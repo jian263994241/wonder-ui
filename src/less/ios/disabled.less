@@ -1,0 +1,12 @@
+/* === Disabled elements === */
+.disabled, [disabled] {
+    opacity: 0.55;
+    pointer-events: none;
+    .disabled &, [disabled] & {
+        opacity: 1;
+    }
+}
+
+.button.disabled, .button[disabled]{
+    background: @gray;
+}

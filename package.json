@@ -1,0 +1,29 @@
+{
+  "name": "kui",
+  "version": "1.0.0",
+  "description": "Kuaiqian H5 Framework",
+  "main": "src/js/kui.js",
+  "directories": {
+    "example": "example"
+  },
+  "homepage": "https://www.99bill.com",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "h5",
+    "framework"
+  ],
+  "author": "jianl",
+  "license": "ISC",
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.7",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-router-transition": "0.0.6",
+    "react-swipeable-views": "^0.12.0",
+    "react-swipeable-views-utils": "^0.12.0",
+    "warning": "^3.0.0"
+  }
+}
