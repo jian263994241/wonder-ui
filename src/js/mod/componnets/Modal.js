@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import {render} from 'react-dom'
-import warning from 'warning'
 import classnames from 'classnames'
 
 const ModalButton = ({text, bold = true, onClick})=>{
