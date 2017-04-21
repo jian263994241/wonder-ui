@@ -10,7 +10,9 @@ export default class Page extends Component {
   static propTypes = {
     style: PropTypes.object,
     className: PropTypes.string,
-    title: PropTypes.string
+    title: PropTypes.string,
+    navbarFixed: PropTypes.bool,
+    toolbarFixed: PropTypes.bool
   }
 
   componentDidMount() {
@@ -22,18 +24,20 @@ export default class Page extends Component {
       document.title = title;
     }
   }
-  
+
   render() {
 
     const {
       title,
+      navbarFixed,
+      toolbarFixed,
       className,
       style,
       children,
       ...other
     } = this.props;
 
-    const cls = classnames('page', className);
+    const cls = classnames('page', (navbarFixed ? 'navbar-fixed': ''), (toolbarFixed ? 'toolbar-fixed': ''), className);
 
     return (
       <div

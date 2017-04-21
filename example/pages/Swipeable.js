@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react'
 
-import {Page, PageContent, SwipeableViews} from 'kui'
+import {Page, PageContent, SwipeableViews, Navbar} from 'kui'
 
 const {virtualize, autoPlay, Pagination} = SwipeableViews;
 
@@ -28,7 +28,7 @@ const styles = {
 };
 
 
-class Swipeable extends Component {
+class SwipeablePage extends Component {
   state = {
     index: 0,
   }
@@ -44,7 +44,8 @@ class Swipeable extends Component {
       index
     } = this.state;
     return (
-      <Page title="Swipeable">
+      <Page title="Swipeable" navbarFixed>
+        <Navbar title="Swipeable" back backText="返回"/>
         <PageContent>
           <div style={styles.root}>
             <AutoPlaySwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>
@@ -71,4 +72,4 @@ class Swipeable extends Component {
 }
 
 
-export default Swipeable;
+export default SwipeablePage;
