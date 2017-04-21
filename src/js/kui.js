@@ -8,4 +8,4 @@ export * as ListView from './mod/componnets/ListView'
 export SwipeableViews from './mod/componnets/SwipeableViews'
 
 
-export * as Router from './mod/utils/Router'
+export * as RouterDOM from './mod/utils/Router'

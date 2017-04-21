@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-import {Router} from 'kui'
+import {RouterDOM} from 'kui'
 
 
 import IndexPage from './pages/IndexPage'
@@ -10,10 +10,12 @@ import MediaLists from './pages/MediaLists'
 import Swipeable from './pages/Swipeable'
 import AccordionList from './pages/AccordionList'
 
-const {HashRouter, Route, Link} = Router;
+const {HashRouter, MemoryRouter, Route, Link} = RouterDOM;
+
+const Router = HashRouter;
 
 const App = ()=>(
-  <HashRouter>
+  <Router>
     <div className="pages">
       <Route exact path="/" component={IndexPage}/>
       <Route path="/swipeable" component={Swipeable}/>
@@ -21,7 +23,7 @@ const App = ()=>(
       <Route exact path="/MediaLists" component={MediaLists}/>
       <Route exact path="/AccordionList" component={AccordionList}/>
     </div>
-  </HashRouter>
+  </Router>
 );
 
 
