@@ -31,8 +31,12 @@ fis.match('example/app.js',{
         'react': 'window.React',
         'react-dom': 'window.ReactDOM',
         // 'react-router-dom': 'window.ReactRouterDOM',
-        'kui': 'UIKIT'
+        'kui': 'window.UIKIT'
       }
     }
   })
+})
+
+fis.match('example/pages/*',{
+  isMod: true
 })

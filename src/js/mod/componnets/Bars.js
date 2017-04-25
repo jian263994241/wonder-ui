@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
 import {sizeNavbars} from '../utils/mix'
-import {withRouter} from '../utils/Router'
+import {withRouter} from 'react-router-dom'
 import $ from '../utils/dom'
+import {mounted} from '../utils/mix'
 import Icon from './Icon'
 
 
-class Navbar extends Component {
+class _Navbar extends Component {
 
   static uiName = 'Navbar'
 
@@ -22,7 +23,11 @@ class Navbar extends Component {
     theme: PropTypes.string,
     back: PropTypes.bool,
     backText: PropTypes.string,
-    onBackClick: PropTypes.func
+    onBackClick: PropTypes.func,
+    center: PropTypes.element,
+    left: PropTypes.element,
+    right: PropTypes.element,
+    subnav: PropTypes.element,
   }
 
   navPosFix = ()=>{
@@ -51,7 +56,10 @@ class Navbar extends Component {
       title,
       back,
       backText,
-      sliding,
+      center,
+      left,
+      right,
+      subnav,
       className,
       children,
       history,
@@ -64,28 +72,45 @@ class Navbar extends Component {
     const themeCss = theme? `theme-${theme}`: '';
     const cls = classnames('navbar', themeCss, className);
 
-    let navLeft;
+    let navLeft = left, navRight = right, navCenter = center, subNavBar = subnav;
 
-    if(back){
+    if(!left && back){
       const backCss = classnames('back link', backText?'':'icon-only')
       navLeft = (
-        <div className="left">
-          <a className="back link icon-only" onClick={this.backHandler}>
-            <Icon type="left-nav"/><span>{backText}</span>
-          </a>
-        </div>
+        <a className="back link icon-only" onClick={this.backHandler}>
+          <Icon type="left-nav"/><span>{backText}</span>
+        </a>
       )
     }
+
+    if(!center && title){
+      navCenter = title;
+    }
+
+    navLeft = mounted(navLeft, <div className="left"></div>);
+    navRight = mounted(navRight, <div className="right"></div>);
+    navCenter = mounted(navCenter, <div className="center" ref="center">{navCenter}</div>);
+
 
     return (
       <div className={cls} ref='navbar' {...other}>
         <div className="navbar-inner">
           {navLeft}
-          <div className="center" ref="center">{title}</div>
+          {navCenter}
+          {navRight}
+          {children}
         </div>
       </div>
     );
   }
 }
 
-export default withRouter(Navbar)
+export const Navbar = withRouter(_Navbar);
+
+export const SubNavBar = (props)=>{
+  const {className, ...other} = props;
+  const cls = classnames('subnavbar', className);
+  return (
+    <div className={cls} {...other}></div>
+  );
+};

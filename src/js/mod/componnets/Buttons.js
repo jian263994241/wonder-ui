@@ -6,9 +6,6 @@ export class Button extends Component {
 
   static uiName = 'Button'
 
-  static defaultProps = {
-    fill: true
-  }
 
   static propTypes = {
     className: PropTypes.string,
@@ -17,7 +14,8 @@ export class Button extends Component {
     big: PropTypes.bool,
     color: PropTypes.string,
     active: PropTypes.bool,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    tabLink: PropTypes.bool,
   }
 
   render() {
@@ -28,6 +26,7 @@ export class Button extends Component {
       color,
       active,
       disabled,
+      tabLink,
       children,
       ...other
     } = this.props;
@@ -37,8 +36,10 @@ export class Button extends Component {
     const buttonBig = big ? 'button-big' : '';
     const buttonColor = color? `color-${color}`: '';
     const buttonActive = active? 'active': '';
+    const tabLinkCss = tabLink? 'tab-link': '';
 
-    const cls = classnames('button', buttonFill, buttonRound, buttonBig, buttonColor, buttonActive);
+
+    const cls = classnames('button', buttonFill, buttonRound, buttonBig, buttonColor, buttonActive, tabLinkCss);
 
     return (
       <div className={cls} disabled={disabled} {...other}>{children}</div>

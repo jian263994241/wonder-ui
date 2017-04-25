@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import {mounted} from '../utils/mix'
-import {Link} from '../utils/Router'
+import {Link} from 'react-router-dom'
 import $ from '../utils/dom'
 
 /**
@@ -63,7 +63,9 @@ export class List extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.virtualItems != undefined){
-      this.state.virtualItems = nextProps.virtualItems;
+      this.setState({
+        virtualItems:  nextProps.virtualItems
+      });
     }
   }
 
@@ -197,7 +199,7 @@ export class ListItem extends Component {
 
   constructor(props){
     super(props);
-    this.state = {} ;
+    this.state = {};
 
     if(props.accordion) {
       this.state.expanded = this.props.expanded;
@@ -205,7 +207,9 @@ export class ListItem extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if(nextProps.expanded != undefined){
-      this.state.expanded = nextProps.expanded;
+      this.setState({
+        expanded: nextProps.expanded
+      });
     }
   }
   render (){

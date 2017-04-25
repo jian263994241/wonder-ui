@@ -1,7 +1,7 @@
 
 export Page from './mod/componnets/Page'
 export PageContent from './mod/componnets/PageContent'
-export Navbar from './mod/componnets/Navbar'
+export * as Bars from './mod/componnets/Bars'
 export * as Block from './mod/componnets/Block'
 export Modal from './mod/componnets/Modal'
 export * as ListView from './mod/componnets/ListView'
@@ -10,8 +10,7 @@ export * as Form from './mod/componnets/Form'
 export * as Buttons from './mod/componnets/Buttons'
 export * as Grid from './mod/componnets/Grid'
 export Icon from './mod/componnets/Icon'
+export Tabs from './mod/componnets/Tabs'
 
-export * as RouterDOM from './mod/utils/Router'
-
-
+export * as RouterDOM from 'react-router-dom'
 export LazyLoad from 'react-lazy-load'

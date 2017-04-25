@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, ListView, Block, Navbar , Form} from 'kui'
+import {Page, PageContent, ListView, Block, Bars , Form} from 'kui'
 
 const {List, ListItem, ListGroup, ListLabel} = ListView;
 
 const {FormLabel, FormInput} = Form;
-
 const {ContentBlock, ContentBlockTitle} = Block;
+const {SubNavBar, Navbar} = Bars;
 
 export default class CheckboxsRadios extends Component {
 

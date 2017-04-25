@@ -16,6 +16,9 @@ import Buttons from './pages/Buttons'
 import Grid from './pages/Grid'
 import Icons from './pages/Icons'
 import LazyLoad from './pages/LazyLoad'
+import Tab from './pages/Tab'
+import TabAnimation from './pages/TabAnimation'
+import TabStatic from './pages/TabStatic'
 
 const {HashRouter, MemoryRouter, Route, Link} = RouterDOM;
 
@@ -36,6 +39,9 @@ const App = ()=>(
       <Route path="/Grid" component={Grid}/>
       <Route path="/Icons" component={Icons}/>
       <Route path="/LazyLoad" component={LazyLoad}/>
+      <Route path="/Tab" component={Tab}/>
+      <Route path="/Tab/Animation" component={TabAnimation}/>
+      <Route path="/Tab/Static" component={TabStatic}/>
     </div>
   </Router>
 );

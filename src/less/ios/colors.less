@@ -7,6 +7,7 @@ Framework7 Color Themes
     //Buttons
     .theme-@{colorName} .button:not(.button-fill) {
         border-color: @color;
+        color: @color;
         html:not(.watch-active-state) &:active, &.active-state {
             background-color: rgba(red(@color), green(@color), blue(@color), 0.15);
         }
@@ -84,19 +85,19 @@ Framework7 Color Themes
             background-color: @color !important;
         }
     }
-    .swiper-pagination {
-        &.color-@{colorName}, .theme-@{colorName} & {
-            .swiper-pagination-bullet-active {
-                background-color: @color;
-            }
-            .swiper-pagination-progressbar {
-                background-color: @color;
-            }
-        }
-        &.swiper-pagination-progress.bg-@{colorName} {
-            background-color: rgba(red(@color), green(@color), blue(@color), 0.25);
-        }
-    }
+    // .swiper-pagination {
+    //     &.color-@{colorName}, .theme-@{colorName} & {
+    //         .swiper-pagination-bullet-active {
+    //             background-color: @color;
+    //         }
+    //         .swiper-pagination-progressbar {
+    //             background-color: @color;
+    //         }
+    //     }
+    //     &.swiper-pagination-progress.bg-@{colorName} {
+    //         background-color: rgba(red(@color), green(@color), blue(@color), 0.25);
+    //     }
+    // }
     // .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
     //     &.color-@{colorName}, .theme-@{colorName} & {
     //         .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='#@{colorHex}'/></svg>");
@@ -108,18 +109,18 @@ Framework7 Color Themes
     //     }
     // }
     // Floating Button
-    .floating-button, .speed-dial-buttons a {
-        .theme-@{colorName} &, &.theme-@{colorName} {
-            color:#fff;
-            background: @color;
-            html:not(.watch-active-state) &:active, &.active-state {
-                background: darken(@color, 8%);
-            }
-            i {
-                color: inherit;
-            }
-        }
-    }
+    // .floating-button, .speed-dial-buttons a {
+    //     .theme-@{colorName} &, &.theme-@{colorName} {
+    //         color:#fff;
+    //         background: @color;
+    //         html:not(.watch-active-state) &:active, &.active-state {
+    //             background: darken(@color, 8%);
+    //         }
+    //         i {
+    //             color: inherit;
+    //         }
+    //     }
+    // }
     // Range Slider
     .range-slider {
         .theme-@{colorName} &, &.theme-@{colorName} {

@@ -23,10 +23,10 @@ export default class IndexPage extends Component {
           <List>
             <ListItem title="基础" divider/>
             <ListItem title="栅格" link to="/Grid"/>
-            <ListItem title="Swipeable" link to="/swipeable"/>
+            <ListItem title="图片滑块" link to="/swipeable"/>
             <ListItem title="图标" link to="/Icons"/>
             <ListItem title="懒加载" link to="/LazyLoad"/>
-            <ListItem title="Tab"/>
+            <ListItem title="标签切换" link to="/Tab"/>
 
             <ListItem title="列表" divider/>
             <ListItem title="列表视图" link to="/ListView"/>
