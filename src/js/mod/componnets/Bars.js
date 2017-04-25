@@ -26,8 +26,7 @@ class _Navbar extends Component {
     onBackClick: PropTypes.func,
     center: PropTypes.element,
     left: PropTypes.element,
-    right: PropTypes.element,
-    subnav: PropTypes.element,
+    right: PropTypes.element
   }
 
   navPosFix = ()=>{
@@ -59,7 +58,6 @@ class _Navbar extends Component {
       center,
       left,
       right,
-      subnav,
       className,
       children,
       history,
@@ -70,9 +68,10 @@ class _Navbar extends Component {
     } = this.props;
 
     const themeCss = theme? `theme-${theme}`: '';
+
     const cls = classnames('navbar', themeCss, className);
 
-    let navLeft = left, navRight = right, navCenter = center, subNavBar = subnav;
+    let navLeft = left, navRight = right, navCenter = center;
 
     if(!left && back){
       const backCss = classnames('back link', backText?'':'icon-only')

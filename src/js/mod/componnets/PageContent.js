@@ -8,7 +8,7 @@ export default class PageContent extends Component {
   static uiName = 'PageContent'
 
   static propTypes = {
-    style: PropTypes.object,
+    withSubnavbar: PropTypes.bool,
     className: PropTypes.string,
   }
 
@@ -16,15 +16,16 @@ export default class PageContent extends Component {
 
     const {
       className,
-      style,
+      withSubnavbar,
       children,
       ...other
     } = this.props;
 
-    const cls = classnames('page-content', className);
+    const subNavbarCss = withSubnavbar? 'with-subnavbar': '';
+    const cls = classnames('page-content', subNavbarCss, className);
 
     return (
-      <div className={cls} style={style} {...other}>
+      <div className={cls} {...other}>
         {children}
       </div>
     );
