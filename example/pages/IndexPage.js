@@ -6,7 +6,7 @@ const {List, ListItem, ListGroup} = ListView;
 const {ContentBlock, ContentBlockTitle} = Block;
 
 
-class IndexPage extends Component {
+export default class IndexPage extends Component {
 
   render() {
     const {
@@ -14,7 +14,7 @@ class IndexPage extends Component {
     } = this.props;
 
     return (
-      <Page title="UIKIT">
+      <Page title="组件库">
         <PageContent>
           <ContentBlockTitle>UIKIT</ContentBlockTitle>
           <ContentBlock>
@@ -22,24 +22,22 @@ class IndexPage extends Component {
           </ContentBlock>
           <List>
             <ListItem title="基础" divider/>
-            <ListItem title="Grid"/>
+            <ListItem title="栅格" link to="/Grid"/>
             <ListItem title="Swipeable" link to="/swipeable"/>
-            <ListItem title="Icons"/>
-            <ListItem title="Loadmore"/>
-            <ListItem title="Lazy Load Images"/>
+            <ListItem title="图标" link to="/Icons"/>
+            <ListItem title="懒加载" link to="/LazyLoad"/>
+            <ListItem title="Tab"/>
 
             <ListItem title="列表" divider/>
-            <ListItem title="List View" link to="/ListView"/>
-            <ListItem title="Media Lists" link to="/MediaLists"/>
-            <ListItem title="Accordion List" link to="/AccordionList"/>
-            <ListItem title="Sortable List" link/>
-            <ListItem title="Swipe To Delete" link/>
-            <ListItem title="Virtual List" link/>
+            <ListItem title="列表视图" link to="/ListView"/>
+            <ListItem title="媒体列表" link to="/MediaLists"/>
+            <ListItem title="手风琴列表" link to="/AccordionList"/>
+            <ListItem title="虚拟列表" link to="/VirtualList"/>
 
             <ListItem title="表单" divider/>
-            <ListItem title="Button"/>
-            <ListItem title="Input"/>
-            <ListItem title="Slider"/>
+            <ListItem title="表单布局" link to="/FormElements"/>
+            <ListItem title="多选 & 单选" link to="/CheckboxesRadios"/>
+            <ListItem title="按钮" link to="/Buttons"/>
 
             <ListItem title="反馈" divider/>
             <ListItem title="Modals" />
@@ -60,5 +58,3 @@ class IndexPage extends Component {
     );
   }
 }
-
-export default IndexPage;

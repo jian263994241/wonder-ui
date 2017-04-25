@@ -7,6 +7,19 @@
     }
 }
 
-.button.disabled, .button[disabled]{
-    background: @gray;
+
+
+.button{
+  &:not(.button-fill){
+    &.disabled, &[disabled]{
+      color: @gray;
+      border-color: @gray;
+    }
+  }
+
+  &.button-fill{
+    &.disabled, &[disabled]{
+      background: @gray;
+    }
+  }
 }

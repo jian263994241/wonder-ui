@@ -7,14 +7,12 @@ export class ContentBlockTitle extends Component {
   static uiName = 'ContentBlockTitle'
 
   static propTypes = {
-    style: PropTypes.object,
     className: PropTypes.string
   }
 
   render() {
     const {
       className,
-      style,
       children,
       ...other
     } = this.props;
@@ -24,7 +22,6 @@ export class ContentBlockTitle extends Component {
     return (
       <div
         className={cls}
-        style={style}
         {...other}>
         {children}
       </div>
@@ -37,11 +34,11 @@ export class ContentBlock extends Component {
   static uiName = 'ContentBlock'
 
   static propTypes = {
-    style: PropTypes.object,
     className: PropTypes.string,
     title: PropTypes.string,
     inner: PropTypes.bool,
-    inset: PropTypes.bool
+    inset: PropTypes.bool,
+    noHairlines: PropTypes.bool
   }
 
 
@@ -50,30 +47,26 @@ export class ContentBlock extends Component {
     const {
       inner,
       inset,
+      noHairlines,
       className,
-      style,
       children,
       ...other
     } = this.props;
-
-    let cls = classnames('content-block', className);
-
-    if(inset){
-      cls = classnames(cls, 'inset');
-    }
+    const inSetCss = inset? 'inset': '';
+    const cls = classnames('content-block', inSetCss, className);
+    const innerCss = classnames('content-block-inner', noHairlines?'no-hairlines':'');
 
     let innerElement = children;
 
     if(inner || inset){
       innerElement = (
-        <div className="content-block-inner">{children}</div>
+        <div className={innerCss}>{children}</div>
       );
     }
 
     return (
       <div
         className={cls}
-        style={style}
         {...other}>
         {innerElement}
       </div>

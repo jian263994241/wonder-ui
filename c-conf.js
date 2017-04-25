@@ -16,7 +16,7 @@ fis.match('src/js/kui.js',{
 //   rExt: '.css'
 // })
 
-fis.match('src/less/ios/framework7.ios.less',{
+fis.match('src/less/ios/uikit.less',{
   parser: fis.plugin('css'),
   isInline: false,
   rExt: '.css'

@@ -45,7 +45,7 @@ class SwipeablePage extends Component {
     } = this.state;
     return (
       <Page title="Swipeable" navbarFixed>
-        <Navbar title="Swipeable" back backText="返回"/>
+        <Navbar title="Swipeable" back/>
         <PageContent>
           <div style={styles.root}>
             <AutoPlaySwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>

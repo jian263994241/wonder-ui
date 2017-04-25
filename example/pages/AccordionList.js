@@ -16,7 +16,7 @@ export default class AccordionListPage extends Component {
   render() {
     return (
       <Page title="Accordion List" navbarFixed>
-        <Navbar title="手风琴" back backText="返回"/>
+        <Navbar title="手风琴" back/>
         <PageContent>
           <ContentBlockTitle>列表</ContentBlockTitle>
           <List accordion>
@@ -28,9 +28,9 @@ export default class AccordionListPage extends Component {
             </ListItem>
             <ListItem accordion title="嵌套列表">
               <List>
-                <ListItem title="Ivan Petrov" after="CEO" img={<Icon/>}/>
-                <ListItem title="John Doe" badge="5" img={<Icon/>}/>
-                <ListItem title="Jenna Smith" badge="new" badgeColor="red" img={<Icon/>}/>
+                <ListItem title="Ivan Petrov" after="CEO" media={<Icon/>}/>
+                <ListItem title="John Doe" badge="5" media={<Icon/>}/>
+                <ListItem title="Jenna Smith" badge="new" badgeColor="red" media={<Icon/>}/>
               </List>
             </ListItem>
             <ListItem accordion title="文字2">

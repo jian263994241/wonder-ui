@@ -8,9 +8,9 @@ export default class Page extends Component {
   static uiName = 'Page'
 
   static propTypes = {
-    style: PropTypes.object,
     className: PropTypes.string,
     title: PropTypes.string,
+    theme: PropTypes.string,
     navbarFixed: PropTypes.bool,
     toolbarFixed: PropTypes.bool
   }
@@ -29,20 +29,22 @@ export default class Page extends Component {
 
     const {
       title,
+      theme,
       navbarFixed,
       toolbarFixed,
       className,
-      style,
       children,
       ...other
     } = this.props;
 
-    const cls = classnames('page', (navbarFixed ? 'navbar-fixed': ''), (toolbarFixed ? 'toolbar-fixed': ''), className);
+    const navbarFixedCss = navbarFixed ? 'navbar-fixed': '';
+    const toolbarFixedCss = toolbarFixed ? 'toolbar-fixed': '';
+    const themeCss = theme? `theme-${theme}`: '';
+    const cls = classnames('page', navbarFixedCss, toolbarFixedCss, themeCss, className);
 
     return (
       <div
         className={cls}
-        style={style}
         data-title={title}
         {...other}>
         {children}

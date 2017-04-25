@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import {mounted} from '../utils/mix'
 import {Link} from '../utils/Router'
+import $ from '../utils/dom'
+
 /**
 * List
 * Properties: className, style, mediaList
@@ -18,8 +20,53 @@ export class List extends Component {
     inset: PropTypes.bool,
     tabletInset: PropTypes.bool,
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-    accordion: PropTypes.bool
+    accordion: PropTypes.bool,
+    virtualItems: React.PropTypes.array
   }
+
+  state = {
+    virtualItems: [],
+    virtualItemsShowLength : 20,
+    virtualItemsIndex: 1
+  }
+
+  componentDidMount() {
+    const {virtualItems} = this.props;
+    let {virtualItemsIndex, virtualItemsShowLength} = this.state;
+    if(virtualItems){
+      const listElem = this.listElem = $(this.refs.list);
+      const pageContent = this.pageContent = listElem.parent('.page-content');
+      const windowHeight = $(window).height();
+
+      this.scrollHandler = (e)=>{
+        if(listElem.height() - windowHeight + listElem.offset().top < 0){
+            pageContent.off('scroll', this.scrollHandler);
+            virtualItemsIndex++;
+            this.setState({
+              virtualItemsIndex: virtualItemsIndex,
+              virtualItems: virtualItems.slice(0 , virtualItemsIndex * virtualItemsShowLength)
+            }, ()=>pageContent.on('scroll', this.scrollHandler));
+        }
+      }
+
+      this.setState({
+        virtualItems: virtualItems.slice(0 , virtualItemsIndex * virtualItemsShowLength)
+      }, ()=>pageContent.on('scroll', this.scrollHandler));
+    }
+  }
+
+  componentWillUnmount() {
+    if(this.pageContent){
+      this.pageContent.off('scroll', this.scrollHandler);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.virtualItems != undefined){
+      this.state.virtualItems = nextProps.virtualItems;
+    }
+  }
+
 
   render() {
     const {
@@ -28,6 +75,7 @@ export class List extends Component {
       inset,
       tabletInset,
       label,
+      virtualItems,
       className,
       style,
       children,
@@ -40,20 +88,36 @@ export class List extends Component {
 
     let childrenWrap = children, blockLabel;
 
-    if(IndexClild && IndexClild.type.uiName === 'ListItem') {
-      childrenWrap = (
-        <ul>{children}</ul>
-      )
-    }
-
     if(label){
       blockLabel = (
         <div className="list-block-label">{label}</div>
       )
     }
 
+
+    if(IndexClild && IndexClild.type.uiName === 'ListItem') {
+      childrenWrap = (
+        <ul>{children}</ul>
+      )
+    }
+
+
+    const createItem = (item, index)=>{
+      const {...props} = item;
+      return <ListItem {...props} key={index}></ListItem>;
+    }
+
+    if(virtualItems){
+
+      childrenWrap = (
+        <ul>
+          {this.state.virtualItems.map(createItem)}
+        </ul>
+      )
+    }
+
     return (
-      <div className={cls} style={style} {...other}>
+      <div className={cls} style={style} {...other} ref="list">
         {childrenWrap}
         {blockLabel}
       </div>
@@ -117,7 +181,7 @@ export class ListItem extends Component {
     badge: PropTypes.string,
     badgeColor: PropTypes.string,
     after: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-    img: PropTypes.element,
+    media: PropTypes.element,
     accordion: PropTypes.bool,
     expanded: PropTypes.bool,
     onAccordionOpen: PropTypes.func,
@@ -125,6 +189,10 @@ export class ListItem extends Component {
     onAccordionClose: PropTypes.func,
     onAccordionClosed: PropTypes.func,
     to: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    checkbox: PropTypes.bool,
+    radio: PropTypes.bool,
+    checked: PropTypes.bool,
+    value: PropTypes.string
   }
 
   constructor(props){
@@ -156,8 +224,13 @@ export class ListItem extends Component {
       badge,
       badgeColor,
       after,
-      img,
+      media,
       to,
+      checkbox,
+      radio,
+      checked,
+      value,
+      name,
       className,
       style,
       children,
@@ -167,37 +240,37 @@ export class ListItem extends Component {
 
     let content, itemMeida, itemAfter, itemTitle, itemTitleRow, type;
 
+    const Div = (props)=>{
+      if(props.to){
+        return <Link {...props}/>;
+      }else{
+        return <div {...props}/>;
+      }
+    };
 
-    if(subtitle || text) type = 'mediaItem';
-    if(divider) type = 'divider';
-    if(accordion) type = 'accordion';
-
-    const badgeElement = ()=>{
+    const badgeElement = (badge, badgeColor)=>{
       if(!badge) return null;
       const badgeCss = classnames('badge', (badgeColor? `bg-${badgeColor}`: ''));
       return (
         <span className={badgeCss}>{badge}</span>
       );
-    }
-
-    itemMeida = mounted(img, <div className="item-media"/>);
-    itemTitle = mounted(title, <div className="item-title"/>);
-    itemAfter = mounted(after || badgeElement(), <div className="item-after"/>);
-
-    const Div = (props)=>{
-      const { ...other } = props;
-
-      if(to){
-        return <Link to={to} {...other}/>;
-      }else{
-        return <div {...other}/>;
-      }
     };
+
+    if(subtitle || text) type = 'mediaItem';
+    if(divider) type = 'divider';
+    if(accordion) type = 'accordion';
+    if(checkbox) type = 'checkbox';
+    if(radio) type = 'radio';
+    if(!accordion && children) type= 'custom';
+
+    itemMeida = mounted(media, <div className="item-media"/>);
+    itemTitle = mounted(title, <div className="item-title"/>);
+    itemAfter = mounted(after || badgeElement(badge, badgeColor), <div className="item-after"/>);
 
     const baseItem = ()=>{
       const itemCss = classnames('item-content', (link?'item-link':''));
       return (
-        <Div className={itemCss}>
+        <Div className={itemCss} to={to}>
           {itemMeida}
           <div className="item-inner">
             {itemTitle}
@@ -210,7 +283,7 @@ export class ListItem extends Component {
     const mediaItem = ()=>{
       const itemCss = classnames('item-content', (link?'item-link':''));
       return (
-        <Div className={itemCss}>
+        <Div className={itemCss} to={to}>
           {itemMeida}
           <div className="item-inner">
             <div className="item-title-row">{itemTitle}{itemAfter}</div>
@@ -247,6 +320,7 @@ export class ListItem extends Component {
       return (
         <div className={itemCss}>
           <div className="item-link item-content" onClick={accordionHandler}>
+            {itemMeida}
             <div className="item-inner">
               {itemTitle}
             </div>
@@ -254,6 +328,65 @@ export class ListItem extends Component {
           <div className="accordion-item-content">
             {children}
           </div>
+        </div>
+      );
+    }
+
+    const checkboxItem = ()=>{
+      if(media){
+        return (
+          <label className="label-checkbox item-content">
+            <input type="checkbox" defaultValue={value} name={name} defaultChecked={checked} {...other}/>
+            <div className="item-media">
+              <i className="icon icon-form-checkbox"></i>
+            </div>
+            <div className="item-inner">
+              <div className="item-title-row">{itemTitle}{itemAfter}</div>
+              {mounted(subtitle, <div className="item-subtitle"/>)}
+              {mounted(text, <div className="item-text"/>)}
+            </div>
+          </label>
+        )
+      }else{
+        return (
+          <label className="label-checkbox item-content">
+            <input type="checkbox" defaultValue={value} name={name} defaultChecked={checked} {...other}/>
+            <div className="item-media">
+              <i className="icon icon-form-checkbox"></i>
+            </div>
+            <div className="item-inner">{itemTitle}</div>
+          </label>
+        )
+      }
+    }
+
+    const radioItem = ()=>{
+      if(media){
+        <label className="label-radio item-content">
+          <input type="radio" defaultValue={value} name={name} defaultChecked={checked} {...other}/>
+          {itemMeida}
+          <div className="item-inner">
+            <div className="item-title-row">{itemTitle}{itemAfter}</div>
+            {mounted(subtitle, <div className="item-subtitle"/>)}
+            {mounted(text, <div className="item-text"/>)}
+          </div>
+        </label>
+      }else{
+        return (
+          <label className="label-radio item-content">
+            <input type="radio" defaultValue={value} name={name} defaultChecked={checked} {...other}/>
+            <div className="item-inner">{itemTitle}</div>
+          </label>
+        )
+      }
+
+    }
+
+    const customItem = ()=>{
+      return (
+        <div className="item-content">
+          {itemMeida}
+          <div className="item-inner">{children}</div>
         </div>
       );
     }
@@ -267,6 +400,15 @@ export class ListItem extends Component {
         break;
       case 'accordion':
         content = accordionItem();
+        break;
+      case 'checkbox':
+        content = checkboxItem();
+        break;
+      case 'radio':
+        content = radioItem();
+        break;
+      case 'custom':
+        content = customItem();
         break;
       default:
         content = baseItem();

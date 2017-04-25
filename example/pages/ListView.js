@@ -16,20 +16,20 @@ export default class ListViewPage extends Component {
 
   render() {
     return (
-      <Page title="List View" navbarFixed>
-        <Navbar title="列表" back backText="返回"/>
+      <Page title="列表" navbarFixed>
+        <Navbar title="列表" back/>
         <PageContent>
           <ContentBlockTitle>有图标的列表</ContentBlockTitle>
           <List>
-            <ListItem title="Ivan Petrov" after="CEO" img={<Icon/>}/>
-            <ListItem title="John Doe" badge="5" img={<Icon/>}/>
-            <ListItem title="Jenna Smith" badge="new" badgeColor="red" img={<Icon/>}/>
+            <ListItem title="Ivan Petrov" after="CEO" media={<Icon/>}/>
+            <ListItem title="John Doe" badge="5" media={<Icon/>}/>
+            <ListItem title="Jenna Smith" badge="new" badgeColor="red" media={<Icon/>}/>
           </List>
           <ContentBlockTitle>有图标的链接的列表</ContentBlockTitle>
           <List>
-            <ListItem title="Ivan Petrov" after="CEO" img={<Icon/>} link/>
-            <ListItem title="John Doe"  after="Cleaner" img={<Icon/>} link/>
-            <ListItem title="Jenna Smith" img={<Icon/>} link/>
+            <ListItem title="Ivan Petrov" after="CEO" media={<Icon/>} link/>
+            <ListItem title="John Doe"  after="Cleaner" media={<Icon/>} link/>
+            <ListItem title="Jenna Smith" media={<Icon/>} link/>
           </List>
           <ContentBlockTitle>没有图标的链接列表</ContentBlockTitle>
           <List>
@@ -50,9 +50,9 @@ export default class ListViewPage extends Component {
           </List>
           <ContentBlockTitle>INSET</ContentBlockTitle>
           <List inset>
-            <ListItem title="Ivan Petrov" after="CEO" img={<Icon/>}/>
-            <ListItem title="John Doe" badge="5" img={<Icon/>}/>
-            <ListItem title="Jenna Smith" badge="new" badgeColor="gray" img={<Icon/>}/>
+            <ListItem title="Ivan Petrov" after="CEO" media={<Icon/>}/>
+            <ListItem title="John Doe" badge="5" media={<Icon/>}/>
+            <ListItem title="Jenna Smith" badge="new" badgeColor="gray" media={<Icon/>}/>
           </List>
 
           <ContentBlockTitle>带LEBAL的列表</ContentBlockTitle>
