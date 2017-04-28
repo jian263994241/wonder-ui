@@ -48,17 +48,18 @@ export default class TabPage extends Component {
     } = this.state;
 
     return (
-      <Page title="标签切换" navbarFixed>
-        <Navbar title="动画切换" back/>
-        <SubNavBar noBorder>
-          <ButtonsSegmented activeIndex={index}>
-            <Button onClick={this.handleChangeTabs(0)}>Tab 1</Button>
-            <Button onClick={this.handleChangeTabs(1)}>Tab 2</Button>
-            <Button onClick={this.handleChangeTabs(2)}>Tab 3</Button>
-          </ButtonsSegmented>
-        </SubNavBar>
+      <Page title="标签切换">
+        <Navbar title="经典切换" back>
+          <SubNavBar>
+            <ButtonsSegmented activeIndex={index}>
+              <Button onClick={this.handleChangeTabs(0)}>Tab 1</Button>
+              <Button onClick={this.handleChangeTabs(1)}>Tab 2</Button>
+              <Button onClick={this.handleChangeTabs(2)}>Tab 3</Button>
+            </ButtonsSegmented>
+          </SubNavBar>
+        </Navbar>
 
-        <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex} disabled style={{height:'100%'}} containerStyle={{height:'100%'}}>
+        <SwipeableViews index={index} onChangeIndex={this.handleChangeIndex} disabled animateTransitions={false} style={{height:'100%'}} containerStyle={{height:'100%'}}>
           <PageContent withSubnavbar >
               Tab centent 1
           </PageContent>

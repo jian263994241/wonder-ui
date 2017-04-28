@@ -11,11 +11,11 @@ import Icon from './Icon'
 
 class _Navbar extends Component {
 
-  static uiName = 'Navbar'
+  uiName = 'Navbar'
 
-  static defaultProps = {
-    theme: 'gray'
-  }
+  // static defaultProps = {
+  //   theme: 'gray'
+  // }
 
   static propTypes = {
     className: PropTypes.string,
@@ -41,8 +41,8 @@ class _Navbar extends Component {
   }
 
   backHandler = ()=>{
-    const {history} = this.props;
-    if(this.props.onBackClick){
+    const {history, onBackClick} = this.props;
+    if(onBackClick){
       onBackClick();
     }else{
       history.goBack();
@@ -104,12 +104,20 @@ class _Navbar extends Component {
   }
 }
 
-export const Navbar = withRouter(_Navbar);
+const Navbar = withRouter(_Navbar);
 
-export const SubNavBar = (props)=>{
-  const {className, ...other} = props;
-  const cls = classnames('subnavbar', className);
+Navbar.uiName = 'Navbar';
+
+const SubNavBar = (props)=>{
+  const {className, noBorder, ...other} = props;
+  const noborderCss = noBorder? 'no-border': '';
+  const cls = classnames('subnavbar', noborderCss, className);
   return (
     <div className={cls} {...other}></div>
   );
 };
+
+export {
+  Navbar,
+  SubNavBar
+}

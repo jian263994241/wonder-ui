@@ -11,7 +11,7 @@ export default class GridPage extends Component {
 
   render() {
     return (
-      <Page title="图标" navbarFixed>
+      <Page title="图标">
         <Navbar title="图标" back/>
         <PageContent id="ratchicons">
 

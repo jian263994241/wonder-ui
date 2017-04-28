@@ -40,7 +40,20 @@ export default class Page extends Component {
     const navbarFixedCss = navbarFixed ? 'navbar-fixed': '';
     const toolbarFixedCss = toolbarFixed ? 'toolbar-fixed': '';
     const themeCss = theme? `theme-${theme}`: '';
-    const cls = classnames('page', navbarFixedCss, toolbarFixedCss, themeCss, className);
+    let cls = classnames('page', navbarFixedCss, toolbarFixedCss, themeCss, className);
+
+    let hasNavbar;
+
+    React.Children.forEach(children, (child, index)=>{
+      const uiName = child.type.uiName;
+      if(uiName === 'Navbar'){
+        hasNavbar = true;
+      }
+    });
+
+    if(!navbarFixed && hasNavbar){
+      cls = classnames(cls, 'navbar-fixed');
+    }
 
     return (
       <div

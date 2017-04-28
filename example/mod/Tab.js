@@ -9,7 +9,7 @@ const {SubNavBar, Navbar} = Bars;
 export default class TabPage extends Component {
   render() {
     return (
-      <Page title="标签切换" navbarFixed>
+      <Page title="标签切换">
         <Navbar title="标签切换" back/>
         <PageContent>
           <List>

@@ -12,7 +12,7 @@ export default class CheckboxsRadios extends Component {
 
   render() {
     return (
-      <Page title="Checkboxs & Radios" navbarFixed>
+      <Page title="Checkboxs & Radios">
         <Navbar title="多选 & 单选" back/>
         <PageContent>
           <ContentBlockTitle>Checkbox group</ContentBlockTitle>

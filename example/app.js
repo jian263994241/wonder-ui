@@ -4,21 +4,25 @@ import {render} from 'react-dom'
 import {RouterDOM} from 'kui'
 
 
-import IndexPage from './pages/IndexPage'
-import ListView from './pages/ListView'
-import MediaLists from './pages/MediaLists'
-import Swipeable from './pages/Swipeable'
-import AccordionList from './pages/AccordionList'
-import VirtualList from './pages/VirtualList'
-import Formelements from './pages/Formelements'
-import CheckboxesRadios from './pages/CheckboxesRadios'
-import Buttons from './pages/Buttons'
-import Grid from './pages/Grid'
-import Icons from './pages/Icons'
-import LazyLoad from './pages/LazyLoad'
-import Tab from './pages/Tab'
-import TabAnimation from './pages/TabAnimation'
-import TabStatic from './pages/TabStatic'
+import IndexPage from './mod/IndexPage'
+import ListView from './mod/ListView'
+import MediaLists from './mod/MediaLists'
+import Swipeable from './mod/Swipeable'
+import AccordionList from './mod/AccordionList'
+import VirtualList from './mod/VirtualList'
+import Formelements from './mod/Formelements'
+import CheckboxesRadios from './mod/CheckboxesRadios'
+import Buttons from './mod/Buttons'
+import Grid from './mod/Grid'
+import Icons from './mod/Icons'
+import LazyLoad from './mod/LazyLoad'
+import Tab from './mod/Tab'
+import TabAnimation from './mod/TabAnimation'
+import TabStatic from './mod/TabStatic'
+import PullToRefresh from './mod/PullToRefresh'
+import Modals from './mod/Modals'
+import Preloader from './mod/Preloader'
+import InfiniteScroll from './mod/InfiniteScroll'
 
 const {HashRouter, MemoryRouter, Route, Link} = RouterDOM;
 
@@ -42,6 +46,10 @@ const App = ()=>(
       <Route path="/Tab" component={Tab}/>
       <Route path="/Tab/Animation" component={TabAnimation}/>
       <Route path="/Tab/Static" component={TabStatic}/>
+      <Route path="/PullToRefresh" component={PullToRefresh}/>
+      <Route path="/Modals" component={Modals}/>
+      <Route path="/Modals/Preloader" component={Preloader}/>
+      <Route path="/InfiniteScroll" component={InfiniteScroll}/>
     </div>
   </Router>
 );

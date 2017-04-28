@@ -10,7 +10,7 @@ export default class GridPage extends Component {
 
   render() {
     return (
-      <Page title="栅格" navbarFixed>
+      <Page title="栅格">
         <Navbar title="栅格" back/>
         <PageContent>
           <ContentBlock>

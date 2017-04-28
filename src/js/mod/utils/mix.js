@@ -1,7 +1,7 @@
 import $ from './dom'
 
 // Size Navbars
- export function sizeNavbars (viewContainer) {
+export function sizeNavbars (viewContainer) {
     var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner:not(.cached)') : $('.navbar .navbar-inner:not(.cached)');
     navbarInner.each(function () {
         var n = $(this);
@@ -48,7 +48,7 @@ import $ from './dom'
 
         center.css({left: centerLeft + 'px'});
     });
-};
+}
 
 export function mounted(content, reactElement){
   if(!content) return null;

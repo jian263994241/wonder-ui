@@ -36,7 +36,3 @@ fis.match('example/app.js',{
     }
   })
 })
-
-fis.match('example/pages/*',{
-  isMod: true
-})

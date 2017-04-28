@@ -1,13 +1,13 @@
 /* === Pull To Refresh === */
 .pull-to-refresh-layer {
-    position:absolute; 
+    position:absolute;
     position: relative;
     margin-top: -@toolbarSize;
-    left:0; 
-    top:0; 
-    width:100%; 
-    height:@toolbarSize; 
-    
+    left:0;
+    top:0;
+    width:100%;
+    height:@toolbarSize;
+
     .preloader {
         position: absolute;
         left: 50%;
@@ -15,7 +15,6 @@
         margin-left: -10px;
         margin-top: -10px;
         visibility: hidden;
-        
     }
     .pull-to-refresh-arrow {
         width: 13px;
@@ -32,7 +31,7 @@
         .transform(rotate(0deg) translate3d(0,0,0));
         .transition(300ms);
     }
-    
+
 }
 .pull-to-refresh-content {
     &.pull-to-refresh-no-navbar {
@@ -45,7 +44,7 @@
         }
     }
     &.transitioning, &.refreshing {
-        .transition(400ms); 
+        .transition(400ms);
     }
     &:not(.refreshing) {
         .pull-to-refresh-layer .preloader {
@@ -60,12 +59,11 @@
         }
         .preloader {
             visibility: visible;
-        }   
+        }
     }
     &.pull-up {
         .pull-to-refresh-arrow {
             .transform(rotate(180deg) translate3d(0,0,0));
         }
     }
-    
 }

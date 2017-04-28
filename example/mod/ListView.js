@@ -18,7 +18,7 @@ export default class ListViewPage extends Component {
 
   render() {
     return (
-      <Page title="列表" navbarFixed>
+      <Page title="列表">
         <Navbar title="列表" back/>
         <PageContent>
           <ContentBlockTitle>有图标的列表</ContentBlockTitle>

@@ -6,7 +6,6 @@ export class Button extends Component {
 
   static uiName = 'Button'
 
-
   static propTypes = {
     className: PropTypes.string,
     fill: PropTypes.bool,
@@ -51,20 +50,38 @@ export class ButtonsSegmented extends Component {
   static uiName = 'ButtonsSegmented'
 
   static propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
+    activeIndex: PropTypes.number
+  }
+
+  state = {
+    activeIndex : 0
+  }
+
+  componentWillMount() {
+    const {activeIndex} = this.props;
+    if(activeIndex){
+      this.setState({activeIndex});
+    }
   }
 
   render() {
     const {
       className,
+      activeIndex,
       children,
       ...other
     } = this.props;
 
     const cls = classnames('buttons-row', className);
 
+    const childrenTransfrom = React.Children.map(children, (child, index)=>{
+      const active = activeIndex === index;
+      return React.cloneElement(child, {active: active, tabLink:true});
+    })
+
     return (
-      <div className={cls} {...other}> {children} </div>
+      <div className={cls} {...other}> {childrenTransfrom} </div>
     );
   }
 }

@@ -40,17 +40,13 @@ export default class IndexPage extends Component {
             <ListItem title="按钮" link to="/Buttons"/>
 
             <ListItem title="反馈" divider/>
-            <ListItem title="Modals" />
+            <ListItem title="Modals" link to="/Modals"/>
             <ListItem title="Popover" />
             <ListItem title="Picker" />
-            <ListItem title="Preloader" />
-            <ListItem title="Infinite Scroll" />
-            <ListItem title="Pull To Refresh" />
+            <ListItem title="指示器" link to="/Modals/Preloader"/>
+            <ListItem title="无限滚动" link to="/InfiniteScroll"/>
+            <ListItem title="下拉刷新" link to="/PullToRefresh"/>
 
-            <ListItem title="导航" divider/>
-            <ListItem title="Navbar"/>
-            <ListItem title="Subnavbar"/>
-            <ListItem title="Toolbar"/>
           </List>
 
         </PageContent>

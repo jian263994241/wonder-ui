@@ -16,7 +16,7 @@ const Icon = ()=>{
 export default class AccordionListPage extends Component {
   render() {
     return (
-      <Page title="Accordion List" navbarFixed>
+      <Page title="Accordion List">
         <Navbar title="手风琴" back/>
         <PageContent>
           <ContentBlockTitle>列表</ContentBlockTitle>

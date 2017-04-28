@@ -9,7 +9,7 @@ export default class LazyLoadPage extends Component {
 
   render() {
     return (
-      <Page title="懒加载" navbarFixed>
+      <Page title="懒加载">
         <Navbar title="懒加载" back/>
         <PageContent>
           <LazyLoad height={762} offsetVertical={300}>

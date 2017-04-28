@@ -19,7 +19,6 @@
   "dependencies": {
     "axios": "^0.16.1",
     "classnames": "^2.2.5",
-    "lodash": "^4.17.4",
     "prop-types": "^15.5.7",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

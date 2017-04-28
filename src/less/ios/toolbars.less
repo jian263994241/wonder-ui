@@ -80,6 +80,9 @@
         display: block;
     }
 }
+.subnavbar{
+  background: #fff;
+}
 .navbar {
     left: 0;
     top: 0;
@@ -151,13 +154,36 @@
     margin-top: -1px;
     z-index: 20;
     box-sizing: border-box;
-    padding: 0 8px;
+    // padding: 0 8px;
     .flexbox();
     .justify-content(space-between);
     .align-items(center);
     .hairline(bottom, @toolbarBorderColor);
     &.no-border {
         .hairline-remove(bottom);
+        .buttons-row{
+          height: 100%;
+          .button{
+            color: inherit;
+            height: 100%;
+            border: none;
+            border-radius: 0;
+            line-height: 3;
+            &.active{
+              color: @buttonTheme;
+              background: none;
+              .hairline(bottom, @buttonTheme);
+              &:after{
+                html.pixel-ratio-2 & {
+                    .transform(scaleX(1));
+                }
+                html.pixel-ratio-3 & {
+                    .transform(scaleX(1));
+                }
+              }
+            }
+          }
+        }
     }
     .navbar.no-border & {
         margin-top: 0;
@@ -280,106 +306,106 @@
     }
 }
 
-.navbar-from-right-to-center {
-    .left, .right, .center, .subnavbar, .fading {
-        .animation(navbarElementFadeIn @toolbarDuration forwards);
-    }
-    .sliding {
-        opacity: 1;
-    }
-
-}
-.navbar-from-center-to-right {
-    .left, .right, .center, .subnavbar, .fading {
-        .animation(navbarElementFadeOut @toolbarDuration forwards);
-    }
-    .sliding {
-        opacity: 0;
-    }
-    .subnavbar.sliding {
-        opacity: 1;
-    }
-}
-@-webkit-keyframes navbarElementFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-@keyframes navbarElementFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-.navbar-from-center-to-left {
-    .left, .right, .center, .subnavbar, .fading {
-        .animation(navbarElementFadeOut @toolbarDuration forwards);
-    }
-    .sliding {
-        opacity: 0;
-    }
-    .subnavbar.sliding {
-        opacity: 1;
-    }
-}
-.navbar-from-left-to-center {
-    .left, .right, .center, .subnavbar, .fading {
-        .animation(navbarElementFadeIn @toolbarDuration forwards);
-    }
-    .sliding {
-        opacity: 1;
-    }
-}
-.navbar-on-left {
-    .left, .right, .center, .subnavbar, .fading {
-        opacity: 0;
-    }
-    .sliding {
-        opacity: 0;
-    }
-    .subnavbar.sliding {
-        opacity: 1;
-        .translate3d(-100%,0,0);
-    }
-}
-.navbar-on-right {
-    .left, .right, .center, .subnavbar, .fading {
-        opacity: 0;
-    }
-    .sliding {
-        opacity: 0;
-    }
-    .subnavbar.sliding {
-        .translate3d(100%,0,0);
-    }
-}
-@-webkit-keyframes navbarElementFadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-@keyframes navbarElementFadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-.navbar-from-right-to-center, .navbar-from-center-to-right, .navbar-from-center-to-left, .navbar-from-left-to-center {
-    .left.sliding .back.link .icon {
-        .transition(@toolbarDuration);
-    }
-    .sliding {
-        .transition(@toolbarDuration);
-        .animation(none);
-    }
-}
+// .navbar-from-right-to-center {
+//     .left, .right, .center, .subnavbar, .fading {
+//         .animation(navbarElementFadeIn @toolbarDuration forwards);
+//     }
+//     .sliding {
+//         opacity: 1;
+//     }
+//
+// }
+// .navbar-from-center-to-right {
+//     .left, .right, .center, .subnavbar, .fading {
+//         .animation(navbarElementFadeOut @toolbarDuration forwards);
+//     }
+//     .sliding {
+//         opacity: 0;
+//     }
+//     .subnavbar.sliding {
+//         opacity: 1;
+//     }
+// }
+// @-webkit-keyframes navbarElementFadeIn {
+//     from {
+//         opacity: 0;
+//     }
+//     to {
+//         opacity: 1;
+//     }
+// }
+// @keyframes navbarElementFadeIn {
+//     from {
+//         opacity: 0;
+//     }
+//     to {
+//         opacity: 1;
+//     }
+// }
+// .navbar-from-center-to-left {
+//     .left, .right, .center, .subnavbar, .fading {
+//         .animation(navbarElementFadeOut @toolbarDuration forwards);
+//     }
+//     .sliding {
+//         opacity: 0;
+//     }
+//     .subnavbar.sliding {
+//         opacity: 1;
+//     }
+// }
+// .navbar-from-left-to-center {
+//     .left, .right, .center, .subnavbar, .fading {
+//         .animation(navbarElementFadeIn @toolbarDuration forwards);
+//     }
+//     .sliding {
+//         opacity: 1;
+//     }
+// }
+// .navbar-on-left {
+//     .left, .right, .center, .subnavbar, .fading {
+//         opacity: 0;
+//     }
+//     .sliding {
+//         opacity: 0;
+//     }
+//     .subnavbar.sliding {
+//         opacity: 1;
+//         .translate3d(-100%,0,0);
+//     }
+// }
+// .navbar-on-right {
+//     .left, .right, .center, .subnavbar, .fading {
+//         opacity: 0;
+//     }
+//     .sliding {
+//         opacity: 0;
+//     }
+//     .subnavbar.sliding {
+//         .translate3d(100%,0,0);
+//     }
+// }
+// @-webkit-keyframes navbarElementFadeOut {
+//     from {
+//         opacity: 1;
+//     }
+//     to {
+//         opacity: 0;
+//     }
+// }
+// @keyframes navbarElementFadeOut {
+//     from {
+//         opacity: 1;
+//     }
+//     to {
+//         opacity: 0;
+//     }
+// }
+// .navbar-from-right-to-center, .navbar-from-center-to-right, .navbar-from-center-to-left, .navbar-from-left-to-center {
+//     .left.sliding .back.link .icon {
+//         .transition(@toolbarDuration);
+//     }
+//     .sliding {
+//         .transition(@toolbarDuration);
+//         .animation(none);
+//     }
+// }
