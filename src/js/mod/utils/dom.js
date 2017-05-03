@@ -806,7 +806,84 @@ const Dom7 = (function() {
 
 
 
-const $ = Dom7;
+var $ = Dom7;
+
+$.parseUrlQuery= function (url) {
+    url = url || location.href;
+    var query = {},i, params, param, length;
+    if (typeof url === 'string' && url.length)  {
+        url = url.indexOf('?')>-1 ? url.replace(/\S*\?/,'') : '';
+        params = url.split('&'), length = params.length;
+
+        for (i = 0; i < length; i++) {
+            param = params[i].replace(/#\S+/g,'').split('=');
+            query[decodeURIComponent(param[0])] = decodeURIComponent(param[1]) || '';
+        }
+    }
+
+    return query;
+};
+
+$.serializeObject = $.param = function (obj, parents) {
+    if (typeof obj === 'string') return obj;
+    var resultArray = [];
+    var separator = '&';
+    parents = parents || [];
+    var newParents;
+    function var_name(name) {
+        if (parents.length > 0) {
+            var _parents = '';
+            for (var j = 0; j < parents.length; j++) {
+                if (j === 0) _parents += parents[j];
+                else _parents += '[' + encodeURIComponent(parents[j]) + ']';
+            }
+            return _parents + '[' + encodeURIComponent(name) + ']';
+        }
+        else {
+            return encodeURIComponent(name);
+        }
+    }
+    function var_value(value) {
+        return encodeURIComponent(value);
+    }
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            var toPush;
+            if ($.isArray(obj[prop])) {
+                toPush = [];
+                for (var i = 0; i < obj[prop].length; i ++) {
+                    if (!$.isArray(obj[prop][i]) && typeof obj[prop][i] === 'object') {
+                        newParents = parents.slice();
+                        newParents.push(prop);
+                        newParents.push(i + '');
+                        toPush.push($.serializeObject(obj[prop][i], newParents));
+                    }
+                    else {
+                        toPush.push(var_name(prop) + '[]=' + var_value(obj[prop][i]));
+                    }
+
+                }
+                if (toPush.length > 0) resultArray.push(toPush.join(separator));
+            }
+            else if (obj[prop] === null) {
+                resultArray.push(var_name(prop) + '=');
+            }
+            else if (typeof obj[prop] === 'object') {
+                // Object, convert to named array
+                newParents = parents.slice();
+                newParents.push(prop);
+                toPush = $.serializeObject(obj[prop], newParents);
+                if (toPush !== '') resultArray.push(toPush);
+            }
+            else if (typeof obj[prop] !== 'undefined' && obj[prop] !== '') {
+                // Should be string or plain value
+                resultArray.push(var_name(prop) + '=' + var_value(obj[prop]));
+            }
+            else if (obj[prop] === '') resultArray.push(var_name(prop));
+        }
+    }
+    return resultArray.join(separator);
+};
 
 $.unique = function (arr) {
     var unique = [];
@@ -921,5 +998,114 @@ $.cancelAnimationFrame = function (id) {
     }
 };
 $.supportTouch = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
+
+
+
+// Plugins
+$.fn = Dom7.prototype;
+$.fn.scrollTo = function (left, top, duration, easing, callback) {
+    if (arguments.length === 4 && typeof easing === 'function') {
+        callback = easing;
+        easing = undefined;
+    }
+    return this.each(function () {
+        var el = this;
+        var currentTop, currentLeft, maxTop, maxLeft, newTop, newLeft, scrollTop, scrollLeft;
+        var animateTop = top > 0 || top === 0;
+        var animateLeft = left > 0 || left === 0;
+        if (typeof easing === 'undefined') {
+            easing = 'swing';
+        }
+        if (animateTop) {
+            currentTop = el.scrollTop;
+            if (!duration) {
+                el.scrollTop = top;
+            }
+        }
+        if (animateLeft) {
+            currentLeft = el.scrollLeft;
+            if (!duration) {
+                el.scrollLeft = left;
+            }
+        }
+        if (!duration) return;
+        if (animateTop) {
+            maxTop = el.scrollHeight - el.offsetHeight;
+            newTop = Math.max(Math.min(top, maxTop), 0);
+        }
+        if (animateLeft) {
+            maxLeft = el.scrollWidth - el.offsetWidth;
+            newLeft = Math.max(Math.min(left, maxLeft), 0);
+        }
+        var startTime = null;
+        if (animateTop && newTop === currentTop) animateTop = false;
+        if (animateLeft && newLeft === currentLeft) animateLeft = false;
+        function render(time) {
+            if (time === undefined) {
+                time = new Date().getTime();
+            }
+            if (startTime === null) {
+                startTime = time;
+            }
+            var done;
+            var progress = Math.max(Math.min((time - startTime) / duration, 1), 0);
+            var easeProgress = easing === 'linear' ? progress : (0.5 - Math.cos( progress * Math.PI ) / 2);
+            if (animateTop) scrollTop = currentTop + (easeProgress * (newTop - currentTop));
+            if (animateLeft) scrollLeft = currentLeft + (easeProgress * (newLeft - currentLeft));
+            if (animateTop && newTop > currentTop && scrollTop >= newTop)  {
+                el.scrollTop = newTop;
+                done = true;
+            }
+            if (animateTop && newTop < currentTop && scrollTop <= newTop)  {
+                el.scrollTop = newTop;
+                done = true;
+            }
+
+            if (animateLeft && newLeft > currentLeft && scrollLeft >= newLeft)  {
+                el.scrollLeft = newLeft;
+                done = true;
+            }
+            if (animateLeft && newLeft < currentLeft && scrollLeft <= newLeft)  {
+                el.scrollLeft = newLeft;
+                done = true;
+            }
+
+            if (done) {
+                if (callback) callback();
+                return;
+            }
+            if (animateTop) el.scrollTop = scrollTop;
+            if (animateLeft) el.scrollLeft = scrollLeft;
+            $.requestAnimationFrame(render);
+        }
+        $.requestAnimationFrame(render);
+    });
+};
+$.fn.scrollTop = function (top, duration, easing, callback) {
+    if (arguments.length === 3 && typeof easing === 'function') {
+        callback = easing;
+        easing = undefined;
+    }
+    var dom = this;
+    if (typeof top === 'undefined') {
+        if (dom.length > 0) return dom[0].scrollTop;
+        else return null;
+    }
+    return dom.scrollTo(undefined, top, duration, easing, callback);
+};
+$.fn.scrollLeft = function (left, duration, easing, callback) {
+    if (arguments.length === 3 && typeof easing === 'function') {
+        callback = easing;
+        easing = undefined;
+    }
+    var dom = this;
+    if (typeof left === 'undefined') {
+        if (dom.length > 0) return dom[0].scrollLeft;
+        else return null;
+    }
+    return dom.scrollTo(left, undefined, duration, easing, callback);
+};
+
+
 
 export default Dom7;

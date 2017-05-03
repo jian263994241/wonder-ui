@@ -22,6 +22,7 @@ export class ContentBlockTitle extends Component {
     return (
       <div
         className={cls}
+        ref="ContentBlockTitle"
         {...other}>
         {children}
       </div>
@@ -67,6 +68,7 @@ export class ContentBlock extends Component {
     return (
       <div
         className={cls}
+        ref="ContentBlock"
         {...other}>
         {innerElement}
       </div>

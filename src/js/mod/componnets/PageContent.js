@@ -22,10 +22,14 @@ export default class PageContent extends Component {
 
   componentDidMount() {
     const {pullToRefresh, onRefresh} = this.props;
-
+    this._mounted = true;
     if(pullToRefresh){
       initPullToRefresh(this.refs.wrapper, onRefresh);
     }
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
   }
 
   state = {
@@ -37,7 +41,6 @@ export default class PageContent extends Component {
   handleInfiniteScroll = (e)=>{
     const {onInfinite, pullToRefreshDistance, infiniteScrollPreloader} = this.props;
     if(!onInfinite) return ;
-
 
     let inf = $(e.target);
     let scrollTop = inf[0].scrollTop;
@@ -57,13 +60,15 @@ export default class PageContent extends Component {
     if (distance > height) distance = height;
 
     const done = ()=>{
-      this.setState({
-        showInfiniteScrollPreloader: false
-      },()=>{
-        setTimeout(()=>{
-          this.infiniteIgnore = false;
-        },100)
-      });
+      if(this._mounted){
+        this.setState({
+          showInfiniteScrollPreloader: false
+        },()=>{
+          setTimeout(()=>{
+            this.infiniteIgnore = false;
+          },100)
+        });
+      }
     };
 
     const showPreloader = ()=>{
@@ -73,8 +78,6 @@ export default class PageContent extends Component {
         });
       }
     };
-
-
 
     if (onTop) {
         if (scrollTop < distance) {
@@ -99,7 +102,7 @@ export default class PageContent extends Component {
         }
     }
 
-}
+  }
 
   render() {
 

@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-
+import device from '../utils/device'
+import $ from '../utils/dom'
+import Modals from './Modals'
 
 export default class Page extends Component {
 
@@ -22,7 +24,12 @@ export default class Page extends Component {
 
     if(title){
       document.title = title;
+      window.KQB && device.ios && KQB.native('setPageTitle', { title });
     }
+
+    Modals.closeModal('.modal-in');
+    Modals.hidePreloader();
+    Modals.hideIndicator();
   }
 
   render() {
@@ -37,10 +44,12 @@ export default class Page extends Component {
       ...other
     } = this.props;
 
-    const navbarFixedCss = navbarFixed ? 'navbar-fixed': '';
-    const toolbarFixedCss = toolbarFixed ? 'toolbar-fixed': '';
+
     const themeCss = theme? `theme-${theme}`: '';
-    let cls = classnames('page', navbarFixedCss, toolbarFixedCss, themeCss, className);
+    let cls = classnames('page', {
+      'navbar-fixed': navbarFixed,
+      'toolbar-fixed': toolbarFixed
+    } ,themeCss, className);
 
     let hasNavbar;
 
@@ -59,6 +68,7 @@ export default class Page extends Component {
       <div
         className={cls}
         data-title={title}
+        ref="Page"
         {...other}>
         {children}
       </div>

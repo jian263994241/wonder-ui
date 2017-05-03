@@ -1,184 +1,125 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {render} from 'react-dom'
 import classnames from 'classnames'
+import $ from '../utils/dom'
 
-const ModalButton = ({text, bold = true, onClick})=>{
-  bold = bold ? 'modal-button-bold' : '';
+import OverLay from './OverLay'
 
-  return (
-    <div className={`modal-button ${bold}`} onClick={onClick}>{text}</div>
-  );
-};
+export default class Modal extends Component {
 
+  static uiName = 'Modal';
 
-class Modal extends Component {
+  static defaultProps = {
+    show: true
+  }
 
-  constructor(props){
-    super(props);
-    this.state = {
-      show: false,
-      modalStyle: {}
+  state = {
+    modalShow: true
+  }
+
+  _modalTopFix = ()=>{
+    if(this.refs.Modal){
+      const Modal = $(this.refs.Modal);
+      Modal.show();
+      Modal.css({marginTop: - Math.round(Modal.outerHeight() / 2) + 'px' });
+      Modal.addClass('modal-in');
     }
   }
 
-  static uiName = 'Modal'
+  componentDidMount() {
+
+    const {
+      show
+    } = this.props;
+
+    this.setState({
+      modalShow: show
+    }, this._modalTopFix);
+
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      show
+    } = nextProps;
+    this.setState({
+      modalShow: show
+    });
+  }
+
+  render() {
+
+    const {
+      className,
+      children,
+      show,
+      ...other
+    } = this.props;
+
+    const {
+      modalShow
+    } = this.state;
+
+    const cls = classnames('modal', className);
+
+    let styles;
+
+
+    return (
+      <div className={cls} {...other} ref="Modal">{children}</div>
+    );
+  }
+}
+
+class Alert extends Component {
+
+  static uiName = "Alert"
+
+  static defaultProps = {
+    okText: '确定'
+  };
 
   static propTypes = {
     title: PropTypes.string,
     text: PropTypes.string,
     afterText: PropTypes.element,
-    verticalButtons: PropTypes.bool,
-    buttons: PropTypes.array,
+    okText: PropTypes.string,
+    callbackOk: PropTypes.func,
     className: PropTypes.string,
   }
 
-  static alert = (text, title, callback)=>{
+  render() {
 
-    if(typeof title === 'function') {
-      callback = arguments[1];
-      title = undefined;
-    }
-
-    const buttons = [
-      {
-        text: '确定',
-        bold: true,
-        onClick: (e)=>{
-          Modal.close();
-          callback && callback(e);
-        }
-      }
-    ]
-
-    Modal.open(<Modal title={title} text={text} buttons={buttons}/>);
-
-  }
-
-  static open = (Elem)=>{
-    const div = document.createElement('div');
-    render(Elem, div);
-    const overlays = div.querySelector('.overlays');
-    document.body.append(overlays);
-  }
-
-  static close = ()=>{
-    const overlays = document.querySelector('.overlays');
-
-    document.querySelector('.overlays').remove();
-  }
-
-  componentDidMount() {
-    setTimeout(()=>{
-      this.setState({
-        show: true,
-        modalStyle:{
-          marginTop: - this.refs.modal.clientHeight/2
-        }
-      })
-    }, 0);
-  }
-
-  render (){
     const {
       title,
       text,
       afterText,
-      buttons,
-      verticalButtons,
-      className,
-      style
+      okText,
+      show,
+      callbackOk,
+      children
     } = this.props;
 
-    const noButtonsCss = !buttons || buttons.length === 0 ? 'modal-no-buttons' : '';
-    const verticalButtonsCss = verticalButtons ? 'modal-buttons-vertical': '';
-    const showCss = 'modal-in';
-    const cssClass = classnames('modal', verticalButtonsCss, noButtonsCss, className);
-
-    let styles = Object.assign({display:'block'}, this.state.modalStyle, style);
-
-    let cls , buttonGroup;
-    if(this.state.show){
-      cls = classnames(cssClass, showCss);
-    }else{
-      cls = cssClass;
-    }
-
-    const createButtons = (item, index)=>(
-      <ModalButton text={item.text} bold={item.bold} onClick={item.onClick} key={`modal-button-${index}`}/>
-    )
-
-    if(noButtonsCss === 'modal-no-buttons'){
-      buttonGroup = null;
-    }else{
-      buttonGroup = (
-        <div className={`modal-buttons modal-buttons-${buttons.length}`}>
-          {buttons.map(createButtons)}
-        </div>
-      )
-    }
+    if(!show) return null;
 
     return (
-      <div className="overlays">
-        <div className="modal-overlay modal-overlay-visible"></div>
-        <div className={cls} style={styles} ref="modal">
+      <div className="modal-root" ref="Alert">
+        <OverLay></OverLay>
+        <Modal>
           <div className="modal-inner">
             <div className="modal-title">{title}</div>
             <div className="modal-text">{text}</div>
             {afterText}
           </div>
-          {buttonGroup}
-        </div>
+          <div className="modal-buttons modal-buttons-1">
+            <div className="modal-button modal-button-bold" onClick={callbackOk}>{okText}</div>
+          </div>
+        </Modal>
       </div>
-    )
-  }
-}
-
-
-class Alert extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      show: true
-    }
-  }
-
-  static uiName = 'Modal.Alert'
-
-  static propTypes = {
-    title: PropTypes.string,
-    text: PropTypes.string,
-    onClick: PropTypes.func
-  }
-
-  render() {
-    const {
-      title = '',
-      text,
-      onClick
-    } = this.props;
-
-    const buttons = [
-      {
-        text: '确定',
-        bold: true,
-        onClick: (e)=>{
-          this.setState({
-            show : false
-          },()=>{
-            onClick && onClick(e);
-          });
-        }
-      }
-    ]
-    if(!this.state.show){
-      return null;
-    }
-
-    return (
-      <Modal title={title} text={text} buttons={buttons}/>
     );
   }
 }
 
-export default Modal;
+
+
+Modal.Alert = Alert;

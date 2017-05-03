@@ -9,9 +9,9 @@ import {mounted} from '../utils/mix'
 import Icon from './Icon'
 
 
-class _Navbar extends Component {
+export class Navbar extends Component {
 
-  uiName = 'Navbar'
+  static uiName = 'Navbar'
 
   // static defaultProps = {
   //   theme: 'gray'
@@ -41,11 +41,11 @@ class _Navbar extends Component {
   }
 
   backHandler = ()=>{
-    const {history, onBackClick} = this.props;
+    const {onBackClick} = this.props;
     if(onBackClick){
       onBackClick();
     }else{
-      history.goBack();
+      history.back();
     }
   }
   render() {
@@ -92,7 +92,7 @@ class _Navbar extends Component {
 
 
     return (
-      <div className={cls} ref='navbar' {...other}>
+      <div className={cls} ref='navbar' {...other} ref="Navbar">
         <div className="navbar-inner">
           {navLeft}
           {navCenter}
@@ -104,20 +104,27 @@ class _Navbar extends Component {
   }
 }
 
-const Navbar = withRouter(_Navbar);
+export class SubNavBar extends Component {
 
-Navbar.uiName = 'Navbar';
+  static uiName = 'SubNavBar'
 
-const SubNavBar = (props)=>{
-  const {className, noBorder, ...other} = props;
-  const noborderCss = noBorder? 'no-border': '';
-  const cls = classnames('subnavbar', noborderCss, className);
-  return (
-    <div className={cls} {...other}></div>
-  );
-};
+  static propTypes = {
+    className: PropTypes.string,
+    noBorder: PropTypes.bool
+  }
 
-export {
-  Navbar,
-  SubNavBar
+  render() {
+    const {
+      className,
+      noBorder,
+      ...other
+    } = this.props;
+
+    const noborderCss = noBorder? 'no-border': '';
+    const cls = classnames('subnavbar', noborderCss, className);
+
+    return (
+      <div className={cls} {...other} ref="SubNavBar"></div>
+    );
+  }
 }

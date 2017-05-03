@@ -34,7 +34,7 @@ export class List extends Component {
     const {virtualItems} = this.props;
     let {virtualItemsIndex, virtualItemsShowLength} = this.state;
     if(virtualItems){
-      const listElem = this.listElem = $(this.refs.list);
+      const listElem = this.listElem = $(this.refs.List);
       const pageContent = this.pageContent = listElem.parent('.page-content');
       const windowHeight = $(window).height();
 
@@ -79,12 +79,16 @@ export class List extends Component {
       label,
       virtualItems,
       className,
-      style,
       children,
       ...other
     } = this.props;
 
-    const cls = classnames('list-block', (mediaList ? 'media-list': ''), (inset ? 'inset': ''), (tabletInset ? 'tablet-inset': ''), (accordion ? 'accordion-list': ''), className);
+    const cls = classnames('list-block', {
+      'media-list': mediaList,
+      'inset': inset,
+      'tablet-inset': tabletInset,
+      'accordion-list': accordion
+    }, className);
 
     const IndexClild = React.Children.toArray(children)[0];
 
@@ -119,7 +123,7 @@ export class List extends Component {
     }
 
     return (
-      <div className={cls} style={style} {...other} ref="list">
+      <div className={cls} {...other} ref="List">
         {childrenWrap}
         {blockLabel}
       </div>
@@ -139,7 +143,6 @@ export class ListGroup extends Component {
   static uiName = 'ListGroup'
 
   static propTypes = {
-    style: PropTypes.object,
     className: PropTypes.string,
     title: React.PropTypes.string.isRequired
   }
@@ -148,13 +151,12 @@ export class ListGroup extends Component {
     const {
       title,
       className,
-      style,
       children,
       ...other
     } = this.props;
 
     return (
-      <ul className={className} style={style} {...other}>
+      <ul className={className} ref="ListGroup" {...other}>
         <li className="list-group-title">{title}</li>
         {children}
       </ul>
@@ -236,7 +238,6 @@ export class ListItem extends Component {
       value,
       name,
       className,
-      style,
       children,
       ...other
     } = this.props;
@@ -285,7 +286,7 @@ export class ListItem extends Component {
     };
 
     const mediaItem = ()=>{
-      const itemCss = classnames('item-content', (link?'item-link':''));
+      const itemCss = classnames('item-content', {'item-link': link});
       return (
         <Div className={itemCss} to={to}>
           {itemMeida}
@@ -303,7 +304,7 @@ export class ListItem extends Component {
     );
 
     const accordionItem = ()=>{
-      const itemCss = classnames('accordion-item', (this.state.expanded?'accordion-item-expanded':''));
+      const itemCss = classnames('accordion-item', {'accordion-item-expanded': this.state.expanded});
       const accordionHandler = ()=>{
         const {expanded} = this.state;
         if(expanded){
@@ -419,7 +420,7 @@ export class ListItem extends Component {
     }
 
     return (
-      <li className={className} style={style} {...other}>
+      <li className={className} {...other} ref="ListItem">
         {content}
       </li>
     )
@@ -450,7 +451,7 @@ export class ListLabel extends Component {
     const cls = classnames('list-block-label', className);
 
     return (
-      <div className={cls}>{children}</div>
+      <div className={cls} {...other} ref="ListLabel">{children}</div>
     );
   }
 }

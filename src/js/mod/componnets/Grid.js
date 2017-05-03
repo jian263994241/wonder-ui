@@ -24,7 +24,7 @@ export class Row extends Component {
     const cls = classnames('row', noGutterCss, className);
 
     return (
-      <div className={cls} {...other}>{children}</div>
+      <div className={cls} {...other} ref="Row">{children}</div>
     );
   }
 
@@ -50,9 +50,9 @@ export class Col extends Component {
 
     const tabletCss = tabletWidth ? `tablet-${tabletWidth}` : '';
     const cls = classnames(`col-${width}`, tabletCss);
-    
+
     return (
-      <div className={cls} {...other}>{children}</div>
+      <div className={cls} {...other} ref="Col">{children}</div>
     );
   }
 

@@ -4,6 +4,8 @@ export PageContent from './mod/componnets/PageContent'
 export * as Bars from './mod/componnets/Bars'
 export * as Block from './mod/componnets/Block'
 export Modals from './mod/componnets/Modals'
+export Popover from './mod/componnets/Popover'
+
 export * as ListView from './mod/componnets/ListView'
 export SwipeableViews from './mod/componnets/SwipeableViews'
 export * as Form from './mod/componnets/Form'

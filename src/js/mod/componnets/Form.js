@@ -7,14 +7,12 @@ export class FormLabel extends Component {
   static uiName = 'FormLabel'
 
   static propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object,
+    className: PropTypes.string
   }
 
   render() {
     const {
       className,
-      style,
       children,
       ...other
     } = this.props;
@@ -22,7 +20,7 @@ export class FormLabel extends Component {
     const cls = classnames('item-title', 'label', className)
 
     return (
-      <div className={cls} {...other} style={style}>
+      <div className={cls} {...other} ref="FormLabel">
         {children}
       </div>
     );
@@ -60,7 +58,7 @@ export class FormInput extends Component {
     };
 
     return (
-      <div className="item-input">
+      <div className="item-input" ref="FormInput">
         <Input {...this.props}/>
       </div>
     );
@@ -87,7 +85,7 @@ export class Switch extends Component {
 
     const cls = classnames('label-switch', className);
     return (
-      <label className={cls} style={style}>
+      <label className={cls} style={style} ref="Switch">
         <input type="checkbox" {...other} defaultChecked={checked}/>
         <div className="checkbox"></div>
       </label>
@@ -107,7 +105,7 @@ export class Range extends Component {
     } = this.props;
 
     return (
-      <div className="range-slider">
+      <div className="range-slider" ref="Range">
         <input {...other} defaultValue={value}/>
       </div>
     );

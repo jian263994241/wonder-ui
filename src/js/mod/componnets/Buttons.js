@@ -41,7 +41,7 @@ export class Button extends Component {
     const cls = classnames('button', buttonFill, buttonRound, buttonBig, buttonColor, buttonActive, tabLinkCss);
 
     return (
-      <div className={cls} disabled={disabled} {...other}>{children}</div>
+      <div className={cls} disabled={disabled} {...other} ref="Button">{children}</div>
     );
   }
 }
@@ -81,7 +81,7 @@ export class ButtonsSegmented extends Component {
     })
 
     return (
-      <div className={cls} {...other}> {childrenTransfrom} </div>
+      <div className={cls} {...other} ref="ButtonsSegmented"> {childrenTransfrom} </div>
     );
   }
 }

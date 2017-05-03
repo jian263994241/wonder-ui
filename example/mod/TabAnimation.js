@@ -37,7 +37,7 @@ export default class TabPage extends Component {
 
   handleChangeIndex = (index) => {
     this.setState({
-      index,
+      index
     });
   };
 
