@@ -1,4 +1,11 @@
 
+import initReactFastclick from 'react-fastclick'
+//fast click
+initReactFastclick();
+
+//export
+export App from './mod/componnets/App'
+export Pages from './mod/componnets/Pages'
 export Page from './mod/componnets/Page'
 export PageContent from './mod/componnets/PageContent'
 export * as Bars from './mod/componnets/Bars'

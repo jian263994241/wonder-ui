@@ -44,14 +44,13 @@ export default class Page extends Component {
       ...other
     } = this.props;
 
-
     const themeCss = theme? `theme-${theme}`: '';
     let cls = classnames('page', {
       'navbar-fixed': navbarFixed,
       'toolbar-fixed': toolbarFixed
     } ,themeCss, className);
 
-    let hasNavbar;
+    let hasNavbar = false;
 
     React.Children.forEach(children, (child, index)=>{
       const uiName = child.type.uiName;

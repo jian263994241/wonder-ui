@@ -60,10 +60,6 @@ export class Navbar extends Component {
       right,
       className,
       children,
-      history,
-      match,
-      location,
-      staticContext,
       ...other
     } = this.props;
 
@@ -103,6 +99,9 @@ export class Navbar extends Component {
     );
   }
 }
+
+
+
 
 export class SubNavBar extends Component {
 

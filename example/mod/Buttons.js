@@ -10,6 +10,7 @@ const {SubNavBar, Navbar} = Bars;
 
 export default class ButtonsPage extends Component {
   render() {
+    
     return (
       <Page title="按钮">
         <Navbar title="按钮" back/>

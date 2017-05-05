@@ -14,7 +14,7 @@ export default class OverLay extends Component {
   static defaultProps = {
     show: true
   }
-  
+
   state = {
     show: true
   }
@@ -37,10 +37,12 @@ export default class OverLay extends Component {
       show
     } = this.state;
 
-    const cls = classnames('modal-overlay');
+    const preventScrolling = e =>{
+      e.preventDefault();
+    }
 
     return (
-      <div className={cls} ref="OverLay"></div>
+      <div className="modal-overlay" ref="OverLay" onTouchMove={preventScrolling}></div>
     );
   }
 }

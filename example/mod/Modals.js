@@ -37,7 +37,8 @@ export default class ModalsPage extends Component {
               </ContentBlock>
             </PageContent>
           </Page>
-        </div>    
+        </div>
+
       )
     )
   }
