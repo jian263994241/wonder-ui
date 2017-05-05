@@ -32,25 +32,20 @@ app.device = device;
 app.modal = function (params) {
     params = params || {};
     var modalHTML = '';
-    if (app.params.modalTemplate) {
-        if (!app._compiledTemplates.modal) app._compiledTemplates.modal = t7.compile(app.params.modalTemplate);
-        modalHTML = app._compiledTemplates.modal(params);
-    }
-    else {
-        var buttonsHTML = '';
-        if (params.buttons && params.buttons.length > 0) {
-            for (var i = 0; i < params.buttons.length; i++) {
-                buttonsHTML += '<span class="modal-button' + (params.buttons[i].bold ? ' modal-button-bold' : '') + '">' + params.buttons[i].text + '</span>';
-            }
+
+    var buttonsHTML = '';
+    if (params.buttons && params.buttons.length > 0) {
+        for (var i = 0; i < params.buttons.length; i++) {
+            buttonsHTML += '<span class="modal-button' + (params.buttons[i].bold ? ' modal-button-bold' : '') + '">' + params.buttons[i].text + '</span>';
         }
-        var titleHTML = params.title ? '<div class="modal-title">' + params.title + '</div>' : '';
-        var textHTML = params.text ? '<div class="modal-text">' + params.text + '</div>' : '';
-        var afterTextHTML = params.afterText ? params.afterText : '';
-        var noButtons = !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '';
-        var verticalButtons = params.verticalButtons ? 'modal-buttons-vertical': '';
-        var modalButtonsHTML = params.buttons && params.buttons.length > 0 ? '<div class="modal-buttons modal-buttons-' + params.buttons.length + ' ' + verticalButtons + '">' + buttonsHTML + '</div>' : '';
-        modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div>' + modalButtonsHTML + '</div>';
     }
+    var titleHTML = params.title ? '<div class="modal-title">' + params.title + '</div>' : '';
+    var textHTML = params.text ? '<div class="modal-text">' + params.text + '</div>' : '';
+    var afterTextHTML = params.afterText ? params.afterText : '';
+    var noButtons = !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '';
+    var verticalButtons = params.verticalButtons ? 'modal-buttons-vertical': '';
+    var modalButtonsHTML = params.buttons && params.buttons.length > 0 ? '<div class="modal-buttons modal-buttons-' + params.buttons.length + ' ' + verticalButtons + '">' + buttonsHTML + '</div>' : '';
+    modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div>' + modalButtonsHTML + '</div>';
 
     _modalTemplateTempDiv.innerHTML = modalHTML;
 

@@ -30,9 +30,12 @@ fis.match('example/app.js',{
       shims:{
         'react': 'window.React',
         'react-dom': 'window.ReactDOM',
-        // 'react-router-dom': 'window.ReactRouterDOM',
         'kui': 'window.UIKIT'
       }
     }
   })
+})
+
+fis.match('*', {
+  domain: 'http://192.168.47.179/docs/ui'
 })
