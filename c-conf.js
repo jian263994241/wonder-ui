@@ -10,12 +10,6 @@ fis.match('src/js/kui.js',{
   })
 })
 
-// fis.match('src/less/kui.less',{
-//   parser: fis.plugin('css'),
-//   isInline: false,
-//   rExt: '.css'
-// })
-
 fis.match('src/less/ios/uikit.less',{
   parser: fis.plugin('css'),
   isInline: false,
@@ -36,6 +30,6 @@ fis.match('example/app.js',{
   })
 })
 
-fis.match('*', {
+fis.media('prod2').match('*', {
   domain: 'http://192.168.47.179/docs/ui'
 })

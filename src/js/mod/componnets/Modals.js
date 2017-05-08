@@ -376,7 +376,7 @@ app.popover = function (modal, target, removeOnClose, animated) {
     $(window).on('resize', sizePopover);
 
     modal.on('popover:close', function () {
-        $(window).off('resize', sizePopover);
+      $(window).off('resize', sizePopover);
     });
 
     app.openModal(modal, animated);
@@ -384,29 +384,29 @@ app.popover = function (modal, target, removeOnClose, animated) {
 };
 
 
-app.popup = function (modal, removeOnClose, animated) {
-    if (typeof removeOnClose === 'undefined') removeOnClose = true;
-    if (typeof animated === 'undefined') animated = true;
-    if (!React.isValidElement(modal)) return false;
-    var _modal = document.createElement('div');
-    ReactDOM.render(modal, _modal);
-    if (_modal.childNodes.length > 0) {
-        modal = _modal.childNodes[0];
-        if (removeOnClose) modal.classList.add('remove-on-close');
-        app.root.append(modal);
-    }
-
-    modal = $(modal);
-    if (modal.length === 0) return false;
-    if (modal.parents('body').length === 0) {
-        if (removeOnClose) modal.addClass('remove-on-close');
-        app.root.append(modal[0]);
-    }
-    modal.show();
-    $(window).trigger('resize');
-    app.openModal(modal, animated);
-    return modal[0];
-};
+// app.popup = function (modal, removeOnClose, animated) {
+//     if (typeof removeOnClose === 'undefined') removeOnClose = true;
+//     if (typeof animated === 'undefined') animated = true;
+//     if (!React.isValidElement(modal)) return false;
+//     var _modal = document.createElement('div');
+//     ReactDOM.render(modal, _modal);
+//     if (_modal.childNodes.length > 0) {
+//         modal = _modal.childNodes[0];
+//         if (removeOnClose) modal.classList.add('remove-on-close');
+//         app.root.append(modal);
+//     }
+//
+//     modal = $(modal);
+//     if (modal.length === 0) return false;
+//     if (modal.parents('body').length === 0) {
+//         if (removeOnClose) modal.addClass('remove-on-close');
+//         app.root.append(modal[0]);
+//     }
+//     modal.show();
+//     $(window).trigger('resize');
+//     app.openModal(modal, animated);
+//     return modal[0];
+// };
 
 app.pickerModal = function (modal, removeOnClose, animated) {
     if (typeof removeOnClose === 'undefined') removeOnClose = true;
@@ -538,6 +538,7 @@ app.openModal = function (modal, animated) {
 
     return true;
 };
+
 app.closeModal = function (modal, animated) {
     if (typeof animated === 'undefined') animated = true;
     modal = $(modal || '.modal-in');
@@ -591,37 +592,19 @@ app.closeModal = function (modal, animated) {
         $('body').addClass('picker-modal-closing');
     }
 
-    if (!(isPopover && !app.params.material)) {
-        if (animated) {
-            modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
-                if (modal.hasClass('modal-out')) modal.trigger('closed ' + modalType + ':closed');
-                else {
-                    modal.trigger('opened ' + modalType + ':opened');
-                    if (isPopover) return;
-                }
+    if (animated) {
+        modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
+            if (modal.hasClass('modal-out')) modal.trigger('closed ' + modalType + ':closed');
+            else {
+                modal.trigger('opened ' + modalType + ':opened');
+                if (isPopover) return;
+            }
 
-                if (isPickerModal) {
-                    $('body').removeClass('picker-modal-closing');
-                }
-                if (isPopup || isLoginScreen || isPickerModal || isPopover) {
-                    modal.removeClass('modal-out').hide();
-                    if (removeOnClose && modal.length > 0) {
-                        modal.remove();
-                    }
-                }
-                else if (!keepOnClose) {
-                    modal.remove();
-                }
-            });
-        }
-        else {
-            modal.trigger('closed ' + modalType + ':closed');
-            modal.removeClass('modal-in modal-out');
             if (isPickerModal) {
                 $('body').removeClass('picker-modal-closing');
             }
             if (isPopup || isLoginScreen || isPickerModal || isPopover) {
-                modal.hide();
+                modal.removeClass('modal-out').hide();
                 if (removeOnClose && modal.length > 0) {
                     modal.remove();
                 }
@@ -629,17 +612,28 @@ app.closeModal = function (modal, animated) {
             else if (!keepOnClose) {
                 modal.remove();
             }
-        }
-        if (isModal && app.params.modalStack) {
-            app.modalStackClearQueue();
-        }
+        });
     }
     else {
-        modal.removeClass('modal-in modal-out not-animated').trigger('closed ' + modalType + ':closed').hide();
-        if (removeOnClose) {
+        modal.trigger('closed ' + modalType + ':closed');
+        modal.removeClass('modal-in modal-out');
+        if (isPickerModal) {
+            $('body').removeClass('picker-modal-closing');
+        }
+        if (isPopup || isLoginScreen || isPickerModal || isPopover) {
+            modal.hide();
+            if (removeOnClose && modal.length > 0) {
+                modal.remove();
+            }
+        }
+        else if (!keepOnClose) {
             modal.remove();
         }
     }
+    if (isModal && app.params.modalStack) {
+        app.modalStackClearQueue();
+    }
+
     return true;
 };
 
@@ -649,50 +643,50 @@ const touchEvents = {
     end: support.touch ? 'touchend' : 'mouseup'
 };
 
-$(document).on(touchEvents.start, 'a, .panel-overlay, .modal-overlay, .popup-overlay, .close-popup, .close-picker, .picker-modal-overlay', handleClicks);
+// $(document).on(touchEvents.start, '.modal-overlay, .popup-overlay, .picker-modal-overlay', handleClicks);
 
 function handleClicks(e) {
   /*jshint validthis:true */
   var clicked = $(this);
-  var url = clicked.attr('href');
-  var isLink = clicked[0].nodeName.toLowerCase() === 'a';
+  // var url = clicked.attr('href');
+  // var isLink = clicked[0].nodeName.toLowerCase() === 'a';
 
   // Collect Clicked data- attributes
-  var clickedData = clicked.dataset();
+  // var clickedData = clicked.dataset();
 
   // Smart Select
-  if (clicked.hasClass('smart-select')) {
-      if (app.smartSelectOpen) app.smartSelectOpen(clicked);
-  }
+  // if (clicked.hasClass('smart-select')) {
+  //     if (app.smartSelectOpen) app.smartSelectOpen(clicked);
+  // }
 
   // Popover
-  if (clicked.hasClass('open-popover')) {
-      var popover;
-      if (clickedData.popover) {
-          popover = clickedData.popover;
-      }
-      else popover = '.popover';
-      app.popover(popover, clicked);
-  }
-  if (clicked.hasClass('close-popover')) {
-      app.closeModal('.popover.modal-in');
-  }
+  // if (clicked.hasClass('open-popover')) {
+  //     var popover;
+  //     if (clickedData.popover) {
+  //         popover = clickedData.popover;
+  //     }
+  //     else popover = '.popover';
+  //     app.popover(popover, clicked);
+  // }
+  // if (clicked.hasClass('close-popover')) {
+  //     app.closeModal('.popover.modal-in');
+  // }
   // Popup
-  var popup;
-  if (clicked.hasClass('open-popup')) {
-      if (clickedData.popup) {
-          popup = clickedData.popup;
-      }
-      else popup = '.popup';
-      app.popup(popup);
-  }
-  if (clicked.hasClass('close-popup')) {
-      if (clickedData.popup) {
-          popup = clickedData.popup;
-      }
-      else popup = '.popup.modal-in';
-      app.closeModal(popup);
-  }
+  // var popup;
+  // if (clicked.hasClass('open-popup')) {
+  //     if (clickedData.popup) {
+  //         popup = clickedData.popup;
+  //     }
+  //     else popup = '.popup';
+  //     app.popup(popup);
+  // }
+  // if (clicked.hasClass('close-popup')) {
+  //     if (clickedData.popup) {
+  //         popup = clickedData.popup;
+  //     }
+  //     else popup = '.popup.modal-in';
+  //     app.closeModal(popup);
+  // }
 
   // Close Modal
   if (clicked.hasClass('modal-overlay')) {
@@ -713,29 +707,29 @@ function handleClicks(e) {
   }
 
   // Picker
-  if (clicked.hasClass('close-picker')) {
-      var pickerToClose = $('.picker-modal.modal-in');
-      if (pickerToClose.length > 0) {
-          app.closeModal(pickerToClose);
-      }
-      else {
-          pickerToClose = $('.popover.modal-in .picker-modal');
-          if (pickerToClose.length > 0) {
-              app.closeModal(pickerToClose.parents('.popover'));
-          }
-      }
-  }
-  if (clicked.hasClass('open-picker')) {
-      var pickerToOpen;
-      if (clickedData.picker) {
-          pickerToOpen = clickedData.picker;
-      }
-      else pickerToOpen = '.picker-modal';
-      app.pickerModal(pickerToOpen, clicked);
-  }
+  // if (clicked.hasClass('close-picker')) {
+  //     var pickerToClose = $('.picker-modal.modal-in');
+  //     if (pickerToClose.length > 0) {
+  //         app.closeModal(pickerToClose);
+  //     }
+  //     else {
+  //         pickerToClose = $('.popover.modal-in .picker-modal');
+  //         if (pickerToClose.length > 0) {
+  //             app.closeModal(pickerToClose.parents('.popover'));
+  //         }
+  //     }
+  // }
+  // if (clicked.hasClass('open-picker')) {
+  //     var pickerToOpen;
+  //     if (clickedData.picker) {
+  //         pickerToOpen = clickedData.picker;
+  //     }
+  //     else pickerToOpen = '.picker-modal';
+  //     app.pickerModal(pickerToOpen, clicked);
+  // }
 
 }
-
+//
 function preventScrolling(e) {
   e.preventDefault();
 }

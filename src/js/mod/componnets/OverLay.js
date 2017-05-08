@@ -8,41 +8,44 @@ export default class OverLay extends Component {
   static uiName = 'OverLay';
 
   static propTypes = {
-    show: PropTypes.bool
+    opened: PropTypes.bool,
+    className: PropTypes.string
   }
 
   static defaultProps = {
-    show: true
+    opened: false
   }
 
   state = {
-    show: true
+    opened: false
   }
 
   componentDidMount() {
-    const {show} = this.props;
-    this.setState({show}, ()=>{
-      $(this.refs.OverLay).addClass('modal-overlay-visible');
-    });
+    const {opened} = this.props;
+    this.setState({opened});
   }
 
   componentWillReceiveProps(nextProps) {
-    const {show} = nextProps;
-    this.setState({show});
+    const {opened} = nextProps;
+    this.setState({opened});
   }
 
   render() {
 
     const {
-      show
-    } = this.state;
+      opened,
+      onTouchMove,
+      className,
+      ...other
+    } = this.props;
 
     const preventScrolling = e =>{
-      e.preventDefault();
+      // e.preventDefault();
     }
+    const cls = classnames('modal-overlay', {'modal-overlay-visible': this.state.opened}, className)
 
     return (
-      <div className="modal-overlay" ref="OverLay" onTouchMove={preventScrolling}></div>
+      <div className={cls} ref="OverLay" onTouchMove={preventScrolling} {...other}></div>
     );
   }
 }

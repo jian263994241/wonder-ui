@@ -360,6 +360,15 @@ input.modal-text-input {
         }
         opacity: 1;
     }
+
+    &.modal-out {
+        .transition(@actionsModalDuration);
+        &.not-animated {
+            .transition(0ms);
+        }
+        opacity: 0;
+    }
+
     .list-block {
         margin: 0;
         ul {

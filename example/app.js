@@ -26,33 +26,28 @@ import InfiniteScroll from './mod/InfiniteScroll'
 
 const {Route, Link} = RouterDOM;
 
-
-const MyApp = ()=>(
-    <App type="hash">
-      <Pages>
-        <Route exact path="/" component={IndexPage}/>
-        <Route path="/swipeable" component={Swipeable}/>
-        <Route path="/ListView" component={ListView}/>
-        <Route path="/MediaLists" component={MediaLists}/>
-        <Route path="/AccordionList" component={AccordionList}/>
-        <Route path="/VirtualList" component={VirtualList}/>
-        <Route path="/Formelements" component={Formelements}/>
-        <Route path="/CheckboxesRadios" component={CheckboxesRadios}/>
-        <Route path="/Buttons" component={Buttons}/>
-        <Route path="/Grid" component={Grid}/>
-        <Route path="/Icons" component={Icons}/>
-        <Route path="/LazyLoad" component={LazyLoad}/>
-        <Route path="/Tab" component={Tab}/>
-        <Route path="/Tab-Animation" component={TabAnimation}/>
-        <Route path="/Tab-Static" component={TabStatic}/>
-        <Route path="/PullToRefresh" component={PullToRefresh}/>
-        <Route path="/Modals" component={Modals}/>
-        <Route path="/Modals/Preloader" component={Preloader}/>
-        <Route path="/InfiniteScroll" component={InfiniteScroll}/>
-      </Pages>
-    </App>
-);
-
-
-
-render(<MyApp/>, document.querySelector('.root'));
+render((
+  <App type="hash">
+    <Pages>
+      <Route exact path="/" component={IndexPage}/>
+      <Route path="/swipeable" component={Swipeable}/>
+      <Route path="/ListView" component={ListView}/>
+      <Route path="/MediaLists" component={MediaLists}/>
+      <Route path="/AccordionList" component={AccordionList}/>
+      <Route path="/VirtualList" component={VirtualList}/>
+      <Route path="/Formelements" component={Formelements}/>
+      <Route path="/CheckboxesRadios" component={CheckboxesRadios}/>
+      <Route path="/Buttons" component={Buttons}/>
+      <Route path="/Grid" component={Grid}/>
+      <Route path="/Icons" component={Icons}/>
+      <Route path="/LazyLoad" component={LazyLoad}/>
+      <Route path="/Tab" component={Tab}/>
+      <Route path="/Tab-Animation" component={TabAnimation}/>
+      <Route path="/Tab-Static" component={TabStatic}/>
+      <Route path="/PullToRefresh" component={PullToRefresh}/>
+      <Route path="/Modals" component={Modals}/>
+      <Route path="/Modals/Preloader" component={Preloader}/>
+      <Route path="/InfiniteScroll" component={InfiniteScroll}/>
+    </Pages>
+  </App>
+), document.querySelector('.root'));

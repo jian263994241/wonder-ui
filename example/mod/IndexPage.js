@@ -5,6 +5,21 @@ import {Page, PageContent, ListView, Block} from 'kui'
 const {List, ListItem, ListGroup} = ListView;
 const {ContentBlock, ContentBlockTitle} = Block;
 
+// <ListItem title="导航" divider/>
+// <ListItem title="导航栏 NavigationBar"/>
+// <ListItem title="工具栏 ToolBar"/>
+// <ListItem title="标签栏 TabBar"/>
+// <ListItem title="搜索栏 SearchBar"/>
+// <ListItem title="气泡 Popup"/>
+//
+// <ListItem title="操作" divider/>
+//
+// <ListItem title="表单组合(Form)-日期选择、性别、开关"/>
+// <ListItem title="图片选择(ImagePicker)"/>
+// <ListItem title="筛选器(Filter"/>
+// <ListItem title="键盘(Keyboard）"/>
+// <ListItem title="输入(Input)"/>
+// <ListItem title="操作表(ActionSheet)"/>
 
 export default class IndexPage extends Component {
 
@@ -22,8 +37,8 @@ export default class IndexPage extends Component {
           </ContentBlock>
           <List>
             <ListItem title="基础" divider/>
-            <ListItem title="栅格" link to="/Grid"/>
-            <ListItem title="图片滑块" link to="/swipeable"/>
+            <ListItem title="九宫格" link to="/Grid"/>
+            <ListItem title="图片轮播" link to="/swipeable"/>
             <ListItem title="图标" link to="/Icons"/>
             <ListItem title="懒加载" link to="/LazyLoad"/>
             <ListItem title="标签切换" link to="/Tab"/>

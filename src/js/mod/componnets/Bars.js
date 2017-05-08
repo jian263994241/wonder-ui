@@ -23,7 +23,7 @@ export class Navbar extends Component {
     theme: PropTypes.string,
     back: PropTypes.bool,
     backText: PropTypes.string,
-    onBackClick: PropTypes.func,
+    onBack: PropTypes.func,
     center: PropTypes.element,
     left: PropTypes.element,
     right: PropTypes.element
@@ -41,9 +41,9 @@ export class Navbar extends Component {
   }
 
   backHandler = ()=>{
-    const {onBackClick} = this.props;
-    if(onBackClick){
-      onBackClick();
+    const {onBack} = this.props;
+    if(onBack){
+      onBack();
     }else{
       history.back();
     }
@@ -55,6 +55,7 @@ export class Navbar extends Component {
       title,
       back,
       backText,
+      onBack,
       center,
       left,
       right,

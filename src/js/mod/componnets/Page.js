@@ -27,9 +27,9 @@ export default class Page extends Component {
       window.KQB && device.ios && KQB.native('setPageTitle', { title });
     }
 
-    Modals.closeModal('.modal-in');
-    Modals.hidePreloader();
-    Modals.hideIndicator();
+    // Modals.closeModal('.modal-in');
+    // Modals.hidePreloader();
+    // Modals.hideIndicator();
   }
 
   render() {
@@ -53,6 +53,7 @@ export default class Page extends Component {
     let hasNavbar = false;
 
     React.Children.forEach(children, (child, index)=>{
+      if(!child.type) return ;
       const uiName = child.type.uiName;
       if(uiName === 'Navbar'){
         hasNavbar = true;
