@@ -14,7 +14,7 @@ export default class Icon extends Component {
     const {
       type
     } = this.props;
-
+    
     return (
       <span className={`icon icon-${type}`} ref="Icon"></span>
     );

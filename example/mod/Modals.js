@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, Buttons, Block, Bars, Grid, Modals, Popover, Popup} from 'kui'
+import {Page, PageContent, Buttons, Block, Bars, Grid, Modals, Popover, Popup, Dialog} from 'kui'
 
 
 const {ContentBlock, ContentBlockTitle} = Block;
@@ -8,31 +8,32 @@ const {Button} = Buttons;
 const {Row,Col} = Grid;
 const {SubNavBar, Navbar} = Bars;
 
+
 export default class ModalsPage extends Component {
 
   state = {
     openPopupOpened: false
   }
 
-  _popup = ()=>{
+  popup = ()=>{
     this.setState({openPopupOpened:true});
   }
 
   render() {
     return (
-      <Page>
+      <Page title="模态框">
         <Navbar title="Modals" back/>
         <PageContent>
           <ContentBlock>
             <Row>
               <Col width="33">
-                <Button onClick={()=>{Modals.alert('Hello Word!')}}>Alert</Button>
+                <Button onClick={()=>Dialog.alert('Hello Word!', ()=>console.log('alert'))}>Alert</Button>
               </Col>
               <Col width="33">
-                <Button onClick={()=>Modals.confirm('Confirm')}>Confirm</Button>
+                <Button onClick={()=>Dialog.confirm('Confirm', ()=>console.log('Confirm: 确定'), ()=>console.log('Confirm: 取消'))}>Confirm</Button>
               </Col>
               <Col width="33">
-                <Button onClick={()=>Modals.prompt('Prompt')}>Prompt</Button>
+                <Button onClick={()=>Dialog.prompt('Prompt', (val)=>console.log('Prompt: 确定', val), ()=>console.log('Prompt: 取消'))}>Prompt</Button>
               </Col>
 
             </Row>
@@ -55,18 +56,13 @@ export default class ModalsPage extends Component {
                 </Popover>
               </Col>
               <Col width="33">
-                <Popover style={{width: 200}} component={<Button>Popover 3</Button>}>
-                  <div className="content-block">
-                    <p>About Popover created dynamically.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
-                  </div>
-                </Popover>
+                <Button onClick={()=>Dialog.toast('Toast')}>Toast</Button>
               </Col>
             </Row>
             <br/>
             <Row>
               <Col width="50">
-                <Button onClick={this._popup}>Popup</Button>
+                <Button onClick={this.popup}>Popup</Button>
               </Col>
             </Row>
 

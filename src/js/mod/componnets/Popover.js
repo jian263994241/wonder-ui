@@ -3,14 +3,9 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import $ from '../utils/dom'
-
-import Modals from './Modals'
+import {mountedOutside} from '../utils/mix'
 
 import Modal from './Modal'
-import OverLay from './OverLay'
-
-
-const ModalRoot = '.page';
 
 class PopoverModal extends Component {
   static uiName = 'PopoverModal';
@@ -125,7 +120,7 @@ class PopoverModal extends Component {
   }
 
   componentDidMount() {
-    this.root = ReactDOM.findDOMNode(this.refs.PopoverModal);
+    this.root = this.refs.PopoverModal.refs.Root;
     $(window).on('resize', this.resize);
   }
 
@@ -189,13 +184,8 @@ export default class Popover extends Component {
       <PopoverModal target={PopoverLink} {...other}> {children} </PopoverModal>
     );
 
-    const root = $(ModalRoot);
 
-    const _modal = document.createElement('div');
-
-    const rendered = ReactDOM.render(popover, _modal);
-
-    root.append(_modal.childNodes[0]);
+    const rendered = mountedOutside(popover);
 
     rendered.open();
   }

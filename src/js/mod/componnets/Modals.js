@@ -65,96 +65,96 @@ app.modal = function (params) {
     return modal[0];
 };
 
-app.toast = function(text, timer, callbackOk) {
-  if (typeof timer === 'function' || typeof timer === 'undefined') {
-    callbackOk = arguments[1];
-    timer = 2000;
-  }
-  var toast =  app.modal({
-    text: text || '',
-    cssClass: 'toast'
-  });
+// app.toast = function(text, timer, callbackOk) {
+//   if (typeof timer === 'function' || typeof timer === 'undefined') {
+//     callbackOk = arguments[1];
+//     timer = 2000;
+//   }
+//   var toast =  app.modal({
+//     text: text || '',
+//     cssClass: 'toast'
+//   });
+//
+//   setTimeout(function(){
+//     app.closeModal(toast);
+//     callbackOk && callbackOk();
+//   }, timer);
+// };
 
-  setTimeout(function(){
-    app.closeModal(toast);
-    callbackOk && callbackOk();
-  }, timer);
-};
+// app.alert = function(text, title, callbackOk) {
+//   if (typeof title === 'function') {
+//     callbackOk = arguments[1];
+//     title = undefined;
+//   }
+//   return app.modal({
+//     text: text || '',
+//     title: typeof title === 'undefined' ? app.params.modalTitle : title,
+//     buttons: [ {text: app.params.modalButtonOk, bold: true, onClick: callbackOk} ]
+//   });
+// };
 
-app.alert = function(text, title, callbackOk) {
-  if (typeof title === 'function') {
-    callbackOk = arguments[1];
-    title = undefined;
-  }
-  return app.modal({
-    text: text || '',
-    title: typeof title === 'undefined' ? app.params.modalTitle : title,
-    buttons: [ {text: app.params.modalButtonOk, bold: true, onClick: callbackOk} ]
-  });
-};
+// app.confirm = function (text, title, callbackOk, callbackCancel) {
+//     if (typeof title === 'function') {
+//         callbackCancel = arguments[2];
+//         callbackOk = arguments[1];
+//         title = undefined;
+//     }
+//     return app.modal({
+//         text: text || '',
+//         title: typeof title === 'undefined' ? app.params.modalTitle : title,
+//         buttons: [
+//             {text: app.params.modalButtonCancel, onClick: callbackCancel},
+//             {text: app.params.modalButtonOk, bold: true, onClick: callbackOk}
+//         ]
+//     });
+// };
 
-app.confirm = function (text, title, callbackOk, callbackCancel) {
-    if (typeof title === 'function') {
-        callbackCancel = arguments[2];
-        callbackOk = arguments[1];
-        title = undefined;
-    }
-    return app.modal({
-        text: text || '',
-        title: typeof title === 'undefined' ? app.params.modalTitle : title,
-        buttons: [
-            {text: app.params.modalButtonCancel, onClick: callbackCancel},
-            {text: app.params.modalButtonOk, bold: true, onClick: callbackOk}
-        ]
-    });
-};
+// app.prompt = function (text, title, callbackOk, callbackCancel) {
+//     if (typeof title === 'function') {
+//         callbackCancel = arguments[2];
+//         callbackOk = arguments[1];
+//         title = undefined;
+//     }
+//     return app.modal({
+//         text: text || '',
+//         title: typeof title === 'undefined' ? app.params.modalTitle : title,
+//         afterText: '<div class="input-field"><input type="text" class="modal-text-input"></div>',
+//         buttons: [
+//             {
+//                 text: app.params.modalButtonCancel
+//             },
+//             {
+//                 text: app.params.modalButtonOk,
+//                 bold: true
+//             }
+//         ],
+//         onClick: function (modal, index) {
+//             if (index === 0 && callbackCancel) callbackCancel($(modal).find('.modal-text-input').val());
+//             if (index === 1 && callbackOk) callbackOk($(modal).find('.modal-text-input').val());
+//         }
+//     });
+// };
 
-app.prompt = function (text, title, callbackOk, callbackCancel) {
-    if (typeof title === 'function') {
-        callbackCancel = arguments[2];
-        callbackOk = arguments[1];
-        title = undefined;
-    }
-    return app.modal({
-        text: text || '',
-        title: typeof title === 'undefined' ? app.params.modalTitle : title,
-        afterText: '<div class="input-field"><input type="text" class="modal-text-input"></div>',
-        buttons: [
-            {
-                text: app.params.modalButtonCancel
-            },
-            {
-                text: app.params.modalButtonOk,
-                bold: true
-            }
-        ],
-        onClick: function (modal, index) {
-            if (index === 0 && callbackCancel) callbackCancel($(modal).find('.modal-text-input').val());
-            if (index === 1 && callbackOk) callbackOk($(modal).find('.modal-text-input').val());
-        }
-    });
-};
-
-app.showPreloader = function(title) {
-  return app.modal({
-        text: '<div class="preloader preloader-white"></div>',
-        afterText: '<div class="modal-text" style="padding:5px 5px 0;">'+ (title || app.params.modalPreloaderTitle) + '</div>',
-        cssClass: 'preloader-modal'
-    });
-};
-
-app.hidePreloader = function () {
-    app.closeModal('.modal.modal-in');
-};
-
-app.showIndicator = function() {
-  if ($('.preloader-indicator-overlay').length > 0) return;
-  app.root.append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-kq">' + (app.params.material ? app.params.materialPreloaderHtml : '') + '</span><i class="logo"></i></div>');
-};
-
-app.hideIndicator = function() {
-  $('.preloader-indicator-overlay, .preloader-indicator-modal').remove();
-};
+// app.showPreloader = function(title) {
+//   return app.modal({
+//         text: '<div class="preloader preloader-white"></div>',
+//         afterText: '<div class="modal-text" style="padding:5px 5px 0;">'+ (title || app.params.modalPreloaderTitle) + '</div>',
+//         cssClass: 'preloader-modal'
+//     });
+// };
+//
+// app.hidePreloader = function () {
+//     app.closeModal('.modal.modal-in');
+// };
+//
+// app.showIndicator = function() {
+//   if ($('.preloader-indicator-overlay').length > 0) return;
+//   app.root.append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-kq">' + (app.params.material ? app.params.materialPreloaderHtml : '') + '</span><i class="logo"></i></div>');
+// };
+//
+// app.hideIndicator = function() {
+//   $('.preloader-indicator-overlay, .preloader-indicator-modal').remove();
+// };
 
 // Action Sheet
 app.actions = function (target, params, animated) {
@@ -637,17 +637,17 @@ app.closeModal = function (modal, animated) {
     return true;
 };
 
-const touchEvents = {
-    start: support.touch ? 'touchstart' : 'mousedown',
-    move: support.touch ? 'touchmove' : 'mousemove',
-    end: support.touch ? 'touchend' : 'mouseup'
-};
+// const touchEvents = {
+//     start: support.touch ? 'touchstart' : 'mousedown',
+//     move: support.touch ? 'touchmove' : 'mousemove',
+//     end: support.touch ? 'touchend' : 'mouseup'
+// };
 
 // $(document).on(touchEvents.start, '.modal-overlay, .popup-overlay, .picker-modal-overlay', handleClicks);
 
-function handleClicks(e) {
+// function handleClicks(e) {
   /*jshint validthis:true */
-  var clicked = $(this);
+  // var clicked = $(this);
   // var url = clicked.attr('href');
   // var isLink = clicked[0].nodeName.toLowerCase() === 'a';
 
@@ -689,22 +689,22 @@ function handleClicks(e) {
   // }
 
   // Close Modal
-  if (clicked.hasClass('modal-overlay')) {
-      if ($('.modal.modal-in').length > 0 && app.params.modalCloseByOutside)
-          app.closeModal('.modal.modal-in');
-      if ($('.actions-modal.modal-in').length > 0 && app.params.actionsCloseByOutside)
-          app.closeModal('.actions-modal.modal-in');
-
-      if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
-  }
-  if (clicked.hasClass('popup-overlay')) {
-      if ($('.popup.modal-in').length > 0 && app.params.popupCloseByOutside)
-          app.closeModal('.popup.modal-in');
-  }
-  if (clicked.hasClass('picker-modal-overlay')) {
-      if ($('.picker-modal.modal-in').length > 0)
-          app.closeModal('.picker-modal.modal-in');
-  }
+  // if (clicked.hasClass('modal-overlay')) {
+  //     if ($('.modal.modal-in').length > 0 && app.params.modalCloseByOutside)
+  //         app.closeModal('.modal.modal-in');
+  //     if ($('.actions-modal.modal-in').length > 0 && app.params.actionsCloseByOutside)
+  //         app.closeModal('.actions-modal.modal-in');
+  //
+  //     if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
+  // }
+  // if (clicked.hasClass('popup-overlay')) {
+  //     if ($('.popup.modal-in').length > 0 && app.params.popupCloseByOutside)
+  //         app.closeModal('.popup.modal-in');
+  // }
+  // if (clicked.hasClass('picker-modal-overlay')) {
+  //     if ($('.picker-modal.modal-in').length > 0)
+  //         app.closeModal('.picker-modal.modal-in');
+  // }
 
   // Picker
   // if (clicked.hasClass('close-picker')) {
@@ -728,13 +728,13 @@ function handleClicks(e) {
   //     app.pickerModal(pickerToOpen, clicked);
   // }
 
-}
+// }
 //
-function preventScrolling(e) {
-  e.preventDefault();
-}
-if (support.touch && !device.android) {
-  $(document).on(touchEvents.move, '.panel-overlay, .modal-overlay, .preloader-indicator-overlay, .popup-overlay, .searchbar-overlay', preventScrolling);
-}
+// function preventScrolling(e) {
+//   e.preventDefault();
+// }
+// if (support.touch && !device.android) {
+//   $(document).on(touchEvents.move, '.panel-overlay, .modal-overlay, .preloader-indicator-overlay, .popup-overlay, .searchbar-overlay', preventScrolling);
+// }
 
 export default app;

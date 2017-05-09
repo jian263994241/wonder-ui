@@ -54,3 +54,11 @@ export function mounted(content, reactElement){
   if(!content) return null;
   return React.cloneElement(reactElement, null , content);
 }
+
+export function mountedOutside(component){
+  const root = $('.page');
+  const _modal = document.createElement('div');
+  const rendered = ReactDOM.render(component , _modal);
+  root.append(_modal.childNodes[0]);
+  return rendered;
+}

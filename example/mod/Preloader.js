@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, Buttons, Block, Bars, Grid, Modals} from 'kui'
+import {Page, PageContent, Buttons, Block, Bars, Grid, Preloader} from 'kui'
 
 
 const {ContentBlock, ContentBlockTitle} = Block;
@@ -11,40 +11,44 @@ const {SubNavBar, Navbar} = Bars;
 
 export default class ModalsPage extends Component {
 
-  showPreloader = ()=>{
-    Modals.showPreloader();
-
-    setTimeout(()=>{
-      Modals.hidePreloader();
-    },1000);
+  state = {
+    show1: false,
+    show2: false
   }
 
-  showIndicator = ()=>{
-    Modals.showIndicator();
+  showPreloader = (i)=>()=>{
+    this.state['show'+ i] = true
+    this.forceUpdate();
     setTimeout(()=>{
-      Modals.hideIndicator();
-    },1000);
+      this.state['show'+ i] = false;
+      this.forceUpdate();
+    }, 2000);
   }
+
 
   render() {
     return (
       <Page>
-        <Navbar title="Modals" back/>
+        <Navbar title="指示器" back/>
         <PageContent>
           <ContentBlock>
 
             <Row>
               <Col width="50">
-                <Button onClick={this.showPreloader}>Preloader</Button>
+                <Button onClick={this.showPreloader('1')}>Preloader</Button>
               </Col>
+
               <Col width="50">
-                <Button onClick={this.showIndicator}>Indicator</Button>
+                <Button onClick={this.showPreloader('2')}>Preloader2</Button>
               </Col>
+
             </Row>
 
           </ContentBlock>
 
         </PageContent>
+        <Preloader show={this.state.show1}></Preloader>
+        <Preloader show={this.state.show2} base></Preloader>
       </Page>
     );
   }

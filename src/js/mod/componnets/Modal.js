@@ -94,20 +94,21 @@ export default class Modal extends Component {
 
     const cls = classnames(className, {'modal-in': stateOpened, 'modal-out': !stateOpened});
 
-    const childrenNode = (removeOnClose && !stateOpened)? null : children;
-
     const isPopup = className && className.indexOf('popup') > -1 ;
 
     const overLayCss = classnames({
-      'popup-overlay': isPopup
+      'popup-overlay': isPopup,
+      'modal-overlay': !isPopup
     });
 
     const closeByOutside = ()=>{
       modalCloseByOutside && this.closeModal();
     };
 
+    const childrenNode = (removeOnClose && !stateOpened)? null : children;
+
     return (
-      <div>
+      <div ref="Root">
         <OverLay opened={stateOpened} className={overLayCss} onClick={closeByOutside}></OverLay>
         <div className={cls} {...other} ref="Modal" onTransitionEnd={this._transitionEnd}>{childrenNode}</div>
       </div>

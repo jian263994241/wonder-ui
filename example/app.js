@@ -46,7 +46,7 @@ render((
       <Route path="/Tab-Static" component={TabStatic}/>
       <Route path="/PullToRefresh" component={PullToRefresh}/>
       <Route path="/Modals" component={Modals}/>
-      <Route path="/Modals/Preloader" component={Preloader}/>
+      <Route path="/Preloader" component={Preloader}/>
       <Route path="/InfiniteScroll" component={InfiniteScroll}/>
     </Pages>
   </App>

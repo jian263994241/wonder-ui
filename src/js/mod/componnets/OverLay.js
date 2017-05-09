@@ -39,10 +39,11 @@ export default class OverLay extends Component {
       ...other
     } = this.props;
 
-    const preventScrolling = e =>{
-      // e.preventDefault();
-    }
-    const cls = classnames('modal-overlay', {'modal-overlay-visible': this.state.opened}, className)
+    const preventScrolling = () =>{
+      return false;
+    };
+
+    const cls = classnames(className, {'modal-overlay-visible': this.state.opened});
 
     return (
       <div className={cls} ref="OverLay" onTouchMove={preventScrolling} {...other}></div>
