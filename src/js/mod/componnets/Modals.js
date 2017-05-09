@@ -259,129 +259,129 @@ app.actions = function (target, params, animated) {
     return modal[0];
 };
 
-app.popover = function (modal, target, removeOnClose, animated) {
-    if (typeof removeOnClose === 'undefined') removeOnClose = true;
-    if (typeof animated === 'undefined') animated = true;
-
-    if (!React.isValidElement(modal)) return false;
-    var _modal = document.createElement('div');
-    ReactDOM.render(modal, _modal);
-    if (_modal.childNodes.length > 0) {
-        modal = _modal.childNodes[0];
-        if (removeOnClose) modal.classList.add('remove-on-close');
-        app.root.append(modal);
-    }
-    else return false; //nothing found
-
-    modal = $(modal);
-    target = $(target);
-
-    if (modal.length === 0 || target.length === 0) return false;
-    if (modal.parents('body').length === 0) {
-        if (removeOnClose) modal.addClass('remove-on-close');
-        app.root.append(modal[0]);
-    }
-    if (modal.find('.popover-angle').length === 0) {
-        modal.append('<div class="popover-angle"></div>');
-    }
-    modal.show();
-
-    function sizePopover() {
-        modal.css({left: '', top: ''});
-        var modalWidth =  modal.width();
-        var modalHeight =  modal.height(); // 13 - height of angle
-        var modalAngle, modalAngleSize = 0, modalAngleLeft, modalAngleTop;
-
-        modalAngle = modal.find('.popover-angle');
-        modalAngleSize = modalAngle.width() / 2;
-        modalAngle.removeClass('on-left on-right on-top on-bottom').css({left: '', top: ''});
-
-        var targetWidth = target.outerWidth();
-        var targetHeight = target.outerHeight();
-        var targetOffset = target.offset();
-        var targetParentPage = target.parents('.page');
-        if (targetParentPage.length > 0) {
-            targetOffset.top = targetOffset.top - targetParentPage[0].scrollTop;
-        }
-
-        var windowHeight = $(window).height();
-        var windowWidth = $(window).width();
-
-        var modalTop = 0;
-        var modalLeft = 0;
-        var diff = 0;
-        // Top Position
-        var modalPosition = 'top';
-
-        if ((modalHeight + modalAngleSize) < targetOffset.top) {
-            // On top
-            modalTop = targetOffset.top - modalHeight - modalAngleSize;
-        }
-        else if ((modalHeight + modalAngleSize) < windowHeight - targetOffset.top - targetHeight) {
-            // On bottom
-            modalPosition = 'bottom';
-            modalTop = targetOffset.top + targetHeight + modalAngleSize;
-        }
-        else {
-            // On middle
-            modalPosition = 'middle';
-            modalTop = targetHeight / 2 + targetOffset.top - modalHeight / 2;
-            diff = modalTop;
-            if (modalTop <= 0) {
-                modalTop = 5;
-            }
-            else if (modalTop + modalHeight >= windowHeight) {
-                modalTop = windowHeight - modalHeight - 5;
-            }
-            diff = diff - modalTop;
-        }
-
-        // Horizontal Position
-        if (modalPosition === 'top' || modalPosition === 'bottom') {
-            modalLeft = targetWidth / 2 + targetOffset.left - modalWidth / 2;
-            diff = modalLeft;
-            if (modalLeft < 5) modalLeft = 5;
-            if (modalLeft + modalWidth > windowWidth) modalLeft = windowWidth - modalWidth - 5;
-            if (modalPosition === 'top') {
-                modalAngle.addClass('on-bottom');
-            }
-            if (modalPosition === 'bottom') {
-                modalAngle.addClass('on-top');
-            }
-            diff = diff - modalLeft;
-            modalAngleLeft = (modalWidth / 2 - modalAngleSize + diff);
-            modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 13), 13);
-            modalAngle.css({left: modalAngleLeft + 'px'});
-
-        }
-        else if (modalPosition === 'middle') {
-            modalLeft = targetOffset.left - modalWidth - modalAngleSize;
-            modalAngle.addClass('on-right');
-            if (modalLeft < 5 || (modalLeft + modalWidth > windowWidth)) {
-                if (modalLeft < 5) modalLeft = targetOffset.left + targetWidth + modalAngleSize;
-                if (modalLeft + modalWidth > windowWidth) modalLeft = windowWidth - modalWidth - 5;
-                modalAngle.removeClass('on-right').addClass('on-left');
-            }
-            modalAngleTop = (modalHeight / 2 - modalAngleSize + diff);
-            modalAngleTop = Math.max(Math.min(modalAngleTop, modalHeight - modalAngleSize * 2 - 13), 13);
-            modalAngle.css({top: modalAngleTop + 'px'});
-        }
-
-        // Apply Styles
-        modal.css({top: modalTop + 'px', left: modalLeft + 'px'});
-    }
-
-    sizePopover();
-
-    $(window).on('resize', sizePopover);
-
-    modal.on('popover:close', function () {
-      $(window).off('resize', sizePopover);
-    });
-
-    app.openModal(modal, animated);
-    return modal[0];
-};
+// app.popover = function (modal, target, removeOnClose, animated) {
+//     if (typeof removeOnClose === 'undefined') removeOnClose = true;
+//     if (typeof animated === 'undefined') animated = true;
+//
+//     if (!React.isValidElement(modal)) return false;
+//     var _modal = document.createElement('div');
+//     ReactDOM.render(modal, _modal);
+//     if (_modal.childNodes.length > 0) {
+//         modal = _modal.childNodes[0];
+//         if (removeOnClose) modal.classList.add('remove-on-close');
+//         app.root.append(modal);
+//     }
+//     else return false; //nothing found
+//
+//     modal = $(modal);
+//     target = $(target);
+//
+//     if (modal.length === 0 || target.length === 0) return false;
+//     if (modal.parents('body').length === 0) {
+//         if (removeOnClose) modal.addClass('remove-on-close');
+//         app.root.append(modal[0]);
+//     }
+//     if (modal.find('.popover-angle').length === 0) {
+//         modal.append('<div class="popover-angle"></div>');
+//     }
+//     modal.show();
+//
+//     function sizePopover() {
+//         modal.css({left: '', top: ''});
+//         var modalWidth =  modal.width();
+//         var modalHeight =  modal.height(); // 13 - height of angle
+//         var modalAngle, modalAngleSize = 0, modalAngleLeft, modalAngleTop;
+//
+//         modalAngle = modal.find('.popover-angle');
+//         modalAngleSize = modalAngle.width() / 2;
+//         modalAngle.removeClass('on-left on-right on-top on-bottom').css({left: '', top: ''});
+//
+//         var targetWidth = target.outerWidth();
+//         var targetHeight = target.outerHeight();
+//         var targetOffset = target.offset();
+//         var targetParentPage = target.parents('.page');
+//         if (targetParentPage.length > 0) {
+//             targetOffset.top = targetOffset.top - targetParentPage[0].scrollTop;
+//         }
+//
+//         var windowHeight = $(window).height();
+//         var windowWidth = $(window).width();
+//
+//         var modalTop = 0;
+//         var modalLeft = 0;
+//         var diff = 0;
+//         // Top Position
+//         var modalPosition = 'top';
+//
+//         if ((modalHeight + modalAngleSize) < targetOffset.top) {
+//             // On top
+//             modalTop = targetOffset.top - modalHeight - modalAngleSize;
+//         }
+//         else if ((modalHeight + modalAngleSize) < windowHeight - targetOffset.top - targetHeight) {
+//             // On bottom
+//             modalPosition = 'bottom';
+//             modalTop = targetOffset.top + targetHeight + modalAngleSize;
+//         }
+//         else {
+//             // On middle
+//             modalPosition = 'middle';
+//             modalTop = targetHeight / 2 + targetOffset.top - modalHeight / 2;
+//             diff = modalTop;
+//             if (modalTop <= 0) {
+//                 modalTop = 5;
+//             }
+//             else if (modalTop + modalHeight >= windowHeight) {
+//                 modalTop = windowHeight - modalHeight - 5;
+//             }
+//             diff = diff - modalTop;
+//         }
+//
+//         // Horizontal Position
+//         if (modalPosition === 'top' || modalPosition === 'bottom') {
+//             modalLeft = targetWidth / 2 + targetOffset.left - modalWidth / 2;
+//             diff = modalLeft;
+//             if (modalLeft < 5) modalLeft = 5;
+//             if (modalLeft + modalWidth > windowWidth) modalLeft = windowWidth - modalWidth - 5;
+//             if (modalPosition === 'top') {
+//                 modalAngle.addClass('on-bottom');
+//             }
+//             if (modalPosition === 'bottom') {
+//                 modalAngle.addClass('on-top');
+//             }
+//             diff = diff - modalLeft;
+//             modalAngleLeft = (modalWidth / 2 - modalAngleSize + diff);
+//             modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 13), 13);
+//             modalAngle.css({left: modalAngleLeft + 'px'});
+//
+//         }
+//         else if (modalPosition === 'middle') {
+//             modalLeft = targetOffset.left - modalWidth - modalAngleSize;
+//             modalAngle.addClass('on-right');
+//             if (modalLeft < 5 || (modalLeft + modalWidth > windowWidth)) {
+//                 if (modalLeft < 5) modalLeft = targetOffset.left + targetWidth + modalAngleSize;
+//                 if (modalLeft + modalWidth > windowWidth) modalLeft = windowWidth - modalWidth - 5;
+//                 modalAngle.removeClass('on-right').addClass('on-left');
+//             }
+//             modalAngleTop = (modalHeight / 2 - modalAngleSize + diff);
+//             modalAngleTop = Math.max(Math.min(modalAngleTop, modalHeight - modalAngleSize * 2 - 13), 13);
+//             modalAngle.css({top: modalAngleTop + 'px'});
+//         }
+//
+//         // Apply Styles
+//         modal.css({top: modalTop + 'px', left: modalLeft + 'px'});
+//     }
+//
+//     sizePopover();
+//
+//     $(window).on('resize', sizePopover);
+//
+//     modal.on('popover:close', function () {
+//       $(window).off('resize', sizePopover);
+//     });
+//
+//     app.openModal(modal, animated);
+//     return modal[0];
+// };
 
 
 // app.popup = function (modal, removeOnClose, animated) {

@@ -17,6 +17,8 @@ export default class Popup extends Component {
 
   static propTypes = {
     className: PropTypes.string,
+    opened: PropTypes.bool,
+    removeOnClose: PropTypes.bool
   }
 
   render() {

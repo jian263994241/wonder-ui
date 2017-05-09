@@ -31,6 +31,7 @@ export default class Modal extends Component {
   }
 
   toggle = (opened)=>{
+    if(this.state.opened === opened) return ;
     opened ? this.openModal(): this.closeModal();
   }
 
@@ -38,10 +39,11 @@ export default class Modal extends Component {
     const {onOpen} = this.props;
     const modal = this.refs.Modal;
     modal.style.display = 'block';
-    $(window).trigger('resize');
-    this.setState({ opened: true }, ()=>{
-      onOpen && onOpen();
-    });
+    setTimeout(()=>{
+      this.setState({ opened: true }, ()=>{
+        onOpen && onOpen();
+      });
+    },16);
   }
 
   closeModal = ()=>{
