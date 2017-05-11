@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-
+import debounce from 'lodash.debounce'
 import {sizeNavbars} from '../utils/mix'
 import {withRouter} from 'react-router-dom'
 import $ from '../utils/dom'
@@ -12,10 +12,6 @@ import Icon from './Icon'
 export class Navbar extends Component {
 
   static uiName = 'Navbar'
-
-  // static defaultProps = {
-  //   theme: 'gray'
-  // }
 
   static propTypes = {
     className: PropTypes.string,
@@ -29,9 +25,7 @@ export class Navbar extends Component {
     right: PropTypes.element
   }
 
-  navPosFix = ()=>{
-    sizeNavbars(this.refs.navbar);
-  }
+  navPosFix = debounce(()=>{ sizeNavbars(this.refs.navbar) }, 100)
 
   componentDidMount() {
     $(window).on('resize', this.navPosFix).trigger('resize');
@@ -102,8 +96,6 @@ export class Navbar extends Component {
 }
 
 
-
-
 export class SubNavBar extends Component {
 
   static uiName = 'SubNavBar'
@@ -120,11 +112,38 @@ export class SubNavBar extends Component {
       ...other
     } = this.props;
 
-    const noborderCss = noBorder? 'no-border': '';
-    const cls = classnames('subnavbar', noborderCss, className);
+    const cls = classnames('subnavbar', {'no-border': noBorder}, className);
 
     return (
       <div className={cls} {...other} ref="SubNavBar"></div>
     );
   }
+}
+
+export class Toolbar extends Component {
+
+  static uiName = 'Toolbar';
+
+  static propTypes = {
+    className: PropTypes.string
+  }
+
+  render() {
+    const {
+      className,
+      children,
+      ...other
+    } = this.props;
+
+    const cls = classnames('toolbar', className);
+
+    return (
+      <div className={cls} {...other}>
+        <div className="toolbar-inner">
+          {children}
+        </div>
+      </div>
+    );
+  }
+
 }

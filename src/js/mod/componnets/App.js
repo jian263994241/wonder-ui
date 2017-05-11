@@ -39,9 +39,7 @@ export default class App extends Component {
 
     return (
       <Router hashType="hashbang">
-        <Route render={(props)=>{
-          return React.cloneElement(children, {...props});
-        }}/>
+        <Route render={(props)=>React.cloneElement(children, {...props})}/>
       </Router>
     );
   }

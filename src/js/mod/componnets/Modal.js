@@ -4,6 +4,7 @@ import classnames from 'classnames'
 
 import $ from '../utils/dom'
 import OverLay from './OverLay'
+import noScroll from 'no-scroll'
 
 export default class Modal extends Component {
 
@@ -11,23 +12,24 @@ export default class Modal extends Component {
 
   static defaultProps = {
     opened: false,
-    removeOnClose: true,
-    modalCloseByOutside: false
+    modalCloseByOutside: false,
+    overlay: true
   }
 
   static propTypes = {
     opened: PropTypes.bool,
-    removeOnClose: PropTypes.bool,
     modalCloseByOutside: PropTypes.bool,
     onOpen: PropTypes.func,
     onOpened: PropTypes.func,
     onClose: PropTypes.func,
     onClosed: PropTypes.func,
     className: PropTypes.string,
+    overlay: PropTypes.bool
   }
 
   state={
     opened: false,
+    showChildren: true
   }
 
   toggle = (opened)=>{
@@ -39,8 +41,10 @@ export default class Modal extends Component {
     const {onOpen} = this.props;
     const modal = this.refs.Modal;
     modal.style.display = 'block';
+    noScroll.on();
     setTimeout(()=>{
-      this.setState({ opened: true }, ()=>{
+      this.setState({ opened: true, showChildren:true }, ()=>{
+        $(window).trigger('resize');
         onOpen && onOpen();
       });
     },16);
@@ -48,12 +52,15 @@ export default class Modal extends Component {
 
   closeModal = ()=>{
     const {onClose} = this.props;
+    noScroll.off();
     this.setState({opened: false}, ()=>{
       onClose && onClose();
     });
   }
 
-  _transitionEnd = ()=>{
+  _transitionEnd = (e)=>{
+    //stop transitionend event to happen on child element
+    if(e.target != this.refs.Modal) return ;
     const {onOpened, onClosed} = this.props;
     const modal = this.refs.Modal;
     let {opened, modalStyle} = this.state;
@@ -62,6 +69,9 @@ export default class Modal extends Component {
     }else{
       onClosed && onClosed();
       modal.style.display = 'none';
+      this.setState({
+        showChildren: false
+      });
     }
   }
 
@@ -84,7 +94,7 @@ export default class Modal extends Component {
       onOpened,
       onClose,
       onClosed,
-      removeOnClose,
+      overlay,
       modalCloseByOutside,
       children,
       ...other
@@ -105,13 +115,20 @@ export default class Modal extends Component {
       modalCloseByOutside && this.closeModal();
     };
 
-    const childrenNode = (removeOnClose && !stateOpened)? null : children;
+    const childrenNode = (!this.state.showChildren && !stateOpened) ? null : children;
+
+    if(overlay){
+      return (
+        <div ref="Root">
+          <OverLay opened={stateOpened} className={overLayCss} onClick={closeByOutside}></OverLay>
+          <div className={cls} {...other} ref="Modal" onTransitionEnd={this._transitionEnd}>{childrenNode}</div>
+        </div>
+      );
+    }
 
     return (
-      <div ref="Root">
-        <OverLay opened={stateOpened} className={overLayCss} onClick={closeByOutside}></OverLay>
-        <div className={cls} {...other} ref="Modal" onTransitionEnd={this._transitionEnd}>{childrenNode}</div>
-      </div>
+      <div className={cls} {...other} ref="Modal" onTransitionEnd={this._transitionEnd}>{childrenNode}</div>
     );
+
   }
 }

@@ -39,8 +39,8 @@ export default class OverLay extends Component {
       ...other
     } = this.props;
 
-    const preventScrolling = () =>{
-      return false;
+    const preventScrolling = (e) =>{
+      e.preventDefault();
     };
 
     const cls = classnames(className, {'modal-overlay-visible': this.state.opened});

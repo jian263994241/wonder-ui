@@ -53,9 +53,7 @@ export default class Page extends Component {
     let hasNavbar = false;
 
     React.Children.forEach(children, (child, index)=>{
-      if(!child.type) return ;
-      const uiName = child.type.uiName;
-      if(uiName === 'Navbar'){
+      if(child.type && child.type.uiName === 'Navbar'){
         hasNavbar = true;
       }
     });

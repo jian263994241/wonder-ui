@@ -23,7 +23,7 @@ import PullToRefresh from './mod/PullToRefresh'
 import Modals from './mod/Modals'
 import Preloader from './mod/Preloader'
 import InfiniteScroll from './mod/InfiniteScroll'
-
+import Picker from './mod/Picker'
 const {Route, Link} = RouterDOM;
 
 render((
@@ -41,12 +41,13 @@ render((
       <Route path="/Grid" component={Grid}/>
       <Route path="/Icons" component={Icons}/>
       <Route path="/LazyLoad" component={LazyLoad}/>
-      <Route path="/Tab" component={Tab}/>
-      <Route path="/Tab-Animation" component={TabAnimation}/>
-      <Route path="/Tab-Static" component={TabStatic}/>
+      <Route path="/Tab/Index" component={Tab}/>
+      <Route path="/Tab/Animation" component={TabAnimation}/>
+      <Route path="/Tab/Static" component={TabStatic}/>
       <Route path="/PullToRefresh" component={PullToRefresh}/>
       <Route path="/Modals" component={Modals}/>
       <Route path="/Preloader" component={Preloader}/>
+      <Route path="/Picker" component={Picker}/>
       <Route path="/InfiniteScroll" component={InfiniteScroll}/>
     </Pages>
   </App>

@@ -56,7 +56,7 @@ export function mounted(content, reactElement){
 }
 
 export function mountedOutside(component){
-  const root = $('.page');
+  const root = $('.root');
   const _modal = document.createElement('div');
   const rendered = ReactDOM.render(component , _modal);
   root.append(_modal.childNodes[0]);
