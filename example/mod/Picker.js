@@ -35,13 +35,13 @@ export default class FormElements extends Component {
           <ContentBlockTitle>类型</ContentBlockTitle>
           <List>
             <ListItem>
-              <FormInput type="text" placeholder="一列" readOnly onTouchStart={(e)=>{this.setState({openA: true})}}/>
+              <FormInput type="text" placeholder="一列" readOnly onClick={(e)=>{this.setState({openA: true})}}/>
             </ListItem>
             <ListItem>
               <FormInput type="text" placeholder="两列" readOnly/>
             </ListItem>
             <ListItem>
-              <FormInput type="text" placeholder="两列" readOnly/>
+              <FormInput type="text" placeholder="三列" readOnly/>
             </ListItem>
           </List>
         </PageContent>
