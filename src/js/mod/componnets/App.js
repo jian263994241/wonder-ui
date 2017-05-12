@@ -26,7 +26,7 @@ export default class App extends Component {
     let Router;
 
     switch (type) {
-      case 'Browser':
+      case 'browser':
         Router = BrowserRouter;
         break;
       case 'hash':

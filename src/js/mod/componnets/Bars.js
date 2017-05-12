@@ -83,7 +83,7 @@ export class Navbar extends Component {
 
 
     return (
-      <div className={cls} ref='navbar' {...other} ref="Navbar">
+      <div className={cls} {...other} ref="Navbar">
         <div className="navbar-inner">
           {navLeft}
           {navCenter}

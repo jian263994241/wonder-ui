@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import device from '../utils/device'
 import $ from '../utils/dom'
-import Modals from './Modals'
+// import Modals from './Modals'
 
 export default class Page extends Component {
 

@@ -166,10 +166,11 @@ const initPullToRefresh = function (pageContainer, callback) {
         }
         container.transform('');
 
-        if (refresh) {
-            function done(){
-              pullToRefreshDone(container);
-            }
+        function done(){
+          pullToRefreshDone(container);
+        }
+
+        if (refresh) {            
             container.addClass('refreshing');
             container.trigger('refresh ptr:refresh', {
                 done: done
