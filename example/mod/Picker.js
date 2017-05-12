@@ -18,14 +18,67 @@ const Icon = ()=>{
 export default class FormElements extends Component {
 
   state = {
-    openA: false,
+    pickerOpened: {
+      a: false,
+      b: false,
+      c: false
+    },
+    pickerData: []
   }
 
-  demo1Cols = [
-    {
-      values: ['Apple', 'Orange', 'Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna',]
+
+  data = {
+    demo1 : [
+      {
+        values: ['Apple', 'Orange', 'Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna',]
+      }
+    ],
+    demo2: [
+      {
+        values: ['Apple', 'Orange', 'Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna',],
+        align:'left'
+      },
+      {
+        values: ['Apple', 'Orange', 'Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna',]
+      }
+    ],
+    demo3: [
+      {
+        displayValues: ['Apple', 'Orange', 'Bananna'],
+        values: [1, 2, 3],
+        align:'left'
+      },
+      {
+        values: ['Apple', 'Orange', 'Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna',],
+        align:'center'
+      },
+      {
+        values: ['Apple', 'Orange', 'Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna',]
+      }
+    ]
+  }
+
+  openPicker = (name)=> ()=>{
+    const {pickerOpened} = this.state;
+    for (const key in pickerOpened ){
+      if(key === name){
+        pickerOpened[key] = true;
+      }else{
+        pickerOpened[key] = false;
+      }
     }
-  ]
+    this.setState({pickerOpened});
+  }
+
+  closePicker = ()=>{
+    this.setState({
+      pickerOpened: {
+        a: false,
+        b: false,
+        c: false
+      }
+    });
+  }
 
   render() {
     return (
@@ -35,27 +88,53 @@ export default class FormElements extends Component {
           <ContentBlockTitle>类型</ContentBlockTitle>
           <List>
             <ListItem>
-              <FormInput type="text" placeholder="一列" readOnly onClick={(e)=>{this.setState({openA: true})}}/>
+              <FormInput type="text" placeholder="一列" readOnly onClick={this.openPicker('a')}/>
             </ListItem>
             <ListItem>
-              <FormInput type="text" placeholder="两列" readOnly/>
+              <FormInput type="text" placeholder="两列" readOnly onClick={this.openPicker('b')}/>
             </ListItem>
             <ListItem>
-              <FormInput type="text" placeholder="三列" readOnly/>
+              <FormInput type="text" placeholder="三列" readOnly onClick={this.openPicker('c')}/>
             </ListItem>
           </List>
         </PageContent>
         <Picker
-          opened={this.state.openA}
+          opened={this.state.pickerOpened.a}
           onOpened={()=>console.log('Picker opened')}
           toolbar={
             <Toolbar>
               <div className="left"></div>
-              <div className="right"><a onClick={()=>this.setState({openA: false})}>关闭</a></div>
+              <div className="right"><a onClick={this.closePicker}>关闭</a></div>
             </Toolbar>
           }
-          cols={this.demo1Cols}
+          cols={this.data.demo1}
         />
+
+        <Picker
+          opened={this.state.pickerOpened.b}
+          onOpened={()=>console.log('Picker opened')}
+          onSelected={data=>console.log(data)}
+          toolbar={
+            <Toolbar>
+              <div className="left"></div>
+              <div className="right"><a onClick={this.closePicker}>关闭</a></div>
+            </Toolbar>
+          }
+          cols={this.data.demo2}
+        />
+
+        <Picker
+          opened={this.state.pickerOpened.c}
+          onOpened={()=>console.log('Picker opened')}
+          toolbar={
+            <Toolbar>
+              <div className="left"></div>
+              <div className="right"><a onClick={this.closePicker}>关闭</a></div>
+            </Toolbar>
+          }
+          cols={this.data.demo3}
+        />
+
       </Page>
     );
   }

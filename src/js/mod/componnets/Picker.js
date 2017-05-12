@@ -8,6 +8,7 @@ import {Motion, spring} from 'react-motion';
 
 const springConfig = {stiffness: 300, damping: 50};
 
+
 class PickerCol extends Component {
 
   static uiName = 'PickerCol';
@@ -16,7 +17,8 @@ class PickerCol extends Component {
     opened: PropTypes.bool,
     items: PropTypes.array,
     align: PropTypes.string,
-    multi: PropTypes.bool
+    multi: PropTypes.bool,
+    onSelected: PropTypes.func
   }
 
   static defaultProps = {
@@ -39,14 +41,10 @@ class PickerCol extends Component {
     velocityTime: 0,
     velocityTranslate: 0,
     prevTranslate: 0,
-    itemsHeight: 0
+    itemsHeight: 0,
+    activeIndex: 0
   }
 
-  // translateY = (currentTranslate)=>{
-  //   let style = this.state.style;
-  //   style = Object.assign({}, style, {transform: `translate3d(0px, ${currentTranslate}px, 0px)`})
-  //   this.setState({ style, currentTranslate});
-  // }
 
   calcSize = ()=>{
     const {itemHeight, items} = this.props;
@@ -65,6 +63,21 @@ class PickerCol extends Component {
     this.setState({ minTranslate, maxTranslate, currentTranslate });
   }
 
+  activeIndex = 0;
+
+  updateItems = (activeIndex, newTranslate)=>{
+    const {items, onSelected} = this.props;
+    if (activeIndex < 0) activeIndex = 0;
+    if (activeIndex >= items.length) activeIndex = items.length - 1;
+
+    const currentTranslate = newTranslate;
+    const isTouched = false;
+
+    this.setState({isTouched, currentTranslate, activeIndex}, ()=>{
+      onSelected && onSelected(activeIndex);
+    });
+  }
+
   handleTouchStart = (e)=>{
     e.preventDefault();
     const isTouched = true;
@@ -75,13 +88,7 @@ class PickerCol extends Component {
 
     touchStartTime = (new Date()).getTime();
 
-    this.setState({
-      touchStartY,
-      touchCurrentY,
-      startTranslate,
-      isTouched,
-      touchStartTime
-    });
+    this.setState({ touchStartY, touchCurrentY, startTranslate, isTouched, touchStartTime });
   }
 
   handleTouchMove = (e)=>{
@@ -112,13 +119,13 @@ class PickerCol extends Component {
 
       this.setState({ touchCurrentY , currentTranslate, returnTo, velocityTranslate, velocityTime, prevTranslate});
 
-
     }
 
   }
 
   handleTouchEnd = (e)=>{
     const isTouched = false;
+    const {itemHeight} = this.props;
     let {returnTo, minTranslate, maxTranslate, currentTranslate, touchStartTime, velocityTime, velocityTranslate} = this.state;
 
     if (returnTo) {
@@ -142,9 +149,13 @@ class PickerCol extends Component {
 
     newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
 
-    currentTranslate = newTranslate;
+    const activeIndex = -Math.floor((newTranslate - maxTranslate)/itemHeight);
 
-    this.setState({isTouched, currentTranslate});
+    newTranslate = -activeIndex * itemHeight + maxTranslate;
+
+
+    this.updateItems(activeIndex, newTranslate);
+
   }
 
   render() {
@@ -154,10 +165,20 @@ class PickerCol extends Component {
       multi
     } = this.props;
 
+    const {
+      activeIndex
+    } = this.state;
 
     const pickerItem = (item, index)=>{
+
       return (
-        <div className="picker-item" key={`pickerItem-${index}`}>
+        <div
+          className={classnames({
+          'picker-item': true,
+          'picker-selected': (activeIndex===index)
+          })}
+          key={`pickerItem-${index}`}
+        >
           <span>{item}</span>
         </div>
       );
@@ -165,9 +186,9 @@ class PickerCol extends Component {
 
     const cls = classnames({
       'picker-items-col': true,
-      'picker-items-col-absolute': multi,
+      // 'picker-items-col-absolute': multi,
       'picker-items-col-left': (align ==='left'),
-      'picker-items-col-center': !multi
+      'picker-items-col-center': (align ==='center')
     });
 
     const y = this.state.currentTranslate;
@@ -197,7 +218,6 @@ class PickerCol extends Component {
 }
 
 
-
 export default class Picker extends Component {
 
   static uiName = 'PickerModal';
@@ -209,19 +229,50 @@ export default class Picker extends Component {
   static propTypes = {
     className: PropTypes.string,
     opened: PropTypes.bool,
-    cols: PropTypes.array.isRequired
+    cols: PropTypes.array.isRequired,
+    onSelected: PropTypes.func,
+    onOpen: PropTypes.func,
+    onOpened: PropTypes.func,
+    onClose: PropTypes.func,
+    onClosed: PropTypes.func,
   }
 
   open = ()=>{
-    this.refs.Col0.calcSize()
+    const {onOpen, onSelected} = this.props;
+    this.resize();
+    onOpen && onOpen();
+    onSelected && onSelected(this.values);
+  }
+
+  resize = ()=>{
+    const {cols} = this.props;
+    cols.forEach((col, index)=>{
+      this.refs[`Col${index}`].calcSize()
+    })
+  }
+
+  values = []
+
+  componentDidMount() {
+    const {cols} = this.props;
+    cols.forEach((col, index)=>{
+      if(!col.displayValues){
+        col.displayValues = col.values;
+      }
+      this.values[index] = {
+        value : col.values[0],
+        displayValues : col.displayValues[0]
+      }
+    });
   }
 
   render() {
 
     const {
       cols,
-      freeMode,
       className,
+      onOpen,
+      onSelected,
       children,
       ...other
     } = this.props;
@@ -231,9 +282,23 @@ export default class Picker extends Component {
       'picker-columns': (cols.length > 1)
     }, className);
 
+    const multi = (cols.length > 1);
+
     const Col = (item, index) => {
+      const displayValues = item.displayValues || item.values;
+
+      const selected = (activeIndex)=>{
+        const val = {};
+        val.value = item.values[activeIndex];
+        val.displayValues = displayValues[activeIndex];
+        this.values[index] = val;
+        onSelected && onSelected(this.values);
+      }
+
+      const align = !multi ? 'center': item.align;
+
       return (
-        <PickerCol key={`pickerCol-${index}`} items={item.values} ref={`Col${index}`}></PickerCol>
+        <PickerCol key={index} items={displayValues} ref={`Col${index}`} align={align} multi={multi} onSelected={selected}></PickerCol>
       );
     };
 
