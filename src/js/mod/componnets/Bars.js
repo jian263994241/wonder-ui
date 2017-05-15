@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import debounce from 'lodash.debounce'
+// import debounce from 'lodash.debounce'
 import {sizeNavbars} from '../utils/mix'
 import {withRouter} from 'react-router-dom'
 import $ from '../utils/dom'
@@ -25,7 +25,9 @@ export class Navbar extends Component {
     right: PropTypes.element
   }
 
-  navPosFix = debounce(()=>{ sizeNavbars(this.refs.navbar) }, 100)
+  navPosFix = ()=>{
+    sizeNavbars(this.refs.navbar)
+  }
 
   componentDidMount() {
     $(window).on('resize', this.navPosFix).trigger('resize');

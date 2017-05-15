@@ -8,6 +8,13 @@ import {Switch} from 'react-router-dom'
 
 class SlidePage extends Component {
 
+  static uiName = 'SlidePage';
+
+  static propTypes = {
+    className: PropTypes.string,
+    noAnimate: PropTypes.bool
+  }
+
   history = {
     index: -1,
     path: []
@@ -132,15 +139,15 @@ export default class Pages extends Component {
   render() {
     const {
       history,
-      noAnimate,
       className,
-      children
+      children,
+      ...other
     } = this.props;
 
     const cls = classnames('pages', className);
 
     return (
-      <SlidePage className={cls} history={history} noAnimate={noAnimate}>
+      <SlidePage className={cls} history={history} {...other}>
         <Switch>
           {children}
         </Switch>
