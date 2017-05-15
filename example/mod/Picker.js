@@ -58,7 +58,8 @@ export default class FormElements extends Component {
     ]
   }
 
-  openPicker = (name)=> ()=>{
+  openPicker = (name)=> (e)=>{
+    e.preventDefault();
     const {pickerOpened} = this.state;
     for (const key in pickerOpened ){
       if(key === name){

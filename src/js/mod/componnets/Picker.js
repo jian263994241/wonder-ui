@@ -278,7 +278,7 @@ export default class Picker extends Component {
     } = this.props;
 
     const cls = classnames({
-      'picker-3d': true,
+      // 'picker-3d': true,
       'picker-columns': (cols.length > 1)
     }, className);
 
