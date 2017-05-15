@@ -5,38 +5,58 @@ import classnames from 'classnames'
 
 import {Switch} from 'react-router-dom'
 
-var detectBackOrForward = function() {
-  var hashHistory = [window.location.hash];
-  var historyLength = window.history.length;
-
-  return function() {
-    var hash = window.location.hash, length = window.history.length;
-    var isBack = false;
-    if (hashHistory.length && historyLength == length) {
-      if (hashHistory[hashHistory.length - 2] == hash) {
-        hashHistory = hashHistory.slice(0, -1);
-        isBack = true;
-      } else {
-        hashHistory.push(hash);
-        // onForward();
-        isBack = false;
-      }
-    } else {
-      hashHistory.push(hash);
-      historyLength = length;
-    }
-
-    return isBack;
-  }
-};
-
-const isBack = detectBackOrForward();
 
 class SlidePage extends Component {
 
+  history = {
+    index: -1,
+    path: []
+  }
+
+  popType = undefined;
+
+  pushHistory = (pathname) =>{
+    const {path, index} = this.history;
+    path.splice(index + 1);
+    path.push(pathname);
+    this.history.index = index + 1;
+  }
+
+  popHistory = (pathname) =>{
+    const {path, index} = this.history;
+    let popType;
+    if(pathname === path[index - 1]){
+      this.history.index = index - 1;
+      popType = 'back';
+    }else if(pathname === path[index + 1]){
+      this.history.index = index + 1;
+      popType = 'forward';
+    }else{
+      popType = undefined;
+    }
+    return popType;
+  }
+
+  componentDidMount() {
+    const {history} = this.props;
+    const pathname = history.location.pathname;
+    this.pushHistory(pathname);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {history} = this.props;
+    const pathname = history.location.pathname;
+
+    if(history.action === 'PUSH'){
+      this.pushHistory(pathname);
+    }else{
+      this.popType = this.popHistory(pathname);
+    }
+  }
+
   render() {
 
-    const {className, location, history, children, noAnimate} = this.props;
+    const {className, history, children, noAnimate} = this.props;
 
     const slideLeft = {
       enter: 'page-from-right-to-center',
@@ -48,6 +68,7 @@ class SlidePage extends Component {
       leave: 'page-from-center-to-right'
     };
 
+    const location = history.location;
     const pathname = location.pathname;
 
     let transitionName, transitionEnterTimeout, transitionLeaveTimeout, transitionEnter, transitionLeave;
@@ -57,22 +78,25 @@ class SlidePage extends Component {
     transitionEnterTimeout = 500;
     transitionLeaveTimeout = 400;
 
+    const popType = this.popType;
+
     switch (history.action) {
       case 'PUSH':
         transitionName = slideLeft;
         break;
       case 'POP':
-        if(isBack()){
+        if(popType === 'back'){
           transitionName = slideRight;
-        }else{
+        }else if(popType === 'forward'){
           transitionName = slideLeft;
+        }else{
+          transitionEnter = transitionLeave = false;
         }
         break;
       default:
         transitionEnter = transitionLeave = false;
         break;
     }
-
 
     if(noAnimate){
       transitionEnter = transitionLeave = false;
@@ -107,7 +131,6 @@ export default class Pages extends Component {
 
   render() {
     const {
-      location,
       history,
       noAnimate,
       className,
@@ -117,7 +140,7 @@ export default class Pages extends Component {
     const cls = classnames('pages', className);
 
     return (
-      <SlidePage className={cls} location={location} history={history} noAnimate={noAnimate}>
+      <SlidePage className={cls} history={history} noAnimate={noAnimate}>
         <Switch>
           {children}
         </Switch>
