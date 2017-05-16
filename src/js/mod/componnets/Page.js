@@ -23,13 +23,35 @@ export default class Page extends Component {
     } = this.props;
 
     if(title){
-      document.title = title;
-      window.KQB && device.ios && KQB.native('setPageTitle', { title });
+      this.setDocumentTitle(title);
     }
+  }
 
-    // Modals.closeModal('.modal-in');
-    // Modals.hidePreloader();
-    // Modals.hideIndicator();
+  setDocumentTitle = (title) => {
+    document.title = title;
+
+    if (device.ios) {
+
+      const KQB = window.KQB;
+      if(!KQB) return ;
+
+      if(KQB.Env.KQ|| KQB.Env.FeiFan){
+        KQB.native('setPageTitle', { title });
+      }
+
+      if(KQB.Env.Weixin){
+        document.title = title;
+        var i = document.createElement('iframe');
+        i.src = '/favicon.ico';
+        i.style.display = 'none';
+        i.onload = function() {
+            setTimeout(function(){
+                i.remove();
+            }, 9)
+        }
+        document.body.appendChild(i);
+      }
+    }
   }
 
   render() {
