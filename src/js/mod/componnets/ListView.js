@@ -101,7 +101,7 @@ export class List extends Component {
     }
 
 
-    if(IndexClild && IndexClild.type.uiName === 'ListItem') {
+    if(IndexClild && React.isValidElement(IndexClild) && IndexClild.type.uiName === 'ListItem') {
       childrenWrap = (
         <ul>{children}</ul>
       )
