@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
-export class ContentBlockTitle extends Component {
+class Title extends Component {
 
   static uiName = 'ContentBlockTitle'
 
@@ -30,7 +30,7 @@ export class ContentBlockTitle extends Component {
   }
 }
 
-export class ContentBlock extends Component {
+export default class ContentBlock extends Component {
 
   static uiName = 'ContentBlock'
 
@@ -42,6 +42,7 @@ export class ContentBlock extends Component {
     noHairlines: PropTypes.bool
   }
 
+  static Title = Title;
 
   render() {
 

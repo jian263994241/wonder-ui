@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, Buttons, Block, Bars, Grid, LazyLoad} from 'kui'
+import {Page, PageContent, Buttons, Bars, Grid, LazyLoad} from 'kui'
 
 
 const {SubNavBar, Navbar} = Bars;

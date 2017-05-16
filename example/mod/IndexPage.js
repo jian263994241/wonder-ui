@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, ListView, Block} from 'kui'
+import {Page, PageContent, ListView, ContentBlock} from 'kui'
 
 const {List, ListItem, ListGroup} = ListView;
-const {ContentBlock, ContentBlockTitle} = Block;
+const {Title: ContentBlockTitle} = ContentBlock;
 
 // <ListItem title="导航" divider/>
 // <ListItem title="导航栏 NavigationBar"/>

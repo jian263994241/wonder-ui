@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, Buttons, Block, Bars, Grid, Popover, Popup, Dialog, PickerModal} from 'kui'
+import {Page, PageContent, Buttons, ContentBlock, Bars, Grid, Popover, Popup, Dialog, PickerModal} from 'kui'
 
 
-const {ContentBlock, ContentBlockTitle} = Block;
+const {Title: ContentBlockTitle} = ContentBlock;
 const {Button} = Buttons;
 const {Row,Col} = Grid;
 const {SubNavBar, Navbar} = Bars;
@@ -89,7 +89,7 @@ export default class ModalsPage extends Component {
               <div className="right"><a onClick={()=>this.setState({pickerModalOpened: false})}>关闭</a></div>
             </Toolbar>
           }
-        >      
+        >
           <ContentBlock>
             <p>About Popover created dynamically.</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>

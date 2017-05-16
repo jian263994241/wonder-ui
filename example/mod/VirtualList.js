@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, ListView, Block, Bars} from 'kui'
+import {Page, PageContent, ListView, ContentBlock, Bars} from 'kui'
 
 const {List, ListItem, ListGroup, ListLabel} = ListView;
 
-const {ContentBlock, ContentBlockTitle} = Block;
+const {Title: ContentBlockTitle} = ContentBlock;
 
 const {SubNavBar, Navbar} = Bars;
 

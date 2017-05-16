@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, Buttons, Block, Bars, Grid} from 'kui'
+import {Page, PageContent, Buttons, ContentBlock, Bars, Grid} from 'kui'
 
 
-const {ContentBlock, ContentBlockTitle} = Block;
+const {Title: ContentBlockTitle} = ContentBlock;
 const {Button} = Buttons;
 const {Row,Col} = Grid;
 const {SubNavBar, Navbar} = Bars;
 
 export default class ButtonsPage extends Component {
   render() {
-    
+
     return (
       <Page title="按钮">
         <Navbar title="按钮" back/>

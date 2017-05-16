@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, Buttons, Block, Bars, Grid, Preloader} from 'kui'
+import {Page, PageContent, Buttons, ContentBlock, Bars, Grid, Preloader} from 'kui'
 
 
-const {ContentBlock, ContentBlockTitle} = Block;
+const {Title: ContentBlockTitle} = ContentBlock;
 const {Button} = Buttons;
 const {Row,Col} = Grid;
 const {SubNavBar, Navbar} = Bars;
