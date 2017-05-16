@@ -140,7 +140,7 @@ export class Toolbar extends Component {
     const cls = classnames('toolbar', className);
 
     return (
-      <div className={cls} {...other}>
+      <div className={cls} {...other} ref="Toolbar">
         <div className="toolbar-inner">
           {children}
         </div>

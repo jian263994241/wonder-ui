@@ -42,6 +42,7 @@ export default class IndexPage extends Component {
             <ListItem title="图标" link to="/Icons"/>
             <ListItem title="懒加载" link to="/LazyLoad"/>
             <ListItem title="标签切换" link to="/Tab/Index"/>
+            <ListItem title="键盘" link to="/Keyboard"/>
 
             <ListItem title="列表" divider/>
             <ListItem title="列表视图" link to="/ListView"/>

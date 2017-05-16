@@ -19,6 +19,7 @@ export Dialog from './mod/componnets/Dialog'
 export Preloader from './mod/componnets/Preloader'
 export PickerModal from './mod/componnets/PickerModal'
 export Picker from './mod/componnets/Picker'
+export Keyboard from './mod/componnets/Keyboard'
 
 export * as ListView from './mod/componnets/ListView'
 export SwipeableViews from './mod/componnets/SwipeableViews'

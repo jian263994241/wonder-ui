@@ -2,6 +2,15 @@
     -webkit-transition-duration: @d;
     transition-duration: @d;
 }
+.border-box(){
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.box-shadow(@bs) {
+    -webkit-box-shadow: @bs;
+    box-shadow: @bs;
+}
 .delay(@d) {
     -webkit-transition-delay: @d;
     transition-delay: @d;

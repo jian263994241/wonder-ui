@@ -24,7 +24,8 @@ import Modals from './mod/Modals'
 import Preloader from './mod/Preloader'
 import InfiniteScroll from './mod/InfiniteScroll'
 import Picker from './mod/Picker'
-const {Route, Link} = RouterDOM;
+import Keyboard from './mod/Keyboard'
+const {Route, Link, Redirect} = RouterDOM;
 
 render((
   <App type="hash">
@@ -49,6 +50,7 @@ render((
       <Route path="/Preloader" component={Preloader}/>
       <Route path="/Picker" component={Picker}/>
       <Route path="/InfiniteScroll" component={InfiniteScroll}/>
+      <Route path="/Keyboard" component={Keyboard}/>
     </Pages>
   </App>
 ), document.querySelector('.root'));
