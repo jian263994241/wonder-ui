@@ -28,6 +28,7 @@ export * as Buttons, {Button, ButtonsSegmented} from './mod/componnets/Buttons'
 export * as Grid from './mod/componnets/Grid'
 export Icon from './mod/componnets/Icon'
 export dom from './mod/utils/dom'
+export * as store, {ls, ss} from './mod/utils/store'
 
 //lib
 export Request from 'axios'
