@@ -225,6 +225,7 @@ Dialog.toast = function (text, timer, callbackOk){
   }, timer);
 }
 
+
 Dialog.showPreloader = function (text, logo = false){
 
   if(Dialog.showPreloader.rendered) return ;
@@ -252,9 +253,11 @@ Dialog.showPreloader = function (text, logo = false){
 }
 
 Dialog.hidePreloader = function(){
-  const {rendered} = Dialog.showPreloader;
-  if(rendered){
-    rendered.close();
-    Dialog.showPreloader.rendered = null;
-  }
+  setTimeout(()=>{
+    const {rendered} = Dialog.showPreloader;
+    if(rendered){
+      rendered.close();
+      Dialog.showPreloader.rendered = null;
+    }
+  }, 100);
 }
