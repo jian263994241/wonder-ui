@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import {mountedOutside} from '../utils/mix'
+import {mountedOutside, mounted} from '../utils/mix'
 import $ from '../utils/dom'
 import Modal from './Modal'
 
@@ -88,8 +88,8 @@ export default class Dialog extends Component {
         ref="Dialog"
       >
         <div className="modal-inner">
-          <div className="modal-title">{title}</div>
-          <div className="modal-text">{text}</div>
+          {mounted(title, <div className="modal-title"></div>)}
+          {mounted(text, <div className="modal-text"></div>)}
           {afterText}
         </div>
         {buttons}
@@ -223,4 +223,38 @@ Dialog.toast = function (text, timer, callbackOk){
   setTimeout(()=>{
     rendered.close();
   }, timer);
+}
+
+Dialog.showPreloader = function (text, logo = false){
+
+  if(Dialog.showPreloader.rendered) return ;
+
+  const cls = classnames('preloader', {
+    'preloader-white': !logo,
+    'preloader-kq': logo
+  });
+
+  const preloader = logo ? (
+    <div style={{position: 'relative'}}>
+      <div className={cls}></div>
+      {logo && <div className="logo"></div>}
+    </div>
+  ) : (<div className={cls}></div>);
+
+
+  const rendered = mountedOutside(
+    <Dialog title={preloader} text={text} className="toast" overLayCss="preloader-indicator-overlay"></Dialog>
+  );
+
+  Dialog.showPreloader.rendered = rendered;
+
+  rendered.open();
+}
+
+Dialog.hidePreloader = function(){
+  const {rendered} = Dialog.showPreloader;
+  if(rendered){
+    rendered.close();
+    Dialog.showPreloader.rendered = null;
+  }
 }

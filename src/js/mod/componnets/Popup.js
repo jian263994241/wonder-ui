@@ -29,7 +29,7 @@ export default class Popup extends Component {
     const cls = classnames('popup', className);
 
     return (
-      <Modal className={cls} {...other}>{children}</Modal>
+      <Modal className={cls} overLayCss="popup-overlay" {...other}>{children}</Modal>
     );
   }
 }

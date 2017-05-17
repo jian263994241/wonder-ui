@@ -32,34 +32,42 @@ export class FormInput extends Component {
 
   static uiName = 'FormInput'
 
+  focus = ()=>{
+    this.refs.input.focus();
+  }
+
+  val = (value)=>{
+    if(value){
+      this.refs.input.value = value;
+    }
+    return this.refs.input.value;
+  }
 
   render() {
 
-    const Input = (props)=>{
-      let ele;
-      const {type, value, ...other} = props;
-      switch (type) {
-        case 'select':
-          ele = <select {...other} type={type} defaultValue={value}/>
-          break;
-        case 'switch':
-          ele = <Switch {...other} type={type} value={value}/>
-          break;
-        case 'range':
-          ele = <Range {...other} type={type} value={value}/>
-          break;
-        case 'textarea':
-          ele = <textarea {...other} type={type} defaultValue={value}/>
-          break;
-        default:
-          ele = <input {...other} type={type} defaultValue={value}/>
-      }
-      return ele;
-    };
+    const {type, value, ...other} = this.props;
 
+    let ele;
+
+    switch (type) {
+      case 'select':
+        ele = <select {...other} type={type} defaultValue={value} {...other}/>
+        break;
+      case 'switch':
+        ele = <Switch {...other} type={type} value={value} {...other}/>
+        break;
+      case 'range':
+        ele = <Range {...other} type={type} value={value} {...other}/>
+        break;
+      case 'textarea':
+        ele = <textarea {...other} type={type} defaultValue={value} ref="input" {...other}/>
+        break;
+      default:
+        ele = <input {...other} type={type} defaultValue={value} ref="input" {...other}/>
+    }
     return (
       <div className="item-input" ref="FormInput">
-        <Input {...this.props}/>
+        {ele}
       </div>
     );
   }

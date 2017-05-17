@@ -23,6 +23,14 @@ Framework7 Color Themes
             background: @color;
         }
     }
+    .theme-@{colorName} .subnavbar.no-border .button.tab-link {
+      color: @color;
+      &.active {
+          &::after{
+              background-color: @color;
+          }
+      }
+    }
     // Progress bar
     .progressbar {
         &.theme-@{colorName}, .theme-@{colorName} & {
