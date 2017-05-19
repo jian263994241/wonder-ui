@@ -27,30 +27,29 @@ export default class Page extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const {
+      title
+    } = nextProps;
+
+    if(title){
+      this.setDocumentTitle(title);
+    }
+  }
+
   setDocumentTitle = (title) => {
     document.title = title;
 
     if (device.ios) {
-
-      const KQB = window.KQB;
-      if(!KQB) return ;
-
-      if(KQB.Env.KQ|| KQB.Env.FeiFan){
-        KQB.native('setPageTitle', { title });
+      var i = document.createElement('iframe');
+      i.src = '/favicon.ico';
+      i.style.display = 'none';
+      i.onload = function() {
+          setTimeout(function(){
+              i.remove();
+          }, 9)
       }
-
-      if(KQB.Env.Weixin){
-        document.title = title;
-        var i = document.createElement('iframe');
-        i.src = '/favicon.ico';
-        i.style.display = 'none';
-        i.onload = function() {
-            setTimeout(function(){
-                i.remove();
-            }, 9)
-        }
-        document.body.appendChild(i);
-      }
+      document.body.appendChild(i);
     }
   }
 

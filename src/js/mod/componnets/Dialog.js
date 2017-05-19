@@ -209,7 +209,7 @@ Dialog.prompt = function (text, title, callbackOk, callbackCancel) {
 Dialog.toast = function (text, timer, callbackOk){
   if (typeof timer === 'function' || typeof timer === 'undefined') {
     callbackOk = arguments[1];
-    timer = 2000;
+    timer = 1500;
   }
 
   const toast = (
@@ -222,6 +222,7 @@ Dialog.toast = function (text, timer, callbackOk){
 
   setTimeout(()=>{
     rendered.close();
+    callbackOk && callbackOk();
   }, timer);
 }
 
