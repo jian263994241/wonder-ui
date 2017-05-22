@@ -30,7 +30,7 @@ export class List extends Component {
 
   state = {
     virtualItems: [],
-    virtualItemsShowLength : 20,
+    virtualItemsShowLength : 15,
     virtualItemsIndex: 1
   }
 
@@ -107,12 +107,12 @@ export class List extends Component {
     const creactChildren = ()=>{
       let childrenNode;
       if(virtualItems){
-        childrenNode = virtualItems.map(createItem);
+        childrenNode = this.state.virtualItems.map(createItem);
       }else{
         childrenNode = children;
       }
 
-      childrenNode = React.Children.map(children, (c, i)=>{
+      childrenNode = React.Children.map(childrenNode, (c, i)=>{
         if(!React.isValidElement(c)) return c;
         return React.cloneElement(c, {key: i, sortable, onSorted});
       });
