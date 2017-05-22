@@ -17,14 +17,14 @@ class PickerCol extends Component {
     opened: PropTypes.bool,
     items: PropTypes.array,
     align: PropTypes.string,
-    multi: PropTypes.bool,
+    picker3d: PropTypes.bool,
     onSelected: PropTypes.func
   }
 
   static defaultProps = {
     items: [],
     align: 'right',
-    multi: false,
+    picker3d: false,
     momentumRatio: 7,
     itemHeight: 36
   }
@@ -93,6 +93,7 @@ class PickerCol extends Component {
 
   handleTouchMove = (e)=>{
     const {pageY: touchCurrentY} = e.touches[0];
+    const {picker3d} = this.props;
     let {isTouched, touchStartY, currentTranslate, startTranslate, maxTranslate, minTranslate, velocityTranslate, prevTranslate} = this.state;
 
     if(isTouched){
@@ -162,7 +163,7 @@ class PickerCol extends Component {
     const {
       items,
       align,
-      multi
+      picker3d
     } = this.props;
 
     const {
@@ -173,10 +174,7 @@ class PickerCol extends Component {
 
       return (
         <div
-          className={classnames({
-          'picker-item': true,
-          'picker-selected': (activeIndex===index)
-          })}
+          className={classnames({ 'picker-item': true, 'picker-selected': (activeIndex===index) })}
           key={`pickerItem-${index}`}
         >
           <span>{item}</span>
@@ -186,7 +184,7 @@ class PickerCol extends Component {
 
     const cls = classnames({
       'picker-items-col': true,
-      // 'picker-items-col-absolute': multi,
+      'picker-items-col-absolute': picker3d,
       'picker-items-col-left': (align ==='left'),
       'picker-items-col-center': (align ==='center')
     });
@@ -277,12 +275,12 @@ export default class Picker extends Component {
       ...other
     } = this.props;
 
-    const cls = classnames({
-      // 'picker-3d': true,
-      'picker-columns': (cols.length > 1)
-    }, className);
+    const multiPicker = (cols.length > 1);
 
-    const multi = (cols.length > 1);
+    const cls = classnames({
+      // 'picker-3d': multiPicker,
+      'picker-columns': multiPicker
+    }, className);
 
     const Col = (item, index) => {
       const displayValues = item.displayValues || item.values;
@@ -295,10 +293,10 @@ export default class Picker extends Component {
         onSelected && onSelected(this.values);
       }
 
-      const align = !multi ? 'center': item.align;
+      const align = !multiPicker ? 'center': (item.align || 'center');
 
       return (
-        <PickerCol key={index} items={displayValues} ref={`Col${index}`} align={align} multi={multi} onSelected={selected}></PickerCol>
+        <PickerCol key={index} items={displayValues} ref={`Col${index}`} align={align} picker3d={false} onSelected={selected}></PickerCol>
       );
     };
 

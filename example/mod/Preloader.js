@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, Buttons, ContentBlock, Bars, Grid, Preloader} from 'kui'
+import {Page, PageContent, Buttons, ContentBlock, Bars, Grid, Dialog} from 'kui'
 
 
 const {Title: ContentBlockTitle} = ContentBlock;
@@ -17,12 +17,17 @@ export default class ModalsPage extends Component {
   }
 
   showPreloader = (i)=>()=>{
-    this.state['show'+ i] = true
-    this.forceUpdate();
-    setTimeout(()=>{
-      this.state['show'+ i] = false;
-      this.forceUpdate();
-    }, 2000);
+    switch (i) {
+      case '1':
+        Dialog.showPreloader()
+        break;
+      case '2':
+        Dialog.showPreloader(0)
+        break;
+      case '3':
+        Dialog.showPreloader(0, '请稍等...')
+        break;
+    }
   }
 
 
@@ -34,21 +39,23 @@ export default class ModalsPage extends Component {
           <ContentBlock>
 
             <Row>
-              <Col width="50">
+              <Col width="33">
                 <Button onClick={this.showPreloader('1')}>Preloader</Button>
               </Col>
 
-              <Col width="50">
+              <Col width="33">
                 <Button onClick={this.showPreloader('2')}>Preloader2</Button>
               </Col>
 
+              <Col width="33">
+                <Button onClick={this.showPreloader('3')}>Preloader2</Button>
+              </Col>
             </Row>
 
           </ContentBlock>
 
         </PageContent>
-        <Preloader show={this.state.show1}></Preloader>
-        <Preloader show={this.state.show2} base></Preloader>
+
       </Page>
     );
   }

@@ -5,6 +5,7 @@ import {mounted} from '../utils/mix'
 import {Link} from 'react-router-dom'
 import $ from '../utils/dom'
 
+
 /**
 * List
 * Properties: className, style, mediaList
@@ -19,9 +20,12 @@ export class List extends Component {
     className: PropTypes.string,
     inset: PropTypes.bool,
     tabletInset: PropTypes.bool,
-    label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    blockLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     accordion: PropTypes.bool,
-    virtualItems: React.PropTypes.array
+    virtualItems: React.PropTypes.array,
+    sortable: PropTypes.bool,
+    sortableOpened: PropTypes.bool,
+    onSorted: PropTypes.func
   }
 
   state = {
@@ -76,8 +80,11 @@ export class List extends Component {
       accordion,
       inset,
       tabletInset,
-      label,
+      blockLabel,
       virtualItems,
+      sortable,
+      sortableOpened,
+      onSorted,
       className,
       children,
       ...other
@@ -85,47 +92,41 @@ export class List extends Component {
 
     const cls = classnames('list-block', {
       'media-list': mediaList,
+      'sortable': sortable,
+      'sortable-opened': sortableOpened,
       'inset': inset,
       'tablet-inset': tabletInset,
       'accordion-list': accordion
     }, className);
 
-    const IndexClild = React.Children.toArray(children)[0];
-
-    let childrenWrap = children, blockLabel;
-
-    if(label){
-      blockLabel = (
-        <div className="list-block-label">{label}</div>
-      )
-    }
-
-
-    if(IndexClild && React.isValidElement(IndexClild) && IndexClild.type.uiName === 'ListItem') {
-      childrenWrap = (
-        <ul>{children}</ul>
-      )
-    }
-
-
     const createItem = (item, index)=>{
       const {...props} = item;
-      return <ListItem {...props} key={index}></ListItem>;
+      return <ListItem {...props} key={index}/>;
     }
 
-    if(virtualItems){
+    const creactChildren = ()=>{
+      let childrenNode;
+      if(virtualItems){
+        childrenNode = virtualItems.map(createItem);
+      }else{
+        childrenNode = children;
+      }
 
-      childrenWrap = (
-        <ul>
-          {this.state.virtualItems.map(createItem)}
-        </ul>
-      )
+      childrenNode = React.Children.map(children, (c, i)=>{
+        if(!React.isValidElement(c)) return c;
+        return React.cloneElement(c, {key: i, sortable, onSorted});
+      });
+
+      if(React.isValidElement(childrenNode[0]) && childrenNode[0].type.uiName === 'ListItem'){
+        return React.createElement('ul', null, childrenNode);
+      }
+      return childrenNode;
     }
 
     return (
       <div className={cls} {...other} ref="List">
-        {childrenWrap}
-        {blockLabel}
+        {creactChildren()}
+        {mounted(blockLabel, <div className="list-block-label"></div>)}
       </div>
     );
   }
@@ -196,24 +197,123 @@ export class ListItem extends Component {
     checkbox: PropTypes.bool,
     radio: PropTypes.bool,
     checked: PropTypes.bool,
-    value: PropTypes.string
+    value: PropTypes.string,
+    sortable: PropTypes.bool,
+    onSorted: PropTypes.func
+  }
+
+  state = {
+    sorting: false,
+    expanded: false
   }
 
   constructor(props){
     super(props);
-    this.state = {};
+    const {expanded, accordion} = props;
+    if(accordion) {
+      this.state.expanded = expanded;
+    }
+  }
 
-    if(props.accordion) {
-      this.state.expanded = this.props.expanded;
-    }
-  }
   componentWillReceiveProps(nextProps) {
-    if(nextProps.expanded != undefined){
-      this.setState({
-        expanded: nextProps.expanded
-      });
-    }
+    const {expanded, accordion} = nextProps;
+    this.setState({ expanded });
   }
+
+  initSortable = ()=>{
+    let isTouched, isMoved, touchStartY, touchesDiff, sortingEl, sortingElHeight, sortingItems, minTop, maxTop, insertAfter, insertBefore, sortableContainer, startIndex;
+
+    const handleTouchStart = (e)=>{
+      isMoved = false;
+      isTouched = true;
+      touchStartY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+      /*jshint validthis:true */
+      sortingEl = $(this.refs.ListItem);
+      startIndex = sortingEl.index();
+      sortingItems = sortingEl.parent().find('li');
+      sortableContainer = sortingEl.parents('.sortable');
+      e.preventDefault();
+    }
+
+    const handleTouchMove = (e)=>{
+        if (!isTouched || !sortingEl) return;
+        let pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+        let pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        if (!isMoved) {
+            sortingEl.addClass('sorting');
+            sortableContainer.addClass('sortable-sorting');
+            minTop = sortingEl[0].offsetTop;
+            maxTop = sortingEl.parent().height() - sortingEl[0].offsetTop - sortingEl.height();
+            sortingElHeight = sortingEl[0].offsetHeight;
+        }
+        isMoved = true;
+
+        e.preventDefault();
+        // e.f7PreventPanelSwipe = true;
+        touchesDiff = pageY - touchStartY;
+        let translate = touchesDiff;
+        if (translate < -minTop) translate = -minTop;
+        if (translate > maxTop) translate = maxTop;
+        sortingEl.transform('translate3d(0,' + translate + 'px,0)');
+
+        insertBefore = insertAfter = undefined;
+
+        sortingItems.each(function () {
+            let currentEl = $(this);
+            if (currentEl[0] === sortingEl[0]) return;
+            let currentElOffset = currentEl[0].offsetTop;
+            let currentElHeight = currentEl.height();
+            let sortingElOffset = sortingEl[0].offsetTop + translate;
+
+            if ((sortingElOffset >= currentElOffset - currentElHeight / 2) && sortingEl.index() < currentEl.index()) {
+                currentEl.transform('translate3d(0, '+(-sortingElHeight)+'px,0)');
+                insertAfter = currentEl;
+                insertBefore = undefined;
+            }
+            else if ((sortingElOffset <= currentElOffset + currentElHeight / 2) && sortingEl.index() > currentEl.index()) {
+                currentEl.transform('translate3d(0, '+(sortingElHeight)+'px,0)');
+                insertAfter = undefined;
+                if (!insertBefore) insertBefore = currentEl;
+            }
+            else {
+                $(this).transform('translate3d(0, 0%,0)');
+            }
+        });
+    }
+    const handleTouchEnd = (e)=>{
+
+        if (!isTouched || !isMoved) {
+            isTouched = false;
+            isMoved = false;
+            return;
+        }
+        const {onSorted} = this.props;
+        e.preventDefault();
+        sortingItems.transform('');
+        sortingEl.removeClass('sorting');
+        sortableContainer.removeClass('sortable-sorting');
+        let virtualList, oldIndex, newIndex;
+        if (insertAfter) {
+            sortingEl.insertAfter(insertAfter);
+            onSorted && onSorted({startIndex: startIndex, newIndex: sortingEl.index()});
+        }
+        if (insertBefore) {
+            sortingEl.insertBefore(insertBefore);
+            onSorted && onSorted({startIndex: startIndex, newIndex: sortingEl.index()});
+        }
+
+        insertAfter = insertBefore = undefined;
+        isTouched = false;
+        isMoved = false;
+    }
+
+    return {
+      onTouchStart : handleTouchStart,
+      onTouchMove : handleTouchMove,
+      onTouchEnd : handleTouchEnd
+    };
+  }
+
   render (){
     const {
       accordion,
@@ -222,6 +322,8 @@ export class ListItem extends Component {
       onAccordionOpened,
       onAccordionClose,
       onAccordionClosed,
+      onSorted,
+      sortable,
       title,
       link,
       subtitle,
@@ -266,7 +368,6 @@ export class ListItem extends Component {
     if(accordion) type = 'accordion';
     if(checkbox) type = 'checkbox';
     if(radio) type = 'radio';
-    if(!accordion && children) type= 'custom';
 
     itemMeida = mounted(media, <div className="item-media"/>);
     itemTitle = mounted(title, <div className="item-title"/>);
@@ -280,6 +381,7 @@ export class ListItem extends Component {
           <div className="item-inner">
             {itemTitle}
             {itemAfter}
+            {children}
           </div>
         </Div>
       );
@@ -412,9 +514,6 @@ export class ListItem extends Component {
       case 'radio':
         content = radioItem();
         break;
-      case 'custom':
-        content = customItem();
-        break;
       default:
         content = baseItem();
     }
@@ -422,36 +521,8 @@ export class ListItem extends Component {
     return (
       <li className={className} {...other} ref="ListItem">
         {content}
+        {sortable && <div className="sortable-handler" {...this.initSortable()}></div>}
       </li>
     )
-  }
-}
-
-/**
-* ListLabel
-* Properties: className, style
-* Event Properties: null
-*/
-
-export class ListLabel extends Component {
-  static uiName = 'ListLabel'
-
-  static propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object,
-  }
-  render() {
-    const {
-      className,
-      style,
-      children,
-      ...other
-    } = this.props;
-
-    const cls = classnames('list-block-label', className);
-
-    return (
-      <div className={cls} {...other} ref="ListLabel">{children}</div>
-    );
   }
 }

@@ -25,6 +25,8 @@ import Preloader from './mod/Preloader'
 import InfiniteScroll from './mod/InfiniteScroll'
 import Picker from './mod/Picker'
 import Keyboard from './mod/Keyboard'
+import SortableList from './mod/SortableList'
+
 const {Route, Link, Redirect} = RouterDOM;
 
 render((
@@ -36,6 +38,7 @@ render((
       <Route path="/MediaLists" component={MediaLists}/>
       <Route path="/AccordionList" component={AccordionList}/>
       <Route path="/VirtualList" component={VirtualList}/>
+      <Route path="/SortableList" component={SortableList}/>
       <Route path="/Formelements" component={Formelements}/>
       <Route path="/CheckboxesRadios" component={CheckboxesRadios}/>
       <Route path="/Buttons" component={Buttons}/>

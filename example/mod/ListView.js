@@ -58,7 +58,7 @@ export default class ListViewPage extends Component {
           </List>
 
           <ContentBlockTitle>带LEBAL的列表</ContentBlockTitle>
-          <List label="LEBAL在这里展示(可以是String,也可以是React Element)">
+          <List blockLabel="LEBAL在这里展示(可以是String,也可以是React Element)">
             <ListItem title="Ivan Petrov" after="CEO" link/>
             <ListItem title="John Doe"  after="Cleaner" link/>
           </List>

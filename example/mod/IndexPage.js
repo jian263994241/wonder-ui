@@ -49,6 +49,7 @@ export default class IndexPage extends Component {
             <ListItem title="媒体列表" link to="/MediaLists"/>
             <ListItem title="手风琴列表" link to="/AccordionList"/>
             <ListItem title="虚拟列表" link to="/VirtualList"/>
+            <ListItem title="排序列表" link to="/SortableList"/>
 
             <ListItem title="表单" divider/>
             <ListItem title="表单布局" link to="/FormElements"/>

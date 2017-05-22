@@ -79,7 +79,12 @@ export default class Keyboard extends Component {
       const del = (key === 'del');
       const close = (key === 'close');
 
-      const keyCss = classnames({ 'picker-keypad-button': true, 'picker-keypad-block': empty, 'picker-keypad-dummy-button': empty, 'picker-keypad-delete': del });
+      const keyCss = classnames({
+        'picker-keypad-button': true,
+        // 'picker-keypad-block': empty,
+        'picker-keypad-dummy-button': empty,
+        'picker-keypad-delete': del
+      });
 
       let inner ;
       if(empty){

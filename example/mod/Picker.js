@@ -36,7 +36,6 @@ export default class FormElements extends Component {
     demo2: [
       {
         values: ['Apple', 'Orange', 'Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna',],
-        align:'left'
       },
       {
         values: ['Apple', 'Orange', 'Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna','Bananna',]

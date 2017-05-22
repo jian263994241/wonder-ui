@@ -227,7 +227,12 @@ Dialog.toast = function (text, timer, callbackOk){
 }
 
 
-Dialog.showPreloader = function (text, logo = false){
+Dialog.showPreloader = function (logo, text){
+
+  if (typeof logo === 'string' || typeof logo === 'undefined') {
+    text = arguments[0];
+    logo = true;
+  }
 
   if(Dialog.showPreloader.rendered) return ;
 
