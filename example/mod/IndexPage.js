@@ -26,7 +26,7 @@ const {Title: ContentBlockTitle} = ContentBlock;
 export default class IndexPage extends Component {
 
   onAccordionOpen = (index)=> ()=>{
-    console.log(index);
+    // console.log(index);
   }
 
   render() {
@@ -47,19 +47,6 @@ export default class IndexPage extends Component {
           </ContentBlock>
           <List accordion inset>
             <ListGroup>
-              <ListItem title="基础" onAccordionOpen={this.onAccordionOpen(0)}>
-                <List>
-                  <ListItem title="九宫格" link to="/Grid"/>
-                  <ListItem title="图片轮播" link to="/swipeable"/>
-                  <ListItem title="图标" link to="/Icons"/>
-                  <ListItem title="懒加载" link to="/LazyLoad"/>
-                  <ListItem title="标签切换" link to="/Tab/Index"/>
-                  <ListItem title="键盘" link to="/Keyboard"/>
-                </List>
-              </ListItem>
-            </ListGroup>
-
-            <ListGroup style={style}>
               <ListItem title="列表" onAccordionOpen={this.onAccordionOpen(1)}>
                 <List>
                   <ListItem title="列表视图" link to="/ListView"/>
@@ -82,7 +69,20 @@ export default class IndexPage extends Component {
             </ListGroup>
 
             <ListGroup style={style}>
-              <ListItem title="反馈" onAccordionOpen={this.onAccordionOpen(3)}>
+              <ListItem title="基础组件" onAccordionOpen={this.onAccordionOpen(0)}>
+                <List>
+                  <ListItem title="九宫格" link to="/Grid"/>
+                  <ListItem title="图片轮播" link to="/swipeable"/>
+                  <ListItem title="图标" link to="/Icons"/>
+                  <ListItem title="懒加载" link to="/LazyLoad"/>
+                  <ListItem title="标签切换" link to="/Tab/Index"/>
+                  <ListItem title="键盘" link to="/Keyboard"/>
+                </List>
+              </ListItem>
+            </ListGroup>
+
+            <ListGroup style={style}>
+              <ListItem title="操作" onAccordionOpen={this.onAccordionOpen(3)}>
                 <List>
                   <ListItem title="模态框 Modals" link to="/Modals"/>
                   <ListItem title="选择器" link to="/Picker"/>
