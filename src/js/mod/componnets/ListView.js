@@ -106,20 +106,24 @@ export class List extends Component {
 
     const creactChildren = ()=>{
       let childrenNode;
+
       if(virtualItems){
         childrenNode = this.state.virtualItems.map(createItem);
       }else{
         childrenNode = children;
       }
 
-      childrenNode = React.Children.map(childrenNode, (c, i)=>{
-        if(!React.isValidElement(c)) return c;
-        return React.cloneElement(c, {key: i, sortable, onSorted});
-      });
+      if(childrenNode){
+        childrenNode = React.Children.map(childrenNode, (c, i)=>{
+          if(!React.isValidElement(c)) return c;
+          return React.cloneElement(c, {key: i, sortable, onSorted, accordion});
+        });
 
-      if(React.isValidElement(childrenNode[0]) && childrenNode[0].type.uiName === 'ListItem'){
-        return React.createElement('ul', null, childrenNode);
+        if(React.isValidElement(childrenNode[0]) && childrenNode[0].type.uiName === 'ListItem'){
+          return React.createElement('ul', null, childrenNode);
+        }
       }
+
       return childrenNode;
     }
 
@@ -145,21 +149,22 @@ export class ListGroup extends Component {
 
   static propTypes = {
     className: PropTypes.string,
-    title: React.PropTypes.string.isRequired
+    title: React.PropTypes.string
   }
 
   render() {
     const {
       title,
+      style,
       className,
       children,
       ...other
     } = this.props;
 
     return (
-      <ul className={className} ref="ListGroup" {...other}>
-        <li className="list-group-title">{title}</li>
-        {children}
+      <ul className={className} style={style} ref="ListGroup">
+        {mounted(title, <li className="list-group-title"></li>)}
+        {React.cloneElement(children, {...other})}
       </ul>
     );
   }
@@ -407,15 +412,16 @@ export class ListItem extends Component {
 
     const accordionItem = ()=>{
       const itemCss = classnames('accordion-item', {'accordion-item-expanded': this.state.expanded});
-      const accordionHandler = ()=>{
-        const {expanded} = this.state;
+      const accordionToggle = ()=>{
+        let {expanded} = this.state;
+        expanded = !expanded;
         if(expanded){
           onAccordionOpen && onAccordionOpen();
         }else{
           onAccordionClose && onAccordionClose();
         }
         this.setState({
-          expanded : !expanded
+          expanded : expanded
         }, ()=>{
           if(expanded){
             onAccordionOpened && onAccordionOpened();
@@ -426,7 +432,7 @@ export class ListItem extends Component {
       }
       return (
         <div className={itemCss}>
-          <div className="item-link item-content" onClick={accordionHandler}>
+          <div className="item-link item-content" onClick={accordionToggle}>
             {itemMeida}
             <div className="item-inner">
               {itemTitle}
