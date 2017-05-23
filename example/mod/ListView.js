@@ -40,6 +40,7 @@ export default class ListViewPage extends Component {
             <ListItem title="这里分隔" divider/>
             <ListItem title="John Doe"  after="Cleaner" link/>
           </List>
+
           <ContentBlockTitle>列表分组</ContentBlockTitle>
           <List>
             <ListGroup title="I">
@@ -50,19 +51,12 @@ export default class ListViewPage extends Component {
               <ListItem title="Jenna Smith"/>
             </ListGroup>
           </List>
-          <ContentBlockTitle>INSET</ContentBlockTitle>
-          <List inset>
-            <ListItem title="Ivan Petrov" after="CEO" media={<Icon/>}/>
-            <ListItem title="John Doe" badge="5" media={<Icon/>}/>
-            <ListItem title="Jenna Smith" badge="new" badgeColor="gray" media={<Icon/>}/>
-          </List>
 
           <ContentBlockTitle>带LEBAL的列表</ContentBlockTitle>
           <List blockLabel="LEBAL在这里展示(可以是String,也可以是React Element)">
             <ListItem title="Ivan Petrov" after="CEO" link/>
             <ListItem title="John Doe"  after="Cleaner" link/>
           </List>
-
         </PageContent>
       </Page>
     );

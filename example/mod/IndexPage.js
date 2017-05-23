@@ -5,24 +5,6 @@ import {Page, PageContent, ListView, ContentBlock} from 'kui'
 const {List, ListItem, ListGroup} = ListView;
 const {Title: ContentBlockTitle} = ContentBlock;
 
-// <ListItem title="导航" divider/>
-// <ListItem title="导航栏 NavigationBar"/>
-// <ListItem title="工具栏 ToolBar"/>
-// <ListItem title="标签栏 TabBar"/>
-// <ListItem title="搜索栏 SearchBar"/>
-// <ListItem title="气泡 Popup"/>
-//
-// <ListItem title="操作" divider/>
-//
-// <ListItem title="表单组合(Form)-日期选择、性别、开关"/>
-// <ListItem title="图片选择(ImagePicker)"/>
-// <ListItem title="筛选器(Filter"/>
-// <ListItem title="键盘(Keyboard）"/>
-// <ListItem title="输入(Input)"/>
-// <ListItem title="操作表(ActionSheet)"/>
-
-
-
 export default class IndexPage extends Component {
 
   onAccordionOpen = (index)=> ()=>{
@@ -66,6 +48,7 @@ export default class IndexPage extends Component {
                   <ListItem title="按钮" link to="/Buttons"/>
                 </List>
               </ListItem>
+
             </ListGroup>
 
             <ListGroup style={style}>

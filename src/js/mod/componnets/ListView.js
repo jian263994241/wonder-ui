@@ -114,9 +114,10 @@ export class List extends Component {
       }
 
       if(childrenNode){
+
         childrenNode = React.Children.map(childrenNode, (c, i)=>{
           if(!React.isValidElement(c)) return c;
-          return React.cloneElement(c, {key: i, sortable, onSorted, accordion});
+          return React.cloneElement(c, {key: i, sortable, onSorted, accordion, mediaList});
         });
 
         if(React.isValidElement(childrenNode[0]) && childrenNode[0].type.uiName === 'ListItem'){
@@ -135,39 +136,6 @@ export class List extends Component {
     );
   }
 
-}
-
-/**
-* ListGroup
-* Properties: className, style
-* Event Properties: null
-*/
-
-export class ListGroup extends Component {
-
-  static uiName = 'ListGroup'
-
-  static propTypes = {
-    className: PropTypes.string,
-    title: React.PropTypes.string
-  }
-
-  render() {
-    const {
-      title,
-      style,
-      className,
-      children,
-      ...other
-    } = this.props;
-
-    return (
-      <ul className={className} style={style} ref="ListGroup">
-        {mounted(title, <li className="list-group-title"></li>)}
-        {React.cloneElement(children, {...other})}
-      </ul>
-    );
-  }
 }
 
 /**
@@ -319,6 +287,31 @@ export class ListItem extends Component {
     };
   }
 
+  accordionToggle = ()=>{
+    const {onAccordionOpen, onAccordionOpened, onAccordionClose, onAccordionClosed} = this.props;
+    const expanded = !this.state.expanded;
+
+    const accordionItemContent = this.refs.accordionItemContent;
+
+    if(expanded){
+      accordionItemContent.style.height = accordionItemContent.scrollHeight + 'px';
+      onAccordionOpen && onAccordionOpen();
+    }else{
+      accordionItemContent.style.height = '0px';
+      onAccordionClose && onAccordionClose();
+    }
+
+    this.setState({ expanded });
+
+    $(accordionItemContent).transitionEnd(()=>{
+      if(expanded){
+        onAccordionOpened && onAccordionOpened();
+      }else{
+        onAccordionClosed && onAccordionClosed();
+      }
+    });
+  }
+
   render (){
     const {
       accordion,
@@ -338,6 +331,7 @@ export class ListItem extends Component {
       badgeColor,
       after,
       media,
+      mediaList,
       to,
       checkbox,
       radio,
@@ -349,6 +343,11 @@ export class ListItem extends Component {
       ...other
     } = this.props;
 
+    if(divider){
+      return (
+        <li className="item-divider">{title}</li>
+      );
+    }
 
     let content, itemMeida, itemAfter, itemTitle, itemTitleRow, type;
 
@@ -368,8 +367,7 @@ export class ListItem extends Component {
       );
     };
 
-    if(subtitle || text) type = 'mediaItem';
-    if(divider) type = 'divider';
+    if(mediaList) type = 'mediaList';
     if(accordion) type = 'accordion';
     if(checkbox) type = 'checkbox';
     if(radio) type = 'radio';
@@ -378,147 +376,73 @@ export class ListItem extends Component {
     itemTitle = mounted(title, <div className="item-title"/>);
     itemAfter = mounted(after || badgeElement(badge, badgeColor), <div className="item-after"/>);
 
-    const baseItem = ()=>{
-      const itemCss = classnames('item-content', (link?'item-link':''));
-      return (
-        <Div className={itemCss} to={to}>
-          {itemMeida}
-          <div className="item-inner">
-            {itemTitle}
-            {itemAfter}
-            {children}
-          </div>
-        </Div>
-      );
-    };
-
-    const mediaItem = ()=>{
-      const itemCss = classnames('item-content', {'item-link': link});
-      return (
-        <Div className={itemCss} to={to}>
-          {itemMeida}
-          <div className="item-inner">
-            <div className="item-title-row">{itemTitle}{itemAfter}</div>
-            {mounted(subtitle, <div className="item-subtitle"/>)}
-            {mounted(text, <div className="item-text"/>)}
-          </div>
-        </Div>
-      );
-    };
-
-    const dividerItem = ()=>(
-      <div className="item-divider">{title}</div>
+    const baseItem = ()=>(
+      <Div className={classnames('item-content', {'item-link': link})} to={to}>
+        {itemMeida}
+        <div className="item-inner">
+          {itemTitle}
+          {itemAfter}
+          {children}
+        </div>
+      </Div>
     );
 
-    const accordionItem = ()=>{
-      const itemCss = classnames('accordion-item', {'accordion-item-expanded': this.state.expanded});
-      const accordionToggle = ()=>{
-        let {expanded} = this.state;
-        expanded = !expanded;
-        if(expanded){
-          onAccordionOpen && onAccordionOpen();
-        }else{
-          onAccordionClose && onAccordionClose();
-        }
-        this.setState({
-          expanded : expanded
-        }, ()=>{
-          if(expanded){
-            onAccordionOpened && onAccordionOpened();
-          }else{
-            onAccordionClosed && onAccordionClosed();
-          }
-        });
-      }
-      return (
-        <div className={itemCss}>
-          <div className="item-link item-content" onClick={accordionToggle}>
-            {itemMeida}
-            <div className="item-inner">
-              {itemTitle}
-            </div>
-          </div>
-          <div className="accordion-item-content">
-            {children}
-          </div>
+    const mediaItem = ()=>(
+      <Div className={classnames('item-content', {'item-link': link})} to={to}>
+        {itemMeida}
+        <div className="item-inner">
+          <div className="item-title-row">{itemTitle}{itemAfter}</div>
+          {mounted(subtitle, <div className="item-subtitle"/>)}
+          {mounted(text, <div className="item-text"/>)}
         </div>
-      );
-    }
+      </Div>
+    );
 
-    const checkboxItem = ()=>{
-      if(media){
-        return (
-          <label className="label-checkbox item-content">
-            <input type="checkbox" defaultValue={value} name={name} defaultChecked={checked} {...other}/>
-            <div className="item-media">
-              <i className="icon icon-form-checkbox"></i>
-            </div>
-            <div className="item-inner">
-              <div className="item-title-row">{itemTitle}{itemAfter}</div>
-              {mounted(subtitle, <div className="item-subtitle"/>)}
-              {mounted(text, <div className="item-text"/>)}
-            </div>
-          </label>
-        )
-      }else{
-        return (
-          <label className="label-checkbox item-content">
-            <input type="checkbox" defaultValue={value} name={name} defaultChecked={checked} {...other}/>
-            <div className="item-media">
-              <i className="icon icon-form-checkbox"></i>
-            </div>
-            <div className="item-inner">{itemTitle}</div>
-          </label>
-        )
-      }
-    }
-
-    const radioItem = ()=>{
-      if(media){
-        <label className="label-radio item-content">
-          <input type="radio" defaultValue={value} name={name} defaultChecked={checked} {...other}/>
+    const accordionItem = ()=>(
+      <div className={classnames('accordion-item', {'accordion-item-expanded': this.state.expanded})}>
+        <div className="item-link item-content" onClick={this.accordionToggle}>
           {itemMeida}
+          <div className="item-inner"> {itemTitle} </div>
+        </div>
+        <div className="accordion-item-content" ref="accordionItemContent"> {children} </div>
+      </div>
+    );
+
+    const check_radio = (type)=>(
+      <label className={`label-${type} item-content`}>
+        <input type={type} defaultValue={value} name={name} defaultChecked={checked} {...other}/>
+        <div className="item-media"> <i className={`icon icon-form-${type}`}></i> </div>
+        {mediaList && (type === 'radio') && itemMeida}
+        {mediaList && (
           <div className="item-inner">
             <div className="item-title-row">{itemTitle}{itemAfter}</div>
             {mounted(subtitle, <div className="item-subtitle"/>)}
             {mounted(text, <div className="item-text"/>)}
           </div>
-        </label>
-      }else{
-        return (
-          <label className="label-radio item-content">
-            <input type="radio" defaultValue={value} name={name} defaultChecked={checked} {...other}/>
-            <div className="item-inner">{itemTitle}</div>
-          </label>
-        )
-      }
+        )}
+        { !mediaList && <div className="item-inner">{itemTitle}{itemAfter}</div> }
+      </label>
+    );
 
-    }
-
-    const customItem = ()=>{
-      return (
-        <div className="item-content">
-          {itemMeida}
-          <div className="item-inner">{children}</div>
-        </div>
-      );
-    }
+    const customItem = ()=>(
+      <div className="item-content">
+        {itemMeida}
+        <div className="item-inner">{children}</div>
+      </div>
+    );
 
     switch (type) {
-      case 'mediaItem':
+      case 'mediaList':
         content = mediaItem();
-        break;
-      case 'divider':
-        content = dividerItem();
         break;
       case 'accordion':
         content = accordionItem();
         break;
       case 'checkbox':
-        content = checkboxItem();
+        content = check_radio('checkbox');
         break;
       case 'radio':
-        content = radioItem();
+        content = check_radio('radio');
         break;
       default:
         content = baseItem();
@@ -530,5 +454,41 @@ export class ListItem extends Component {
         {sortable && <div className="sortable-handler" {...this.initSortable()}></div>}
       </li>
     )
+  }
+}
+
+/**
+* ListGroup
+* Properties: className, style
+* Event Properties: null
+*/
+
+export class ListGroup extends Component {
+
+  static uiName = 'ListGroup'
+
+  static propTypes = {
+    className: PropTypes.string,
+    title: React.PropTypes.string
+  }
+
+  render() {
+    const {
+      title,
+      style,
+      className,
+      children,
+      ...other
+    } = this.props;
+
+    return (
+      <ul className={className} style={style} ref="ListGroup">
+        {mounted(title, <li className="list-group-title"></li>)}
+        {React.Children.map(children, (c, i)=>{
+          if(!React.isValidElement(c)) return c;
+          return React.cloneElement(c, {key: i, ...other});
+        })}
+      </ul>
+    );
   }
 }
