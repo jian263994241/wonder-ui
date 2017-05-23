@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import device from '../utils/device'
 import $ from '../utils/dom'
+import Dialog from './Dialog'
+
 // import Modals from './Modals'
 
 export default class Page extends Component {
@@ -25,6 +27,8 @@ export default class Page extends Component {
     if(title){
       this.setDocumentTitle(title);
     }
+
+    Dialog.hidePreloader();
   }
 
   componentWillReceiveProps(nextProps) {
