@@ -8,6 +8,11 @@ var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
 var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
 var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
 var iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
+var KQ = ua.indexOf('kuaiqianbao') > -1;
+var FeiFan = ua.indexOf('feifan') > -1;
+
+device.KQ = KQ;
+device.FeiFan = FeiFan;
 
 device.ios = device.android = device.iphone = device.ipod = device.ipad = device.androidChrome = false;
 

@@ -21,11 +21,8 @@ export default class ModalsPage extends Component {
       case '1':
         Dialog.showPreloader()
         break;
-      case '2':
-        Dialog.showPreloader(0)
-        break;
       case '3':
-        Dialog.showPreloader(0, '请稍等...')
+        Dialog.showPreloader('请稍等...')
         break;
     }
   }
@@ -39,15 +36,10 @@ export default class ModalsPage extends Component {
           <ContentBlock>
 
             <Row>
-              <Col width="33">
+              <Col width="50">
                 <Button onClick={this.showPreloader('1')}>Preloader</Button>
               </Col>
-
-              <Col width="33">
-                <Button onClick={this.showPreloader('2')}>Preloader2</Button>
-              </Col>
-
-              <Col width="33">
+              <Col width="50">
                 <Button onClick={this.showPreloader('3')}>Preloader2</Button>
               </Col>
             </Row>

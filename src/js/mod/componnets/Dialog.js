@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import {mountedOutside, mounted} from '../utils/mix'
 import $ from '../utils/dom'
+import device from '../utils/device'
 import Modal from './Modal'
 
 const modalStack = [];
@@ -231,7 +232,11 @@ Dialog.showPreloader = function (logo, text){
 
   if (typeof logo === 'string' || typeof logo === 'undefined') {
     text = arguments[0];
-    logo = true;
+    logo = device.KQ;
+  }
+
+  if(text){
+    logo = false;
   }
 
   if(Dialog.showPreloader.rendered) return ;
