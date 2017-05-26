@@ -43,7 +43,7 @@ fis.media('prod2')
   release: `css/${pkg.name}.${pkg.version}.min.css`
 })
 .match('src/less/(fonts/*)',{
-  release: false
+  release: '$1'
 })
 .match('**/(*.png)',{
   release: 'img/$1'
