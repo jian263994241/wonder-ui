@@ -99,6 +99,10 @@ export default class Dialog extends Component {
   }
 }
 
+Dialog.config = {
+  kqLogo: !device.FeiFan
+};
+
 
 Dialog.alert = function (text, title, callbackOk) {
   if (typeof title === 'function') {
@@ -228,12 +232,9 @@ Dialog.toast = function (text, timer, callbackOk){
 }
 
 
-Dialog.showPreloader = function (logo, text){
+Dialog.showPreloader = function (text){
 
-  if (typeof logo === 'string' || typeof logo === 'undefined') {
-    text = arguments[0];
-    logo = device.KQ;
-  }
+  let logo = Dialog.config.kqLogo;
 
   if(text){
     logo = false;
@@ -255,7 +256,7 @@ Dialog.showPreloader = function (logo, text){
 
 
   const rendered = mountedOutside(
-    <Dialog title={preloader} text={text} className="toast" overLayCss="preloader-indicator-overlay"></Dialog>
+    <Dialog title={preloader} text={text} className="toast" overLayCss="preloader-indicator-overlay" style={{maxWidth: '180px'}}></Dialog>
   );
 
   Dialog.showPreloader.rendered = rendered;

@@ -18,13 +18,14 @@ fis.match('src/less/ios/uikit.less',{
   rExt: '.css'
 })
 
-fis.match('example/app.js',{
+fis.match('**/app.js',{
   parser:fis.plugin('browserify',{
     option:{
       shims:{
         'react': 'window.React',
         'react-dom': 'window.ReactDOM',
-        'kui': 'window.WONDER'
+        'kui': 'window.WONDER',
+        'antd': 'window.antd'
       }
     }
   })
@@ -32,9 +33,6 @@ fis.match('example/app.js',{
 
 
 fis.media('prod2')
-.match('*', {
-  domain: 'http://192.168.47.179/docs/ui'
-})
 .match('src/js/wonder.js',{
   useHash: false,
   release: `js/${pkg.name}.${pkg.version}.min.js`
@@ -45,7 +43,7 @@ fis.media('prod2')
   release: `css/${pkg.name}.${pkg.version}.min.css`
 })
 .match('src/less/(fonts/*)',{
-  release: '$1'
+  release: false
 })
 .match('**/(*.png)',{
   release: 'img/$1'
@@ -55,4 +53,13 @@ fis.media('prod2')
 })
 .match('example/mod/**',{
   release: false
-});
+})
+.match('site/(**)',{
+  release: 'site/$1'
+})
+.match('site/mod/(**)',{
+  release: false
+})
+.match('*', {
+  domain: 'http://192.168.47.179/docs/ui'
+})
