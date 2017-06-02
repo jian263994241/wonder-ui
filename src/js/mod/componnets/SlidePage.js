@@ -3,10 +3,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
-import {Switch} from 'react-router-dom'
-
-
-class SlidePage extends Component {
+export default class SlidePage extends Component {
 
   static uiName = 'SlidePage';
 
@@ -63,7 +60,7 @@ class SlidePage extends Component {
 
   render() {
 
-    const {className, history, children, noAnimate} = this.props;
+    const {className, history, children, noAnimate, ...other} = this.props;
 
     const slideLeft = {
       enter: 'page-from-right-to-center',
@@ -119,39 +116,10 @@ class SlidePage extends Component {
         transitionLeave={transitionLeave}
         transitionEnterTimeout={transitionEnterTimeout}
         transitionLeaveTimeout={transitionLeaveTimeout}
-        className={className}
+        className={classnames('pages', className)}
       >
         {React.cloneElement(children, {key, location})}
       </CSSTransitionGroup>
-    );
-  }
-}
-
-export default class Pages extends Component {
-
-  static uiName = 'Pages'
-
-  static propTypes = {
-    className: PropTypes.string,
-    noAnimate: PropTypes.bool
-  }
-
-  render() {
-    const {
-      history,
-      className,
-      children,
-      ...other
-    } = this.props;
-
-    const cls = classnames('pages', className);
-
-    return (
-      <SlidePage className={cls} history={history} {...other}>
-        <Switch>
-          {children}
-        </Switch>
-      </SlidePage>
     );
   }
 }

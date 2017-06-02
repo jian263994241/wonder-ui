@@ -232,6 +232,8 @@ Dialog.toast = function (text, timer, callbackOk){
   }, timer);
 }
 
+
+
 Dialog.showPreloader = function (text){
 
   let logo = Dialog.config.kqLogo;
@@ -255,9 +257,8 @@ Dialog.showPreloader = function (text){
   ) : (<div className={cls}></div>);
 
 
-  const rendered = mountedOutside(
-    <Dialog title={preloader} text={text} className="preloader-modal" overLayCss="preloader-indicator-overlay" style={{maxWidth: '180px'}}></Dialog>
-  );
+
+  const rendered = mountedOutside(<Dialog title={preloader} text={text} className="preloader-modal" overLayCss="preloader-indicator-overlay" style={{maxWidth: '180px'}}></Dialog>);
 
   Dialog.Preloader = rendered;
 
@@ -265,10 +266,8 @@ Dialog.showPreloader = function (text){
 }
 
 Dialog.hidePreloader = function(){
-  setTimeout(()=>{
-    if(Dialog.Preloader){
-      Dialog.Preloader.close();
-      Dialog.Preloader = null;
-    }
-  }, 400);
+  if(Dialog.Preloader){
+    Dialog.Preloader.close();
+    Dialog.Preloader = null;
+  }
 }

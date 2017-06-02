@@ -1,5 +1,5 @@
 import $ from './dom'
-
+import ReactDOM from 'react-dom'
 // Size Navbars
 export function sizeNavbars (viewContainer) {
     var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner:not(.cached)') : $('.navbar .navbar-inner:not(.cached)');
@@ -55,10 +55,16 @@ export function mounted(content, reactElement){
   return React.cloneElement(reactElement, null , content);
 }
 
-export function mountedOutside(component){
+export function mountedOutside(component, callback){
   const root = $('body');
   const _modal = document.createElement('div');
-  const rendered = ReactDOM.render(component , _modal);
+  let doneRendering = false;
+  const rendered = ReactDOM.render(component , _modal, ()=>{
+    doneRendering = true;
+  });
+  while (!doneRendering) {
+      console.log("Waiting");
+  }
   root.append(_modal.childNodes[0]);
   return rendered;
 }

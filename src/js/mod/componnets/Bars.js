@@ -16,6 +16,7 @@ export class Navbar extends Component {
   static propTypes = {
     className: PropTypes.string,
     title: PropTypes.string,
+    noBorder:PropTypes.bool,
     theme: PropTypes.string,
     back: PropTypes.bool,
     backText: PropTypes.string,
@@ -51,6 +52,7 @@ export class Navbar extends Component {
       title,
       back,
       backText,
+      noBorder,
       onBack,
       center,
       left,
@@ -62,7 +64,7 @@ export class Navbar extends Component {
 
     const themeCss = theme? `theme-${theme}`: '';
 
-    const cls = classnames('navbar', themeCss, className);
+    const cls = classnames('navbar', themeCss, {'no-border': noBorder}, className);
 
     let navLeft = left, navRight = right, navCenter = center;
 
