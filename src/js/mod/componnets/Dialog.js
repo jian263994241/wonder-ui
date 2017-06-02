@@ -24,6 +24,10 @@ export default class Dialog extends Component {
     buttons: PropTypes.element
   }
 
+  static config = {
+    kqLogo: !device.FeiFan
+  }
+
   state = {
     opened: false,
     style: {}
@@ -99,9 +103,6 @@ export default class Dialog extends Component {
   }
 }
 
-Dialog.config = {
-  kqLogo: !device.FeiFan
-};
 
 
 Dialog.alert = function (text, title, callbackOk) {
@@ -218,7 +219,7 @@ Dialog.toast = function (text, timer, callbackOk){
   }
 
   const toast = (
-    <Dialog text={text} className="toast"></Dialog>
+    <Dialog text={text} className="toast" overlay={false}></Dialog>
   )
 
   const rendered = mountedOutside(toast);
@@ -230,7 +231,6 @@ Dialog.toast = function (text, timer, callbackOk){
     callbackOk && callbackOk();
   }, timer);
 }
-
 
 Dialog.showPreloader = function (text){
 
@@ -259,17 +259,16 @@ Dialog.showPreloader = function (text){
     <Dialog title={preloader} text={text} className="preloader-modal" overLayCss="preloader-indicator-overlay" style={{maxWidth: '180px'}}></Dialog>
   );
 
-  Dialog.showPreloader.rendered = rendered;
+  Dialog.Preloader = rendered;
 
   rendered.open();
 }
 
 Dialog.hidePreloader = function(){
   setTimeout(()=>{
-    const {rendered} = Dialog.showPreloader;
-    if(rendered){
-      rendered.close();
-      Dialog.showPreloader.rendered = null;
+    if(Dialog.Preloader){
+      Dialog.Preloader.close();
+      Dialog.Preloader = null;
     }
-  }, 100);
+  }, 400);
 }
