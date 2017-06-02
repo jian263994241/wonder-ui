@@ -12,13 +12,12 @@ export default class Modal extends Component {
 
   static defaultProps = {
     opened: false,
-    modalCloseByOutside: false,
     overlay: true
   }
 
   static propTypes = {
     opened: PropTypes.bool,
-    modalCloseByOutside: PropTypes.bool,
+    onClickOutside: PropTypes.func,
     onOpen: PropTypes.func,
     onOpened: PropTypes.func,
     onClose: PropTypes.func,
@@ -97,7 +96,7 @@ export default class Modal extends Component {
       onClosed,
       overlay,
       overLayCss,
-      modalCloseByOutside,
+      onClickOutside,
       children,
       ...other
     } = this.props;
@@ -108,24 +107,15 @@ export default class Modal extends Component {
 
     const isPopup = className && className.indexOf('popup') > -1 ;
 
-  
-    const closeByOutside = ()=>{
-      modalCloseByOutside && this.closeModal();
-    };
-
     const childrenNode = (!this.state.showChildren && !stateOpened) ? null : children;
 
-    if(overlay){
-      return (
-        <div ref="Root">
-          <OverLay opened={stateOpened} className={overLayCss || 'modal-overlay'} onClick={closeByOutside}></OverLay>
-          <div className={cls} {...other} ref="Modal" onTransitionEnd={this._transitionEnd}>{childrenNode}</div>
-        </div>
-      );
-    }
+    const overlayStyle = overlay ? {} : {'opacity': 0.01};
 
     return (
-      <div className={cls} {...other} ref="Modal" onTransitionEnd={this._transitionEnd}>{childrenNode}</div>
+      <div ref="Root">
+        <OverLay opened={stateOpened} className={overLayCss || 'modal-overlay'} style={overlayStyle} onClick={onClickOutside}></OverLay>
+        <div className={cls} {...other} ref="Modal" onTransitionEnd={this._transitionEnd}>{childrenNode}</div>
+      </div>
     );
 
   }

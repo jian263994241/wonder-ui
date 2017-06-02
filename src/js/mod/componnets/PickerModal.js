@@ -10,14 +10,9 @@ export default class PickerModal extends Component {
 
   static uiName = 'PickerModal';
 
-  static defaultProps = {
-    opened: false
-  }
-
   static propTypes = {
     className: PropTypes.string,
-    innerClassName: PropTypes.string,
-    opened: PropTypes.bool
+    innerClassName: PropTypes.string
   }
 
   render() {
@@ -33,7 +28,7 @@ export default class PickerModal extends Component {
     const cls = classnames('picker-modal', className);
     const innerCls = classnames('picker-modal-inner', innerClassName);
     return (
-      <Modal className={cls} {...other} overlay={false}>
+      <Modal className={cls} {...other} overlay={false} overLayCss="picker-modal-overlay">
         {toolbar}
         <div className={innerCls}>
           {children}

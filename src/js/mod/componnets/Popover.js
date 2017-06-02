@@ -146,7 +146,7 @@ class PopoverModal extends Component {
         onClosed={closedRemoveNode}
         className={cls}
         onOpen={this.resize}
-        modalCloseByOutside={true}
+        onClickOutside={this.close}
         ref="PopoverModal"
         {...other}
       >
@@ -171,19 +171,16 @@ export default class Popover extends Component {
     opened: false
   }
 
-  open = ()=>{
+  open = (target)=>{
     const {
       component,
       children,
       ...other
     } =  this.props;
 
-    const PopoverLink = ReactDOM.findDOMNode(this.refs.PopoverLink);
-
     const popover = (
-      <PopoverModal target={PopoverLink} {...other}> {children} </PopoverModal>
+      <PopoverModal target={target} {...other}> {children} </PopoverModal>
     );
-
 
     const rendered = mountedOutside(popover);
 
@@ -199,12 +196,13 @@ export default class Popover extends Component {
     } =  this.props;
     const target = ReactDOM.findDOMNode(this.refs.PopoverLink);
     const targetClick = component.props.onClick;
+
+    this.open(target);
+
     //判断是否react Dom 事件
     if (targetClick && targetClick.name === 'onClick'){
       targetClick();
     }
-
-    this.open();
   }
 
   render() {
