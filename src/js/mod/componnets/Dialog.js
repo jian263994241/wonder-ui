@@ -256,7 +256,7 @@ Dialog.showPreloader = function (text){
 
 
   const rendered = mountedOutside(
-    <Dialog title={preloader} text={text} className="toast" overLayCss="preloader-indicator-overlay" style={{maxWidth: '180px'}}></Dialog>
+    <Dialog title={preloader} text={text} className="preloader-modal" overLayCss="preloader-indicator-overlay" style={{maxWidth: '180px'}}></Dialog>
   );
 
   Dialog.showPreloader.rendered = rendered;
