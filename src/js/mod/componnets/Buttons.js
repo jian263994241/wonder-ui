@@ -23,23 +23,27 @@ export class Button extends Component {
       fill,
       round,
       big,
+      block,
       color,
       active,
       disabled,
       tabLink,
+      className,
       children,
       ...other
     } = this.props;
 
-    const buttonFill = fill ? 'button-fill' : '';
-    const buttonRound = round ? 'button-round' : '';
-    const buttonBig = big ? 'button-big' : '';
     const buttonColor = color? `color-${color}`: '';
-    const buttonActive = active? 'active': '';
-    const tabLinkCss = tabLink? 'tab-link': '';
 
-
-    const cls = classnames('button', buttonFill, buttonRound, buttonBig, buttonColor, buttonActive, tabLinkCss);
+    const cls = classnames({
+      'button': true,
+      'button-block': block,
+      'button-big': big,
+      'button-round': round,
+      'button-fill': fill,
+      'active': active,
+      'tab-link': tabLink
+    }, buttonColor, className);
 
     return (
       <div className={cls} disabled={disabled} {...other} ref="Button">{children}</div>

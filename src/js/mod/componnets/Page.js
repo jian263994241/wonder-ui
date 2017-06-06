@@ -16,7 +16,8 @@ export default class Page extends Component {
     title: PropTypes.string,
     theme: PropTypes.string,
     navbarFixed: PropTypes.bool,
-    toolbarFixed: PropTypes.bool
+    toolbarFixed: PropTypes.bool,
+    waiting: PropTypes.bool
   }
 
   componentDidMount() {
@@ -64,6 +65,7 @@ export default class Page extends Component {
       navbarFixed,
       toolbarFixed,
       className,
+      waiting,
       children,
       ...other
     } = this.props;
@@ -75,6 +77,10 @@ export default class Page extends Component {
     } ,themeCss, className);
 
     let hasNavbar = false;
+
+    if(waiting){
+      return <div className="page"><span className="progressbar-infinite"></span></div>;
+    }
 
     React.Children.forEach(children, (child, index)=>{
       if(child.type && child.type.uiName === 'Navbar'){

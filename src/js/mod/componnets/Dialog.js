@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {findDOMNode} from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import {mountedOutside, mounted} from '../utils/mix'
@@ -60,9 +61,6 @@ export default class Dialog extends Component {
     });
   }, 16)
 
-  componentDidMount() {
-    this.root = this.refs.Dialog.refs.Root;
-  }
 
   render() {
     const {
@@ -77,7 +75,7 @@ export default class Dialog extends Component {
     } = this.props;
 
     const closedRemoveNode = ()=>{
-      $(this.root).remove();
+      findDOMNode(this).remove();
       modalStackClearQueue();
     };
 

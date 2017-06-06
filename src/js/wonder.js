@@ -34,7 +34,7 @@ export LazyLoad from 'react-lazy-load'
 export noScroll from 'no-scroll'
 export * as ReactMotion from 'react-motion'
 export * as RouterDOM, {Link, Redirect} from 'react-router-dom'
-
+export classnames from 'classnames'
 
 import initReactFastclick from 'react-fastclick'
 //fast click

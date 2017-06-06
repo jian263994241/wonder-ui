@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import ReactDOM from 'react-dom'
+import {findDOMNode} from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import $ from '../utils/dom'
@@ -194,7 +194,7 @@ export default class Popover extends Component {
       children,
       ...other
     } =  this.props;
-    const target = ReactDOM.findDOMNode(this.refs.PopoverLink);
+    const target = findDOMNode(this.refs.PopoverLink);
     const targetClick = component.props.onClick;
 
     this.open(target);

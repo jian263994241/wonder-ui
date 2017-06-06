@@ -17,7 +17,8 @@ export default class PageContent extends Component {
     className: PropTypes.string,
     onRefresh: PropTypes.func,
     onInfinite: PropTypes.func,
-    pullToRefreshDistance: PropTypes.number
+    pullToRefreshDistance: PropTypes.number,
+    waiting: PropTypes.bool
   }
 
   componentDidMount() {
@@ -116,6 +117,7 @@ export default class PageContent extends Component {
       onInfinite,
       children,
       onScroll,
+      waiting,
       ...other
     } = this.props;
 
@@ -124,6 +126,14 @@ export default class PageContent extends Component {
     const subNavbarCss = withSubnavbar? 'with-subnavbar': '';
 
     let cls = classnames('page-content', subNavbarCss, className);
+
+    if(waiting){
+      return (
+        <div className="page-content">
+          <span className="progressbar-infinite"></span>
+        </div>
+      );
+    }
 
     if(pullToRefresh){
       cls = classnames(cls, 'pull-to-refresh-content');

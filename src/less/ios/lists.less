@@ -4,14 +4,14 @@
 @dividerBg: #F7F7F7;
 @dividerColor: #8e8e93;
 .list-block {
-    margin: 35px 0;
-    font-size: 15px;
+    margin: 35px 0;  
     ul {
         background: @listBlockBg;
         list-style: none;
         padding: 0;
         margin: 0;
         position: relative;
+        font-size: 15px;
         .hairline(top, @listBlockBorderColor);
         .hairline(bottom, @listBlockBorderColor);
         ul {
@@ -120,6 +120,7 @@
       height: 43px;
       line-height: 43px;
       position: absolute;
+      width: auto;
       right: 0;
       top: 0;
     }
@@ -183,7 +184,7 @@
     }
     // Label after List block
     .list-block-label {
-        margin: 10px 0 35px;
+        margin: 10px 0 20px;
         padding: 0 15px;
         font-size: 14px;
         color: #8f8f94;
@@ -345,9 +346,9 @@
     }
     .item-divider, .list-group-title {
         background: @dividerBg;
-        .hairline(top, @listBlockBorderColor);
+        // .hairline(top, @listBlockBorderColor);
         margin-top: -1px;
-        padding: 4px 15px;
+        padding: 6px 15px;
         white-space: nowrap;
         position: relative;
         max-width: 100%;

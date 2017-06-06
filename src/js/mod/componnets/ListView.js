@@ -20,7 +20,6 @@ export class List extends Component {
     className: PropTypes.string,
     inset: PropTypes.bool,
     tabletInset: PropTypes.bool,
-    blockLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     accordion: PropTypes.bool,
     virtualItems: React.PropTypes.array,
     sortable: PropTypes.bool,
@@ -80,7 +79,6 @@ export class List extends Component {
       accordion,
       inset,
       tabletInset,
-      blockLabel,
       virtualItems,
       sortable,
       sortableOpened,
@@ -117,7 +115,13 @@ export class List extends Component {
 
         childrenNode = React.Children.map(childrenNode, (c, i)=>{
           if(!React.isValidElement(c)) return c;
-          return React.cloneElement(c, {key: i, sortable, onSorted, accordion, mediaList});
+
+          if(typeof c.type.uiName === 'ListItem'){
+            return React.cloneElement(c, {key: i, sortable, onSorted, accordion, mediaList});
+          }
+
+          return c;
+
         });
 
         if(React.isValidElement(childrenNode[0]) && childrenNode[0].type.uiName === 'ListItem'){
@@ -131,7 +135,6 @@ export class List extends Component {
     return (
       <div className={cls} {...other} ref="List">
         {creactChildren()}
-        {mounted(blockLabel, <div className="list-block-label"></div>)}
       </div>
     );
   }
@@ -345,7 +348,7 @@ export class ListItem extends Component {
 
     if(divider){
       return (
-        <li className="item-divider">{title}</li>
+        <li className="item-divider">{children}</li>
       );
     }
 
@@ -381,8 +384,8 @@ export class ListItem extends Component {
         {itemMeida}
         <div className="item-inner">
           {itemTitle}
-          {itemAfter}
           {children}
+          {itemAfter}
         </div>
       </Div>
     );
@@ -492,6 +495,24 @@ export class ListGroup extends Component {
           return React.cloneElement(c, {key: i, ...other});
         })}
       </ul>
+    );
+  }
+}
+
+export class ListLabel  extends Component {
+  static uiName = 'ListBlockLabel'
+
+  render() {
+    const {
+      title,
+      className,
+      children,
+      ...other
+    } = this.props;
+
+    const cls = classnames('list-block-label', className);
+    return (
+      <div className={cls} {...other}>{children}</div>
     );
   }
 }
