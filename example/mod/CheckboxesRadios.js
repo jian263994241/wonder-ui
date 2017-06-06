@@ -23,7 +23,7 @@ export default class CheckboxsRadios extends Component {
         <PageContent>
           <ContentBlockTitle>Checkbox group</ContentBlockTitle>
           <List>
-            <ListItem checkbox name="demo-checkbox" title="checkbox 1"/>
+            <ListItem checkbox name="demo-checkbox" title="checkbox 1" disabled/>
             <ListItem checkbox name="demo-checkbox" title="checkbox 2"/>
             <ListItem checkbox name="demo-checkbox" title="default checked 3" checked/>
           </List>

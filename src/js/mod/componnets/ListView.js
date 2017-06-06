@@ -408,21 +408,24 @@ export class ListItem extends Component {
       </div>
     );
 
-    const check_radio = (type)=>(
-      <label className={`label-${type} item-content`}>
-        <input type={type} defaultValue={value} name={name} defaultChecked={checked} {...other}/>
-        <div className="item-media"> <i className={`icon icon-form-${type}`}></i> </div>
-        {mediaList && (type === 'radio') && itemMeida}
-        {mediaList && (
-          <div className="item-inner">
-            <div className="item-title-row">{itemTitle}{itemAfter}</div>
-            {mounted(subtitle, <div className="item-subtitle"/>)}
-            {mounted(text, <div className="item-text"/>)}
-          </div>
-        )}
-        { !mediaList && <div className="item-inner">{itemTitle}{itemAfter}</div> }
-      </label>
-    );
+    const check_radio = (type)=> {
+      const checkRadioClassName = classnames({ 'disabled': other.disabled }, `item-content label-${type}`);
+      return (
+        <label className={checkRadioClassName}>
+          <input type={type} defaultValue={value} name={name} checked={checked || false}  {...other}/>
+          <div className="item-media"> <i className={`icon icon-form-${type}`}></i> </div>
+          {mediaList && (type === 'radio') && itemMeida}
+          {mediaList && (
+            <div className="item-inner">
+              <div className="item-title-row">{itemTitle}{itemAfter}</div>
+              {mounted(subtitle, <div className="item-subtitle"/>)}
+              {mounted(text, <div className="item-text"/>)}
+            </div>
+          )}
+          { !mediaList && <div className="item-inner">{itemTitle}{itemAfter}</div> }
+        </label>
+      );
+    };
 
     const customItem = ()=>(
       <div className="item-content">

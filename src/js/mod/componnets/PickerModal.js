@@ -28,7 +28,7 @@ export default class PickerModal extends Component {
     const cls = classnames('picker-modal', className);
     const innerCls = classnames('picker-modal-inner', innerClassName);
     return (
-      <Modal className={cls} {...other} overlay={false} overLayCss="picker-modal-overlay">
+      <Modal className={cls} {...other} overLayCss="picker-modal-overlay">
         {toolbar}
         <div className={innerCls}>
           {children}
