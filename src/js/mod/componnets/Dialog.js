@@ -56,7 +56,7 @@ export default class Dialog extends Component {
     const modal = $(this.refs.Dialog.refs.Modal);
     this.setState({
       style: {
-        marginTop: - Math.round(modal.outerHeight() / 2)
+        marginTop: - Math.round(modal.outerHeight() / 2) - 44
       }
     });
   }, 16)

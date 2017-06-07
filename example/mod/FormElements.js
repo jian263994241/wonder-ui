@@ -4,7 +4,7 @@ import {Page, PageContent, ListView, ContentBlock, Bars , Form} from 'kui'
 
 const {List, ListItem, ListGroup, ListLabel} = ListView;
 
-const {FormLabel, FormInput} = Form;
+const {FormLabel, FormInput, FormTimerButton} = Form;
 const {Title: ContentBlockTitle} = ContentBlock;
 const {SubNavBar, Navbar} = Bars;
 
@@ -17,7 +17,9 @@ const Icon = ()=>{
 
 export default class FormElements extends Component {
 
-
+  sms = (next)=>{
+    next()
+  }
 
   render() {
     return (
@@ -45,6 +47,7 @@ export default class FormElements extends Component {
             <ListItem media={<Icon/>}>
               <FormLabel>Phone</FormLabel>
               <FormInput type="tel" placeholder="Phone"/>
+              <FormTimerButton onStart={this.sms}></FormTimerButton>
             </ListItem>
             <ListItem media={<Icon/>}>
               <FormLabel>Gender</FormLabel>

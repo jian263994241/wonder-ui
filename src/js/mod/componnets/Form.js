@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
+import {Button} from './Buttons'
+
 export class FormLabel extends Component {
 
   static uiName = 'FormLabel'
@@ -31,17 +33,6 @@ export class FormLabel extends Component {
 export class FormInput extends Component {
 
   static uiName = 'FormInput'
-
-  focus = ()=>{
-    this.refs.input.focus();
-  }
-
-  val = (value)=>{
-    if(value){
-      this.refs.input.value = value;
-    }
-    return this.refs.input.value;
-  }
 
   render() {
 
@@ -117,4 +108,90 @@ export class Range extends Component {
       </div>
     );
   }
+}
+
+export class FormTimerButton extends Component {
+
+  static uiName = 'FormButtonTimer'
+
+  static defaultProps = {
+    fill: true,
+    block: true,
+    secondsResidue: 60,
+    defaultText: '发送验证码',
+    text: '%s秒后重新发送'
+  }
+
+  state = {
+    process: false,
+    secondsResidue: 0
+  }
+
+  static propTypes = {
+    secondsResidue: PropTypes.number,
+    defaultText: PropTypes.string,
+    text: PropTypes.string,
+    onStart: PropTypes.func,
+    onEnd: PropTypes.func
+  }
+
+  componentWillMount() {
+    const {secondsResidue} = this.props;
+    this.setState({secondsResidue});
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  tick = ()=>{
+    const {secondsResidue, onEnd} = this.props;
+    this.setState((prevState) => {
+      if(prevState.secondsResidue === 0){
+        clearInterval(this.interval);
+        onEnd && onEnd();
+        return {
+          process: false,
+          secondsResidue
+        };
+      }
+      return {
+        secondsResidue: prevState.secondsResidue - 1
+      };
+    });
+  }
+
+  clickHandler = ()=>{
+
+    const {onStart} = this.props;
+
+    onStart(()=>{
+      this.interval = setInterval(() => this.tick(), 1000);
+      this.setState({
+        process: true
+      });
+    });
+  }
+
+  render() {
+    const {
+      defaultText,
+      text,
+      onStart,
+      secondsResidue,
+      children,
+      onClick,
+      disabeld,
+      ...other
+    } = this.props;
+
+    const content = this.state.process? text.replace(/%s/, this.state.secondsResidue) : defaultText;
+
+    return (
+      <div className="item-after">
+        <Button {...other} onClick={this.clickHandler} disabled={this.state.process}>{content}</Button>
+      </div>
+    );
+  }
+
 }
