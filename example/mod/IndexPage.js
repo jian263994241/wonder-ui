@@ -31,11 +31,11 @@ export default class IndexPage extends Component {
             <ListGroup>
               <ListItem accordionItem title="列表" onAccordionOpen={this.onAccordionOpen(1)}>
                 <List>
-                  <ListItem title="列表视图" link to="/ListView"/>
-                  <ListItem title="媒体列表" link to="/MediaLists"/>
-                  <ListItem title="手风琴列表" link to="/AccordionList"/>
-                  <ListItem title="虚拟列表" link to="/VirtualList"/>
-                  <ListItem title="排序列表" link to="/SortableList"/>
+                  <ListItem title="列表视图" link="/ListView"/>
+                  <ListItem title="媒体列表" link="/MediaLists"/>
+                  <ListItem title="手风琴列表" link="/AccordionList"/>
+                  <ListItem title="虚拟列表" link="/VirtualList"/>
+                  <ListItem title="排序列表" link="/SortableList"/>
                 </List>
               </ListItem>
             </ListGroup>
@@ -43,9 +43,9 @@ export default class IndexPage extends Component {
             <ListGroup style={style}>
               <ListItem accordionItem title="表单" onAccordionOpen={this.onAccordionOpen(2)}>
                 <List>
-                  <ListItem title="表单布局" link to="/FormElements"/>
-                  <ListItem title="多选 & 单选" link to="/CheckboxesRadios"/>
-                  <ListItem title="按钮" link to="/Buttons"/>
+                  <ListItem title="表单布局" link="/FormElements"/>
+                  <ListItem title="多选 & 单选" link="/CheckboxesRadios"/>
+                  <ListItem title="按钮" link="/Buttons"/>
                 </List>
               </ListItem>
             </ListGroup>
@@ -53,12 +53,12 @@ export default class IndexPage extends Component {
             <ListGroup style={style}>
               <ListItem accordionItem title="基础组件" onAccordionOpen={this.onAccordionOpen(0)}>
                 <List>
-                  <ListItem title="九宫格" link to="/Grid"/>
-                  <ListItem title="图片轮播" link to="/swipeable"/>
-                  <ListItem title="图标" link to="/Icons"/>
-                  <ListItem title="懒加载" link to="/LazyLoad"/>
-                  <ListItem title="标签切换" link to="/Tab/Index"/>
-                  <ListItem title="键盘" link to="/Keyboard"/>
+                  <ListItem title="九宫格" link="/Grid"/>
+                  <ListItem title="图片轮播" link="/swipeable"/>
+                  <ListItem title="图标" link="/Icons"/>
+                  <ListItem title="懒加载" link="/LazyLoad"/>
+                  <ListItem title="标签切换" link="/Tab/Index"/>
+                  <ListItem title="键盘" link="/Keyboard"/>
                 </List>
               </ListItem>
             </ListGroup>
@@ -66,11 +66,11 @@ export default class IndexPage extends Component {
             <ListGroup style={style}>
               <ListItem accordionItem title="操作" onAccordionOpen={this.onAccordionOpen(3)}>
                 <List>
-                  <ListItem title="模态框 Modals" link to="/Modals"/>
-                  <ListItem title="选择器" link to="/Picker"/>
-                  <ListItem title="指示器" link to="/Preloader"/>
-                  <ListItem title="无限滚动" link to="/InfiniteScroll"/>
-                  <ListItem title="下拉刷新" link to="/PullToRefresh"/>
+                  <ListItem title="模态框 Modals" link="/Modals"/>
+                  <ListItem title="选择器" link="/Picker"/>
+                  <ListItem title="指示器" link="/Preloader"/>
+                  <ListItem title="无限滚动" link="/InfiniteScroll"/>
+                  <ListItem title="下拉刷新" link="/PullToRefresh"/>
                 </List>
               </ListItem>
             </ListGroup>

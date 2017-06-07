@@ -18,6 +18,10 @@ export class Button extends Component {
     tabLink: PropTypes.bool,
   }
 
+  static defaultProps = {
+    block: true
+  }
+
   render() {
     const {
       fill,
@@ -28,6 +32,8 @@ export class Button extends Component {
       active,
       disabled,
       tabLink,
+      link,
+      submit,
       className,
       children,
       ...other
@@ -45,8 +51,10 @@ export class Button extends Component {
       'tab-link': tabLink
     }, buttonColor, className);
 
+    const ButtonElement = submit? 'button': (typeof link === 'object' || typeof link === 'string' && link != '') ? Link : 'div';
+
     return (
-      <div className={cls} disabled={disabled} {...other} ref="Button">{children}</div>
+      <ButtonElement className={cls} disabled={disabled} {...other} ref="Button" to={link}>{children}</ButtonElement>
     );
   }
 }

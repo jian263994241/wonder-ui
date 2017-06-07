@@ -71,18 +71,18 @@ export class ListButton extends Component {
 
     const {
       className,
-      to,
+      link,
       children,
       ...other
     } = this.props;
 
     const cls = classnames('item-link', 'list-button', className);
 
-    const A = to? Link: 'a';
+    const A = link? Link: 'a';
 
     return (
       <li>
-        <A className={cls} to={to} {...other}>{children}</A>
+        <A className={cls} to={link} {...other}>{children}</A>
       </li>
     );
   }
@@ -234,7 +234,7 @@ export class ListItem extends Component {
 
   static propTypes = {
     title: PropTypes.string,
-    link: PropTypes.bool,
+    // link: PropTypes.bool,
     subtitle: PropTypes.string,
     text: PropTypes.string,
     divider: PropTypes.bool,
@@ -250,7 +250,7 @@ export class ListItem extends Component {
     onAccordionOpened: PropTypes.func,
     onAccordionClose: PropTypes.func,
     onAccordionClosed: PropTypes.func,
-    to: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    link: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.string]),
     checkbox: PropTypes.bool,
     radio: PropTypes.bool,
     checked: PropTypes.bool,
@@ -408,7 +408,6 @@ export class ListItem extends Component {
       after,
       media,
       mediaList,
-      to,
       checkbox,
       radio,
       checked,
@@ -422,7 +421,7 @@ export class ListItem extends Component {
     const cls = classnames({
       'item-divider': divider,
       'item-content': !divider,
-      'item-link': link || to || accordionItem,
+      'item-link': link || accordionItem,
     });
 
     if(divider){
@@ -439,7 +438,7 @@ export class ListItem extends Component {
     if(radio) type = 'radio';
 
 
-    const Div = to? Link: 'div';
+    const Div = (typeof link === 'object' || typeof link === 'string' && link != '') ? Link: 'div';
 
     const badgeElement = (badge, badgeColor = 'gray')=>{
       if(!badge) return null;
@@ -454,7 +453,7 @@ export class ListItem extends Component {
     itemAfter = mounted(after || badgeElement(badge, badgeColor), <div className="item-after"/>);
 
     const createBaseItem = ()=>(
-      <Div className={cls} to={to}>
+      <Div className={cls} to={link}>
         {itemMeida}
         <div className="item-inner">
           {itemTitle}
@@ -465,7 +464,7 @@ export class ListItem extends Component {
     );
 
     const createMediaItem = ()=>(
-      <Div className={cls} to={to}>
+      <Div className={cls} to={link}>
         {itemMeida}
         <div className="item-inner">
           <div className="item-title-row">{itemTitle}{itemAfter}</div>
