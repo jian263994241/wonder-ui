@@ -120,7 +120,7 @@ class PopoverModal extends Component {
   }
 
   componentDidMount() {
-    this.root = this.refs.PopoverModal.refs.Root;
+    this.root = findDOMNode(this.refs.PopoverModal);
     $(window).on('resize', this.resize);
   }
 

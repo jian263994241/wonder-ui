@@ -23,7 +23,7 @@ export default class IndexPage extends Component {
     return (
       <Page title="组件库">
         <PageContent>
-          <ContentBlockTitle style={{fontSize: '20px'}}>99BILL MOBILE UI</ContentBlockTitle>
+          <ContentBlockTitle style={{fontSize: '20px'}}>wonderjs</ContentBlockTitle>
           <ContentBlock>
             快钱包移动组件库
           </ContentBlock>
