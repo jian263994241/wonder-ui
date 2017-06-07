@@ -1,10 +1,93 @@
-import React, {Component} from 'react'
+import React, {Component, cloneElement} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import {mounted} from '../utils/mix'
 import {Link} from 'react-router-dom'
 import $ from '../utils/dom'
 
+
+
+/**
+* ListGroup
+* Properties: className, style
+* Event Properties: null
+*/
+
+export class ListGroup extends Component {
+
+  static uiName = 'ListGroup'
+
+  static propTypes = {
+    title: React.PropTypes.string
+  }
+
+  render() {
+    const {
+      title,
+      children,
+      ...other
+    } = this.props;
+
+    return (
+      <ul {...other}>
+        {mounted(title, <li className="list-group-title"></li>)}
+        {children}
+      </ul>
+    );
+  }
+}
+
+export class ListLabel extends Component {
+  static uiName = 'ListBlockLabel'
+
+  static propTypes = {
+    className: React.PropTypes.string
+  }
+
+  render() {
+    const {
+      className,
+      children,
+      ...other
+    } = this.props;
+
+    const cls = classnames('list-block-label', className);
+    return (
+      <div className={cls} {...other}>{children}</div>
+    );
+  }
+}
+
+
+export class ListButton extends Component {
+
+  static uiName = 'ListButton'
+
+  static propTypes = {
+    className: React.PropTypes.string
+  }
+
+  render() {
+
+    const {
+      className,
+      to,
+      children,
+      ...other
+    } = this.props;
+
+    const cls = classnames('item-link', 'list-button', className);
+
+    const A = to? Link: 'a';
+
+    return (
+      <li>
+        <A className={cls} to={to} {...other}>{children}</A>
+      </li>
+    );
+  }
+
+}
 
 /**
 * List
@@ -102,39 +185,37 @@ export class List extends Component {
       return <ListItem {...props} key={index}/>;
     }
 
-    const creactChildren = ()=>{
-      let childrenNode;
+    // const passProps = {sortable, onSorted};
 
-      if(virtualItems){
-        childrenNode = this.state.virtualItems.map(createItem);
-      }else{
-        childrenNode = children;
-      }
+    let childrenNode;
 
-      if(childrenNode){
+    if(virtualItems){
+      childrenNode = this.state.virtualItems.map(createItem);
+    }else{
+      childrenNode = children;
+    }
 
-        childrenNode = React.Children.map(childrenNode, (c, i)=>{
-          if(!React.isValidElement(c)) return c;
-
-          if(typeof c.type.uiName === 'ListItem'){
-            return React.cloneElement(c, {key: i, sortable, onSorted, accordion, mediaList});
+    if(sortable){
+      childrenNode = React.Children.map(childrenNode, (child, index)=>{
+        if(React.isValidElement(child) && child.type.uiName === 'ListItem'){
+          if(child.type.uiName === 'ListItem'){
+            return cloneElement(child, {key: child.toString(), sortable: sortableOpened, onSorted});
           }
-
-          return c;
-
-        });
-
-        if(React.isValidElement(childrenNode[0]) && childrenNode[0].type.uiName === 'ListItem'){
-          return React.createElement('ul', null, childrenNode);
+        }else{
+          return child;
         }
-      }
+      })
+    }
 
-      return childrenNode;
+    if(childrenNode){
+      if(React.isValidElement(childrenNode[0]) && childrenNode[0].type.uiName === 'ListItem'){
+        childrenNode = <ListGroup>{childrenNode}</ListGroup>;
+      }
     }
 
     return (
       <div className={cls} {...other} ref="List">
-        {creactChildren()}
+        {childrenNode}
       </div>
     );
   }
@@ -163,7 +244,7 @@ export class ListItem extends Component {
     badgeColor: PropTypes.string,
     after: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     media: PropTypes.element,
-    accordion: PropTypes.bool,
+    accordionItem: PropTypes.bool,
     expanded: PropTypes.bool,
     onAccordionOpen: PropTypes.func,
     onAccordionOpened: PropTypes.func,
@@ -179,20 +260,12 @@ export class ListItem extends Component {
   }
 
   state = {
-    sorting: false,
-    expanded: false
+    expanded: this.props.expanded
   }
 
-  constructor(props){
-    super(props);
-    const {expanded, accordion} = props;
-    if(accordion) {
-      this.state.expanded = expanded;
-    }
-  }
 
   componentWillReceiveProps(nextProps) {
-    const {expanded, accordion} = nextProps;
+    const {expanded, accordionItem} = nextProps;
     this.setState({ expanded });
   }
 
@@ -317,7 +390,7 @@ export class ListItem extends Component {
 
   render (){
     const {
-      accordion,
+      accordionItem,
       expanded,
       onAccordionOpen,
       onAccordionOpened,
@@ -346,41 +419,42 @@ export class ListItem extends Component {
       ...other
     } = this.props;
 
+    const cls = classnames({
+      'item-divider': divider,
+      'item-content': !divider,
+      'item-link': link || to || accordionItem,
+    });
+
     if(divider){
       return (
-        <li className="item-divider">{children}</li>
+        <li className={cls} {...other}></li>
       );
     }
 
     let content, itemMeida, itemAfter, itemTitle, itemTitleRow, type;
 
-    const Div = (props)=>{
-      if(props.to){
-        return <Link {...props}/>;
-      }else{
-        return <div {...props}/>;
-      }
-    };
+    if(subtitle || text) type = 'mediaList';
+    if(accordionItem) type = 'accordionItem';
+    if(checkbox) type = 'checkbox';
+    if(radio) type = 'radio';
 
-    const badgeElement = (badge, badgeColor)=>{
+
+    const Div = to? Link: 'div';
+
+    const badgeElement = (badge, badgeColor = 'gray')=>{
       if(!badge) return null;
-      const badgeCss = classnames('badge', (badgeColor? `bg-${badgeColor}`: ''));
+      const badgeCss = classnames('badge', `bg-${badgeColor}`);
       return (
         <span className={badgeCss}>{badge}</span>
       );
     };
 
-    if(mediaList) type = 'mediaList';
-    if(accordion) type = 'accordion';
-    if(checkbox) type = 'checkbox';
-    if(radio) type = 'radio';
-
     itemMeida = mounted(media, <div className="item-media"/>);
     itemTitle = mounted(title, <div className="item-title"/>);
     itemAfter = mounted(after || badgeElement(badge, badgeColor), <div className="item-after"/>);
 
-    const baseItem = ()=>(
-      <Div className={classnames('item-content', {'item-link': link})} to={to}>
+    const createBaseItem = ()=>(
+      <Div className={cls} to={to}>
         {itemMeida}
         <div className="item-inner">
           {itemTitle}
@@ -390,8 +464,8 @@ export class ListItem extends Component {
       </Div>
     );
 
-    const mediaItem = ()=>(
-      <Div className={classnames('item-content', {'item-link': link})} to={to}>
+    const createMediaItem = ()=>(
+      <Div className={cls} to={to}>
         {itemMeida}
         <div className="item-inner">
           <div className="item-title-row">{itemTitle}{itemAfter}</div>
@@ -401,9 +475,9 @@ export class ListItem extends Component {
       </Div>
     );
 
-    const accordionItem = ()=>(
+    const createAccordionItem = ()=>(
       <div className={classnames('accordion-item', {'accordion-item-expanded': this.state.expanded})}>
-        <div className="item-link item-content" onClick={this.accordionToggle}>
+        <div className={cls} onClick={this.accordionToggle}>
           {itemMeida}
           <div className="item-inner"> {itemTitle} </div>
         </div>
@@ -411,8 +485,8 @@ export class ListItem extends Component {
       </div>
     );
 
-    const check_radio = (type)=> {
-      const checkRadioClassName = classnames({ 'disabled': other.disabled }, `item-content label-${type}`);
+    const createCheckRadio = (type)=> {
+      const checkRadioClassName = classnames(cls, { 'disabled': other.disabled }, `label-${type}`);
       return (
         <label className={checkRadioClassName}>
           <input type={type} defaultValue={value} name={name} checked={checked || false}  {...other}/>
@@ -430,89 +504,29 @@ export class ListItem extends Component {
       );
     };
 
-    const customItem = ()=>(
-      <div className="item-content">
-        {itemMeida}
-        <div className="item-inner">{children}</div>
-      </div>
-    );
 
     switch (type) {
       case 'mediaList':
-        content = mediaItem();
+        content = createMediaItem();
         break;
-      case 'accordion':
-        content = accordionItem();
+      case 'accordionItem':
+        content = createAccordionItem();
         break;
       case 'checkbox':
-        content = check_radio('checkbox');
+        content = createCheckRadio('checkbox');
         break;
       case 'radio':
-        content = check_radio('radio');
+        content = createCheckRadio('radio');
         break;
       default:
-        content = baseItem();
+        content = createBaseItem();
     }
 
     return (
-      <li className={className} {...other} ref="ListItem">
+      <li ref="ListItem">
         {content}
         {sortable && <div className="sortable-handler" {...this.initSortable()}></div>}
       </li>
     )
-  }
-}
-
-/**
-* ListGroup
-* Properties: className, style
-* Event Properties: null
-*/
-
-export class ListGroup extends Component {
-
-  static uiName = 'ListGroup'
-
-  static propTypes = {
-    className: PropTypes.string,
-    title: React.PropTypes.string
-  }
-
-  render() {
-    const {
-      title,
-      style,
-      className,
-      children,
-      ...other
-    } = this.props;
-
-    return (
-      <ul className={className} style={style} ref="ListGroup">
-        {mounted(title, <li className="list-group-title"></li>)}
-        {React.Children.map(children, (c, i)=>{
-          if(!React.isValidElement(c)) return c;
-          return React.cloneElement(c, {key: i, ...other});
-        })}
-      </ul>
-    );
-  }
-}
-
-export class ListLabel  extends Component {
-  static uiName = 'ListBlockLabel'
-
-  render() {
-    const {
-      title,
-      className,
-      children,
-      ...other
-    } = this.props;
-
-    const cls = classnames('list-block-label', className);
-    return (
-      <div className={cls} {...other}>{children}</div>
-    );
   }
 }

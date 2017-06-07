@@ -29,7 +29,7 @@ export default class IndexPage extends Component {
           </ContentBlock>
           <List accordion inset>
             <ListGroup>
-              <ListItem title="列表" onAccordionOpen={this.onAccordionOpen(1)}>
+              <ListItem accordionItem title="列表" onAccordionOpen={this.onAccordionOpen(1)}>
                 <List>
                   <ListItem title="列表视图" link to="/ListView"/>
                   <ListItem title="媒体列表" link to="/MediaLists"/>
@@ -41,18 +41,17 @@ export default class IndexPage extends Component {
             </ListGroup>
 
             <ListGroup style={style}>
-              <ListItem title="表单" onAccordionOpen={this.onAccordionOpen(2)}>
+              <ListItem accordionItem title="表单" onAccordionOpen={this.onAccordionOpen(2)}>
                 <List>
                   <ListItem title="表单布局" link to="/FormElements"/>
                   <ListItem title="多选 & 单选" link to="/CheckboxesRadios"/>
                   <ListItem title="按钮" link to="/Buttons"/>
                 </List>
               </ListItem>
-
             </ListGroup>
 
             <ListGroup style={style}>
-              <ListItem title="基础组件" onAccordionOpen={this.onAccordionOpen(0)}>
+              <ListItem accordionItem title="基础组件" onAccordionOpen={this.onAccordionOpen(0)}>
                 <List>
                   <ListItem title="九宫格" link to="/Grid"/>
                   <ListItem title="图片轮播" link to="/swipeable"/>
@@ -65,7 +64,7 @@ export default class IndexPage extends Component {
             </ListGroup>
 
             <ListGroup style={style}>
-              <ListItem title="操作" onAccordionOpen={this.onAccordionOpen(3)}>
+              <ListItem accordionItem title="操作" onAccordionOpen={this.onAccordionOpen(3)}>
                 <List>
                   <ListItem title="模态框 Modals" link to="/Modals"/>
                   <ListItem title="选择器" link to="/Picker"/>

@@ -45,25 +45,25 @@ export class FormInput extends Component {
 
   render() {
 
-    const {type, value, ...other} = this.props;
+    const {type, ...other} = this.props;
 
     let ele;
 
     switch (type) {
       case 'select':
-        ele = <select {...other} type={type} defaultValue={value} {...other}/>
+        ele = <select {...other} type={type}/>
         break;
       case 'switch':
-        ele = <Switch {...other} type={type} value={value} {...other}/>
+        ele = <Switch {...other} type={type}/>
         break;
       case 'range':
-        ele = <Range {...other} type={type} value={value} {...other}/>
+        ele = <Range {...other} type={type}/>
         break;
       case 'textarea':
-        ele = <textarea {...other} type={type} defaultValue={value} ref="input" {...other}/>
+        ele = <textarea {...other} type={type}/>
         break;
       default:
-        ele = <input {...other} type={type} defaultValue={value} ref="input" {...other}/>
+        ele = <input {...other} type={type}/>
     }
     return (
       <div className="item-input" ref="FormInput">
@@ -87,14 +87,14 @@ export class Switch extends Component {
       className,
       style,
       type,
-      checked,
+      value,
       ...other
     } = this.props;
 
     const cls = classnames('label-switch', className);
     return (
       <label className={cls} style={style} ref="Switch">
-        <input type="checkbox" {...other} defaultChecked={checked}/>
+        <input type="checkbox" {...other} defaultValue="Switch"/>
         <div className="checkbox"></div>
       </label>
     );
@@ -108,13 +108,12 @@ export class Range extends Component {
   render() {
 
     const {
-      value,
       ...other
     } = this.props;
 
     return (
       <div className="range-slider" ref="Range">
-        <input {...other} defaultValue={value}/>
+        <input {...other} />
       </div>
     );
   }

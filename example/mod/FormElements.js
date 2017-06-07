@@ -17,6 +17,8 @@ const Icon = ()=>{
 
 export default class FormElements extends Component {
 
+
+
   render() {
     return (
       <Page title="表单">
@@ -47,13 +49,13 @@ export default class FormElements extends Component {
             <ListItem media={<Icon/>}>
               <FormLabel>Gender</FormLabel>
               <FormInput type="select">
-                <option value="male">Male</option>
+                <option defaultValue="male">Male</option>
                 <option value="female">Female</option>
               </FormInput>
             </ListItem>
             <ListItem media={<Icon/>}>
               <FormLabel>Birth date</FormLabel>
-              <FormInput type="date" placeholder="Birth day" value="2014-04-30"/>
+              <FormInput type="date" placeholder="Birth day" defaultValue="2014-04-30"/>
             </ListItem>
             <ListItem media={<Icon/>}>
               <FormLabel>Date time</FormLabel>
@@ -61,11 +63,11 @@ export default class FormElements extends Component {
             </ListItem>
             <ListItem media={<Icon/>}>
               <FormLabel>Switch</FormLabel>
-              <FormInput type="switch" checked={true}/>
+              <FormInput type="switch" defaultChecked={true}/>
             </ListItem>
             <ListItem media={<Icon/>}>
               <FormLabel>Slider</FormLabel>
-              <FormInput type="range"  min="0" max="100" step="1" value="90"/>
+              <FormInput type="range"  min="0" max="100" step="1" defaultValue="90"/>
             </ListItem>
             <ListItem media={<Icon/>} className="align-top">
               <FormLabel>Textarea</FormLabel>
@@ -82,10 +84,10 @@ export default class FormElements extends Component {
               <FormInput type="password" placeholder="Password"/>
             </ListItem>
             <ListItem media={<Icon/>}>
-              <FormInput type="date" placeholder="Birth day" value="2014-04-30"/>
+              <FormInput type="date" placeholder="Birth day" defaultValue="2014-04-30"/>
             </ListItem>
             <ListItem media={<Icon/>}>
-              <FormInput type="switch" checked={true}/>
+              <FormInput type="switch" defaultChecked={true}/>
             </ListItem>
           </List>
 
@@ -98,10 +100,10 @@ export default class FormElements extends Component {
               <FormInput type="password" placeholder="Password"/>
             </ListItem>
             <ListItem>
-              <FormInput type="date" placeholder="Birth day" value="2014-04-30"/>
+              <FormInput type="date" placeholder="Birth day" defaultValue="2014-04-30"/>
             </ListItem>
             <ListItem>
-              <FormInput type="switch" checked={true}/>
+              <FormInput type="switch" defaultChecked={true}/>
             </ListItem>
           </List>
 
@@ -114,10 +116,10 @@ export default class FormElements extends Component {
               <FormInput type="password" placeholder="Password"/>
             </ListItem>
             <ListItem>
-              <FormInput type="date" placeholder="Birth day" value="2014-04-30"/>
+              <FormInput type="date" placeholder="Birth day" defaultValue="2014-04-30"/>
             </ListItem>
             <ListItem>
-              <FormInput type="switch" checked={true}/>
+              <FormInput type="switch" defaultChecked={true}/>
             </ListItem>
           </List>
         </PageContent>

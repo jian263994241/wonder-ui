@@ -21,20 +21,20 @@ export default class AccordionListPage extends Component {
         <PageContent>
           <ContentBlockTitle>列表</ContentBlockTitle>
           <List accordion>
-            <ListItem accordion title="文字">
+            <ListItem accordionItem title="文字">
               <ContentBlock>
                 <p>Accordion Item 1 Content</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu felis volutpat, rutrum ex quis, lobortis ex. Curabitur quis mattis lorem. Nullam magna lacus, interdum vel maximus nec, vestibulum non quam. Phasellus ornare efficitur porttitor. Quisque neque diam, imperdiet in fermentum nec, congue vitae ante. Nullam imperdiet maximus commodo. Morbi pharetra id purus ac ultrices. Duis non posuere libero.</p>
               </ContentBlock>
             </ListItem>
-            <ListItem accordion title="嵌套列表">
+            <ListItem accordionItem title="嵌套列表">
               <List>
                 <ListItem title="Ivan Petrov" after="CEO" media={<Icon/>}/>
                 <ListItem title="John Doe" badge="5" media={<Icon/>}/>
                 <ListItem title="Jenna Smith" badge="new" badgeColor="red" media={<Icon/>}/>
               </List>
             </ListItem>
-            <ListItem accordion title="文字2">
+            <ListItem accordionItem title="文字2">
               <ContentBlock>
                 <p>Accordion Item 3 Content</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu felis volutpat, rutrum ex quis, lobortis ex. Curabitur quis mattis lorem. Nullam magna lacus, interdum vel maximus nec, vestibulum non quam. Phasellus ornare efficitur porttitor. Quisque neque diam, imperdiet in fermentum nec, congue vitae ante. Nullam imperdiet maximus commodo. Morbi pharetra id purus ac ultrices. Duis non posuere libero.</p>
@@ -44,13 +44,13 @@ export default class AccordionListPage extends Component {
 
           <ContentBlockTitle>嵌入式</ContentBlockTitle>
           <List accordion inset>
-            <ListItem accordion title="文字">
+            <ListItem accordionItem title="文字">
               <ContentBlock>
                 <p>Accordion Item 1 Content</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu felis volutpat, rutrum ex quis, lobortis ex. Curabitur quis mattis lorem. Nullam magna lacus, interdum vel maximus nec, vestibulum non quam. Phasellus ornare efficitur porttitor. Quisque neque diam, imperdiet in fermentum nec, congue vitae ante. Nullam imperdiet maximus commodo. Morbi pharetra id purus ac ultrices. Duis non posuere libero.</p>
               </ContentBlock>
             </ListItem>
-            <ListItem accordion title="文字">
+            <ListItem accordionItem title="文字">
               <ContentBlock>
                 <p>Accordion Item 1 Content</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu felis volutpat, rutrum ex quis, lobortis ex. Curabitur quis mattis lorem. Nullam magna lacus, interdum vel maximus nec, vestibulum non quam. Phasellus ornare efficitur porttitor. Quisque neque diam, imperdiet in fermentum nec, congue vitae ante. Nullam imperdiet maximus commodo. Morbi pharetra id purus ac ultrices. Duis non posuere libero.</p>
