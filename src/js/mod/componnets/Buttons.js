@@ -19,7 +19,8 @@ export class Button extends Component {
   }
 
   static defaultProps = {
-    block: true
+    block: true,
+    fill: true
   }
 
   render() {
@@ -90,7 +91,7 @@ export class ButtonsSegmented extends Component {
 
     const childrenTransfrom = React.Children.map(children, (child, index)=>{
       const active = activeIndex === index;
-      return React.cloneElement(child, {active: active, tabLink:true});
+      return React.cloneElement(child, {active: active, tabLink:true, fill: false});
     })
 
     return (
