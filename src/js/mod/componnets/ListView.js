@@ -253,8 +253,8 @@ export class ListItem extends Component {
     link: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.string]),
     checkbox: PropTypes.bool,
     radio: PropTypes.bool,
-    checked: PropTypes.bool,
-    value: PropTypes.string,
+    // checked: PropTypes.bool,
+    // value: PropTypes.string,
     sortable: PropTypes.bool,
     onSorted: PropTypes.func
   }
@@ -410,9 +410,6 @@ export class ListItem extends Component {
       mediaList,
       checkbox,
       radio,
-      checked,
-      value,
-      name,
       className,
       children,
       ...other
@@ -486,19 +483,24 @@ export class ListItem extends Component {
 
     const createCheckRadio = (type)=> {
       const checkRadioClassName = classnames(cls, { 'disabled': other.disabled }, `label-${type}`);
+      let inner ;
+      if(subtitle || text){
+        inner = (
+          <div className="item-inner">
+            <div className="item-title-row">{itemTitle}{itemAfter}</div>
+            {mounted(subtitle, <div className="item-subtitle"/>)}
+            {mounted(text, <div className="item-text"/>)}
+          </div>
+        )
+      }else{
+        inner = (<div className="item-inner">{itemTitle}{itemAfter}</div>)
+      }
       return (
         <label className={checkRadioClassName}>
-          <input type={type} defaultValue={value} name={name} checked={checked || false}  {...other}/>
+          <input type={type} {...other}/>
           <div className="item-media"> <i className={`icon icon-form-${type}`}></i> </div>
-          {mediaList && (type === 'radio') && itemMeida}
-          {mediaList && (
-            <div className="item-inner">
-              <div className="item-title-row">{itemTitle}{itemAfter}</div>
-              {mounted(subtitle, <div className="item-subtitle"/>)}
-              {mounted(text, <div className="item-text"/>)}
-            </div>
-          )}
-          { !mediaList && <div className="item-inner">{itemTitle}{itemAfter}</div> }
+          {(type === 'radio') && itemMeida}
+          {inner}
         </label>
       );
     };
