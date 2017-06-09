@@ -195,6 +195,8 @@ export class List extends Component {
       childrenNode = children;
     }
 
+    childrenNode = React.Children.toArray(childrenNode);
+
     if(sortable){
       childrenNode = React.Children.map(childrenNode, (child, index)=>{
         if(React.isValidElement(child) && child.type.uiName === 'ListItem'){
