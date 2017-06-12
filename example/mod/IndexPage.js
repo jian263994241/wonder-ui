@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, ListView, ContentBlock} from 'kui'
+import {Page, PageContent, ListView, ContentBlock, ContentBlockTitle} from 'kui'
 
 const {List, ListItem, ListGroup} = ListView;
-const {Title: ContentBlockTitle} = ContentBlock;
 
 export default class IndexPage extends Component {
 

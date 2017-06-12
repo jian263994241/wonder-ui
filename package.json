@@ -1,6 +1,6 @@
 {
   "name": "wonder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Kuaiqian H5 Framework",
   "main": "src/js/kui.js",
   "directories": {
@@ -25,7 +25,6 @@
     "prop-types": "^15.5.7",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-fastclick": "^3.0.1",
     "react-lazy-load": "^3.0.12",
     "react-motion": "^0.5.0",
     "react-router-dom": "^4.1.1",

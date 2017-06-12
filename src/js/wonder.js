@@ -36,6 +36,7 @@ export * as ReactMotion from 'react-motion'
 export * as RouterDOM, {Link, Redirect} from 'react-router-dom'
 export classnames from 'classnames'
 
-import initReactFastclick from 'react-fastclick'
-//fast click
-initReactFastclick();
+
+import initFastClicks from './mod/utils/fastclick'
+
+initFastClicks();
