@@ -13,8 +13,8 @@ export default class TabPage extends Component {
         <Navbar title="标签切换" backText/>
         <PageContent>
           <List>
-            <ListItem title="经典切换" link to="/Tab/Static"/>
-            <ListItem title="动画切换" link to="/Tab/Animation"/>
+            <ListItem title="经典切换" link="/Tab/Static"/>
+            <ListItem title="动画切换" link="/Tab/Animation"/>
           </List>
         </PageContent>
       </Page>
