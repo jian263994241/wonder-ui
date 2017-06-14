@@ -14,7 +14,7 @@ export default class SortableList extends Component {
       <Page title="排序列表">
         <Navbar title="排序列表" backText/>
         <PageContent>
-          <List sortable sortableOpened onSorted={(e)=>console.log(e)}>
+          <List sortable onSorted={(e)=>console.log(e)}>
             <ListItem title="a"></ListItem>
             <ListItem title="b"></ListItem>
             <ListItem title="c"></ListItem>

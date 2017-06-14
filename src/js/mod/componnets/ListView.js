@@ -25,13 +25,26 @@ export class ListGroup extends Component {
     const {
       title,
       children,
+      sortable,
+      onSorted,
       ...other
     } = this.props;
+
+    const passProps = {sortable, onSorted};
+
 
     return (
       <ul {...other}>
         {mounted(title, <li className="list-group-title"></li>)}
-        {children}
+        {React.Children.map(children, (child, index)=>{
+          if(!child) return null;
+
+          return cloneElement(child, {
+            key: child.toString(),
+            ...passProps
+          });
+
+        })}
       </ul>
     );
   }
@@ -106,7 +119,6 @@ export class List extends Component {
     accordion: PropTypes.bool,
     virtualItems: React.PropTypes.array,
     sortable: PropTypes.bool,
-    sortableOpened: PropTypes.bool,
     onSorted: PropTypes.func
   }
 
@@ -164,7 +176,6 @@ export class List extends Component {
       tabletInset,
       virtualItems,
       sortable,
-      sortableOpened,
       onSorted,
       className,
       children,
@@ -174,7 +185,7 @@ export class List extends Component {
     const cls = classnames('list-block', {
       'media-list': mediaList,
       'sortable': sortable,
-      'sortable-opened': sortableOpened,
+      'sortable-opened': sortable,
       'inset': inset,
       'tablet-inset': tabletInset,
       'accordion-list': accordion
@@ -185,7 +196,7 @@ export class List extends Component {
       return <ListItem {...props} key={index}/>;
     }
 
-    // const passProps = {sortable, onSorted};
+    const passProps = {sortable, onSorted};
 
     let childrenNode;
 
@@ -197,22 +208,21 @@ export class List extends Component {
 
     childrenNode = React.Children.toArray(childrenNode);
 
-    if(sortable){
-      childrenNode = React.Children.map(childrenNode, (child, index)=>{
-        if(React.isValidElement(child) && child.type.uiName === 'ListItem'){
-          if(child.type.uiName === 'ListItem'){
-            return cloneElement(child, {key: child.toString(), sortable: sortableOpened, onSorted});
-          }
-        }else{
-          return child;
-        }
-      })
-    }
+    //
+    // if(sortable){
+    //   childrenNode = React.Children.map(childrenNode, (child, index)=>{
+    //     if(React.isValidElement(child) && child.type.uiName === 'ListItem'){
+    //       if(child.type.uiName === 'ListItem'){
+    //         return cloneElement(child, {key: child.toString(), sortable: sortableOpened, onSorted});
+    //       }
+    //     }else{
+    //       return child;
+    //     }
+    //   })
+    // }
 
-    if(childrenNode){
-      if(React.isValidElement(childrenNode[0]) && childrenNode[0].type.uiName === 'ListItem'){
-        childrenNode = <ListGroup>{childrenNode}</ListGroup>;
-      }
+    if(React.isValidElement(childrenNode[0]) && childrenNode[0].type.uiName === 'ListItem'){
+      childrenNode = <ListGroup {...passProps}>{childrenNode}</ListGroup>;
     }
 
     return (
@@ -255,8 +265,6 @@ export class ListItem extends Component {
     link: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.string]),
     checkbox: PropTypes.bool,
     radio: PropTypes.bool,
-    // checked: PropTypes.bool,
-    // value: PropTypes.string,
     sortable: PropTypes.bool,
     onSorted: PropTypes.func
   }
@@ -388,6 +396,10 @@ export class ListItem extends Component {
         onAccordionClosed && onAccordionClosed();
       }
     });
+  }
+
+  accordionClose = ()=>{
+    this.setState({ expanded: false });
   }
 
   render (){
