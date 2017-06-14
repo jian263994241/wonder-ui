@@ -11,7 +11,7 @@ export default class ButtonsPage extends Component {
 
     return (
       <Page title="按钮">
-        <Navbar title="按钮" back/>
+        <Navbar title="按钮" backText/>
         <PageContent>
           <ContentBlock>
             <Button fill>按钮</Button>

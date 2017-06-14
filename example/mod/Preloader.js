@@ -29,7 +29,7 @@ export default class ModalsPage extends Component {
   render() {
     return (
       <Page>
-        <Navbar title="指示器" back/>
+        <Navbar title="指示器" backText/>
         <PageContent>
           <ContentBlock>
 

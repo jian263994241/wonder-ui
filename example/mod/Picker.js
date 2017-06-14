@@ -82,7 +82,7 @@ export default class FormElements extends Component {
   render() {
     return (
       <Page title="picker">
-        <Navbar title="picker" back/>
+        <Navbar title="picker" backText/>
         <PageContent>
           <ContentBlockTitle>类型</ContentBlockTitle>
           <List>

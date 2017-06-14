@@ -116,7 +116,7 @@ export default class PageContent extends Component {
       onRefresh,
       onInfinite,
       children,
-      onScroll,
+      // onScroll,
       waiting,
       ...other
     } = this.props;
@@ -160,7 +160,7 @@ export default class PageContent extends Component {
       );
 
       return (
-        <div className={cls} {...other} onScroll={this.handleInfiniteScroll}>
+        <div className={cls} {...other}>
           {children}
           {showInfiniteScrollPreloader && preloader}
         </div>

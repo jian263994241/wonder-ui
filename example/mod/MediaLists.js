@@ -17,7 +17,7 @@ export default class MediaViewPage extends Component {
   render() {
     return (
       <Page title="媒体列表">
-        <Navbar title="媒体列表" back/>
+        <Navbar title="媒体列表" backText/>
         <PageContent>
           <ContentBlockTitle>有图标的</ContentBlockTitle>
           <List mediaList>

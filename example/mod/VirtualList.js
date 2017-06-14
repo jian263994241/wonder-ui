@@ -23,7 +23,7 @@ export default class VirtualList extends Component {
   render() {
     return (
       <Page title="虚拟列表">
-        <Navbar title="虚拟列表" back/>
+        <Navbar title="虚拟列表" backText/>
         <PageContent>
           <ContentBlockTitle>Virtual Items</ContentBlockTitle>
           <List virtualItems={Items} />

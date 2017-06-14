@@ -15,7 +15,7 @@ export default class PullToRefresh extends Component {
   render() {
     return (
       <Page title="无限滚动">
-        <Navbar title="无限滚动" back/>
+        <Navbar title="无限滚动" backText/>
         <PageContent infiniteScroll infiniteScrollPreloader onInfinite={this.onInfinite}>
           <ContentBlock>
             <p>Just pull page down to let the magic happen.<br/>Note that pull-to-refresh feature is optimised for touch and native scrolling so it may not work on desktop browser.</p>

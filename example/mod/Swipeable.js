@@ -47,7 +47,7 @@ class SwipeablePage extends Component {
     } = this.state;
     return (
       <Page title="图片滑块" navbarFixed>
-        <Navbar title="图片滑块" back/>
+        <Navbar title="图片滑块" backText/>
         <PageContent>
           <div style={styles.root}>
             <AutoPlaySwipeableViews index={index} onChangeIndex={this.handleChangeIndex}>

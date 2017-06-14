@@ -12,6 +12,10 @@ export default class SlidePage extends Component {
     noAnimate: PropTypes.bool
   }
 
+  static defaultProps = {
+    noAnimate: false
+  }
+
   history = {
     index: -1,
     path: []
@@ -42,6 +46,7 @@ export default class SlidePage extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     const {history} = this.props;
     const pathname = history.location.pathname;
     this.pushHistory(pathname);

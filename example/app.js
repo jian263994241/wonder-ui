@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-import {RouterDOM, Pages, App, AppRoute} from 'kui'
+import {RouterDOM, App, View, Pages} from 'kui'
 
 
 import IndexPage from './mod/IndexPage'
@@ -30,27 +30,29 @@ import SortableList from './mod/SortableList'
 
 render((
   <App>
-    <AppRoute exact path="/" component={IndexPage}/>
-    <AppRoute path="/swipeable" component={Swipeable}/>
-    <AppRoute path="/ListView" component={ListView}/>
-    <AppRoute path="/MediaLists" component={MediaLists}/>
-    <AppRoute path="/AccordionList" component={AccordionList}/>
-    <AppRoute path="/VirtualList" component={VirtualList}/>
-    <AppRoute path="/SortableList" component={SortableList}/>
-    <AppRoute path="/Formelements" component={Formelements}/>
-    <AppRoute path="/CheckboxesRadios" component={CheckboxesRadios}/>
-    <AppRoute path="/Buttons" component={Buttons}/>
-    <AppRoute path="/Grid" component={Grid}/>
-    <AppRoute path="/Icons" component={Icons}/>
-    <AppRoute path="/LazyLoad" component={LazyLoad}/>
-    <AppRoute path="/Tab/Index" component={Tab}/>
-    <AppRoute path="/Tab/Animation" component={TabAnimation}/>
-    <AppRoute path="/Tab/Static" component={TabStatic}/>
-    <AppRoute path="/PullToRefresh" component={PullToRefresh}/>
-    <AppRoute path="/Modals" component={Modals}/>
-    <AppRoute path="/Preloader" component={Preloader}/>
-    <AppRoute path="/Picker" component={Picker}/>
-    <AppRoute path="/InfiniteScroll" component={InfiniteScroll}/>
-    <AppRoute path="/Keyboard" component={Keyboard}/>
+    <View type="hash">
+      <Pages exact path="/" component={IndexPage}/>
+      <Pages path="/swipeable" component={Swipeable}/>
+      <Pages path="/ListView" component={ListView}/>
+      <Pages path="/MediaLists" component={MediaLists}/>
+      <Pages path="/AccordionList" component={AccordionList}/>
+      <Pages path="/VirtualList" component={VirtualList}/>
+      <Pages path="/SortableList" component={SortableList}/>
+      <Pages path="/Formelements" component={Formelements}/>
+      <Pages path="/CheckboxesRadios" component={CheckboxesRadios}/>
+      <Pages path="/Buttons" component={Buttons}/>
+      <Pages path="/Grid" component={Grid}/>
+      <Pages path="/Icons" component={Icons}/>
+      <Pages path="/LazyLoad" component={LazyLoad}/>
+      <Pages path="/Tab/Index" component={Tab}/>
+      <Pages path="/Tab/Animation" component={TabAnimation}/>
+      <Pages path="/Tab/Static" component={TabStatic}/>
+      <Pages path="/PullToRefresh" component={PullToRefresh}/>
+      <Pages path="/Modals" component={Modals}/>
+      <Pages path="/Preloader" component={Preloader}/>
+      <Pages path="/Picker" component={Picker}/>
+      <Pages path="/InfiniteScroll" component={InfiniteScroll}/>
+      <Pages path="/Keyboard" component={Keyboard}/>
+    </View>
   </App>
 ), document.querySelector('.root'));

@@ -18,8 +18,7 @@ export class Navbar extends Component {
     title: PropTypes.string,
     noBorder:PropTypes.bool,
     theme: PropTypes.string,
-    back: PropTypes.bool,
-    backText: PropTypes.string,
+    backText: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.bool]),
     onBack: PropTypes.func,
     center: PropTypes.element,
     left: PropTypes.element,
@@ -37,20 +36,12 @@ export class Navbar extends Component {
     $(window).off('resize', this.navPosFix);
   }
 
-  backHandler = ()=>{
-    const {onBack} = this.props;
-    if(onBack){
-      onBack();
-    }else{
-      history.back();
-    }
-  }
+
   render() {
 
     const {
       theme,
       title,
-      back,
       backText,
       noBorder,
       onBack,
@@ -64,16 +55,25 @@ export class Navbar extends Component {
 
     const themeCss = theme? `theme-${theme}`: '';
 
-    const cls = classnames('navbar', themeCss, {'no-border': noBorder}, className);
+    const cls = classnames({
+      'navbar': true,
+      'no-border': noBorder
+    }, className);
+
+    const BackButton = withRouter(({history, onClick})=>{
+      const clickHandler = onClick ? onClick: history.goBack;
+      return (
+        <a className={classnames({'back': backText, 'link': backText, 'icon-only': (backText != '')})} onClick={clickHandler}>
+          <Icon type="left-nav"/><span>{backText}</span>
+        </a>
+      );
+    })
 
     let navLeft = left, navRight = right, navCenter = center;
 
-    if(!left && back){
-      const backCss = classnames('back link', backText?'':'icon-only')
+    if(!left && typeof backText != undefined){
       navLeft = (
-        <a className="back link icon-only" onClick={this.backHandler}>
-          <Icon type="left-nav"/><span>{backText}</span>
-        </a>
+        <BackButton onClick={onBack}></BackButton>
       )
     }
 

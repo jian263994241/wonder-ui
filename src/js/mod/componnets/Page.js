@@ -16,8 +16,12 @@ export default class Page extends Component {
     title: PropTypes.string,
     theme: PropTypes.string,
     navbarFixed: PropTypes.bool,
-    toolbarFixed: PropTypes.bool,
-    waiting: PropTypes.bool
+    toolbarFixed: PropTypes.bool
+  }
+
+  static defaultProps = {
+    waiting: false,
+    navbarFixed: false,
   }
 
   componentDidMount() {

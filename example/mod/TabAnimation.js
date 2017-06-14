@@ -49,7 +49,7 @@ export default class TabPage extends Component {
 
     return (
       <Page title="标签切换">
-        <Navbar title="动画切换" back/>
+        <Navbar title="动画切换" backText/>
         <SubNavBar noBorder>
           <ButtonsSegmented activeIndex={index}>
             <Button onClick={this.handleChangeTabs(0)}>Tab 1</Button>

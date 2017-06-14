@@ -10,7 +10,7 @@ export default class LazyLoadPage extends Component {
   render() {
     return (
       <Page title="懒加载">
-        <Navbar title="懒加载" back/>
+        <Navbar title="懒加载" backText/>
         <PageContent>
           <LazyLoad height={762} offsetVertical={300}>
             <img src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493116001431&di=3f98372310ecd81fcb3a520481b9f3dc&imgtype=0&src=http%3A%2F%2Fwww.mengtu.cc%2Fuploads%2Fallimg%2F140902%2F1-140Z2205916.jpg' />

@@ -2,8 +2,8 @@
 
 //export
 export App from './mod/componnets/App'
-export AppRoute from './mod/componnets/AppRoute'
-export SlidePage from './mod/componnets/SlidePage'
+export View from './mod/componnets/View'
+export Pages from './mod/componnets/Pages'
 export Page from './mod/componnets/Page'
 export PageContent from './mod/componnets/PageContent'
 export * as Bars, {Navbar, SubNavBar, Toolbar} from './mod/componnets/Bars'
@@ -33,10 +33,5 @@ export Request from 'axios'
 export LazyLoad from 'react-lazy-load'
 export noScroll from 'no-scroll'
 export * as ReactMotion from 'react-motion'
-export * as RouterDOM, {Link, Redirect} from 'react-router-dom'
+export * as RouterDOM, {Link, Redirect, withRouter} from 'react-router-dom'
 export classnames from 'classnames'
-
-
-import initFastClicks from './mod/utils/fastclick'
-
-initFastClicks();

@@ -52,9 +52,16 @@ export class ContentBlock extends Component {
       children,
       ...other
     } = this.props;
-    const inSetCss = inset? 'inset': '';
-    const cls = classnames('content-block', inSetCss, className);
-    const innerCss = classnames('content-block-inner', noHairlines?'no-hairlines':'');
+
+    const cls = classnames({
+      'content-block': true,
+      'inset': inset
+    }, className);
+
+    const innerCss = classnames({
+      'content-block-inner': true,
+      'no-hairlines': noHairlines
+    });
 
     let innerElement = children;
 

@@ -33,7 +33,7 @@ export default class IndexPage extends Component {
                   <ListItem title="列表视图" link="/ListView"/>
                   <ListItem title="媒体列表" link="/MediaLists"/>
                   <ListItem title="手风琴列表" link="/AccordionList"/>
-                  <ListItem title="虚拟列表" link="/VirtualList"/>
+                  {/**<ListItem title="虚拟列表" link="/VirtualList"/>**/}
                   <ListItem title="排序列表" link="/SortableList"/>
                 </List>
               </ListItem>

@@ -18,7 +18,7 @@ export default class KeyboardPage extends Component {
   render() {
     return (
       <Page title="键盘">
-        <Navbar title="键盘" back></Navbar>
+        <Navbar title="键盘" backText></Navbar>
         <PageContent>
 
           <List>

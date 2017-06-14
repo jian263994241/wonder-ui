@@ -24,7 +24,7 @@ export default class FormElements extends Component {
   render() {
     return (
       <Page title="表单">
-        <Navbar title="表单" back/>
+        <Navbar title="表单" backText/>
         <PageContent>
           <ContentBlockTitle>Full Layout</ContentBlockTitle>
           <List>

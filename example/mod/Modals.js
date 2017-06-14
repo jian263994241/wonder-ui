@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, Buttons, ContentBlock, ContentBlockTitle, Bars, Grid, Popover, Popup, Dialog, PickerModal, ActionsModal} from 'kui'
-
+import {Page, PageContent, Buttons, ContentBlock, ContentBlockTitle, Bars, Grid, Popover, Popup, Dialog, PickerModal, ActionsModal, View, Pages, Link} from 'kui'
 
 const {Button} = Buttons;
 const {Row,Col} = Grid;
@@ -34,9 +33,51 @@ export default class ModalsPage extends Component {
   }
 
   render() {
+
+    const pop1 = ()=>{
+      return (
+        <Page>
+          <Navbar title="弹窗1" backText="模态框" onBack={()=>{this.setState({popupOpened:false})}}/>
+          <PageContent>
+            <ContentBlock>
+              POPUP1 ...
+              <Link to="/pop2">pop2</Link>
+            </ContentBlock>
+          </PageContent>
+        </Page>
+      );
+    }
+
+    const pop2 = ()=>{
+      return (
+        <Page>
+          <Navbar title="弹窗2" backText="弹窗1"/>
+          <PageContent>
+            <ContentBlock>
+              POPUP2 ...
+              <Link to="/pop3">pop3</Link>
+            </ContentBlock>
+          </PageContent>
+        </Page>
+      );
+    }
+
+    const pop3 = ()=>{
+      return (
+        <Page>
+          <Navbar title="弹窗3" backText="弹窗2"/>
+          <PageContent>
+            <ContentBlock>
+              POPUP3 ...
+            </ContentBlock>
+          </PageContent>
+        </Page>
+      );
+    }
+
     return (
       <Page title="模态框">
-        <Navbar title="模态框" back/>
+        <Navbar title="模态框" backText/>
         <PageContent>
           <ContentBlock>
             <Row>
@@ -121,42 +162,12 @@ export default class ModalsPage extends Component {
 
         {/*popup*/}
         <Popup opened={this.state.popupOpened}>
-          <Page>
-            <Navbar title="POPUP" back onBack={()=>{this.setState({popupOpened:false})}}/>
-            <PageContent>
-              <ContentBlock>
-                POPUP...
-              </ContentBlock>
-              <ContentBlock>
-                <p>About Popover created dynamically.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
-              </ContentBlock>
-              <ContentBlock>
-                <p>About Popover created dynamically.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
-              </ContentBlock>
-              <ContentBlock>
-                <p>About Popover created dynamically.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
-              </ContentBlock>
-              <ContentBlock>
-                <p>About Popover created dynamically.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
-              </ContentBlock>
-              <ContentBlock>
-                <p>About Popover created dynamically.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
-              </ContentBlock>
-              <ContentBlock>
-                <p>About Popover created dynamically.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
-              </ContentBlock>
-              <ContentBlock>
-                <p>About Popover created dynamically.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
-              </ContentBlock>
-            </PageContent>
-          </Page>
+
+          <View>
+            <Pages path="/" exact component={pop1}></Pages>
+            <Pages path="/pop2" component={pop2}></Pages>
+            <Pages path="/pop3" component={pop3}></Pages>
+          </View>
         </Popup>
 
       </Page>

@@ -35,15 +35,15 @@ fis.match('**/app.js',{
 fis.media('prod2')
 .match('src/js/wonder.js',{
   useHash: false,
-  release: `js/${pkg.name}.${pkg.version}.min.js`
+  release: `${pkg.version}/js/${pkg.name}.min.js`
 })
 .match('src/less/ios/uikit.less',{
   useHash: false,
   optimizer: fis.plugin('clean-css'),
-  release: `css/${pkg.name}.${pkg.version}.min.css`
+  release: `${pkg.version}/css/${pkg.name}.min.css`
 })
 .match('src/less/(fonts/*)',{
-  release: '$1'
+  release: `${pkg.version}/$1`
 })
 .match('**/(*.png)',{
   release: 'img/$1'
