@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-import {RouterDOM, App, View, Pages} from 'kui'
+import {App, View, Pages} from 'kui'
 
 
 import IndexPage from './mod/IndexPage'

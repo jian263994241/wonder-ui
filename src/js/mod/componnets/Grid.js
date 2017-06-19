@@ -20,8 +20,10 @@ export class Row extends Component {
       ...other
     } =  this.props;
 
-    const noGutterCss = noGutter? 'no-gutter' : '';
-    const cls = classnames('row', noGutterCss, className);
+    const cls = classnames({
+      'row': true,
+      'no-gutter': noGutter
+    }, noGutterCss, className);
 
     return (
       <div className={cls} {...other} ref="Row">{children}</div>
