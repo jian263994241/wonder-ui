@@ -42,10 +42,10 @@ export default class View extends Component {
     }
 
     const renderPage = (props)=>(
-      <SlidePage {...props} noAnimate={noAnimate}>
+      <SlidePage history={props.history} noAnimate={noAnimate}>
         <Switch>
           {React.Children.map(children, (c, i)=>{
-            return React.cloneElement(c, {app: this});
+            return React.cloneElement(c, {View: this, ...props});
           })}
         </Switch>
       </SlidePage>

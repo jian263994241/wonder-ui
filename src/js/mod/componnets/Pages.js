@@ -10,7 +10,6 @@ export default class Pages extends Component {
   render() {
 
     const {component: Component, ...other}  = this.props;
-
     return (
       <Route {...other} render={props=>(<Component {...other}/>)}/>
     );

@@ -23,7 +23,7 @@ export class Row extends Component {
     const cls = classnames({
       'row': true,
       'no-gutter': noGutter
-    }, noGutterCss, className);
+    }, className);
 
     return (
       <div className={cls} {...other} ref="Row">{children}</div>

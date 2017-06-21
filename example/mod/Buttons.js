@@ -7,6 +7,9 @@ const {Row,Col} = Grid;
 const {SubNavBar, Navbar} = Bars;
 
 export default class ButtonsPage extends Component {
+  componentDidMount() {
+    console.log(this.props);
+  }
   render() {
 
     return (
