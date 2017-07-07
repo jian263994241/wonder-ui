@@ -6,6 +6,7 @@ import $ from '../utils/dom'
 import {mountedOutside} from '../utils/mix'
 
 import Modal from './Modal'
+import OverLay from './OverLay'
 
 class PopoverModal extends Component {
   static uiName = 'PopoverModal';
@@ -120,41 +121,53 @@ class PopoverModal extends Component {
   }
 
   componentDidMount() {
-    this.root = findDOMNode(this.refs.PopoverModal);
-    $(window).on('resize', this.resize);
+    // this.root = findDOMNode(this.refs.PopoverModal);
+    // $(window).on('resize', this.resize);
   }
 
+  // updateState (state){
+  //   this.setState(state);
+  // }
+
+  closedRemoveNode = ()=>{
+    $(window).off('resize', this.resize);
+    $(this.refs.root).remove();
+  };
 
   render() {
     const {
-      className,
       target,
+      visible,
+      content,
+      onCancel,
       children,
       ...other
     } =  this.props;
 
-    const cls = classnames('popover', className);
+    console.log(visible);
 
-    const closedRemoveNode = ()=>{
-      $(window).off('resize', this.resize);
-      $(this.root).remove();
-    };
 
+
+    const type = 'popover';
+
+    // onOpen={this.resize}
+    //onClickOutside={this.close}
     return (
-      <Modal
-        opened={this.state.opened}
-        onClosed={closedRemoveNode}
-        className={cls}
-        onOpen={this.resize}
-        onClickOutside={this.close}
-        ref="PopoverModal"
-        {...other}
-      >
-        <div className="popover-angle" ref="angle"></div>
-        <div className="popover-inner">
-          {children}
-        </div>
-      </Modal>
+      <div ref="root">
+        <OverLay visible={visible} onClick={onCancel}></OverLay>
+        <Modal
+          visible={visible}
+          afterClose={this.closedRemoveNode}
+          type={type}
+          ref="PopoverModal"
+          {...other}
+        >
+          <div className="popover-angle" ref="angle"></div>
+          <div className="popover-inner">
+            {content}
+          </div>
+        </Modal>
+      </div>
     );
   }
 }
@@ -164,51 +177,129 @@ export default class Popover extends Component {
   static uiName = 'Popover';
 
   static propTypes = {
-    component: PropTypes.element.isRequired
+    content: PropTypes.element.isRequired,
+    children: PropTypes.element.isRequired
   }
 
   state = {
-    opened: false
+    visible: false
   }
 
-  open = (target)=>{
-    const {
-      component,
-      children,
-      ...other
-    } =  this.props;
+  constructor(props){
+    super(props);
 
-    const popover = (
-      <PopoverModal target={target} {...other}> {children} </PopoverModal>
-    );
+    this.container = document.createElement('div');
 
-    const rendered = mountedOutside(popover);
-
-    rendered.open();
   }
 
-  clickHandler = ()=>{
-    const {
-      className,
-      component,
-      children,
-      ...other
-    } =  this.props;
-    const target = findDOMNode(this.refs.PopoverLink);
-    const targetClick = component.props.onClick;
-
-    this.open(target);
-
-    //判断是否react Dom 事件
-    if (targetClick && targetClick.name === 'onClick'){
-      targetClick();
-    }
+  componentDidMount() {
+    console.log(this.container);
+    $('body').append(this.container);
   }
+
+  open = ()=>{
+    // const {
+    //   content,
+    //   children,
+    //   ...other
+    // } =  this.props;
+    //
+    // const popover = (
+    //   <PopoverModal target={children} {...other}>{content}</PopoverModal>
+    // );
+    //
+    // const rendered = mountedOutside(popover);
+    //
+    // rendered.open();
+    // const {
+    //   content,
+    //   children,
+    //   ...other
+    // } =  this.props;
+    //
+    // const node = React.Children.only(children);
+    //
+    // this.outside = mountedOutside(
+    //   <PopoverModal target={node} visible={this.state.visible} onCancel={this.cancel} {...other}>{content}</PopoverModal>
+    // );
+
+    this.setState({
+      visible: true
+    });
+
+  }
+
+  cancelHandler = ()=>{
+    this.setState({
+      visible: false
+    });
+  }
+
+
+  componentDidMount() {
+    // const {
+    //   content,
+    //   children,
+    //   ...other
+    // } =  this.props;
+    //
+    // const node = React.Children.only(children);
+    //
+    // this.outside = mountedOutside(
+    //   <PopoverModal target={node} visible={this.state.visible} onCancel={this.cancel} {...other}>{content}</PopoverModal>
+    // );
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+
+
+  }
+
+  // clickHandler = ()=>{
+  //   const {
+  //     children,
+  //     ...other
+  //   } =  this.props;
+  //
+  //   const target = findDOMNode(this.refs.PopoverLink);
+  //   const targetClick = component.props.onClick;
+  //
+  //   this.open(target);
+  //
+  //   //判断是否react Dom 事件
+  //   if (targetClick && targetClick.name === 'onClick'){
+  //     targetClick();
+  //   }
+  // }
+
+
 
   render() {
+
     const {
-      component
+      content,
+      children,
+      ...other
     } =  this.props;
-    return React.cloneElement(component, {onClick: this.clickHandler, ref: 'PopoverLink'});
+
+    const targetNode = React.Children.only(children);
+
+    return (
+      <div>
+        {React.cloneElement(targetNode, {onClick: this.open})}
+        <Modal
+          type="popover"
+          visible={this.state.visible}
+          onCancel={this.cancelHandler}
+          >
+          <div className="popover-angle" ref="angle"></div>
+          <div className="popover-inner">
+            {content}
+          </div>
+        </Modal>
+      </div>
+    );
+
   }
 }

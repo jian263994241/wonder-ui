@@ -95,23 +95,27 @@ export default class ModalsPage extends Component {
             <br/>
             <Row>
               <Col width="33">
-                <Popover style={{width: 200}} component={<Button>Popover 1</Button>}>
+                <Popover style={{width: 200}} content={(
+                    <ContentBlock>
+                      <p>About Popover created dynamically.</p>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
+                    </ContentBlock>
+                  )}>
+                  <Button>Popover 1</Button>
+                </Popover>
+              </Col>
+              <Col width="33">
+                <Popover style={{width: 200}} content={(
                   <ContentBlock>
                     <p>About Popover created dynamically.</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
                   </ContentBlock>
+                  )}>
+                  <Button>Popover 2</Button>
                 </Popover>
               </Col>
               <Col width="33">
-                <Popover style={{width: 200}} component={<Button>Popover 2</Button>}>
-                  <ContentBlock>
-                    <p>About Popover created dynamically.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
-                  </ContentBlock>
-                </Popover>
-              </Col>
-              <Col width="33">
-                <Button onClick={()=>Dialog.toast('Toast')}>Toast</Button>
+                <Button onClick={()=>{Dialog.toast('Toast1'); Dialog.toast('Toast1');Dialog.toast('Toast1')}}>Toast</Button>
               </Col>
             </Row>
             <br/>
@@ -133,7 +137,7 @@ export default class ModalsPage extends Component {
 
         </PageContent>
 
-        <ActionsModal opened={this.state.actionsOpened} >
+        <ActionsModal visible={this.state.actionsOpened} onCancel={()=>{this.setState({actionsOpened: false})}}>
           <ActionGroup>
             <ActionLabel>这是一个标题，可以为一行或者两行。</ActionLabel>
             <ActionButton>示例菜单</ActionButton>
@@ -145,14 +149,8 @@ export default class ModalsPage extends Component {
         </ActionsModal>
 
         <PickerModal
-          opened={this.state.pickerModalOpened}
-          onClickOutside={()=>{this.setState({pickerModalOpened: false})}}
-          toolbar={
-            <Toolbar>
-              <div className="left"></div>
-              <div className="right"><a onClick={()=>{this.setState({pickerModalOpened: false})}}>关闭</a></div>
-            </Toolbar>
-          }
+          visible={this.state.pickerModalOpened}
+          onCancel={()=>{this.setState({pickerModalOpened: false})}}
         >
           <ContentBlock>
             <p>About Popover created dynamically.</p>
@@ -161,7 +159,7 @@ export default class ModalsPage extends Component {
         </PickerModal>
 
         {/*popup*/}
-        <Popup opened={this.state.popupOpened}>
+        <Popup visible={this.state.popupOpened}>
 
           <View>
             <Pages path="/" exact component={pop1}></Pages>

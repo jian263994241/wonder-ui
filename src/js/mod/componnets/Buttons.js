@@ -52,7 +52,7 @@ export class Button extends Component {
       'tab-link': tabLink
     }, buttonColor, className);
 
-    const ButtonElement = submit? 'button': (typeof link === 'object' || typeof link === 'string' && link != '') ? Link : 'div';
+    const ButtonElement = submit? 'button': (typeof link === 'object' || typeof link === 'string' && link != '') ? Link : 'a';
 
     return (
       <ButtonElement className={cls} disabled={disabled} {...other} ref="Button" to={link}>{children}</ButtonElement>

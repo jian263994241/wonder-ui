@@ -35,7 +35,8 @@ export default class Dialog extends Component {
   }
 
   open = ()=>{
-
+    console.log($('.modal').length);
+    console.log($('.modal.modal-in:not(.modal-out)').length);
     if($('.modal.modal-in:not(.modal-out)').length){
       modalStack.push(()=>{
         this.open();

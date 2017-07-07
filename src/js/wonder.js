@@ -29,9 +29,9 @@ export device from './mod/utils/device'
 export * as store, {ls, ss, ms} from './mod/utils/store'
 
 //lib
-export Request from 'axios'
+// export Request from 'axios'
 export LazyLoad from 'react-lazy-load'
-export noScroll from 'no-scroll'
+// export noScroll from 'no-scroll'
 export * as ReactMotion from 'react-motion'
 export * as RouterDOM, {Link, Redirect, withRouter} from 'react-router-dom'
 export classnames from 'classnames'

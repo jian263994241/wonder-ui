@@ -4,6 +4,8 @@ import classnames from 'classnames'
 
 import $ from '../utils/dom'
 import Modal from './Modal'
+import OverLay from './OverLay'
+import {Toolbar} from './Bars'
 
 
 export default class PickerModal extends Component {
@@ -11,26 +13,37 @@ export default class PickerModal extends Component {
   static uiName = 'PickerModal';
 
   static propTypes = {
-    className: PropTypes.string,
-    innerClassName: PropTypes.string
+    cancelText: PropTypes.string,
+    onCancel: PropTypes.func
+  }
+
+  static defaultProps = {
+    cancelText: '关闭'
   }
 
   render() {
 
     const {
       toolbar,
-      className,
-      innerClassName,
+      onCancel,
+      cancelText,
       children,
       ...other
     } = this.props;
 
-    const cls = classnames('picker-modal', className);
-    const innerCls = classnames('picker-modal-inner', innerClassName);
+    const type = 'picker';
+
+    const preset = toolbar || (
+      <Toolbar>
+        <div className="left"></div>
+        <div className="right"><a onClick={onCancel}>{cancelText}</a></div>
+      </Toolbar>
+    )
+
     return (
-      <Modal className={cls} {...other} overLayCss="picker-modal-overlay">
-        {toolbar}
-        <div className={innerCls}>
+      <Modal {...other} type="picker" onCancel={onCancel}>
+        {preset}
+        <div className="picker-modal-inner">
           {children}
         </div>
       </Modal>

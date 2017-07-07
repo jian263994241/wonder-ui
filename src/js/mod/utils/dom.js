@@ -340,7 +340,7 @@ const Dom7 = (function() {
           return this;
         },
         transitionEnd: function(callback) {
-          var events = ['webkitTransitionEnd', 'transitionend'],
+          var events = ['webkitTransitionEnd', 'transitionend', 'webkitTransitioncancel','transitioncancel'],
             i, dom = this;
 
           function fireCallBack(e) {

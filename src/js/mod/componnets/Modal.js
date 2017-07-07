@@ -4,114 +4,126 @@ import classnames from 'classnames'
 import {mountedOutside, mounted} from '../utils/mix'
 import $ from '../utils/dom'
 import OverLay from './OverLay'
-import noScroll from 'no-scroll'
+
 
 export default class Modal extends Component {
 
-  static uiName = 'Popup';
+  static uiName = 'Modal';
 
   static defaultProps = {
-    opened: false,
-    overlay: true
+    visible: false,
+    type: 'modal',
+    closeByOutside: true
   }
 
   static propTypes = {
-    opened: PropTypes.bool,
-    onClickOutside: PropTypes.func,
-    onOpen: PropTypes.func,
-    onOpened: PropTypes.func,
-    onClose: PropTypes.func,
-    onClosed: PropTypes.func,
+    visible: PropTypes.bool,
+    afterClose: PropTypes.func,
+    onCancel: PropTypes.func,
+    closeByOutside: PropTypes.bool,
     className: PropTypes.string,
-    overlay: PropTypes.bool,
-    overLayCss: PropTypes.string
+    // overlay: PropTypes.bool,
+    // overLayCss: PropTypes.string
   }
 
-  state={
-    opened: false,
-    // showChildren: true,
-    transitionEnd: true
+  // toggle = (opened)=>{
+  //   if(this.state.opened === opened) return ;
+  //   opened ? this.openModal(): this.closeModal();
+  // }
+
+  // openModal = ()=>{
+  //   const {onOpen, onOpened} = this.props;
+  //   const {modal} = this.refs;
+  //
+  //   $(modal).show();
+  //
+  //   this.setState({ opened: true });
+  //
+  //   onOpen && onOpen();
+  //   $(window).trigger('resize');
+  //   $(modal).removeClass('modal-out').addClass('modal-in').transitionEnd((e)=>{
+  //     onOpened && onOpened();
+  //   });
+
+  // }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {visible, afterClose} = this.props;
+    const modal = $(this.refs.modal);
+    if(visible != prevProps.visible){
+      if(visible){
+        console.log('Modal Opened');
+        modal.show();
+        setTimeout(()=>{
+          $(window).trigger('resize');
+          modal.removeClass('modal-out').addClass('modal-in');
+        });
+
+      }else{
+        console.log('Modal Closed');
+        modal.removeClass('modal-in').addClass('modal-out').transitionEnd((e)=>{
+          modal.hide();
+          afterClose && afterClose();
+        });
+      }
+    }
   }
 
-  toggle = (opened)=>{
-    if(this.state.opened === opened) return ;
-    opened ? this.openModal(): this.closeModal();
-  }
+  // closeModal = ()=>{
+  //   const {onClose, onClosed} = this.props;
+  //   const {Modal: modal} = this.refs;
+  //
+  //
+  //   this.setState({opened: false});
+  //
+  //   onClose && onClose();
+  //   $(modal).removeClass('modal-in').addClass('modal-out').transitionEnd((e)=>{
+  //     $(modal).hide();
+  //     onClosed && onClosed();
+  //   });
+  // }
 
-  openModal = ()=>{
-    const {onOpen, onOpened} = this.props;
-    const {Modal: modal} = this.refs;
-
-    $(modal).show();
-    noScroll.on();
-    this.setState({ opened: true });
-
-    onOpen && onOpen();
-    $(window).trigger('resize');
-    $(modal).removeClass('modal-out').addClass('modal-in').transitionEnd((e)=>{
-      onOpened && onOpened();
-    });
-
-
-  }
-
-  closeModal = ()=>{
-    const {onClose, onClosed} = this.props;
-    const {Modal: modal} = this.refs;
-
-    noScroll.off();
-    this.setState({opened: false});
-    
-    onClose && onClose();
-    $(modal).removeClass('modal-in').addClass('modal-out').transitionEnd((e)=>{
-      $(modal).hide();
-      onClosed && onClosed();
-    });
-  }
-
-  componentDidMount() {
-    const {opened} = this.props;
-    this.toggle(opened);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {opened} = nextProps;
-    this.toggle(opened);
-  }
+  // componentDidMount() {
+    // const {visible} = this.props;
+    // if(!visible){
+    //   $(this.refs.modal).hide().addClass('modal-out');
+    // }
+    // this.toggle(opened);
+  // }
+  //
+  // componentWillReceiveProps(nextProps) {
+  //   const {opened} = nextProps;
+  //   // this.toggle(opened);
+  // }
 
   render() {
 
     const {
       className,
-      opened,
-      onOpen,
-      onOpened,
-      onClose,
-      onClosed,
-      overlay,
-      overLayCss,
-      onClickOutside,
+      visible,
+      onCancel,
+      afterClose,
+      closeByOutside,
       children,
+      type,
       ...other
     } = this.props;
 
-    const {opened: stateOpened} = this.state;
-
-    // const cls = classnames(className, {
-    //   'modal-in': stateOpened
-    // });
-
-    const isPopup = className && className.indexOf('popup') > -1 ;
-
-    // const childrenNode = (!this.state.showChildren && !stateOpened) ? null : children;
-
-    const overlayStyle = overlay ? {} : {'opacity': 0.01};
+    const cls = classnames({
+      'modal': type === 'modal',
+      'popup': type === 'popup',
+      'actions-modal': type === 'actions',
+      'picker-modal': type === 'picker',
+      'popover': type === 'popover',
+    }, className);
 
     return (
       <div>
-        <OverLay opened={stateOpened} className={overLayCss || 'modal-overlay'} style={overlayStyle} onClick={onClickOutside}></OverLay>
-        <div className={className} {...other} ref="Modal">{children}</div>
+        <OverLay visible={visible} type={type} onClick={closeByOutside && onCancel}></OverLay>
+        <div className={cls} {...other} ref="modal">{children}</div>
       </div>
     );
   }
 }
+
+  // <OverLay opened={visible} className="modal-overlay" onClick={onClickOutside && onCancel}></OverLay>

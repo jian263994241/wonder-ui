@@ -8,32 +8,32 @@ export default class OverLay extends Component {
   static uiName = 'OverLay';
 
   static propTypes = {
-    opened: PropTypes.bool,
-    className: PropTypes.string
+    visible: PropTypes.bool,
+    type: PropTypes.string
   }
 
   static defaultProps = {
-    opened: false
+    visible: false,
+    type: 'modal'
   }
 
-  state = {
-    opened: false
-  }
-
-  componentDidMount() {
-    const {opened} = this.props;
-    this.setState({opened});
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {opened} = nextProps;
-    this.setState({opened});
+  componentDidUpdate(prevProps, prevState) {
+    const {visible} = this.props;
+    const overLay = $(this.refs.overLay);
+    if(visible != prevProps.visible){
+      if(visible){
+        overLay.addClass('modal-overlay-visible');
+      }else{
+        overLay.removeClass('modal-overlay-visible');
+      }
+    }
   }
 
   render() {
 
     const {
-      opened,
+      visible,
+      type,
       onTouchMove,
       className,
       ...other
@@ -43,10 +43,16 @@ export default class OverLay extends Component {
       e.preventDefault();
     };
 
-    const cls = classnames(className, {'modal-overlay-visible': this.state.opened});
+
+    const cls = classnames({
+      'modal-overlay': (type === 'modal' ||  type === 'actions' || type === 'popover'),
+      'popup-overlay': type === 'popup',
+      'picker-modal-overlay': type === 'picker',
+      'modal-overlay-visible': visible
+    });
 
     return (
-      <div className={cls} ref="OverLay" onTouchMove={preventScrolling} {...other}></div>
+      <div className={cls} ref="overLay" onTouchMove={preventScrolling} {...other}></div>
     );
   }
 }
