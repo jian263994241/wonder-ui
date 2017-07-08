@@ -3,7 +3,6 @@ import {findDOMNode} from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import $ from '../utils/dom'
-import {mountedOutside} from '../utils/mix'
 
 import Modal from './Modal'
 import OverLay from './OverLay'
@@ -20,7 +19,6 @@ export default class Popover extends Component {
   state = {
     visible: false
   }
-
 
   resize = ()=> {
     const targetElement = findDOMNode(this.refs.target);
@@ -112,11 +110,9 @@ export default class Popover extends Component {
   }
 
   open = ()=>{
-
     this.setState({
       visible: true
     }, this.resize);
-
   }
 
   cancelHandler = ()=>{
@@ -124,47 +120,6 @@ export default class Popover extends Component {
       visible: false
     });
   }
-
-
-  componentDidMount() {
-    // const {
-    //   content,
-    //   children,
-    //   ...other
-    // } =  this.props;
-    //
-    // const node = React.Children.only(children);
-    //
-    // this.outside = mountedOutside(
-    //   <PopoverModal target={node} visible={this.state.visible} onCancel={this.cancel} {...other}>{content}</PopoverModal>
-    // );
-
-
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-
-
-  }
-
-  // clickHandler = ()=>{
-  //   const {
-  //     children,
-  //     ...other
-  //   } =  this.props;
-  //
-  //   const target = findDOMNode(this.refs.PopoverLink);
-  //   const targetClick = component.props.onClick;
-  //
-  //   this.open(target);
-  //
-  //   //判断是否react Dom 事件
-  //   if (targetClick && targetClick.name === 'onClick'){
-  //     targetClick();
-  //   }
-  // }
-
-
 
   render() {
 
@@ -193,6 +148,5 @@ export default class Popover extends Component {
         </Modal>
       </div>
     );
-
   }
 }

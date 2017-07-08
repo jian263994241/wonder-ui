@@ -33,7 +33,7 @@ export default class Page extends Component {
       this.setDocumentTitle(title);
     }
 
-    Dialog.hidePreloader();
+    // Dialog.hidePreloader();
   }
 
   componentWillReceiveProps(nextProps) {

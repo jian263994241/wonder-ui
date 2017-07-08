@@ -55,16 +55,13 @@ export function mounted(content, reactElement){
   return React.cloneElement(reactElement, null , content);
 }
 
-export function mountedOutside(component, callback){
-  const root = $('body');
-  const _modal = document.createElement('div');
-  let doneRendering = false;
-  const rendered = ReactDOM.render(component , _modal, ()=>{
-    doneRendering = true;
-  });
-  while (!doneRendering) {
-      console.log("Waiting");
+
+export function validateDOMElem (props, propName, componentName){
+  const prop = props[propName];
+  if (prop != undefined && prop instanceof Element === false) {
+    return new Error(
+      'Invalid prop `' + propName + '` supplied to' +
+      ' `' + componentName + '`. Validation failed.'
+    );
   }
-  root.append(_modal.childNodes[0]);
-  return rendered;
 }

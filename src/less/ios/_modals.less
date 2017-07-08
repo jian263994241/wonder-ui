@@ -85,8 +85,6 @@
         .transform(translate3d(0,0,0) scale(1));
     }
     &.toast, &.preloader-modal{
-      width: 80%;
-      min-width: 120px;
       margin-left: 0;
       border-radius: 8px!important;
       .transform(translate3d(-50%,-50%,0) scale(1));
@@ -98,6 +96,7 @@
         .modal-text{
           word-wrap: break-word;
           word-break:break-all;
+          min-width: 80px;
         }
       }
     }

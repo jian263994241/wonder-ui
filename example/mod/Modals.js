@@ -115,7 +115,7 @@ export default class ModalsPage extends Component {
                 </Popover>
               </Col>
               <Col width="33">
-                <Button onClick={()=>{Dialog.toast('Toast1'); Dialog.toast('Toast1');Dialog.toast('Toast1')}}>Toast</Button>
+                <Button onClick={()=>{Dialog.toast('Toast1');}}>Toast</Button>
               </Col>
             </Row>
             <br/>

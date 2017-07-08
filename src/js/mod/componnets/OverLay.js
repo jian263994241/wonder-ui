@@ -47,6 +47,7 @@ export default class OverLay extends Component {
     const cls = classnames({
       'modal-overlay': (type === 'modal' ||  type === 'actions' || type === 'popover'),
       'popup-overlay': type === 'popup',
+      'preloader-indicator-overlay': (type === 'preloader' && visible),
       'picker-modal-overlay': type === 'picker',
       'modal-overlay-visible': visible
     });

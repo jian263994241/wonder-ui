@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, Buttons, ContentBlock, ContentBlockTitle, Bars, Grid, Dialog} from 'kui'
+import {Page, PageContent, Buttons, ContentBlock, ContentBlockTitle, Bars, Grid, Preloader} from 'kui'
 
 const {Button} = Buttons;
 const {Row,Col} = Grid;
@@ -10,19 +10,19 @@ const {SubNavBar, Navbar} = Bars;
 export default class ModalsPage extends Component {
 
   state = {
-    show1: false,
-    show2: false
+    visibleType: null
   }
 
   showPreloader = (i)=>()=>{
-    switch (i) {
-      case '1':
-        Dialog.showPreloader()
-        break;
-      case '3':
-        Dialog.showPreloader('请稍等...')
-        break;
-    }
+    this.setState({
+      visibleType: i
+    });
+
+    setTimeout(()=>{
+      this.setState({
+        visibleType: null
+      });
+    }, 1000);
   }
 
 
@@ -32,18 +32,23 @@ export default class ModalsPage extends Component {
         <Navbar title="指示器" backText/>
         <PageContent>
           <ContentBlock>
-
+            <ContentBlockTitle>Preloader</ContentBlockTitle>
             <Row>
-              <Col width="50">
-                <Button onClick={this.showPreloader('1')}>Preloader</Button>
+              <Col width="33">
+                <Button onClick={this.showPreloader(1)}>默认</Button>
               </Col>
-              <Col width="50">
-                <Button onClick={this.showPreloader('3')}>Preloader2</Button>
+              <Col width="33">
+                <Button onClick={this.showPreloader(2)}>有文字</Button>
+              </Col>
+              <Col width="33">
+                <Button onClick={this.showPreloader(3)}>logo</Button>
               </Col>
             </Row>
 
           </ContentBlock>
-
+          <Preloader visible={this.state.visibleType === 1}></Preloader>
+          <Preloader visible={this.state.visibleType === 2} text="问题提示"></Preloader>
+          <Preloader visible={this.state.visibleType === 3} logoType="kq"></Preloader>
         </PageContent>
 
       </Page>
