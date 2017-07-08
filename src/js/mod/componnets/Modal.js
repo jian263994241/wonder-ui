@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import {mountedOutside, mounted} from '../utils/mix'
 import $ from '../utils/dom'
 import OverLay from './OverLay'
+import Mounter from './Mounter'
 
 
 export default class Modal extends Component {
@@ -26,28 +28,9 @@ export default class Modal extends Component {
     // overLayCss: PropTypes.string
   }
 
-  // toggle = (opened)=>{
-  //   if(this.state.opened === opened) return ;
-  //   opened ? this.openModal(): this.closeModal();
-  // }
-
-  // openModal = ()=>{
-  //   const {onOpen, onOpened} = this.props;
-  //   const {modal} = this.refs;
-  //
-  //   $(modal).show();
-  //
-  //   this.setState({ opened: true });
-  //
-  //   onOpen && onOpen();
-  //   $(window).trigger('resize');
-  //   $(modal).removeClass('modal-out').addClass('modal-in').transitionEnd((e)=>{
-  //     onOpened && onOpened();
-  //   });
-
-  // }
 
   componentDidUpdate(prevProps, prevState) {
+
     const {visible, afterClose} = this.props;
     const modal = $(this.refs.modal);
     if(visible != prevProps.visible){
@@ -67,34 +50,13 @@ export default class Modal extends Component {
         });
       }
     }
+
   }
 
-  // closeModal = ()=>{
-  //   const {onClose, onClosed} = this.props;
-  //   const {Modal: modal} = this.refs;
-  //
-  //
-  //   this.setState({opened: false});
-  //
-  //   onClose && onClose();
-  //   $(modal).removeClass('modal-in').addClass('modal-out').transitionEnd((e)=>{
-  //     $(modal).hide();
-  //     onClosed && onClosed();
-  //   });
-  // }
+  getModal = ()=>{
+    return this.refs.modal
+  }
 
-  // componentDidMount() {
-    // const {visible} = this.props;
-    // if(!visible){
-    //   $(this.refs.modal).hide().addClass('modal-out');
-    // }
-    // this.toggle(opened);
-  // }
-  //
-  // componentWillReceiveProps(nextProps) {
-  //   const {opened} = nextProps;
-  //   // this.toggle(opened);
-  // }
 
   render() {
 
@@ -104,8 +66,9 @@ export default class Modal extends Component {
       onCancel,
       afterClose,
       closeByOutside,
-      children,
+      mounter,
       type,
+      children,
       ...other
     } = this.props;
 
@@ -117,13 +80,17 @@ export default class Modal extends Component {
       'popover': type === 'popover',
     }, className);
 
+    const Wrapper = mounter? Mounter : 'div';
+
     return (
-      <div>
+      <Wrapper>
         <OverLay visible={visible} type={type} onClick={closeByOutside && onCancel}></OverLay>
         <div className={cls} {...other} ref="modal">{children}</div>
-      </div>
+      </Wrapper>
     );
   }
 }
+
+
 
   // <OverLay opened={visible} className="modal-overlay" onClick={onClickOutside && onCancel}></OverLay>

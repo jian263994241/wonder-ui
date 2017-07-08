@@ -3,7 +3,6 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 import {App, View, Pages} from 'kui'
 
-
 import IndexPage from './mod/IndexPage'
 import ListView from './mod/ListView'
 import MediaLists from './mod/MediaLists'
