@@ -38,19 +38,26 @@ export default class KeyboardPage extends Component {
           <Keyboard.Input value={'123a'} />
         </PageContent>
 
-        <Keyboard opened={this.state.keyboardOpen} logo closeBtn onKeyDown={(num)=>{
-          let inputValA = this.state.inputValA
+        <Keyboard
+          visible={this.state.keyboardOpen}
+          onKeyDown={(num)=>{
+            let inputValA = this.state.inputValA
 
-          if(num === 'del'){
-            inputValA = inputValA.slice(0, inputValA.length - 1);
-          }else{
-            inputValA = inputValA + num
-          }
-          this.setState({
-            inputValA: inputValA
-          })
-
-        }}></Keyboard>
+            if(num === 'del'){
+              inputValA = inputValA.slice(0, inputValA.length - 1);
+            }else{
+              inputValA = inputValA + num
+            }
+            this.setState({
+              inputValA: inputValA
+            })
+          }}
+          onCancel={()=>{
+            this.setState({
+              keyboardOpen:false
+            });
+          }}
+        ></Keyboard>
       </Page>
     );
   }

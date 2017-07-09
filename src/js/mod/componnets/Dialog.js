@@ -15,13 +15,14 @@ const modalStackClearQueue = function () {
         (modalStack.shift())();
     }
 };
-// if($('.modal.modal-in:not(.modal-out)').length){
-//   modalStack.push(()=>{
-//     this.open();
-//   });
-// }else{
-//   this.setState({ opened: true }, this.modalTopFix);
-// }
+
+const addQueue = function(fn){
+  if($('.modal.modal-in:not(.modal-out)').length){
+    modalStack.push(fn);
+    return true;
+  }
+};
+
 
 export function alert (text, title, callbackOk) {
   if (typeof title === 'function') {
@@ -29,12 +30,10 @@ export function alert (text, title, callbackOk) {
     title = undefined;
   }
 
+  if( addQueue( alert.bind(this, arguments) ) ) return true;
+
   const clickOk = ()=>{
     mounted.updateProps({visible: false}, callbackOk);
-  }
-
-  const afterClose = ()=>{
-    mounted.getComponent().getMounter().destroy();
   }
 
   const mounted = Mounter.mount(
@@ -54,6 +53,12 @@ export function alert (text, title, callbackOk) {
       </div>
     </Modal>
   );
+
+  function afterClose () {
+    mounted.getComponent().getMounter().destroy();
+    modalStackClearQueue();
+  }
+
 };
 
 
@@ -65,6 +70,8 @@ export function confirm (text, title, callbackOk, callbackCancel) {
       title = undefined;
   }
 
+  if( addQueue( confirm.bind(this, arguments) ) ) return true;
+
   const clickOk = ()=>{
     mounted.updateProps({visible: false}, callbackOk);
   }
@@ -73,9 +80,6 @@ export function confirm (text, title, callbackOk, callbackCancel) {
     mounted.updateProps({visible: false}, callbackCancel);
   }
 
-  const afterClose = ()=>{
-    mounted.getComponent().getMounter().destroy();
-  }
 
   const mounted = Mounter.mount(
     <Modal
@@ -95,6 +99,12 @@ export function confirm (text, title, callbackOk, callbackCancel) {
       </div>
     </Modal>
   );
+
+  function afterClose () {
+    mounted.getComponent().getMounter().destroy();
+    modalStackClearQueue();
+  }
+
 };
 
 export function prompt(text, title, callbackOk, callbackCancel) {
@@ -106,6 +116,8 @@ export function prompt(text, title, callbackOk, callbackCancel) {
   }
 
   callbackOk = callbackOk || function(){};
+
+  if( addQueue( prompt.bind(this, arguments) ) ) return true;
 
   let value = null;
 
@@ -119,10 +131,6 @@ export function prompt(text, title, callbackOk, callbackCancel) {
 
   const clickCancel = ()=>{
     mounted.updateProps({visible: false}, callbackCancel);
-  }
-
-  const afterClose = ()=>{
-    mounted.getComponent().getMounter().destroy();
   }
 
   const mounted = Mounter.mount(
@@ -146,6 +154,11 @@ export function prompt(text, title, callbackOk, callbackCancel) {
       </div>
     </Modal>
   );
+
+  function afterClose () {
+    mounted.getComponent().getMounter().destroy();
+    modalStackClearQueue();
+  }
 }
 
 export function toast (text, timer, callbackOk){
@@ -154,9 +167,7 @@ export function toast (text, timer, callbackOk){
     timer = 1500;
   }
 
-  const afterClose = ()=>{
-    mounted.getComponent().getMounter().destroy();
-  }
+  if( addQueue( toast.bind(this, arguments) ) ) return true;
 
   setTimeout(()=>{
     mounted.updateProps({visible: false});
@@ -176,4 +187,9 @@ export function toast (text, timer, callbackOk){
       </div>
     </Modal>
   );
+
+  function afterClose () {
+    mounted.getComponent().getMounter().destroy();
+    modalStackClearQueue();
+  }
 }

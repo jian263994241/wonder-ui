@@ -13,7 +13,6 @@ export default class Keyboard extends Component {
 
   static propTypes = {
     className: PropTypes.string,
-    opened: PropTypes.bool,
     inline: PropTypes.bool,
     logo: PropTypes.bool,
     dot: PropTypes.bool,
@@ -22,35 +21,22 @@ export default class Keyboard extends Component {
     random: PropTypes.bool
   }
 
-  state = {
-    opened: false
-  }
-
-  close = ()=>{
-    this.setState({opened: false});
-  }
-
-  componentDidMount() {
-    const {opened} = this.props;
-    this.setState({opened});
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {opened} = nextProps;
-    this.setState({opened});
+  static defaultProps = {
+    logo: true,
+    closeBtn: true
   }
 
   render() {
 
     const {
       className,
-      opened,
       inline,
       logo,
       dot,
       closeBtn,
       onKeyDown,
       random,
+      onCancel,
       children,
       ...other
     } = this.props;
@@ -109,13 +95,13 @@ export default class Keyboard extends Component {
       <Toolbar>
         <div className="left"></div>
         {logo && (<div className="center"> <div className="picker-keypad-logo">飞凡通安全键盘</div> </div>)}
-        <div className="right">{closeBtn && !inline && (<div className="picker-keypad-close" onClick={this.close}><span className="icon icon-down-nav"></span></div>)}</div>
+        <div className="right">{closeBtn && !inline && (<div className="picker-keypad-close" onClick={onCancel}><span className="icon icon-down-nav"></span></div>)}</div>
       </Toolbar>
     )
 
 
     return (
-      <PickerModal className={cls} innerClassName="picker-keypad-buttons" opened={!inline && this.state.opened} toolbar={toolbar} {...other}>
+      <PickerModal className={cls} onCancel={onCancel} innerCss="picker-keypad-buttons" toolbar={toolbar} {...other}>
         {keys.map(keyInit)}
       </PickerModal>
     );

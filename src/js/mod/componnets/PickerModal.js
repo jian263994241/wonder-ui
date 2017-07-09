@@ -14,7 +14,9 @@ export default class PickerModal extends Component {
 
   static propTypes = {
     cancelText: PropTypes.string,
-    onCancel: PropTypes.func
+    onCancel: PropTypes.func,
+    toolbar: PropTypes.element,
+    innerCss: PropTypes.string
   }
 
   static defaultProps = {
@@ -25,6 +27,7 @@ export default class PickerModal extends Component {
 
     const {
       toolbar,
+      innerCss,
       onCancel,
       cancelText,
       children,
@@ -43,7 +46,7 @@ export default class PickerModal extends Component {
     return (
       <Modal {...other} type="picker" onCancel={onCancel}>
         {preset}
-        <div className="picker-modal-inner">
+        <div className={classnames('picker-modal-inner', innerCss)}>
           {children}
         </div>
       </Modal>

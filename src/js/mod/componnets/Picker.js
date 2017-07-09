@@ -4,305 +4,391 @@ import classnames from 'classnames'
 
 import $ from '../utils/dom'
 import PickerModal from './PickerModal'
-import {Motion, spring} from 'react-motion';
-
-const springConfig = {stiffness: 300, damping: 50};
-
-
-class PickerCol extends Component {
-
-  static uiName = 'PickerCol';
-
-  static propTypes = {
-    opened: PropTypes.bool,
-    items: PropTypes.array,
-    align: PropTypes.string,
-    picker3d: PropTypes.bool,
-    onSelected: PropTypes.func
-  }
-
-  static defaultProps = {
-    items: [],
-    align: 'right',
-    picker3d: false,
-    momentumRatio: 7,
-    itemHeight: 36
-  }
-
-  state = {
-    isTouched: false,
-    touchStartY : 0,
-    touchCurrentY: 0,
-    startTranslate: 0,
-    currentTranslate: 0,
-    touchStartTime: 0,
-    maxTranslate: 0,
-    minTranslate: 0,
-    velocityTime: 0,
-    velocityTranslate: 0,
-    prevTranslate: 0,
-    itemsHeight: 0,
-    activeIndex: 0
-  }
-
-
-  calcSize = ()=>{
-    const {itemHeight, items} = this.props;
-    const container = this.refs.PickerCol;
-    const wrapper = this.refs.wrapper;
-    let colWidth, colHeight , itemsHeight, minTranslate, maxTranslate;
-    colWidth = 0;
-    colHeight = container.offsetHeight;
-    itemsHeight = itemHeight * items.length;
-
-    minTranslate = colHeight / 2 - itemsHeight + itemHeight / 2;
-    maxTranslate = colHeight / 2 - itemHeight / 2;
-
-    const currentTranslate = maxTranslate;
-
-    this.setState({ minTranslate, maxTranslate, currentTranslate });
-  }
-
-  activeIndex = 0;
-
-  updateItems = (activeIndex, newTranslate)=>{
-    const {items, onSelected} = this.props;
-    if (activeIndex < 0) activeIndex = 0;
-    if (activeIndex >= items.length) activeIndex = items.length - 1;
-
-    const currentTranslate = newTranslate;
-    const isTouched = false;
-
-    this.setState({isTouched, currentTranslate, activeIndex}, ()=>{
-      onSelected && onSelected(activeIndex);
-    });
-  }
-
-  handleTouchStart = (e)=>{
-    e.preventDefault();
-    const isTouched = true;
-    const {pageY} = e.touches[0];
-    let {touchStartY, touchCurrentY, startTranslate, currentTranslate, touchStartTime} = this.state;
-    touchStartY = touchCurrentY = pageY;
-    startTranslate = currentTranslate;
-
-    touchStartTime = (new Date()).getTime();
-
-    this.setState({ touchStartY, touchCurrentY, startTranslate, isTouched, touchStartTime });
-  }
-
-  handleTouchMove = (e)=>{
-    const {pageY: touchCurrentY} = e.touches[0];
-    const {picker3d} = this.props;
-    let {isTouched, touchStartY, currentTranslate, startTranslate, maxTranslate, minTranslate, velocityTranslate, prevTranslate} = this.state;
-
-    if(isTouched){
-      const diff = touchCurrentY - touchStartY;
-
-      currentTranslate = startTranslate + diff;
-
-      let returnTo = undefined;
-      // Normalize translate
-      if (currentTranslate < minTranslate) {
-          currentTranslate = minTranslate - Math.pow(minTranslate - currentTranslate, 0.8);
-          returnTo = 'min';
-      }
-      if (currentTranslate > maxTranslate) {
-          currentTranslate = maxTranslate + Math.pow(currentTranslate - maxTranslate, 0.8);
-          returnTo = 'max';
-      }
-
-      const velocityTime = (new Date()).getTime();
-
-      velocityTranslate = currentTranslate - prevTranslate || currentTranslate;
-
-      prevTranslate = currentTranslate;
-
-      this.setState({ touchCurrentY , currentTranslate, returnTo, velocityTranslate, velocityTime, prevTranslate});
-
-    }
-
-  }
-
-  handleTouchEnd = (e)=>{
-    const isTouched = false;
-    const {itemHeight} = this.props;
-    let {returnTo, minTranslate, maxTranslate, currentTranslate, touchStartTime, velocityTime, velocityTranslate} = this.state;
-
-    if (returnTo) {
-        if (returnTo === 'min') {
-          currentTranslate = minTranslate;
-        }else{
-          currentTranslate = maxTranslate;
-        }
-    }
-
-    const touchEndTime = (new Date()).getTime();
-
-    let newTranslate, velocity ;
-
-    if (touchEndTime - touchStartTime > 300) {
-        newTranslate = currentTranslate;
-    }else{
-      velocity = Math.abs(velocityTranslate / (touchEndTime - velocityTime));
-      newTranslate = currentTranslate + velocityTranslate * this.props.momentumRatio;
-    }
-
-    newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
-
-    const activeIndex = -Math.floor((newTranslate - maxTranslate)/itemHeight);
-
-    newTranslate = -activeIndex * itemHeight + maxTranslate;
-
-
-    this.updateItems(activeIndex, newTranslate);
-
-  }
-
-  render() {
-    const {
-      items,
-      align,
-      picker3d
-    } = this.props;
-
-    const {
-      activeIndex
-    } = this.state;
-
-    const pickerItem = (item, index)=>{
-
-      return (
-        <div
-          className={classnames({ 'picker-item': true, 'picker-selected': (activeIndex===index) })}
-          key={`pickerItem-${index}`}
-        >
-          <span>{item}</span>
-        </div>
-      );
-    }
-
-    const cls = classnames({
-      'picker-items-col': true,
-      'picker-items-col-absolute': picker3d,
-      'picker-items-col-left': (align ==='left'),
-      'picker-items-col-center': (align ==='center')
-    });
-
-    const y = this.state.currentTranslate;
-    return (
-      <div className={cls} ref="PickerCol">
-        <Motion style={{y}}>
-          {
-            ({y})=>(
-              <div
-                className="picker-items-col-wrapper"
-                onTouchStart={this.handleTouchStart}
-                onTouchMove={this.handleTouchMove}
-                onTouchEnd={this.handleTouchEnd}
-                style={{
-                  transform: `translate3d(0px, ${y}px, 0px)`,
-                  WebkitTransform: `translate3d(0px, ${y}px, 0px)`
-                }}
-              >
-                {items.map(pickerItem)}
-              </div>
-            )
-          }
-        </Motion>
-      </div>
-    );
-  }
-}
 
 
 export default class Picker extends Component {
 
-  static uiName = 'PickerModal';
-
-  static defaultProps = {
-    opened: false
-  }
+  static uiName = 'Picker';
 
   static propTypes = {
     className: PropTypes.string,
-    opened: PropTypes.bool,
     cols: PropTypes.array.isRequired,
-    onSelected: PropTypes.func,
-    onOpen: PropTypes.func,
-    onOpened: PropTypes.func,
-    onClose: PropTypes.func,
-    onClosed: PropTypes.func,
+    onChange: PropTypes.func,
+    rotateEffect: PropTypes.bool,
+    updateValuesOnMomentum: PropTypes.bool,
+    updateValuesOnTouchmove: PropTypes.bool,
+    momentumRatio: PropTypes.number,
+    inline: PropTypes.bool
   }
 
-  open = ()=>{
-    const {onOpen, onSelected} = this.props;
-    this.resize();
-    onOpen && onOpen();
-    onSelected && onSelected(this.values);
+  static defaultProps = {
+    rotateEffect: false,
+    momentumRatio: 7,
+    updateValuesOnMomentum: false,
+    updateValuesOnTouchmove: true,
+    value: undefined,
+    inline: false
   }
 
-  resize = ()=>{
-    const {cols} = this.props;
-    cols.forEach((col, index)=>{
-      this.refs[`Col${index}`].calcSize()
-    })
+  constructor (props){
+    super(props);
+    this.cols = [];
+  }
+
+  initPickerCol = (colElement, updateItems)=>{
+    var p = this;
+    var colContainer = $(colElement);
+    var colIndex = colContainer.index();
+    var col = p.cols[colIndex];
+    if (col.divider) return;
+    col.container = colContainer;
+    col.wrapper = col.container.find('.picker-items-col-wrapper');
+    col.items = col.wrapper.find('.picker-item');
+
+    var i, j;
+    var wrapperHeight, itemHeight, itemsHeight, minTranslate, maxTranslate;
+    col.replaceValues = function (values, displayValues) {
+        col.destroyEvents();
+        col.values = values;
+        col.displayValues = displayValues;
+        var newItemsHTML = p.columnHTML(col, true);
+        col.wrapper.html(newItemsHTML);
+        col.items = col.wrapper.find('.picker-item');
+        col.calcSize();
+        col.setValue(col.values[0], 0, true);
+        col.initEvents();
+    };
+    var resizeTimeout;
+    col.calcSize = function () {
+        if (p.params.rotateEffect) {
+            col.container.removeClass('picker-items-col-absolute');
+            if (!col.width) col.container.css({width:''});
+        }
+        var colWidth, colHeight;
+        colWidth = 0;
+        colHeight = col.container[0].offsetHeight;
+        wrapperHeight = col.wrapper[0].offsetHeight;
+        itemHeight = col.items[0].offsetHeight;
+        itemsHeight = itemHeight * col.items.length;
+        minTranslate = colHeight / 2 - itemsHeight + itemHeight / 2;
+        maxTranslate = colHeight / 2 - itemHeight / 2;
+        if (col.width) {
+            colWidth = col.width;
+            if (parseInt(colWidth, 10) === colWidth) colWidth = colWidth + 'px';
+            col.container.css({width: colWidth});
+        }
+        if (p.params.rotateEffect) {
+            if (!col.width) {
+                col.items.each(function () {
+                    var item = $(this).children('span');
+                    colWidth = Math.max(colWidth, item[0].offsetWidth);
+                });
+                col.container.css({width: (colWidth + 2) + 'px'});
+            }
+            col.container.addClass('picker-items-col-absolute');
+        }
+    };
+    col.calcSize();
+
+    col.wrapper.transform('translate3d(0,' + maxTranslate + 'px,0)').transition(0);
+
+
+    var activeIndex = 0;
+    var animationFrameId;
+
+    // Set Value Function
+    col.setValue = function (newValue, transition, valueCallbacks) {
+        if (typeof transition === 'undefined') transition = '';
+        var newActiveIndex = col.wrapper.find('.picker-item[data-picker-value="' + newValue + '"]').index();
+        if(typeof newActiveIndex === 'undefined' || newActiveIndex === -1) {
+            return;
+        }
+        var newTranslate = -newActiveIndex * itemHeight + maxTranslate;
+        // Update wrapper
+        col.wrapper.transition(transition);
+        col.wrapper.transform('translate3d(0,' + (newTranslate) + 'px,0)');
+
+        // Watch items
+        if (p.params.updateValuesOnMomentum && col.activeIndex && col.activeIndex !== newActiveIndex ) {
+            $.cancelAnimationFrame(animationFrameId);
+            col.wrapper.transitionEnd(function(){
+                $.cancelAnimationFrame(animationFrameId);
+            });
+            updateDuringScroll();
+        }
+
+        // Update items
+        col.updateItems(newActiveIndex, newTranslate, transition, valueCallbacks);
+    };
+
+    col.updateItems = function (activeIndex, translate, transition, valueCallbacks) {
+        if (typeof translate === 'undefined') {
+            translate = $.getTranslate(col.wrapper[0], 'y');
+        }
+        if(typeof activeIndex === 'undefined') activeIndex = -Math.round((translate - maxTranslate)/itemHeight);
+        if (activeIndex < 0) activeIndex = 0;
+        if (activeIndex >= col.items.length) activeIndex = col.items.length - 1;
+        var previousActiveIndex = col.activeIndex;
+        col.activeIndex = activeIndex;
+        col.wrapper.find('.picker-selected').removeClass('picker-selected');
+
+        col.items.transition(transition);
+
+        var selectedItem = col.items.eq(activeIndex).addClass('picker-selected').transform('');
+
+        // Set 3D rotate effect
+        if (p.params.rotateEffect) {
+            var percentage = (translate - (Math.floor((translate - maxTranslate)/itemHeight) * itemHeight + maxTranslate)) / itemHeight;
+
+            col.items.each(function () {
+                var item = $(this);
+                var itemOffsetTop = item.index() * itemHeight;
+                var translateOffset = maxTranslate - translate;
+                var itemOffset = itemOffsetTop - translateOffset;
+                var percentage = itemOffset / itemHeight;
+
+                var itemsFit = Math.ceil(col.height / itemHeight / 2) + 1;
+
+                var angle = (-18*percentage);
+                if (angle > 180) angle = 180;
+                if (angle < -180) angle = -180;
+                // Far class
+                if (Math.abs(percentage) > itemsFit) item.addClass('picker-item-far');
+                else item.removeClass('picker-item-far');
+                // Set transform
+                item.transform('translate3d(0, ' + (-translate + maxTranslate) + 'px, ' + (originBug ? -110 : 0) + 'px) rotateX(' + angle + 'deg)');
+            });
+        }
+
+        if (valueCallbacks || typeof valueCallbacks === 'undefined') {
+            // Update values
+            col.value = selectedItem.attr('data-picker-value');
+            col.displayValue = col.displayValues ? col.displayValues[activeIndex] : col.value;
+            // On change callback
+            if (previousActiveIndex !== activeIndex) {
+                if (col.onChange) {
+                    col.onChange(p, col.value, col.displayValue);
+                }
+                p.updateValue();
+            }
+        }
+    };
+
+    function updateDuringScroll() {
+        animationFrameId = $.requestAnimationFrame(function () {
+            col.updateItems(undefined, undefined, 0);
+            updateDuringScroll();
+        });
+    }
+
+    // Update items on init
+    if (updateItems) col.updateItems(0, maxTranslate, 0);
+
+    var allowItemClick = true;
+    var isTouched, isMoved, touchStartY, touchCurrentY, touchStartTime, touchEndTime, startTranslate, returnTo, currentTranslate, prevTranslate, velocityTranslate, velocityTime;
+    function handleTouchStart (e) {
+        if (isMoved || isTouched) return;
+        e.preventDefault();
+        isTouched = true;
+        touchStartY = touchCurrentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+        touchStartTime = (new Date()).getTime();
+
+        allowItemClick = true;
+        startTranslate = currentTranslate = $.getTranslate(col.wrapper[0], 'y');
+    }
+    function handleTouchMove (e) {
+        if (!isTouched) return;
+        e.preventDefault();
+        allowItemClick = false;
+        touchCurrentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        if (!isMoved) {
+            // First move
+            $.cancelAnimationFrame(animationFrameId);
+            isMoved = true;
+            startTranslate = currentTranslate = $.getTranslate(col.wrapper[0], 'y');
+            col.wrapper.transition(0);
+        }
+
+        var diff = touchCurrentY - touchStartY;
+        currentTranslate = startTranslate + diff;
+        returnTo = undefined;
+
+        // Normalize translate
+        if (currentTranslate < minTranslate) {
+            currentTranslate = minTranslate - Math.pow(minTranslate - currentTranslate, 0.8);
+            returnTo = 'min';
+        }
+        if (currentTranslate > maxTranslate) {
+            currentTranslate = maxTranslate + Math.pow(currentTranslate - maxTranslate, 0.8);
+            returnTo = 'max';
+        }
+        // Transform wrapper
+        col.wrapper.transform('translate3d(0,' + currentTranslate + 'px,0)');
+
+        // Update items
+        col.updateItems(undefined, currentTranslate, 0, p.params.updateValuesOnTouchmove);
+
+        // Calc velocity
+        velocityTranslate = currentTranslate - prevTranslate || currentTranslate;
+        velocityTime = (new Date()).getTime();
+        prevTranslate = currentTranslate;
+    }
+    function handleTouchEnd (e) {
+        if (!isTouched || !isMoved) {
+            isTouched = isMoved = false;
+            return;
+        }
+        isTouched = isMoved = false;
+        col.wrapper.transition('');
+        if (returnTo) {
+            if (returnTo === 'min') {
+                col.wrapper.transform('translate3d(0,' + minTranslate + 'px,0)');
+            }
+            else col.wrapper.transform('translate3d(0,' + maxTranslate + 'px,0)');
+        }
+        touchEndTime = new Date().getTime();
+        var velocity, newTranslate;
+        if (touchEndTime - touchStartTime > 300) {
+            newTranslate = currentTranslate;
+        }
+        else {
+            velocity = Math.abs(velocityTranslate / (touchEndTime - velocityTime));
+            newTranslate = currentTranslate + velocityTranslate * p.params.momentumRatio;
+        }
+
+        newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
+
+        // Active Index
+        var activeIndex = -Math.floor((newTranslate - maxTranslate)/itemHeight);
+
+        // Normalize translate
+        if (!p.params.freeMode) newTranslate = -activeIndex * itemHeight + maxTranslate;
+
+        // Transform wrapper
+        col.wrapper.transform('translate3d(0,' + (parseInt(newTranslate,10)) + 'px,0)');
+
+        // Update items
+        col.updateItems(activeIndex, newTranslate, '', true);
+
+        // Watch items
+        if (p.params.updateValuesOnMomentum) {
+            updateDuringScroll();
+            col.wrapper.transitionEnd(function(){
+                $.cancelAnimationFrame(animationFrameId);
+            });
+        }
+
+        // Allow click
+        setTimeout(function () {
+            allowItemClick = true;
+        }, 100);
+    }
+
+    function handleClick(e) {
+        if (!allowItemClick) return;
+        $.cancelAnimationFrame(animationFrameId);
+        /*jshint validthis:true */
+        var value = $(this).attr('data-picker-value');
+        col.setValue(value);
+    }
+
+    col.initEvents = function (detach) {
+        var method = detach ? 'off' : 'on';
+        var activeListener = app.support.passiveListener ? {passive: false, capture: false} : false;
+        col.container[method](app.touchEvents.start, handleTouchStart, activeListener);
+        col.container[method](app.touchEvents.move, handleTouchMove, activeListener);
+        col.container[method](app.touchEvents.end, handleTouchEnd, activeListener);
+        col.items[method]('click', handleClick);
+    };
+    col.destroyEvents = function () {
+        col.initEvents(true);
+    };
+
+    col.container[0].f7DestroyPickerCol = function () {
+        col.destroyEvents();
+    };
+
+    col.initEvents();
   }
 
   values = []
 
-  componentDidMount() {
-    const {cols} = this.props;
-    cols.forEach((col, index)=>{
-      if(!col.displayValues){
-        col.displayValues = col.values;
-      }
-      this.values[index] = {
-        value : col.values[0],
-        displayValues : col.displayValues[0]
-      }
-    });
-  }
-
   render() {
 
     const {
+      visible,
       cols,
+      rotateEffect,
+      momentumRatio,
+      updateValuesOnMomentum,
+      updateValuesOnTouchmove,
+      value,
+      inline,
       className,
-      onOpen,
-      onSelected,
       children,
       ...other
     } = this.props;
 
-    const multiPicker = (cols.length > 1);
-
     const cls = classnames({
-      // 'picker-3d': multiPicker,
-      'picker-columns': multiPicker
+      'picker-3d': rotateEffect,
+      'picker-columns': true
     }, className);
 
-    const Col = (item, index) => {
-      const displayValues = item.displayValues || item.values;
+    const colsHTML = [];
 
-      const selected = (activeIndex)=>{
-        const val = {};
-        val.value = item.values[activeIndex];
-        val.displayValues = displayValues[activeIndex];
-        this.values[index] = val;
-        onSelected && onSelected(this.values);
+    const columnHTML = (col, colIndex, onlyItems)=>{
+      if(col.divider){
+        return (
+          <div
+            className={classnames(
+              'picker-items-col picker-items-col-divider',
+              (col.textAlign ? 'picker-items-col-' + col.textAlign : ''),
+              col.cssClass,
+            )}
+          >{col.content}</div>
+        )
       }
 
-      const align = !multiPicker ? 'center': (item.align || 'center');
+      const columnItemsHTML = col.values.map((value, index)=>(
+        <div className="picker-item" data-picker-value={value} key={value+index}>
+          <span>{col.displayValues? col.displayValues[j]: value}</span>
+        </div>
+      ));
+
+      if(onlyItems){
+        return columnItemsHTML;
+      }
 
       return (
-        <PickerCol key={index} items={displayValues} ref={`Col${index}`} align={align} picker3d={false} onSelected={selected}></PickerCol>
-      );
-    };
+        <div
+          key={'wrapper'+ colIndex}
+          className={
+            classnames(
+              'picker-items-col',
+              (col.textAlign ? 'picker-items-col-' + col.textAlign : ''),
+              col.cssClass
+            )
+          }
+          >
+          <div className="picker-items-col-wrapper">
+            {columnItemsHTML}
+          </div>
+        </div>
+      )
+    }
+
+    cols.forEach(function(col, index){
+      colsHTML.push(columnHTML(col, index));
+    })
 
     return (
-      <PickerModal className={cls} {...other} innerClassName="picker-items" onOpen={this.open}>
-        {cols.map(Col)}
+      <PickerModal
+        visible={visible}
+        className={cls}
+        {...other}
+        innerCss="picker-items"
+      >
+        {colsHTML}
         <div className="picker-center-highlight"></div>
       </PickerModal>
     );

@@ -97,44 +97,33 @@ export default class FormElements extends Component {
             </ListItem>
           </List>
         </PageContent>
-        <Picker
-          opened={this.state.pickerOpened.a}
-          onOpened={()=>console.log('Picker opened')}
-          toolbar={
-            <Toolbar>
-              <div className="left"></div>
-              <div className="right"><a onClick={this.closePicker}>关闭</a></div>
-            </Toolbar>
-          }
-          cols={this.data.demo1}
-        />
 
         <Picker
-          opened={this.state.pickerOpened.b}
-          onOpened={()=>console.log('Picker opened')}
-          onSelected={data=>console.log(data)}
-          toolbar={
-            <Toolbar>
-              <div className="left"></div>
-              <div className="right"><a onClick={this.closePicker}>关闭</a></div>
-            </Toolbar>
-          }
+          visible={this.state.pickerOpened.b}
+          onChange={data=>console.log(data)}
+          onCancel={this.closePicker}
           cols={this.data.demo2}
-        />
-
-        <Picker
-          opened={this.state.pickerOpened.c}
-          onOpened={()=>console.log('Picker opened')}
-          toolbar={
-            <Toolbar>
-              <div className="left"></div>
-              <div className="right"><a onClick={this.closePicker}>关闭</a></div>
-            </Toolbar>
-          }
-          cols={this.data.demo3}
         />
 
       </Page>
     );
   }
 }
+
+// <Picker
+//   visible={this.state.pickerOpened.a}
+//   onCancel={this.closePicker}
+//   cols={this.data.demo1}
+// />
+
+// <Picker
+//   visible={this.state.pickerOpened.b}
+//   onSelected={data=>console.log(data)}
+//   onCancel={this.closePicker}
+//   cols={this.data.demo2}
+// />
+// <Picker
+//   visible={this.state.pickerOpened.c}
+//   onCancel={this.closePicker}
+//   cols={this.data.demo3}
+// />

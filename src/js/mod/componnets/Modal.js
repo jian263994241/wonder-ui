@@ -34,7 +34,7 @@ export default class Modal extends Component {
     const {visible, afterClose, fixTop} = this.props;
     const modal = $(this.refs.modal);
     if(visible){
-      console.log('Modal Opened');
+      // console.log('Modal Opened');
       modal.show();
       setTimeout(()=>{
         $(window).trigger('resize');
@@ -44,7 +44,7 @@ export default class Modal extends Component {
         }
       });
     }else{
-      console.log('Modal Closed');
+      // console.log('Modal Closed');
       modal.removeClass('modal-in').addClass('modal-out');
       if(!initial){
         modal.transitionEnd((e)=>{
