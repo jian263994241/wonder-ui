@@ -27,7 +27,7 @@ export * as Grid from './mod/componnets/Grid'
 export Icon from './mod/componnets/Icon'
 export dom from './mod/utils/dom'
 export device from './mod/utils/device'
-export * as store, {ls, ss, ms} from './mod/utils/store'
+export kq from './mod/utils/kq'
 
 //lib
 // export Request from 'axios'
@@ -35,3 +35,4 @@ export LazyLoad from 'react-lazy-load'
 // export noScroll from 'no-scroll'
 export * as RouterDOM, {Link, Redirect, withRouter} from 'react-router-dom'
 export classnames from 'classnames'
+export WebStorageCache from 'web-storage-cache'
