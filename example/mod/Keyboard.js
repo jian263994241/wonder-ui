@@ -12,8 +12,12 @@ export default class KeyboardPage extends Component {
 
   state = {
     inputValA: '',
-    keyboardOpen: false
+    inputValB: '',
+    inputValC: '',
+    keyboardOpen: false,
+    keyboardOpenB: false
   }
+
 
   render() {
     return (
@@ -32,29 +36,71 @@ export default class KeyboardPage extends Component {
             </ListItem>
             <ListItem>
               <FormLabel>数字键盘</FormLabel>
-              <FormInput type="text" placeholder="数字输入"/>
+              <FormInput type="text" placeholder="数字输入" value={this.state.inputValB} onFocus={()=>{
+                this.setState({
+                  keyboardOpenB:true
+                });
+              }}/>
             </ListItem>
           </List>
-          <Keyboard.Input value={'123a'} />
+          <Keyboard.Input
+            show
+            value={this.state.inputValC}
+            onClick={()=>{
+              this.setState({
+                keyboardOpenC:true
+              });
+            }}
+          />
+         <br/>
+          <Keyboard
+            inline
+            random
+            value={this.state.inputValC}
+            maxLength={6}
+            onChange={(num)=>{
+              this.setState({
+                inputValC: num
+              })
+            }}
+            onCancel={()=>{
+              this.setState({
+                keyboardOpenC:false
+              });
+            }}
+          ></Keyboard>
         </PageContent>
 
         <Keyboard
           visible={this.state.keyboardOpen}
-          onKeyDown={(num)=>{
-            let inputValA = this.state.inputValA
+          value={this.state.inputValA}
+          onChange={(num)=>{
 
-            if(num === 'del'){
-              inputValA = inputValA.slice(0, inputValA.length - 1);
-            }else{
-              inputValA = inputValA + num
-            }
             this.setState({
-              inputValA: inputValA
+              inputValA: num
             })
           }}
           onCancel={()=>{
             this.setState({
               keyboardOpen:false
+            });
+          }}
+        ></Keyboard>
+
+        <Keyboard
+          visible={this.state.keyboardOpenB}
+          value={this.state.inputValB}
+          number
+          dot
+          onChange={(num)=>{
+
+            this.setState({
+              inputValB: num
+            })
+          }}
+          onCancel={()=>{
+            this.setState({
+              keyboardOpenB:false
             });
           }}
         ></Keyboard>

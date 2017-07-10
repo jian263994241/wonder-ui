@@ -10,12 +10,21 @@
   left: 50%;
   top: 50%;
 }
+
+.kq-keyboard{
+  .picker-modal-overlay{
+    &.modal-overlay-visible{
+      opacity: 0.1;
+    }
+  }
+}
+
 .picker-modal.picker-keypad {
     .picker-modal-inner {
       height: @keypad-height;
       .hairline(top, rgba(184/2, 188/2, 192/2, 0.35));
 
-      .active-state {
+      .picker-keypad-button.active-state {
          background: #D6DEE0;
       }
     }
@@ -80,24 +89,14 @@
         }
     }
 
-    &.calc-operator-button {
-        color:#fff;
-        background: #ff9500;
-        html:not(.watch-active-state){
-          &:active, &.active-state {
-             background: #e0750e;
-         }
-        }
-        &.calc-operator-active {
-            border: 1px solid rgba(0,0,0,0.4);
-        }
-    }
+
 }
 
 .picker-keypad-button-number,  .picker-keypad-button-letters {
     display: block;
     font-size: 28px;
     line-height: 1;
+    pointer-events: none;
     .vartical-middle();
 }
 .picker-keypad-button-letters {
@@ -157,13 +156,17 @@
         font-family: inherit;
     }
 }
-// .picker-keypad-button-close{
-//   width: 26px;
-//   height: 14px;
-//   display: block;
-//   background-image: data-uri('../img/anquanjianpan@2x.png');
-//   background-size: cover;
-// }
+
+.picker-keypad-button-close{
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: data-uri('../img/anquanjianpan@2x.png');
+  background-repeat: no-repeat;
+  background-size: 26px 14px;
+  background-position: 50% 50%;
+}
+
 .picker-keypad-close{
   .icon-down-nav{
     color: #7F8587;

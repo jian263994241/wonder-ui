@@ -14,16 +14,62 @@ export default class Keyboard extends Component {
   static propTypes = {
     className: PropTypes.string,
     inline: PropTypes.bool,
-    logo: PropTypes.bool,
     dot: PropTypes.bool,
     onKeyDown: PropTypes.func,
-    closeBtn: PropTypes.bool,
-    random: PropTypes.bool
+    random: PropTypes.bool,
+    number: PropTypes.bool,
+    value: React.PropTypes.oneOfType([
+      PropTypes.string.isRequired,
+      PropTypes.number.isRequired
+    ])
   }
 
-  static defaultProps = {
-    logo: true,
-    closeBtn: true
+  valueFormat = (value , key, maxLength)=>{
+    let val = String(value);
+    key = String(key);
+    
+    if(key === 'del'){
+      return val.slice(0, val.length - 1);
+    }
+
+    if(maxLength && val.length >= maxLength) {
+      return val;
+    }
+
+    if(key === '.' && val.indexOf('.') > -1){
+      return val;
+    }
+
+    return val + key ;
+  }
+
+  getkeys = (extraKeys, random) =>{
+    let keys = [1,2,3,4,5,6,7,8,9,0];
+
+    if(random){
+      keys.sort(function(){ return 0.5 - Math.random() });
+    }
+
+    keys.splice(keys.length - 1, 0 , extraKeys[0])
+    keys.push(extraKeys[1]);
+
+    return keys;
+  }
+
+  constructor(props){
+    super(props);
+    const {inline, number, random, dot} = props;
+
+    const _closeBtn = !inline && !number;
+
+    if(_closeBtn){
+      this.keys = this.getkeys(['close','del'], random);
+    }else if(dot){
+      this.keys = this.getkeys(['.', 'del'], random);
+    }else{
+      this.keys = this.getkeys([null, 'del'], random);
+    }
+
   }
 
   render() {
@@ -31,58 +77,53 @@ export default class Keyboard extends Component {
     const {
       className,
       inline,
-      logo,
+      number,
       dot,
-      closeBtn,
-      onKeyDown,
+      value,
+      maxLength,
+      onChange,
       random,
       onCancel,
       children,
       ...other
     } = this.props;
 
-    const cls = classnames({
-      'picker-keypad': true,
-      'picker-keypad-type-numpad': true,
-      'picker-modal-inline': inline
-    }, className);
+    const _inline = inline && !number;
+    const _closeBtn = !inline && !number;
 
-    let keys = [1,2,3,4,5,6,7,8,9];
-
-    if(random){
-      keys.sort(function(){ return 0.5 - Math.random() })
-    }
-
-    if(dot){
-      keys = keys.concat(['.' ,0,'del']);
-    }else{
-      keys = keys.concat([null ,0,'del']);
-    }
-
+    let inner ;
 
     const keyInit = (key) => {
-      const empty = (key === null);
-      const del = (key === 'del');
-      const close = (key === 'close');
-
       const keyCss = classnames({
         'picker-keypad-button': true,
-        // 'picker-keypad-block': empty,
-        'picker-keypad-dummy-button': empty,
-        'picker-keypad-delete': del
+        'picker-keypad-dummy-button': key === null,
+        'picker-keypad-delete': key === 'del'
       });
 
-      let inner ;
-      if(empty){
-        inner = null;
-      }else if(del){
-        inner = ( <i className="icon icon-keypad-delete"></i> );
-      }else{
-        inner = ( <div className="picker-keypad-button-number">{key}</div> );
+      switch (key) {
+        case null:
+          inner = null;
+          break;
+        case 'close':
+          inner = <div className="picker-keypad-button-close"></div>;
+          break;
+        case 'del':
+          inner = ( <div className="icon icon-keypad-delete"></div> );
+          break;
+        default:
+          inner = ( <div className="picker-keypad-button-number">{key}</div> )
       }
 
       const keyChange = ()=>{
-        if(key != null && !close && onKeyDown) onKeyDown(String(key));
+        if(typeof key === 'number' || key=== 'del' || key === '.'){
+          const val = this.valueFormat(value, key , maxLength);
+          if(value != val && onChange){
+            onChange(val);
+          }
+
+        }else if(key === 'close'){
+          onCancel && onCancel();
+        }
       }
 
       return (
@@ -90,19 +131,53 @@ export default class Keyboard extends Component {
       );
     }
 
-
-    const toolbar = (
+    const toolbar = number ? (
       <Toolbar>
         <div className="left"></div>
-        {logo && (<div className="center"> <div className="picker-keypad-logo">飞凡通安全键盘</div> </div>)}
-        <div className="right">{closeBtn && !inline && (<div className="picker-keypad-close" onClick={onCancel}><span className="icon icon-down-nav"></span></div>)}</div>
+        <div className="right">
+          <div className="picker-keypad-close" onClick={onCancel}>
+            <span className="icon icon-down-nav"></span>
+          </div>
+        </div>
       </Toolbar>
-    )
+    ): (
+      <Toolbar>
+        <div className="left"></div>
+        <div className="center"> <div className="picker-keypad-logo">飞凡通安全键盘</div> </div>
+        <div className="right"></div>
+      </Toolbar>
+    );
 
+    const cls = classnames({
+      'picker-keypad': true,
+      'picker-keypad-type-numpad': true,
+      'picker-modal-inline': inline
+    }, className);
+
+    if(_inline){
+      return (
+        <div className="kq-keyboard">
+          <div className="picker-modal picker-keypad picker-keypad-type-numpad picker-modal-inline">
+            {toolbar}
+            <div className="picker-modal-inner picker-keypad-buttons">
+              {this.keys.map(keyInit)}
+            </div>
+          </div>
+        </div>
+      );
+    }
 
     return (
-      <PickerModal className={cls} onCancel={onCancel} innerCss="picker-keypad-buttons" toolbar={toolbar} {...other}>
-        {keys.map(keyInit)}
+      <PickerModal
+        className={cls}
+        containerCss="kq-keyboard"
+        onCancel={onCancel}
+        innerCss="picker-keypad-buttons"
+        toolbar={toolbar}
+        mounter
+        {...other}
+        >
+        {this.keys.map(keyInit)}
       </PickerModal>
     );
   }
@@ -122,7 +197,8 @@ class Input extends Component {
 
     const {
       value,
-      show
+      show,
+      ...other
     } = this.props;
 
     const val = [];
@@ -141,7 +217,7 @@ class Input extends Component {
     }
 
     return (
-      <div className="input-pwd-grid">
+      <div className="input-pwd-grid" {...other}>
         {val.map(grid)}
       </div>
     );

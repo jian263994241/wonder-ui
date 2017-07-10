@@ -22,6 +22,7 @@ export default class Modal extends Component {
     onCancel: PropTypes.func,
     closeByOutside: PropTypes.bool,
     className: PropTypes.string,
+    containerCss: PropTypes.string
     // overlay: PropTypes.bool,
     // overLayCss: PropTypes.string
   }
@@ -79,6 +80,7 @@ export default class Modal extends Component {
 
     const {
       className,
+      containerCss,
       visible,
       onCancel,
       afterClose,
@@ -109,14 +111,14 @@ export default class Modal extends Component {
 
     if(mounter){
       return (
-        <Mounter root={root} ref="mounter">
+        <Mounter root={root} ref="mounter" className={containerCss}>
           {innerElement}
         </Mounter>
       );
     }
 
     return (
-      <div>{innerElement}</div>
+      <div className={containerCss}>{innerElement}</div>
     );
   }
 }
