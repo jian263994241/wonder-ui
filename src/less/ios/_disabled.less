@@ -1,4 +1,7 @@
 /* === Disabled elements === */
+
+@disabled-gray: #CECECE ;
+
 .disabled, [disabled] {
     opacity: 0.55;
     pointer-events: none;
@@ -12,14 +15,14 @@
 .button{
   &:not(.button-fill){
     &.disabled, &[disabled]{
-      color: @gray;
-      border-color: @gray;
+      color: @disabled-gray;
+      border-color: @disabled-gray;
     }
   }
 
   &.button-fill{
     &.disabled, &[disabled]{
-      background: @gray;
+      background: @disabled-gray;
     }
   }
 }
