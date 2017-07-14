@@ -170,7 +170,7 @@ export function toast (text, timer, callbackOk){
   if( addQueue( toast.bind(this, arguments) ) ) return true;
 
   setTimeout(()=>{
-    mounted.updateProps({visible: false});
+    mounted.updateProps({visible: false}, callbackOk);
   }, timer);
 
   const mounted = Mounter.mount(
