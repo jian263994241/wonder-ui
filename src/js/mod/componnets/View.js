@@ -14,8 +14,7 @@ export default class View extends Component {
 
   static propTypes = {
     type: PropTypes.string,
-    noAnimate: PropTypes.bool,
-    fastclick: PropTypes.bool
+    noAnimate: PropTypes.bool
   }
 
   render() {
@@ -24,7 +23,7 @@ export default class View extends Component {
       className,
       children,
       noAnimate,
-      ...other
+      ...rest
     } = this.props;
 
     let Router;
@@ -44,9 +43,7 @@ export default class View extends Component {
     const renderPage = (props)=>(
       <SlidePage history={props.history} noAnimate={noAnimate}>
         <Switch>
-          {React.Children.map(children, (c, i)=>{
-            return React.cloneElement(c, {View: this, ...props});
-          })}
+          {children}
         </Switch>
       </SlidePage>
     )
@@ -55,7 +52,7 @@ export default class View extends Component {
 
     return (
       <div className={cls}>
-        <Router hashType="hashbang">
+        <Router hashType="hashbang" {...rest}>
           <Route render={renderPage}/>
         </Router>
       </div>

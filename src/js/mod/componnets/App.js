@@ -15,14 +15,14 @@ export default class App extends Component {
 
   static propTypes = {
     type: PropTypes.string,
-    fastclick: PropTypes.bool
+    fastclick: PropTypes.bool,
+    fastclickConfig: PropTypes.object
   }
 
-
   componentDidMount() {
-    const {fastclick} = this.props;
+    const {fastclick, fastclickConfig} = this.props;
     if(fastclick){
-      initFastClicks();
+      initFastClicks(fastclickConfig);
     }
   }
 
@@ -31,7 +31,8 @@ export default class App extends Component {
       className,
       children,
       fastclick,
-      ...other
+      fastclickConfig,
+      ...rest
     } = this.props;
 
     const cls = classnames('views', className);

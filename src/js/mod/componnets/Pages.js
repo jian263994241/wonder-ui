@@ -9,9 +9,11 @@ export default class Pages extends Component {
 
   render() {
 
-    const {component: Component, ...other}  = this.props;
+    const {component: Component, ...rest}  = this.props;
     return (
-      <Route {...other} render={props=>(<Component {...other}/>)}/>
+      <Route {...rest} render={(props)=> (
+          <Component {...props}/>
+      )}/>
     );
   }
 }
