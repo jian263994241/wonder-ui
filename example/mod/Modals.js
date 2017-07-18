@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {Page, PageContent, Buttons, ContentBlock, ContentBlockTitle, Bars, Grid, Popover, Popup, Dialog, PickerModal, ActionsModal, View, Pages, Link} from 'kui'
+import {Page, PageContent, Buttons, ContentBlock, ContentBlockTitle, Bars, Grid, Popover, Popup, Modal, PickerModal, ActionsModal, View, Pages, Link} from 'kui'
 
 const {Button} = Buttons;
 const {Row,Col} = Grid;
@@ -82,13 +82,13 @@ export default class ModalsPage extends Component {
           <ContentBlock>
             <Row>
               <Col width="33">
-                <Button onClick={()=>Dialog.alert('Hello Word!', ()=>console.log('alert'))}>Alert</Button>
+                <Button onClick={()=>Modal.alert({text: 'Hello Word!', onOk:()=>{console.log('alert')}, okText: '好的'}) }>Alert</Button>
               </Col>
               <Col width="33">
-                <Button onClick={()=>Dialog.confirm('Confirm', ()=>console.log('Confirm: 确定'), ()=>console.log('Confirm: 取消'))}>Confirm</Button>
+                <Button onClick={()=>Modal.confirm({text: 'Confirm',onOk: ()=>console.log('Confirm: 确定'), onCancel:()=>console.log('Confirm: 取消')})}>Confirm</Button>
               </Col>
               <Col width="33">
-                <Button onClick={()=>Dialog.prompt('Prompt', (val)=>console.log('Prompt: 确定', val), ()=>console.log('Prompt: 取消'))}>Prompt</Button>
+                <Button onClick={()=>Modal.prompt({text:'Prompt', onOk:(val)=>console.log('Prompt: 确定', val),onCancel: ()=>console.log('Prompt: 取消')})}>Prompt</Button>
               </Col>
 
             </Row>
@@ -115,7 +115,7 @@ export default class ModalsPage extends Component {
                 </Popover>
               </Col>
               <Col width="33">
-                <Button onClick={()=>{Dialog.toast('Toast1');}}>Toast</Button>
+                <Button onClick={()=>{Modal.toast('Toast1');}}>Toast</Button>
               </Col>
             </Row>
             <br/>

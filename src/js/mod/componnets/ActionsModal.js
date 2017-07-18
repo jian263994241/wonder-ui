@@ -17,7 +17,7 @@ export default class ActionsModal extends Component {
     } = this.props;
 
     return (
-      <Modal type="actions" {...other}> {children} </Modal>
+      <Modal type="actions" fixTop={false} {...other}> {children} </Modal>
     );
   }
 }

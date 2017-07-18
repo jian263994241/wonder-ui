@@ -14,12 +14,11 @@ export default class Preloader extends PureComponent {
     const {
       text,
       logoType,
+      visible,
       children,
       ...other
     } = this.props;
 
-
-    let textElement = text? <div className="modal-text">{text}</div> : null
 
     let indicator;
 
@@ -29,15 +28,25 @@ export default class Preloader extends PureComponent {
           <div className="preloader preloader-kq" key="logo-p1"></div>,
           <div className="logo" key="logo-p2"></div>
         ];
-        textElement = null;
         break;
       default:
         indicator = <div className="preloader preloader-white"></div>;
     }
 
+    if(!text){
+      return visible ? (
+        <div>
+          <div className="preloader-indicator-overlay"></div>
+          <div className="preloader-indicator-modal">{indicator}</div>
+        </div>
+      ): null;
+    }
+
+
     return (
       <Modal
         type="preloader"
+        visible={visible}
         closeByOutside={false}
         fixTop
         mounter
@@ -45,7 +54,7 @@ export default class Preloader extends PureComponent {
         >
         <div className="modal-inner">
           {indicator}
-          {textElement}
+          <div className="modal-text" style={{marginTop: 3}}>{text}</div>
         </div>
       </Modal>
     );

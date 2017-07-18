@@ -44,7 +44,7 @@ export default class PickerModal extends Component {
     )
 
     return (
-      <Modal {...other} type="picker" onCancel={onCancel}>
+      <Modal {...other} type="picker" onCancel={onCancel} fixTop={false}>
         {preset}
         <div className={classnames('picker-modal-inner', innerCss)}>
           {children}

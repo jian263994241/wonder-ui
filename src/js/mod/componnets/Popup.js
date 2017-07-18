@@ -17,7 +17,7 @@ export default class Popup extends Component {
     } = this.props;
 
     return (
-      <Modal type="popup" {...other}>{children}</Modal>
+      <Modal type="popup" fixTop={false} {...other}>{children}</Modal>
     );
   }
 }

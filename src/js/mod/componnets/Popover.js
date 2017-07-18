@@ -139,6 +139,7 @@ export default class Popover extends Component {
           type="popover"
           visible={this.state.visible}
           onCancel={this.cancelHandler}
+          fixTop={false}
           mounter
           >
           <div className="popover-angle" ref="angle"></div>

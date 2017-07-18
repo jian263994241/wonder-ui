@@ -17,23 +17,19 @@ const modalStackClearQueue = function () {
 };
 
 const addQueue = function(fn){
-  if($('.modal.modal-in:not(.modal-out)').length){
+  if($('.modal.modal-in:not(.modal-out):not(.preloader-modal)').length){
     modalStack.push(fn);
     return true;
   }
 };
 
 
-export function alert (text, title, callbackOk) {
-  if (typeof title === 'function') {
-    callbackOk = arguments[1];
-    title = undefined;
-  }
+export function alert ({title, text, onOk, okText='确定'}) {
 
   if( addQueue( alert.bind(this, arguments) ) ) return true;
 
   const clickOk = ()=>{
-    mounted.updateProps({visible: false}, callbackOk);
+    mounted.updateProps({visible: false}, onOk);
   }
 
   const mounted = Mounter.mount(
@@ -49,7 +45,7 @@ export function alert (text, title, callbackOk) {
         <div className="modal-text">{text}</div>
       </div>
       <div className="modal-buttons modal-buttons-1">
-        <span className="modal-button modal-button-bold" onClick={clickOk}>确定</span>
+        <span className="modal-button modal-button-bold" onClick={clickOk}>{okText}</span>
       </div>
     </Modal>
   );
@@ -62,22 +58,17 @@ export function alert (text, title, callbackOk) {
 };
 
 
-export function confirm (text, title, callbackOk, callbackCancel) {
+export function confirm ({title, text, onOk, onCancel, okText='确定', cancelText='取消'}) {
 
-  if (typeof title === 'function') {
-      callbackCancel = arguments[2];
-      callbackOk = arguments[1];
-      title = undefined;
-  }
 
   if( addQueue( confirm.bind(this, arguments) ) ) return true;
 
   const clickOk = ()=>{
-    mounted.updateProps({visible: false}, callbackOk);
+    mounted.updateProps({visible: false}, onOk);
   }
 
   const clickCancel = ()=>{
-    mounted.updateProps({visible: false}, callbackCancel);
+    mounted.updateProps({visible: false}, onCancel);
   }
 
 
@@ -94,8 +85,8 @@ export function confirm (text, title, callbackOk, callbackCancel) {
         <div className="modal-text">{text}</div>
       </div>
       <div className="modal-buttons modal-buttons-2">
-        <span className="modal-button" onClick={clickCancel}>取消</span>
-        <span className="modal-button modal-button-bold" onClick={clickOk}>确定</span>
+        <span className="modal-button" onClick={clickCancel}>{cancelText}</span>
+        <span className="modal-button modal-button-bold" onClick={clickOk}>{okText}</span>
       </div>
     </Modal>
   );
@@ -107,15 +98,8 @@ export function confirm (text, title, callbackOk, callbackCancel) {
 
 };
 
-export function prompt(text, title, callbackOk, callbackCancel) {
+export function prompt({title, text, onOk, onCancel, okText='确定', cancelText='取消'}) {
 
-  if (typeof title === 'function') {
-      callbackCancel = arguments[2];
-      callbackOk = arguments[1];
-      title = undefined;
-  }
-
-  callbackOk = callbackOk || function(){};
 
   if( addQueue( prompt.bind(this, arguments) ) ) return true;
 
@@ -126,11 +110,11 @@ export function prompt(text, title, callbackOk, callbackCancel) {
   }
 
   const clickOk = ()=>{
-    mounted.updateProps({visible: false}, callbackOk.bind(this, value));
+    mounted.updateProps({visible: false}, onOk.bind(this, value));
   }
 
   const clickCancel = ()=>{
-    mounted.updateProps({visible: false}, callbackCancel);
+    mounted.updateProps({visible: false}, onCancel);
   }
 
   const mounted = Mounter.mount(
@@ -149,8 +133,8 @@ export function prompt(text, title, callbackOk, callbackCancel) {
         </div>
       </div>
       <div className="modal-buttons modal-buttons-2">
-        <span className="modal-button" onClick={clickCancel}>取消</span>
-        <span className="modal-button modal-button-bold" onClick={clickOk}>确定</span>
+        <span className="modal-button" onClick={clickCancel}>{cancelText}</span>
+        <span className="modal-button modal-button-bold" onClick={clickOk}>{okText}</span>
       </div>
     </Modal>
   );

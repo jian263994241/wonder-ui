@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import $ from '../utils/dom'
 import OverLay from './OverLay'
 import Mounter from './Mounter'
+import {alert, confirm, prompt, toast} from './Dialog'
 
 export default class Modal extends Component {
 
@@ -11,7 +12,7 @@ export default class Modal extends Component {
 
   static defaultProps = {
     visible: false,
-    fixTop: false,
+    fixTop: true,
     type: 'modal',
     closeByOutside: true
   }
@@ -23,9 +24,12 @@ export default class Modal extends Component {
     closeByOutside: PropTypes.bool,
     className: PropTypes.string,
     containerCss: PropTypes.string
-    // overlay: PropTypes.bool,
-    // overLayCss: PropTypes.string
   }
+
+  static alert = alert;
+  static confirm = confirm;
+  static prompt = prompt;
+  static toast = toast;
 
   getModal = ()=>{
     return this.refs.modal
@@ -36,14 +40,14 @@ export default class Modal extends Component {
     const modal = $(this.refs.modal);
     if(visible){
       // console.log('Modal Opened');
-      modal.show();
+      modal.removeClass('modal-out').show();
       setTimeout(()=>{
         $(window).trigger('resize');
-        modal.removeClass('modal-out').addClass('modal-in');
+        modal.addClass('modal-in');
         if(fixTop){
           this.fixTop();
         }
-      });
+      }, 0);
     }else{
       // console.log('Modal Closed');
       modal.removeClass('modal-in').addClass('modal-out');
@@ -58,7 +62,7 @@ export default class Modal extends Component {
 
   fixTop = ()=>{
     const modal = $(this.refs.modal);
-    const topx = - Math.round(modal.outerHeight() / 2) - 10 ;
+    const topx = - Math.round(modal.outerHeight() / 2) - 5 ;
     modal.css({marginTop:  topx+ 'px'});
   }
 
