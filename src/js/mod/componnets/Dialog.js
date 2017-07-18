@@ -167,9 +167,13 @@ export function toast (text, timer, callbackOk){
 
   if( addQueue( toast.bind(this, arguments) ) ) return true;
 
-  setTimeout(()=>{
+
+
+  const onCancel = ()=>{
     mounted.updateProps({visible: false}, callbackOk);
-  }, timer);
+  }
+
+  setTimeout(onCancel, timer);
 
   modalLock = true;
 
@@ -177,7 +181,8 @@ export function toast (text, timer, callbackOk){
     <Modal
       type="toast"
       visible={true}
-      closeByOutside={false}
+      closeByOutside={true}
+      onCancel={onCancel}
       afterClose={afterClose}
       fixTop
       mounter
