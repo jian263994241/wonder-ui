@@ -8,29 +8,36 @@ import device from '../utils/device'
 import Modal from './Modal'
 import Mounter from './Mounter'
 
+let modalLock = false;
+
 const modalStack = [];
 
 const modalStackClearQueue = function () {
-    if (modalStack.length) {
-        (modalStack.shift())();
-    }
+  modalLock = false;
+  if (modalStack.length) {
+      (modalStack.shift())();
+  }
 };
 
 const addQueue = function(fn){
-  if($('.modal.modal-in:not(.modal-out):not(.preloader-modal)').length){
+  if(modalLock){
     modalStack.push(fn);
     return true;
   }
 };
 
 
-export function alert ({title, text, onOk, okText='确定'}) {
+export function alert (parmas) {
 
-  if( addQueue( alert.bind(this, arguments) ) ) return true;
+  if( addQueue( alert.bind(this, parmas) ) ) return true;
+
+  const {title, text, onOk, okText='确定'} = parmas;
 
   const clickOk = ()=>{
     mounted.updateProps({visible: false}, onOk);
   }
+
+  modalLock = true;
 
   const mounted = Mounter.mount(
     <Modal
@@ -58,10 +65,12 @@ export function alert ({title, text, onOk, okText='确定'}) {
 };
 
 
-export function confirm ({title, text, onOk, onCancel, okText='确定', cancelText='取消'}) {
+export function confirm (parmas) {
 
 
-  if( addQueue( confirm.bind(this, arguments) ) ) return true;
+  if( addQueue( confirm.bind(this, parmas) ) ) return true;
+
+  const {title, text, onOk, onCancel, okText='确定', cancelText='取消'} = parmas;
 
   const clickOk = ()=>{
     mounted.updateProps({visible: false}, onOk);
@@ -71,6 +80,7 @@ export function confirm ({title, text, onOk, onCancel, okText='确定', cancelTe
     mounted.updateProps({visible: false}, onCancel);
   }
 
+  modalLock = true;
 
   const mounted = Mounter.mount(
     <Modal
@@ -98,10 +108,12 @@ export function confirm ({title, text, onOk, onCancel, okText='确定', cancelTe
 
 };
 
-export function prompt({title, text, onOk, onCancel, okText='确定', cancelText='取消'}) {
+export function prompt(parmas) {
 
 
   if( addQueue( prompt.bind(this, arguments) ) ) return true;
+
+  const {title, text, onOk, onCancel, okText='确定', cancelText='取消'} = parmas;
 
   let value = null;
 
@@ -116,6 +128,8 @@ export function prompt({title, text, onOk, onCancel, okText='确定', cancelText
   const clickCancel = ()=>{
     mounted.updateProps({visible: false}, onCancel);
   }
+
+  modalLock = true;
 
   const mounted = Mounter.mount(
     <Modal
@@ -156,6 +170,8 @@ export function toast (text, timer, callbackOk){
   setTimeout(()=>{
     mounted.updateProps({visible: false}, callbackOk);
   }, timer);
+
+  modalLock = true;
 
   const mounted = Mounter.mount(
     <Modal

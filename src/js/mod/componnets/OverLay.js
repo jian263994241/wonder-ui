@@ -18,14 +18,22 @@ export default class OverLay extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    this.update();
+  }
+
+  componentDidMount() {
+    this.update();
+  }
+
+  update() {
     const {visible} = this.props;
     const overLay = $(this.refs.overLay);
-    if(visible != prevProps.visible){
-      if(visible){
+    if(visible){
+      setTimeout(()=>{
         overLay.addClass('modal-overlay-visible');
-      }else{
-        overLay.removeClass('modal-overlay-visible');
-      }
+      },16)
+    }else{
+      overLay.removeClass('modal-overlay-visible');
     }
   }
 
@@ -48,8 +56,7 @@ export default class OverLay extends Component {
       'modal-overlay': type != 'popup',
       'popup-overlay': type === 'popup',
       'transparent':  (type === 'toast' || type === 'preloader'),
-      'picker-modal-overlay': type === 'picker',
-      'modal-overlay-visible': visible
+      'picker-modal-overlay': type === 'picker'
     });
 
     return (

@@ -47,7 +47,7 @@ export default class Modal extends Component {
         if(fixTop){
           this.fixTop();
         }
-      }, 0);
+      }, 16);
     }else{
       // console.log('Modal Closed');
       modal.removeClass('modal-in').addClass('modal-out');
