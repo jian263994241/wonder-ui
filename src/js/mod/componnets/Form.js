@@ -29,6 +29,7 @@ export default class From extends Component {
     const form = this.refs.form;
     const descriptor = {};
     this.getInputs(form).forEach((a)=>{
+      const dataset = $(a).dataset();
       const rule = descriptor[a.name] = {};
       if(a.type === 'checkbox'){
         rule.type = 'array';
@@ -38,16 +39,16 @@ export default class From extends Component {
 
       if(a.dataset.enum){
         rule.type = 'enum';
-        rule.enum = a.dataset.enum.split(',');
+        rule.enum = dataset.enum.split(',');
       }
 
-      rule.required = a.dataset.required;
-      rule.pattern = a.dataset.pattern;
-      rule.message = a.dataset.message;
+      rule.required = dataset.required;
+      rule.pattern = dataset.pattern;
+      rule.message = dataset.message;
 
-      a.dataset.max && (rule.max = Number(a.dataset.max));
-      a.dataset.mix && (rule.mix = Number(a.dataset.mix));
-      a.dataset.len && (rule.len = Number(a.dataset.len));
+      dataset.max && (rule.max = Number(dataset.max));
+      dataset.mix && (rule.mix = Number(dataset.mix));
+      dataset.len && (rule.len = Number(dataset.len));
     });
     return descriptor;
   }
@@ -66,6 +67,7 @@ export default class From extends Component {
     const form = this.refs.form;
     const valus = {};
     this.getInputs(form).forEach((a)=>{
+      if(!a.value) return ;
       if(a.type === 'checkbox'){
         valus[a.name] = valus[a.name] || [];
         if(a.checked){
