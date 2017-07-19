@@ -1,197 +1,113 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import $ from '../utils/dom'
+import {FormLabel, FormInput, FormTimerButton} from './FormElement'
+import schema from 'async-validator'
+export default class From extends Component {
 
-import {Button} from './Buttons'
+  static uiName = 'Form';
 
-export class FormLabel extends Component {
+  static FormLabel = FormLabel;
 
-  static uiName = 'FormLabel'
+  static FormInput = FormInput;
 
-  static propTypes = {
-    className: PropTypes.string
-  }
-
-  render() {
-    const {
-      className,
-      children,
-      ...other
-    } = this.props;
-
-    const cls = classnames('item-title', 'label', className)
-
-    return (
-      <div className={cls} {...other} ref="FormLabel">
-        {children}
-      </div>
-    );
-  }
-}
-
-
-export class FormInput extends Component {
-
-  static uiName = 'FormInput'
-
-  render() {
-
-    const {type, ...other} = this.props;
-
-    let ele;
-
-    switch (type) {
-      case 'select':
-        ele = <select {...other} type={type}/>
-        break;
-      case 'switch':
-        ele = <Switch {...other} type={type}/>
-        break;
-      case 'range':
-        ele = <Range {...other} type={type}/>
-        break;
-      case 'textarea':
-        ele = <textarea {...other} type={type}/>
-        break;
-      default:
-        ele = <input {...other} type={type}/>
-    }
-    return (
-      <div className="item-input" ref="FormInput">
-        {ele}
-      </div>
-    );
-  }
-}
-
-export class Switch extends Component {
-
-  static uiName = 'Switch'
+  static FormTimerButton = FormTimerButton;
 
   static propTypes = {
     className: PropTypes.string,
-    style: PropTypes.object
+    onSubmit: PropTypes.func
+  };
+
+  componentDidMount() {
+    const descriptor = this.getDescriptor();
+    console.log(descriptor);
+    this.validator = new schema(descriptor);
   }
 
-  render() {
-    const {
-      className,
-      style,
-      type,
-      value,
-      ...other
-    } = this.props;
-
-    const cls = classnames('label-switch', className);
-    return (
-      <label className={cls} style={style} ref="Switch">
-        <input type="checkbox" {...other} defaultValue="Switch"/>
-        <div className="checkbox"></div>
-      </label>
-    );
-  }
-}
-
-export class Range extends Component {
-
-  static uiName = 'Range'
-
-  render() {
-
-    const {
-      ...other
-    } = this.props;
-
-    return (
-      <div className="range-slider" ref="Range">
-        <input {...other} />
-      </div>
-    );
-  }
-}
-
-export class FormTimerButton extends Component {
-
-  static uiName = 'FormButtonTimer'
-
-  static defaultProps = {
-    fill: true,
-    block: true,
-    secondsResidue: 60,
-    defaultText: '发送验证码',
-    text: '%s秒后重新发送'
-  }
-
-  state = {
-    process: false,
-    secondsResidue: 0
-  }
-
-  static propTypes = {
-    secondsResidue: PropTypes.number,
-    defaultText: PropTypes.string,
-    text: PropTypes.string,
-    onStart: PropTypes.func,
-    onEnd: PropTypes.func
-  }
-
-  componentWillMount() {
-    const {secondsResidue} = this.props;
-    this.setState({secondsResidue});
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  tick = ()=>{
-    const {secondsResidue, onEnd} = this.props;
-    this.setState((prevState) => {
-      if(prevState.secondsResidue === 0){
-        clearInterval(this.interval);
-        onEnd && onEnd();
-        return {
-          process: false,
-          secondsResidue
-        };
+  getDescriptor = ()=>{
+    const form = this.refs.form;
+    const descriptor = {};
+    this.getInputs(form).forEach((a)=>{
+      const rule = descriptor[a.name] = {};
+      if(a.type === 'checkbox'){
+        rule.type = 'array';
+      }else{
+        rule.type = 'string';
       }
-      return {
-        secondsResidue: prevState.secondsResidue - 1
+
+      if(a.dataset.enum){
+        rule.type = 'enum';
+        rule.enum = a.dataset.enum.split(',');
+      }
+
+      rule.required = a.dataset.required;
+      rule.pattern = a.dataset.pattern;
+      rule.message = a.dataset.message;
+
+      a.dataset.max && (rule.max = Number(a.dataset.max));
+      a.dataset.mix && (rule.mix = Number(a.dataset.mix));
+      a.dataset.len && (rule.len = Number(a.dataset.len));
+    });
+    return descriptor;
+  }
+
+  getInputs = (form)=>{
+    const inputs = [];
+    Array.prototype.forEach.call(form.elements, function(a, i){
+      if(a.name) {
+        inputs.push(a)
       };
     });
+    return inputs;
   }
 
-  clickHandler = ()=>{
+  getValues = ()=>{
+    const form = this.refs.form;
+    const valus = {};
+    this.getInputs(form).forEach((a)=>{
+      if(a.type === 'checkbox'){
+        valus[a.name] = valus[a.name] || [];
+        if(a.checked){
+          valus[a.name].push(a.value)
+        }
+      }else{
+        valus[a.name] = a.value;
+      }
+    })
+    return valus;
+  }
 
-    const {onStart} = this.props;
+  submit = (e)=>{
+    e.preventDefault();
 
-    onStart(()=>{
-      this.interval = setInterval(() => this.tick(), 1000);
-      this.setState({
-        process: true
-      });
+    const {
+      onSubmit
+    } = this.props;
+
+    const values = this.getValues();
+
+    this.validator.validate(values, {first: true}, (errors, fields)=>{
+      onSubmit && onSubmit(errors, fields, values);
     });
+
   }
 
   render() {
+
     const {
-      defaultText,
-      text,
-      onStart,
-      secondsResidue,
+      onSubmit,
       children,
-      onClick,
-      disabeld,
-      ...other
+      ...rest
     } = this.props;
 
-    const content = this.state.process? text.replace(/%s/, this.state.secondsResidue) : defaultText;
-
     return (
-      <div className="item-after">
-        <Button {...other} onClick={this.clickHandler} disabled={this.state.process}>{content}</Button>
+      <div {...rest}>
+        <form onSubmit={this.submit} noValidate ref="form">
+          {children}
+        </form>
       </div>
+
     );
   }
-
 }
