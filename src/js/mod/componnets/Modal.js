@@ -62,7 +62,7 @@ export default class Modal extends Component {
 
   fixTop = ()=>{
     const modal = $(this.refs.modal);
-    const topx = - Math.round(modal.outerHeight() / 2) - 5 ;
+    const topx = - Math.round(modal.outerHeight() / 2) - 8 ;
     modal.css({marginTop:  topx+ 'px'});
   }
 

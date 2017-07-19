@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Modal from './Modal'
+import Mounter from './Mounter'
 
 export default class Preloader extends PureComponent {
 
@@ -19,6 +20,7 @@ export default class Preloader extends PureComponent {
       ...other
     } = this.props;
 
+    if(!visible) return null;
 
     let indicator;
 
@@ -34,14 +36,13 @@ export default class Preloader extends PureComponent {
     }
 
     if(!text){
-      return visible ? (
-        <div>
+      return (
+        <Mounter>
           <div className="preloader-indicator-overlay"></div>
           <div className="preloader-indicator-modal">{indicator}</div>
-        </div>
-      ): null;
+        </Mounter>
+      );
     }
-
 
     return (
       <Modal
