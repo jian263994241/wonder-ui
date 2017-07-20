@@ -16,7 +16,8 @@ export default class From extends Component {
 
   static propTypes = {
     className: PropTypes.string,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    rules: PropTypes.object
   };
 
   static defaultProps = {
