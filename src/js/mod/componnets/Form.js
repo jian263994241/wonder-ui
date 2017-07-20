@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Children} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import $ from '../utils/dom'
@@ -19,38 +19,10 @@ export default class From extends Component {
     onSubmit: PropTypes.func
   };
 
-  componentDidMount() {
-    const descriptor = this.getDescriptor();
-    console.log(descriptor);
-    this.validator = new schema(descriptor);
-  }
-
-  getDescriptor = ()=>{
-    const form = this.refs.form;
-    const descriptor = {};
-    this.getInputs(form).forEach((a)=>{
-      const dataset = $(a).dataset();
-      const rule = descriptor[a.name] = {};
-      if(a.type === 'checkbox'){
-        rule.type = 'array';
-      }else{
-        rule.type = 'string';
-      }
-
-      if(a.dataset.enum){
-        rule.type = 'enum';
-        rule.enum = dataset.enum.split(',');
-      }
-
-      rule.required = dataset.required;
-      rule.pattern = dataset.pattern;
-      rule.message = dataset.message;
-
-      dataset.max && (rule.max = Number(dataset.max));
-      dataset.mix && (rule.mix = Number(dataset.mix));
-      dataset.len && (rule.len = Number(dataset.len));
-    });
-    return descriptor;
+  constructor(props){
+    super(props);
+    const {rules} = this.props;
+    this.validator = new schema(rules);
   }
 
   getInputs = (form)=>{
@@ -98,6 +70,7 @@ export default class From extends Component {
   render() {
 
     const {
+      rules,
       onSubmit,
       children,
       ...rest
