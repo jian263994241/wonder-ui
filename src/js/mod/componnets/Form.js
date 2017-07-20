@@ -19,6 +19,10 @@ export default class From extends Component {
     onSubmit: PropTypes.func
   };
 
+  static defaultProps = {
+    rules: {}
+  };
+
   constructor(props){
     super(props);
     const {rules} = this.props;
