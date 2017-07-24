@@ -7,7 +7,8 @@ fis.match('src/js/wonder.js',{
         'react': 'window.React',
         'react-dom': 'window.ReactDOM'
       },
-      umd: 'WONDER'
+      umd: 'WONDER',
+      guard: false
     }
   })
 })
@@ -26,24 +27,26 @@ fis.match('**/app.js',{
         'react-dom': 'window.ReactDOM',
         'kui': 'window.WONDER',
         'antd': 'window.antd'
-      }
+      },
+      guard: false
     }
   })
 })
 
+var prod2Path = '/seashell/webapp/lib/wonder';
 
-fis.media('prod2')
+fis.media('dist')
 .match('src/js/wonder.js',{
   useHash: false,
-  release: `${pkg.version}/js/${pkg.name}.min.js`
+  release: `${prod2Path}/${pkg.version}/js/${pkg.name}.min.js`
 })
 .match('src/less/ios/uikit.less',{
   useHash: false,
   optimizer: fis.plugin('clean-css'),
-  release: `${pkg.version}/css/${pkg.name}.min.css`
+  release: `${prod2Path}/${pkg.version}/css/${pkg.name}.min.css`
 })
 .match('src/less/(fonts/*)',{
-  release: `${pkg.version}/$1`
+  release: `${prod2Path}/${pkg.version}/$1`
 })
 .match('**/(*.png)',{
   release: 'img/$1'
@@ -60,6 +63,6 @@ fis.media('prod2')
 .match('site/mod/(**)',{
   release: false
 })
-.match('*', {
-  domain: 'http://192.168.47.179/docs/ui'
-})
+// .match('*', {
+//   domain: 'http://192.168.47.179/docs/ui'
+// })

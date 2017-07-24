@@ -23,7 +23,9 @@ export default class Modal extends Component {
     onCancel: PropTypes.func,
     closeByOutside: PropTypes.bool,
     className: PropTypes.string,
-    containerCss: PropTypes.string
+    containerCss: PropTypes.string,
+    fixTop: PropTypes.bool,
+    mounter: PropTypes.bool
   }
 
   static alert = alert;

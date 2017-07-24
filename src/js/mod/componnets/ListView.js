@@ -112,7 +112,6 @@ export class List extends Component {
   static uiName = 'List'
 
   static propTypes = {
-    style: PropTypes.object,
     className: PropTypes.string,
     inset: PropTypes.bool,
     tabletInset: PropTypes.bool,
@@ -246,12 +245,10 @@ export class ListItem extends Component {
 
   static propTypes = {
     title: PropTypes.string,
-    // link: PropTypes.bool,
     subtitle: PropTypes.string,
     text: PropTypes.string,
     divider: PropTypes.bool,
     className: PropTypes.string,
-    style: PropTypes.object,
     badge: PropTypes.string,
     badgeColor: PropTypes.string,
     after: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),

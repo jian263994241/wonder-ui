@@ -15,7 +15,7 @@ export default class Keyboard extends Component {
     className: PropTypes.string,
     inline: PropTypes.bool,
     dot: PropTypes.bool,
-    onKeyDown: PropTypes.func,
+    onChange: PropTypes.func,
     random: PropTypes.bool,
     number: PropTypes.bool,
     value: React.PropTypes.oneOfType([
@@ -27,7 +27,7 @@ export default class Keyboard extends Component {
   valueFormat = (value , key, maxLength)=>{
     let val = String(value);
     key = String(key);
-    
+
     if(key === 'del'){
       return val.slice(0, val.length - 1);
     }
