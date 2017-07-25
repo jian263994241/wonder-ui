@@ -54,14 +54,3 @@ export function mounted(content, reactElement){
   if(!content) return null;
   return React.cloneElement(reactElement, null , content);
 }
-
-
-export function validateDOMElem (props, propName, componentName){
-  const prop = props[propName];
-  if (prop != undefined && prop instanceof Element === false) {
-    return new Error(
-      'Invalid prop `' + propName + '` supplied to' +
-      ' `' + componentName + '`. Validation failed.'
-    );
-  }
-}
