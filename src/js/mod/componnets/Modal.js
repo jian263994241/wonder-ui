@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import $ from '../utils/dom'
 import OverLay from './OverLay'
-import Mounter from './Mounter'
+import Mounter from 'rc-mounter'
 import {alert, confirm, prompt, toast} from './Dialog'
 
 export default class Modal extends Component {

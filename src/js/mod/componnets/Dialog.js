@@ -6,7 +6,7 @@ import {mountedOutside, mounted} from '../utils/mix'
 import $ from '../utils/dom'
 import device from '../utils/device'
 import Modal from './Modal'
-import Mounter from './Mounter'
+import Mounter from 'rc-mounter'
 
 let modalLock = false;
 

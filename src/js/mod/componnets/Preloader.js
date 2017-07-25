@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Modal from './Modal'
-import Mounter from './Mounter'
+import Mounter from 'rc-mounter'
 
 export default class Preloader extends PureComponent {
 
