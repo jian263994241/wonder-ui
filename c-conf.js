@@ -27,8 +27,7 @@ fis.match('**/app.js',{
         'react-dom': 'window.ReactDOM',
         'kui': 'window.WONDER',
         'antd': 'window.antd'
-      },
-      guard: false
+      }
     }
   })
 })
@@ -62,6 +61,11 @@ fis.media('dist')
 })
 .match('site/mod/(**)',{
   release: false
+})
+.match('**.js',{
+  optimizer: [
+    fis.plugin('uglify-js', fis.get('plugin.option.uglifyjs'))
+  ]
 })
 // .match('*', {
 //   domain: 'http://192.168.47.179/docs/ui'

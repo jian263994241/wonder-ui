@@ -64,7 +64,7 @@ var pubData = function(business) {
   *
 **/
 
-var api = function({business, token, errCode = ['00'], type, data, ...ajaxOpt}) {
+var api = function({business, token, errCode = ['00'], data, ...ajaxOpt}) {
 
   var headers = {};
 
