@@ -21,8 +21,6 @@ import TabStatic from './mod/TabStatic'
 import PullToRefresh from './mod/PullToRefresh'
 import Modals from './mod/Modals'
 import Preloader from './mod/Preloader'
-import InfiniteScroll from './mod/InfiniteScroll'
-import Picker from './mod/Picker'
 import Keyboard from './mod/Keyboard'
 import SortableList from './mod/SortableList'
 
@@ -49,8 +47,6 @@ render((
       <Pages path="/PullToRefresh" component={PullToRefresh}/>
       <Pages path="/Modals" component={Modals}/>
       <Pages path="/Preloader" component={Preloader}/>
-      <Pages path="/Picker" component={Picker}/>
-      <Pages path="/InfiniteScroll" component={InfiniteScroll}/>
       <Pages path="/Keyboard" component={Keyboard}/>
     </View>
   </App>
