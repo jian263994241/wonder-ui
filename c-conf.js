@@ -1,14 +1,14 @@
 var pkg = require('./package.json');
 
 fis.match('src/js/wonder.js',{
+  guard: false,
   parser:fis.plugin('browserify', {
     option:{
       shims:{
         'react': 'window.React',
         'react-dom': 'window.ReactDOM'
       },
-      umd: 'WONDER',
-      guard: false
+      umd: 'WONDER'
     }
   })
 })
@@ -20,6 +20,7 @@ fis.match('src/less/ios/uikit.less',{
 })
 
 fis.match('**/app.js',{
+  guard: false,
   parser:fis.plugin('browserify',{
     option:{
       shims:{
@@ -62,11 +63,3 @@ fis.media('dist')
 .match('site/mod/(**)',{
   release: false
 })
-.match('**.js',{
-  optimizer: [
-    fis.plugin('uglify-js', fis.get('plugin.option.uglifyjs'))
-  ]
-})
-// .match('*', {
-//   domain: 'http://192.168.47.179/docs/ui'
-// })

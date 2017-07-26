@@ -24,16 +24,13 @@ export default class Page extends Component {
     navbarFixed: false,
   }
 
+  constructor(props){
+    super(props);
+    this.title = props.title;
+  }
+
   componentDidMount() {
-    const {
-      title
-    } = this.props;
-
-    if(title){
-      this.setDocumentTitle(title);
-    }
-
-    // Dialog.hidePreloader();
+    this.setDocumentTitle(this.title);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,13 +38,17 @@ export default class Page extends Component {
       title
     } = nextProps;
 
-    if(title){
+    if(title != this.title){
       this.setDocumentTitle(title);
     }
   }
 
   setDocumentTitle = (title) => {
+    if(!title || (title === this.title) ) return ;
+    this.title = title;
+
     document.title = title;
+    
     if (device.ios && device.webView) {
       var i = document.createElement('iframe');
       i.src = '/favicon.ico';
