@@ -1,11 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-// import debounce from 'lodash.debounce'
-import {sizeNavbars} from '../utils/mix'
 import {withRouter} from 'react-router-dom'
-import $ from '../utils/dom'
-import {mounted} from '../utils/mix'
+import $ from 'dom7'
+import {mounted, sizeNavbars} from '../utils/mix'
 import Icon from './Icon'
 
 

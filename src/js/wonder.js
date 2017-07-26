@@ -1,5 +1,3 @@
-
-
 //export
 export App from './mod/componnets/App'
 export View from './mod/componnets/View'
@@ -8,7 +6,7 @@ export Page from './mod/componnets/Page'
 export PageContent from './mod/componnets/PageContent'
 export * as Bars, {Navbar, SubNavBar, Toolbar} from './mod/componnets/Bars'
 export {ContentBlock, ContentBlockTitle} from './mod/componnets/ContentBlock'
-export Modal from './mod/componnets/Modal'
+export Modal from 'f7-modal'
 export Popover from './mod/componnets/Popover'
 export Popup from './mod/componnets/Popup'
 export ActionsModal from './mod/componnets/ActionsModal'
@@ -21,7 +19,7 @@ export Form from './mod/componnets/Form'
 export * as Buttons, {Button, ButtonsSegmented} from './mod/componnets/Buttons'
 export * as Grid from './mod/componnets/Grid'
 export Icon from './mod/componnets/Icon'
-export dom from './mod/utils/dom'
+export dom from 'dom7'
 export device from './mod/utils/device'
 export kq from './mod/utils/kq'
 

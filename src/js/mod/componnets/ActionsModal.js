@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
-import Modal from './Modal'
+import Modal from 'f7-modal'
 
 
 export default class ActionsModal extends Component {

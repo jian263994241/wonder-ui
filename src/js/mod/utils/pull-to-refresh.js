@@ -1,7 +1,7 @@
 /*======================================================
 ************   Pull To Refresh   ************
 ======================================================*/
-import $ from './dom'
+import $ from 'dom7'
 import device from './device'
 import support from './support'
 
@@ -170,7 +170,7 @@ const initPullToRefresh = function (pageContainer, callback) {
           pullToRefreshDone(container);
         }
 
-        if (refresh) {            
+        if (refresh) {
             container.addClass('refreshing');
             container.trigger('refresh ptr:refresh', {
                 done: done

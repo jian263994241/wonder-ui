@@ -1,7 +1,7 @@
 import React, {Component, Children} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import $ from '../utils/dom'
+import $ from 'dom7'
 import {FormLabel, FormInput, FormTimerButton} from './FormElement'
 import schema from 'async-validator'
 export default class From extends Component {

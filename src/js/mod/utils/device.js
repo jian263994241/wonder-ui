@@ -1,4 +1,4 @@
-import $ from './dom'
+import $ from 'dom7'
 
 var device = {};
 var ua = navigator.userAgent;

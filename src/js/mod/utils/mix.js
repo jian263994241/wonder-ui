@@ -1,4 +1,4 @@
-import $ from './dom'
+import $ from 'dom7'
 import ReactDOM from 'react-dom'
 // Size Navbars
 export function sizeNavbars (viewContainer) {

@@ -1,4 +1,4 @@
-import $ from './dom'
+import $ from 'dom7'
 
 /**
   *  判断手机系统和App环境

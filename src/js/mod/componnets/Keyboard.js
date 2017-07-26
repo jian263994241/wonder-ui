@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
-import $ from '../utils/dom'
+import $ from 'dom7'
 import PickerModal from './PickerModal'
 import {Toolbar} from './Bars'
 

@@ -2,10 +2,8 @@ import React, {Component} from 'react'
 import {findDOMNode} from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import $ from '../utils/dom'
-
-import Modal from './Modal'
-import OverLay from './OverLay'
+import $ from 'dom7'
+import Modal from 'f7-modal'
 
 export default class Popover extends Component {
 

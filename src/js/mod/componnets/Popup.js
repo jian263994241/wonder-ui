@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import $ from '../utils/dom'
-import Modal from './Modal'
-
+import $ from 'dom7'
+import Modal from 'f7-modal'
 
 export default class Popup extends Component {
 

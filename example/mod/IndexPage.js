@@ -33,7 +33,6 @@ export default class IndexPage extends Component {
                   <ListItem title="列表视图" link="/ListView"/>
                   <ListItem title="媒体列表" link="/MediaLists"/>
                   <ListItem title="手风琴列表" link="/AccordionList"/>
-                  {/**<ListItem title="虚拟列表" link="/VirtualList"/>**/}
                   <ListItem title="排序列表" link="/SortableList"/>
                 </List>
               </ListItem>
@@ -66,7 +65,6 @@ export default class IndexPage extends Component {
               <ListItem accordionItem title="操作" onAccordionOpen={this.onAccordionOpen(3)}>
                 <List>
                   <ListItem title="模态框 Modals" link="/Modals"/>
-                  <ListItem title="选择器" link="/Picker"/>
                   <ListItem title="指示器" link="/Preloader"/>
                   <ListItem title="无限滚动" link="/InfiniteScroll"/>
                   <ListItem title="下拉刷新" link="/PullToRefresh"/>

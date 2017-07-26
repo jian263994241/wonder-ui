@@ -2,7 +2,7 @@
 ************   Fast Clicks   ************
 ************   Inspired by https://github.com/ftlabs/fastclick   ************
 ===============================================================================*/
-import $ from './dom';
+import $ from 'dom7';
 import device from './device'
 import support from './support'
 

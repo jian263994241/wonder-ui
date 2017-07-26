@@ -2,10 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import device from '../utils/device'
-import $ from '../utils/dom'
-import Dialog from './Dialog'
-
-// import Modals from './Modals'
+import $ from 'dom7'
 
 export default class Page extends Component {
 
@@ -48,7 +45,7 @@ export default class Page extends Component {
     this.title = title;
 
     document.title = title;
-    
+
     if (device.ios && device.webView) {
       var i = document.createElement('iframe');
       i.src = '/favicon.ico';

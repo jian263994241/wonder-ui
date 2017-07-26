@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import $ from 'dom7'
 
-import $ from '../utils/dom'
-import Modal from './Modal'
-import OverLay from './OverLay'
+import Modal from 'f7-modal'
 import {Toolbar} from './Bars'
 
 

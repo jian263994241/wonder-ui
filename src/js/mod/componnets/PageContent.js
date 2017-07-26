@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import $ from '../utils/dom';
+import $ from 'dom7';
 import {initPullToRefresh} from '../utils/pull-to-refresh'
 import debounce from 'lodash.debounce';
 

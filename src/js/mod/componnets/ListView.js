@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import {mounted} from '../utils/mix'
 import {Link} from 'react-router-dom'
-import $ from '../utils/dom'
+import $ from 'dom7'
 
 
 
