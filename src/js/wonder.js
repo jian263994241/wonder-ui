@@ -6,10 +6,7 @@ export Page from './mod/componnets/Page'
 export PageContent from './mod/componnets/PageContent'
 export * as Bars, {Navbar, SubNavBar, Toolbar} from './mod/componnets/Bars'
 export {ContentBlock, ContentBlockTitle} from './mod/componnets/ContentBlock'
-export Popover from './mod/componnets/Popover'
-export Popup from './mod/componnets/Popup'
-export ActionsModal from './mod/componnets/ActionsModal'
-export PickerModal from './mod/componnets/PickerModal'
+
 export Preloader from './mod/componnets/Preloader'
 export Keyboard from './mod/componnets/Keyboard'
 export * as ListView from './mod/componnets/ListView'
@@ -22,7 +19,7 @@ export Icon from './mod/componnets/Icon'
 export device from './mod/utils/device'
 export kq from './mod/utils/kq'
 
-export Modal from 'f7-modal'
+export {Modal, Popup, Popover, PickerModal, ActionsModal} from 'f7-modal'
 
 //lib
 export dom from 'dom7'

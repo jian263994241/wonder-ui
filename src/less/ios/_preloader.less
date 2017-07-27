@@ -1,3 +1,22 @@
+//Preloaders modals
+
+.preloader-indicator-overlay {
+    visibility: visible;
+    opacity: 0;
+    background: none;
+}
+.preloader-indicator-modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    padding: 8px;
+    background: rgba(0,0,0,0.7);
+    z-index: 13500;
+    border-radius: 5px;
+    .translate3d(-50%,-50%,0)
+}
+
+
 /* === Preloader === */
 .preloader {
     display: inline-block;

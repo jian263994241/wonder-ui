@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
 import $ from 'dom7'
-import PickerModal from './PickerModal'
+import {PickerModal} from 'f7-modal'
 import {Toolbar} from './Bars'
 
 

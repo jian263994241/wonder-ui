@@ -66,7 +66,6 @@ export default class IndexPage extends Component {
                 <List>
                   <ListItem title="模态框 Modals" link="/Modals"/>
                   <ListItem title="指示器" link="/Preloader"/>
-                  <ListItem title="无限滚动" link="/InfiniteScroll"/>
                   <ListItem title="下拉刷新" link="/PullToRefresh"/>
                 </List>
               </ListItem>
