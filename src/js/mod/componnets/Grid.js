@@ -37,7 +37,7 @@ export class Col extends Component {
 
   static propTypes = {
     className: PropTypes.string,
-    width: PropTypes.string.isRequired,
+    width: PropTypes.string,
     tabletWidth: PropTypes.string
   }
 
@@ -50,8 +50,9 @@ export class Col extends Component {
       ...other
     } =  this.props;
 
+    const colCss = width ? `col-${width}`: 'col-auto';
     const tabletCss = tabletWidth ? `tablet-${tabletWidth}` : '';
-    const cls = classnames(`col-${width}`, tabletCss);
+    const cls = classnames(colCss, tabletCss);
 
     return (
       <div className={cls} {...other} ref="Col">{children}</div>

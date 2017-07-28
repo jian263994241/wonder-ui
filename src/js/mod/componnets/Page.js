@@ -41,11 +41,11 @@ export default class Page extends Component {
   }
 
   setDocumentTitle = (title) => {
-    if(!title || (title === this.title) ) return ;
+
+    if(!title) return ;
     this.title = title;
-
     document.title = title;
-
+    console.log(title);
     if (device.ios && device.webView) {
       var i = document.createElement('iframe');
       i.src = '/favicon.ico';

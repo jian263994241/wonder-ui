@@ -1,5 +1,5 @@
 import $ from 'dom7'
-
+import {Modal} from 'f7-modal'
 /**
   *  判断手机系统和App环境
   *
@@ -122,7 +122,11 @@ var api = function({business, token, errCode = ['00'], data, ...ajaxOpt}) {
         errMsg: '网络状况不太好,请稍后再试',
         errCode: undefined
       };
-      reject(err, xhr, status);
+
+      Modal.toast(err.errMsg, ()=>{
+        reject(err, xhr, status);
+      });
+
     }
 
   });
