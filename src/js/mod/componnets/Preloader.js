@@ -31,9 +31,13 @@ export default class Preloader extends PureComponent {
         indicator = <div className="preloader preloader-white"></div>;
     }
 
+    const preventScrolling = (e) =>{
+      e.preventDefault();
+    };
+
     return (
       <Mounter>
-        <div className="preloader-indicator-overlay"></div>
+        <div className="preloader-indicator-overlay" onTouchMove={preventScrolling}></div>
         <div className="preloader-indicator-modal">{indicator}</div>
       </Mounter>
     );

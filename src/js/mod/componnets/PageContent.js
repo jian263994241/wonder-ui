@@ -118,14 +118,17 @@ export default class PageContent extends Component {
       children,
       // onScroll,
       waiting,
-      ...other
+      ...rest
     } = this.props;
 
     const {showInfiniteScrollPreloader} = this.state;
 
-    const subNavbarCss = withSubnavbar? 'with-subnavbar': '';
-
-    let cls = classnames('page-content', subNavbarCss, className);
+    let cls = classnames({
+      'page-content': true,
+      'with-subnavbar': withSubnavbar,
+      'pull-to-refresh-content': pullToRefresh,
+      'infinite-scroll': infiniteScroll
+    }, className);
 
     if(waiting){
       return (
@@ -135,42 +138,25 @@ export default class PageContent extends Component {
       );
     }
 
-    if(pullToRefresh){
-      cls = classnames(cls, 'pull-to-refresh-content');
-
-      return (
-        <div className={cls} {...other} ref="wrapper">
-          <div className="pull-to-refresh-layer">
-            <div className="preloader"></div>
-            <div className="pull-to-refresh-arrow"></div>
-          </div>
-          {children}
-        </div>
-      );
-
-    }
-
-    if(infiniteScroll){
-      cls = classnames(cls, 'infinite-scroll');
-
-      const preloader = (
-        <div className="infinite-scroll-preloader">
-          <div className="preloader"></div>
-        </div>
-      );
-
-      return (
-        <div className={cls} {...other}>
-          {children}
-          {showInfiniteScrollPreloader && preloader}
-        </div>
-      );
-    }
-
-
     return (
-      <div className={cls} {...other}>
-        {children}
+      <div className={cls} {...rest} ref="wrapper">
+        {
+          pullToRefresh && (
+            <div className="pull-to-refresh-layer">
+              <div className="preloader"></div>
+              <div className="pull-to-refresh-arrow"></div>
+            </div>
+          )
+        }
+        
+{children}
+        {
+          showInfiniteScrollPreloader && (
+            <div className="infinite-scroll-preloader">
+              <div className="preloader"></div>
+            </div>
+          )
+        }
       </div>
     );
   }
