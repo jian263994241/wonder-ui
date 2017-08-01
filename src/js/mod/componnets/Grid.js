@@ -52,7 +52,7 @@ export class Col extends Component {
 
     const colCss = width ? `col-${width}`: 'col-auto';
     const tabletCss = tabletWidth ? `tablet-${tabletWidth}` : '';
-    const cls = classnames(colCss, tabletCss);
+    const cls = classnames(colCss, tabletCss, className);
 
     return (
       <div className={cls} {...other} ref="Col">{children}</div>
