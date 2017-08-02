@@ -189,7 +189,7 @@ export class FormTimerButton extends Component {
     return (
       <div className="item-after">
         <Button
-          style={Object.assign({border: 'none', 'border-left': '1px solid #DEDEDE', 'border-radius': '0px'}, style)}
+          style={Object.assign({border: 'none', borderLeft: '1px solid #DEDEDE', borderRadius: '0px'}, style)}
           onClick={this.clickHandler}
           disabled={this.state.process}
           fill={false}
