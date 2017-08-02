@@ -112,11 +112,9 @@ export class Range extends Component {
 
 export class FormTimerButton extends Component {
 
-  static uiName = 'FormButtonTimer'
+  static uiName = 'FormTimerButton'
 
   static defaultProps = {
-    fill: true,
-    block: true,
     secondsResidue: 60,
     defaultText: '发送验证码',
     text: '%s秒后重新发送'
@@ -131,7 +129,7 @@ export class FormTimerButton extends Component {
     secondsResidue: PropTypes.number,
     defaultText: PropTypes.string,
     text: PropTypes.string,
-    onStart: PropTypes.func,
+    onStart: PropTypes.func.isRequired,
     onEnd: PropTypes.func
   }
 
@@ -175,6 +173,7 @@ export class FormTimerButton extends Component {
 
   render() {
     const {
+      style,
       defaultText,
       text,
       onStart,
@@ -182,14 +181,21 @@ export class FormTimerButton extends Component {
       children,
       onClick,
       disabeld,
-      ...other
+      ...rest
     } = this.props;
 
     const content = this.state.process? text.replace(/%s/, this.state.secondsResidue) : defaultText;
 
     return (
       <div className="item-after">
-        <Button {...other} onClick={this.clickHandler} disabled={this.state.process}>{content}</Button>
+        <Button
+          style={Object.assign({border: 'none', 'border-left': '1px solid #DEDEDE', 'border-radius': '0px'}, style)}
+          onClick={this.clickHandler}
+          disabled={this.state.process}
+          fill={false}
+          block={false}
+          {...rest}
+          >{content}</Button>
       </div>
     );
   }
