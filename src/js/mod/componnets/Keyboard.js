@@ -6,7 +6,6 @@ import $ from 'dom7'
 import {PickerModal} from 'f7-modal'
 import {Toolbar} from './Bars'
 
-
 export default class Keyboard extends Component {
 
   static uiName = 'Keyboard';
@@ -18,6 +17,7 @@ export default class Keyboard extends Component {
     onChange: PropTypes.func,
     random: PropTypes.bool,
     number: PropTypes.bool,
+    maxLength: PropTypes.number,
     value: React.PropTypes.oneOfType([
       PropTypes.string.isRequired,
       PropTypes.number.isRequired
@@ -78,6 +78,7 @@ export default class Keyboard extends Component {
       className,
       inline,
       number,
+      visible,
       dot,
       value,
       maxLength,
@@ -154,19 +155,6 @@ export default class Keyboard extends Component {
       'picker-modal-inline': inline
     }, className);
 
-    if(_inline){
-      return (
-        <div className="kq-keyboard">
-          <div className="picker-modal picker-keypad picker-keypad-type-numpad picker-modal-inline">
-            {toolbar}
-            <div className="picker-modal-inner picker-keypad-buttons">
-              {this.keys.map(keyInit)}
-            </div>
-          </div>
-        </div>
-      );
-    }
-
     return (
       <PickerModal
         className={cls}
@@ -174,7 +162,9 @@ export default class Keyboard extends Component {
         onCancel={onCancel}
         innerCss="picker-keypad-buttons"
         toolbar={toolbar}
-        mounter
+        mounter={!_inline}
+        visible={_inline || visible}
+        overlay={!_inline}
         {...other}
         >
         {this.keys.map(keyInit)}

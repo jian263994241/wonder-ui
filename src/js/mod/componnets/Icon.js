@@ -12,11 +12,13 @@ export default class Icon extends Component {
 
   render() {
     const {
-      type
+      type,
+      className,
+      ...rest
     } = this.props;
-    
+
     return (
-      <span className={`icon icon-${type}`} ref="Icon"></span>
+      <span className={classnames('icon', `icon-${type}`, className)} {...rest}></span>
     );
   }
 }
