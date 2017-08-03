@@ -34,6 +34,21 @@
 .scrollable(){
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+    html.ios & {
+    	//ios10 bug fix
+      &::before{
+        content:'';
+        width: 1px;
+        float: left;
+        height: calc(100% + 1px);
+        margin-left: -1px;
+      }
+      &::after{
+        content:'';
+        width: 100%;
+        clear: both;
+      }
+    }
 }
 .flexbox() {
     display: -webkit-box;
