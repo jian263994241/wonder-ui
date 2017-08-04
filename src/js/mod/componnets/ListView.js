@@ -27,23 +27,21 @@ export class ListGroup extends Component {
       children,
       sortable,
       onSorted,
-      ...other
+      ...rest
     } = this.props;
 
     const passProps = {sortable, onSorted};
 
 
     return (
-      <ul {...other}>
+      <ul {...rest}>
         {mounted(title, <li className="list-group-title"></li>)}
         {React.Children.map(children, (child, index)=>{
           if(!child) return null;
-
           return cloneElement(child, {
             key: child.toString(),
             ...passProps
           });
-
         })}
       </ul>
     );
@@ -86,7 +84,7 @@ export class ListButton extends Component {
       className,
       link,
       children,
-      ...other
+      ...rest
     } = this.props;
 
     const cls = classnames('item-link', 'list-button', className);
@@ -95,7 +93,7 @@ export class ListButton extends Component {
 
     return (
       <li>
-        <A className={cls} to={link} {...other}>{children}</A>
+        <A className={cls} to={link} {...rest}>{children}</A>
       </li>
     );
   }
@@ -178,7 +176,7 @@ export class List extends Component {
       onSorted,
       className,
       children,
-      ...other
+      ...rest
     } = this.props;
 
     const cls = classnames('list-block', {
@@ -225,7 +223,7 @@ export class List extends Component {
     }
 
     return (
-      <div className={cls} {...other} ref="List">
+      <div className={cls} {...rest} ref="List">
         {childrenNode}
       </div>
     );
@@ -430,7 +428,7 @@ export class ListItem extends Component {
       'item-divider': divider,
       'item-content': !divider,
       'item-link': link || accordionItem,
-    });
+    }, className);
 
     if(divider){
       return (
