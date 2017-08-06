@@ -18,7 +18,7 @@ export class Navbar extends Component {
     theme: PropTypes.string,
     backText: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.bool]),
     onBack: PropTypes.func,
-    center: PropTypes.element,
+    center: PropTypes.any,
     left: PropTypes.element,
     right: PropTypes.element
   }

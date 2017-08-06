@@ -66,14 +66,16 @@ var pubData = function(business) {
 
 var api = function({business, token, errCode = ['00'], data, ...ajaxOpt}) {
 
-  var headers = {};
+  var headers = {
+    'content-type': 'application/json;charset=UTF-8'
+  };
 
   if(token){
-    headers.Authorization = token;
+    headers['Authorization'] = token;
   }
 
   if(business){
-    headers.pubData = pubData(business);
+    headers['pubData'] = pubData(business);
   }
 
   if(data){
@@ -82,14 +84,7 @@ var api = function({business, token, errCode = ['00'], data, ...ajaxOpt}) {
 
   return new Promise(function(resolve, reject){
 
-    $.ajax({
-      contentType: 'application/json;charset=UTF-8',
-      headers,
-      success,
-      data,
-      error,
-      ...ajaxOpt
-    });
+    $.ajax({ headers, success, data, error, processData: false, ...ajaxOpt });
 
     function success(data, status, xhr) {
 
@@ -113,7 +108,7 @@ var api = function({business, token, errCode = ['00'], data, ...ajaxOpt}) {
         //登录失效判断
         sessionStorage.removeItem('loginToken');
       }
-
+      Modal.toast.fail(data.errMsg);
       return reject( data, status, xhr);
     }
 
@@ -123,7 +118,7 @@ var api = function({business, token, errCode = ['00'], data, ...ajaxOpt}) {
         errCode: undefined
       };
 
-      Modal.toast(err.errMsg, ()=>{
+      Modal.toast.offline(err.errMsg, ()=>{
         reject(err, xhr, status);
       });
 
