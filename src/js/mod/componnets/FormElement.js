@@ -34,28 +34,51 @@ export class FormInput extends Component {
 
   static uiName = 'FormInput'
 
+  static propTypes = {
+    cursor: PropTypes.bool
+  }
+
   render() {
 
-    const {type, ...other} = this.props;
+    const {type, cursor, ...rest} = this.props;
 
     let ele;
 
     switch (type) {
       case 'select':
-        ele = <select {...other} type={type}/>
+        ele = <select {...rest} type={type}/>
         break;
       case 'switch':
-        ele = <Switch {...other} type={type}/>
+        ele = <Switch {...rest} type={type}/>
         break;
       case 'range':
-        ele = <Range {...other} type={type}/>
+        ele = <Range {...rest} type={type}/>
         break;
       case 'textarea':
-        ele = <textarea {...other} type={type}/>
+        ele = <textarea {...rest} type={type}/>
         break;
       default:
-        ele = <input {...other} type={type}/>
+
+        ele = [<input {...rest} type={type} key=".1" ref="input"/>]
+
+        if(cursor){
+          ele.push(
+            <div className="cursor" key=".2">
+              <div className="values">
+                {Array.prototype.map.call(rest.value || '', (a)=>{
+                  if(type==='password'){
+                    return '*';
+                  }else{
+                    return a;
+                  }
+                })}
+              </div>
+            </div>
+          )
+        }
     }
+
+
     return (
       <div className="item-input" ref="FormInput">
         {ele}
