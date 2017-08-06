@@ -5,6 +5,7 @@ import classnames from 'classnames'
 import $ from 'dom7'
 import {PickerModal} from 'f7-modal'
 import {Toolbar} from './Bars'
+import kq from '../utils/kq'
 
 export default class Keyboard extends Component {
 
@@ -22,6 +23,22 @@ export default class Keyboard extends Component {
       PropTypes.string.isRequired,
       PropTypes.number.isRequired
     ])
+  }
+
+  static encrypt = (value)=>{
+    const baseurl = location.port === "8080" ? (location.origin + "/coc-bill-api/") : "https://ebd.99bill.com/coc-bill-api/";
+    if(!window.Safety) throw '缺少safe mod';
+    const safety = new window.Safety();
+    return kq.api({
+      method: 'post',
+      url: baseurl + '3.0/pgh/keys',
+      business: 'MEMBER-BASE'
+    })
+    .then(({mapString, mcryptKey, token})=>{
+      safety.setMap(mapString, mcryptKey);
+      const result = safety.toX(value);
+      return Promise.resolve({result, token});
+    })
   }
 
   valueFormat = (value , key, maxLength)=>{
@@ -69,7 +86,6 @@ export default class Keyboard extends Component {
     }else{
       this.keys = this.getkeys([null, 'del'], random);
     }
-
   }
 
   render() {
@@ -164,7 +180,7 @@ export default class Keyboard extends Component {
         toolbar={toolbar}
         mounter={!_inline}
         visible={_inline || visible}
-        overlay={!_inline}
+        overlay={false}
         {...other}
         >
         {this.keys.map(keyInit)}
