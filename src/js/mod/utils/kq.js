@@ -64,7 +64,7 @@ var pubData = function(business) {
   *
 **/
 
-var api = function({business, token, errCode = ['00'], data, ...ajaxOpt}) {
+var api = function({business, token, errCode = ['00'], showPreloader = false, data, ...ajaxOpt}) {
 
   var headers = {
     'content-type': 'application/json;charset=UTF-8'
@@ -83,6 +83,12 @@ var api = function({business, token, errCode = ['00'], data, ...ajaxOpt}) {
   }
 
   return new Promise(function(resolve, reject){
+
+    let closePreloader = function(){};
+
+    if(showPreloader){
+      closePreloader = Modal.toast.waiting();
+    }
 
     $.ajax({ headers, success, data, error, processData: false, ...ajaxOpt });
 
@@ -108,6 +114,7 @@ var api = function({business, token, errCode = ['00'], data, ...ajaxOpt}) {
         //登录失效判断
         sessionStorage.removeItem('loginToken');
       }
+      closePreloader();
       Modal.toast.fail(data.errMsg);
       return reject( data, status, xhr);
     }
@@ -117,7 +124,7 @@ var api = function({business, token, errCode = ['00'], data, ...ajaxOpt}) {
         errMsg: '网络状况不太好,请稍后再试',
         errCode: undefined
       };
-
+      closePreloader();
       Modal.toast.offline(err.errMsg, ()=>{
         reject(err, xhr, status);
       });
