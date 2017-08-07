@@ -174,7 +174,6 @@ export default class Keyboard extends Component {
     return (
       <PickerModal
         className={cls}
-        containerCss="kq-keyboard"
         onCancel={onCancel}
         innerCss="picker-keypad-buttons"
         toolbar={toolbar}

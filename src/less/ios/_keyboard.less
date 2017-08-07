@@ -11,16 +11,9 @@
   top: 50%;
 }
 
-.kq-keyboard{
-  .picker-modal-overlay{
-    &.modal-overlay-visible{
-      opacity: 0.1;
-    }
-  }
-}
 
-.picker-modal.picker-keypad {
-    .picker-modal-inner {
+.picker-keypad {
+    .picker-keypad-buttons {
       height: @keypad-height;
       .hairline(top, rgba(184/2, 188/2, 192/2, 0.35));
 
@@ -28,10 +21,17 @@
          background: #D6DEE0;
       }
     }
-    &.picker-modal-inline, .popover.popover-picker-keypad & {
-        .picker-modal-inner {
+    &.picker-modal-inline, .popover-picker-keypad & {
+        .picker-keypad-buttons {
             .hairline-remove(top);
         }
+    }
+
+    &.picker-modal-inline{
+      position: relative;
+      transition-property: none;
+      transform: translate3d(0,0,0)!important;
+      top: 0;
     }
 }
 
@@ -106,6 +106,7 @@
 }
 .input-pwd-grid{
   width: 100%;
+  height: 43px;
   >i{
     width:100%/6;
     float: left;
