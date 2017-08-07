@@ -25,19 +25,23 @@ export default class Keyboard extends Component {
     ])
   }
 
+  static baseurl = location.port === "8080" ? (location.origin + "/coc-bill-api/") : "https://ebd.99bill.com/coc-bill-api/";
+
   static encrypt = (value)=>{
-    const baseurl = location.port === "8080" ? (location.origin + "/coc-bill-api/") : "https://ebd.99bill.com/coc-bill-api/";
     if(!window.Safety) throw '缺少safe mod';
     const safety = new window.Safety();
     return kq.api({
       method: 'post',
-      url: baseurl + '3.0/pgh/keys',
+      url: Keyboard.baseurl + '3.0/pgh/keys',
       business: 'MEMBER-BASE'
     })
     .then(({mapString, mcryptKey, token})=>{
       safety.setMap(mapString, mcryptKey);
+      if(typeof value === 'undefined'){
+        return Promise.resolve({safety, token});
+      }
       const result = safety.toX(value);
-      return Promise.resolve({result, token});
+      return Promise.resolve({safety, token, result});
     })
   }
 
