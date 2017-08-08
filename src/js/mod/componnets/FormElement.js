@@ -64,20 +64,15 @@ export class FormInput extends Component {
         if(cursor){
           ele.push(
             <div className="cursor" key=".2">
-              <div className="values">
+              <div className="values" style={ type==='password' ? {visibility: 'visible'}: {}}>
                 {Array.prototype.map.call(rest.value || '', (a)=>{
-                  if(type==='password'){
-                    return '*';
-                  }else{
-                    return a;
-                  }
+                  if(type==='password'){ return '•'; }else{ return a; }
                 })}
               </div>
             </div>
           )
         }
     }
-
 
     return (
       <div className="item-input" ref="FormInput">

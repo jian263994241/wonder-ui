@@ -106,7 +106,7 @@ export default class Keyboard extends Component {
       random,
       onCancel,
       children,
-      ...other
+      ...rest
     } = this.props;
 
     const _inline = inline && !number;
@@ -184,7 +184,7 @@ export default class Keyboard extends Component {
         mounter={!_inline}
         visible={_inline || visible}
         overlay={false}
-        {...other}
+        {...rest}
         >
         {this.keys.map(keyInit)}
       </PickerModal>
@@ -207,7 +207,7 @@ class Input extends Component {
     const {
       value,
       show,
-      ...other
+      ...rest
     } = this.props;
 
     const val = [];
@@ -226,7 +226,7 @@ class Input extends Component {
     }
 
     return (
-      <div className="input-pwd-grid" {...other}>
+      <div className="input-pwd-grid" {...rest}>
         {val.map(grid)}
       </div>
     );
