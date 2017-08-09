@@ -63,11 +63,13 @@
           height: 30px;
           pointer-events: none;
           .values{
+            color:#000;
             visibility: hidden;
             font-size: 15px;
             line-height: 32px;
             background-color: #fff;
             pointer-events: none;
+            padding-right: 2px;
           }
           &::after {
             position: absolute;
@@ -89,23 +91,7 @@
     }
 }
 
-@-webkit-keyframes twinkle {
-  0% {
-    opacity: 1;
-  }
 
-  30% {
-    opacity: 0.2;
-  }
-
-  50% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
 @keyframes twinkle {
   0% {
     opacity: 1;

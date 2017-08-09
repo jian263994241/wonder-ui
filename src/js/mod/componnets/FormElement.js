@@ -35,12 +35,13 @@ export class FormInput extends Component {
   static uiName = 'FormInput'
 
   static propTypes = {
-    cursor: PropTypes.bool
+    cursor: PropTypes.bool,
+    cursorStyle: PropTypes.object
   }
 
   render() {
 
-    const {type, cursor, ...rest} = this.props;
+    const {type, cursor, placeholder, cursorStyle, ...rest} = this.props;
 
     let ele;
 
@@ -58,13 +59,14 @@ export class FormInput extends Component {
         ele = <textarea {...rest} type={type}/>
         break;
       default:
+        const _placeholder = cursor? '': placeholder;
 
-        ele = [<input {...rest} type={type} key=".1" ref="input"/>]
+        ele = [<input {...rest} type={type} key=".1" ref="input" placeholder={_placeholder} readOnly={cursor}/>]
 
         if(cursor){
           ele.push(
-            <div className="cursor" key=".2">
-              <div className="values" style={ type==='password' ? {visibility: 'visible'}: {}}>
+            <div className="cursor" key=".2" >
+              <div className="values" style={ Object.assign((type==='password' ? {visibility: 'visible'}: {}), cursorStyle)}>
                 {Array.prototype.map.call(rest.value || '', (a)=>{
                   if(type==='password'){ return '•'; }else{ return a; }
                 })}
