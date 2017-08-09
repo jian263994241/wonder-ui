@@ -45,6 +45,23 @@ export default class Keyboard extends Component {
     })
   }
 
+  static getPayToken = (value, authUrl, useLimit=30)=>{
+    Keyboard.encrypt(value).then(({result, token})=>{
+      return kq.api({
+        method: 'post',
+        url: Keyboard.baseurl + '/pay/3.0/members/login/password/pay',
+        business: 'MEMBER-BASE',
+        token: sessionStorage.loginToken,
+        data:{
+          password: result,
+          token,
+          useLimit,
+          authUrl: '/mam/3.0/zyt/card/entity/active'
+        }
+      });
+    })
+  }
+
   valueFormat = (value , key, maxLength)=>{
     let val = String(value);
     key = String(key);
