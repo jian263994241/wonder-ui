@@ -41,7 +41,7 @@ export class FormInput extends Component {
 
   render() {
 
-    const {type, cursor, placeholder, cursorStyle, ...rest} = this.props;
+    const {type, cursor, cursorStyle, ...rest} = this.props;
 
     let ele;
 
@@ -59,9 +59,9 @@ export class FormInput extends Component {
         ele = <textarea {...rest} type={type}/>
         break;
       default:
-        const _placeholder = cursor? '': placeholder;
 
-        ele = [<input {...rest} type={type} key=".1" ref="input" placeholder={_placeholder} readOnly={cursor}/>]
+
+        ele = [<input {...rest} type={type} key=".1" ref="input" readOnly={cursor}/>]
 
         if(cursor){
           ele.push(
