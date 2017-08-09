@@ -198,7 +198,7 @@ export default class Keyboard extends Component {
         onCancel={onCancel}
         innerCss="picker-keypad-buttons"
         toolbar={toolbar}
-        mounter={!_inline}
+        mounter={false}
         visible={_inline || visible}
         overlay={false}
         {...rest}
