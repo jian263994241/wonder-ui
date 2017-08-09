@@ -46,7 +46,7 @@ export default class Keyboard extends Component {
   }
 
   static getPayToken = (value, authUrl, useLimit=30)=>{
-    Keyboard.encrypt(value).then(({result, token})=>{
+    return Keyboard.encrypt(value).then(({result, token})=>{
       return kq.api({
         method: 'post',
         url: Keyboard.baseurl + '/pay/3.0/members/login/password/pay',
