@@ -42,7 +42,7 @@ export class FormInput extends Component {
 
   render() {
 
-    const {type, cursor, cursorStyle, ...rest} = this.props;
+    const {type, cursor, cursorStyle, readOnly, ...rest} = this.props;
 
     let ele;
 
@@ -70,12 +70,12 @@ export class FormInput extends Component {
           }
         }
 
-        ele = [<input type={type} key=".1" ref="input" readOnly={cursor} onFocus={(e)=>{ e.target.blur() }} {...rest} />]
+        ele = [<input type={type} key=".1" ref="input" readOnly={readOnly} onFocus={(e)=>{ e.target.blur() }} {...rest} />]
 
-        if(cursor){
+        if(readOnly){
           ele.push(
-            <div className="cursor" key=".2" >
-              <div className="values" style={ Object.assign(((type==='password') ? {visibility: 'visible'}: {}), cursorStyle)}>
+            <div className={classnames('cursor', {'none': !cursor})} key=".2" >
+              <div className="values" style={ Object.assign(( type==='password' ? {visibility: 'visible'}: {}), cursorStyle)}>
                 {Array.prototype.map.call(rest.value || '', (a)=>{
                   if(type==='password'){ return '●'; }else{ return a; }
                 })}
