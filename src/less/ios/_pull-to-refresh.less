@@ -1,7 +1,7 @@
 /* === Pull To Refresh === */
 .pull-to-refresh-layer {
     position:absolute;
-    position: relative;
+    // position: relative;
     margin-top: -@toolbarSize;
     left:0;
     top:0;
@@ -64,6 +64,7 @@
         }
     }
     &.pull-up {
+        overflow: visible;
         .pull-to-refresh-arrow {
             .transform(rotate(180deg) translate3d(0,0,0));
         }
