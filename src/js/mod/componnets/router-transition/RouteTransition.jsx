@@ -59,8 +59,7 @@ class RouteTransition extends Component {
   renderRoute(config) {
     const props = {
       style: this.props.mapStyles(config.style),
-      key: config.key,
-      className: this.props.innerCss
+      key: config.key
     };
     return this.props.component
       ? createElement(this.props.component, props, config.data)

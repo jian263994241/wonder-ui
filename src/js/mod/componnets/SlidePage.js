@@ -1,11 +1,15 @@
 import React, {Component} from 'react'
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import store from 'store2'
+
+import RouteTransition from './router-transition/RouteTransition'
+import spring from 'react-motion/lib/spring';
 
 export default class SlidePage extends Component {
 
   static uiName = 'SlidePage';
+
 
   static propTypes = {
     className: PropTypes.string,
@@ -16,18 +20,16 @@ export default class SlidePage extends Component {
     noAnimate: false
   }
 
-  history = {
-    index: -1,
-    path: []
-  }
 
   popType = undefined;
 
   pushHistory = (pathname) =>{
     const {path, index} = this.history;
+    if(path[path.length-1] === pathname) return ;
     path.splice(index + 1);
     path.push(pathname);
     this.history.index = index + 1;
+    this.store.set('SlidePage', this.history);
   }
 
   popHistory = (pathname) =>{
@@ -42,13 +44,29 @@ export default class SlidePage extends Component {
     }else{
       popType = undefined;
     }
+    this.store.set('SlidePage', this.history);
     return popType;
   }
 
   componentDidMount() {
-    const {history} = this.props;
+    const {history, location} = this.props;
     const pathname = history.location.pathname;
-    this.pushHistory(pathname);
+
+    const key = history.location.key || '.0';
+    this.store = store.namespace(window.location.pathname + key).session;
+
+    this.history = this.store.get('SlidePage') || {
+      index: -1,
+      path: []
+    }
+
+    if(history.action === 'POP'){
+      this.popHistory(pathname);
+    }else{
+      this.pushHistory(pathname);
+    }
+
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -64,66 +82,91 @@ export default class SlidePage extends Component {
 
   render() {
 
-    const {className, history, children, noAnimate, ...other} = this.props;
+    const {className, history, children, noAnimate, ...rest} = this.props;
+
+    const { action, location } = history;
+
+    const key = location.pathname;
 
     const slideLeft = {
-      enter: 'page-from-right-to-center',
-      leave: 'page-from-center-to-left'
+      atEnter: {
+        offset: 100,
+        index: 1,
+      },
+      atLeave: {
+        offset: spring(-33, { stiffness: 330, damping: 33 }),
+        index: 0
+      },
+      atActive: {
+        offset: spring(0, { stiffness: 330, damping: 33 }),
+        index: 1
+      },
+      mapStyles(styles) {
+        return {
+          transform: `translateX(${styles.offset}%)`,
+          zIndex: styles.index
+        };
+      },
     };
 
     const slideRight = {
-      enter: 'page-from-left-to-center',
-      leave: 'page-from-center-to-right'
+      atEnter: {
+        offset: -33,
+        opacity: 0,
+        index: 0
+      },
+      atLeave: {
+        offset: spring(102, { stiffness: 330, damping: 35 }),
+        index: 1
+      },
+      atActive: {
+        offset: spring(0, { stiffness: 330, damping: 33 }),
+        index: 1
+      },
+      mapStyles(styles) {
+        return {
+          transform: `translateX(${styles.offset}%)`,
+          zIndex: styles.index
+        };
+      },
     };
 
-    const location = history.location;
-    const pathname = location.pathname;
+    let animateConfig;
 
-    let transitionName, transitionEnterTimeout, transitionLeaveTimeout, transitionEnter, transitionLeave;
+    const emptyAnimate = {
+      atEnter: {},
+      atLeave:{},
+      atActive:{}
+    };
 
-    transitionEnter = transitionLeave = true;
-    transitionName = slideLeft;
-    transitionEnterTimeout = 500;
-    transitionLeaveTimeout = 400;
+    animateConfig = (()=>{
+      if(action === 'REPLACE' || noAnimate){
+        return emptyAnimate;
+      }
+      if(action === 'POP'){
+        return slideRight;
+      }
+      if(action === 'PUSH'){
+        return slideLeft;
+      }
+    })();
 
-    const popType = this.popType;
-
-    switch (history.action) {
-      case 'PUSH':
-        transitionName = slideLeft;
-        break;
-      case 'POP':
-        if(popType === 'back'){
-          transitionName = slideRight;
-        }else if(popType === 'forward'){
-          transitionName = slideLeft;
-        }else{
-          transitionEnter = transitionLeave = false;
-        }
-        break;
-      default:
-        transitionEnter = transitionLeave = false;
-        break;
-    }
 
     if(noAnimate){
-      transitionEnter = transitionLeave = false;
+      animateConfig = emptyAnimate
     }
-
-    const key = pathname;
-
     return (
-      <CSSTransitionGroup
-        transitionName={transitionName}
-        component="div"
-        transitionEnter={transitionEnter}
-        transitionLeave={transitionLeave}
-        transitionEnterTimeout={transitionEnterTimeout}
-        transitionLeaveTimeout={transitionLeaveTimeout}
-        className={classnames('pages', className)}
-      >
-        {React.cloneElement(children, {key, location})}
-      </CSSTransitionGroup>
+        <RouteTransition
+          pathname={location.pathname}
+          component={false}
+          runOnMount={false}
+          className="pages"
+          {...animateConfig}
+        >
+        <div className="page-transition">
+            {React.cloneElement(children, {key, location})}
+        </div>
+      </RouteTransition>
     );
   }
 }
