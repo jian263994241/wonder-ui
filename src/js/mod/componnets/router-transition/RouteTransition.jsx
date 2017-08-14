@@ -56,10 +56,10 @@ class RouteTransition extends Component {
     return ensureSpring(this.props.atLeave);
   }
 
-  renderRoute(config) {
+  renderRoute(config, index) {
     const props = {
       style: this.props.mapStyles(config.style),
-      key: config.key
+      key: config.key,
     };
     return this.props.component
       ? createElement(this.props.component, props, config.data)
@@ -69,7 +69,9 @@ class RouteTransition extends Component {
   renderRoutes(interpolatedStyles) {
     return (
       <div className={this.props.className} style={this.props.style}>
-        {interpolatedStyles.map(this.renderRoute)}
+        {
+          interpolatedStyles.map(this.renderRoute)
+        }
       </div>
     );
   }

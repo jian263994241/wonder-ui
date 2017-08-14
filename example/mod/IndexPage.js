@@ -24,7 +24,8 @@ export default class IndexPage extends Component {
         <PageContent>
           <ContentBlockTitle style={{fontSize: '20px'}}>wonderjs</ContentBlockTitle>
           <ContentBlock>
-            快钱包移动组件库
+            快钱包移动组件库 <br/>
+            地址 : <a href="https://jian263994241.gitbooks.io/wonderjs/content/">wonderjs</a>
           </ContentBlock>
           <List accordion inset>
             <ListGroup>

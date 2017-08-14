@@ -66,7 +66,6 @@ export default class SlidePage extends Component {
       this.pushHistory(pathname);
     }
 
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -90,43 +89,34 @@ export default class SlidePage extends Component {
 
     const slideLeft = {
       atEnter: {
-        offset: 100,
-        index: 1,
+        offset: 100
       },
       atLeave: {
-        offset: spring(-33, { stiffness: 330, damping: 33 }),
-        index: 0
+        offset: spring(-33, { stiffness: 330, damping: 33 })
       },
       atActive: {
-        offset: spring(0, { stiffness: 330, damping: 33 }),
-        index: 1
+        offset: spring(0, { stiffness: 330, damping: 33 })
       },
       mapStyles(styles) {
         return {
-          transform: `translateX(${styles.offset}%)`,
-          zIndex: styles.index
+          transform: `translateX(${styles.offset}%)`
         };
       },
     };
 
     const slideRight = {
       atEnter: {
-        offset: -33,
-        opacity: 0,
-        index: 0
+        offset: -33
       },
       atLeave: {
-        offset: spring(102, { stiffness: 330, damping: 35 }),
-        index: 1
+        offset: spring(102, { stiffness: 330, damping: 33 })
       },
       atActive: {
-        offset: spring(0, { stiffness: 330, damping: 33 }),
-        index: 1
+        offset: spring(0, { stiffness: 330, damping: 33 })
       },
       mapStyles(styles) {
         return {
-          transform: `translateX(${styles.offset}%)`,
-          zIndex: styles.index
+          transform: `translateX(${styles.offset}%)`
         };
       },
     };
@@ -151,7 +141,6 @@ export default class SlidePage extends Component {
       }
     })();
 
-
     if(noAnimate){
       animateConfig = emptyAnimate
     }
@@ -163,7 +152,14 @@ export default class SlidePage extends Component {
           className="pages"
           {...animateConfig}
         >
-        <div className="page-transition">
+        <div
+          className={
+            classnames({
+              'page-transition': true,
+              'slide-left' : (action === 'PUSH'),
+              'slide-right' : (action === 'POP')
+            })
+          }>
             {React.cloneElement(children, {key, location})}
         </div>
       </RouteTransition>
