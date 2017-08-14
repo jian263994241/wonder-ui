@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
 import {Button} from './Buttons'
+// import kq from '../utils/kq'
 
 export class FormLabel extends Component {
 
@@ -60,15 +61,23 @@ export class FormInput extends Component {
         break;
       default:
 
+        let opt = {};
 
-        ele = [<input {...rest} type={type} key=".1" ref="input" readOnly={cursor}/>]
+        if(cursor){
+          opt =  {
+            readOnly: true,
+
+          }
+        }
+
+        ele = [<input type={type} key=".1" ref="input" readOnly={cursor} onFocus={(e)=>{ e.target.blur() }} {...rest} />]
 
         if(cursor){
           ele.push(
             <div className="cursor" key=".2" >
-              <div className="values" style={ Object.assign((type==='password' ? {visibility: 'visible'}: {}), cursorStyle)}>
+              <div className="values" style={ Object.assign(((type==='password') ? {visibility: 'visible'}: {}), cursorStyle)}>
                 {Array.prototype.map.call(rest.value || '', (a)=>{
-                  if(type==='password'){ return '•'; }else{ return a; }
+                  if(type==='password'){ return '●'; }else{ return a; }
                 })}
               </div>
             </div>
