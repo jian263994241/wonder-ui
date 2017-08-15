@@ -128,8 +128,6 @@ export default class SlidePage extends Component {
       }
     }
 
-    let animateConfig;
-
     let animationType = 'no';
 
 
@@ -138,13 +136,7 @@ export default class SlidePage extends Component {
         return 'no';
       }
       if(action === 'POP'){
-
-        // if(this.popType === 'forward'){
-        //   return 'slide-left';
-        // }
-
         return 'slide-right';
-
       }
       if(action === 'PUSH'){
         return 'slide-left';
