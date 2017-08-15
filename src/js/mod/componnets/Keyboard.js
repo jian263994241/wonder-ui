@@ -28,7 +28,8 @@ export default class Keyboard extends Component {
   }
 
   static defaultProps = {
-    value: ''
+    value: '',
+    mounter: false
   }
 
   static baseurl = location.port === "8080" ? (location.origin + "/coc-bill-api/") : "https://ebd.99bill.com/coc-bill-api/";
@@ -128,6 +129,7 @@ export default class Keyboard extends Component {
       getCancelIgnore,
       inline,
       maxLength,
+      mounter,
       number,
       onChange,
       onCancel,
@@ -232,7 +234,7 @@ export default class Keyboard extends Component {
         onCancel={onCancel}
         innerCss="picker-keypad-buttons"
         toolbar={toolbar}
-        mounter={false}
+        mounter={mounter}
         visible={_inline || visible}
         overlay={false}
         ignore={cancelIgnore}

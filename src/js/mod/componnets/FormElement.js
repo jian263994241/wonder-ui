@@ -174,12 +174,20 @@ export class FormTimerButton extends Component {
     defaultText: PropTypes.string,
     text: PropTypes.string,
     onStart: PropTypes.func.isRequired,
-    onEnd: PropTypes.func
+    onEnd: PropTypes.func,
+    runOnMount: PropTypes.bool
   }
 
   componentWillMount() {
     const {secondsResidue} = this.props;
     this.setState({secondsResidue});
+  }
+
+  componentDidMount() {
+    const {runOnMount} = this.props;
+    if(runOnMount){
+      this.clickHandler();
+    }
   }
 
   componentWillUnmount() {
@@ -231,6 +239,7 @@ export class FormTimerButton extends Component {
       children,
       onClick,
       disabeld,
+      runOnMount,
       ...rest
     } = this.props;
 
