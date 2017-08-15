@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {findDOMNode} from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
@@ -11,6 +12,10 @@ export class FormLabel extends Component {
 
   static propTypes = {
     className: PropTypes.string
+  }
+
+  getElement(){
+    return findDOMNode(this);
   }
 
   render() {
@@ -38,6 +43,10 @@ export class FormInput extends Component {
   static propTypes = {
     cursor: PropTypes.bool,
     cursorStyle: PropTypes.object
+  }
+
+  getElement(){
+    return findDOMNode(this);
   }
 
   render() {
@@ -100,6 +109,10 @@ export class Switch extends Component {
     style: PropTypes.object
   }
 
+  getElement(){
+    return findDOMNode(this);
+  }
+
   render() {
     const {
       className,
@@ -122,6 +135,10 @@ export class Switch extends Component {
 export class Range extends Component {
 
   static uiName = 'Range'
+
+  getElement(){
+    return findDOMNode(this);
+  }
 
   render() {
 
@@ -169,6 +186,10 @@ export class FormTimerButton extends Component {
     clearInterval(this.interval);
   }
 
+  getElement(){
+    return findDOMNode(this);
+  }
+
   tick = ()=>{
     const {secondsResidue, onEnd} = this.props;
     this.setState((prevState) => {
@@ -197,6 +218,8 @@ export class FormTimerButton extends Component {
       });
     });
   }
+
+
 
   render() {
     const {

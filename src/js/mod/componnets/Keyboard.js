@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {findDOMNode} from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
@@ -19,10 +20,15 @@ export default class Keyboard extends Component {
     random: PropTypes.bool,
     number: PropTypes.bool,
     maxLength: PropTypes.number,
-    value: React.PropTypes.oneOfType([
+    value: PropTypes.oneOfType([
       PropTypes.string.isRequired,
       PropTypes.number.isRequired
-    ])
+    ]).isRequired,
+    getCancelIgnore: PropTypes.func
+  }
+
+  static defaultProps = {
+    value: ''
   }
 
   static baseurl = location.port === "8080" ? (location.origin + "/coc-bill-api/") : "https://ebd.99bill.com/coc-bill-api/";
@@ -109,20 +115,25 @@ export default class Keyboard extends Component {
     }
   }
 
+  getElement(){
+    return findDOMNode(this);
+  }
+
   render() {
 
     const {
       className,
-      inline,
-      number,
-      visible,
-      dot,
-      value,
-      maxLength,
-      onChange,
-      random,
-      onCancel,
       children,
+      dot,
+      getCancelIgnore,
+      inline,
+      maxLength,
+      number,
+      onChange,
+      onCancel,
+      random,
+      visible,
+      value,
       ...rest
     } = this.props;
 
@@ -192,6 +203,29 @@ export default class Keyboard extends Component {
       'picker-modal-inline': inline
     }, className);
 
+    const cancelIgnore = (_target)=>{
+      if(!getCancelIgnore || !getCancelIgnore()) return false;
+      const elements = getCancelIgnore();
+      let result = false;
+
+      if(Array.isArray(elements)){
+        elements.every((element, i)=>{
+          if(element.contains(_target)){
+            result = true;
+            return false;
+          }else{
+            return true;
+          }
+        })
+      }else{
+        if(elements.contains(_target)){
+          result =  true;
+        }
+      }
+
+      return result;
+    }
+
     return (
       <PickerModal
         className={cls}
@@ -201,6 +235,7 @@ export default class Keyboard extends Component {
         mounter={false}
         visible={_inline || visible}
         overlay={false}
+        ignore={cancelIgnore}
         {...rest}
         >
         {this.keys.map(keyInit)}
@@ -217,6 +252,10 @@ class Input extends Component {
     className: PropTypes.string,
     value: PropTypes.string.isRequired,
     show: PropTypes.bool
+  }
+
+  getElement(){
+    return findDOMNode(this);
   }
 
   render() {
