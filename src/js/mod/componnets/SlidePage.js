@@ -13,13 +13,12 @@ export default class SlidePage extends Component {
 
   static propTypes = {
     className: PropTypes.string,
-    noAnimate: PropTypes.bool
+    noAnimation: PropTypes.bool
   }
 
   static defaultProps = {
-    noAnimate: false
+    noAnimation: false
   }
-
 
   popType = undefined;
 
@@ -81,83 +80,107 @@ export default class SlidePage extends Component {
 
   render() {
 
-    const {className, history, children, noAnimate, ...rest} = this.props;
+    const {className, history, children, noAnimation, ...rest} = this.props;
 
     const { action, location } = history;
 
     const key = location.pathname;
 
-    const slideLeft = {
-      atEnter: {
-        offset: 100
-      },
-      atLeave: {
-        offset: spring(-33, { stiffness: 330, damping: 33 })
-      },
-      atActive: {
-        offset: spring(0, { stiffness: 330, damping: 33 })
-      },
-      mapStyles(styles) {
-        return {
-          transform: `translateX(${styles.offset}%)`
-        };
-      },
-    };
+    const state = location.state || {};
 
-    const slideRight = {
-      atEnter: {
-        offset: -33
+    const pageAnimation = {
+      'slide-left': {
+        atEnter: {
+          offset: 100
+        },
+        atLeave: {
+          offset: spring(-33, { stiffness: 330, damping: 33 })
+        },
+        atActive: {
+          offset: spring(0, { stiffness: 330, damping: 33 })
+        },
+        mapStyles(styles) {
+          return {
+            transform: `translateX(${styles.offset}%)`
+          };
+        },
       },
-      atLeave: {
-        offset: spring(102, { stiffness: 330, damping: 33 })
+      'slide-right': {
+        atEnter: {
+          offset: -33
+        },
+        atLeave: {
+          offset: spring(102, { stiffness: 330, damping: 33 })
+        },
+        atActive: {
+          offset: spring(0, { stiffness: 330, damping: 33 })
+        },
+        mapStyles(styles) {
+          return {
+            transform: `translateX(${styles.offset}%)`
+          };
+        }
       },
-      atActive: {
-        offset: spring(0, { stiffness: 330, damping: 33 })
-      },
-      mapStyles(styles) {
-        return {
-          transform: `translateX(${styles.offset}%)`
-        };
-      },
-    };
+      'no': {
+        atEnter: {},
+        atLeave:{},
+        atActive:{}
+      }
+    }
 
     let animateConfig;
 
-    const emptyAnimate = {
-      atEnter: {},
-      atLeave:{},
-      atActive:{}
-    };
+    let animationType = 'no';
 
-    animateConfig = (()=>{
-      if(action === 'REPLACE' || noAnimate){
-        return emptyAnimate;
+
+    animationType = (()=>{
+      if(action === 'REPLACE'){
+        return 'no';
       }
       if(action === 'POP'){
-        return slideRight;
+
+        if(this.popType === 'forward'){
+          return 'slide-left';
+        }
+
+        return 'slide-right';
+
       }
       if(action === 'PUSH'){
-        return slideLeft;
+        return 'slide-left';
       }
     })();
 
-    if(noAnimate){
-      animateConfig = emptyAnimate
+    if(state.animation === 'push'){
+      animationType = 'slide-left';
     }
+
+    if(state.animation === 'back'){
+      animationType = 'slide-right';
+    }
+
+    if(state.animation === 'no'){
+      animationType = 'slide-right';
+    }
+
+    if(noAnimation){
+      animationType = 'no';
+    }
+
     return (
         <RouteTransition
           pathname={location.pathname}
           component={false}
           runOnMount={false}
           className="pages"
-          {...animateConfig}
+          {...pageAnimation[animationType]}
         >
         <div
           className={
             classnames({
               'page-transition': true,
-              'slide-left' : (action === 'PUSH'),
-              'slide-right' : (action === 'POP')
+              'slide-left' : (animationType === 'slide-left'),
+              'slide-right' : (animationType === 'slide-right')
             })
           }>
             {React.cloneElement(children, {key, location})}
