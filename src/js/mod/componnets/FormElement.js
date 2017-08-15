@@ -60,20 +60,18 @@ export class FormInput extends Component {
         ele = <textarea {...rest} type={type}/>
         break;
       default:
-
-        let opt = {};
-
-        if(cursor){
-          opt =  {
-            readOnly: true,
-
-          }
-        }
-
-        ele = [<input type={type} key=".1" ref="input" readOnly={readOnly} onFocus={(e)=>{ e.target.blur() }} {...rest} />]
-
-        if(readOnly){
-          ele.push(
+        ele = [
+          (
+            <input
+              type={type}
+              key=".1"
+              ref="input"
+              readOnly={readOnly}
+              onFocus={(e)=>{ readOnly && e.target.blur() }}
+              {...rest}
+              />
+          ),
+          readOnly && (
             <div className={classnames('cursor', {'none': !cursor})} key=".2" >
               <div className="values" style={ Object.assign(( type==='password' ? {visibility: 'visible'}: {}), cursorStyle)}>
                 {Array.prototype.map.call(rest.value || '', (a)=>{
@@ -82,7 +80,7 @@ export class FormInput extends Component {
               </div>
             </div>
           )
-        }
+        ]
     }
 
     return (
