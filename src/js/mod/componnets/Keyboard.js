@@ -63,7 +63,7 @@ export default class Keyboard extends Component {
           password: result,
           token,
           useLimit,
-          authUrl: '/mam/3.0/zyt/card/entity/active'
+          authUrl
         }
       });
     })
