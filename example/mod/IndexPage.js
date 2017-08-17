@@ -71,6 +71,10 @@ export default class IndexPage extends Component {
                 </List>
               </ListItem>
             </ListGroup>
+
+            <ListGroup style={style}>
+              <ListItem title="颜色" link="/Colors"></ListItem>
+            </ListGroup>
           </List>
 
         </PageContent>

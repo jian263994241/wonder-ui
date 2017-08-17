@@ -23,7 +23,7 @@ import Modals from './mod/Modals'
 import Preloader from './mod/Preloader'
 import Keyboard from './mod/Keyboard'
 import SortableList from './mod/SortableList'
-
+import Colors from './mod/Colors'
 
 render((
   <App>
@@ -48,6 +48,7 @@ render((
       <Pages path="/Modals" component={Modals}/>
       <Pages path="/Preloader" component={Preloader}/>
       <Pages path="/Keyboard" component={Keyboard}/>
+      <Pages path="/Colors" component={Colors}/>
     </View>
   </App>
 ), document.querySelector('.root'));
