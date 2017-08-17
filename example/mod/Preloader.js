@@ -18,11 +18,11 @@ export default class ModalsPage extends Component {
       visibleType: i
     });
 
-    setTimeout(()=>{
-      this.setState({
-        visibleType: null
-      });
-    }, 1000);
+    // setTimeout(()=>{
+    //   this.setState({
+    //     visibleType: null
+    //   });
+    // }, 1000);
   }
 
 
@@ -42,6 +42,7 @@ export default class ModalsPage extends Component {
               </Col>
             </Row>
           </ContentBlock>
+          <div style={{height: '1000px'}}></div>
           <Preloader visible={this.state.visibleType === 1}></Preloader>
           <Preloader visible={this.state.visibleType === 3} logoType="kq"></Preloader>
         </PageContent>
