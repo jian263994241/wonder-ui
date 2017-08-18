@@ -14,7 +14,7 @@ export default class View extends Component {
 
   static propTypes = {
     type: PropTypes.string,
-    noAnimate: PropTypes.bool
+    noAnimation: PropTypes.bool
   }
 
   render() {
@@ -22,7 +22,7 @@ export default class View extends Component {
       type,
       className,
       children,
-      noAnimate,
+      noAnimation,
       ...rest
     } = this.props;
 
@@ -41,7 +41,7 @@ export default class View extends Component {
     }
 
     const renderPage = (props)=>(
-      <SlidePage history={props.history} noAnimate={noAnimate}>
+      <SlidePage history={props.history} noAnimation={noAnimation}>
         <Switch>
           {children}
         </Switch>
