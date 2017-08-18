@@ -249,7 +249,7 @@ export class FormTimerButton extends Component {
       <div className="item-after">
         <span style={{borderLeft: '1px solid #DEDEDE', height: 30, width:0, display:'block', borderRadius: '0px', WebkitTransform:'scaleX(0.5)'}}></span>
         <Button
-          style={{border: 'none', ...style}}
+          style={{border: 'none', width:'108px', fontSize: '12px', ...style}}
           onClick={this.clickHandler}
           disabled={this.state.process}
           fill={false}
