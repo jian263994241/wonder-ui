@@ -87,48 +87,51 @@ var api = function({business, token, errCode = ['00'], showPreloader = false, da
     let closePreloader = function(){};
 
     if(showPreloader){
-      closePreloader = Modal.toast.waiting();
+      Modal.toast.waiting(req);
+    }else{
+      req();
     }
 
-    $.ajax({ headers, success, data, error, processData: false, ...ajaxOpt });
+    function req(done){
+      $.ajax({ headers, success, data, error, processData: false, ...ajaxOpt });
 
-    function success(data, status, xhr) {
+      function success(data, status, xhr) {
 
-      data = JSON.parse(data);
+        data = JSON.parse(data);
 
-      if(errCode === false){
-        return resolve(data, status, xhr);
-      }
-
-      var checkIn = errCode.every(function(code) {
-        if (data.errCode === code) {
-          resolve(data, status, xhr);
-          return false;
+        if(errCode === false){
+          return resolve(data, status, xhr);
         }
-        return true;
-      });
 
-      if(!checkIn) return ;
+        var checkIn = errCode.every(function(code) {
+          if (data.errCode === code) {
+            resolve(data, status, xhr);
+            return false;
+          }
+          return true;
+        });
 
-      if(data.errCode === '03'){
-        //登录失效判断
-        sessionStorage.removeItem('loginToken');
+        if(!checkIn) return ;
+
+        if(data.errCode === '03'){
+          //登录失效判断
+          sessionStorage.removeItem('loginToken');
+        }
+        done && done();
+        Modal.toast.fail(data.errMsg);
+        return reject( data, status, xhr);
       }
-      closePreloader();
-      Modal.toast.fail(data.errMsg);
-      return reject( data, status, xhr);
-    }
 
-    function error(xhr, status) {
-      var err = {
-        errMsg: '网络状况不太好,请稍后再试',
-        errCode: undefined
-      };
-      closePreloader();
-      Modal.toast.offline(err.errMsg, ()=>{
-        reject(err, xhr, status);
-      });
-
+      function error(xhr, status) {
+        var err = {
+          errMsg: '网络状况不太好,请稍后再试',
+          errCode: undefined
+        };
+        done && done();
+        Modal.toast.offline(err.errMsg, ()=>{
+          reject(err, xhr, status);
+        });
+      }
     }
 
   });
