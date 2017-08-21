@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-// import store from 'store2'
 
 import RouteTransition from './router-transition/RouteTransition'
 import spring from 'react-motion/lib/spring';
@@ -19,64 +18,6 @@ export default class SlidePage extends Component {
   static defaultProps = {
     noAnimation: false
   }
-
-  // popType = undefined;
-  //
-  // pushHistory = (pathname) =>{
-  //   const {path, index} = this.history;
-  //   if(path[path.length-1] === pathname) return ;
-  //   path.splice(index + 1);
-  //   path.push(pathname);
-  //   this.history.index = index + 1;
-  //   // this.store.set('SlidePage', this.history);
-  // }
-  //
-  // popHistory = (pathname) =>{
-  //   const {path, index} = this.history;
-  //   let popType;
-  //   if(pathname === path[index - 1]){
-  //     this.history.index = index - 1;
-  //     popType = 'back';
-  //   }else if(pathname === path[index + 1]){
-  //     this.history.index = index + 1;
-  //     popType = 'forward';
-  //   }else{
-  //     popType = undefined;
-  //   }
-  //   this.store.set('SlidePage', this.history);
-  //   return popType;
-  // }
-
-  // componentDidMount() {
-  //   const {history, location} = this.props;
-  //   const pathname = history.location.pathname;
-  //
-  //   const key = history.location.key || '.0';
-  //   this.store = store.namespace(window.location.pathname + key).session;
-  //
-  //   this.history = this.store.get('SlidePage') || {
-  //     index: -1,
-  //     path: []
-  //   }
-  //
-  //   if(history.action === 'POP'){
-  //     this.popHistory(pathname);
-  //   }else{
-  //     this.pushHistory(pathname);
-  //   }
-  //
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   const {history} = this.props;
-  //   const pathname = history.location.pathname;
-  //
-  //   if(history.action === 'PUSH'){
-  //     this.pushHistory(pathname);
-  //   }else{
-  //     this.popType = this.popHistory(pathname);
-  //   }
-  // }
 
   render() {
 

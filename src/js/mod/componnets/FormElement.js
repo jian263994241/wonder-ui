@@ -244,11 +244,12 @@ export class FormTimerButton extends Component {
     } = this.props;
 
     const content = this.state.process? text.replace(/%s/, this.state.secondsResidue) : defaultText;
-    // <span style={{borderLeft: '1px solid #DEDEDE', height: 30, width:0, display:'block', borderRadius: '0px', WebkitTransform:'scaleX(0.5)'}}></span>
+
     return (
       <div className="item-after">
+        <span style={{borderLeft: '1px solid #DEDEDE', height: 30, width:0, display:'block', borderRadius: '0px', WebkitTransform:'scaleX(0.5)'}}></span>
         <Button
-          style={{border: 'none', fontSize: '12px', ...style}}
+          style={{border: 'none', fontSize: '12px', width:'108px', ...style}}
           onClick={this.clickHandler}
           disabled={this.state.process}
           fill={false}
