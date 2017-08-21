@@ -99,12 +99,14 @@ var api = function({business, token, errCode = ['00'], showPreloader = false, da
 
         data = JSON.parse(data);
 
+        const $errCode = data.errCode || data.responseCode;
+
         if(errCode === false){
           return resolve(data, status, xhr);
         }
 
         var checkIn = errCode.every(function(code) {
-          if (data.errCode === code) {
+          if ($errCode === code) {
             resolve(data, status, xhr);
             return false;
           }
@@ -113,7 +115,7 @@ var api = function({business, token, errCode = ['00'], showPreloader = false, da
 
         if(!checkIn) return ;
 
-        if(data.errCode === '03'){
+        if($errCode === '03'){
           //登录失效判断
           sessionStorage.removeItem('loginToken');
         }
