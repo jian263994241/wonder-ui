@@ -1,9 +1,11 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
-import RouteTransition from './router-transition/RouteTransition'
+import RouteTransition from './router-transition/RouteTransition';
 import spring from 'react-motion/lib/spring';
+
+import kq from '../utils/kq';
 
 export default class SlidePage extends Component {
 
@@ -96,7 +98,7 @@ export default class SlidePage extends Component {
       animationType = 'slide-right';
     }
 
-    if(noAnimation){
+    if(noAnimation || kq.Env.is('safari')){
       animationType = 'no';
     }
 
