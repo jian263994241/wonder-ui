@@ -64,7 +64,7 @@ var pubData = function(business) {
   *
 **/
 
-var api = function({business, token, errCode = ['00'], resConfig={}, data, ...ajaxOpt}) {
+var api = function({business, token, errCode = ['00'], showErrMsg = true, resConfig={}, data, ...ajaxOpt}) {
 
   const conf = {
     errCode: 'errCode',
@@ -117,9 +117,9 @@ var api = function({business, token, errCode = ['00'], resConfig={}, data, ...aj
         //登录失效判断
         sessionStorage.removeItem('loginToken');
       }
-      done && done();
-      Modal.toast.fail(data[conf.errMsg]);
-      return reject( data, status, xhr);
+      reject( data, status, xhr);
+
+      showErrMsg && Modal.toast.fail(data[conf.errMsg]);
     }
 
     function error(xhr, status) {
@@ -127,10 +127,10 @@ var api = function({business, token, errCode = ['00'], resConfig={}, data, ...aj
         errMsg: '网络状况不太好,请稍后再试',
         errCode: undefined
       };
-      done && done();
-      Modal.toast.offline(err.errMsg, ()=>{
-        reject(err, xhr, status);
-      });
+
+      reject(err, xhr, status);
+
+      showErrMsg && Modal.toast.offline(err.errMsg);
     }
 
   });
