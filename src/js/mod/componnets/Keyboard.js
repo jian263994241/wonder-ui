@@ -45,15 +45,17 @@ export default class Keyboard extends Component {
     .then(({mapString, mcryptKey, token})=>{
       safety.setMap(mapString, mcryptKey);
       if(typeof value === 'undefined'){
-        return Promise.resolve({safety, token});
+        return {safety, token};
       }
       const result = safety.toX(value);
-      return Promise.resolve({safety, token, result});
+      return {safety, token, result};
     })
   }
 
-  static getPayToken = (value, authUrl, useLimit=30)=>{
-    return Keyboard.encrypt(value).then(({result, token})=>{
+  static getPayToken = (value, authUrl, useLimit='30')=>{
+    if(!authUrl) throw '缺少authUrl';
+    return Keyboard.encrypt(value)
+    .then(({result, token})=>{
       return kq.api({
         method: 'post',
         url: Keyboard.baseurl + '/pay/3.0/members/login/password/pay',
