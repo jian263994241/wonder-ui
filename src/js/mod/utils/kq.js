@@ -64,7 +64,14 @@ var pubData = function(business) {
   *
 **/
 
-var api = function({business, token, errCode = ['00'], showPreloader = false, data, ...ajaxOpt}) {
+var api = function({business, token, errCode = ['00'], resConfig={}, data, ...ajaxOpt}) {
+
+  const conf = {
+    errCode: 'errCode',
+    errMsg: 'errMsg',
+    overtimeCode: '03',
+    ...resConfig
+  };
 
   var headers = {
     'content-type': 'application/json;charset=UTF-8'
@@ -84,56 +91,46 @@ var api = function({business, token, errCode = ['00'], showPreloader = false, da
 
   return new Promise(function(resolve, reject){
 
-    let closePreloader = function(){};
+    $.ajax({ headers, success, data, error, processData: false, ...ajaxOpt });
 
-    if(showPreloader){
-      Modal.toast.waiting(req);
-    }else{
-      req();
+    function success(data, status, xhr) {
+
+      data = JSON.parse(data);
+
+      const $errCode = data[conf.errCode];
+
+      if(errCode === false){
+        return resolve(data, status, xhr);
+      }
+
+      var checkIn = errCode.every(function(code) {
+        if ($errCode === code) {
+          resolve(data, status, xhr);
+          return false;
+        }
+        return true;
+      });
+
+      if(!checkIn) return ;
+
+      if($errCode === conf.overtimeCode){
+        //登录失效判断
+        sessionStorage.removeItem('loginToken');
+      }
+      done && done();
+      Modal.toast.fail(data[conf.errMsg]);
+      return reject( data, status, xhr);
     }
 
-    function req(done){
-      $.ajax({ headers, success, data, error, processData: false, ...ajaxOpt });
-
-      function success(data, status, xhr) {
-
-        data = JSON.parse(data);
-
-        const $errCode = data.errCode || data.responseCode;
-
-        if(errCode === false){
-          return resolve(data, status, xhr);
-        }
-
-        var checkIn = errCode.every(function(code) {
-          if ($errCode === code) {
-            resolve(data, status, xhr);
-            return false;
-          }
-          return true;
-        });
-
-        if(!checkIn) return ;
-
-        if($errCode === '03'){
-          //登录失效判断
-          sessionStorage.removeItem('loginToken');
-        }
-        done && done();
-        Modal.toast.fail(data.errMsg);
-        return reject( data, status, xhr);
-      }
-
-      function error(xhr, status) {
-        var err = {
-          errMsg: '网络状况不太好,请稍后再试',
-          errCode: undefined
-        };
-        done && done();
-        Modal.toast.offline(err.errMsg, ()=>{
-          reject(err, xhr, status);
-        });
-      }
+    function error(xhr, status) {
+      var err = {
+        errMsg: '网络状况不太好,请稍后再试',
+        errCode: undefined
+      };
+      done && done();
+      Modal.toast.offline(err.errMsg, ()=>{
+        reject(err, xhr, status);
+      });
     }
 
   });
