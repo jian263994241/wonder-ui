@@ -98,7 +98,7 @@ export default class SlidePage extends Component {
       animationType = 'slide-right';
     }
 
-    if(noAnimation || kq.Env.is('safari')){
+    if(noAnimation || (kq.Env.is('safari') && !kq.Env.is('chrome'))){
       animationType = 'no';
     }
 
