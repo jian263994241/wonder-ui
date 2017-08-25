@@ -3,32 +3,30 @@ var pkg = require('./package.json');
 fis.match('src/js/wonder.js',{
   guard: false,
   parser:fis.plugin('browserify', {
-    option:{
-      shims:{
-        'react': 'window.React',
-        'react-dom': 'window.ReactDOM'
-      },
-      umd: 'WONDER'
-    }
-  })
+    shims:{
+      'react': 'window.React',
+      'react-dom': 'window.ReactDOM'
+    },
+    umd: 'WONDER'
+  }),
+  useMap: true
 })
 
 fis.match('src/less/ios/uikit.less',{
   parser: fis.plugin('css'),
   isInline: false,
-  rExt: '.css'
+  rExt: '.css',
+  useMap: true
 })
 
 fis.match('**/app.js',{
   guard: false,
   parser:fis.plugin('browserify',{
-    option:{
-      shims:{
-        'react': 'window.React',
-        'react-dom': 'window.ReactDOM',
-        'kui': 'window.WONDER',
-        'antd': 'window.antd'
-      }
+    shims:{
+      'react': 'window.React',
+      'react-dom': 'window.ReactDOM',
+      'kui': 'window.WONDER',
+      'antd': 'window.antd'
     }
   })
 })
