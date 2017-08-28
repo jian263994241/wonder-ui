@@ -11,7 +11,6 @@ export default class SlidePage extends Component {
 
   static uiName = 'SlidePage';
 
-
   static propTypes = {
     className: PropTypes.string,
     noAnimation: PropTypes.bool
@@ -102,12 +101,14 @@ export default class SlidePage extends Component {
       animationType = 'no';
     }
 
+    const cls = classnames('pages', className);
+
     return (
         <RouteTransition
           pathname={location.pathname}
           component={false}
           runOnMount={false}
-          className="pages"
+          className={cls}
           {...pageAnimation[animationType]}
         >
         <div

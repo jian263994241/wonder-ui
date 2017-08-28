@@ -77,12 +77,16 @@ export class Navbar extends Component {
   }
 
   componentDidMount() {
-    $(window).on('resize', this.navPosFix).trigger('resize');
+    $(window)
+    .on('resize', this.navPosFix)
+    .trigger('resize');
   }
   componentWillUnmount() {
     $(window).off('resize', this.navPosFix);
   }
-
+  componentDidUpdate(prevProps, prevState){
+    $(window).trigger('resize');
+  }
 
   render() {
 
@@ -107,20 +111,22 @@ export class Navbar extends Component {
       'no-border': noBorder
     }, className);
 
-    const BackButton = withRouter(({history, onClick})=>{
-      const clickHandler = onClick ? onClick: history.goBack;
+    const BackButton = ()=>{
+      const clickHandler = ()=>{
+        if(onBack){ onBack() }else{ window.history.back() }
+      };
       return (
         <a className={classnames({'back': backText, 'link': backText, 'icon-only': (backText != '')})} onClick={clickHandler}>
           <Icon type="left-nav"/><span>{backText}</span>
         </a>
       );
-    })
+    };
 
     let navLeft = left, navRight = right, navCenter = center;
 
     if(!left && typeof backText != undefined){
       navLeft = (
-        <BackButton onClick={onBack}></BackButton>
+        <BackButton/>
       )
     }
 
