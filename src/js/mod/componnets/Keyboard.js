@@ -258,6 +258,10 @@ class Input extends Component {
     show: PropTypes.bool
   }
 
+  static defaultProps = {
+    value: ''
+  }
+
   getElement(){
     return findDOMNode(this);
   }
