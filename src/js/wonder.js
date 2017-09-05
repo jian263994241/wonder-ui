@@ -29,3 +29,5 @@ export classnames from 'classnames'
 export asyncValidator from 'async-validator'
 export mobx from 'mobx'
 export mobxReact from 'mobx-react'
+export Picker from 'rmc-picker/lib/Picker';
+export MultiPicker from 'rmc-picker/lib/MultiPicker';
