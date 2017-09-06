@@ -20,6 +20,8 @@ export device from './mod/utils/device'
 export kq from './mod/utils/kq'
 
 export {Modal, Popup, Popover, PickerModal, ActionsModal} from 'f7-modal'
+export MultiPicker from './mod/componnets/MultiPicker'
+export Picker from './mod/componnets/Picker';
 
 //lib
 export dom from 'dom7'
@@ -29,5 +31,3 @@ export classnames from 'classnames'
 export asyncValidator from 'async-validator'
 export mobx from 'mobx'
 export mobxReact from 'mobx-react'
-export Picker from 'rmc-picker/lib/Picker';
-export MultiPicker from 'rmc-picker/lib/MultiPicker';
