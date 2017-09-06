@@ -140,7 +140,7 @@ export default class Picker extends Component {
     }
     const children = React.Children.toArray(this.props.children);
     index = Math.min(index, children.length - 1);
-    const child: any = children[index];
+    const child = children[index];
     if (child) {
       this.fireValueChange(child.props.value);
     } else if (console.warn) {
