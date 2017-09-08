@@ -8,7 +8,7 @@ import {Modal} from 'f7-modal'
 
 var ua = navigator.userAgent.toLowerCase();
 
-var Env = function() {
+export const Env = function() {
  function is( agent ) {
    agent = agent.toLowerCase();
 
@@ -29,13 +29,12 @@ var Env = function() {
 }();
 
 /**
-  * api 3.0
-  * 生成统计信息header
-  *
-  *
-**/
-
-var pubData = function(business) {
+ * pubData - 生成统计信息header
+ *
+ * @param  {type} business description
+ * @return {type}          description
+ */
+export function pubData (business) {
   var channel = 'H5';
   var appid = '100';
   var query = $.parseUrlQuery(window.location.search);
@@ -56,15 +55,19 @@ var pubData = function(business) {
   return JSON.stringify({ c : channel, b : business, id : appid, t: Date.now()});
 }
 
-
 /**
-  * 请求接口方法封装
-  * type 请求类型 post, get
-  * opt: {business, token }
-  *
-**/
-
-var api = function({business, token, errCode = ['00'], showErrMsg = true, resConfig={}, data, ...ajaxOpt}) {
+ * api - 请求接口方法封装
+ *
+ * @param  {type} {business         description
+ * @param  {type} token             description
+ * @param  {type} errCode = ['00']  description
+ * @param  {type} showErrMsg = true description
+ * @param  {type} resConfig={}      description
+ * @param  {type} data              description
+ * @param  {type} ...ajaxOpt}       description
+ * @return {type}                   description
+ */
+export function api ({business, token, errCode = ['00'], showErrMsg = true, resConfig={}, data, ...ajaxOpt}) {
 
   const conf = {
     errCode: 'errCode',
@@ -136,13 +139,16 @@ var api = function({business, token, errCode = ['00'], showErrMsg = true, resCon
   });
 };
 
-/**
-  * 获取脚本
-  *
-  *
-**/
 
-var getScript = function(src, opts, cb) {
+/**
+ * getScript - 获取script
+ *
+ * @param  {type} src  description
+ * @param  {type} opts description
+ * @param  {type} cb   description
+ * @return {type}      description
+ */
+export function getScript (src, opts, cb) {
   var head = document.head || document.getElementsByTagName('head')[0]
   var script = document.createElement('script')
 
@@ -207,5 +213,28 @@ var getScript = function(src, opts, cb) {
   head.appendChild(script)
 };
 
+/**
+ * local2session - localStorage 转存 sessionStorage
+ *
+ * @param  {type} key description
+ * @return {type}     description
+ */
+export function local2session(key){
+  const value = localStorage[key];
+  if(value){
+    sessionStorage.setItem(key, value);
+    localStorage.removeItem(key);
+  }
+}
 
-export default {Env, pubData, api, getScript}
+
+/**
+ * getParams - 获取url query
+ *
+ * @return {object}  description
+ */
+export function getParams(){
+  const loc = window.location;
+  const query = $.parseQuery(loc.search);
+  return query;
+}
