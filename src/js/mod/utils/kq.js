@@ -40,13 +40,13 @@ kq.pubData = function (business) {
   var channel = 'H5';
   var appid = '100';
   var query = $.parseUrlQuery(window.location.search);
-  if(Env.KQ){
+  if(kq.Env.KQ){
     channel = 'app-kq';
   }
-  if(Env.FeiFan){
+  if(kq.Env.FeiFan){
     channel = 'app-ffan';
   }
-  if(Env.Weixin && query.code){
+  if(kq.Env.Weixin && query.code){
     channel = 'wx-kqqb';
   }
 
