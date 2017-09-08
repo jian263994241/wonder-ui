@@ -1,5 +1,7 @@
 import $ from 'dom7'
 import {Modal} from 'f7-modal'
+
+const kq = module.exports = {};
 /**
   *  判断手机系统和App环境
   *
@@ -8,7 +10,7 @@ import {Modal} from 'f7-modal'
 
 var ua = navigator.userAgent.toLowerCase();
 
-export const Env = function() {
+kq.Env = function() {
  function is( agent ) {
    agent = agent.toLowerCase();
 
@@ -34,7 +36,7 @@ export const Env = function() {
  * @param  {type} business description
  * @return {type}          description
  */
-export function pubData (business) {
+kq.pubData = function (business) {
   var channel = 'H5';
   var appid = '100';
   var query = $.parseUrlQuery(window.location.search);
@@ -67,7 +69,7 @@ export function pubData (business) {
  * @param  {type} ...ajaxOpt}       description
  * @return {type}                   description
  */
-export function api ({business, token, errCode = ['00'], showErrMsg = true, resConfig={}, data, ...ajaxOpt}) {
+kq.api = function ({business, token, errCode = ['00'], showErrMsg = true, resConfig={}, data, ...ajaxOpt}) {
 
   const conf = {
     errCode: 'errCode',
@@ -148,7 +150,7 @@ export function api ({business, token, errCode = ['00'], showErrMsg = true, resC
  * @param  {type} cb   description
  * @return {type}      description
  */
-export function getScript (src, opts, cb) {
+kq.getScript =  function (src, opts, cb) {
   var head = document.head || document.getElementsByTagName('head')[0]
   var script = document.createElement('script')
 
@@ -219,7 +221,7 @@ export function getScript (src, opts, cb) {
  * @param  {type} key description
  * @return {type}     description
  */
-export function local2session(key){
+kq.l2s = function (key){
   const value = localStorage[key];
   if(value){
     sessionStorage.setItem(key, value);
@@ -233,7 +235,7 @@ export function local2session(key){
  *
  * @return {object}  description
  */
-export function getParams(){
+kq.getParams = function (){
   const loc = window.location;
   const query = $.parseQuery(loc.search);
   return query;
