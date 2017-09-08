@@ -240,3 +240,20 @@ kq.getParams = function (){
   const query = $.parseQuery(loc.search);
   return query;
 }
+
+
+/**
+ * crosskeys - 获取跨域参数
+ * url?crosskeys=key1,key2,key3
+ * @return {type}  description
+ */
+kq.crosskeys = function(){
+  const query = kq.getParams();
+  const crosskeys = query.crosskeys;
+  if(crosskeys){
+    const keys = crosskeys.split(',');
+    $.each(keys, function(i){
+      kq.l2s(keys[i]);
+    })
+  }
+}
