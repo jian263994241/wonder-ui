@@ -87,7 +87,7 @@ kq.api = function ({business, token, errCode = ['00'], showErrMsg = true, resCon
   }
 
   if(business){
-    headers['pubData'] = pubData(business);
+    headers['pubData'] = kq.pubData(business);
   }
 
   if(data){
