@@ -229,26 +229,13 @@ kq.l2s = function (key){
   }
 }
 
-
-/**
- * getParams - 获取url query
- *
- * @return {object}  description
- */
-kq.getParams = function (){
-  const loc = window.location;
-  const query = $.parseQuery(loc.search);
-  return query;
-}
-
-
 /**
  * crosskeys - 获取跨域参数
  * url?crosskeys=key1,key2,key3
  * @return {type}  description
  */
 kq.crosskeys = function(){
-  const query = kq.getParams();
+  const query = $.parseQuery();
   const crosskeys = query.crosskeys;
   if(crosskeys){
     const keys = crosskeys.split(',');
