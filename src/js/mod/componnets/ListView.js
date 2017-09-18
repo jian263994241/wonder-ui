@@ -459,7 +459,7 @@ export class ListItem extends Component {
     itemAfter = mounted(after || badgeElement(badge, badgeColor), <div className="item-after"/>);
 
     const createBaseItem = ()=>(
-      <Div className={cls} to={link}>
+      <Div className={cls} to={link} {...other}>
         {itemMeida}
         <div className="item-inner">
           {itemTitle}
