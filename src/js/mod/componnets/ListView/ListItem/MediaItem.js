@@ -81,30 +81,30 @@ export default class MediaItem extends Component {
         });
     }
     const handleTouchEnd = (e)=>{
+      e.preventDefault();
+      const {onSorted} = this.props;
+      if (!isTouched || !isMoved) {
+          isTouched = false;
+          isMoved = false;
+          return;
+      }
 
-        if (!isTouched || !isMoved) {
-            isTouched = false;
-            isMoved = false;
-            return;
-        }
-        const {onSorted} = this.props;
-        e.preventDefault();
-        sortingItems.transform('');
-        sortingEl.removeClass('sorting');
-        sortableContainer.removeClass('sortable-sorting');
-        let virtualList, oldIndex, newIndex;
-        if (insertAfter) {
-            sortingEl.insertAfter(insertAfter);
-            onSorted && onSorted({startIndex: startIndex, newIndex: sortingEl.index()});
-        }
-        if (insertBefore) {
-            sortingEl.insertBefore(insertBefore);
-            onSorted && onSorted({startIndex: startIndex, newIndex: sortingEl.index()});
-        }
+      sortingItems.transform('');
+      sortingEl.removeClass('sorting');
+      sortableContainer.removeClass('sortable-sorting');
+      let virtualList, oldIndex, newIndex;
+      if (insertAfter) {
+          sortingEl.insertAfter(insertAfter);
+          onSorted && onSorted({startIndex: startIndex, newIndex: sortingEl.index()});
+      }
+      if (insertBefore) {
+          sortingEl.insertBefore(insertBefore);
+          onSorted && onSorted({startIndex: startIndex, newIndex: sortingEl.index()});
+      }
 
-        insertAfter = insertBefore = undefined;
-        isTouched = false;
-        isMoved = false;
+      insertAfter = insertBefore = undefined;
+      isTouched = false;
+      isMoved = false;
     }
 
     return {

@@ -25,7 +25,7 @@ export default class List extends Component {
   }
 
   defaultGroup = (children)=>{
-    const {accordion, sortable} = this.props;
+    const {accordion, sortable, onSorted} = this.props;
     const head = Children.toArray(children)[0];
     const isValid = isValidElement(head);
     const props = {};
@@ -35,6 +35,9 @@ export default class List extends Component {
       }
       if('sortable' in this.props){
         props.sortable = sortable;
+      }
+      if('onSorted' in this.props){
+        props.onSorted = onSorted;
       }
       return (
         <ListGroup {...props}>
