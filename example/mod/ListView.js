@@ -23,8 +23,8 @@ export default class ListViewPage extends Component {
           <ContentBlockTitle>有图标的列表</ContentBlockTitle>
           <List>
             <ListItem title="Ivan Petrov" after="CEO" media={<Icon/>}/>
-            <ListItem title="John Doe" badge="5" media={<Icon/>}/>
-            <ListItem title="Jenna Smith" badge="new" badgeColor="red" media={<Icon/>}/>
+            <ListItem title="John Doe"  media={<Icon/>}/>
+            <ListItem title="Jenna Smith" media={<Icon/>}/>
           </List>
           <ContentBlockTitle>有图标的链接的列表</ContentBlockTitle>
           <List>

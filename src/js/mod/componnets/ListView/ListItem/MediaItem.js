@@ -149,25 +149,24 @@ export default class MediaItem extends Component {
       )
     }
 
+
     return (
       <li ref="ListItem">
         <Element className={cls} {...rest}>
           {media && <div className="item-media">{media}</div>}
           {
-            title && (
+            (subtitle || text) ? (
               <div className="item-inner">
                 <div className="item-title-row">
-                  <div className="item-title">{title}</div>
+                  {title && <div className="item-title">{title}</div>}
                   {after && <div className="item-after">{after}</div>}
                 </div>
                 {subtitle && <div className="item-subtitle">{subtitle}</div>}
                 {text && <div className="item-text">{text}</div>}
               </div>
-            )
-          }
-          {
-            !title && (
+            ) : (
               <div className="item-inner">
+                {title && <div className="item-title">{title}</div>}
                 {children}
                 {after && <div className="item-after">{after}</div>}
               </div>
