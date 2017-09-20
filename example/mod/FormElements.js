@@ -72,7 +72,7 @@ export default class FormElements extends Component {
               <FormLabel>Slider</FormLabel>
               <FormInput type="range"  min="0" max="100" step="1" defaultValue="90"/>
             </ListItem>
-            <ListItem media={<Icon/>} className="align-top">
+            <ListItem media={<Icon/>}>
               <FormLabel>Textarea</FormLabel>
               <FormInput type="textarea"/>
             </ListItem>

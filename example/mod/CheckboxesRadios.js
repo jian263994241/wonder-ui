@@ -24,7 +24,7 @@ export default class CheckboxsRadios extends Component {
           <List>
             <ListItem checkbox name="demo-checkbox" title="checkbox 1"/>
             <ListItem checkbox name="demo-checkbox" title="checkbox 2"/>
-            <ListItem checkbox name="demo-checkbox" title="default checked 3"/>
+            <ListItem checkbox name="demo-checkbox" title="default checked 3" defaultChecked/>
           </List>
           <List mediaList>
             <ListItem checkbox name="demo-checkbox2" title="Radio 1" after="12312" subtitle="副标题" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."/>
