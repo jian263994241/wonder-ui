@@ -14,13 +14,14 @@ export class Button extends Component {
     big: PropTypes.bool,
     color: PropTypes.string,
     active: PropTypes.bool,
-    disabled: PropTypes.bool,
     tabLink: PropTypes.bool,
+    component: PropTypes.any
   }
 
   static defaultProps = {
     block: true,
-    fill: true
+    fill: true,
+    component: 'a'
   }
 
   render() {
@@ -31,13 +32,12 @@ export class Button extends Component {
       block,
       color,
       active,
-      disabled,
       tabLink,
-      link,
       submit,
       className,
+      component,
       children,
-      ...other
+      ...rest
     } = this.props;
 
     const buttonColor = color? `color-${color}`: '';
@@ -52,10 +52,10 @@ export class Button extends Component {
       'tab-link': tabLink
     }, buttonColor, className);
 
-    const ButtonElement = submit? 'button': (typeof link === 'object' || typeof link === 'string' && link != '') ? Link : 'a';
+    const ButtonElement = submit? 'button': component;
 
     return (
-      <ButtonElement className={cls} disabled={disabled} {...other} ref="Button" to={link}>{children}</ButtonElement>
+      <ButtonElement className={cls} {...rest} ref="Button">{children}</ButtonElement>
     );
   }
 }

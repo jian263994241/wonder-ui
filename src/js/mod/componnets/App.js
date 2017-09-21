@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import {HashRouter, MemoryRouter, BrowserRouter, Route, Switch} from 'react-router-dom'
 import SlidePage from './SlidePage'
 import initFastClicks from '../utils/fastclick'
+import device from '../utils/device'
 
 export default class App extends Component {
 
@@ -24,6 +25,9 @@ export default class App extends Component {
     if(fastclick){
       initFastClicks(fastclickConfig);
     }
+    if(device.statusBar && $('.statusbar-overlay').length === 0){
+      $('.root').prepend('<div className="statusbar-overlay"></div>');
+    }
   }
 
   render() {
@@ -38,7 +42,8 @@ export default class App extends Component {
     const cls = classnames('views', className);
 
     return (
-      <div className={cls}>
+      <div className={cls} ref="views">
+
         {children}
       </div>
     );
