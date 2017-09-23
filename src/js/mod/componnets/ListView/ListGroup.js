@@ -41,12 +41,8 @@ export default class ListGroup extends Component {
       <ul className={className}>
         {title && <li className="list-group-title">{title}</li>}
         {Children.map(children, (c, i)=>{
-          if(c.type.uiName === 'ListItem'){
-            return cloneElement(c, {
-              itemKey: '.'+ i,
-              group: this,
-              ...rest
-            });
+          if(isValidElement(c) && c.type.uiName === 'ListItem'){
+            return cloneElement(c, { itemKey: '.'+ i, group: this, ...rest });
           }
           return c;
         })}

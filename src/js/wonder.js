@@ -31,3 +31,6 @@ export classnames from 'classnames'
 export asyncValidator from 'async-validator'
 export mobx from 'mobx'
 export mobxReact from 'mobx-react'
+
+//webpack
+window.WONDER = module.exports;

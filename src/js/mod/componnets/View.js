@@ -17,7 +17,10 @@ export default class View extends Component {
   static propTypes = {
     type: PropTypes.string,
     noAnimation: PropTypes.bool,
-    navbar: PropTypes.object
+    navbar: React.PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.object
+    ])
   }
 
   render() {
