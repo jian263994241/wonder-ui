@@ -69,7 +69,7 @@ kq.pubData = function (business) {
  * @param  {type} ...ajaxOpt}       description
  * @return {type}                   description
  */
-kq.api = function ({business, token, errCode = ['00'], showErrMsg = true, resConfig={}, data, ...ajaxOpt}) {
+kq.api = function ({business, token, errCode = ['00'], showErrMsg = true, resConfig={}, data, headers={}, ...ajaxOpt}) {
 
   const conf = {
     errCode: 'errCode',
@@ -78,16 +78,16 @@ kq.api = function ({business, token, errCode = ['00'], showErrMsg = true, resCon
     ...resConfig
   };
 
-  var headers = {
+  var _headers = {
     'content-type': 'application/json;charset=UTF-8'
   };
 
   if(token){
-    headers['Authorization'] = token;
+    _headers['Authorization'] = token;
   }
 
   if(business){
-    headers['pubData'] = kq.pubData(business);
+    _headers['pubData'] = kq.pubData(business);
   }
 
   if(data){
@@ -96,7 +96,7 @@ kq.api = function ({business, token, errCode = ['00'], showErrMsg = true, resCon
 
   return new Promise(function(resolve, reject){
 
-    $.ajax({ headers, success, data, error, processData: false, ...ajaxOpt });
+    $.ajax({ headers: {..._headers, ...headers}, success, data, error, processData: false, ...ajaxOpt });
 
     function success(data, status, xhr) {
 
