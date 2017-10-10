@@ -133,7 +133,7 @@ kq.api = function ({business, token, errCode = ['00'], showErrMsg = true, resCon
         errCode: undefined
       };
 
-      reject(err, xhr, status);
+      reject(xhr, status);
 
       showErrMsg && Modal.toast.offline(err.errMsg);
     }
@@ -214,33 +214,3 @@ kq.getScript =  function (src, opts, cb) {
 
   head.appendChild(script)
 };
-
-/**
- * local2session - localStorage 转存 sessionStorage
- *
- * @param  {type} key description
- * @return {type}     description
- */
-kq.l2s = function (key){
-  const value = localStorage[key];
-  if(value){
-    sessionStorage.setItem(key, value);
-    localStorage.removeItem(key);
-  }
-}
-
-/**
- * crosskeys - 获取跨域参数
- * url?crosskeys=key1,key2,key3
- * @return {type}  description
- */
-kq.crosskeys = function(){
-  const query = $.parseQuery();
-  const crosskeys = query.crosskeys;
-  if(crosskeys){
-    const keys = crosskeys.split(',');
-    $.each(keys, function(i){
-      kq.l2s(keys[i]);
-    })
-  }
-}
