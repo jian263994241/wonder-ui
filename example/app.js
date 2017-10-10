@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-import {App, View, Pages} from 'kui'
+import {App, View, Pages, dom as $} from 'kui'
 
 import IndexPage from './mod/IndexPage'
 import ListView from './mod/ListView'

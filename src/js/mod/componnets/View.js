@@ -28,6 +28,7 @@ export default class View extends Component {
       type,
       className,
       children,
+      getHistory,
       navbar,
       noAnimation,
       ...rest
@@ -66,7 +67,7 @@ export default class View extends Component {
     return (
       <div className={cls}>
         {throughBar}
-        <Router hashType="hashbang" {...rest} ref="router">
+        <Router hashType="hashbang" {...rest}>
           <Route render={renderPage}/>
         </Router>
       </div>

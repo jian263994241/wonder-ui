@@ -3,6 +3,21 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import device from '../utils/device'
 import $ from 'dom7'
+import {withRouter} from 'react-router-dom'
+
+class Expose extends Component {
+  componentWillMount() {
+    $(document).trigger('page:init', this.props);
+  }
+  componentWillUnmount() {
+    $(document).trigger('page:remove', this.props);
+  }
+  render() {
+    return null;
+  }
+}
+
+const ExposeRouter = withRouter(Expose);
 
 export default class Page extends Component {
 
@@ -97,9 +112,9 @@ export default class Page extends Component {
     return (
       <div
         className={cls}
-        data-title={title}
         ref="Page"
         {...other}>
+        <ExposeRouter title={title}/>
         {children}
       </div>
     );
