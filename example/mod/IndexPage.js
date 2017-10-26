@@ -26,7 +26,7 @@ export default class IndexPage extends Component {
           <ContentBlock>
             快钱包移动组件库 <br/>
           地址: <a href="https://jian263994241.gitbooks.io/wonderjs/content/">wonderjs</a> <br/>
-            版本: 0.3.1
+        版本: 0.4.0
           </ContentBlock>
           <List>
 

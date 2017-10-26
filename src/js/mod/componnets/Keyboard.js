@@ -32,45 +32,6 @@ export default class Keyboard extends Component {
     mounter: false
   }
 
-  static baseurl = location.port === "8080" ? (location.origin + "/coc-bill-api/") : "https://ebd.99bill.com/coc-bill-api/";
-
-  static encrypt = (value)=>{
-    if(!window.Safety) throw '缺少safe mod';
-    const safety = new window.Safety();
-    return kq.api({
-      method: 'post',
-      url: Keyboard.baseurl + '3.0/pgh/keys',
-      business: 'MEMBER-BASE'
-    })
-    .then(({mapString, mcryptKey, token})=>{
-      safety.setMap(mapString, mcryptKey);
-      if(typeof value === 'undefined'){
-        return {safety, token};
-      }
-      const result = safety.toX(value);
-      return {safety, token, result};
-    })
-  }
-
-  static getPayToken = (value, authUrl, useLimit='30')=>{
-    if(!authUrl) throw '缺少authUrl';
-    return Keyboard.encrypt(value)
-    .then(({result, token})=>{
-      return kq.api({
-        method: 'post',
-        url: Keyboard.baseurl + '/pay/3.0/members/login/password/pay',
-        business: 'MEMBER-BASE',
-        token: sessionStorage.loginToken,
-        data:{
-          password: result,
-          token,
-          useLimit,
-          authUrl
-        }
-      });
-    })
-  }
-
   valueFormat = (value , key, maxLength)=>{
     let val = String(value);
     key = String(key);
@@ -122,6 +83,45 @@ export default class Keyboard extends Component {
     return findDOMNode(this);
   }
 
+  cancelIgnore = (e)=>{
+    const _target = e.target;
+    const getCancelIgnore = this.props.getCancelIgnore;
+    const onCancel = this.props.onCancel;
+
+    if(!getCancelIgnore || !getCancelIgnore()) return false;
+    const elements = getCancelIgnore();
+    let result = false;
+
+    if(Array.isArray(elements)){
+      elements.every((element, i)=>{
+        if(element.contains(_target)){
+          result = true;
+          return false;
+        }else{
+          return true;
+        }
+      })
+    }else{
+      if(elements.contains(_target)){
+        result =  true;
+      }
+    }
+
+    if(!result){
+      onCancel && onCancel();
+    }
+
+    return result;
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.cancelIgnore, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.cancelIgnore, false);
+  }
+
   render() {
 
     const {
@@ -141,7 +141,7 @@ export default class Keyboard extends Component {
       ...rest
     } = this.props;
 
-    const _inline = inline && !number;
+
     const _closeBtn = !inline && !number;
 
     let inner ;
@@ -207,39 +207,15 @@ export default class Keyboard extends Component {
       'picker-modal-inline': inline
     }, className);
 
-    const cancelIgnore = (_target)=>{
-      if(!getCancelIgnore || !getCancelIgnore()) return false;
-      const elements = getCancelIgnore();
-      let result = false;
-
-      if(Array.isArray(elements)){
-        elements.every((element, i)=>{
-          if(element.contains(_target)){
-            result = true;
-            return false;
-          }else{
-            return true;
-          }
-        })
-      }else{
-        if(elements.contains(_target)){
-          result =  true;
-        }
-      }
-
-      return result;
-    }
 
     return (
       <PickerModal
         className={cls}
-        onCancel={onCancel}
         innerCss="picker-keypad-buttons"
         toolbar={toolbar}
-        mounter={mounter}
-        visible={_inline || visible}
+        mounter={!inline}
+        visible={inline || visible}
         overlay={false}
-        ignore={cancelIgnore}
         {...rest}
         >
         {this.keys.map(keyInit)}

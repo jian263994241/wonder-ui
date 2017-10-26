@@ -94,26 +94,7 @@ export default class ModalsPage extends Component {
             </Row>
             <br/>
             <Row>
-              <Col width="33">
-                <Popover style={{width: 200}} content={(
-                    <ContentBlock>
-                      <p>About Popover created dynamically.</p>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
-                    </ContentBlock>
-                  )}>
-                  <Button>Popover 1</Button>
-                </Popover>
-              </Col>
-              <Col width="33">
-                <Popover style={{width: 200}} content={(
-                  <ContentBlock>
-                    <p>About Popover created dynamically.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac diam ac quam euismod porta vel a nunc. Quisque sodales scelerisque est, at porta justo cursus ac.</p>
-                  </ContentBlock>
-                  )}>
-                  <Button>Popover 2</Button>
-                </Popover>
-              </Col>
+
               <Col width="33">
                 <Button onClick={()=>{Modal.toast('Toast1');}}>Toast</Button>
               </Col>

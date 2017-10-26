@@ -28,7 +28,7 @@ export default class KeyboardPage extends Component {
           <List>
             <ListItem>
               <FormLabel>安全键盘</FormLabel>
-              <FormInput type="text" placeholder="数字输入" value={this.state.inputValA} onFocus={()=>{
+            <FormInput type="text" placeholder="数字输入" value={this.state.inputValA} ref="inputA" onFocus={()=>{
                 this.setState({
                   keyboardOpen:true
                 });
@@ -36,7 +36,7 @@ export default class KeyboardPage extends Component {
             </ListItem>
             <ListItem>
               <FormLabel>数字键盘</FormLabel>
-              <FormInput type="text" placeholder="数字输入" value={this.state.inputValB} onFocus={()=>{
+            <FormInput type="text" placeholder="数字输入" value={this.state.inputValB} ref="inputB" onFocus={()=>{
                 this.setState({
                   keyboardOpenB:true
                 });
@@ -85,6 +85,9 @@ export default class KeyboardPage extends Component {
               keyboardOpen:false
             });
           }}
+          getCancelIgnore={()=>{
+            return this.refs.inputA.getElement();
+          }}
         ></Keyboard>
 
         <Keyboard
@@ -102,6 +105,9 @@ export default class KeyboardPage extends Component {
             this.setState({
               keyboardOpenB:false
             });
+          }}
+          getCancelIgnore={()=>{
+            return this.refs.inputB.getElement();
           }}
         ></Keyboard>
       </Page>

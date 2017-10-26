@@ -17,7 +17,6 @@ export * as Grid from './mod/componnets/Grid'
 export Icon from './mod/componnets/Icon'
 
 export device from './mod/utils/device'
-export kq from './mod/utils/kq'
 
 export {Modal, Popup, Popover, PickerModal, ActionsModal} from 'f7-modal'
 export MultiPicker from './mod/componnets/MultiPicker'
@@ -31,6 +30,3 @@ export classnames from 'classnames'
 export asyncValidator from 'async-validator'
 export mobx from 'mobx'
 export mobxReact from 'mobx-react'
-
-//webpack
-window.WONDER = module.exports;

@@ -1,6 +1,6 @@
 {
   "name": "wonder",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Kuaiqian H5 Framework",
   "main": "src/js/kui.js",
   "directories": {
@@ -8,6 +8,8 @@
   },
   "homepage": "https://www.99bill.com",
   "scripts": {
+    "start": "c release -L",
+    "build": "c release dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
