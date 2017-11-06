@@ -64,9 +64,9 @@ export default class FormElements extends Component {
               <FormLabel>Date time</FormLabel>
               <FormInput type="datetime-local" placeholder="Birth day"/>
             </ListItem>
-            <ListItem media={<Icon/>}>
+            <ListItem media={<Icon/>} after={<FormInput type="switch" defaultChecked={true}/>}>
               <FormLabel>Switch</FormLabel>
-              <FormInput type="switch" defaultChecked={true}/>
+
             </ListItem>
             <ListItem media={<Icon/>}>
               <FormLabel>Slider</FormLabel>

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
 import {Button} from './Buttons'
-// import kq from '../utils/kq'
 
 export class FormLabel extends Component {
 
@@ -66,11 +65,16 @@ export class FormInput extends Component {
         ele = <Range {...rest} type={type}/>
         break;
       case 'textarea':
-        ele = <textarea {...rest} type={type}/>
+        ele = (
+          <div className="item-input">
+            <textarea {...rest} type={type}/>
+          </div>
+        )
         break;
       default:
-        ele = [
-          (
+
+        ele = (
+          <div className="item-input">
             <input
               type={type}
               key=".1"
@@ -79,24 +83,22 @@ export class FormInput extends Component {
               onFocus={(e)=>{ readOnly && e.target.blur() }}
               {...rest}
               />
-          ),
-          readOnly && (
-            <div className={classnames('cursor', {'none': !cursor})} key=".2" >
-              <div className="values" style={ Object.assign(( type==='password' ? {visibility: 'visible'}: {}), cursorStyle)}>
-                {Array.prototype.map.call(rest.value || '', (a)=>{
-                  if(type==='password'){ return '●'; }else{ return a; }
-                })}
-              </div>
-            </div>
-          )
-        ]
+            {
+              readOnly && (
+                <div className={classnames('cursor', {'none': !cursor})}>
+                  <div className="values" style={ Object.assign(( type==='password' ? {visibility: 'visible'}: {}), cursorStyle)}>
+                    {Array.prototype.map.call(rest.value || '', (a)=>{
+                      if(type==='password'){ return '●'; }else{ return a; }
+                    })}
+                  </div>
+                </div>
+              )
+            }
+          </div>
+        )
     }
 
-    return (
-      <div className="item-input" ref="FormInput">
-        {ele}
-      </div>
-    );
+    return ele;
   }
 }
 

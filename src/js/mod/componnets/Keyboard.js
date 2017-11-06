@@ -3,10 +3,8 @@ import {findDOMNode} from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
-import $ from 'dom7'
 import {PickerModal} from 'f7-modal'
 import {Toolbar} from './Bars'
-import kq from '../utils/kq'
 
 export default class Keyboard extends Component {
 
@@ -88,7 +86,7 @@ export default class Keyboard extends Component {
     const getCancelIgnore = this.props.getCancelIgnore;
     const onCancel = this.props.onCancel;
 
-    if(!getCancelIgnore || !getCancelIgnore()) return false;
+    if(!getCancelIgnore || !getCancelIgnore() || this.getElement().contains(_target)) return false;
     const elements = getCancelIgnore();
     let result = false;
 
@@ -140,7 +138,6 @@ export default class Keyboard extends Component {
       value,
       ...rest
     } = this.props;
-
 
     const _closeBtn = !inline && !number;
 
