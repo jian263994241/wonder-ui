@@ -13,7 +13,7 @@ export default class Keyboard extends Component {
   }
 
   static defaultProps = {
-    closeButton: false,
+    closeButton: true,
     closeText: '关闭'
   }
 
@@ -55,6 +55,14 @@ export default class Keyboard extends Component {
   componentWillUnmount() {
     if(!this.props.inline){
       document.removeEventListener('click', this.cancelIgnore);
+    }
+  }
+
+  componentDidUpdate (prevProps, prevState){
+
+    if(prevProps.visible){
+      let reset = this.refs.pad.reset;
+      reset && reset()
     }
   }
 
@@ -131,14 +139,16 @@ export default class Keyboard extends Component {
         onChange: setValue,
         random,
         maxLength,
-        extraKey
+        extraKey,
+        ref: 'pad'
       };
     }else{
       props = {
         value: this.state.value,
         onChange: setValue,
         done: onCancel,
-        maxLength
+        maxLength,
+        ref: 'pad'
       };
     }
 

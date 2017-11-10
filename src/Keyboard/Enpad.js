@@ -106,6 +106,10 @@ var Enpad = function (_Component) {
       };
     };
 
+    _this.reset = function () {
+      return _this.setState({ padId: 'lowerCase' });
+    };
+
     _this.switchPad = function (id) {
       return function () {
         return _this.setState({ padId: id });

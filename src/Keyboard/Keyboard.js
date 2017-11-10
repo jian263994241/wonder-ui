@@ -140,6 +140,15 @@ var Keyboard = function (_Component) {
       }
     }
   }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+
+      if (prevProps.visible) {
+        var reset = this.refs.pad.reset;
+        reset && reset();
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -179,14 +188,16 @@ var Keyboard = function (_Component) {
           onChange: setValue,
           random: random,
           maxLength: maxLength,
-          extraKey: extraKey
+          extraKey: extraKey,
+          ref: 'pad'
         };
       } else {
         props = {
           value: this.state.value,
           onChange: setValue,
           done: onCancel,
-          maxLength: maxLength
+          maxLength: maxLength,
+          ref: 'pad'
         };
       }
 
@@ -230,7 +241,7 @@ Keyboard.propTypes = {
   getCancelIgnore: _propTypes2.default.func
 };
 Keyboard.defaultProps = {
-  closeButton: false,
+  closeButton: true,
   closeText: '关闭'
 };
 exports.default = Keyboard;
