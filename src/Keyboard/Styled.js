@@ -15,15 +15,6 @@ var _styledTheming2 = _interopRequireDefault(_styledTheming);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// @key-color : #000;
-// @key-bgColor : #fff;
-// @specialkey-bgColor : #ACAEB4;
-// @background-color : #D2D5DB;
-// @return-text-color : #000;
-// @return-background-color : #ACAEB4;
-// @shadowColor : #848688;
-
-
 var keyboardBgColor = (0, _styledTheming2.default)('mode', {
   light: '#D2D5DB',
   dark: '#6A7286'
@@ -61,7 +52,7 @@ var spaceBgColor = (0, _styledTheming2.default)('mode', {
 
 var StyleModal = _styledComponents2.default.div(['position:fixed;left:0;bottom:0;width:100%;height:auto;padding:0;margin:0;z-index:6666;']);
 
-var StyleToolbar = _styledComponents2.default.div(['font-size:12px;color:', ';background-color:', ';text-align:center;padding:10px 10px;font-size:16px;line-height:1;box-sizing:border-box;white-space:nowrap;overflow:hidden;width:100%;position:relative;&::after{content:\'\';clear:both;display:block;height:0;overflow:hidden;}.center{position:absolute;display:block;width:100%;padding:0;margin:0 -10px;text-align:center;white-space:nowrap;box-sizing:border-box;z-index:1;}.left{float:left;position:relative;z-index:2;}.right{float:right;position:relative;z-index:2;}'], toolbarTextColor, toolbarBgColor);
+var StyleToolbar = _styledComponents2.default.div(['font-size:12px;color:', ';background-color:', ';min-height:36px;text-align:center;padding:10px 10px;font-size:16px;line-height:1;box-sizing:border-box;white-space:nowrap;overflow:hidden;width:100%;position:relative;&::after{content:\'\';clear:both;display:block;height:0;overflow:hidden;}.center{position:absolute;display:block;width:100%;padding:0;margin:0 -10px;text-align:center;white-space:nowrap;box-sizing:border-box;z-index:1;}.left{float:left;position:relative;z-index:2;}.right{float:right;position:relative;z-index:2;}'], toolbarTextColor, toolbarBgColor);
 
 var StyleKeyboard = _styledComponents2.default.ul(['width:100%;box-sizing:border-box;list-style:none;padding:0;margin:0;overflow:hidden;user-select:none;padding:5px 0;background-color:', ';> li{padding:5px 0;display:flex;justify-content:center;}'], keyboardBgColor);
 

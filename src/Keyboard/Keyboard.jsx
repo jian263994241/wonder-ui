@@ -13,7 +13,7 @@ export default class Keyboard extends Component {
   }
 
   static defaultProps = {
-    closeButton: true,
+    closeButton: false,
     closeText: '关闭'
   }
 

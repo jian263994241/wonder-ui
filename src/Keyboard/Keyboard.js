@@ -230,7 +230,7 @@ Keyboard.propTypes = {
   getCancelIgnore: _propTypes2.default.func
 };
 Keyboard.defaultProps = {
-  closeButton: true,
+  closeButton: false,
   closeText: '关闭'
 };
 exports.default = Keyboard;

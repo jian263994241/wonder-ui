@@ -1,15 +1,6 @@
 import styled from 'styled-components';
 import theme from 'styled-theming';
 
-// @key-color : #000;
-// @key-bgColor : #fff;
-// @specialkey-bgColor : #ACAEB4;
-// @background-color : #D2D5DB;
-// @return-text-color : #000;
-// @return-background-color : #ACAEB4;
-// @shadowColor : #848688;
-
-
 const keyboardBgColor = theme('mode', {
   light: '#D2D5DB',
   dark: '#6A7286',
@@ -61,6 +52,7 @@ const StyleToolbar = styled.div `
   font-size: 12px;
   color: ${toolbarTextColor};
   background-color: ${toolbarBgColor};
+  min-height: 36px;
   text-align: center;
   padding: 10px 10px;
   font-size: 16px;
