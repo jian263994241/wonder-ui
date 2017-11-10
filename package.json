@@ -22,7 +22,7 @@
     "antd": "^2.10.2",
     "async-validator": "^1.7.1",
     "classnames": "^2.2.5",
-    "dom7": "^2.0.1",
+    "dom7": "^1.7.2",
     "f7-modal": "^0.2.5",
     "lodash.debounce": "^4.0.8",
     "mobx": "^3.2.1",
@@ -37,7 +37,6 @@
     "react-swipeable-views": "^0.12.0",
     "react-swipeable-views-utils": "^0.12.0",
     "warning": "^3.0.0",
-    "web-storage-cache": "^1.0.3",
     "zscroller": "^0.3.1"
   },
   "repository": "git@github.com:jian263994241/uikit.git"
