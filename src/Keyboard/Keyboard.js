@@ -219,13 +219,12 @@ var Keyboard = function (_Component) {
           title
         )
       );
-
       return _react2.default.createElement(
         _styledComponents.ThemeProvider,
         { theme: { mode: dark ? 'dark' : 'light' } },
         _react2.default.createElement(
           _Modal2.default,
-          (0, _extends3.default)({ visible: visible, inline: inline }, rest, { ref: 'modal' }),
+          (0, _extends3.default)({ visible: visible, inline: inline, style: style }, rest, { ref: 'modal' }),
           toolbar,
           (0, _react.createElement)(keypad, props)
         )

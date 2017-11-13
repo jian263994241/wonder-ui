@@ -151,7 +151,7 @@ export default class Keyboard extends Component {
         ref: 'pad'
       };
     }
-    
+
     const toolbar = (
       <StyleToolbar>
         <div className="right">
@@ -162,10 +162,9 @@ export default class Keyboard extends Component {
         </div>
       </StyleToolbar>
     );
-
     return  (
       <ThemeProvider theme={{mode : dark ? 'dark': 'light'}}>
-        <Modal visible={visible} inline={inline} {...rest} ref="modal">
+        <Modal visible={visible} inline={inline} style={style} {...rest} ref="modal">
           {toolbar}
           {createElement(keypad, props)}
         </Modal>

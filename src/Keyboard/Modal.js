@@ -72,7 +72,6 @@ var Modal = function (_Component) {
     }, _this.getModal = function () {
       return (0, _reactDom.findDOMNode)(_this.refs.modal);
     }, _this.renderModal = function (interpolatedStyles) {
-
       return _react2.default.createElement(
         'div',
         null,
@@ -84,6 +83,7 @@ var Modal = function (_Component) {
             _Styled.StyleModal,
             {
               key: key,
+              inline: _this.props.inline,
               style: { transform: 'translate3d(0, ' + style.x + '%, 0)', display: style.x >= 98 ? 'none' : 'block' } },
             _this.props.children
           );

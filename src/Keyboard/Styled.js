@@ -50,7 +50,9 @@ var spaceBgColor = (0, _styledTheming2.default)('mode', {
   dark: '#fff'
 });
 
-var StyleModal = _styledComponents2.default.div(['position:fixed;left:0;bottom:0;width:100%;height:auto;padding:0;margin:0;z-index:6666;']);
+var StyleModal = _styledComponents2.default.div(['position:', ';left:0;bottom:0;width:100%;height:auto;padding:0;margin:0;z-index:6666;'], function (props) {
+  return props.inline ? 'relative' : 'fixed';
+});
 
 var StyleToolbar = _styledComponents2.default.div(['font-size:12px;color:', ';background-color:', ';height:44px;text-align:center;padding:12px;font-size:16px;line-height:1;box-sizing:border-box;white-space:nowrap;overflow:hidden;width:100%;position:relative;&::after{content:\'\';clear:both;display:block;height:0;overflow:hidden;}.center{position:absolute;display:block;width:100%;height:100%;padding:0;margin:0 -10px;text-align:center;white-space:nowrap;box-sizing:border-box;z-index:1;box-sizing:border-box;}.left{float:left;position:relative;z-index:2;}.right{float:right;position:relative;z-index:2;span,a{vertical-align:middle;}}'], toolbarTextColor, toolbarBgColor);
 

@@ -24,7 +24,6 @@ export default class Modal extends Component {
   }
 
   renderModal = interpolatedStyles => {
-
     return (
       <div>
         {
@@ -32,6 +31,7 @@ export default class Modal extends Component {
             return (
               <StyleModal
                 key={key}
+                inline={this.props.inline}
                 style={{transform: `translate3d(0, ${style.x}%, 0)`, display: style.x >= 98 ? 'none': 'block'}}>
                 {this.props.children}
               </StyleModal>

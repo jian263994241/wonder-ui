@@ -38,7 +38,7 @@ const spaceBgColor = theme('mode', {
 
 
 const StyleModal = styled.div `
-  position: fixed;
+  position: ${props=>props.inline? 'relative': 'fixed'};
   left: 0;
   bottom: 0;
   width: 100%;
