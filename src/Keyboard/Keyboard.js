@@ -143,7 +143,7 @@ var Keyboard = function (_Component) {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
 
-      if (prevProps.visible) {
+      if (prevProps.visible && prevProps.visible != this.props.visible) {
         var reset = this.refs.pad.reset;
         reset && reset();
       }
@@ -216,7 +216,11 @@ var Keyboard = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'center' },
-          title
+          _react2.default.createElement(
+            'span',
+            null,
+            title
+          )
         )
       );
 

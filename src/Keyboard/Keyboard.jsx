@@ -60,7 +60,7 @@ export default class Keyboard extends Component {
 
   componentDidUpdate (prevProps, prevState){
 
-    if(prevProps.visible){
+    if(prevProps.visible && prevProps.visible != this.props.visible){
       let reset = this.refs.pad.reset;
       reset && reset()
     }
@@ -158,7 +158,7 @@ export default class Keyboard extends Component {
           {closeButton && <span onClick={onCancel}>{closeText}</span>}
         </div>
         <div className="center">
-          {title}
+          <span>{title}</span>
         </div>
       </StyleToolbar>
     );

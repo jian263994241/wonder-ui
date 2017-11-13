@@ -60,6 +60,7 @@ class Example extends Component {
           dark={this.state.dark}
           input="numInput"
           keypad={Enpad}
+          title="安全键盘"
           onCancel={()=>this.setState({keyboardid: ''})}
         />
 
