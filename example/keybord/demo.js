@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Keyboard, Enpad, Numpad} from '../../src/Keyboard';
+import Logo from '../../src/Keyboard/Logo';
 
 const style = {
   padding: '10px 0'
@@ -60,7 +61,7 @@ class Example extends Component {
           dark={this.state.dark}
           input="numInput"
           keypad={Enpad}
-          title="安全键盘"
+          title={<Logo></Logo>}
           onCancel={()=>this.setState({keyboardid: ''})}
         />
 

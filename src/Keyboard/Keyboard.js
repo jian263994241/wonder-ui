@@ -216,11 +216,7 @@ var Keyboard = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'center' },
-          _react2.default.createElement(
-            'span',
-            null,
-            title
-          )
+          title
         )
       );
 

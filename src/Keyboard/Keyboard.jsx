@@ -151,14 +151,14 @@ export default class Keyboard extends Component {
         ref: 'pad'
       };
     }
-
+    
     const toolbar = (
       <StyleToolbar>
         <div className="right">
           {closeButton && <span onClick={onCancel}>{closeText}</span>}
         </div>
         <div className="center">
-          <span>{title}</span>
+          {title}
         </div>
       </StyleToolbar>
     );
