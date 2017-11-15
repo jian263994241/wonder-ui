@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "no-scroll": "^2.1.0",
     "prop-types": "^15.6.0",
     "rc-mounter": "^1.1.5",
     "react": "^16.1.0",

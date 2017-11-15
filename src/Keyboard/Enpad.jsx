@@ -148,7 +148,7 @@ export default class Enpad extends Component {
   }
 
   reset = ()=> this.setState({padId: 'lowerCase'});
-  
+
   switchPad = (id)=> () => this.setState({padId: id});
 
   shouldComponentUpdate(nextProps, nextState) {

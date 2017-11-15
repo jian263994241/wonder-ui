@@ -34,8 +34,19 @@ class Example extends Component {
   }
 
   render() {
+
+    const style = {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      bottom: 0,
+      width: '100%',
+      overflowY: 'auto',
+      WebkitOverflowScrolling: 'touch',
+    }
+
     return (
-      <div>
+      <div style={style}>
         <h2>安全键盘</h2>
         <ul>
           <li>
@@ -78,31 +89,40 @@ class Example extends Component {
           数字键盘
         </h2>
 
-        <p>
-          <Keyboard
-            visible
-            inline
-            extraKey={null}
-            keypad={Numpad}
-          />
-        </p>
-        <p>
-          <Keyboard
-            visible
-            inline
-            extraKey={'.'}
-            keypad={Numpad}
-          />
-        </p>
-        <p>
-          <Keyboard
-            visible
-            inline
-            extraKey={'00'}
-            keypad={Numpad}
-          />
-        </p>
 
+        <Keyboard
+          visible
+          inline
+          extraKey={null}
+          keypad={Numpad}
+        />
+
+        <br/>
+
+        <Keyboard
+          visible
+          inline
+          extraKey={'.'}
+          keypad={Numpad}
+        />
+
+        <br/>
+
+        <Keyboard
+          visible
+          inline
+          extraKey={'00'}
+          keypad={Numpad}
+        />
+
+        <br/>
+
+        <Keyboard
+          visible
+          inline
+          extraKey={'x'}
+          keypad={Numpad}
+        />
 
 
 

@@ -37,17 +37,6 @@ const spaceBgColor = theme('mode', {
 })
 
 
-const StyleModal = styled.div `
-  position: ${props=>props.inline? 'relative': 'fixed'};
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: auto;
-  padding: 0;
-  margin: 0;
-  z-index: 6666;
-`;
-
 const StyleToolbar = styled.div `
   font-size: 12px;
   color: ${toolbarTextColor};
@@ -115,12 +104,13 @@ const StyleKeyboard = styled.ul `
   }
 `
 
-const StyleButton = styled.button `
+const StyleButton = styled.div `
   width: ${props=>props.width};
+  height: ${props=>props.height};
   display: block;
   color: #000;
   font-size: ${props=>props.fontSize};
-  font-family: 'PingFang SC', 'Hiragino Sans GB', helvetica, arial, sans-serif;
+  font-family: HelveticaNeue,Helvetica,Arial,sans-serif;
   background-color: #fff;
   text-decoration: none;
   text-align: center;
@@ -130,10 +120,10 @@ const StyleButton = styled.button `
   border-radius: 4px;
   box-sizing: border-box;
   margin: 0 3px;
-  padding: 5px 2px;
-  > svg{
-    vertical-align: middle;
-  }
+  padding: ${props=>props.padding};;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
   &.specialkey {
     background-color: #ACAEB4;
   }
@@ -151,10 +141,18 @@ const StyleButton = styled.button `
 
 const StyleEnpadButton = styled(StyleButton).attrs({
   width: '8.6%',
-  fontSize: '22px'
+  height: '42px',
+  padding: '8px 3px',
+  fontSize: '22.5px'
 }) `
+  > svg{
+    position: relative;
+    vertical-align: middle;
+  }
   &.specialkey {
     font-size: 16px;
+    padding: 3px;
+    line-height: 2;
   }
   &.backspace, &.shift {
     width: 10%;
@@ -176,13 +174,14 @@ const StyleEnpadButton = styled(StyleButton).attrs({
 
 const StyleNumpadButton = styled(StyleButton).attrs({
   width: '33%',
+  height: '46px',
+  padding: '7px 3px',
   fontSize: '25px'
 }) `
 
 `
 
 export {
-  StyleModal,
   StyleToolbar,
   StyleKeyboard,
   StyleButton,

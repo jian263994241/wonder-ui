@@ -40,7 +40,7 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Modal = require('./Modal');
+var _Modal = require('../Modal');
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -70,13 +70,17 @@ var Keyboard = function (_Component) {
       value: ''
     }, _this.input = null, _this.getInput = function (input) {
       var currentInput = document.getElementById(input);
+      var blur = document.activeElement.blur;
+
+      if (_this.input && _this.input !== currentInput) {
+        _this.input.removeEventListener('click', blur);
+      }
 
       if (currentInput) {
         _this.input = currentInput;
-        currentInput.readOnly = true;
+        _this.input.readOnly = true;
+        _this.input.addEventListener('click', blur);
         _this.setState({ value: currentInput.value });
-      } else {
-        _this.input = null;
       }
     }, _this.getElement = function () {
       return _this.refs.modal.getModal();
@@ -89,7 +93,6 @@ var Keyboard = function (_Component) {
       _this.refs.modal.getModal();
       if (!getCancelIgnore || !getCancelIgnore() || _this.getElement().contains(_target)) return false;
       var elements = getCancelIgnore();
-
       var result = false;
       if (Array.isArray(elements)) {
         elements.every(function (element, i) {
@@ -107,6 +110,7 @@ var Keyboard = function (_Component) {
       }
 
       if (!result && _this.props.visible && onCancel) {
+
         onCancel();
       }
 
@@ -119,7 +123,7 @@ var Keyboard = function (_Component) {
     value: function componentDidMount() {
       this.getInput(this.props.input);
       if (!this.props.inline) {
-        document.addEventListener('click', this.cancelIgnore);
+        document.addEventListener('touchstart', this.cancelIgnore);
       }
     }
   }, {
@@ -128,24 +132,12 @@ var Keyboard = function (_Component) {
       if (nextProps.input != this.props.input) {
         this.getInput(nextProps.input);
       }
-      if (nextProps.visible != this.props.visible) {
-        document.activeElement.blur();
-      }
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       if (!this.props.inline) {
-        document.removeEventListener('click', this.cancelIgnore);
-      }
-    }
-  }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate(prevProps, prevState) {
-
-      if (prevProps.visible && prevProps.visible != this.props.visible) {
-        var reset = this.refs.pad.reset;
-        reset && reset();
+        document.removeEventListener('touchstart', this.cancelIgnore);
       }
     }
   }, {
@@ -173,8 +165,9 @@ var Keyboard = function (_Component) {
 
 
       var setValue = function setValue(a) {
-        _this2.setState({ value: a });
+
         if (_this2.input) {
+          _this2.setState({ value: a });
           _this2.input.value = a;
           _this2.input.scrollLeft = _this2.input.scrollWidth;
         }
@@ -219,6 +212,7 @@ var Keyboard = function (_Component) {
           title
         )
       );
+
       return _react2.default.createElement(
         _styledComponents.ThemeProvider,
         { theme: { mode: dark ? 'dark' : 'light' } },
