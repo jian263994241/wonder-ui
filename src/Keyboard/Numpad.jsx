@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {backspace, shift, shift2} from './icons';
+import Backspace from '../icons/Backspace';
 import {StyleKeyboard, StyleNumpadButton} from './Styled';
 
 export default class Numpad extends Component {
@@ -43,7 +43,7 @@ export default class Numpad extends Component {
     let btn = key;
 
     if(btn === 'del'){
-      btn = backspace;
+      btn = <Backspace/>;
     }
 
     const valueFormat = (value , key, maxLength)=>{

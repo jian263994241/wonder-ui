@@ -5,6 +5,7 @@ import Mounter from 'rc-mounter';
 import TransitionMotion from 'react-motion/lib/TransitionMotion';
 import Motion from 'react-motion/lib/Motion';
 import spring from 'react-motion/lib/spring';
+import presets from 'react-motion/lib/presets';
 
 import {StyleModal, StyleOverlay} from './Styled';
 
@@ -56,7 +57,7 @@ export default class Modal extends Component {
     }).map((layer)=>{
       return {
         ...layer,
-        style: { x: spring(0)}
+        style: { x: spring(0, presets.noWobble)}
       }
 
     })
@@ -68,7 +69,7 @@ export default class Modal extends Component {
   }
 
   willLeave=()=>{
-    return { x: spring(100) }
+    return { x: spring(100, {...presets.noWobble, precision: 100}) }
   }
 
   getModal = ()=>{
@@ -98,6 +99,9 @@ export default class Modal extends Component {
 
   renderModal = interpolatedStyles => {
     const {visible, children} = this.props;
+    const preventScrolling = (e) =>{
+      e.preventDefault();
+    };
     return (
       <div>
         {
@@ -107,7 +111,7 @@ export default class Modal extends Component {
               return <StyleModal key={key} style={{transform: `translate3d(0, ${style.x}%, 0)`}}> {children} </StyleModal>
             }
             if(type === 'overlay'){
-              return <StyleOverlay key={key} style={{opacity: `${1 - style.x/100}`}} onClick={this.props.onCancel}/>
+              return <StyleOverlay key={key} style={{opacity: `${1 - style.x/100}`}} onClick={this.props.onCancel} onTouchMove={preventScrolling}/>
             }
 
           })

@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.StyleNumpadButton = exports.StyleEnpadButton = exports.StyleButton = exports.StyleKeyboard = exports.StyleToolbar = undefined;
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _styledComponents = require('styled-components');
 
 var _styledComponents2 = _interopRequireDefault(_styledComponents);

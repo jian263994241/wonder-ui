@@ -4,6 +4,29 @@ import Citys from '../../src/Citys';
 
 export default class Example extends Component {
 
+  state = {
+    visible: false,
+    inputText: null
+  }
+
+  open = ()=>{
+    this.setState({
+      visible: true
+    })
+  }
+  close = ()=>{
+    this.setState({
+      visible: false
+    })
+  }
+
+  select = ({province, city})=>{
+  
+    this.setState({
+      inputText: `${province.provinceName} ${city.cityName}`
+    })
+  }
+
   render(){
 
     const inputStyle={
@@ -26,9 +49,14 @@ export default class Example extends Component {
 
     return (
       <div style={style}>
-        <input type="text" placeholder="请选择" style={inputStyle} readOnly/>
+        <div style={inputStyle} onClick={this.open}>{this.state.inputText? this.state.inputText : '请选择'}</div>
 
-        <Citys></Citys>
+
+        <Citys
+          visible={this.state.visible}
+          onCancel={this.close}
+          onSelect={this.select}
+        />
       </div>
     )
   }

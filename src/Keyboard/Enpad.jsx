@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import {StyleKeyboard, StyleEnpadButton} from './Styled';
 
-import {backspace, shift, shift2} from './icons';
+import Backspace from '../icons/Backspace';
+import Shift from '../icons/Shift';
+import ShiftFill from '../icons/ShiftFill';
 
 export default class Enpad extends Component {
 
@@ -33,9 +35,9 @@ export default class Enpad extends Component {
           {renderKeys('asdfghjkl')}
         </li>
         <li>
-          {renderSpecialkey('shift', shift, this.switchPad('upperCase'))}
+          {renderSpecialkey('shift', <Shift/>, this.switchPad('upperCase'))}
           {renderKeys('zxcvbnm')}
-          {renderSpecialkey('backspace', backspace, this.keypress('backspace'))}
+          {renderSpecialkey('backspace', <Backspace/>, this.keypress('backspace'))}
         </li>
         <li>
           {renderSpecialkey('numbers', '.?123', this.switchPad('numbers'))}
@@ -54,9 +56,9 @@ export default class Enpad extends Component {
           {renderKeys('ASDFGHJKL')}
         </li>
         <li>
-          {renderSpecialkey('shift', shift2, this.switchPad('lowerCase'))}
+          {renderSpecialkey('shift', <ShiftFill/>, this.switchPad('lowerCase'))}
           {renderKeys('ZXCVBNM')}
-          {renderSpecialkey('backspace', backspace, this.keypress('backspace'))}
+          {renderSpecialkey('backspace', <Backspace/>, this.keypress('backspace'))}
         </li>
         <li>
           {renderSpecialkey('numbers', '.?123', this.switchPad('numbers'))}
@@ -77,7 +79,7 @@ export default class Enpad extends Component {
         <li>
           {renderSpecialkey('shift', '#+=', this.switchPad('symbol'))}
           {renderKeys('.,?!\'')}
-          {renderSpecialkey('backspace', backspace, this.keypress('backspace'))}
+          {renderSpecialkey('backspace', <Backspace/>, this.keypress('backspace'))}
         </li>
         <li>
           {renderSpecialkey('numbers', 'ABC', this.switchPad('lowerCase'))}
@@ -98,7 +100,7 @@ export default class Enpad extends Component {
         <li>
           {renderSpecialkey('shift', '123', this.switchPad('numbers'))}
           {renderKeys('.,?!\'')}
-          {renderSpecialkey('backspace', backspace, this.keypress('backspace'))}
+          {renderSpecialkey('backspace', <Backspace/>, this.keypress('backspace'))}
         </li>
         <li>
           {renderSpecialkey('numbers', 'ABC', this.switchPad('lowerCase'))}

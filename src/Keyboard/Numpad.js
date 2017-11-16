@@ -36,7 +36,9 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _icons = require('./icons');
+var _Backspace = require('../icons/Backspace');
+
+var _Backspace2 = _interopRequireDefault(_Backspace);
 
 var _Styled = require('./Styled');
 
@@ -73,7 +75,7 @@ var Numpad = function (_Component) {
       var btn = key;
 
       if (btn === 'del') {
-        btn = _icons.backspace;
+        btn = _react2.default.createElement(_Backspace2.default, null);
       }
 
       var valueFormat = function valueFormat(value, key, maxLength) {

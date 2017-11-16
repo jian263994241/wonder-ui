@@ -34,7 +34,17 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _Styled = require('./Styled');
 
-var _icons = require('./icons');
+var _Backspace = require('../icons/Backspace');
+
+var _Backspace2 = _interopRequireDefault(_Backspace);
+
+var _Shift = require('../icons/Shift');
+
+var _Shift2 = _interopRequireDefault(_Shift);
+
+var _ShiftFill = require('../icons/ShiftFill');
+
+var _ShiftFill2 = _interopRequireDefault(_ShiftFill);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -136,9 +146,9 @@ var Enpad = function (_Component) {
       _react2.default.createElement(
         'li',
         null,
-        renderSpecialkey('shift', _icons.shift, _this.switchPad('upperCase')),
+        renderSpecialkey('shift', _react2.default.createElement(_Shift2.default, null), _this.switchPad('upperCase')),
         renderKeys('zxcvbnm'),
-        renderSpecialkey('backspace', _icons.backspace, _this.keypress('backspace'))
+        renderSpecialkey('backspace', _react2.default.createElement(_Backspace2.default, null), _this.keypress('backspace'))
       ),
       _react2.default.createElement(
         'li',
@@ -165,9 +175,9 @@ var Enpad = function (_Component) {
       _react2.default.createElement(
         'li',
         null,
-        renderSpecialkey('shift', _icons.shift2, _this.switchPad('lowerCase')),
+        renderSpecialkey('shift', _react2.default.createElement(_ShiftFill2.default, null), _this.switchPad('lowerCase')),
         renderKeys('ZXCVBNM'),
-        renderSpecialkey('backspace', _icons.backspace, _this.keypress('backspace'))
+        renderSpecialkey('backspace', _react2.default.createElement(_Backspace2.default, null), _this.keypress('backspace'))
       ),
       _react2.default.createElement(
         'li',
@@ -196,7 +206,7 @@ var Enpad = function (_Component) {
         null,
         renderSpecialkey('shift', '#+=', _this.switchPad('symbol')),
         renderKeys('.,?!\''),
-        renderSpecialkey('backspace', _icons.backspace, _this.keypress('backspace'))
+        renderSpecialkey('backspace', _react2.default.createElement(_Backspace2.default, null), _this.keypress('backspace'))
       ),
       _react2.default.createElement(
         'li',
@@ -225,7 +235,7 @@ var Enpad = function (_Component) {
         null,
         renderSpecialkey('shift', '123', _this.switchPad('numbers')),
         renderKeys('.,?!\''),
-        renderSpecialkey('backspace', _icons.backspace, _this.keypress('backspace'))
+        renderSpecialkey('backspace', _react2.default.createElement(_Backspace2.default, null), _this.keypress('backspace'))
       ),
       _react2.default.createElement(
         'li',
