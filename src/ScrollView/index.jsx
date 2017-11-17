@@ -35,6 +35,10 @@ export default class ScrollView extends Component {
     console.log(this.zscroller);
   }
 
+  componentWillUnmount(){
+    this.destroy();
+  }
+
   scrollTop = (animate = false)=>{
     this.zscroller.scroller.scrollTo(0, 0, animate);
   }
