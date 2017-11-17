@@ -20,18 +20,18 @@ export default class Example extends Component {
     })
   }
 
-  select = ({province, city})=>{
-  
+  select = (data)=>{
+
     this.setState({
-      inputText: `${province.provinceName} ${city.cityName}`
+      inputText: JSON.stringify(data)
     })
+
   }
 
   render(){
 
     const inputStyle={
       width: '100%',
-      height: '44px',
       border: '1px solid #ccc',
       padding: '10px',
       boxSizing: 'border-box'

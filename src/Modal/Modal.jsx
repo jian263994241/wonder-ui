@@ -69,7 +69,7 @@ export default class Modal extends Component {
   }
 
   willLeave=()=>{
-    return { x: spring(100, {...presets.noWobble, precision: 100}) }
+    return { x: spring(100, {...presets.noWobble, precision: 50}) }
   }
 
   getModal = ()=>{
@@ -99,9 +99,7 @@ export default class Modal extends Component {
 
   renderModal = interpolatedStyles => {
     const {visible, children} = this.props;
-    const preventScrolling = (e) =>{
-      e.preventDefault();
-    };
+
     return (
       <div>
         {
@@ -111,7 +109,7 @@ export default class Modal extends Component {
               return <StyleModal key={key} style={{transform: `translate3d(0, ${style.x}%, 0)`}}> {children} </StyleModal>
             }
             if(type === 'overlay'){
-              return <StyleOverlay key={key} style={{opacity: `${1 - style.x/100}`}} onClick={this.props.onCancel} onTouchMove={preventScrolling}/>
+              return <StyleOverlay key={key} style={{opacity: `${1 - style.x/100}`}} onClick={this.props.onCancel} onTouchMove={e=>e.preventDefault()}/>
             }
 
           })

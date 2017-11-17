@@ -4,6 +4,9 @@ import Modal from '../Modal';
 import {StyleCitys, Panel, Subbar} from './Styled';
 import IconClose from '../Icons/Close';
 import Toolbar from '../Toolbar';
+import ScrollView from '../ScrollView';
+// 数据来源 http://passer-by.com/data_location/list.json
+
 
 export default class Citys extends Component {
 
@@ -14,84 +17,146 @@ export default class Citys extends Component {
 
   state = {
     provinceList : [],
-    province: {},
     cityList: [],
+    areaList: [],
+    province: {},
     city: {},
+    area: {},
     activePanel: 'province',
   }
 
-  componentDidMount(){
-
-  }
+  data = null;
 
   componentWillMount(){
-    this.getChinaList();
+    this.getProvinceList();
   }
 
-  getChinaList = ()=>{
-    const xhr = new XMLHttpRequest();
-    xhr.timeout = 3000;
-    xhr.responseType = "json";
-    xhr.open('GET', 'https://ebd.99bill.com/coc-bill-api/3.0/members/card/openAdr', true);
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    xhr.setRequestHeader('pubData', JSON.stringify({"c":"H5","b":"MEMBER-BASE","id":"100","t":Date.now()}));
-    xhr.onload = (e)=>{
-      const {status, response} = e.target;
-      if(status === 200 || status === 304 ){
-        if(response.errCode === '00'){
-          let provinceCityList = response.provinceCityList;
-          let chinaList = provinceCityList.filter(({contryId})=> contryId === '100');
-          if(chinaList.length === 1){
-            this.setState({
-              provinceList: chinaList[0].provinceList
-            });
-          }
+  getProvinceList = ()=>{
+    this.getJSONP('//img.99bill.com/seashell/webapp/lib/jsonp/citys.js', (data)=>{
+      this.data = data;
+      const provinceList = [],city={},area={};
+      for(let code in data){
+        if(!(code%1e4)){
+          //获取所有的省级行政单位
+          provinceList.push({
+            id: code,
+            name: data[code]
+          });
+        }
+      }
+      this.setState({provinceList});
+    })
+  }
+
+  getJSONP = (url, callback)=>{
+    let script = document.createElement('script');
+    script.src = url;
+    script.onload = ()=> {
+      script.remove();
+      delete window.jsonp_location;
+    };
+    window.jsonp_location = callback;
+    document.body.appendChild(script);
+  }
+
+  selectProvince = ({id, name})=>{
+
+    const cityList = [], areaList = [] ,data = this.data;
+    let hasCity = false, activePanel = '';
+    for(let code in data){
+      let p = code - id;
+      if(p>0&&p<1e4){
+         //同省的城市或地区
+        if(!(code%100)){
+          //市
+          hasCity = true;
+          activePanel = 'city';
+          cityList.push({
+            id: code,
+            name: data[code]
+          })
+        }else if(!hasCity){
+          //区
+          activePanel = 'area';
+          areaList.push({
+            id: code,
+            name: data[code]
+          })
         }
       }
     }
-    xhr.send();
+
+    this.setState({cityList, areaList, province: {id, name}, activePanel});
+
   }
 
-  selectProvince = ({provinceName, provinceId})=>{
-    const provinceList = this.state.provinceList;
-    let provinceInfo = provinceList.filter((p)=>p.provinceId === provinceId);
+  selectCity = ({id, name})=>{
+    const onSelect = this.props.onSelect || function(){};
+    const onCancel = this.props.onCancel;
+    const {province, area} = this.state;
+    const areaList = [], data = this.data;
+    for(let code in data){
+      var c = code- id;
+      if(c>0&&c<100){
+        areaList.push({
+          id: code,
+          name: data[code]
+        })
+      }
+    }
 
-    if(provinceInfo.length >= 1){
-      provinceInfo = provinceInfo[0];
-      const cityList = provinceInfo.cityList;
+    const city = {id, name};
 
+    if(areaList.length > 0){
       this.setState({
-        province: {provinceName, provinceId},
-        activePanel: 'city',
-        cityList,
-      })
+        areaList,
+        city,
+        activePanel: 'area'
+      });
+    }else{
+      this.setState({city}, onSelect.bind(null, {province, city, area}));
+      onCancel && onCancel();
     }
 
   }
 
-  selectCity = ({cityId, cityName})=>{
-    const cityList = this.state.cityList;
-    const {onSelect, onCancel} = this.props;
-    let cityInfo = cityList.filter((p)=>p.cityId === cityId);
-    if(cityInfo.length >= 1){
-      cityInfo = cityInfo[0];
-      const city = {
-        cityId: cityInfo.cityId,
-        cityName: cityInfo.cityName,
-      };
-      this.setState({city}, ()=>{
-        onSelect && onSelect({ city, province: this.state.province });
-        onCancel && onCancel();
-      })
-    }
+  selectArea = ({id, name})=>{
+    const onSelect = this.props.onSelect || function(){};
+    const onCancel = this.props.onCancel;
+    const {province, city} = this.state;
+    const area = {id, name};
+    this.setState({area}, onSelect.bind(null, {province, city, area}));
+
+    onCancel && onCancel();
   }
 
   resetCityList = ()=>{
     this.setState({
       cityList: [],
+      areaList: [],
       city: {},
+      area: {},
       activePanel: 'province'
     })
+  }
+
+  resetAreaList = ()=>{
+    this.setState({
+      areaList: [],
+      area: {},
+      activePanel: 'city'
+    })
+  }
+
+  componentDidUpdate(prevProps, prevState){
+
+    if(this.state.cityList.length != prevState.cityList.length){
+      this.cityPanel.scrollTop();
+    }
+
+    if(this.state.areaList.length != prevState.areaList.length){
+      this.areaPanel.scrollTop() ;
+    }
   }
 
   render(){
@@ -116,55 +181,87 @@ export default class Citys extends Component {
           <div className="left"> <IconClose onClick={onCancel}/> </div>
           <div className="center">所在地区</div>
         </Toolbar>
-        <Subbar>
+        <Subbar onTouchMove={e=>e.preventDefault()}>
           <div
             onClick={this.resetCityList}
             className={this.state.activePanel === 'province'?'active': ''}
           >
-            {this.state.province.provinceId ? this.state.province.provinceName : '请选择省'}
+            <nobr>{this.state.province.id ? this.state.province.name : '选择省'}</nobr>
           </div>
           {
-            this.state.activePanel != 'province' && (
-              <div
-                className={this.state.activePanel === 'city'?'active': ''}
-              >
-                {this.state.city.cityId ? this.state.city.cityName : '请选择市'}
+            this.state.cityList.length > 0 && (
+              <div onClick={this.resetAreaList} className={this.state.activePanel === 'city'?'active': ''} >
+                <nobr>{this.state.city.id ? this.state.city.name : '选择市'}</nobr>
               </div>
             )
           }
+          {
+            this.state.areaList.length > 0 && (
+              <div className={this.state.activePanel === 'area'?'active': ''} >
+                <nobr>{this.state.area.id ? this.state.area.name : '选择区'}</nobr>
+              </div>
+            )
+          }
+
         </Subbar>
         <StyleCitys>
+
           <Panel hidden={this.state.activePanel != 'province'}>
-            {
-              this.state.provinceList.map(({provinceName, provinceId})=>{
-                return (
-                  <li
-                    key={provinceId}
-                    onClick={this.selectProvince.bind(null, {provinceName, provinceId})}
-                    className={provinceId === this.state.province.provinceId ? 'active': ''}
-                  >
-                    {provinceName}
-                  </li>
-                )
-              })
-            }
+            <ul>
+              {
+                this.state.provinceList.map(({id, name})=>{
+                  return (
+                    <li
+                      key={id}
+                      onClick={this.selectProvince.bind(null, {id, name})}
+                      className={id === this.state.province.id ? 'active': ''}
+                    >
+                      {name}
+                    </li>
+                  )
+                })
+              }
+            </ul>
           </Panel>
 
-          <Panel hidden={this.state.activePanel != 'city'}>
-            {
-              this.state.cityList.map(({cityId, cityName})=>{
-                return (
-                  <li
-                    key={cityId}
-                    onClick={this.selectCity.bind(null, {cityId, cityName})}
-                    className={cityName === this.state.city.cityName ? 'active': ''}
-                  >
-                    {cityName}
-                  </li>
-                )
-              })
-            }
-            </Panel>
+
+
+          <Panel hidden={this.state.activePanel != 'city'} innerRef={(x)=>this.cityPanel = x}>
+            <ul>
+              {
+                this.state.cityList.map(({id, name})=>{
+                  return (
+                    <li
+                      key={id}
+                      onClick={this.selectCity.bind(null, {id, name})}
+                      className={id === this.state.city.id ? 'active': ''}
+                    >
+                      {name}
+                    </li>
+                  )
+                })
+              }
+            </ul>
+
+          </Panel>
+
+          <Panel hidden={this.state.activePanel != 'area'} innerRef={(x)=>this.areaPanel = x}>
+            <ul>
+              {
+                this.state.areaList.map(({id, name})=>{
+                  return (
+                    <li
+                      key={id}
+                      onClick={this.selectArea.bind(null, {id,name})}
+                      className={id === this.state.area.id ? 'active': ''}
+                    >
+                      {name}
+                    </li>
+                  )
+                })
+              }
+            </ul>
+          </Panel>
 
         </StyleCitys>
       </Modal>
