@@ -3,6 +3,8 @@
 短信60秒倒计时组件
 
 ```js
+import Countdown from 'wonder-ui/Countdown';
+
 <Countdown onStart={(done)=>done()} runOnMount component="button"/>
 
 <Countdown onStart={(done)=>done()} component={({children, ...rest})=><Btn {...rest}>{props.children}</Btn>}/>
