@@ -11,6 +11,7 @@ import ScrollView from '../ScrollView';
 export default class Citys extends Component {
 
   static propTypes = {
+    visible: PropTypes.bool,
     onCancel: PropTypes.func,
     onSelect: PropTypes.func,
   }
@@ -155,7 +156,7 @@ export default class Citys extends Component {
     }
 
     if(this.state.areaList.length != prevState.areaList.length){
-      this.areaPanel.scrollTop() ;
+      this.areaPanel.scrollTop();
     }
   }
 

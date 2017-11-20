@@ -32,7 +32,6 @@ export default class ScrollView extends Component {
       locking,
       onScroll,
     });
-    console.log(this.zscroller);
   }
 
   componentWillUnmount(){
