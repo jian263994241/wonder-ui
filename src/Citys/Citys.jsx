@@ -5,6 +5,7 @@ import {StyleCitys, Panel, Subbar} from './Styled';
 import IconClose from '../Icons/Close';
 import Toolbar from '../Toolbar';
 import ScrollView from '../ScrollView';
+
 // 数据来源 http://passer-by.com/data_location/list.json
 
 
@@ -171,6 +172,19 @@ export default class Citys extends Component {
     if(this.state.provinceList.length === 0){
       return null;
     }
+    let index = 0;
+    switch (this.state.activePanel) {
+      case 'province':
+        index = 0
+        break;
+      case 'city':
+        index = 1
+        break;
+      case 'area':
+        index = 2
+        break;
+
+    }
 
     return (
       <Modal
@@ -205,9 +219,9 @@ export default class Citys extends Component {
           }
 
         </Subbar>
-        <StyleCitys>
 
-          <Panel hidden={this.state.activePanel != 'province'}>
+        <StyleCitys index={index}>
+          <Panel>
             <ul>
               {
                 this.state.provinceList.map(({id, name})=>{
@@ -224,10 +238,7 @@ export default class Citys extends Component {
               }
             </ul>
           </Panel>
-
-
-
-          <Panel hidden={this.state.activePanel != 'city'} innerRef={(x)=>this.cityPanel = x}>
+          <Panel innerRef={(x)=>this.cityPanel = x}>
             <ul>
               {
                 this.state.cityList.map(({id, name})=>{
@@ -243,10 +254,8 @@ export default class Citys extends Component {
                 })
               }
             </ul>
-
           </Panel>
-
-          <Panel hidden={this.state.activePanel != 'area'} innerRef={(x)=>this.areaPanel = x}>
+          <Panel innerRef={(x)=>this.areaPanel = x}>
             <ul>
               {
                 this.state.areaList.map(({id, name})=>{
@@ -263,7 +272,6 @@ export default class Citys extends Component {
               }
             </ul>
           </Panel>
-
         </StyleCitys>
       </Modal>
     )

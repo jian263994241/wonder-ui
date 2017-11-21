@@ -1,7 +1,18 @@
 import styled from 'styled-components';
 import ScrollView from '../ScrollView';
+import SwipeableViews from 'react-swipeable-views';
 
-export const StyleCitys = styled.div `
+export const StyleCitys = styled(SwipeableViews).attrs({
+  containerStyle: {
+    width: '100%',
+    height: '100%'
+  },
+  slideStyle:{
+    width: '100%',
+    height: '100%'
+  },
+  disabled: true
+}) `
   background-color: #fff;
   box-sizing: border-box;
   width: 100%;
@@ -11,8 +22,6 @@ export const StyleCitys = styled.div `
 
 
 export const Panel = styled(ScrollView) `
-
-  display: ${props=>props.hidden ? 'none': 'block'};
 
   ul{
     width: 100%;
@@ -27,13 +36,13 @@ export const Panel = styled(ScrollView) `
       height: 44px;
       list-style: none;
       box-sizing: border-box;
-      padding: 10px 22px;
+      padding: 10px 20px;
       font-size: 15px;
       position: relative;
       &.active {
         color: #F54D4F;
         &::after {
-          background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAaCAYAAADWm14/AAAAAXNSR0IArs4c6QAAAz5JREFUSA3FVl9IU2EUP+fu6tDdrayHwteUegvxMUKREovYJjL6sw0lSkQwCHqIilgvUUQZRQpW5toE0crdqxgIQRBFT0X1GEKPlVHkvYttzns633RDp0432vpg+/6c73y/33fO73wbwn9o5PU6DDQmCUCXSo1PgYCkgz5CRPuBoEouNQFj5t1NxjyEAD9kqdzLfenanM91CojuI2CCEA44wuqrkqVA97c28G37xHURoUuAi3FJCMTa3buIzKec9zJGv6GE1UcCXLSiExCKn1+gCQ79dsabtNfUnU8hL30VVQM06rHoWnyS1d7Cef+kWGkfDmr6cgJFrQJDTdxisBbO+awsoxMH1RXggkjRUqD73Z0EdCaleIvcWjEU+SIAs1tRUqD73I0ANC1EJ4GlQxkeD2YDp+f/PAIxn6eGgVOKlxCv5wIXJGR+HIIcBrsiV53AoaFYmlkhPXV6thjR+AT7buNy02w1dRcA1JxHSQi0lxm3GslfmdrM6bGOUSje+JMY5R+YPSy6j3YHP7OBgLnO9swyp6jMCwhzTOKY7nVdzljyHBgTiV4+oxkRv8tW2Yl9Y8ZmjkiJMOp3HTYJxGOBXBdH7SFtbDPO6T2639lFJvTzzeMWwKbKsPombduoT4nQFlKn2Pkchw/BxGC03V2/kWPazm98E5hwV8wRpdP5gAufTBUoIbWXw/eAa7fCTJIWPemsFhtytVhHWy2ZC0+YuCxJeE0JRUK59q9lyxAQRqVyRzeTeMkkqs04anTWU7GWk1ijDvfWRDIpFF/FPhHb4wgrPv+2ggAODMwr1vI2juUMk6g3ZuNBFtaqx4r/1chG0hxlzezm1H1Q0OFjEhyI/NsKAsIdH479BFk+wqPfROAx/K4r2ccan9/fZttBZvZNlqxODIWi2Xs2O191u7Sj4XU3cxSm+GNBCY5zZYwIG5dqN6/dSyme5MbK4Wdv0z6F9OsSWARz9xCYdxgsZpGkBhPIQQv0PCU6BJ8S1oYLAV3uk5PAIglXP9+4i0l85bBbeU2I7qo9rF5cflCh41UayD5Iqa3rYcAXDL5zCXycy+1S9r5C5xsS4Pc8qdhtHg7VayYyzYr3F6r4tUj+BRqrM3Aubii9AAAAAElFTkSuQmCC');
+          background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAcCAYAAAAJKR1YAAAAAXNSR0IArs4c6QAAA61JREFUSA3FVk1oU0EQ3tk0rTZ5wVbEm4KtlurNQxUFoaj4A6atUpEmDWqhtVT0IIiCh3rwIGJVVMSCUptU0ahNf6B4EhTUnkRQQRRFvBQRkb5XTV+TN85G93VfNG0aTfsgzOy3MztfZnZ2F9gcfT+adi5NjCciyKASkJ3TevpOCSowF3wwEPAZYDxFxJUyPjBYRaRecwnMlsQ79S4d9NsqmVTsgoJUcgpmi4iMY/SZHaRvleNfEsLajXuvhD6rGdIba5uR4SEHGYBhzV3SLLFZ20N6yF/NLHhApXJPBodP4C6s8nZFRyYxqeVRxoP15Saaw4xhqR0G2BhnrvXeSO8LGyMl7yXDvbULTGYOqmSoLEihg+lkBLG8EsL29gIjYd1hiBVqFhDguC8Si6mY1PPaZcbb5+cpFZtlsJQE6PZF+k47MGWQtwzpjTVt1FFtSiw6huGJVrLE7ijH3O9BXrrMCNVswiQOUXaUCsBH4LxKC/d+/hsRiYG+r34RTphdBFRwhEventh5OZmLjAf9FSaDZ7RvFtj+ADoAX0dkXtpYBoWzifGT5LydfmUWs87pjf4DGWynhbGpvtRENqCSAQDLxXlDNmREAI4I8x2RLHbRCNRudGBZDFIdFTfvkuly1ZwIHfV091LbZ/dx2kRnaLcZ0lzUnTIVjYfqVkgsG2m8e36JNnG1w5bz695w7KwDm2bAxZXvAgyI1Cq2JaZlDWBrQ4mCZVSNoP8wXQktqgE9Jx5pZe5WFctGT7W9J9LfDwyPORwQVxj6WFSUwoGnDYxg3VYqe3oW3qOneBe0R80082mH9jnkjfSL0nWpHvSvN9LhdlHFVF1vrKu0WPI2lcpl48BGKTs7fJ23vtjYDBSbkPDRlhe2UOkeq/4U7AAdcs4nAxlgqG4hWslBupV80p6IJKmj9ohtILGZSgchkWIsLt5JD9sPjoUs1iFKIzFsbnYbSes+jZdJTEgAPOLpjg2p2Ex1ByHhLFINLvcOIjUqFxMlEaXRAzWpN/DY95ErhG2Q80ICsE4q+wUVy0XPeHWMhWq3WUkccOwPxt4D4zeRWSfUYFSqh17P4i3Q2Tmh4rnoGQmJxUQ7W8imvkqAvdOKitbAtejXXAik+0xJSBjrQf9VRPb3GxrgWyHDtfMi/W/SF851/MceSl/IW766TZQkHad/kuCM7/6fZESMaTMkjMSJrY8a9CaevKeAw0Et3HdZzP/PLytCImB8/65lppkIk0M53XcdU736/oXgT0azTJ6RjQkLAAAAAElFTkSuQmCC');
           content: '';
           width: 18px;
           height: 14px;
@@ -54,18 +63,22 @@ export const Subbar = styled.div `
   height: 44px;
   background-color: #F8F8F8;
   box-sizing: border-box;
-  padding: 0 12px;
+  padding: 0 8px;
   color: #666666;
   display: flex;
   >div{
     float: left;
-    padding: 10px;
+    padding: 12px;
+    margin-right: 5px;
     position: relative;
     height: 100%;
     box-sizing: border-box;
     text-overflow:ellipsis;
-    max-width: 50%;
+    max-width: 100%;
     overflow: hidden;
+    &:last-child{
+      margin-right: 0;
+    }
     &.active {
       color: #F54D4F;
       ::after{

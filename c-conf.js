@@ -1,4 +1,4 @@
-
+fis.project.addIgnore(['docs/*']);
 
 fis.match('example/*/*.js',{
   parser: fis.plugin('browserify')

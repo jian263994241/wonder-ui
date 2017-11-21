@@ -3,13 +3,12 @@ import styled from 'styled-components';
 
 
 export const StyleToolbar = styled.div `
-  font-size: 12px;
+  font-size: 16px;
   color: #000;
   background-color: #fff;
   height: 44px;
   text-align: center;
-  padding: 12px;
-  font-size: 16px;
+  padding: 14px;
   line-height: 1;
   box-sizing: border-box;
   white-space: nowrap;
