@@ -88,7 +88,7 @@ export default class Citys extends Component {
       }
     }
 
-    this.setState({cityList, areaList, province: {id, name}, activePanel});
+    this.setState({cityList, areaList, province: {id, name}, city: {}, area: {}, activePanel});
 
   }
 
@@ -113,6 +113,7 @@ export default class Citys extends Component {
       this.setState({
         areaList,
         city,
+        area: {},
         activePanel: 'area'
       });
     }else{
@@ -134,18 +135,18 @@ export default class Citys extends Component {
 
   resetCityList = ()=>{
     this.setState({
-      cityList: [],
-      areaList: [],
-      city: {},
-      area: {},
+      // cityList: [],
+      // areaList: [],
+      // city: {},
+      // area: {},
       activePanel: 'province'
     })
   }
 
   resetAreaList = ()=>{
     this.setState({
-      areaList: [],
-      area: {},
+      // areaList: [],
+      // area: {},
       activePanel: 'city'
     })
   }
@@ -172,6 +173,7 @@ export default class Citys extends Component {
     if(this.state.provinceList.length === 0){
       return null;
     }
+    
     let index = 0;
     switch (this.state.activePanel) {
       case 'province':
