@@ -16,8 +16,8 @@ export default class Countdown extends Component{
   static defaultProps = {
     secondsResidue: 60,
     component: 'div',
-    defaultText: '发送验证码',
-    text: '%s秒后重新发送'
+    defaultText: '获取验证码',
+    text: '获取验证码(%s)'
   }
 
   state = {

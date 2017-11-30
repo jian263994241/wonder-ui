@@ -99,22 +99,20 @@ export default class Modal extends Component {
 
   renderModal = interpolatedStyles => {
     const {visible, children} = this.props;
-
+    const Fragment = React.Fragment || 'div';
     return (
-      <div>
+      <Fragment>
         {
-          interpolatedStyles.map(({key, style, data: {type}})=>{
-
+          interpolatedStyles.map(({key, style: {x}, data: {type}})=>{
             if(type === 'modal'){
-              return <StyleModal key={key} style={{transform: `translate3d(0, ${style.x}%, 0)`}}> {children} </StyleModal>
+              return <StyleModal key={key} style={{transform: `translate3d(0, ${x}%, 0) scale(1)`}}> {children} </StyleModal>
             }
             if(type === 'overlay'){
-              return <StyleOverlay key={key} style={{opacity: `${1 - style.x/100}`}} onClick={this.props.onCancel} onTouchMove={e=>e.preventDefault()}/>
+              return <StyleOverlay key={key} style={{opacity: `${1 - x/100}`}} onClick={this.props.onCancel} onTouchMove={e=>e.preventDefault()}/>
             }
-
           })
         }
-      </div>
+      </Fragment>
     )
   }
 
@@ -132,13 +130,14 @@ export default class Modal extends Component {
       <Mounter
         className={className}
         style={style}
+        ref="modal"
       >
         <TransitionMotion
           defaultStyles={this.getDefaultStyles()}
           styles={this.getStyles()}
           willEnter={this.willEnter}
           willLeave={this.willLeave}
-          ref="modal"
+
         >
           {this.renderModal}
         </TransitionMotion>

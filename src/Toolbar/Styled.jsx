@@ -15,6 +15,15 @@ export const StyleToolbar = styled.div `
   overflow: hidden;
   width: 100%;
   position: relative;
+
+  span, a{
+    vertical-align: middle;
+  }
+
+  a{
+    color: #298BEB;
+  }
+
   &::after{
     content: '';
     clear: both;
@@ -38,14 +47,10 @@ export const StyleToolbar = styled.div `
     float: left;
     position: relative;
     z-index: 2;
-
   }
   .right{
     float: right;
     position: relative;
     z-index: 2;
-    span, a{
-      vertical-align: middle;
-    }
   }
 `;
