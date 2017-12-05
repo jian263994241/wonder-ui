@@ -1,3 +1,4 @@
+import React, {Component} from 'react';
 import styled from 'styled-components';
 import ScrollView from '../ScrollView';
 import SwipeableViews from 'react-swipeable-views';

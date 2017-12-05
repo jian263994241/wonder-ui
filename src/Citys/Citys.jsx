@@ -54,7 +54,7 @@ export default class Citys extends Component {
     let script = document.createElement('script');
     script.src = url;
     script.onload = ()=> {
-      script.remove();
+      script.parentNode.removeChild(script);
       delete window.jsonp_location;
     };
     window.jsonp_location = callback;
@@ -173,7 +173,7 @@ export default class Citys extends Component {
     if(this.state.provinceList.length === 0){
       return null;
     }
-    
+
     let index = 0;
     switch (this.state.activePanel) {
       case 'province':

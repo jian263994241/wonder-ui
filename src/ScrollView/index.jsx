@@ -73,7 +73,8 @@ export default class ScrollView extends Component {
     }
 
     const containerStyle = {
-      width: '100%'
+      width: '100%',
+      overflow: 'auto'
     }
 
     return (

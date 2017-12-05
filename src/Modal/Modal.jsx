@@ -3,7 +3,6 @@ import {findDOMNode} from 'react-dom';
 import PropTypes from 'prop-types';
 import Mounter from 'rc-mounter';
 import TransitionMotion from 'react-motion/lib/TransitionMotion';
-import Motion from 'react-motion/lib/Motion';
 import spring from 'react-motion/lib/spring';
 import presets from 'react-motion/lib/presets';
 
