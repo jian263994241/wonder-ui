@@ -47,6 +47,7 @@ injectGlobal `
 
   a {
     text-decoration: none;
+    color: #5399ED;
   }
 
   p {

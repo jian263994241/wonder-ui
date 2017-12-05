@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
-import Countdown from '../../src/Countdown';
+import {Page, PageContent, Link} from '../../src/Minimal';
+import Citys from '../../src/Citys';
 
-export default class Example extends Component {
+export default class CitysDemo extends Component {
 
   state = {
     visible: false,
@@ -34,7 +34,8 @@ export default class Example extends Component {
       width: '100%',
       border: '1px solid #ccc',
       padding: '10px',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      background: '#fff'
     }
 
     const style = {
@@ -48,15 +49,16 @@ export default class Example extends Component {
     }
 
     return (
-      <div style={style}>
-        <Countdown onStart={(done)=>done()}/>
-      </div>
+      <Page>
+        <PageContent>
+          <div style={inputStyle} onClick={this.open}>{this.state.inputText? this.state.inputText : '请选择'}</div>
+          <Citys
+            visible={this.state.visible}
+            onCancel={this.close}
+            onSelect={this.select}
+          />
+        </PageContent>
+      </Page>
     )
   }
 }
-
-
-render(
-  <Example/>,
-  document.getElementById('root')
-)

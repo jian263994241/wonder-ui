@@ -8,3 +8,4 @@ export PageContent from './PageContent';
 export Link from 'react-router-dom/Link';
 export Route from 'react-router-dom/Route'
 export withRouter from 'react-router-dom/withRouter';
+export Redirect from 'react-router-dom/Redirect';
