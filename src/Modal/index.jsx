@@ -1,4 +1,3 @@
+import Modal from './Modal';
 
-
-
-module.exports = require('./Modal').default;
+export default Modal;

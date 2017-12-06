@@ -7,6 +7,8 @@ import Citys from './mod/Citys';
 import Picker from './mod/Picker';
 import Countdown from './mod/Countdown';
 import Keyboard from './mod/Keyboard';
+import Popup from './mod/Popup';
+import Dialog from './mod/Dialog';
 
 class Demos extends Component {
 
@@ -21,6 +23,8 @@ class Demos extends Component {
             <Route path="/picker" component={Picker}/>
             <Route path="/countdown" component={Countdown}/>
             <Route path="/keyboard" component={Keyboard}/>
+            <Route path="/popup" component={Popup}/>
+            <Route path="/dialog" component={Dialog}/>
           </Pages>
         </View>
       </Views>

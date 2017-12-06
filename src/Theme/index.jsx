@@ -1,0 +1,13 @@
+import React from 'react';
+import styled, {ThemeProvider} from 'styled-components';
+import theme from 'styled-theming';
+import colors, {blue} from './Colors';
+
+//base colors
+export const color = theme('mode', {...colors, default: blue });
+
+//dialog modal
+export const modalBg = 'rgba(255,255,255,0.95)';
+export const modalButonColor  = color;
+export const modalButonActiveBg = 'rgba(230,230,230,0.95)';
+export const modalHairlineColor = 'rgba(0,0,0,0.2)';

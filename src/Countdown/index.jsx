@@ -1,1 +1,3 @@
-module.exports = require('./Countdown').default;
+import Countdown from './Countdown';
+
+export default Countdown;

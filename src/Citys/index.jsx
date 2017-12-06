@@ -1,1 +1,3 @@
-module.exports = require('./Citys').default;
+import Citys from './Citys';
+
+export default Citys;

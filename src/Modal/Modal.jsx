@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, createElement} from 'react';
 import {findDOMNode} from 'react-dom';
 import PropTypes from 'prop-types';
 import Mounter from 'rc-mounter';
@@ -13,6 +13,7 @@ export default class Modal extends Component {
   static propTypes = {
     visible: PropTypes.bool,
     overlay: PropTypes.bool,
+    fade: PropTypes.bool,
     onCancel: PropTypes.func,
   }
 
@@ -24,8 +25,33 @@ export default class Modal extends Component {
     }
 
     this.defaultLayers = [
-      {key: '.1', data: {type: 'modal'}},
-      {key: '.2',  data: {type: 'overlay'}}
+      {
+        key: '.1',
+        data: {
+          component: StyleModal,
+          getProps : ({className, children})=>{
+            return { className, children }
+          },
+          mapStyle: (x, style)=>{
+            return {...style, transform: `translate3d(0, ${x}%, 0) scale(1)`}
+          }
+        }
+      },
+      {
+        key: '.2',
+        data: {
+          component: StyleOverlay,
+          getProps: () => {
+            return {
+              onClick: props.onCancel,
+              onTouchMove: e=>e.preventDefault()
+            }
+          },
+          mapStyle : (x)=>{
+            return {opacity: `${1 - x/100}`}
+          }
+        }
+      }
     ];
 
     if(props.visible){
@@ -97,18 +123,12 @@ export default class Modal extends Component {
   }
 
   renderModal = interpolatedStyles => {
-    const {visible, children} = this.props;
     const Fragment = React.Fragment || 'div';
     return (
       <Fragment>
         {
-          interpolatedStyles.map(({key, style: {x}, data: {type}})=>{
-            if(type === 'modal'){
-              return <StyleModal key={key} style={{transform: `translate3d(0, ${x}%, 0) scale(1)`}}> {children} </StyleModal>
-            }
-            if(type === 'overlay'){
-              return <StyleOverlay key={key} style={{opacity: `${1 - x/100}`}} onClick={this.props.onCancel} onTouchMove={e=>e.preventDefault()}/>
-            }
+          interpolatedStyles.map(({key, style: {x}, data: {component, getProps, mapStyle}})=>{
+            return createElement(component,  {key, style: mapStyle(x), ...getProps(this.props)})
           })
         }
       </Fragment>
@@ -126,17 +146,12 @@ export default class Modal extends Component {
     return inline ? (
       <div className={className} style={style} ref="modal">{children}</div>
     ):(
-      <Mounter
-        className={className}
-        style={style}
-        ref="modal"
-      >
+      <Mounter ref="modal">
         <TransitionMotion
           defaultStyles={this.getDefaultStyles()}
           styles={this.getStyles()}
           willEnter={this.willEnter}
           willLeave={this.willLeave}
-
         >
           {this.renderModal}
         </TransitionMotion>

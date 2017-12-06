@@ -12,7 +12,9 @@ export default class Welcome extends Component {
           <Link to="/citys">省市区选择器</Link>,
           <Link to="/picker">时间选择器</Link>,
           <Link to="/countdown">短信倒计时</Link>,
-          <Link to="/keyboard">键盘</Link>
+          <Link to="/keyboard">键盘</Link>,
+          <Link to="/popup">弹窗</Link>,
+          <Link to="/dialog">对话</Link>,
         </PageContent>
       </Page>
     )
