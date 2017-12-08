@@ -7,23 +7,29 @@ import IconClose from '../SvgIcon/CloseOutline';
 import IconOffline from '../SvgIcon/Offline';
 import IconWarring from '../SvgIcon/Warning';
 
-export default function toast (text = '', callback, icon) {
+export default function toast (text = '', callback, conf = {}) {
   const noButtons = true;
   const toast = true;
   const overlayStyle = {
     background: 'rgba(0,0,0,0)'
   };
-  const title = icon ;
+  const title = conf.icon ;
+  const timeout = conf.timeout != undefined ? conf.timeout : 1500;
 
-  mount({title, text, noButtons, toast, overlayStyle}, ()=>{
-    setTimeout(()=>{
-      unmount({title, text, noButtons, toast, overlayStyle}, callback);
-    }, 1500);
-  });
+  const open = (cb)=>mount({title, text, noButtons, toast, overlayStyle}, cb);
+  const close = (cb)=>unmount({title, text, noButtons, toast, overlayStyle}, cb);
+
+  if(timeout != 0){
+    open(()=>setTimeout(close.bind(null, callback), timeout));
+  }else{
+    open();
+  }
+  
+  return close;
 }
 
 
-toast.success = (text, callback)=>toast.call(null, text, callback, <IconSuccess/>);
-toast.fail = (text, callback)=>toast.call(null, text, callback, <IconClose/>);
-toast.warning = (text, callback)=>toast.call(null, text, callback, <IconWarring/>);
-toast.offline = (text, callback)=>toast.call(null, text, callback, <IconOffline/>);
+toast.success = (text, callback)=>toast.call(null, text, callback, {icon: <IconSuccess/>});
+toast.fail = (text, callback)=>toast.call(null, text, callback, {icon: <IconClose/>});
+toast.warning = (text, callback)=>toast.call(null, text, callback, {icon: <IconWarring/>});
+toast.offline = (text, callback)=>toast.call(null, text, callback, {icon: <IconOffline/>});

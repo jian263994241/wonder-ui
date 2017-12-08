@@ -36,7 +36,7 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Backspace = require('../icons/Backspace');
+var _Backspace = require('../SvgIcon/Backspace');
 
 var _Backspace2 = _interopRequireDefault(_Backspace);
 

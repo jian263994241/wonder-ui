@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import DOMScroller from 'zscroller/lib/DOMScroller';
-import './Styled';
+import {Preloader} from '../Preloader/Styled';
+import {Container, PullToRefreshContent, PullToRefreshLayer, PullToRefreshArrow} from './Styled';
 
 export default class ScrollView extends Component {
 
@@ -10,7 +11,9 @@ export default class ScrollView extends Component {
     scrollingX: PropTypes.bool,
     scrollingY: PropTypes.bool,
     locking: PropTypes.bool,
-    onScroll: PropTypes.func
+    onScroll: PropTypes.func,
+    pullToRefresh: PropTypes.bool,
+    onRefresh: PropTypes.func,
   }
 
   static defaultProps = {
@@ -22,8 +25,12 @@ export default class ScrollView extends Component {
 
   zscroller = null;
 
+  state = {
+    stage : null
+  }
+
   componentDidMount(){
-    const {scrollbars, scrollingX, scrollingY, locking, onScroll} = this.props;
+    const {scrollbars, scrollingX, scrollingY, locking, onScroll, pullToRefresh} = this.props;
     this.zscroller =  new DOMScroller(this.refs.root, {
       animationDuration: 200,
       scrollbars,
@@ -32,10 +39,78 @@ export default class ScrollView extends Component {
       locking,
       onScroll,
     });
+
+    if(pullToRefresh){
+      this.pullToRefreshInit();
+    }
+
   }
 
+  pullToRefreshInit = ()=>{
+    const scroller = this.zscroller.scroller;
+    const {onRefresh} = this.props;
+
+    scroller.activatePullToRefresh(50, ()=>{
+      //start
+      this.setState({ stage: 'pull-up' })
+    }, ()=>{
+      //reset
+      this.setState({ stage: null })
+    }, ()=>{
+      //end
+      this.setState({ stage: 'refreshing' });
+
+      onRefresh && onRefresh(scroller);
+
+    })
+  }
+
+  renderPullToRefresh = ()=>{
+    const {
+      scrollbars,
+      scrollingX,
+      scrollingY,
+      locking,
+      innerStyle,
+      children,
+      ...rest
+    } = this.props
+
+    return (
+      <PullToRefreshContent stage={this.state.stage} {...rest}>
+        <div ref="root" style={innerStyle}>
+          <PullToRefreshLayer>
+            <Preloader/>
+            <PullToRefreshArrow/>
+          </PullToRefreshLayer>
+          {children}
+        </div>
+      </PullToRefreshContent>
+    )
+  }
+
+  renderBase = ()=>{
+    const {
+      scrollbars,
+      scrollingX,
+      scrollingY,
+      locking,
+      innerStyle,
+      children,
+      ...rest
+    } = this.props;
+    return (
+      <Container {...rest}>
+        <div ref="root" style={innerStyle}>
+          {children}
+        </div>
+      </Container>
+    )
+  }
+
+
   componentWillUnmount(){
-    this.destroy();
+    this.zscroller.destroy();
   }
 
   scrollTop = (animate = false)=>{
@@ -53,34 +128,6 @@ export default class ScrollView extends Component {
   }
 
   render(){
-
-    const {
-      style,
-      scrollbars,
-      scrollingX,
-      scrollingY,
-      locking,
-      innerStyle,
-      children,
-      ...rest
-    } = this.props
-
-    const defaultStyle = {
-      width: '100%',
-      height: '100%',
-      overflow: 'hidden',
-      position: 'relative',
-    }
-
-    const containerStyle = {
-      width: '100%',
-      overflow: 'auto'
-    }
-
-    return (
-      <div style={{...defaultStyle, ...style}} {...rest}>
-        <div ref="root" style={{...containerStyle, ...innerStyle}}>{children}</div>
-      </div>
-    )
+    return this.props.pullToRefresh? this.renderPullToRefresh(): this.renderBase()
   }
 }

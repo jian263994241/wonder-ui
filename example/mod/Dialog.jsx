@@ -45,7 +45,7 @@ export default class DialogDemo extends Component {
     Dialog.toast.success('第2个toast');
     Dialog.toast.fail('第3个toast');
     Dialog.toast.warning('第4个toast');
-    Dialog.toast.offline('第5个toast');
+    Dialog.toast.offline('第5个toast');  
   }
 
   render(){
