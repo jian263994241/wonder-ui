@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Minimal';
-import Alert from '../../src/Dialog/Alert';
+import {Page, PageContent, Link} from '../../src/CreateApp';
+import Dialog from '../../src/Dialog';
 
 export default class DialogDemo extends Component {
 
@@ -21,12 +21,40 @@ export default class DialogDemo extends Component {
     })
   }
 
+  alert = ()=>{
+    Dialog.alert({text: 'Alert content'});
+    Dialog.alert({text: 'Alert content2'});
+    Dialog.confirm({
+      text: '请继续',
+      okText: '好的',
+      cancelText: '不好',
+      onOk: ()=> {
+        Dialog.prompt({
+          title: '问题',
+          text: '你的名字?',
+          onOk: (val)=>Dialog.alert({text: val}),
+          onCancel: ()=>Dialog.alert({text: 'Cancel'}),
+        })
+      },
+      onCancel: ()=>Dialog.alert({text: 'Confirm -> cancel'}),
+    });
+  }
+
+  toast = ()=>{
+    Dialog.toast('第1个toast');
+    Dialog.toast.success('第2个toast');
+    Dialog.toast.fail('第3个toast');
+    Dialog.toast.warning('第4个toast');
+    Dialog.toast.offline('第5个toast');
+  }
+
   render(){
-    console.log(this.state);
     return (
       <Page>
         <PageContent>
-          <Alert buttons={[{text:'ok', onClick:()=>this.setState({text: 'ok'})}]} text={this.state.text}></Alert>
+          <a onClick={this.alert}>alert</a>,
+
+          <a onClick={this.toast}>toast</a>
         </PageContent>
       </Page>
     )

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import {StyleKeyboard, StyleEnpadButton} from './Styled';
 
-import Backspace from '../icons/Backspace';
-import Shift from '../icons/Shift';
-import ShiftFill from '../icons/ShiftFill';
+import Backspace from '../SvgIcon/Backspace';
+import Shift from '../SvgIcon/Shift';
+import ShiftFill from '../SvgIcon/ShiftFill';
 
 export default class Enpad extends Component {
 

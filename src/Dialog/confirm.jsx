@@ -4,15 +4,25 @@ import Dialog from './Dialog';
 import mount, {unmount} from './mount';
 
 
-export default function alert (props = {}) {
+export default function confirm (props = {}) {
   const {
     onOk,
     okText = '确定',
+    onCancel,
+    cancelText = '取消',
     title,
     text
   } = props;
 
   const buttons = [
+    {
+      text: cancelText,
+      bold: false,
+      onClick: ()=>{
+        onCancel && onCancel();
+        unmount({title, text, buttons});
+      }
+    },
     {
       text: okText,
       bold: true,

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 
 
-export const StyleModal = styled.div `
+export const PopupModal = styled.div `
   position: absolute;
   left: 0;
   bottom: 0;
@@ -13,6 +13,13 @@ export const StyleModal = styled.div `
   z-index: 12500;
 `;
 
+export const StyleModal = styled.div `
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  transform: translate3d(-50%, -50%, 0) scale(1.185);
+`;
 
 export const StyleOverlay = styled.div `
   position: absolute;

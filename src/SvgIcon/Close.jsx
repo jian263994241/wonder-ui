@@ -1,4 +1,4 @@
-import React, {Component, cloneElement} from 'react';
+import React, {Component} from 'react';
 
 export default function Close({width='14',color='#A0A4AD', ...rest}){
   return (

@@ -34,15 +34,15 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _Styled = require('./Styled');
 
-var _Backspace = require('../icons/Backspace');
+var _Backspace = require('../SvgIcon/Backspace');
 
 var _Backspace2 = _interopRequireDefault(_Backspace);
 
-var _Shift = require('../icons/Shift');
+var _Shift = require('../SvgIcon/Shift');
 
 var _Shift2 = _interopRequireDefault(_Shift);
 
-var _ShiftFill = require('../icons/ShiftFill');
+var _ShiftFill = require('../SvgIcon/ShiftFill');
 
 var _ShiftFill2 = _interopRequireDefault(_ShiftFill);
 

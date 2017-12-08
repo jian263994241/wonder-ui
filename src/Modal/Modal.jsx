@@ -6,13 +6,14 @@ import TransitionMotion from 'react-motion/lib/TransitionMotion';
 import spring from 'react-motion/lib/spring';
 import presets from 'react-motion/lib/presets';
 
-import {StyleModal, StyleOverlay} from './Styled';
+import {PopupModal, StyleModal, StyleOverlay} from './Styled';
 
 export default class Modal extends Component {
 
   static propTypes = {
     visible: PropTypes.bool,
     overlay: PropTypes.bool,
+    overlayStyle: PropTypes.object,
     fade: PropTypes.bool,
     onCancel: PropTypes.func,
   }
@@ -26,9 +27,9 @@ export default class Modal extends Component {
 
     this.defaultLayers = [
       {
-        key: '.1',
+        key: 'popup',
         data: {
-          component: StyleModal,
+          component: PopupModal,
           getProps : ({className, children})=>{
             return { className, children }
           },
@@ -38,17 +39,35 @@ export default class Modal extends Component {
         }
       },
       {
-        key: '.2',
+        key: 'modal',
+        data: {
+          component: StyleModal,
+          getProps : ({className, children})=>{
+            return { className, children }
+          },
+          mapStyle: (x)=>{
+            const {style} = this.props;
+            return {
+              ...style,
+              transform: `translate3d(-50%, -50%, 0) scale(${x/100 * 0.181 + 1})`,
+              opacity: `${1 - x/100}`
+            }
+          }
+        }
+      },
+      {
+        key: 'overlay',
         data: {
           component: StyleOverlay,
-          getProps: () => {
+          getProps: ({onCancel}) => {
             return {
-              onClick: props.onCancel,
+              onClick: onCancel,
               onTouchMove: e=>e.preventDefault()
             }
           },
           mapStyle : (x)=>{
-            return {opacity: `${1 - x/100}`}
+            const {overlayStyle} = this.props;
+            return {...overlayStyle, opacity: `${1 - x/100}`}
           }
         }
       }
@@ -72,17 +91,23 @@ export default class Modal extends Component {
 
   getStyles = ()=>{
 
-    const {visible, overlay} = this.props;
+    const {visible, overlay, fade} = this.props;
 
-    return this.state.layers.filter(({data:{type}})=>{
-      if(type === 'overlay' && !overlay ){
+    return this.state.layers.filter(({key})=>{
+      if(key === 'overlay' && !overlay ){
+        return false;
+      }
+      if(key === 'modal' && !fade ){
+        return false;
+      }
+      if(key === 'popup' && fade ){
         return false;
       }
       return true;
     }).map((layer)=>{
       return {
         ...layer,
-        style: { x: spring(0, presets.noWobble)}
+        style: { x: spring(0)}
       }
 
     })
@@ -93,8 +118,15 @@ export default class Modal extends Component {
     return { x: 100 }
   }
 
-  willLeave=()=>{
-    return { x: spring(100, {...presets.noWobble, precision: 50}) }
+  willLeave = ()=>{
+    return { x: spring(100, {...presets.stiff, precision: 0.1 }) }
+  }
+
+  didLeave = ({key})=>{
+    const {didLeave} = this.props;
+    if(key === 'popup' || key === 'modal'){
+      didLeave && setTimeout(didLeave, 0);
+    }
   }
 
   getModal = ()=>{
@@ -140,7 +172,7 @@ export default class Modal extends Component {
       className,
       style,
       inline,
-      children,
+      children
     } = this.props;
 
     return inline ? (
@@ -152,6 +184,7 @@ export default class Modal extends Component {
           styles={this.getStyles()}
           willEnter={this.willEnter}
           willLeave={this.willLeave}
+          didLeave={this.didLeave}
         >
           {this.renderModal}
         </TransitionMotion>

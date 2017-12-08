@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Backspace from '../icons/Backspace';
+import Backspace from '../SvgIcon/Backspace';
 import {StyleKeyboard, StyleNumpadButton} from './Styled';
 
 export default class Numpad extends Component {

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import device from '../Minimal/device';
+import device from '../CreateApp/device';
 
 function hairline(position, color) {
   let result = '';

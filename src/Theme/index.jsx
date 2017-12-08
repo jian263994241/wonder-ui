@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, {ThemeProvider} from 'styled-components';
 import theme from 'styled-theming';
-import colors, {blue} from './Colors';
+import colors, {blue} from './colors';
 
 //base colors
 export const color = theme('mode', {...colors, default: blue });

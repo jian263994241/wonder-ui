@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../Modal';
 import {StyleCitys, Panel, Subbar} from './Styled';
-import IconClose from '../Icons/Close';
+import IconClose from '../SvgIcon/Close';
 import Toolbar from '../Toolbar';
 import ScrollView from '../ScrollView';
 

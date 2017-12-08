@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Minimal';
+import {Page, PageContent, Link} from '../../src/CreateApp';
 import Citys from '../../src/Citys';
 
 export default class CitysDemo extends Component {

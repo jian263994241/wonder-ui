@@ -1,4 +1,4 @@
-import React, {Component, cloneElement} from 'react';
+import React, {Component} from 'react';
 
 export default function Backspace({width='22', color='#000', ...rest}){
   return (
