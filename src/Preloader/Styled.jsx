@@ -8,8 +8,17 @@ const spin = keyframes `
   }
 `
 
-export const Preloader = styled.div.attrs({
+export const StylePreloader = styled.div.attrs({
   children: <Loader width="100%"/>
+}) `
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  vertical-align: middle;
+  animation: ${spin} 1s steps(12, end) infinite;
+`
+export const StylePreloaderWhite = styled.div.attrs({
+  children: <Loader width="100%" color="#fff"/>
 }) `
   display: inline-block;
   width: 34px;

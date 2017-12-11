@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import DOMScroller from 'zscroller/lib/DOMScroller';
-import {Preloader} from '../Preloader/Styled';
+import {StylePreloader} from '../Preloader/Styled';
 import {Container, PullToRefreshContent, PullToRefreshLayer, PullToRefreshArrow} from './Styled';
 
 export default class ScrollView extends Component {
@@ -80,7 +80,7 @@ export default class ScrollView extends Component {
       <PullToRefreshContent stage={this.state.stage} {...rest}>
         <div ref="root" style={innerStyle}>
           <PullToRefreshLayer>
-            <Preloader/>
+            <StylePreloader/>
             <PullToRefreshArrow/>
           </PullToRefreshLayer>
           {children}

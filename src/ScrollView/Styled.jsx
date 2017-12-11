@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled, {injectGlobal, css} from 'styled-components';
 import {toolbarSize} from '../styles/vars';
-import {Preloader} from '../Preloader/Styled';
+import {StylePreloader} from '../Preloader/Styled';
 import Arrow from '../SvgIcon/Arrow';
 
 injectGlobal `
@@ -85,7 +85,7 @@ export const PullToRefreshLayer = styled.div `
   top:0;
   width:100%;
   height:${toolbarSize};
-  ${Preloader} {
+  ${StylePreloader} {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -103,7 +103,7 @@ const refreshing = css `
     visibility: hidden;
     transition-duration: 0ms;
   }
-  ${Preloader} {
+  ${StylePreloader} {
     visibility: visible;
   }
 `

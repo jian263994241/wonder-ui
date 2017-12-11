@@ -14,6 +14,7 @@ export default class Dialog extends Component {
     verticalButtons: PropTypes.bool,
     noButtons: PropTypes.bool,
     afterText: PropTypes.node,
+    innerStyle: PropTypes.object,
   }
 
   static defaultProps = {
@@ -35,14 +36,15 @@ export default class Dialog extends Component {
       noButtons,
       visible,
       verticalButtons,
+      innerStyle,
       ...rest
     } = this.props;
 
     return (
       <Modal2 visible={visible} noButtons={noButtons} fade overlay {...rest}>
-        <ModalInner>
+        <ModalInner style={innerStyle}>
           {title && <ModalTitle>{title}</ModalTitle>}
-          <ModalText>{text}</ModalText>
+          {text && <ModalTitle>{text}</ModalTitle>}
           {afterText}
         </ModalInner>
         <ButtonGroup vertical={verticalButtons}>

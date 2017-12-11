@@ -105,7 +105,7 @@ const toast = css `
   ${ModalInner} {
     color:#fff;
     display: inline-block;
-    border-radius: 8px!important;
+    border-radius: 5px!important;
     background: rgba(0,0,0,0.7);
   }
 `
