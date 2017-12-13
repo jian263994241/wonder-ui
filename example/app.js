@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Views, View, Route, Pages, Page, PageContent, Link, Redirect} from '../src/CreateApp';
+import {Views, View, Route, Pages, Page, PageContent, Link, Redirect, PopupRoute} from '../src/CreateApp';
 
 import Welcome from './mod/Welcome';
 import Citys from './mod/Citys';
@@ -9,6 +9,7 @@ import Countdown from './mod/Countdown';
 import Keyboard from './mod/Keyboard';
 import Popup from './mod/Popup';
 import Dialog from './mod/Dialog';
+import PopupPage from './mod/PopupPage';
 
 class Demos extends Component {
 
@@ -26,6 +27,7 @@ class Demos extends Component {
             <Route path="/dialog" component={Dialog}/>
 
           </Pages>
+
         </View>
       </Views>
     )

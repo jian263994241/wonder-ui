@@ -1,40 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import AnimatedSwitch from 'react-router-transition/lib/AnimatedSwitch';
+import AnimatedSwitch from './transition/AnimatedSwitch';
 import spring from 'react-motion/lib/spring';
 import styled from 'styled-components';
 import withRouter from 'react-router-dom/withRouter';
+import {StylePages} from './Styled';
 
-const StylePages = styled(AnimatedSwitch) `
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: transparent;
-  >div{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    &::after{
-      position: absolute;
-      right: 100%;
-      top: 0;
-      width: 16px;
-      height: 100%;
-      background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
-      background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
-      z-index: -1;
-      content: '';
-      display: ${props=>props.shadow ? 'block': 'none'};
-    }
-    &:nth-child(1){
-      z-index: ${props=>props.reverse? 2 : 1};
-    }
-    &:nth-child(2){
-      z-index: ${props=>props.reverse? 1 : 2};
-    }
-  }
-`
+const Switch = StylePages.withComponent(AnimatedSwitch);
+
+const fullfade = { stiffness: 330, damping: 33, precision: 1 };
+const halffade = { stiffness: 110, damping: 17, precision: 1 };
 
 const pageAnimation = {
   'slide-left': {
@@ -42,10 +17,10 @@ const pageAnimation = {
       offset: 100
     },
     atLeave: {
-      offset: spring(-33, { stiffness: 220, damping: 22, precision: 0.1 })
+      offset: spring(-33, halffade)
     },
     atActive: {
-      offset: spring(0, { stiffness: 330, damping: 33, precision: 0.1 })
+      offset: spring(0, fullfade)
     },
     mapStyles(styles) {
       return {
@@ -58,10 +33,10 @@ const pageAnimation = {
       offset: -33
     },
     atLeave: {
-      offset: spring(102, { stiffness: 330, damping: 33, precision: 0.1 })
+      offset: spring(102, fullfade)
     },
     atActive: {
-      offset: spring(0, { stiffness: 220, damping: 22, precision: 0.1 })
+      offset: spring(0, halffade)
     },
     mapStyles(styles) {
       return {
@@ -111,14 +86,14 @@ class Pages extends Component {
     })();
 
     return (
-      <StylePages
+      <Switch
         runOnMount={false}
         reverse={animationType==='slide-right'}
         shadow={shadow}
         {...pageAnimation[animationType]}
       >
         {children}
-      </StylePages>
+      </Switch>
     );
   }
 }

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import Modal from '../Modal';
+import {PopupModal} from '../Modal/Styled';
 
 
-export const StylePopup = styled(Modal) `
+export const StylePopup = styled(PopupModal) `
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: ${props=>props.bgColor? props.bgColor :'#fff'};
 
   html.with-statusbar-overlay {
 

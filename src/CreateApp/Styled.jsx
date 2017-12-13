@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import styled, {injectGlobal} from 'styled-components';
+import styled, {injectGlobal, css} from 'styled-components';
 
 injectGlobal `
   html, body, .root{
@@ -82,15 +82,64 @@ injectGlobal `
 `
 
 export const StyleViews = styled.div `
-  position: relative;
+  position: absolute;
   width: 100%;
   height: 100%;
   z-index: 5000;
+  top: 0;
+  left: 0;
 `
 
 export const StyleView = StyleViews.extend `
   overflow: hidden;
   box-sizing: border-box;
+`
+
+
+const childrenIndex = (reverse)=> {
+  const max = 3, ids = []
+  for (let i=1; i<=max; i++){ ids.push(i); }
+  reverse && ids.reverse();
+  return ids.map((item, i)=>`
+    &:nth-child(${i + 1}) {
+      z-index: ${item};
+    }
+  `)
+}
+
+const rightToCenter = css `
+  ${childrenIndex()}
+`
+
+const leftToCenter = css `
+  ${childrenIndex(true)}
+`
+
+
+export const StylePages = styled.div `
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  >div{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    &::after{
+      position: absolute;
+      right: 100%;
+      top: 0;
+      width: 16px;
+      height: 100%;
+      background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+      background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+      z-index: -1;
+      content: '';
+      display: ${props=>props.shadow ? 'block': 'none'};
+    }
+    ${props=>props.reverse? leftToCenter : rightToCenter}
+  }
 `
 
 export const StylePage = styled.div `

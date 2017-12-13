@@ -4,6 +4,7 @@ export View from './View';
 export Pages from './Pages';
 export Page from './Page';
 export PageContent from './PageContent';
+export PopupRoute from './PopupRoute';
 
 export Link from 'react-router-dom/Link';
 export Route from 'react-router-dom/Route'
