@@ -26,7 +26,7 @@ export default class PopupDemo extends Component {
       <Page>
         <PageContent>
           <h1>PopRoute</h1>
-          <em>URL 控制关闭</em>
+          <p>回退关闭</p>
         </PageContent>
       </Page>
     )

@@ -93,6 +93,7 @@ export const StyleViews = styled.div `
 export const StyleView = StyleViews.extend `
   overflow: hidden;
   box-sizing: border-box;
+  display: ${props=>props.main? 'block': 'none'}
 `
 
 

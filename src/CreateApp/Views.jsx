@@ -1,52 +1,70 @@
-import React, {Component} from 'react';
+import React, {Component, Children, createElement} from 'react';
 import PropTypes from 'prop-types';
-import {StyleViews} from './Styled';
-import createHistory from 'history/createHashHistory';
-import Router from 'react-router-dom/Router';
+import {StyleViews, StyleView} from './Styled';
+import HashRouter from 'react-router-dom/HashRouter';
 
 export default class Views extends Component {
 
   static propTypes = {
-    basename: PropTypes.string,
-    getUserConfirmation: PropTypes.func,
-    hashType: PropTypes.oneOf([ 'hashbang', 'noslash', 'slash' ]),
-    children: PropTypes.node,
-    history: PropTypes.object,
+    statusbar: PropTypes.bool,
     statusbarStyle: PropTypes.object,
+    routerConf: PropTypes.object,
+    router: PropTypes.func,
+    onRouteChange: PropTypes.func
   }
 
   static defaultProps = {
-    hashType: 'hashbang'
+    statusbar: false,
+    routerConf: {
+      hashType: 'hashbang',
+      basename: '',
+      getUserConfirmation: null
+    },
+    router: HashRouter,
+    onRouteChange: val=>val
   }
 
-  constructor(props){
-    super(props);
+  static View = val => val;
 
-    this.history = props.history || createHistory({
-      basename: props.basename,
-      hashType: props.hashType,
-      getUserConfirmation: props.getUserConfirmation
-    });
+  componentDidMount(){
+    const history = this.refs.router.history;
+    this._unlisten = history.listen(this.props.onRouteChange);
+  }
 
+  componentWillUnMount(){
+    this._unlisten();
   }
 
   render(){
     const {
-      basename,
-      hashType,
-      getUserConfirmation,
-      history,
+      statusbar,
       statusbarStyle,
+      router,
+      routerConf,
+      children,
+      onRouteChange,
       ...rest
     } = this.props;
 
     const Fragment = React.Fragment || 'div';
+    const Router = router || Fragment;
+
+    const $children = Children.toArray(children);
+    const main = $children.length === 1 ? true: false;
 
     return (
       <Fragment>
-        <div className="statusbar-overlay" style={statusbarStyle}></div>
-        <Router history={this.history}>
-          <StyleViews {...rest}/>
+        {statusbar && (
+          <div className="statusbar-overlay" style={statusbarStyle}></div>
+        )}
+        <Router {...routerConf} ref="router">
+          <StyleViews {...rest}>
+            {
+              $children.map(({props}, i)=>{
+                return createElement(StyleView, {main, key: `view_${i}`, ...props});
+              })
+            }
+          </StyleViews>
         </Router>
       </Fragment>
     )

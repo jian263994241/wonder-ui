@@ -1,9 +1,11 @@
-import React, {Component} from 'react';
+import React, {Component, createElement, Children} from 'react';
 import PropTypes from 'prop-types';
 import AnimatedSwitch from './transition/AnimatedSwitch';
 import spring from 'react-motion/lib/spring';
 import styled from 'styled-components';
 import withRouter from 'react-router-dom/withRouter';
+import Route from 'react-router-dom/Route';
+import Redirect from 'react-router-dom/Redirect';
 import {StylePages} from './Styled';
 
 const Switch = StylePages.withComponent(AnimatedSwitch);
@@ -55,16 +57,53 @@ class Pages extends Component {
 
   static propTypes = {
     noAnimation: PropTypes.bool,
-    shadow: PropTypes.bool
+    shadow: PropTypes.bool,
+    routes: PropTypes.arrayOf(PropTypes.object),
+    redirects: PropTypes.arrayOf(PropTypes.object),
   }
 
   static defaultProps = {
     noAnimation: false,
     shadow: true,
+    routes: null,
+    redirects: null
+  }
+
+  renderRoutes = ()=>{
+    const {
+      children,
+      routes,
+      redirects
+    } = this.props;
+
+    let result = Children.toArray(children);
+
+    if(routes){
+      result = result.concat(routes.map((conf, i)=>{
+        if(conf.path === '/'){
+          conf.exact = true;
+        }
+        return createElement(Route, {key: `route_${i}`, ...conf})
+      }));
+    }
+
+    if(redirects){
+      result = result.concat(redirects.map((conf, i)=>{
+        return createElement(Redirect, {key: `redirect_${i}`, ...conf})
+      }))
+    }
+
+    return result;
   }
 
   render(){
-    const {className, history, children, noAnimation, shadow, ...rest} = this.props;
+    const {
+      history,
+      children,
+      noAnimation,
+      shadow,
+      ...rest
+    } = this.props;
 
     const { action, location } = history;
 
@@ -73,13 +112,13 @@ class Pages extends Component {
     const state = location.state || {};
 
     const animationType = (()=>{
-      if(noAnimation || action === 'REPLACE' || state.animation === null){
+      if(noAnimation || state.animation === null){
         return 'empty';
       }
       if(action === 'POP' || state.animation === 'back'){
         return 'slide-right';
       }
-      if(action === 'PUSH' || state.animation === 'push'){
+      if(action === 'PUSH'|| action === 'REPLACE' || state.animation === 'push'){
         return 'slide-left';
       }
       return 'empty';
@@ -92,7 +131,7 @@ class Pages extends Component {
         shadow={shadow}
         {...pageAnimation[animationType]}
       >
-        {children}
+        {this.renderRoutes()}
       </Switch>
     );
   }
