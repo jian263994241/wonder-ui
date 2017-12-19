@@ -32,6 +32,7 @@ export default class Welcome extends Component {
             <li><Link to="/popup">弹窗</Link></li>
             <li><Link to="/dialog">对话</Link></li>
             <li><a onClick={this.preloader}>Preloader</a></li>
+            <li><Link to="/accordion">Accordion</Link></li>
           </ul>
           {/* <Preloader text="123" visible innerStyle={{width: '80px'}}/> */}
         </PageContent>

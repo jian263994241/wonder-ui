@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "classnames": "^2.2.5",
     "dom-helpers": "^3.2.1",
     "history": "^4.7.2",
     "prop-types": "^15.6.0",

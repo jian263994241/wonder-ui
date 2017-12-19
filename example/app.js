@@ -10,6 +10,7 @@ import Keyboard from './mod/Keyboard';
 import Popup from './mod/Popup';
 import Dialog from './mod/Dialog';
 import PopupPage from './mod/PopupPage';
+import Accordion from './mod/Accordion';
 
 class App extends Component {
 
@@ -19,16 +20,14 @@ class App extends Component {
         <Views.View>
           <Pages
             routes={[
-              {path: '/welcome', component: Welcome},
+              {path: '/', component: Welcome},
               {path: '/citys', component: Citys},
               {path: '/picker', component: Picker},
               {path: '/countdown', component: Countdown},
               {path: '/keyboard', component: Keyboard},
               {path: '/popup', component: Popup},
               {path: '/dialog', component: Dialog},
-            ]}
-            redirects={[
-              {to:'/welcome'}
+              {path: '/accordion', component: Accordion},
             ]}
           />
         </Views.View>
