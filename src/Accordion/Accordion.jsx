@@ -9,11 +9,13 @@ export default class Accordion extends Component {
   }
 
   static propTypes = {
-    component: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
+    component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+    defaultActiveIndex: PropTypes.number
   }
 
   static defaultProps = {
-    component: 'div'
+    component: 'div',
+    defaultActiveIndex: null
   }
 
   state = {
@@ -24,6 +26,13 @@ export default class Accordion extends Component {
     activeIndex: this.state.activeIndex,
     updateActive: activeIndex => this.setState({activeIndex})
   });
+
+  componentDidMount(){
+
+    this.setState({
+      activeIndex: this.props.defaultActiveIndex
+    })
+  }
 
   render(){
 

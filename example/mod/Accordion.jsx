@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import {Page, PageContent, Link} from '../../src/CreateApp';
-import Accordion from '../../src/Accordion/Accordion';
-import AccordionItem from '../../src/Accordion/AccordionItem';
-import AccordionToggle from '../../src/Accordion/AccordionToggle';
-import AccordionContent from '../../src/Accordion/AccordionContent';
+import {Accordion, AccordionItem, AccordionToggle, AccordionContent} from '../../src/Accordion';
 
 export default class AccordionDemo extends Component {
 
