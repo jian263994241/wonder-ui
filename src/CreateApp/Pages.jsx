@@ -16,33 +16,41 @@ const halffade = { stiffness: 110, damping: 17, precision: 1 };
 const pageAnimation = {
   'slide-left': {
     atEnter: {
-      offset: 100
+      offset: 100,
+      opacity: 100
     },
     atLeave: {
-      offset: spring(-33, halffade)
+      offset: spring(-22, halffade),
+      opacity: spring(90, halffade)
     },
     atActive: {
-      offset: spring(0, fullfade)
+      offset: spring(0, fullfade),
+      opacity: spring(100, fullfade)
     },
     mapStyles(styles) {
       return {
-        transform: `translateX(${styles.offset}%)`
+        transform: `translateX(${styles.offset}%)`,
+        opacity: styles.opacity/100
       };
     },
   },
   'slide-right': {
     atEnter: {
-      offset: -33
+      offset: -22,
+      opacity: 90
     },
     atLeave: {
-      offset: spring(102, fullfade)
+      offset: spring(102, fullfade),
+      opacity: spring(90, fullfade)
     },
     atActive: {
-      offset: spring(0, halffade)
+      offset: spring(0, halffade),
+      opacity: spring(100, halffade)
     },
     mapStyles(styles) {
       return {
-        transform: `translateX(${styles.offset}%)`
+        transform: `translateX(${styles.offset}%)`,
+        opacity: styles.opacity/100
       };
     }
   },

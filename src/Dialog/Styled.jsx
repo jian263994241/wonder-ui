@@ -67,7 +67,7 @@ export const Button = styled.span `
 
 `
 Button.defaultProps = {
-  theme: {mode: 'default'},
+  theme: {color: 'default'},
 };
 
 const verticalButtons = css `

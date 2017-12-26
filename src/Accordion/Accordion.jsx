@@ -39,6 +39,7 @@ export default class Accordion extends Component {
     const {
       component,
       children,
+      defaultActiveIndex,
       ...rest
     } = this.props;
 

@@ -11,6 +11,8 @@ import Popup from './mod/Popup';
 import Dialog from './mod/Dialog';
 import PopupPage from './mod/PopupPage';
 import Accordion from './mod/Accordion';
+import Buttons from './mod/Buttons';
+import Tabs from './mod/Tabs';
 
 class App extends Component {
 
@@ -28,6 +30,8 @@ class App extends Component {
               {path: '/popup', component: Popup},
               {path: '/dialog', component: Dialog},
               {path: '/accordion', component: Accordion},
+              {path: '/buttons', component: Buttons},
+              {path: '/tabs', component: Tabs},
             ]}
           />
         </Views.View>

@@ -1,4 +1,4 @@
-# Accordion
+# <Accordion/>
 
 折叠面板
 
@@ -28,22 +28,22 @@ class Example extends Component {
 
 ## Props
 
-### Accordion
+### <Accordion/>
 
 - component `string|func` default : 'div'
 - defaultActiveIndex  `number` default: null 默认展开
 
-### AccordionItem
+### <AccordionItem/>
 
 - component `string|func` default : 'div'
 - activeClass `string`   default : 'active'
 - onAccordionOpen `func`
 - onAccordionClose `func`
 
-### AccordionToggle
+### <AccordionToggle/>
 
 - component `string|func` default : 'div'
 
-### AccordionContent
+### <AccordionContent/>
 
 - component `string|func` default : 'div'

@@ -1,4 +1,4 @@
-# Picker
+# <Picker/>
 
 ```js
 import React, {Component} from 'react';
@@ -103,13 +103,13 @@ export default class Example extends Component {
 
 参数
 
-### Picker props
+### Props
 
-* `selectedValue`  array 已选择的值
-* `onValueChange`  function  值改变时触发
+- `selectedValue`  array 已选择的值
+- `onValueChange`  function  值改变时触发
 
 ### Picker.Col props
 
-* `disabled` bool 禁用
+- `disabled` bool 禁用
 
 ###
