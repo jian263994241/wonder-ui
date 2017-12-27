@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component, createElement} from 'react';
 import {Page, PageContent, Link} from '../../src/CreateApp';
 import Preloader, {showPreloader, hidePreloader} from '../../src/Preloader';
-import Button from '../../src/Button';
-
-const ButtonLink = Button.withComponent(Link);
+import Button, {ButtonsRow} from '../../src/Button';
+import {GridRow, GridCol} from '../../src/Grid';
 
 export default class Welcome extends Component {
 
@@ -26,7 +25,24 @@ export default class Welcome extends Component {
     return (
       <Page>
         <PageContent pullToRefresh onRefresh={this.onRefresh}>
-          <ButtonLink to="/citys">省市区选择器</ButtonLink>
+          <GridRow gutter={15}>
+            <GridCol width={33}>
+              <Button fill to="/citys">省市区选择器</Button>
+            </GridCol>
+            <GridCol width={33}>
+              <Button fill to="/citys">省市区选择器</Button>
+            </GridCol>
+            <GridCol width={33}>
+              <Button fill to="/citys">省市区选择器</Button>
+            </GridCol>
+          </GridRow>
+
+          <ButtonsRow round>
+            <Button  as={Link} to="/citys">省市区选择器</Button>
+            <Button active to="/citys">省市区选择器</Button>
+            <Button to="/citys">省市区选择器</Button>
+          </ButtonsRow>
+
           <ul>
             <li><Link to="/citys">省市区选择器</Link></li>
             <li><Link to="/picker">时间选择器</Link></li>

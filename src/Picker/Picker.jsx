@@ -1,13 +1,10 @@
 import React, {Component, cloneElement} from 'react';
 import PropTypes from 'prop-types';
-import PickerCol from './PickerCol';
 import {StylePicker} from './Styled';
 
 export default class Picker extends Component {
 
   static uiName = 'Picker';
-
-  static Col = PickerCol;
 
   static propTypes = {
     selectedValue: PropTypes.any,

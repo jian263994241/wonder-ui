@@ -2,7 +2,7 @@
 
 ```js
 import React, {Component} from 'react';
-import Picker from 'wonder-ui/Picker';
+import {Picker, PickerCol} from 'wonder-ui/Picker';
 import Modal from 'wonder-ui/Modal';
 import Toolbar from 'wonder-ui/Toolbar';
 
@@ -78,21 +78,21 @@ export default class Example extends Component {
             selectedValue={this.state.selectedValue}
             onValueChange={(selectedValue)=>this.setState({selectedValue})}
           >
-            <Picker.Col>
+            <PickerCol>
               {
                 this.state.y.map((val)=><div value={val} key={val}>{val}年</div>)
               }
-            </Picker.Col>
-            <Picker.Col>
+            </PickerCol>
+            <PickerCol>
               {
                 this.state.m.map((val)=><div value={val} key={val}>{val}月</div>)
               }
-            </Picker.Col>
-            <Picker.Col>
+            </PickerCol>
+            <PickerCol>
               {
                 this.state.d.map((val)=><div value={val} key={val}>{val}日</div>)
               }
-            </Picker.Col>
+            </PickerCol>
           </Picker>
         </Modal>
       </div>

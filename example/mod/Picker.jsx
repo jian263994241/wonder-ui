@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Page, PageContent, Link} from '../../src/CreateApp';
-import Picker from '../../src/Picker';
+import {Picker,PickerCol} from '../../src/Picker';
 import Modal from '../../src/Modal';
 import Toolbar from '../../src/Toolbar';
 
@@ -83,21 +83,21 @@ export default class PickerDemo extends Component {
               selectedValue={this.state.selectedValue}
               onValueChange={(selectedValue)=>this.setState({selectedValue})}
             >
-              <Picker.Col>
+              <PickerCol>
                 {
                   this.state.y.map((val)=><div value={val} key={val}>{val}年</div>)
                 }
-              </Picker.Col>
-              <Picker.Col>
+              </PickerCol>
+              <PickerCol>
                 {
                   this.state.m.map((val)=><div value={val} key={val}>{val}月</div>)
                 }
-              </Picker.Col>
-              <Picker.Col>
+              </PickerCol>
+              <PickerCol>
                 {
                   this.state.d.map((val)=><div value={val} key={val}>{val}日</div>)
                 }
-              </Picker.Col>
+              </PickerCol>
             </Picker>
           </Modal>
         </PageContent>

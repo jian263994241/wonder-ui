@@ -1,3 +1,6 @@
 import Picker from './Picker';
-
-export default Picker;
+import PickerCol from './PickerCol';
+export {
+  Picker,
+  PickerCol
+};
