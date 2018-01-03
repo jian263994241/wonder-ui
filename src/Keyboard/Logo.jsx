@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 export default class Logo extends Component {
 
   static defaultProps = {
-    text: '飞凡通安全键盘',
+    text: '安全键盘',
     color: '#fff'
   }
 
