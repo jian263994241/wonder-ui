@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import ScrollView from '../ScrollView';
 import SwipeableViews from 'react-swipeable-views';
-import svg from '../styles/svg';
 import tick from '../styles/tick';
 
 export const StyleCitys = styled(SwipeableViews).attrs({

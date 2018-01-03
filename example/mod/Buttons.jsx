@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Page, PageContent, Link} from '../../src/CreateApp';
-import {Accordion, AccordionItem, AccordionToggle, AccordionContent} from '../../src/Accordion';
+import Button, {ButtonsRow} from '../../src/Button';
+import {BlockTitle} from '../../src/ContentBlock';
 
 export default class ButtonsDemo extends Component {
 
@@ -9,30 +10,26 @@ export default class ButtonsDemo extends Component {
     return (
       <Page>
         <PageContent>
-          <Accordion component="ul">
-            <AccordionItem
-              component="li"
-              activeClass="active1"
-              className="item1"
-              onAccordionOpen={()=>console.log('Accordion active1')}
-              onAccordionClose={()=>console.log('Accordion close1')}
-            >
-              <AccordionToggle>
-                Item 1
-              </AccordionToggle>
-              <AccordionContent>
-                Item Content1
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem component="li">
-              <AccordionToggle>
-                Item 2
-              </AccordionToggle>
-              <AccordionContent>
-                Item Content2
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+          <BlockTitle>按钮</BlockTitle>
+
+          <Button>123</Button>
+          <Button fill>123</Button>
+          <Button fill big>123</Button>
+
+          <BlockTitle>按钮组</BlockTitle>
+
+          <ButtonsRow round>
+            <Button>Tab 1</Button>
+            <Button>Tab 2</Button>
+            <Button>Tab 3</Button>
+          </ButtonsRow>
+          <br/>
+          <ButtonsRow>
+            <Button>Tab 1</Button>
+            <Button>Tab 2</Button>
+            <Button>Tab 3</Button>
+          </ButtonsRow>
+
         </PageContent>
       </Page>
     )

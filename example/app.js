@@ -13,6 +13,8 @@ import PopupPage from './mod/PopupPage';
 import Accordion from './mod/Accordion';
 import Buttons from './mod/Buttons';
 import Tabs from './mod/Tabs';
+import List from './mod/List';
+import MediaList from './mod/MediaList';
 
 class App extends Component {
 
@@ -32,6 +34,8 @@ class App extends Component {
               {path: '/accordion', component: Accordion},
               {path: '/buttons', component: Buttons},
               {path: '/tabs', component: Tabs},
+              {path: '/list', component: List},
+              {path: '/media-list', component: MediaList},
             ]}
           />
         </Views.View>

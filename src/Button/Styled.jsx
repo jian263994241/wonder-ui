@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import styled, {css} from 'styled-components';
-import {buttonTheme} from '../Theme';
 import createTag from '../utils/createTag';
-
+import {buttonTheme} from '../Theme';
 const disabledColor = '#CECECE';
 
 const fill = css `
@@ -97,6 +97,15 @@ export const StyledButton = styled(ButtonTag) `
 StyledButton.defaultProps = {
   theme: {color: 'default'},
 };
+
+StyledButton.propTypes = {
+  theme: PropTypes.object,
+  fill: PropTypes.bool,
+  round: PropTypes.bool,
+  active: PropTypes.bool,
+  big: PropTypes.bool,
+  block: PropTypes.bool,
+}
 
 const row = css `
   ${StyledButton}:last-child {

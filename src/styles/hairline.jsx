@@ -18,7 +18,7 @@ function hairline(position, color) {
           background-color: ${color};
           display: block;
           z-index: 15;
-          transform-origin: 50% 0%;
+
           html.pixel-ratio-2 & {
               transform: scaleY(0.5);
           }
@@ -42,7 +42,7 @@ function hairline(position, color) {
            background-color: ${color};
            display: block;
            z-index: 15;
-           transform-origin: 0% 50%;
+
            html.pixel-ratio-2 & {
                transform: scaleX(0.5);
            }
@@ -54,7 +54,7 @@ function hairline(position, color) {
       break;
     case 'bottom':
       result = css `
-        &:before {
+        &:after {
            content: '';
            position: absolute;
            left: 0;
@@ -66,7 +66,7 @@ function hairline(position, color) {
            background-color: ${color};
            display: block;
            z-index: 15;
-           transform-origin: 50% 100%;
+
            html.pixel-ratio-2 & {
                transform: scaleY(0.5);
            }
@@ -78,7 +78,7 @@ function hairline(position, color) {
       break;
     case 'right':
       result = css `
-        &:before {
+        &:after {
            content: '';
            position: absolute;
            right: 0;
@@ -90,7 +90,7 @@ function hairline(position, color) {
            background-color: ${color};
            display: block;
            z-index: 15;
-           transform-origin: 100% 50%;
+        
            html.pixel-ratio-2 & {
                transform: scaleX(0.5);
            }
