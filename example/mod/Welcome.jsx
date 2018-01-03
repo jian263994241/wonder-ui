@@ -7,11 +7,11 @@ import {List, ListItem} from '../../src/ListView';
 
 export default class Welcome extends Component {
 
-  onRefresh = (scroller)=>{
-    setTimeout(()=>{
-      scroller.finishPullToRefresh()
-    }, 2000)
-  }
+  // onRefresh = (scroller)=>{
+  //   setTimeout(()=>{
+  //     scroller.finishPullToRefresh()
+  //   }, 2000)
+  // }
 
   preloader = ()=>{
     showPreloader();
@@ -25,7 +25,7 @@ export default class Welcome extends Component {
 
     return (
       <Page>
-        <PageContent pullToRefresh onRefresh={this.onRefresh}>
+        <PageContent>
 
           <List>
             <ListItem title="省市区选择器" to="/citys" as={Link}/>
