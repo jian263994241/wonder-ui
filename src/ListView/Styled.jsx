@@ -110,7 +110,7 @@ export const StyledItemMedia = styled(createTag({name: 'list-media'})) `
   }
 `
 
-export const StyledListItem = styled(createTag({name: 'list-item', propsToOmit: ['arrow']})) `
+export const StyledListItem = styled(createTag({name: 'item-content', propsToOmit: ['arrow']})) `
   position: relative;
   box-sizing: border-box;
   padding-left: 15px;
@@ -120,12 +120,12 @@ export const StyledListItem = styled(createTag({name: 'list-item', propsToOmit: 
   justify-content:space-between;
   color: inherit;
   ${props=>props.arrow && itemLinkInnerCss}
-  ${'' /* html:not(.watch-active-state) &:active, &.active-state{
+  html:not(.watch-active-state) &:active, &.active-state{
     background-color: #d9d9d9;
     ${StyledItemInner} {
       ${hairline('bottom', 'transparent')}
     }
-  } */}
+  }
 `
 
 const insetCss = css `
