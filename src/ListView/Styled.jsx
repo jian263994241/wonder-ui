@@ -11,7 +11,7 @@ const listBlockBg=  '#fff';
 const dividerBg=  '#f2f2f2';
 const dividerColor=  '#8e8e93';
 
-export const StyledItemTitle = styled(createTag({name: 'item-title', propsToOmit:['bold']})) `
+export const StyledItemTitle = styled( createTag({ propsToOmit: ['bold'] }) ) `
   white-space: nowrap;
   position: relative;
   overflow: hidden;
@@ -21,7 +21,7 @@ export const StyledItemTitle = styled(createTag({name: 'item-title', propsToOmit
   flex-shrink: 1;
   ${props=>props.bold && bold}
 `
-export const StyledItemSubTitle = styled(createTag({name: 'item-subtitle'})) `
+export const StyledItemSubTitle = styled.div `
   font-size: 15px;
   position: relative;
   overflow: hidden;
@@ -29,7 +29,7 @@ export const StyledItemSubTitle = styled(createTag({name: 'item-subtitle'})) `
   max-width: 100%;
   text-overflow:ellipsis;
 `
-export const StyledItemText = styled(createTag({name: 'item-text'})) `
+export const StyledItemText = styled.div `
   font-size: 15px;
   color: #8e8e93;
   line-height: 21px;
@@ -42,7 +42,7 @@ export const StyledItemText = styled(createTag({name: 'item-text'})) `
   display: -webkit-box;
 `
 
-export const StyledItemTitleRow = styled(createTag({name: 'item-title-row', propsToOmit: ['arrow']})) `
+export const StyledItemTitleRow = styled( createTag({ propsToOmit: ['arrow'] }) ) `
   padding-right: 20px;
   background: no-repeat right center;
   ${props=>props.arrow && arrow}
@@ -50,7 +50,7 @@ export const StyledItemTitleRow = styled(createTag({name: 'item-title-row', prop
   justify-content:space-between;
 `
 
-export const StyledItemAfter = styled(createTag({name: 'item-after'})) `
+export const StyledItemAfter = styled.div `
   white-space: nowrap;
   color: #8e8e93;
   display: flex;
@@ -59,7 +59,7 @@ export const StyledItemAfter = styled(createTag({name: 'item-after'})) `
   max-height: 28px;
 `
 
-export const StyledItemInner = styled(createTag({name:'item-inner'})) `
+export const StyledItemInner = styled.div `
   padding-right: 15px;
   position: relative;
   width: 100%;
@@ -88,7 +88,7 @@ const itemLinkInnerCss = css `
   }
 `
 
-export const StyledItemMedia = styled(createTag({name: 'list-media'})) `
+export const StyledItemMedia = styled.div `
   display: flex;
   flex-shrink:0;
   flex-wrap:nowrap;
@@ -110,7 +110,7 @@ export const StyledItemMedia = styled(createTag({name: 'list-media'})) `
   }
 `
 
-export const StyledListItem = styled(createTag({name: 'item-content', propsToOmit: ['arrow']})) `
+export const StyledListItemContent = styled( createTag({ propsToOmit: ['arrow'] }) ) `
   position: relative;
   box-sizing: border-box;
   padding-left: 15px;
@@ -136,18 +136,22 @@ const insetCss = css `
     margin-left: 0;
     margin-right: 0;
   }
-  ${StyledListItem}:first-child {
+  ${StyledListItemContent}:first-child {
     border-radius: 7px 7px 0 0;
   }
-  ${StyledListItem}:last-child {
+  ${StyledListItemContent}:last-child {
     border-radius: 0 0 7px 7px;
   }
-  ${StyledListItem}:first-child:last-child {
+  ${StyledListItemContent}:first-child:last-child {
     border-radius: 7px;
   }
 `
+export const StyledListItem = styled.li `
+  position: relative;
+  box-sizing: border-box;
+`
 
-export const StyledList = styled(createTag({name: 'list', propsToOmit: ['inset', 'mediaList'], propsToNested: ['mediaList']})) `
+export const StyledList = styled( createTag({ propsToOmit: ['inset', 'mediaList'], propsToNested: ['mediaList'] }) ) `
   background: ${listBlockBg};
   list-style: none;
   padding: 0;

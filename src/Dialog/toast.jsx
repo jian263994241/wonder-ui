@@ -17,14 +17,17 @@ export default function toast (text = '', callback, conf = {}) {
   const timeout = conf.timeout != undefined ? conf.timeout : 1500;
 
   const open = (cb)=>mount({title, text, noButtons, toast, overlayStyle}, cb);
-  const close = (cb)=>unmount({title, text, noButtons, toast, overlayStyle}, cb);
+  const close = ()=>{
+    unmount();
+    callback && callback();
+  }
 
   if(timeout != 0){
-    open(()=>setTimeout(close.bind(null, callback), timeout));
+    open(()=>setTimeout(close, timeout));
   }else{
     open();
   }
-  
+
   return close;
 }
 

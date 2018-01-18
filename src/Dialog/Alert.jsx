@@ -18,7 +18,7 @@ export default function alert (props = {}) {
       bold: true,
       onClick: ()=>{
         onOk && onOk();
-        unmount({title, text, buttons});
+        unmount();
       }
     }
   ]

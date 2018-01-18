@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {
   StyledListItem,
+  StyledListItemContent,
   StyledItemMedia,
   StyledItemInner,
   StyledItemTitle,
@@ -28,9 +29,9 @@ export default class ListItem extends Component {
       ...rest
     } = this.props;
 
-    if(this.props.mediaList){
+    if(mediaList){
       return (
-        <StyledListItem inset={inset} {...rest}>
+        <StyledListItemContent inset={inset} {...rest}>
           {media && <StyledItemMedia>{media}</StyledItemMedia>}
           <StyledItemInner>
             <StyledItemTitleRow arrow={arrow}>
@@ -40,42 +41,26 @@ export default class ListItem extends Component {
             {subTitle && <StyledItemSubTitle>{subTitle}</StyledItemSubTitle>}
             {text && <StyledItemText>{text}</StyledItemText>}
           </StyledItemInner>
-        </StyledListItem>
+        </StyledListItemContent>
       )
     }
 
     return (
-      <StyledListItem arrow={arrow} inset={inset} {...rest}>
+      <StyledListItemContent arrow={arrow} inset={inset} {...rest}>
         {media && <StyledItemMedia>{media}</StyledItemMedia>}
         <StyledItemInner>
           {title && <StyledItemTitle>{title}</StyledItemTitle>}
           {after && <StyledItemAfter>{after}</StyledItemAfter>}
         </StyledItemInner>
-      </StyledListItem>
+      </StyledListItemContent>
     )
   }
 
 
   render(){
 
-    const {
-      after,
-      arrow,
-      title,
-      text,
-      media,
-      mediaList,
-      subTitle,
-      inset,
-      children,
-      ...rest
-    } = this.props;
 
-    return (
-      <div>
-        {this.renderContent()}
-      </div>
-    )
+    return <StyledListItem>{this.renderContent()}</StyledListItem>
 
   }
 }

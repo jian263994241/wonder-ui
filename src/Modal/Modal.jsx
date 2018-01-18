@@ -73,10 +73,16 @@ export default class Modal extends Component {
       }
     ];
 
-    if(props.visible){
-      this.state.layers = this.defaultLayers;
-    }
 
+
+  }
+
+  componentDidMount(){
+    if(this.props.visible){
+      this.setState({
+        layers: this.defaultLayers
+      })
+    }
   }
 
   getDefaultStyles = ()=>{
@@ -178,16 +184,18 @@ export default class Modal extends Component {
     return inline ? (
       <div className={className} style={style} ref="modal">{children}</div>
     ):(
-      <Mounter ref="modal">
-        <TransitionMotion
-          defaultStyles={this.getDefaultStyles()}
-          styles={this.getStyles()}
-          willEnter={this.willEnter}
-          willLeave={this.willLeave}
-          didLeave={this.didLeave}
-        >
-          {this.renderModal}
-        </TransitionMotion>
+      <Mounter>
+        <div ref="modal">
+          <TransitionMotion
+            defaultStyles={this.getDefaultStyles()}
+            styles={this.getStyles()}
+            willEnter={this.willEnter}
+            willLeave={this.willLeave}
+            didLeave={this.didLeave}
+          >
+            {this.renderModal}
+          </TransitionMotion>
+        </div>
       </Mounter>
     )
   }

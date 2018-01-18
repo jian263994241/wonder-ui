@@ -12,6 +12,7 @@ const Switch = StylePages.withComponent(AnimatedSwitch);
 
 const fullfade = { stiffness: 330, damping: 33, precision: 1 };
 const halffade = { stiffness: 110, damping: 17, precision: 1 };
+const crude = {stiffness: 110, damping:17, precision: 100};
 
 const pageAnimation = {
   'slide-left': {
@@ -55,9 +56,24 @@ const pageAnimation = {
     }
   },
   'empty': {
-    atEnter: {},
-    atLeave:{},
-    atActive:{}
+    atEnter: {
+      offset: -22,
+      opacity: 90
+    },
+    atLeave: {
+      offset: spring(102, crude),
+      opacity: spring(90, crude)
+    },
+    atActive: {
+      offset: spring(0, crude),
+      opacity: spring(100, crude)
+    },
+    mapStyles(styles) {
+      return {
+        transform: `translateX(0%)`,
+        opacity: styles.opacity/100
+      };
+    }
   }
 }
 
@@ -120,13 +136,13 @@ class Pages extends Component {
     const state = location.state || {};
 
     const animationType = (()=>{
-      if(noAnimation || state.animation === null){
+      if(noAnimation || state.nested === 0){
         return 'empty';
       }
-      if(action === 'POP' || state.animation === 'back'){
+      if(action === 'POP' || state.nested === -1){
         return 'slide-right';
       }
-      if(action === 'PUSH'|| action === 'REPLACE' || state.animation === 'push'){
+      if(action === 'PUSH'|| action === 'REPLACE' || state.nested === 1){
         return 'slide-left';
       }
       return 'empty';

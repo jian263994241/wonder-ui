@@ -28,18 +28,19 @@ export default class Welcome extends Component {
         <PageContent>
 
           <List>
-            <ListItem title="省市区选择器" to="/citys" as={Link}/>
-            <ListItem title="时间选择器" to="/picker" as={Link}/>
-            <ListItem title="短信倒计时" to="/countdown" as={Link}/>
-            <ListItem title="键盘" to="/keyboard" as={Link}/>
-            <ListItem title="弹窗" to="/popup" as={Link}/>
-            <ListItem title="对话" to="/dialog" as={Link}/>
+            <ListItem title="省市区选择器" to="/citys" as={Link} arrow/>
+            <ListItem title="时间选择器" to="/picker" as={Link} arrow/>
+            <ListItem title="短信倒计时" to="/countdown" as={Link} arrow/>
+            <ListItem title="键盘" to="/keyboard" as={Link} arrow/>
+            <ListItem title="弹窗" to="/popup" as={Link} arrow/>
+            <ListItem title="对话" to="/dialog" as={Link} arrow/>
             <ListItem title="指示器" to="/citys" onClick={this.preloader}/>
-            <ListItem title="折叠面板" to="/accordion" as={Link}/>
-            <ListItem title="按钮" to="/buttons" as={Link}/>
-            <ListItem title="Tabs" to="/tabs" as={Link}/>
-            <ListItem title="列表" to="/list" as={Link}/>
-            <ListItem title="媒体列表" to="/media-list" as={Link}/>
+            <ListItem title="折叠面板" to="/accordion" as={Link} arrow/>
+            <ListItem title="按钮" to="/buttons" as={Link} arrow/>
+            <ListItem title="Tabs" to="/tabs" as={Link} arrow/>
+            <ListItem title="列表" to="/list" as={Link} arrow/>
+            <ListItem title="媒体列表" to="/media-list" as={Link} arrow/>
+            <ListItem title="左划删除" to="/swipe-out" as={Link} arrow/>
           </List>
 
         </PageContent>

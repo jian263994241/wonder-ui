@@ -9,7 +9,14 @@ import pickBy from 'lodash/pickBy';
  * propsToOmit 过滤 props
  * propsToNested 传递 props
  */
-export default ({tag: defaultTag = 'div', prop = 'as', name, propsToOmit = [], propsToNested = []} = {}) => {
+
+export default function createTag ({
+  tag: defaultTag = 'div',
+  prop = 'as',
+  name,
+  propsToOmit = [],
+  propsToNested = []
+} = {}) {
   return ({children, ...otherProps}) => {
     const tag = otherProps[prop] || defaultTag;
     const omitPropsKeys = [prop, ...propsToOmit];
@@ -28,4 +35,4 @@ export default ({tag: defaultTag = 'div', prop = 'as', name, propsToOmit = [], p
     }
     return createElement(tag, props, _children);
   };
-};
+}

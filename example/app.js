@@ -1,3 +1,4 @@
+import 'es6-shim';
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Views, Pages} from '../src/CreateApp';
@@ -15,6 +16,7 @@ import Buttons from './mod/Buttons';
 import Tabs from './mod/Tabs';
 import List from './mod/List';
 import MediaList from './mod/MediaList';
+import SwipeOut from './mod/SwipeOut';
 
 class App extends Component {
 
@@ -36,6 +38,7 @@ class App extends Component {
               {path: '/tabs', component: Tabs},
               {path: '/list', component: List},
               {path: '/media-list', component: MediaList},
+              {path: '/swipe-out', component: SwipeOut},
             ]}
           />
         </Views.View>
