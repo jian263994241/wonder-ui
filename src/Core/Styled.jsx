@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled, {injectGlobal, css} from 'styled-components';
+import device from './device';
 
 injectGlobal `
   html, body, .root{
@@ -155,7 +156,7 @@ export const StylePages = styled.div `
       background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
       z-index: -1;
       content: '';
-      display: ${props=>props.shadow ? 'block': 'none'};
+      display: ${props=>device.ios ? 'block': 'none'};
     }
     ${props=>props.reverse? leftToCenter : rightToCenter}
   }

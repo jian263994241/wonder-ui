@@ -82,14 +82,12 @@ class Pages extends Component {
 
   static propTypes = {
     noAnimation: PropTypes.bool,
-    shadow: PropTypes.bool,
     routes: PropTypes.arrayOf(PropTypes.object),
     redirects: PropTypes.arrayOf(PropTypes.object),
   }
 
   static defaultProps = {
     noAnimation: false,
-    shadow: true,
     routes: null,
     redirects: null
   }
@@ -126,7 +124,6 @@ class Pages extends Component {
       history,
       children,
       noAnimation,
-      shadow,
       ...rest
     } = this.props;
 
@@ -153,7 +150,6 @@ class Pages extends Component {
       <Switch
         runOnMount={false}
         reverse={animationType==='slide-right'}
-        shadow={shadow}
         {...pageAnimation[animationType]}
       >
         {this.renderRoutes()}
