@@ -21,6 +21,18 @@ export const StyledItemTitle = styled( createTag({ propsToOmit: ['bold'] }) ) `
   flex-shrink: 1;
   ${props=>props.bold && bold}
 `
+
+export const StyledItemHeader = styled.div `
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: normal;
+`
+
+export const StyledItemFooter = StyledItemHeader.extend `
+  color: #888;
+`
+
 export const StyledItemSubTitle = styled.div `
   font-size: 15px;
   position: relative;
@@ -31,21 +43,29 @@ export const StyledItemSubTitle = styled.div `
 `
 export const StyledItemText = styled.div `
   font-size: 15px;
-  color: #8e8e93;
+  color: #888888;
   line-height: 21px;
   position: relative;
   overflow: hidden;
-  height: 42px;
   text-overflow:ellipsis;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   display: -webkit-box;
 `
 
+const arrowCss = css `
+  background-size: 8px 13px;
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  background-position: -webkit-calc(100% - 15px) center;
+  background-position: calc(100% - 15px) center;
+  ${arrow}
+`
+
 export const StyledItemTitleRow = styled( createTag({ propsToOmit: ['arrow'] }) ) `
   padding-right: 20px;
   background: no-repeat right center;
-  ${props=>props.arrow && arrow}
+  ${props=>props.arrow && arrowCss}
   display: flex;
   justify-content:space-between;
 `
@@ -64,7 +84,7 @@ export const StyledItemInner = styled.div `
   position: relative;
   width: 100%;
   padding-top: 8px;
-  padding-bottom: 7px;
+  padding-bottom: 8px;
   min-height: 44px;
   box-sizing: border-box;
   display: flex;
@@ -78,13 +98,8 @@ export const StyledItemInner = styled.div `
 
 const itemLinkInnerCss = css `
   ${StyledItemInner}{
-    ${arrow}
-    background-size: 10px 20px;
-    background-repeat: no-repeat;
-    background-position: 95% center;
-    background-position: -webkit-calc(~"100% - 15px") center;
-    background-position: calc(~"100% - 15px") center;
     padding-right: 35px;
+    ${arrowCss}
   }
 `
 
@@ -151,7 +166,7 @@ export const StyledListItem = styled.li `
   box-sizing: border-box;
 `
 
-export const StyledList = styled( createTag({ propsToOmit: ['inset', 'mediaList'], propsToNested: ['mediaList'] }) ) `
+export const StyledList = styled( createTag({ propsToOmit: ['inset', 'mediaList'] }) ) `
   background: ${listBlockBg};
   list-style: none;
   padding: 0;

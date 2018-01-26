@@ -1,8 +1,8 @@
 import React, {Component, createElement} from 'react';
 import PropTypes from 'prop-types';
-import {Content} from './Styled';
+import {StyledContent} from './Styled';
 
-class AccordionContent extends Component {
+export default class AccordionContent extends Component {
 
   static contextTypes = {
     activeIndex: PropTypes.number,
@@ -36,11 +36,11 @@ class AccordionContent extends Component {
   };
 
   open = ()=>{
-    this.refs.content.style.height = this.refs.content.scrollHeight + 'px';
+    this.content.style.height = this.content.scrollHeight + 'px';
   }
 
   close = ()=>{
-    this.refs.content.style.height = 0;
+    this.content.style.height = 0;
   }
 
   render(){
@@ -48,11 +48,12 @@ class AccordionContent extends Component {
       component,
       ...rest
     } = this.props;
-    return createElement(component, {
-      ref: 'content',
-      ...rest
-    });
+
+    return (
+      <StyledContent
+        innerRef={x=>{this.content=x}}
+        {...rest}
+      />
+    )
   }
 }
-
-export default Content.withComponent(AccordionContent);

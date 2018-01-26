@@ -1,8 +1,6 @@
-import {
-  StyledButton as Button,
-  styledButtonsRow as ButtonsRow
-} from './Styled';
+
+import Button from './Button';
 
 export default Button;
 
-export {ButtonsRow};
+export ButtonsRow from './ButtonsRow';

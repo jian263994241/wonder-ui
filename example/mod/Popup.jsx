@@ -1,5 +1,5 @@
 import React, {Component, createElement} from 'react';
-import {Page, PageContent, Link, PopupRoute, Route} from '../../src/CreateApp';
+import {Page, PageContent, Link, PopupRoute, Route} from '../../src/Core';
 
 import PopupPage from './PopupPage';
 

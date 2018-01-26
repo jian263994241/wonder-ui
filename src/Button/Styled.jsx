@@ -7,6 +7,7 @@ const disabledColor = '#CECECE';
 
 const fill = css `
   color:#fff;
+  text-fill-color: #fff;
   background: ${buttonTheme};
   border-color: transparent;
 `;
@@ -34,11 +35,13 @@ const block = css `
 const buttonFilldisabled = css `
   &.disabled, &[disabled]{
     background: ${disabledColor};
+
   }
 `
 const disabled = css `
   &.disabled, &[disabled]{
     color: ${disabledColor};
+    text-fill-color: ${disabledColor};
     border-color: ${disabledColor};
   }
 `
@@ -51,6 +54,7 @@ const ButtonTag = createTag({
 export const StyledButton = styled(ButtonTag) `
   border: 1px solid ${buttonTheme};
   color: ${buttonTheme};
+  text-fill-color: ${buttonTheme};
   text-decoration: none;
   text-align: center;
   display: block;
@@ -94,19 +98,6 @@ export const StyledButton = styled(ButtonTag) `
 
 `
 
-StyledButton.defaultProps = {
-  theme: {color: 'default'},
-};
-
-StyledButton.propTypes = {
-  theme: PropTypes.object,
-  fill: PropTypes.bool,
-  round: PropTypes.bool,
-  active: PropTypes.bool,
-  big: PropTypes.bool,
-  block: PropTypes.bool,
-}
-
 const row = css `
   ${StyledButton}:last-child {
     border-radius: 0 5px 5px 0;
@@ -125,7 +116,7 @@ const rowRound = css `
 `
 const ButtonsRowTag = createTag({ tag: 'div', propsToOmit: ['round', 'theme'] });
 
-export const styledButtonsRow = styled(ButtonsRowTag) `
+export const StyledButtonsRow = styled(ButtonsRowTag) `
   display: flex;
   align-self: center;
   flex-wrap: nowrap;

@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import device from '../CreateApp/device';
 
 const bold = css `
   font-weight: 500;

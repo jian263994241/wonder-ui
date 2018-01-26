@@ -14,7 +14,7 @@ export const PopupModal = styled.div `
 `;
 
 export const StyleModal = styled.div `
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   opacity: 0;
@@ -22,7 +22,7 @@ export const StyleModal = styled.div `
 `;
 
 export const StyleOverlay = styled.div `
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;

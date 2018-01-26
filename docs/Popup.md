@@ -36,7 +36,7 @@ class Example extends Component {
 
 ```js
 import React, {Component} from 'react';
-import {Page, PageContent, Link, PopupRoute, Route} from 'wonder-ui/CreateApp';
+import {Page, PageContent, Link, PopupRoute, Route} from 'wonder-ui/Core';
 import PopupPage from './PopupPage';
 
 export default class PopupDemo extends Component {

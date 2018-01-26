@@ -1,7 +1,7 @@
 import 'es6-shim';
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Views, Pages} from '../src/CreateApp';
+import {Views,View, Pages} from '../src/Core';
 
 import Welcome from './mod/Welcome';
 import Citys from './mod/Citys';
@@ -23,25 +23,28 @@ class App extends Component {
   render(){
     return (
       <Views onRouteChange={(location, action)=>console.log(location, action)}>
-        <Views.View>
-          <Pages
-            routes={[
-              {path: '/', component: Welcome},
-              {path: '/citys', component: Citys},
-              {path: '/picker', component: Picker},
-              {path: '/countdown', component: Countdown},
-              {path: '/keyboard', component: Keyboard},
-              {path: '/popup', component: Popup},
-              {path: '/dialog', component: Dialog},
-              {path: '/accordion', component: Accordion},
-              {path: '/buttons', component: Buttons},
-              {path: '/tabs', component: Tabs},
-              {path: '/list', component: List},
-              {path: '/media-list', component: MediaList},
-              {path: '/swipe-out', component: SwipeOut},
-            ]}
-          />
-        </Views.View>
+        <Views>
+          <View>
+            <Pages
+              routes={[
+                {path: '/', component: Welcome},
+                {path: '/citys', component: Citys},
+                {path: '/picker', component: Picker},
+                {path: '/countdown', component: Countdown},
+                {path: '/keyboard', component: Keyboard},
+                {path: '/popup', component: Popup},
+                {path: '/dialog', component: Dialog},
+                {path: '/accordion', component: Accordion},
+                {path: '/buttons', component: Buttons},
+                {path: '/tabs', component: Tabs},
+                {path: '/list', component: List},
+                {path: '/media-list', component: MediaList},
+                {path: '/swipe-out', component: SwipeOut},
+              ]}
+            />
+          </View>
+
+        </Views>
       </Views>
     )
   }

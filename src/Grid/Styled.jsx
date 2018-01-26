@@ -6,14 +6,10 @@ import createTag from '../utils/createTag';
 const width = ({width}) => width ;
 const gutter = ({width, gutter}) => `calc((100% - ${gutter}px*${100/parseFloat(width)-1}) / ${100/parseFloat(width)})`
 
-export const StyledCol = styled(createTag({propsToOmit:['width', 'gutter']})) `
+export const StyledCol = styled(createTag()) `
   width: ${width}%;
   width: ${gutter};
 `;
-
-StyledCol.propTypes = {
-  width: PropTypes.number.isRequired
-}
 
 export const StyledRow = styled(
   createTag({

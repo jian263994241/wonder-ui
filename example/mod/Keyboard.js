@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/CreateApp';
+import {Page, PageContent, Link} from '../../src/Core';
 import {Keyboard, Enpad, Numpad} from '../../src/Keyboard';
 import Logo from '../../src/Keyboard/Logo';
 

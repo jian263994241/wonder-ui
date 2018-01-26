@@ -1,7 +1,12 @@
 import React, {Component, createElement, Children} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import {StyledAccordionItem} from './Styled';
 
+
+/**
+ * Accordion Item React component
+ */
 export default class AccordionItem extends Component {
 
   static childContextTypes = {
@@ -13,17 +18,26 @@ export default class AccordionItem extends Component {
   }
 
   static propTypes = {
-    component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+
+    /**
+     * 打开的样式
+     */
     activeClass: PropTypes.string,
+
+    /**
+     * 事件: 打开时触发
+     */
     onAccordionOpen: PropTypes.func,
+    /**
+     * 事件: 关闭时触发
+     */
     onAccordionClose: PropTypes.func
   }
 
   static defaultProps = {
-    component: 'div',
     activeClass: 'active',
-    onAccordionOpen: val=>val,
-    onAccordionClose: val=>val,
+    onAccordionOpen: null,
+    onAccordionClose: null,
   }
 
   getChildContext = ()=>({
@@ -34,9 +48,9 @@ export default class AccordionItem extends Component {
     const {onAccordionOpen, onAccordionClose, index} = this.props;
 
     if(nextContext.activeIndex === index){
-      onAccordionOpen();
+      onAccordionOpen && onAccordionOpen();
     }else if(this.context.activeIndex === index && nextContext.activeIndex != index ){
-      onAccordionClose();
+      onAccordionClose && onAccordionClose();
     }
   }
 
@@ -52,11 +66,12 @@ export default class AccordionItem extends Component {
       ...rest
     } = this.props;
 
-    return createElement(component, {
-      className: classnames(className, {
-        [activeClass]: index === this.context.activeIndex
-      }),
-      ...rest,
-    });
+    return (
+      <StyledAccordionItem
+        className={classnames(className, { [activeClass]: index === this.context.activeIndex })}
+        {...rest}
+      />
+    )
+
   }
 }

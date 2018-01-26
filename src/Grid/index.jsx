@@ -1,9 +1,3 @@
-import {
-  StyledRow as GridRow,
-  StyledCol as GridCol,
-} from './Styled';
 
-export {
-  GridRow,
-  GridCol
-}
+export GridRow from './GridRow';
+export GridCol from './GridCol';

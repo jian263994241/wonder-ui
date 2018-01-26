@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/CreateApp';
+import {Page, PageContent, Link} from '../../src/Core';
 import {Accordion, AccordionItem, AccordionToggle, AccordionContent} from '../../src/Accordion';
 
 export default class AccordionDemo extends Component {
@@ -9,9 +9,8 @@ export default class AccordionDemo extends Component {
     return (
       <Page>
         <PageContent>
-          <Accordion component="ul">
+          <Accordion>
             <AccordionItem
-              component="li"
               activeClass="active1"
               className="item1"
               onAccordionOpen={()=>console.log('Accordion active1')}
@@ -24,7 +23,7 @@ export default class AccordionDemo extends Component {
                 Item Content1
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem component="li">
+            <AccordionItem>
               <AccordionToggle>
                 Item 2
               </AccordionToggle>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/CreateApp';
+import {Page, PageContent, Link} from '../../src/Core';
 import {Picker,PickerCol} from '../../src/Picker';
 import Modal from '../../src/Modal';
 import Toolbar from '../../src/Toolbar';

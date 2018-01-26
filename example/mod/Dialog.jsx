@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/CreateApp';
+import {Page, PageContent, Link} from '../../src/Core';
 import Dialog from '../../src/Dialog';
 
 export default class DialogDemo extends Component {

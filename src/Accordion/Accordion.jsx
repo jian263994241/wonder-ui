@@ -1,6 +1,10 @@
 import React, {Component, Children, cloneElement, createElement} from 'react';
 import PropTypes from 'prop-types';
+import {StyledAccordion} from './Styled';
 
+/**
+ * Accordion React component
+ */
 export default class Accordion extends Component {
 
   static childContextTypes = {
@@ -9,12 +13,13 @@ export default class Accordion extends Component {
   }
 
   static propTypes = {
-    component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+    /**
+     * 默认展开面板
+     */
     defaultActiveIndex: PropTypes.number
   }
 
   static defaultProps = {
-    component: 'div',
     defaultActiveIndex: null
   }
 
@@ -37,16 +42,16 @@ export default class Accordion extends Component {
   render(){
 
     const {
-      component,
       children,
       defaultActiveIndex,
       ...rest
     } = this.props;
 
-    return createElement(component, {
-      children: Children.toArray(children).map((c, i)=>cloneElement(c, {index: i})),
-      ...rest
-    })
+    return (
+      <StyledAccordion {...rest}>
+        {Children.toArray(children).map((c, i)=>cloneElement(c, {index: i}))}
+      </StyledAccordion>
+    )
 
   }
 }

@@ -1,5 +1,6 @@
 import React, {Component, createElement} from 'react';
 import PropTypes from 'prop-types';
+import {StyledAccordionToggle} from './Styled';
 
 export default class AccordionToggle extends Component {
 
@@ -7,14 +8,6 @@ export default class AccordionToggle extends Component {
     activeIndex: PropTypes.number,
     itemIndex: PropTypes.number,
     updateActive: PropTypes.func
-  }
-
-  static propTypes = {
-    component: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
-  }
-
-  static defaultProps = {
-    component: 'div'
   }
 
   clickHander = ()=>{
@@ -34,10 +27,11 @@ export default class AccordionToggle extends Component {
       ...rest
     } = this.props;
 
-    return createElement(component, {
-      onClick: this.clickHander,
-      ...rest
-    })
-
+    return (
+      <StyledAccordionToggle
+        onClick={this.clickHander}
+        {...rest}
+      />
+    )
   }
 }

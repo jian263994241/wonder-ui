@@ -79,9 +79,28 @@ injectGlobal `
       width: 100%;
       display: none;
   }
+
+.fade-enter {
+  transform: translate3d(-100%, 0, 0);
+}
+
+.fade-enter.fade-enter-active {
+  transform: translate3d(0, 0, 0);
+  transition: transform 400ms ease-in;
+}
+
+.fade-exit {
+  transform: translate3d(0, 0, 0);
+}
+
+.fade-exit.fade-exit-active {
+  transform: translate3d(20%, 0, 0);
+  transition: transform 400ms ease-in;
+}
+
 `
 
-export const StyleViews = styled.div `
+export const StyledViews = styled.div `
   position: absolute;
   width: 100%;
   height: 100%;
@@ -90,10 +109,9 @@ export const StyleViews = styled.div `
   left: 0;
 `
 
-export const StyleView = StyleViews.extend `
+export const StyledView = StyledViews.extend `
   overflow: hidden;
   box-sizing: border-box;
-  display: ${props=>props.main? 'block': 'none'}
 `
 
 
@@ -151,6 +169,7 @@ export const StylePage = styled.div `
   width: 100%;
   height: 100%;
   background: #F2F2F2;
+  contain: layout size style;
 `
 
 export const StylePageContent = styled.div `
@@ -161,6 +180,8 @@ export const StylePageContent = styled.div `
   z-index: 1;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  contain: layout size style;
+  will-change: scroll-position;
   html.ios & {
     &::before{
       content:'';

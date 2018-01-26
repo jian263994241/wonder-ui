@@ -7,3 +7,5 @@ node_modules
 wp-conf.js
 
 .Ds_Store
+
+*.md

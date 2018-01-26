@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import device from '../CreateApp/device';
 
 function hairline(position, color) {
   let result = '';
@@ -90,7 +89,7 @@ function hairline(position, color) {
            background-color: ${color};
            display: block;
            z-index: 15;
-        
+
            html.pixel-ratio-2 & {
                transform: scaleX(0.5);
            }

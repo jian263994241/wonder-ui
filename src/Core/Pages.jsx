@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import withRouter from 'react-router-dom/withRouter';
 import Route from 'react-router-dom/Route';
 import Redirect from 'react-router-dom/Redirect';
+
 import {StylePages} from './Styled';
 
 const Switch = StylePages.withComponent(AnimatedSwitch);

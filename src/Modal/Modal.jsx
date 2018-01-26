@@ -25,6 +25,8 @@ export default class Modal extends Component {
       layers : []
     }
 
+    this.bodyScrollHeight = 0;
+
     this.defaultLayers = [
       {
         key: 'popup',
@@ -72,8 +74,6 @@ export default class Modal extends Component {
         }
       }
     ];
-
-
 
   }
 

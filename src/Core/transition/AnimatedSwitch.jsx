@@ -3,7 +3,7 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import matchPath from 'react-router-dom/matchPath';
 import PropTypes from 'prop-types';
-
+import find from 'lodash/find';
 import RouteTransition from './RouteTransition';
 
 const NO_MATCH = {
@@ -22,12 +22,12 @@ function getLocationKey(location) {
  * to persist matches/allow for nesting/etc.
  */
 function getMatchedRoute(children, pathname) {
-  return React.Children.toArray(children).find(child => {
-    return matchPath(pathname, {
-      exact: child.props.exact,
-      path: child.props.path,
-    });
-  }) || NO_MATCH;
+ return find(React.Children.toArray(children), child => {
+   return matchPath(pathname, {
+     exact: child.props.exact,
+     path: child.props.path,
+   });
+ }) || NO_MATCH;
 }
 
 class AnimatedSwitch extends React.Component {

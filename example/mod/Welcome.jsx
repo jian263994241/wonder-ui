@@ -1,5 +1,5 @@
 import React, {Component, createElement} from 'react';
-import {Page, PageContent, Link} from '../../src/CreateApp';
+import {Page, PageContent, Link} from '../../src/Core';
 import Preloader, {showPreloader, hidePreloader} from '../../src/Preloader';
 import Button, {ButtonsRow} from '../../src/Button';
 import {GridRow, GridCol} from '../../src/Grid';
