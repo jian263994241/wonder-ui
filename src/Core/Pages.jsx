@@ -11,8 +11,8 @@ import {StylePages} from './Styled';
 
 const Switch = StylePages.withComponent(AnimatedSwitch);
 
-const fullfade = { stiffness: 330, damping: 33, precision: 1 };
-const halffade = { stiffness: 110, damping: 17, precision: 1 };
+const fullfade = { stiffness: 300, damping: 30, precision: 1 };
+const halffade = { stiffness: 200, damping: 30, precision: 1 };
 const crude = {stiffness: 110, damping:17, precision: 100};
 
 const pageAnimation = {
