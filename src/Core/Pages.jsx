@@ -11,68 +11,55 @@ import {StylePages} from './Styled';
 
 const Switch = StylePages.withComponent(AnimatedSwitch);
 
-const fullfade = { stiffness: 300, damping: 30, precision: 1 };
-const halffade = { stiffness: 200, damping: 30, precision: 1 };
+const slide = { stiffness: 130, damping: 20, precision: 1 };
 const crude = {stiffness: 110, damping:17, precision: 100};
 
 const pageAnimation = {
   'slide-left': {
     atEnter: {
-      offset: 100,
-      opacity: 100
+      offset: 100
     },
     atLeave: {
-      offset: spring(-22, halffade),
-      opacity: spring(90, halffade)
+      offset: spring(-22, slide)
     },
     atActive: {
-      offset: spring(0, fullfade),
-      opacity: spring(100, fullfade)
+      offset: spring(0, slide)
     },
     mapStyles(styles) {
       return {
-        transform: `translateX(${styles.offset}%)`,
-        opacity: styles.opacity/100
+        transform: `translateX(${styles.offset}%)`
       };
     },
   },
   'slide-right': {
     atEnter: {
-      offset: -22,
-      opacity: 90
+      offset: -22
     },
     atLeave: {
-      offset: spring(102, fullfade),
-      opacity: spring(90, fullfade)
+      offset: spring(102, slide)
     },
     atActive: {
-      offset: spring(0, halffade),
-      opacity: spring(100, halffade)
+      offset: spring(0, slide)
     },
     mapStyles(styles) {
       return {
-        transform: `translateX(${styles.offset}%)`,
-        opacity: styles.opacity/100
+        transform: `translateX(${styles.offset}%)`
       };
     }
   },
   'empty': {
     atEnter: {
-      offset: -22,
-      opacity: 90
+      offset: -22
     },
     atLeave: {
-      offset: spring(102, crude),
-      opacity: spring(90, crude)
+      offset: spring(102, crude)
     },
     atActive: {
-      offset: spring(0, crude),
-      opacity: spring(100, crude)
+      offset: spring(0, crude)
     },
     mapStyles(styles) {
       return {
-        transform: `translateX(0%)`,
-        opacity: styles.opacity/100
+        transform: `translateX(0%)`
       };
     }
   }
