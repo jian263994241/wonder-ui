@@ -7,14 +7,79 @@ import {StyleToolbar} from './Styled';
 export default class Keyboard extends Component {
 
   static propTypes = {
+
+    /**
+     * 是否显示关闭按钮
+     */
+    closeButton: PropTypes.bool,
+
+    /**
+     * 关闭按钮的文本
+     */
+    closeText: PropTypes.string,
+
+    /**
+     * keypad = {Numpad} 时 定义左下角按键, 可以是 '00', 'x', '.' , null
+     */
+
+    extraKey: PropTypes.any,
+
+    /**
+     * 是否显示为暗色主题
+     */
+
+    dark: PropTypes.bool,
+
+    /**
+     * Input Id
+     */
+
+    input: PropTypes.string.isRequired,
+
+    /**
+     * 为ture时, 直接显示
+     */
     inline: PropTypes.bool,
+
+    /**
+     * 忽略点击的区域
+     */
+    getCancelIgnore: PropTypes.func,
+
+    /**
+     * 键盘套件  Enpad/Numpad
+     */
     keypad: PropTypes.func.isRequired,
-    getCancelIgnore: PropTypes.func
+
+    /**
+     * 设置标题栏显示的内容
+     */
+    title: PropTypes.element,
+
+    /**
+     * 关闭时回调方法
+     */
+    onCancel: PropTypes.func,
+
+    /**
+     * 是否显示键盘
+     */
+    visible: PropTypes.bool,
+
+
+
+
   }
 
   static defaultProps = {
+    title:null,
+    dark: false,
+    inline: false,
     closeButton: true,
-    closeText: '关闭'
+    closeText: '关闭',
+    getCancelIgnore: null,
+    visible: false,
+    onCancel: null,
   }
 
   state = {
@@ -100,7 +165,6 @@ export default class Keyboard extends Component {
       input,
       children,
       inline,
-      value,
       dark,
       extraKey,
       random,

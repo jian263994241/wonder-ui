@@ -149,7 +149,6 @@ var Keyboard = function (_Component) {
           input = _props.input,
           children = _props.children,
           inline = _props.inline,
-          value = _props.value,
           dark = _props.dark,
           extraKey = _props.extraKey,
           random = _props.random,
@@ -161,7 +160,7 @@ var Keyboard = function (_Component) {
           title = _props.title,
           closeButton = _props.closeButton,
           closeText = _props.closeText,
-          rest = (0, _objectWithoutProperties3.default)(_props, ['input', 'children', 'inline', 'value', 'dark', 'extraKey', 'random', 'keypad', 'maxLength', 'style', 'visible', 'onCancel', 'title', 'closeButton', 'closeText']);
+          rest = (0, _objectWithoutProperties3.default)(_props, ['input', 'children', 'inline', 'dark', 'extraKey', 'random', 'keypad', 'maxLength', 'style', 'visible', 'onCancel', 'title', 'closeButton', 'closeText']);
 
 
       var setValue = function setValue(a) {
@@ -229,12 +228,74 @@ var Keyboard = function (_Component) {
 }(_react.Component);
 
 Keyboard.propTypes = {
+
+  /**
+   * 是否显示关闭按钮
+   */
+  closeButton: _propTypes2.default.bool,
+
+  /**
+   * 关闭按钮的文本
+   */
+  closeText: _propTypes2.default.string,
+
+  /**
+   * keypad = {Numpad} 时 定义左下角按键, 可以是 '00', 'x', '.' , null
+   */
+
+  extraKey: _propTypes2.default.any,
+
+  /**
+   * 是否显示为暗色主题
+   */
+
+  dark: _propTypes2.default.bool,
+
+  /**
+   * Input Id
+   */
+
+  input: _propTypes2.default.string.isRequired,
+
+  /**
+   * 为ture时, 直接显示
+   */
   inline: _propTypes2.default.bool,
+
+  /**
+   * 忽略点击的区域
+   */
+  getCancelIgnore: _propTypes2.default.func,
+
+  /**
+   * 键盘套件  Enpad/Numpad
+   */
   keypad: _propTypes2.default.func.isRequired,
-  getCancelIgnore: _propTypes2.default.func
+
+  /**
+   * 设置标题栏显示的内容
+   */
+  title: _propTypes2.default.element,
+
+  /**
+   * 关闭时回调方法
+   */
+  onCancel: _propTypes2.default.func,
+
+  /**
+   * 是否显示键盘
+   */
+  visible: _propTypes2.default.bool
+
 };
 Keyboard.defaultProps = {
+  title: null,
+  dark: false,
+  inline: false,
   closeButton: true,
-  closeText: '关闭'
+  closeText: '关闭',
+  getCancelIgnore: null,
+  visible: false,
+  onCancel: null
 };
 exports.default = Keyboard;

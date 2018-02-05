@@ -48,6 +48,16 @@ module.exports = {
         {components: 'src/Grid/GridRow.jsx'},
         {components: 'src/Grid/GridCol.jsx'},
       ]
+    },
+    {
+      name: 'Keyboard',
+      content: 'docs/Keyboard.md',
+      sections: [
+        {components: 'src/Keyboard/Keyboard.jsx'},
+        {components: 'src/Keyboard/Enpad.jsx'},
+        {components: 'src/Keyboard/Numpad.jsx'},
+        {components: 'src/Keyboard/Logo.jsx'},
+      ]
     }
   ]
 
