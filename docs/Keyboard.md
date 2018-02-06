@@ -40,20 +40,30 @@ const style = {
 const Keyboard = require('../src/Keyboard/Keyboard').default;
 const Numpad = require('../src/Keyboard/Numpad').default;
 const Logo = require('../src/Keyboard/Logo').default;
+const KeyboardInput = require('../src/Keyboard/Input').default;
+
 const style = {
   width: 375
 }
 ;
 <div style={style}>
+
+  <KeyboardInput
+    id="input-grid"
+    onChange={(val)=>console.log(val)}
+  />
+
+  <br/>
+
   <Keyboard
-    visible
     inline
     dark
-    input="id"
+    closeButton={false}
+    maxLength={6}
+    input="input-grid"
     extraKey={null}
     keypad={Numpad}
     title={<Logo/>}
-    onCancel={()=>this.setState({visible: false})}
   />
 </div>
 
@@ -79,7 +89,6 @@ const style = {
   <Keyboard
     visible
     inline
-    dark
     input="id"
     extraKey={'.'}
     keypad={Numpad}
@@ -89,7 +98,6 @@ const style = {
   <Keyboard
     visible
     inline
-    dark
     input="id"
     extraKey={null}
     keypad={Numpad}
@@ -99,7 +107,6 @@ const style = {
   <Keyboard
     visible
     inline
-    dark
     input="id"
     extraKey={'X'}
     keypad={Numpad}

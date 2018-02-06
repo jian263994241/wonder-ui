@@ -34,7 +34,7 @@ export default class Keyboard extends Component {
      * Input Id
      */
 
-    input: PropTypes.string.isRequired,
+    input: PropTypes.string,
 
     /**
      * 为ture时, 直接显示
@@ -66,9 +66,6 @@ export default class Keyboard extends Component {
      */
     visible: PropTypes.bool,
 
-
-
-
   }
 
   static defaultProps = {
@@ -80,6 +77,7 @@ export default class Keyboard extends Component {
     getCancelIgnore: null,
     visible: false,
     onCancel: null,
+    input: ''
   }
 
   state = {
@@ -184,6 +182,7 @@ export default class Keyboard extends Component {
       if(this.input){
         this.setState({ value: a });
         this.input.value = a;
+        this.input._value = a;
         this.input.scrollLeft = this.input.scrollWidth;
       }
     }

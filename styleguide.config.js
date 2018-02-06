@@ -57,6 +57,7 @@ module.exports = {
         {components: 'src/Keyboard/Enpad.jsx'},
         {components: 'src/Keyboard/Numpad.jsx'},
         {components: 'src/Keyboard/Logo.jsx'},
+        {components: 'src/Keyboard/Input.jsx'},
       ]
     }
   ]

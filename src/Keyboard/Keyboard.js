@@ -168,6 +168,7 @@ var Keyboard = function (_Component) {
         if (_this2.input) {
           _this2.setState({ value: a });
           _this2.input.value = a;
+          _this2.input._value = a;
           _this2.input.scrollLeft = _this2.input.scrollWidth;
         }
       };
@@ -255,7 +256,7 @@ Keyboard.propTypes = {
    * Input Id
    */
 
-  input: _propTypes2.default.string.isRequired,
+  input: _propTypes2.default.string,
 
   /**
    * 为ture时, 直接显示
@@ -296,6 +297,7 @@ Keyboard.defaultProps = {
   closeText: '关闭',
   getCancelIgnore: null,
   visible: false,
-  onCancel: null
+  onCancel: null,
+  input: ''
 };
 exports.default = Keyboard;

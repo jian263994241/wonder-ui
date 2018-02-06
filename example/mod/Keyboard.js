@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Page, PageContent, Link} from '../../src/Core';
 import {Keyboard, Enpad, Numpad} from '../../src/Keyboard';
 import Logo from '../../src/Keyboard/Logo';
+import Input from '../../src/Keyboard/Input';
 
 const style = {
   padding: '10px 0'
@@ -85,6 +86,23 @@ export default class KeyboardDemo extends Component {
               />
             </li>
           </ul>
+
+          <Input
+            id="numInputInline"
+            onChange={(val)=>console.log(val)}
+          />
+
+          <Keyboard
+            visible
+            inline
+            dark
+            closeButton={false}
+            maxLength={6}
+            input="numInputInline"
+            extraKey={null}
+            keypad={Numpad}
+            title={<Logo/>}
+          />
 
           <h2>
             数字键盘
