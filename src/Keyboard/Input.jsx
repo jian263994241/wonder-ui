@@ -50,7 +50,7 @@ export default class KeyboardInput extends PureComponent {
   static defaultProps = {
     grid: 6,
     show: true,
-    onChange: val=>val
+    onChange: val=>val,
   }
 
   state = {
@@ -82,6 +82,17 @@ export default class KeyboardInput extends PureComponent {
     const input = this.refs.input;
     const self = this;
 
+    Object.defineProperty(input, 'value', {
+        configurable: true,
+        set: function(value) {
+            this._value = value;
+            onchangeCallback(value);
+        },
+        get: function() {
+            return this._value;
+        }
+    });
+
     function onchangeCallback(value) {
         self.setState({value});
         self.props.onChange(value);
@@ -89,17 +100,8 @@ export default class KeyboardInput extends PureComponent {
 
     input.addEventListener('onchange', onchangeCallback, false);
 
-    Object.defineProperty(input, '_value', {
-        configurable: true,
-        set: function(value) {
-            this.value = value;
-            onchangeCallback(value);
-        },
-        get: function() {
-            return this.value;
-        }
-    });
   }
+
 
   render(){
 

@@ -45,28 +45,42 @@ const KeyboardInput = require('../src/Keyboard/Input').default;
 const style = {
   width: 375
 }
-;
-<div style={style}>
 
-  <KeyboardInput
-    id="input-grid"
-    onChange={(val)=>console.log(val)}
-  />
+class Demo extends React.Component{
+  render(){
+    return (
+      <div style={style}>
 
-  <br/>
+        <KeyboardInput
+          id="input-grid"
+          onChange={(value)=>{
+            console.log(value);
+          }}
+        />
 
-  <Keyboard
-    inline
-    dark
-    closeButton={false}
-    maxLength={6}
-    input="input-grid"
-    extraKey={null}
-    keypad={Numpad}
-    title={<Logo/>}
-  />
-</div>
+        <br/>
 
+        <Keyboard
+          inline
+          dark
+          closeButton={false}
+          maxLength={6}
+          input="input-grid"
+          extraKey={null}
+          keypad={Numpad}
+          title={<Logo/>}
+          ref="kb"
+        />
+
+        <br/>
+
+        <button onClick={()=>{this.refs.kb.reset()}}>reset</button>
+      </div>
+    )
+  }
+}
+
+;<Demo/>
 ```
 
 数字键盘

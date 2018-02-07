@@ -115,6 +115,9 @@ var Keyboard = function (_Component) {
       }
 
       return result;
+    }, _this.reset = function () {
+      _this.setState({ value: '' });
+      _this.input.value = '';
     }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
@@ -168,7 +171,6 @@ var Keyboard = function (_Component) {
         if (_this2.input) {
           _this2.setState({ value: a });
           _this2.input.value = a;
-          _this2.input._value = a;
           _this2.input.scrollLeft = _this2.input.scrollWidth;
         }
       };

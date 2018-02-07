@@ -157,6 +157,11 @@ export default class Keyboard extends Component {
     return result;
   }
 
+  reset = ()=>{
+    this.setState({ value: '' });
+    this.input.value = '';
+  }
+
   render() {
 
     const {
@@ -182,7 +187,6 @@ export default class Keyboard extends Component {
       if(this.input){
         this.setState({ value: a });
         this.input.value = a;
-        this.input._value = a;
         this.input.scrollLeft = this.input.scrollWidth;
       }
     }
