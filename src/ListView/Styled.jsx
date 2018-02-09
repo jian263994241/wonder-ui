@@ -54,6 +54,7 @@ export const StyledItemText = styled.div `
 `
 
 const arrowCss = css `
+  padding-right: 20px;
   background-size: 8px 13px;
   background-repeat: no-repeat;
   background-position: 95% center;
@@ -63,9 +64,8 @@ const arrowCss = css `
 `
 
 export const StyledItemTitleRow = styled( createTag({ propsToOmit: ['arrow'] }) ) `
-  padding-right: 20px;
-  background: no-repeat right center;
   ${props=>props.arrow && arrowCss}
+  background-position: right center!important;
   display: flex;
   justify-content:space-between;
 `
@@ -161,7 +161,7 @@ const insetCss = css `
     border-radius: 7px;
   }
 `
-export const StyledListItem = styled.li `
+export const StyledListItem = styled.div `
   position: relative;
   box-sizing: border-box;
 `

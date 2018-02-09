@@ -22,7 +22,6 @@ export default class ListDemo extends Component {
               text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
               media={<img src="http://lorempixel.com/160/160/people/1" width="80" alt=""/>}
               after="$15"
-              arrow
             />
             <ListItem
               title="Don't Stop Me Now"

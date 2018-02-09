@@ -41,7 +41,7 @@ const Keyboard = require('../src/Keyboard/Keyboard').default;
 const Numpad = require('../src/Keyboard/Numpad').default;
 const Logo = require('../src/Keyboard/Logo').default;
 const KeyboardInput = require('../src/Keyboard/Input').default;
-
+const Button = require('../src/Button').default;
 const style = {
   width: 375
 }
@@ -74,7 +74,7 @@ class Demo extends React.Component{
 
         <br/>
 
-        <button onClick={()=>{this.refs.kb.reset()}}>reset</button>
+        <Button fill onClick={()=>{this.refs.kb.reset()}}>reset</Button>
       </div>
     )
   }
