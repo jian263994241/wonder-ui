@@ -1,16 +1,12 @@
 import React, { cloneElement, createElement, Component } from 'react';
-import TransitionMotion from 'react-motion/lib/TransitionMotion';
 import PropTypes from 'prop-types';
+import TransitionGroup from 'react-transition-group/TransitionGroup'
+import CSSTransition from 'react-transition-group/CSSTransition'
 
-import ensureSpring from 'react-router-transition/lib/ensureSpring';
-
-const identity = val => val;
 
 class RouteTransition extends Component {
   static defaultProps = {
     wrapperComponent: 'div',
-    runOnMount: false,
-    mapStyles: identity,
   };
 
   static propTypes = {
@@ -20,92 +16,43 @@ class RouteTransition extends Component {
       PropTypes.element,
       PropTypes.string,
     ]),
-    atEnter: PropTypes.object.isRequired,
-    atActive: PropTypes.object.isRequired,
-    atLeave: PropTypes.object.isRequired,
-    mapStyles: PropTypes.func.isRequired,
-    runOnMount: PropTypes.bool.isRequired,
   };
 
-  getDefaultStyles() {
-    if (!this.props.runOnMount) {
+
+  getStyles() {
+    if (!this.props.children) {
       return null;
     }
 
-    if (!this.props.children) {
-      return [];
-    }
+    // const {onEnter, onEntering, onEntered, onExit, onExiting, onExited} = this.props;
 
-    return [
-      {
-        key: this.props.children.key,
-        data: this.props.children,
-        style: this.props.atEnter,
-      },
-    ];
-  }
-
-  // there's only ever one route mounted at a time,
-  // so just return the current match
-  getStyles() {
-    if (!this.props.children) {
-      return [];
-    }
-
-    return [
-      {
-        key: this.props.children.key,
-        data: this.props.children,
-        style: ensureSpring(this.props.atActive),
-      },
-    ];
-  }
-
-  willEnter = () => {
-
-    if('willEnter' in this.props){
-      this.props.willEnter()
-    }
-    return this.props.atEnter;
-  };
-
-  willLeave = () => {
-    return ensureSpring(this.props.atLeave);
-  };
-
-  didLeave = this.props.onRest
-
-  renderRoute = config => {
-    const props = {
-      style: this.props.mapStyles(config.style),
-      key: config.key,
-    };
-
-    return this.props.wrapperComponent !== false
-      ? createElement(this.props.wrapperComponent, props, config.data)
-      : cloneElement(config.data, props);
-  };
-
-  renderRoutes = interpolatedStyles => {
     return (
-      <div className={this.props.className}>
-        {interpolatedStyles.map(this.renderRoute)}
-      </div>
-    );
-  };
+      <CSSTransition
+        timeout={this.props.timeout}
+        key={this.props.children.key}
+        children={this.props.children}
+        classNames={this.props.classNames}
+      />
+    )
+
+  }
 
   render() {
+    const {
+      className,
+      classNames,
+      wrapperComponent
+    } = this.props;
+
     return (
-      <TransitionMotion
-        defaultStyles={this.getDefaultStyles()}
-        styles={this.getStyles()}
-        willEnter={this.willEnter}
-        willLeave={this.willLeave}
-        didLeave={this.didLeave}
+      <TransitionGroup
+        className={className}
+        component={wrapperComponent}
       >
-        {this.renderRoutes}
-      </TransitionMotion>
-    );
+        {this.getStyles()}
+      </TransitionGroup>
+    )
+
   }
 }
 

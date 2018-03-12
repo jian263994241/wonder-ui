@@ -6,64 +6,10 @@ import styled from 'styled-components';
 import withRouter from 'react-router-dom/withRouter';
 import Route from 'react-router-dom/Route';
 import Redirect from 'react-router-dom/Redirect';
-
+import classnames from 'classnames';
 import {StylePages} from './Styled';
 
 const Switch = StylePages.withComponent(AnimatedSwitch);
-
-const slide = { stiffness: 130, damping: 20, precision: 1 };
-const crude = {stiffness: 110, damping:17, precision: 100};
-
-const pageAnimation = {
-  'slide-left': {
-    atEnter: {
-      offset: 100
-    },
-    atLeave: {
-      offset: spring(-22, slide)
-    },
-    atActive: {
-      offset: spring(0, slide)
-    },
-    mapStyles(styles) {
-      return {
-        transform: `translateX(${styles.offset}%)`
-      };
-    },
-  },
-  'slide-right': {
-    atEnter: {
-      offset: -22
-    },
-    atLeave: {
-      offset: spring(102, slide)
-    },
-    atActive: {
-      offset: spring(0, slide)
-    },
-    mapStyles(styles) {
-      return {
-        transform: `translateX(${styles.offset}%)`
-      };
-    }
-  },
-  'empty': {
-    atEnter: {
-      offset: -22
-    },
-    atLeave: {
-      offset: spring(102, crude)
-    },
-    atActive: {
-      offset: spring(0, crude)
-    },
-    mapStyles(styles) {
-      return {
-        transform: `translateX(0%)`
-      };
-    }
-  }
-}
 
 class Pages extends Component {
 
@@ -106,6 +52,7 @@ class Pages extends Component {
     return result;
   }
 
+
   render(){
     const {
       history,
@@ -122,22 +69,26 @@ class Pages extends Component {
 
     const animationType = (()=>{
       if(noAnimation || state.nested === 0){
-        return 'empty';
+        return null;
       }
       if(action === 'POP' || state.nested === -1){
-        return 'slide-right';
+        return 'backward';
       }
       if(action === 'PUSH'|| action === 'REPLACE' || state.nested === 1){
-        return 'slide-left';
+        return 'forward';
       }
-      return 'empty';
+      return null;
     })();
+
+    const cls = classnames({
+      [`router-transition-${animationType}`] : animationType
+    });
 
     return (
       <Switch
-        runOnMount={false}
-        reverse={animationType==='slide-right'}
-        {...pageAnimation[animationType]}
+        timeout={400}
+        classNames="slide"
+        className={cls}
       >
         {this.renderRoutes()}
       </Switch>

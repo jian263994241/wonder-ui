@@ -81,23 +81,48 @@ injectGlobal `
       display: none;
   }
 
-.fade-enter {
-  transform: translate3d(-100%, 0, 0);
-}
+  .router-transition-forward{
+    .slide-enter {
+      transform: translate3d(100%, 0, 2px);
+    }
 
-.fade-enter.fade-enter-active {
-  transform: translate3d(0, 0, 0);
-  transition: transform 400ms ease-in;
-}
+    .slide-enter.slide-enter-active {
+      z-index: 2;
+      transform: translate3d(0, 0, 2px);
+      transition: transform 400ms ease;
+    }
 
-.fade-exit {
-  transform: translate3d(0, 0, 0);
-}
+    .slide-exit {
+      transform: translate3d(0, 0, 1px);
+    }
 
-.fade-exit.fade-exit-active {
-  transform: translate3d(20%, 0, 0);
-  transition: transform 400ms ease-in;
-}
+    .slide-exit.slide-exit-active {
+      z-index: 1;
+      transform: translate3d(-20%, 0, 1px);
+      transition: transform 400ms ease;
+    }
+  }
+
+  .router-transition-backward{
+    .slide-enter {
+      transform: translate3d(-20%, 0, 2px);
+    }
+    .slide-enter.slide-enter-active {
+      z-index: 1;
+      transform: translate3d(0, 0, 1px);
+      transition: transform 400ms ease;
+    }
+
+    .slide-exit {
+      transform: translate3d(0, 0, 2px);
+    }
+
+    .slide-exit.slide-exit-active {
+      z-index: 2;
+      transform: translate3d(100%, 0, 2px);
+      transition: transform 400ms ease;
+    }
+  }
 
 `
 
@@ -158,7 +183,7 @@ export const StylePages = styled.div `
       content: '';
       display: ${props=>device.ios ? 'block': 'none'};
     }
-    ${props=>props.reverse? leftToCenter : rightToCenter}
+    ${'' /* ${props=>props.reverse? leftToCenter : rightToCenter} */}
   }
 `
 

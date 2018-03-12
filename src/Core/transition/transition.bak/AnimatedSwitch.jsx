@@ -45,7 +45,14 @@ class AnimatedSwitch extends React.Component {
 
   matches = 0;
 
+  unblock = function(){};
+
+  willEnter = ()=>{
+    this.unblock = this.props.history.block();
+  }
+
   onRest = ()=> this.unblock();
+
 
   componentWillReceiveProps(nextProps) {
     const nextMatch = getMatchedRoute(
@@ -67,6 +74,8 @@ class AnimatedSwitch extends React.Component {
     return (
       <RouteTransition
         {...routeTransitionProps}
+        willEnter={this.willEnter}
+        onRest={this.onRest}
       >
         <Switch key={this.state.key} location={location}>
           {children}
