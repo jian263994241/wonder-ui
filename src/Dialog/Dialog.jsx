@@ -41,7 +41,7 @@ export default class Dialog extends Component {
     } = this.props;
 
     return (
-      <Modal2 visible={visible} noButtons={noButtons} fade overlay {...rest}>
+      <Modal2 visible={visible} noButtons={noButtons} overlay {...rest}>
         <ModalInner style={innerStyle}>
           {title && <ModalTitle>{title}</ModalTitle>}
           {text && <ModalTitle>{text}</ModalTitle>}

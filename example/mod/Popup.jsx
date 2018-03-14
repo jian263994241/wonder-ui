@@ -1,24 +1,39 @@
 import React, {Component, createElement} from 'react';
 import {Page, PageContent, Link, Route} from '../../src/Core';
 
-import PopupPage from './PopupPage';
+import Popup from '../../src/Popup';
 
 
 
 export default class PopupDemo extends Component {
 
+   state = {
+     visible: false
+   }
 
-  render(){
+   open = ()=>{
+     this.setState({
+       visible: true
+     })
+   }
 
-    return (
-      <Page>
-        <PageContent>
-          <Link to="/popup/popup-page">打开Pop页面</Link>
-        </PageContent>
+   close = ()=>{
+     this.setState({
+       visible: false
+     })
+   }
 
+   render(){
 
-
-      </Page>
-    )
-  }
-}
+     return (
+       <Page>
+         <PageContent>
+           <a onClick={this.open}>打开</a>
+           <Popup visible={this.state.visible}>
+             <a onClick={this.close}>关闭</a>
+           </Popup>
+         </PageContent>
+       </Page>
+     )
+   }
+ }

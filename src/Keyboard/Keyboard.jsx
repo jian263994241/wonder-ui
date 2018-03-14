@@ -173,7 +173,6 @@ export default class Keyboard extends Component {
       random,
       keypad,
       maxLength,
-      style,
       visible,
       onCancel,
       title,
@@ -222,10 +221,17 @@ export default class Keyboard extends Component {
         </div>
       </StyleToolbar>
     );
-
+    
     return  (
       <ThemeProvider theme={{mode : dark ? 'dark': 'light'}}>
-        <Modal visible={visible} inline={inline} style={style} {...rest} ref="modal">
+        <Modal
+          visible={visible}
+          inline={inline}
+          fade={false}
+          overlay={false}
+          ref="modal"
+          {...rest}
+        >
           {toolbar}
           {createElement(keypad, props)}
         </Modal>

@@ -157,13 +157,12 @@ var Keyboard = function (_Component) {
           random = _props.random,
           keypad = _props.keypad,
           maxLength = _props.maxLength,
-          style = _props.style,
           visible = _props.visible,
           onCancel = _props.onCancel,
           title = _props.title,
           closeButton = _props.closeButton,
           closeText = _props.closeText,
-          rest = (0, _objectWithoutProperties3.default)(_props, ['input', 'children', 'inline', 'dark', 'extraKey', 'random', 'keypad', 'maxLength', 'style', 'visible', 'onCancel', 'title', 'closeButton', 'closeText']);
+          rest = (0, _objectWithoutProperties3.default)(_props, ['input', 'children', 'inline', 'dark', 'extraKey', 'random', 'keypad', 'maxLength', 'visible', 'onCancel', 'title', 'closeButton', 'closeText']);
 
 
       var setValue = function setValue(a) {
@@ -220,7 +219,13 @@ var Keyboard = function (_Component) {
         { theme: { mode: dark ? 'dark' : 'light' } },
         _react2.default.createElement(
           _Modal2.default,
-          (0, _extends3.default)({ visible: visible, inline: inline, style: style }, rest, { ref: 'modal' }),
+          (0, _extends3.default)({
+            visible: visible,
+            inline: inline,
+            fade: false,
+            overlay: false,
+            ref: 'modal'
+          }, rest),
           toolbar,
           (0, _react.createElement)(keypad, props)
         )

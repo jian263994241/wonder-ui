@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {PopupModal} from '../Modal/Styled';
 
-
-export const StylePopup = styled(PopupModal) `
+export const StylePopup = styled.div `
   width: 100%;
   height: 100%;
   background-color: ${props=>props.bgColor? props.bgColor :'#fff'};

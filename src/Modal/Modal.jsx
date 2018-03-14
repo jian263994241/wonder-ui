@@ -1,143 +1,51 @@
 import React, {Component, createElement} from 'react';
-import {findDOMNode} from 'react-dom';
 import PropTypes from 'prop-types';
 import Mounter from 'rc-mounter';
-import TransitionMotion from 'react-motion/lib/TransitionMotion';
-import spring from 'react-motion/lib/spring';
-import presets from 'react-motion/lib/presets';
+import CSSTransition from '@clay.global/react-transition-group/lib/CSSTransition';
 
 import {PopupModal, StyleModal, StyleOverlay} from './Styled';
+
+const show = node => {
+  node.style.display = 'block';
+  node.style.visibility = 'visible';
+};
+const hide = node => {
+  node.style.visibility = 'hidden';
+  node.style.display = 'none';
+};
 
 export default class Modal extends Component {
 
   static propTypes = {
     visible: PropTypes.bool,
     overlay: PropTypes.bool,
-    overlayStyle: PropTypes.object,
     fade: PropTypes.bool,
+    component: PropTypes.func,
     onCancel: PropTypes.func,
   }
 
-  constructor(props){
-    super(props);
+  static defaultProps = {
+    overlay: true,
+    fade: true,
+  }
 
-    this.state = {
-      layers : []
-    }
-
-    this.bodyScrollHeight = 0;
-
-    this.defaultLayers = [
-      {
-        key: 'popup',
-        data: {
-          component: PopupModal,
-          getProps : ({className, children})=>{
-            return { className, children }
-          },
-          mapStyle: (x, style)=>{
-            return {...style, transform: `translate3d(0, ${x}%, 0) scale(1)`}
-          }
-        }
-      },
-      {
-        key: 'modal',
-        data: {
-          component: StyleModal,
-          getProps : ({className, children})=>{
-            return { className, children }
-          },
-          mapStyle: (x)=>{
-            const {style} = this.props;
-            return {
-              ...style,
-              transform: `translate3d(-50%, -50%, 0) scale(${x/100 * 0.181 + 1})`,
-              opacity: `${1 - x/100}`
-            }
-          }
-        }
-      },
-      {
-        key: 'overlay',
-        data: {
-          component: StyleOverlay,
-          getProps: ({onCancel}) => {
-            return {
-              onClick: onCancel,
-              onTouchMove: e=>e.preventDefault()
-            }
-          },
-          mapStyle : (x)=>{
-            const {overlayStyle} = this.props;
-            return {...overlayStyle, opacity: `${1 - x/100}`}
-          }
-        }
-      }
-    ];
-
+  state = {
+    visible: false,
   }
 
   componentDidMount(){
     if(this.props.visible){
-      this.setState({
-        layers: this.defaultLayers
-      })
+      this.openModal();
     }
   }
 
-  getDefaultStyles = ()=>{
-    const {visible} = this.props;
-    return this.state.layers.map((layer)=>{
-      return {
-        ...layer,
-        style: { x: 100 }
-      }
-    })
-  }
-
-  getStyles = ()=>{
-
-    const {visible, overlay, fade} = this.props;
-
-    return this.state.layers.filter(({key})=>{
-      if(key === 'overlay' && !overlay ){
-        return false;
-      }
-      if(key === 'modal' && !fade ){
-        return false;
-      }
-      if(key === 'popup' && fade ){
-        return false;
-      }
-      return true;
-    }).map((layer)=>{
-      return {
-        ...layer,
-        style: { x: spring(0)}
-      }
-
-    })
-
-  }
-
-  willEnter = ()=>{
-    return { x: 100 }
-  }
-
-  willLeave = ()=>{
-    return { x: spring(100, {...presets.stiff, precision: 0.1 }) }
-  }
-
-  didLeave = ({key})=>{
+  didLeave = (node)=>{
     const {didLeave} = this.props;
-    if(key === 'popup' || key === 'modal'){
-      didLeave && setTimeout(didLeave, 0);
-    }
+    hide(node);
+    didLeave && setTimeout(didLeave, 100);
   }
 
-  getModal = ()=>{
-    return findDOMNode(this.refs.modal);
-  }
+  getModal = ()=> this.modal
 
   componentWillReceiveProps(nextProps) {
 
@@ -151,26 +59,11 @@ export default class Modal extends Component {
   }
 
   openModal = ()=>{
-    this.setState({
-      layers : this.defaultLayers
-    })
+    this.setState({ visible: true })
   }
 
   closeModal = ()=>{
-    this.setState({layers: []});
-  }
-
-  renderModal = interpolatedStyles => {
-    const Fragment = React.Fragment || 'div';
-    return (
-      <Fragment>
-        {
-          interpolatedStyles.map(({key, style: {x}, data: {component, getProps, mapStyle}})=>{
-            return createElement(component,  {key, style: mapStyle(x), ...getProps(this.props)})
-          })
-        }
-      </Fragment>
-    )
+    this.setState({ visible: false });
   }
 
   render() {
@@ -178,24 +71,53 @@ export default class Modal extends Component {
       className,
       style,
       inline,
-      children
+      visible,
+      overlay,
+      onCancel,
+      children,
+      fade
     } = this.props;
 
-    return inline ? (
-      <div className={className} style={style} ref="modal">{children}</div>
-    ):(
+
+    if(inline){
+      return <div className={className} style={style} ref="modal">{children}</div>
+    }
+
+    const backdrop = overlay && (
+      <CSSTransition
+        in={this.state.visible}
+        timeout={400}
+        classNames="fade"
+        onEnter={node=>show(node)}
+        onExited={node=>hide(node)}
+      >
+        <StyleOverlay onClick={onCancel} onTouchMove={e=>e.preventDefault()}/>
+      </CSSTransition>
+    )
+
+    let classNames, Content ;
+
+    if (fade) {
+      classNames = 'fade';
+      Content = StyleModal;
+    }else {
+      classNames = 'slideUp';
+      Content = PopupModal;
+    }
+
+    return (
       <Mounter>
-        <div ref="modal">
-          <TransitionMotion
-            defaultStyles={this.getDefaultStyles()}
-            styles={this.getStyles()}
-            willEnter={this.willEnter}
-            willLeave={this.willLeave}
-            didLeave={this.didLeave}
-          >
-            {this.renderModal}
-          </TransitionMotion>
-        </div>
+        { backdrop }
+        <CSSTransition
+          className={className}
+          in={this.state.visible}
+          timeout={400}
+          classNames={classNames}
+          onEnter={node=>show(node)}
+          onExited={this.didLeave}
+        >
+          <Content innerRef={x=>this.modal=x}>{children}</Content>
+        </CSSTransition>
       </Mounter>
     )
   }
