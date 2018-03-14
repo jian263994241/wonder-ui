@@ -1,7 +1,8 @@
 import React, { cloneElement, createElement, Component } from 'react';
+import ReactDOM, {findDOMNode} from 'react-dom';
 import PropTypes from 'prop-types';
-import TransitionGroup from 'react-transition-group/TransitionGroup'
-import CSSTransition from 'react-transition-group/CSSTransition'
+import TransitionGroup from '@clay.global/react-transition-group/lib/TransitionGroup';
+import CSSTransition from '@clay.global/react-transition-group/lib/CSSTransition';
 
 
 class RouteTransition extends Component {
@@ -20,11 +21,13 @@ class RouteTransition extends Component {
 
 
   getStyles() {
-    if (!this.props.children) {
+
+
+    if (!this.props.children ) {
       return null;
     }
 
-    // const {onEnter, onEntering, onEntered, onExit, onExiting, onExited} = this.props;
+    const {onEnter, onEntering, onEntered, onExit, onExiting, onExited} = this.props;
 
     return (
       <CSSTransition
@@ -32,6 +35,8 @@ class RouteTransition extends Component {
         key={this.props.children.key}
         children={this.props.children}
         classNames={this.props.classNames}
+        onEnter={onEnter}
+        onEntered={onEntered}
       />
     )
 

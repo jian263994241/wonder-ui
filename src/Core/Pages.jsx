@@ -6,7 +6,8 @@ import styled from 'styled-components';
 import withRouter from 'react-router-dom/withRouter';
 import Route from 'react-router-dom/Route';
 import Redirect from 'react-router-dom/Redirect';
-import classnames from 'classnames';
+import addClass from 'dom-helpers/class/addClass';
+import removeClass from 'dom-helpers/class/removeClass';
 import {StylePages} from './Styled';
 
 const Switch = StylePages.withComponent(AnimatedSwitch);
@@ -80,18 +81,22 @@ class Pages extends Component {
       return null;
     })();
 
-    const cls = classnames({
-      [`router-transition-${animationType}`] : animationType
-    });
+    const onEntered = (node)=>{
+      removeClass(node.parentNode, `router-transition-${animationType}`);
+    }
+
+    const onEnter= (node)=>{
+      addClass(node.parentNode, `router-transition-${animationType}`);
+    }
 
     return (
       <Switch
-        timeout={400}
+        timeout={410}
         classNames="slide"
-        className={cls}
-      >
-        {this.renderRoutes()}
-      </Switch>
+        onEnter={onEnter}
+        onEntered={onEntered}
+        children={this.renderRoutes()}
+      />
     );
   }
 }

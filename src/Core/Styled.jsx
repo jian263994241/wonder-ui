@@ -83,12 +83,12 @@ injectGlobal `
 
   .router-transition-forward{
     .slide-enter {
-      transform: translate3d(100%, 0, 2px);
+      transform: translate3d(100%, 0, 10px);
     }
 
     .slide-enter.slide-enter-active {
-      z-index: 2;
-      transform: translate3d(0, 0, 2px);
+      z-index: 10;
+      transform: translate3d(0, 0, 10px);
       transition: transform 400ms ease;
     }
 
@@ -105,7 +105,7 @@ injectGlobal `
 
   .router-transition-backward{
     .slide-enter {
-      transform: translate3d(-20%, 0, 2px);
+      transform: translate3d(-20%, 0, 10px);
     }
     .slide-enter.slide-enter-active {
       z-index: 1;
@@ -114,12 +114,12 @@ injectGlobal `
     }
 
     .slide-exit {
-      transform: translate3d(0, 0, 2px);
+      transform: translate3d(0, 0, 10px);
     }
 
     .slide-exit.slide-exit-active {
-      z-index: 2;
-      transform: translate3d(100%, 0, 2px);
+      z-index: 10;
+      transform: translate3d(100%, 0, 10px);
       transition: transform 400ms ease;
     }
   }
