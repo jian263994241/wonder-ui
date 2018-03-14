@@ -82,11 +82,11 @@ class Pages extends Component {
     })();
 
     const onEntered = (node)=>{
-      removeClass(node.parentNode, `router-transition-${animationType}`);
+      node && node.parentNode && removeClass(node.parentNode, `router-transition-${animationType}`);
     }
 
     const onEnter= (node)=>{
-      addClass(node.parentNode, `router-transition-${animationType}`);
+      node && node.parentNode && addClass(node.parentNode, `router-transition-${animationType}`);
     }
 
     return (
