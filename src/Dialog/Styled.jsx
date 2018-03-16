@@ -9,6 +9,8 @@ export const ModalInner = styled.div `
   border-radius: 13px 13px 0 0;
   position: relative;
   background: ${modalBg};
+  font-size: 14px;
+  font-family: inherit;
   ${hairline('bottom', modalHairlineColor)}
 `
 

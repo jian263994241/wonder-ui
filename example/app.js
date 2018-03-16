@@ -16,6 +16,7 @@ import Tabs from './mod/Tabs';
 import List from './mod/List';
 import MediaList from './mod/MediaList';
 import SwipeOut from './mod/SwipeOut';
+import CheckboxesRadios from './mod/CheckboxesRadios';
 
 class App extends Component {
 
@@ -39,6 +40,7 @@ class App extends Component {
                 {path: '/list', component: List},
                 {path: '/media-list', component: MediaList},
                 {path: '/swipe-out', component: SwipeOut},
+                {path: '/CheckboxesRadios', component: CheckboxesRadios},
               ]}
             />
           </View>

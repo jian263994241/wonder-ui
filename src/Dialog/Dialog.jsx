@@ -44,7 +44,7 @@ export default class Dialog extends Component {
       <Modal2 visible={visible} noButtons={noButtons} overlay {...rest}>
         <ModalInner style={innerStyle}>
           {title && <ModalTitle>{title}</ModalTitle>}
-          {text && <ModalTitle>{text}</ModalTitle>}
+          {text && <ModalText>{text}</ModalText>}
           {afterText}
         </ModalInner>
         <ButtonGroup vertical={verticalButtons}>

@@ -31,6 +31,7 @@ export default class Welcome extends Component {
             <ListItem title="省市区选择器" to="/citys" as={Link} arrow/>
             <ListItem title="时间选择器" to="/picker" as={Link} arrow/>
             <ListItem title="短信倒计时" to="/countdown" as={Link} arrow/>
+            <ListItem title="单选&多选" to="/CheckboxesRadios" as={Link} arrow/>
             <ListItem title="键盘" to="/keyboard" as={Link} arrow/>
             <ListItem title="弹窗" to="/popup" as={Link} arrow/>
             <ListItem title="对话" to="/dialog" as={Link} arrow/>

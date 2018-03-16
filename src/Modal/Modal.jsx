@@ -71,11 +71,15 @@ export default class Modal extends Component {
       className,
       style,
       inline,
+      fade,
       visible,
       overlay,
       onCancel,
       children,
-      fade
+      onEnter,
+      onEntered,
+      onExit,
+      onExited
     } = this.props;
 
 
@@ -83,13 +87,31 @@ export default class Modal extends Component {
       return <div className={className} style={style} ref="modal">{children}</div>
     }
 
+    const enter = (node)=>{
+      onEnter && onEnter(node);
+      show(node);
+    }
+    const entered = (node)=>{
+      onEntered && onEntered(node);
+    }
+
+    const exit = (node)=>{
+      onExit && onExit(node);
+    }
+    const exited = (node)=>{
+      onExited && onExited(node);
+      hide(node);
+    }
+
     const backdrop = overlay && (
       <CSSTransition
         in={this.state.visible}
         timeout={400}
         classNames="fade"
-        onEnter={node=>show(node)}
-        onExited={node=>hide(node)}
+        onEnter={enter}
+        onEntered={entered}
+        onExit={exit}
+        onExited={exited}
       >
         <StyleOverlay onClick={onCancel} onTouchMove={e=>e.preventDefault()}/>
       </CSSTransition>

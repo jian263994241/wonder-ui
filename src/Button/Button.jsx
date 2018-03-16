@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import {StyledButton} from './Styled';
 
-export default class Button extends Component {
+export default class Button extends PureComponent {
 
   static propTypes = {
 

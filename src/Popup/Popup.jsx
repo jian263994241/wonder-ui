@@ -11,13 +11,15 @@ export default class Popup extends Component {
     const {
       visible,
       children,
-      bgColor
+      bgColor,
+      ...rest
     } = this.props;
     return (
       <PopupModal
         visible={visible}
         fade={false}
         bgColor={bgColor}
+        {...rest}
       >
         {children}
       </PopupModal>
