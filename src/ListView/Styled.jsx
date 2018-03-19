@@ -183,7 +183,7 @@ export const StyledLIstItemDivider = styled.div `
   white-space: nowrap;
   position: relative;
   max-width: 100%;
-  min-height: 28px;
+  min-height: 10px;
   text-overflow: ellipsis;
   overflow: hidden;
   z-index: 15;

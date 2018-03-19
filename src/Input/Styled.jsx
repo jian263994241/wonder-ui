@@ -91,13 +91,33 @@ export const StyledInputWrap = styled.div `
     }
   }
 
+  input[type="text"],
+  input[type="password"],
+  input[type="search"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="time"],
+  input[type="number"],
+  select {
+    height: 44px;
+    color: #000;
+    font-size: 15px;
+  }
+
   textarea{
     resize: none;
     line-height: 1.4;
-    height: 100px;
+    width: 100%;
+    height: 45px;
     color: #000;
-    font-size: 17px;
+    font-size: 15px;
     padding-top: 11px;
     padding-bottom: 11px;
+    padding-left: 0;
+    border: 0
   }
+
 `

@@ -16,10 +16,6 @@ export default class Input extends PureComponent {
     type: 'text',
   }
 
-  state = {
-    showCleanBtn: false
-  }
-
   onChange = (e)=>{
     const onChange = this.props.onChange;
     const value = e.target.value;

@@ -74,6 +74,7 @@ export default class Modal extends Component {
       fade,
       visible,
       overlay,
+      overlayStyle,
       onCancel,
       children,
       onEnter,
@@ -113,7 +114,7 @@ export default class Modal extends Component {
         onExit={exit}
         onExited={exited}
       >
-        <StyleOverlay onClick={onCancel} onTouchMove={e=>e.preventDefault()}/>
+        <StyleOverlay onClick={onCancel} style={overlayStyle} onTouchMove={e=>e.preventDefault()}/>
       </CSSTransition>
     )
 

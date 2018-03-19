@@ -6,9 +6,9 @@ import {
 
 
 
-export default function ListItemDivider({text}){
+export default function ListItemDivider({text, ...rest}){
 
   return (
-    <StyledLIstItemDivider>{text}</StyledLIstItemDivider>
+    <StyledLIstItemDivider {...rest}>{text}</StyledLIstItemDivider>
   )
 };
