@@ -24,14 +24,17 @@ export default class ListItem extends Component {
   static propTypes = {
     after: PropTypes.node,
     arrow: PropTypes.bool,
+    footer: PropTypes.node,
+    label: PropTypes.bool,
     title: PropTypes.node,
     subTitle: PropTypes.node,
     text: PropTypes.node,
     media: PropTypes.node,
     inset: PropTypes.bool,
-    header: PropTypes.node,
-    footer: PropTypes.node,
     innerStyle: PropTypes.object,
+    header: PropTypes.node,
+
+
   }
 
   static contextTypes = {
@@ -48,6 +51,7 @@ export default class ListItem extends Component {
       subTitle,
       inset,
       innerStyle,
+      label,
       header,
       footer,
       children,
@@ -80,11 +84,12 @@ export default class ListItem extends Component {
       <StyledListItemContent arrow={arrow} inset={inset} {...rest}>
         <Mount as={StyledItemMedia}>{media}</Mount>
         <StyledItemInner style={innerStyle}>
-          <Mount as={StyledItemTitle}>
+          <Mount as={StyledItemTitle} label={label}>
             <Mount as={StyledItemHeader}>{header}</Mount>
             {title}
             <Mount as={StyledItemFooter}>{footer}</Mount>
           </Mount>
+          {children}
           <Mount as={StyledItemAfter}>{after}</Mount>
         </StyledItemInner>
       </StyledListItemContent>

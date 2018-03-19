@@ -4,6 +4,8 @@ import Button, {ButtonsRow} from '../../src/Button';
 import {BlockTitle} from '../../src/ContentBlock';
 
 import {List, ListItem, GroupTitle, ListItemDivider} from '../../src/ListView';
+import Input from '../../src/Input';
+import Toggle from '../../src/Toggle';
 
 const svgXml = `
 <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="29" height="29">
@@ -16,7 +18,7 @@ const svgXml = `
 
 const Icon = <div dangerouslySetInnerHTML={{__html: svgXml}}/>;
 
-export default class ListDemo extends Component {
+export default class Inputs extends Component {
 
   render (){
 
@@ -25,29 +27,34 @@ export default class ListDemo extends Component {
         <PageContent>
           <BlockTitle>Data list, with icons</BlockTitle>
           <List>
-            <ListItem title="Ivan Petrov" after="CEO" media={Icon}></ListItem>
-            <ListItem title="John Doe" after="2" media={Icon}></ListItem>
-            <ListItem title="Jenna Smith" media={Icon}></ListItem>
+            <ListItem title="限制四字" media={Icon} label>
+              <Input placeholder="123"></Input>
+            </ListItem>
+            <ListItem title="密码" media={Icon} label>
+              <Input placeholder="123" type="password"></Input>
+            </ListItem>
+
           </List>
 
-          <BlockTitle>Links</BlockTitle>
+          <BlockTitle>2</BlockTitle>
           <List>
-            <ListItem title="Ivan Petrov" after="CEO" arrow media={Icon}></ListItem>
-            <ListItem title="John Doe" after="2" arrow media={Icon}></ListItem>
-            <ListItemDivider text="Links Divider"></ListItemDivider>
-            <ListItem title="Jenna Smith" arrow media={Icon}></ListItem>
-          </List>
-
-          <BlockTitle>Links, no icons</BlockTitle>
-          <List>
-            <ListItem title="John Doe" arrow></ListItem>
-            <ListItem title="Jenna Smith" arrow></ListItem>
+            <ListItem>
+              <Input placeholder="123" info="提示报错"></Input>
+            </ListItem>
+            <ListItem>
+              <Input placeholder="123"info="提示报错"></Input>
+            </ListItem>
+            <ListItem after={<Toggle/>}></ListItem>
           </List>
 
           <BlockTitle>Inset</BlockTitle>
           <List inset>
-            <ListItem title="John Doe" arrow></ListItem>
-            <ListItem title="Jenna Smith" arrow></ListItem>
+            <ListItem title="限制四字" label>
+              <Input placeholder="123"></Input>
+            </ListItem>
+            <ListItem title="限制四字" label>
+              <Input placeholder="123"></Input>
+            </ListItem>
           </List>
 
 

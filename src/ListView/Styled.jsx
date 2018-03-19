@@ -11,7 +11,13 @@ const listBlockBg=  '#fff';
 const dividerBg=  '#f2f2f2';
 const dividerColor=  '#8e8e93';
 
-export const StyledItemTitle = styled( createTag({ propsToOmit: ['bold'] }) ) `
+const labelTitle = css `
+  font-size: 15px;
+  width: 30%;
+  line-height: 1.4;
+  align-self: center;
+`
+export const StyledItemTitle = styled( createTag({ propsToOmit: ['bold', 'label'] }) ) `
   white-space: nowrap;
   position: relative;
   overflow: hidden;
@@ -20,6 +26,7 @@ export const StyledItemTitle = styled( createTag({ propsToOmit: ['bold'] }) ) `
   min-width: 0;
   flex-shrink: 1;
   ${props=>props.bold && bold}
+  ${props=>props.label && labelTitle}
 `
 
 export const StyledItemHeader = styled.div `
@@ -32,6 +39,7 @@ export const StyledItemHeader = styled.div `
 export const StyledItemFooter = StyledItemHeader.extend `
   color: #888;
 `
+
 
 export const StyledItemSubTitle = styled.div `
   font-size: 15px;
@@ -96,13 +104,6 @@ export const StyledItemInner = styled.div `
   ${hairline('bottom', listBlockBorderColor)}
 `
 
-const itemLinkInnerCss = css `
-  ${StyledItemInner}{
-    padding-right: 35px;
-    ${arrowCss}
-  }
-`
-
 export const StyledItemMedia = styled.div `
   display: flex;
   flex-shrink:0;
@@ -125,6 +126,19 @@ export const StyledItemMedia = styled.div `
   }
 `
 
+const itemLinkInnerCss = css `
+  ${StyledItemMedia} + ${StyledItemInner} ,${StyledItemInner} {
+    ${arrowCss}
+    padding-right: 35px;
+  }
+  html:not(.watch-active-state) &:active, &.active-state{
+    background-color: #d9d9d9;
+    ${StyledItemInner} {
+      ${hairline('bottom', 'transparent')}
+    }
+  }
+`
+
 export const StyledListItemContent = styled( createTag({ propsToOmit: ['arrow'] }) ) `
   position: relative;
   box-sizing: border-box;
@@ -135,12 +149,7 @@ export const StyledListItemContent = styled( createTag({ propsToOmit: ['arrow'] 
   justify-content:space-between;
   color: inherit;
   ${props=>props.arrow && itemLinkInnerCss}
-  html:not(.watch-active-state) &:active, &.active-state{
-    background-color: #d9d9d9;
-    ${StyledItemInner} {
-      ${hairline('bottom', 'transparent')}
-    }
-  }
+
 `
 
 const insetCss = css `
@@ -163,6 +172,21 @@ const insetCss = css `
 `
 export const StyledListItem = styled.div `
   position: relative;
+  box-sizing: border-box;
+`
+
+export const StyledLIstItemDivider = styled.div `
+  margin-top: -1px;
+  padding: 4px 15px;
+  background: #f7f7f7;
+  color: #8e8e93;
+  white-space: nowrap;
+  position: relative;
+  max-width: 100%;
+  min-height: 28px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  z-index: 15;
   box-sizing: border-box;
 `
 
