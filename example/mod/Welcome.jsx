@@ -43,6 +43,7 @@ export default class Welcome extends Component {
             <ListItem title="媒体列表" to="/media-list" as={Link} arrow/>
             <ListItem title="左划删除" to="/swipe-out" as={Link} arrow/>
             <ListItem title="输入框" to="/inputs" as={Link} arrow/>
+            <ListItem title="栅格" to="/grid" as={Link} arrow/>
           </List>
 
         </PageContent>

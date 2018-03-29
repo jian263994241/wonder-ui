@@ -79,5 +79,5 @@ export const StyledToggle = styled.label `
 `
 
 StyledToggle.defaultProps = {
-  theme: {color: 'red'},
+  theme: {color: 'green'},
 }

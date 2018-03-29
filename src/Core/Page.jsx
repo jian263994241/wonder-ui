@@ -9,6 +9,14 @@ export default class Page extends Component {
     onPageRemove: PropTypes.func,
   }
 
+  static defaultProps = {
+    ready: true
+  }
+
+  static propTypes = {
+    ready: PropTypes.bool
+  }
+
   transition = true;
 
   duration = 400;
@@ -22,7 +30,7 @@ export default class Page extends Component {
 
   componentDidMount() {
     const {onPageInit} = this.context;
-    const {children, ...extraData} = this.props;
+    const {children, ready, ...extraData} = this.props;
     onPageInit(extraData);
   }
 
@@ -32,13 +40,20 @@ export default class Page extends Component {
 
   componentWillUnmount(){
     const {onPageRemove} = this.context;
-    const {children, ...extraData} = this.props;
+    const {children, ready, ...extraData} = this.props;
     onPageRemove(extraData);
   }
 
   render(){
+    const {
+      children,
+      ready,
+      ...rest
+    } = this.props;
      return (
-       <StylePage {...this.props}/>
+       <StylePage {...rest}>
+         {ready ? children: null}
+       </StylePage>
      )
   }
 }

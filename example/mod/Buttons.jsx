@@ -6,8 +6,8 @@ import {BlockTitle} from '../../src/ContentBlock';
 export default class ButtonsDemo extends Component {
 
   render (){
-
-    return (  
+    console.log('button render');
+    return (
       <Page>
         <PageContent>
           <BlockTitle>按钮</BlockTitle>

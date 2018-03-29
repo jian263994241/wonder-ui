@@ -82,11 +82,15 @@ class Pages extends Component {
     })();
 
     const onEntered = (node)=>{
-      node && node.parentNode && removeClass(node.parentNode, `router-transition-${animationType}`);
+      // node && node.parentNode && removeClass(node.parentNode, `router-transition-${animationType}`);
     }
 
     const onEnter= (node)=>{
-      node && node.parentNode && addClass(node.parentNode, `router-transition-${animationType}`);
+      if(node && node.parentNode){
+        removeClass(node.parentNode, `router-transition-backward`);
+        removeClass(node.parentNode, `router-transition-forward`);
+        addClass(node.parentNode, `router-transition-${animationType}`);
+      }
     }
 
     return (

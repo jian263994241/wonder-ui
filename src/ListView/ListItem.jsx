@@ -33,8 +33,6 @@ export default class ListItem extends Component {
     inset: PropTypes.bool,
     innerStyle: PropTypes.object,
     header: PropTypes.node,
-
-
   }
 
   static contextTypes = {
@@ -52,6 +50,7 @@ export default class ListItem extends Component {
       inset,
       innerStyle,
       label,
+      labelStyle,
       header,
       footer,
       children,
@@ -84,7 +83,7 @@ export default class ListItem extends Component {
       <StyledListItemContent arrow={arrow} inset={inset} {...rest}>
         <Mount as={StyledItemMedia}>{media}</Mount>
         <StyledItemInner style={innerStyle}>
-          <Mount as={StyledItemTitle} label={label}>
+          <Mount as={StyledItemTitle} label={label} style={labelStyle}>
             <Mount as={StyledItemHeader}>{header}</Mount>
             {title}
             <Mount as={StyledItemFooter}>{footer}</Mount>

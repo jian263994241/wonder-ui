@@ -193,9 +193,10 @@ export default class Citys extends Component {
         onCancel={onCancel}
         overlay
         visible={visible}
+        fade={false}
       >
         <Toolbar>
-          <div className="left"> <IconClose onClick={onCancel}/> </div>
+          <div className="left"> <span onClick={onCancel} style={{padding: 4}}><IconClose/></span> </div>
           <div className="center">所在地区</div>
         </Toolbar>
         <Subbar onTouchMove={e=>e.preventDefault()}>

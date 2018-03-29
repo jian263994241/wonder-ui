@@ -16,8 +16,37 @@ export default class Input extends PureComponent {
     type: 'text',
   }
 
+  componentDidMount(){
+    const {innerRef} = this.props;
+
+    innerRef && innerRef(this.refs.input);
+  }
+
   onChange = (e)=>{
     const onChange = this.props.onChange;
+
+    onChange && onChange(e);
+
+    this.toggleBtn(e);
+  }
+
+  onFocus = (e)=>{
+    const onFocus = this.props.onFocus;
+
+    onFocus && onFocus(e);
+
+    this.toggleBtn(e);
+  }
+
+  onBlur = (e)=>{
+    const onBlur = this.props.onBlur;
+
+    onBlur && onBlur();
+
+    removeClass(this._cleanBtn, 'visible');
+  }
+
+  toggleBtn = (e)=>{
     const value = e.target.value;
     const cleanVisible = hasClass(this._cleanBtn, 'visible');
 
@@ -28,8 +57,6 @@ export default class Input extends PureComponent {
     if(value.length === 0 && cleanVisible) {
       removeClass(this._cleanBtn, 'visible');
     }
-
-    onChange && onChange(e);
   }
 
   clean = ()=>{
@@ -45,13 +72,21 @@ export default class Input extends PureComponent {
       style,
       type,
       info,
+      innerRef,
       onChange,
       ...rest
     } = this.props;
 
     return (
       <StyledInputWrap className={className} style={style}>
-        <input type={type} onChange={this.onChange} {...rest} ref="input"/>
+        <input
+          {...rest}
+          type={type}
+          onChange={this.onChange}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          ref="input"
+        />
         <StyledCleanButton innerRef={x=>this._cleanBtn = x} onClick={this.clean}></StyledCleanButton>
         {info && <StyledInputInfo>{info}</StyledInputInfo>}
       </StyledInputWrap>

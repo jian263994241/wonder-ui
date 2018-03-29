@@ -85,10 +85,10 @@ export const StyledInputWrap = styled.div `
     resize: none;
     font-size: inherit;
     color: inherit;
+  }
 
-    &&::-webkit-input-placeholder{
-      color: #ccc;
-    }
+  input::-webkit-input-placeholder{
+    color: #ccc;
   }
 
   input[type="text"],
