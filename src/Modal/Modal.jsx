@@ -1,18 +1,10 @@
 import React, {Component, createElement} from 'react';
 import PropTypes from 'prop-types';
 import Mounter from 'rc-mounter';
-import CSSTransition from '@clay.global/react-transition-group/lib/CSSTransition';
+import CSSTransition from 'react-transition-group/CSSTransition';
 
 import {PopupModal, StyleModal, StyleOverlay} from './Styled';
 
-const show = node => {
-  node.style.display = 'block';
-  node.style.visibility = 'visible';
-};
-const hide = node => {
-  node.style.visibility = 'hidden';
-  node.style.display = 'none';
-};
 
 export default class Modal extends Component {
 
@@ -37,12 +29,6 @@ export default class Modal extends Component {
     if(this.props.visible){
       this.openModal();
     }
-  }
-
-  didLeave = (node)=>{
-    const {didLeave} = this.props;
-    hide(node);
-    didLeave && setTimeout(didLeave, 100);
   }
 
   getModal = ()=> this.modal
@@ -90,7 +76,6 @@ export default class Modal extends Component {
 
     const enter = (node)=>{
       onEnter && onEnter(node);
-      show(node);
     }
     const entered = (node)=>{
       onEntered && onEntered(node);
@@ -101,7 +86,6 @@ export default class Modal extends Component {
     }
     const exited = (node)=>{
       onExited && onExited(node);
-      hide(node);
     }
 
     const backdrop = overlay && (
@@ -136,8 +120,6 @@ export default class Modal extends Component {
           in={this.state.visible}
           timeout={400}
           classNames={classNames}
-          onEnter={node=>show(node)}
-          onExited={this.didLeave}
         >
           <Content innerRef={x=>this.modal=x}>{children}</Content>
         </CSSTransition>

@@ -1,8 +1,8 @@
 import React, { cloneElement, createElement, Component } from 'react';
 import ReactDOM, {findDOMNode} from 'react-dom';
 import PropTypes from 'prop-types';
-import TransitionGroup from '@clay.global/react-transition-group/lib/TransitionGroup';
-import CSSTransition from '@clay.global/react-transition-group/lib/CSSTransition';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+import CSSTransition from 'react-transition-group/CSSTransition';
 
 
 class RouteTransition extends Component {

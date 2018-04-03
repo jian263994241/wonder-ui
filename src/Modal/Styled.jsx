@@ -3,12 +3,17 @@ import styled, {css} from 'styled-components';
 
 const fade = css `
   &.fade-enter {
+    visibility: visible;
     opacity: 0.01;
   }
 
   &.fade-enter.fade-enter-active {
     opacity: 1;
     transition: opacity 400ms ease;
+  }
+  &.fade-enter-done {
+    visibility: visible;
+    opacity: 1;
   }
 
   &.fade-exit {
@@ -18,11 +23,16 @@ const fade = css `
   &.fade-exit.fade-exit-active {
     opacity: 0.01;
     transition: opacity 400ms ease;
+  }
+  &.fade-exit-done {
+    visibility: hidden;
+    opacity: 0;
   }
 `
 
 const fadeScale = css `
   &.fade-enter {
+    visibility: visible;
     opacity: 0;
     transform: translate3d(-50%, -50%,0) scale(1.185);
   }
@@ -33,7 +43,14 @@ const fadeScale = css `
     transition: opacity, transform 400ms ease;
   }
 
+  &.fade-enter-done {
+    visibility: visible;
+    opacity: 1;
+    transform: translate3d(-50%, -50%,0) scale(1);
+  }
+
   &.fade-exit {
+    visibility: visible;
     opacity: 1;
     transform: translate3d(-50%, -50%,0) scale(1);
   }
@@ -42,6 +59,11 @@ const fadeScale = css `
     opacity: 0;
     transform: translate3d(-50%, -50%,0) scale(1.185);
     transition: opacity, transform 400ms ease;
+  }
+  &.fade-exit-done {
+    visibility: hidden;
+    opacity: 0;
+    transform: translate3d(-50%, -50%,0) scale(1.185);
   }
 `
 
@@ -55,6 +77,10 @@ const slideUp = css `
     transform: translate3d(0,0,0);
     transition: transform 400ms ease;
   }
+  &.slideUp-enter-done {
+    visibility: visible;
+    transform: translate3d(0,0,0);
+  }
 
   &.slideUp-exit {
     visibility: visible;
@@ -64,6 +90,10 @@ const slideUp = css `
   &.slideUp-exit.slideUp-exit-active {
     transform: translate3d(0, 100%,0);
     transition: opacity, transform 400ms ease;
+  }
+  &.slideUp-exit-done{
+    visibility: hidden;
+    transform: translate3d(0, 100%,0);
   }
 `
 
@@ -79,6 +109,7 @@ export const PopupModal = styled.div `
   z-index: 12500;
   visibility: hidden;
   will-change: transform;
+  transform: translate3d(0, 100%,0);
   ${slideUp}
 `;
 
