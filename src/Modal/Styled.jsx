@@ -77,7 +77,6 @@ export const PopupModal = styled.div `
   padding: 0;
   margin: 0;
   z-index: 12500;
-  display: none;
   visibility: hidden;
   will-change: transform;
   ${slideUp}
@@ -91,7 +90,6 @@ export const StyleModal = styled.div `
   transform: translate3d(-50%, -50%, 0);
   z-index: 13500;
   contain: content;
-  display: none;
   visibility: hidden;
   will-change: transform,opacity;
   ${fadeScale}
@@ -106,7 +104,6 @@ export const StyleOverlay = styled.div `
   height: 100%;
   background: rgba(0,0,0,.4);
   will-change: opacity;
-  display: none;
   visibility: hidden;
   contain: strict;
   z-index: 10500;

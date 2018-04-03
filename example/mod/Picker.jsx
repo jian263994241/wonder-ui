@@ -73,6 +73,7 @@ export default class PickerDemo extends Component {
           <Modal
             visible={this.state.visible}
             overlay
+            fade={false}
           >
             <Toolbar style={{background: '#F8F8F8'}}>
               <div className="left"><a onClick={this.close}>取消</a></div>
