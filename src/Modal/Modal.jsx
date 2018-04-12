@@ -1,7 +1,7 @@
 import React, {Component, createElement} from 'react';
 import PropTypes from 'prop-types';
 import Mounter from 'rc-mounter';
-import CSSTransition from 'react-transition-group/CSSTransition';
+import CSSTransition from '../Core/react-transition-group/CSSTransition';
 
 import {PopupModal, StyleModal, StyleOverlay} from './Styled';
 
