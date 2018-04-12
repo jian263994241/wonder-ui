@@ -170,7 +170,7 @@ const insetCss = css `
     border-radius: 7px;
   }
 `
-export const StyledListItem = styled.div `
+export const StyledListItem = styled( createTag() ) `
   position: relative;
   box-sizing: border-box;
 `

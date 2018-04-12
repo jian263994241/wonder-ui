@@ -1,5 +1,14 @@
 import React, {Component, createElement} from 'react';
 import PropTypes from 'prop-types';
+import {CheckboxIcon, Input} from '../Checkbox/Styled';
+
+const IconRight = CheckboxIcon.extend `
+  margin-left: 5px;
+`
+const IconLeft = CheckboxIcon.extend `
+  margin-right: 15px;
+`
+
 import {
   StyledListItem,
   StyledListItemContent,
@@ -33,13 +42,89 @@ export default class ListItem extends Component {
     inset: PropTypes.bool,
     innerStyle: PropTypes.object,
     header: PropTypes.node,
+    type: PropTypes.oneOf(['checkbox', 'radio']),
   }
 
   static contextTypes = {
     mediaList: PropTypes.bool
   }
 
-  renderContent = ()=>{
+  renderItem = ()=>{
+    const {
+      after,
+      arrow,
+      title,
+      text,
+      media,
+      inset,
+      innerStyle,
+      label,
+      labelStyle,
+      header,
+      footer,
+      children,
+      type,
+      IconLeft,
+      inputProps,
+      ...rest
+    } = this.props;
+
+    if(type === 'checkbox' || type === 'radio'){
+
+      if(IconLeft){
+        return (
+          <StyledListItemContent arrow={arrow} inset={inset} as="label" {...rest}>
+            <Input type={type} {...inputProps}/>
+            <IconLeft/>
+            <StyledItemInner style={innerStyle}>
+              <Mount as={StyledItemTitle} label={label} style={labelStyle}>
+                <Mount as={StyledItemHeader}>{header}</Mount>
+                {title}
+                <Mount as={StyledItemFooter}>{footer}</Mount>
+              </Mount>
+              {children}
+              <Mount as={StyledItemAfter}>{after}</Mount>
+            </StyledItemInner>
+          </StyledListItemContent>
+        )
+      }
+
+      return (
+        <StyledListItemContent arrow={arrow} inset={inset} as="label" {...rest}>
+          <Mount as={StyledItemMedia}>{media}</Mount>
+          <StyledItemInner style={innerStyle}>
+            <Mount as={StyledItemTitle} label={label} style={labelStyle}>
+              <Mount as={StyledItemHeader}>{header}</Mount>
+              {title}
+              <Mount as={StyledItemFooter}>{footer}</Mount>
+            </Mount>
+            {children}
+            <Input type={type} {...inputProps}/>
+            <IconRight/>
+          </StyledItemInner>
+        </StyledListItemContent>
+      )
+    }
+
+    return (
+
+      <StyledListItemContent arrow={arrow} inset={inset} {...rest}>
+        <Mount as={StyledItemMedia}>{media}</Mount>
+        <StyledItemInner style={innerStyle}>
+          <Mount as={StyledItemTitle} label={label} style={labelStyle}>
+            <Mount as={StyledItemHeader}>{header}</Mount>
+            {title}
+            <Mount as={StyledItemFooter}>{footer}</Mount>
+          </Mount>
+          {children}
+          <Mount as={StyledItemAfter}>{after}</Mount>
+        </StyledItemInner>
+      </StyledListItemContent>
+
+    )
+  }
+
+  renderMediaItem = ()=>{
     const {
       after,
       arrow,
@@ -54,42 +139,25 @@ export default class ListItem extends Component {
       header,
       footer,
       children,
+      checkbox,
       ...rest
     } = this.props;
 
-    const mediaList = this.context.mediaList;
-
-    if(mediaList){
-      return (
-        <StyledListItemContent inset={inset} {...rest}>
-          <Mount as={StyledItemMedia}>{media}</Mount>
-          <StyledItemInner style={innerStyle}>
-            <StyledItemTitleRow arrow={arrow}>
-              <Mount as={StyledItemTitle} bold>
-                <Mount as={StyledItemHeader}>{header}</Mount>
-                {title}
-                <Mount as={StyledItemFooter}>{footer}</Mount>
-              </Mount>
-              <Mount as={StyledItemAfter}>{after}</Mount>
-            </StyledItemTitleRow>
-            <Mount as={StyledItemSubTitle}>{subTitle}</Mount>
-            <Mount as={StyledItemText}>{text}</Mount>
-          </StyledItemInner>
-        </StyledListItemContent>
-      )
-    }
-
     return (
-      <StyledListItemContent arrow={arrow} inset={inset} {...rest}>
+
+      <StyledListItemContent inset={inset} {...rest}>
         <Mount as={StyledItemMedia}>{media}</Mount>
         <StyledItemInner style={innerStyle}>
-          <Mount as={StyledItemTitle} label={label} style={labelStyle}>
-            <Mount as={StyledItemHeader}>{header}</Mount>
-            {title}
-            <Mount as={StyledItemFooter}>{footer}</Mount>
-          </Mount>
-          {children}
-          <Mount as={StyledItemAfter}>{after}</Mount>
+          <StyledItemTitleRow arrow={arrow}>
+            <Mount as={StyledItemTitle} bold>
+              <Mount as={StyledItemHeader}>{header}</Mount>
+              {title}
+              <Mount as={StyledItemFooter}>{footer}</Mount>
+            </Mount>
+            <Mount as={StyledItemAfter}>{after}</Mount>
+          </StyledItemTitleRow>
+          <Mount as={StyledItemSubTitle}>{subTitle}</Mount>
+          <Mount as={StyledItemText}>{text}</Mount>
         </StyledItemInner>
       </StyledListItemContent>
     )
@@ -98,8 +166,12 @@ export default class ListItem extends Component {
 
   render(){
 
+    const mediaList = this.context.mediaList;
 
-    return <StyledListItem>{this.renderContent()}</StyledListItem>
-
+    return (
+      <StyledListItem>
+        {mediaList ? this.renderMediaItem(): this.renderItem()}
+      </StyledListItem>
+    );
   }
 }

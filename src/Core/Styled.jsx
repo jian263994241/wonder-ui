@@ -8,7 +8,6 @@ injectGlobal `
     height: 100%;
     width: 100%;
     overflow-x: hidden;
-    -webkit-tap-highlight-color: transparent;
   }
   body {
     font-family: PingFang SC ,PingHei, DroidSansFallback, Hiragino Sans GB, STHeiti, Roboto, Noto, Helvetica Neue, Helvetica, Arial, SimSun, sans-serif;
@@ -20,10 +19,12 @@ injectGlobal `
     width: 100%;
     background: #fff;
     overflow: hidden;
+    -webkit-highlight: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
   }
   @media all and (width:1024px) and (height:691px) and (orientation:landscape) {
     html, body, .root {
@@ -140,27 +141,6 @@ export const StyledView = StyledViews.extend `
   box-sizing: border-box;
 `
 
-
-const childrenIndex = (reverse)=> {
-  const max = 3, ids = []
-  for (let i=1; i<=max; i++){ ids.push(i); }
-  reverse && ids.reverse();
-  return ids.map((item, i)=>`
-    &:nth-child(${i + 1}) {
-      z-index: ${item};
-    }
-  `)
-}
-
-const rightToCenter = css `
-  ${childrenIndex()}
-`
-
-const leftToCenter = css `
-  ${childrenIndex(true)}
-`
-
-
 export const StylePages = styled.div `
   position: relative;
   width: 100%;
@@ -183,7 +163,6 @@ export const StylePages = styled.div `
       content: '';
       display: ${props=>device.ios ? 'block': 'none'};
     }
-    ${'' /* ${props=>props.reverse? leftToCenter : rightToCenter} */}
   }
 `
 

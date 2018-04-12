@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import styled, {css} from 'styled-components';
 
-export const Checkbox = styled.i `
+export const CheckboxIcon = styled.i `
   width: 22px;
   height: 22px;
   position: relative;
@@ -13,6 +13,8 @@ export const Checkbox = styled.i `
   line-height: 1;
   text-decoration: none;
   vertical-align: middle;
+  margin-left: 3px;
+  flex-shrink: 0;
   &::after {
     content: ' ';
     position: absolute;
@@ -33,4 +35,8 @@ export const Checkbox = styled.i `
    background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 9"> <path fill="#fff" d="M12 .7l-.7-.7-7.4 7.4L.7 4.2l-.7.7 3.9 3.9z"/> </svg>');
    background-size: 12px 9px;
   }
+`
+
+export const Input = styled.input `
+  display: none;
 `

@@ -1,17 +1,15 @@
 import React, {Component, Children, createElement} from 'react';
 import PropTypes from 'prop-types';
 import {StyledViews} from './Styled';
-import HashRouter from 'react-router-dom/HashRouter';
-import emptyfunction from 'emptyfunction';
-import attachFastClick from 'fastclick';
+import Router from 'react-router-dom/Router';
+import createHashHistory from 'history/createHashHistory';
+import attachFastClick from './fastclick';
+
+function noop(){};
 
 export default class Views extends Component {
 
   static propTypes = {
-    router: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.func
-    ]).isRequired,
     onRouteChange: PropTypes.func,
     onRouteInit: PropTypes.func,
     onPageInit: PropTypes.func,
@@ -24,15 +22,19 @@ export default class Views extends Component {
   }
 
   static defaultProps = {
-    router: [HashRouter, {
+    onRouteChange: noop,
+    onRouteInit: noop,
+    onPageInit: noop,
+    onPageRemove: noop,
+  }
+
+  constructor(props){
+    super(props);
+    this.history = props.history || createHashHistory({
       hashType: 'hashbang',
       basename: '',
       getUserConfirmation: null
-    }],
-    onRouteChange: emptyfunction,
-    onRouteInit: emptyfunction,
-    onPageInit: emptyfunction,
-    onPageRemove: emptyfunction,
+    });
   }
 
   getChildContext(){
@@ -44,7 +46,7 @@ export default class Views extends Component {
 
   componentDidMount(){
     const {onRouteChange, onRouteInit} = this.props;
-    const history = this.refs.router.history;
+    const history = this.history;
     this._unlisten = history.listen(onRouteChange);
     attachFastClick(document.body);
     onRouteInit(history.location, history.action);
@@ -56,17 +58,13 @@ export default class Views extends Component {
 
   render(){
     const {
-      router,
       children,
       onRouteChange,
       ...rest
     } = this.props;
 
-    const Router = router[0];
-    const routerConf = router[1] || {};
-
     return (
-      <Router {...routerConf} ref="router">
+      <Router history={this.history}>
         <StyledViews {...rest}>
           {children}
         </StyledViews>

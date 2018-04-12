@@ -1,8 +1,8 @@
 import React, { cloneElement, createElement, Component } from 'react';
 import ReactDOM, {findDOMNode} from 'react-dom';
 import PropTypes from 'prop-types';
-import TransitionGroup from 'react-transition-group/TransitionGroup';
-import CSSTransition from 'react-transition-group/CSSTransition';
+import TransitionGroup from '../react-transition-group/TransitionGroup';
+import CSSTransition from '../react-transition-group/CSSTransition';
 
 
 class RouteTransition extends Component {
@@ -19,34 +19,19 @@ class RouteTransition extends Component {
     ]),
   };
 
-
-  getStyles() {
-
-
-    if (!this.props.children ) {
-      return null;
-    }
-
-    const {onEnter, onEntering, onEntered, onExit, onExiting, onExited} = this.props;
-
-    return (
-      <CSSTransition
-        timeout={this.props.timeout}
-        key={this.props.children.key}
-        children={this.props.children}
-        classNames={this.props.classNames}
-        onEnter={onEnter}
-        onEntered={onEntered}
-      />
-    )
-
-  }
-
   render() {
     const {
       className,
       classNames,
-      wrapperComponent
+      children,
+      timeout,
+      wrapperComponent,
+      onEnter,
+      onEntering,
+      onEntered,
+      onExit,
+      onExiting,
+      onExited
     } = this.props;
 
     return (
@@ -54,7 +39,14 @@ class RouteTransition extends Component {
         className={className}
         component={wrapperComponent}
       >
-        {this.getStyles()}
+        <CSSTransition
+          timeout={timeout}
+          key={children.key}
+          children={children}
+          classNames={classNames}
+          onEnter={onEnter}
+          onEntered={onEntered}
+        />
       </TransitionGroup>
     )
 

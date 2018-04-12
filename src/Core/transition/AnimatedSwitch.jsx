@@ -1,6 +1,7 @@
 import React from 'react';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
+import withRouter from 'react-router-dom/withRouter';
 import matchPath from 'react-router-dom/matchPath';
 import PropTypes from 'prop-types';
 import find from 'lodash/find';
@@ -59,6 +60,15 @@ class AnimatedSwitch extends React.Component {
         key: getLocationKey(nextProps.location) + ++this.matches,
       });
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+
+    if(this.state.key != nextState.key){
+      return true;
+    }
+
+    return false;
   }
 
   render() {
