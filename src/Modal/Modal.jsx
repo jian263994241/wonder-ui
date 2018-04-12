@@ -52,6 +52,12 @@ export default class Modal extends Component {
     this.setState({ visible: false });
   }
 
+  didLeave = (node)=>{
+    const {didLeave} = this.props;
+    // hide(node);
+    didLeave && setTimeout(didLeave, 100);
+  }
+
   render() {
     const {
       className,
@@ -120,6 +126,7 @@ export default class Modal extends Component {
           in={this.state.visible}
           timeout={400}
           classNames={classNames}
+          onExited={this.didLeave}
         >
           <Content innerRef={x=>this.modal=x}>{children}</Content>
         </CSSTransition>

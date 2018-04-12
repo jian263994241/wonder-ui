@@ -56,13 +56,12 @@ const fadeScale = css `
   }
 
   &.fade-exit.fade-exit-active {
-    opacity: 0;
+    opacity: 0.01;
     transform: translate3d(-50%, -50%,0) scale(1.185);
     transition: opacity, transform 400ms ease;
   }
   &.fade-exit-done {
     visibility: hidden;
-    opacity: 0;
     transform: translate3d(-50%, -50%,0) scale(1.185);
   }
 `

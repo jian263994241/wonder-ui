@@ -183,12 +183,12 @@ class Transition extends React.Component {
     this.cancelNextCallback();
   }
 
-  shouldComponentUpdate(nextProps, nextState){
-    if(nextProps.in === this.props.in){
-      return false;
-    }
-    return true;
-  }
+  // shouldComponentUpdate(nextProps, nextState){
+  //   if(nextProps.in === this.props.in){
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   getTimeouts() {
     const { timeout } = this.props;

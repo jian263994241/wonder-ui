@@ -63,7 +63,7 @@ export default function mount (props, callback) {
 }
 
 function unmount () {
-  mount.rc.hide()
+  mount.rc.hide();
 }
 
 export {unmount};
