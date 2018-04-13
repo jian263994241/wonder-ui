@@ -84,44 +84,59 @@ injectGlobal `
 
   .router-transition-forward{
     .slide-enter {
-      transform: translate3d(100%, 0, 10px);
+      transform: translate3d(100%, 0, 0);
     }
 
     .slide-enter.slide-enter-active {
       z-index: 10;
-      transform: translate3d(0, 0, 10px);
+      transform: translate3d(0, 0, 0);
       transition: transform 400ms ease;
     }
 
+    .slide-enter-done {
+      z-index: 10;
+    }
+
     .slide-exit {
-      transform: translate3d(0, 0, 1px);
+      transform: translate3d(0, 0, 0);
     }
 
     .slide-exit.slide-exit-active {
       z-index: 1;
-      transform: translate3d(-20%, 0, 1px);
+      transform: translate3d(-20%, 0, 0);
       transition: transform 400ms ease;
+    }
+
+    .slide-exit-done {
+      visibility: hidden;
     }
   }
 
   .router-transition-backward{
     .slide-enter {
-      transform: translate3d(-20%, 0, 10px);
+      transform: translate3d(-20%, 0, 0);
     }
     .slide-enter.slide-enter-active {
       z-index: 1;
-      transform: translate3d(0, 0, 1px);
+      transform: translate3d(0, 0, 0);
       transition: transform 400ms ease;
     }
 
+    .slide-enter-done {
+      z-index: 10;
+    }
+
     .slide-exit {
-      transform: translate3d(0, 0, 10px);
+      transform: translate3d(0, 0, 0);
     }
 
     .slide-exit.slide-exit-active {
       z-index: 10;
       transform: translate3d(100%, 0, 10px);
       transition: transform 400ms ease;
+    }
+    .slide-exit-done {
+      visibility: hidden;
     }
   }
 
@@ -174,7 +189,6 @@ export const StylePage = styled.div `
   width: 100%;
   height: 100%;
   background: #F2F2F2;
-  contain: layout size style;
 `
 
 export const StylePageContent = styled.div `
@@ -185,7 +199,6 @@ export const StylePageContent = styled.div `
   z-index: 1;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  contain: layout size style;
   will-change: scroll-position;
   html.ios & {
     &::before{

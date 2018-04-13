@@ -52,7 +52,6 @@ class Pages extends Component {
     return result;
   }
 
-
   render(){
     const {
       history,
@@ -81,16 +80,17 @@ class Pages extends Component {
     })();
 
     const cls = classnames({
-      'router-transition-backward': animationType === 'backward',
-      'router-transition-forward': animationType === 'forward'
+      'router-transition-backward': animationType === 'backward' && animationType!=null,
+      'router-transition-forward': animationType != 'backward'&& animationType!=null
     })
 
     return (
       <Switch
+        ref="s"
         timeout={400}
         classNames="slide"
-        className={cls}
         children={this.renderRoutes()}
+        className={cls}
       />
     );
   }

@@ -62,15 +62,6 @@ class AnimatedSwitch extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-
-    if(this.state.key != nextState.key){
-      return true;
-    }
-
-    return false;
-  }
-
   render() {
     const { children, location, match, ...routeTransitionProps } = this.props;
 

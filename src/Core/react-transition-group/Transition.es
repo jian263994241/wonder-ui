@@ -184,10 +184,11 @@ class Transition extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState){
-    if(nextProps.in === this.props.in){
-      return false;
+    if( nextProps.in != this.props.in || this.state.status === 'entered' )
+    {
+      return true;
     }
-    return true;
+    return false;
   }
 
   getTimeouts() {
@@ -310,8 +311,7 @@ class Transition extends React.Component {
       if (active) {
         active = false;
         this.nextCallback = null;
-
-        callback(event);
+        setTimeout(callback.bind(this, event), 0);
       }
     };
 

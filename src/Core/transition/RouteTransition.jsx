@@ -26,12 +26,7 @@ class RouteTransition extends Component {
       children,
       timeout,
       wrapperComponent,
-      onEnter,
-      onEntering,
-      onEntered,
-      onExit,
-      onExiting,
-      onExited
+      ...rest
     } = this.props;
 
     return (
@@ -44,8 +39,7 @@ class RouteTransition extends Component {
           key={children.key}
           children={children}
           classNames={classNames}
-          onEnter={onEnter}
-          onEntered={onEntered}
+          {...rest}
         />
       </TransitionGroup>
     )
