@@ -1,7 +1,6 @@
 import React, {Component, createElement, Children} from 'react';
 import PropTypes from 'prop-types';
 import AnimatedSwitch from './transition/AnimatedSwitch';
-import spring from 'react-motion/lib/spring';
 import styled from 'styled-components';
 import withRouter from 'react-router-dom/withRouter';
 import Route from 'react-router-dom/Route';

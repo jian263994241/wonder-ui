@@ -5,15 +5,27 @@ import removeClass from 'dom-helpers/class/removeClass';
 import hasClass from 'dom-helpers/class/removeClass';
 import {StyledInputWrap, StyledCleanButton, StyledInputInfo} from './Styled';
 
+function noop(){};
+
 export default class Input extends PureComponent {
 
   static propTypes = {
     type: PropTypes.string,
-    info: PropTypes.any
+    info: PropTypes.any,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
+    onChange: PropTypes.func,
   }
 
   static defaultProps = {
     type: 'text',
+    onFocus: noop,
+    onBlur: noop,
+    onChange: noop,
+  }
+
+  state = {
+    cleanVisible: false
   }
 
   componentDidMount(){
@@ -32,10 +44,10 @@ export default class Input extends PureComponent {
 
   onFocus = (e)=>{
     const onFocus = this.props.onFocus;
-
-    onFocus && onFocus(e);
-
-    this.toggleBtn(e);
+    if(!e.target.readOnly){
+      onFocus && onFocus(e);
+      this.toggleBtn(e);
+    }
   }
 
   onBlur = (e)=>{
@@ -43,19 +55,23 @@ export default class Input extends PureComponent {
 
     onBlur && onBlur();
 
-    removeClass(this._cleanBtn, 'visible');
+    this.setState({cleanVisible: false});
   }
 
   toggleBtn = (e)=>{
     const value = e.target.value;
-    const cleanVisible = hasClass(this._cleanBtn, 'visible');
+    // const cleanVisible = hasClass(this._cleanBtn, 'visible');
+
+    const cleanVisible = this.state.cleanVisible;
 
     if(value.length > 0 && !cleanVisible) {
-      addClass(this._cleanBtn, 'visible');
+      // addClass(this._cleanBtn, 'visible');
+      this.setState({cleanVisible: true});
     }
 
     if(value.length === 0 && cleanVisible) {
-      removeClass(this._cleanBtn, 'visible');
+      // removeClass(this._cleanBtn, 'visible');
+      this.setState({cleanVisible: false});
     }
   }
 
@@ -63,7 +79,8 @@ export default class Input extends PureComponent {
     const input = this.refs.input;
     input.value = '';
     input.focus();
-    removeClass(this._cleanBtn, 'visible');
+    this.setState({cleanVisible: false});
+    // removeClass(this._cleanBtn, 'visible');
   }
 
   render(){
@@ -78,7 +95,7 @@ export default class Input extends PureComponent {
     } = this.props;
 
     return (
-      <StyledInputWrap className={className} style={style}>
+      <StyledInputWrap className={className} style={style} cleanVisible={this.state.cleanVisible}>
         <input
           {...rest}
           type={type}

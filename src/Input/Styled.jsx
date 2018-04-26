@@ -66,6 +66,10 @@ export const StyledInputWrap = styled.div `
   flex-shrink: 1;
   position: relative;
 
+  ${StyledCleanButton} {
+    ${props=> props.cleanVisible ? css `opacity: 1;visibility: visible;` : null}
+  }
+
   >input {
     width: 100%;
     height: 44px;
@@ -85,6 +89,7 @@ export const StyledInputWrap = styled.div `
     resize: none;
     font-size: inherit;
     color: inherit;
+    ${props=>props.cleanVisible ? css `padding-right: 17px` : null}
   }
 
   input::-webkit-input-placeholder{
@@ -111,7 +116,7 @@ export const StyledInputWrap = styled.div `
     resize: none;
     line-height: 1.4;
     width: 100%;
-    height: 45px;
+    height: 14px;
     color: #000;
     font-size: 15px;
     padding-top: 11px;

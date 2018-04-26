@@ -48,7 +48,7 @@ export default class Dialog extends Component {
           {afterText}
         </ModalInner>
         <ButtonGroup vertical={verticalButtons}>
-          { buttons.map(({text, ...props}, index)=><Button {...props} theme={theme} key={'modal-button.' + index}>{text}</Button>) }
+          { buttons.map(({text, ...props}, index)=><Button theme={theme} {...props} key={'modal-button.' + index}>{text}</Button>) }
         </ButtonGroup>
       </Modal2>
     )
