@@ -159,10 +159,11 @@ var Keyboard = function (_Component) {
           maxLength = _props.maxLength,
           visible = _props.visible,
           onCancel = _props.onCancel,
+          onChange = _props.onChange,
           title = _props.title,
           closeButton = _props.closeButton,
           closeText = _props.closeText,
-          rest = (0, _objectWithoutProperties3.default)(_props, ['input', 'children', 'inline', 'dark', 'extraKey', 'random', 'keypad', 'maxLength', 'visible', 'onCancel', 'title', 'closeButton', 'closeText']);
+          rest = (0, _objectWithoutProperties3.default)(_props, ['input', 'children', 'inline', 'dark', 'extraKey', 'random', 'keypad', 'maxLength', 'visible', 'onCancel', 'onChange', 'title', 'closeButton', 'closeText']);
 
 
       var setValue = function setValue(a) {
@@ -171,6 +172,7 @@ var Keyboard = function (_Component) {
           _this2.setState({ value: a });
           _this2.input.value = a;
           _this2.input.scrollLeft = _this2.input.scrollWidth;
+          onChange && onChange(a);
         }
       };
 
@@ -293,7 +295,12 @@ Keyboard.propTypes = {
   /**
    * 是否显示键盘
    */
-  visible: _propTypes2.default.bool
+  visible: _propTypes2.default.bool,
+
+  /**
+   * 按键时触发    
+   */
+  onChange: _propTypes2.default.func
 
 };
 Keyboard.defaultProps = {

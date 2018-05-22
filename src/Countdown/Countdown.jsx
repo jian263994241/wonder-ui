@@ -17,6 +17,11 @@ export default class Countdown extends Component{
     defaultText: PropTypes.string,
 
     /**
+     * 初始状态文本
+     */
+    defaultText2: PropTypes.string,
+
+    /**
      * 倒计时状态的文本
      */
     text: PropTypes.string,
@@ -45,12 +50,14 @@ export default class Countdown extends Component{
     secondsResidue: 60,
     as: 'div',
     defaultText: '获取验证码',
-    text: '获取验证码(%s)'
+    defaultText2: '重新发送',
+    text: '%ss'
   }
 
   state = {
     process: false,
-    secondsResidue: 0
+    secondsResidue: 0,
+    initial: true
   }
 
   componentWillMount() {
@@ -90,7 +97,7 @@ export default class Countdown extends Component{
     if(!this.state.process){
       onStart(()=>{
         this.interval = setInterval(() => this.tick(), 1000);
-        this.setState({ process: true });
+        this.setState({ process: true, initial: false });
       });
     }
   }
@@ -98,6 +105,7 @@ export default class Countdown extends Component{
   render() {
     const {
       defaultText,
+      defaultText2,
       text,
       component,
       onStart,
@@ -108,12 +116,12 @@ export default class Countdown extends Component{
       ...rest
     } = this.props;
 
-    const content = this.state.process? text.replace(/%s/, this.state.secondsResidue) : defaultText;
+    const content = this.state.process ? text.replace(/%s/, this.state.secondsResidue) : this.state.initial ? defaultText : defaultText2;
 
     const Wrapper = createTag();
 
     return (
-      <Wrapper onClick={this.clickHandler} {...rest} >{content}</Wrapper>
+      <Wrapper onClick={this.clickHandler} disabled={this.state.process} {...rest} >{content}</Wrapper>
     )
 
   }

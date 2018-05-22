@@ -33,7 +33,9 @@ export default class Inputs extends Component {
             <ListItem title="密码" media={Icon} label>
               <Input placeholder="123" type="password"></Input>
             </ListItem>
-
+            <ListItem title="标题" media={Icon} label>
+              <Input placeholder="readOnly" type="password" readOnly></Input>
+            </ListItem>
           </List>
 
           <BlockTitle>2</BlockTitle>
@@ -42,7 +44,7 @@ export default class Inputs extends Component {
               <Input placeholder="123" info="提示报错"></Input>
             </ListItem>
             <ListItem>
-              <Input placeholder="123"info="提示报错"></Input>
+              <Input placeholder="123" info="提示报错" onChange={e=>console.log(e.type, e.target.value, e.target)}></Input>
             </ListItem>
             <ListItem after={<Toggle/>}></ListItem>
           </List>

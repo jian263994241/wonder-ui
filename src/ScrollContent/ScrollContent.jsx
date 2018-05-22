@@ -14,7 +14,9 @@ export default class ScrollContent extends Component {
 
   scrollHandler = ({target : container})=>{
     const {onLoad, id} = this.props;
-    const isBottom = container.scrollTop === container.scrollHeight - container.offsetHeight;
+    const scrollHeight = container.scrollHeight;
+    const offsetHeight = container.offsetHeight;
+    const isBottom = container.scrollTop === scrollHeight - offsetHeight;
     const done = ()=>{
       this.lock = false;
     }
@@ -25,7 +27,7 @@ export default class ScrollContent extends Component {
       }
     }
 
-    if(!this.lock && isBottom) {
+    if(!this.lock && isBottom && scrollHeight != offsetHeight) {
       this.lock = true;
       onLoad(done);
     }

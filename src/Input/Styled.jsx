@@ -49,7 +49,7 @@ export const StyledCleanButton = styled.span `
   }
 `
 
-export const StyledInputInfo = styled.div `
+export const StyledInputFooter = styled.div `
   font-size: 12px;
   line-height: 1.4;
   position: relative;
@@ -57,15 +57,24 @@ export const StyledInputInfo = styled.div `
   margin-top: -8px;
   color: #8e8e93;
 `
-
+export const StyledInputHeader = styled.div `
+  font-size: 12px;
+  width: 100%;
+  line-height: 1;
+  overflow: visible;
+  margin-top: 6px;
+`
 export const StyledInputWrap = styled.div `
-  margin-top: -8px;
-  margin-bottom: -8px;
   margin-left: 5px;
   width: 100%;
   flex-shrink: 1;
-  position: relative;
+  margin-top: -8px;
+  margin-bottom: -8px;
+`
 
+export const StyledInputInner = styled.div `
+  width: 100%;
+  position: relative;
   ${StyledCleanButton} {
     ${props=> props.cleanVisible ? css `opacity: 1;visibility: visible;` : null}
   }

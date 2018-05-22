@@ -3,7 +3,7 @@ import {Page, PageContent, Link} from '../../src/Core';
 import Preloader, {showPreloader, hidePreloader} from '../../src/Preloader';
 import Button, {ButtonsRow} from '../../src/Button';
 import {GridRow, GridCol} from '../../src/Grid';
-import {List, ListItem} from '../../src/ListView';
+import {List, ListItem, ListItemDivider} from '../../src/ListView';
 
 export default class Welcome extends Component {
 
@@ -44,7 +44,10 @@ export default class Welcome extends Component {
             <ListItem title="左划删除" to="/swipe-out" as={Link} arrow/>
             <ListItem title="输入框" to="/inputs" as={Link} arrow/>
             <ListItem title="栅格" to="/grid" as={Link} arrow/>
+            <ListItemDivider/>
+            <ListItem title="文档" as="a" href="https://github.com/jian263994241/wonderjs/tree/components/docs" target="_blank"/>
           </List>
+
 
         </PageContent>
       </Page>

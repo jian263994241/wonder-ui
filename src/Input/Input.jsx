@@ -3,25 +3,21 @@ import PropTypes from 'prop-types';
 import addClass from 'dom-helpers/class/addClass';
 import removeClass from 'dom-helpers/class/removeClass';
 import hasClass from 'dom-helpers/class/removeClass';
-import {StyledInputWrap, StyledCleanButton, StyledInputInfo} from './Styled';
-
-function noop(){};
+import events from 'dom-helpers/events';
+import {StyledInputWrap, StyledInputInner, StyledCleanButton, StyledInputFooter, StyledInputHeader} from './Styled';
 
 export default class Input extends PureComponent {
 
   static propTypes = {
     type: PropTypes.string,
-    info: PropTypes.any,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    onChange: PropTypes.func,
+    header: PropTypes.any,
+    footer: PropTypes.any,
   }
 
   static defaultProps = {
     type: 'text',
-    onFocus: noop,
-    onBlur: noop,
-    onChange: noop,
+    onChange: e=>{},
+    innerRef: input=>{}
   }
 
   state = {
@@ -29,49 +25,36 @@ export default class Input extends PureComponent {
   }
 
   componentDidMount(){
-    const {innerRef} = this.props;
+    const {innerRef, onChange} = this.props;
+    const input = this.refs.input;
 
-    innerRef && innerRef(this.refs.input);
-  }
-
-  onChange = (e)=>{
-    const onChange = this.props.onChange;
-
-    onChange && onChange(e);
-
-    this.toggleBtn(e);
-  }
-
-  onFocus = (e)=>{
-    const onFocus = this.props.onFocus;
-    if(!e.target.readOnly){
-      onFocus && onFocus(e);
+    this.props.innerRef(input);
+    events.on(input, 'input', e=>{
+      this.props.onChange(e);
       this.toggleBtn(e);
-    }
-  }
+    });
+    events.on(input, 'focus', e=>this.toggleBtn(e));
+    events.on(input, 'blur', e=>this.toggleBtn(e));
 
-  onBlur = (e)=>{
-    const onBlur = this.props.onBlur;
-
-    onBlur && onBlur();
-
-    this.setState({cleanVisible: false});
   }
 
   toggleBtn = (e)=>{
-    const value = e.target.value;
-    // const cleanVisible = hasClass(this._cleanBtn, 'visible');
 
-    const cleanVisible = this.state.cleanVisible;
-
-    if(value.length > 0 && !cleanVisible) {
-      // addClass(this._cleanBtn, 'visible');
-      this.setState({cleanVisible: true});
+    if(e.type === 'blur' || e.target.readOnly){
+      this.setState({cleanVisible: false});
+      return ;
     }
 
-    if(value.length === 0 && cleanVisible) {
-      // removeClass(this._cleanBtn, 'visible');
-      this.setState({cleanVisible: false});
+    if(e.type === 'input' || e.type === 'focus'){
+      let value = e.target.value;
+      let cleanVisible = this.state.cleanVisible;
+
+      if(value.length > 0 && !cleanVisible){
+        this.setState({cleanVisible: true});
+      }
+      if(value.length === 0 && cleanVisible) {
+        this.setState({cleanVisible: false});
+      }
     }
   }
 
@@ -79,8 +62,7 @@ export default class Input extends PureComponent {
     const input = this.refs.input;
     input.value = '';
     input.focus();
-    this.setState({cleanVisible: false});
-    // removeClass(this._cleanBtn, 'visible');
+    input.dispatchEvent(new Event('input'));
   }
 
   render(){
@@ -88,25 +70,23 @@ export default class Input extends PureComponent {
       className,
       style,
       type,
-      info,
+      header,
+      footer,
       innerRef,
       onChange,
       ...rest
     } = this.props;
 
     return (
-      <StyledInputWrap className={className} style={style} cleanVisible={this.state.cleanVisible}>
-        <input
-          {...rest}
-          type={type}
-          onChange={this.onChange}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          ref="input"
-        />
-        <StyledCleanButton innerRef={x=>this._cleanBtn = x} onClick={this.clean}></StyledCleanButton>
-        {info && <StyledInputInfo>{info}</StyledInputInfo>}
+      <StyledInputWrap className={className} style={style} >
+        {header && <StyledInputHeader>{header}</StyledInputHeader>}
+        <StyledInputInner cleanVisible={this.state.cleanVisible}>
+          <input ref="input" type={type} {...rest} />
+          <StyledCleanButton innerRef={x=>this._cleanBtn = x} onClick={this.clean}></StyledCleanButton>
+        </StyledInputInner>
+        {footer && <StyledInputFooter>{footer}</StyledInputFooter>}
       </StyledInputWrap>
+
     )
   }
 }

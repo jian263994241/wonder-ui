@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import styled, { keyframes } from 'styled-components';
-import Loader from '../SvgIcon/Loader';
 
 
-
-export const StylePreloaderWhite = styled.div.attrs({
-  children: <Loader width="24" color="#999"/>
-}) `
+export const StylePreloaderWrapper = styled.div `
   display: ${props=>props.show ? 'block': 'none'};
   padding: 15px;
   text-align: center;
+  font-size: 14px;
+  color: #999;
+  svg {
+    vertical-align: middle;
+    margin-right: 3px;
+  }
 `
-
-StylePreloaderWhite.show = true;

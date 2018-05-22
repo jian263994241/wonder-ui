@@ -6,7 +6,9 @@ import createTag from '../utils/createTag';
 const width = ({width}) => width ;
 const gutter = ({width, gutter}) => `calc((100% - ${gutter}px*${100/parseFloat(width)-1}) / ${100/parseFloat(width)})`
 
-export const StyledCol = styled(createTag()) `
+export const StyledCol = styled(createTag({
+  propsToOmit:['width', 'gutter'],
+})) `
   width: ${width}%;
   width: ${gutter};
 `;

@@ -1,8 +1,8 @@
 import ScrollContent from './ScrollContent';
-import {StylePreloaderWhite} from './Styled';
+import ScrollPreloader from './ScrollPreloader';
 
 
 export default ScrollContent;
 export {
-  StylePreloaderWhite as ScrollPreloader
+  ScrollPreloader
 }

@@ -66,6 +66,11 @@ export default class Keyboard extends Component {
      */
     visible: PropTypes.bool,
 
+    /**
+     * 按键时触发    
+     */
+    onChange: PropTypes.func,
+
   }
 
   static defaultProps = {
@@ -175,6 +180,7 @@ export default class Keyboard extends Component {
       maxLength,
       visible,
       onCancel,
+      onChange,
       title,
       closeButton,
       closeText,
@@ -187,6 +193,7 @@ export default class Keyboard extends Component {
         this.setState({ value: a });
         this.input.value = a;
         this.input.scrollLeft = this.input.scrollWidth;
+        onChange && onChange(a);
       }
     }
 
@@ -221,7 +228,7 @@ export default class Keyboard extends Component {
         </div>
       </StyleToolbar>
     );
-    
+
     return  (
       <ThemeProvider theme={{mode : dark ? 'dark': 'light'}}>
         <Modal
