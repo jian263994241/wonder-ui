@@ -4,7 +4,7 @@ import Button, {ButtonsRow} from '../../src/Button';
 import {BlockTitle} from '../../src/ContentBlock';
 
 import {List, ListItem, GroupTitle, ListItemDivider} from '../../src/ListView';
-import Input from '../../src/Input';
+import Input, {InputWrap} from '../../src/Input';
 import Toggle from '../../src/Toggle';
 
 const svgXml = `
@@ -54,8 +54,10 @@ export default class Inputs extends Component {
             <ListItem title="限制四字" label>
               <Input placeholder="123"></Input>
             </ListItem>
-            <ListItem title="限制四字" label>
-              <Input placeholder="123"></Input>
+            <ListItem title="textarea" label>
+              <InputWrap>
+                <textarea name="" id="" cols="30" rows="10"></textarea>
+              </InputWrap>
             </ListItem>
           </List>
 

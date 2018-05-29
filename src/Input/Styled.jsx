@@ -70,16 +70,8 @@ export const StyledInputWrap = styled.div `
   flex-shrink: 1;
   margin-top: -8px;
   margin-bottom: -8px;
-`
 
-export const StyledInputInner = styled.div `
-  width: 100%;
-  position: relative;
-  ${StyledCleanButton} {
-    ${props=> props.cleanVisible ? css `opacity: 1;visibility: visible;` : null}
-  }
-
-  >input {
+  input {
     width: 100%;
     height: 44px;
     color: #000;
@@ -132,6 +124,14 @@ export const StyledInputInner = styled.div `
     padding-bottom: 11px;
     padding-left: 0;
     border: 0
+  }
+`
+
+export const StyledInputInner = styled.div `
+  width: 100%;
+  position: relative;
+  ${StyledCleanButton} {
+    ${props=> props.cleanVisible ? css `opacity: 1;visibility: visible;` : null}
   }
 
 `
