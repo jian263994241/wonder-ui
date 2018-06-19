@@ -81,12 +81,14 @@ class Pages extends Component {
     const cls = classnames({
       'router-transition-backward': animationType === 'backward' && animationType!=null,
       'router-transition-forward': animationType != 'backward'&& animationType!=null
-    })
+    });
+
+    const timeout = cls === '' ? 0 : 400;
 
     return (
       <Switch
         ref="s"
-        timeout={400}
+        timeout={timeout}
         classNames="slide"
         children={this.renderRoutes()}
         className={cls}

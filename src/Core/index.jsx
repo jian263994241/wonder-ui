@@ -1,5 +1,4 @@
 export device from './device';
-export Views from './Views';
 export View from './View';
 export Pages from './Pages';
 export Page from './Page';

@@ -46,8 +46,6 @@ class AnimatedSwitch extends React.Component {
 
   matches = 0;
 
-  onRest = ()=> this.unblock();
-
   componentWillReceiveProps(nextProps) {
     const nextMatch = getMatchedRoute(
       nextProps.children,

@@ -45,7 +45,7 @@ export default class Welcome extends Component {
             <ListItem title="输入框" to="/inputs" as={Link} arrow/>
             <ListItem title="栅格" to="/grid" as={Link} arrow/>
             <ListItemDivider/>
-            <ListItem title="文档" as="a" href="https://github.com/jian263994241/wonderjs/tree/components/docs" target="_blank"/>
+            <ListItem title="文档" as="a" href="https://github.com/jian263994241/wonderjs/tree/master/docs" target="_blank"/>
           </List>
 
 

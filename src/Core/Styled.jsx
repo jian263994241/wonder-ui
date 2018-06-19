@@ -142,19 +142,17 @@ injectGlobal `
 
 `
 
-export const StyledViews = styled.div `
+export const StyledView = styled.div `
   position: absolute;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
   z-index: 5000;
   top: 0;
   left: 0;
 `
 
-export const StyledView = StyledViews.extend `
-  overflow: hidden;
-  box-sizing: border-box;
-`
 
 export const StylePages = styled.div `
   position: relative;
