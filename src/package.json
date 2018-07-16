@@ -1,6 +1,6 @@
 {
   "name": "wonder-ui",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "react ui",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "history": "^4.7.2",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
-    "rc-mounter": "^1.1.6",
+    "rc-mounter": "^1.1.9",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",

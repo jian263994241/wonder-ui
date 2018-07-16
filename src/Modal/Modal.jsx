@@ -1,4 +1,4 @@
-import React, {Component, createElement} from 'react';
+import React, {Component, createElement, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import Mounter from 'rc-mounter';
 import CSSTransition from '../Core/react-transition-group/CSSTransition';
@@ -120,16 +120,18 @@ export default class Modal extends Component {
 
     return (
       <Mounter>
-        { backdrop }
-        <CSSTransition
-          className={className}
-          in={this.state.visible}
-          timeout={400}
-          classNames={classNames}
-          onExited={this.didLeave}
-        >
-          <Content innerRef={x=>this.modal=x}>{children}</Content>
-        </CSSTransition>
+        <Fragment>
+          { backdrop }
+          <CSSTransition
+            className={className}
+            in={this.state.visible}
+            timeout={400}
+            classNames={classNames}
+            onExited={this.didLeave}
+          >
+            <Content innerRef={x=>this.modal=x}>{children}</Content>
+          </CSSTransition>
+        </Fragment>
       </Mounter>
     )
   }

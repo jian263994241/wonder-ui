@@ -41,7 +41,7 @@ export default class DialogDemo extends Component {
   }
 
   toast = ()=>{
-    Dialog.toast('第1个toast');
+    Dialog.toast('toast');
     // Dialog.toast.success('第2个toast');
     // Dialog.toast.fail('第3个toast');
     // Dialog.toast.warning('第4个toast');
