@@ -67,7 +67,7 @@ export default class Keyboard extends Component {
     visible: PropTypes.bool,
 
     /**
-     * 按键时触发    
+     * 按键时触发
      */
     onChange: PropTypes.func,
 
@@ -126,7 +126,7 @@ export default class Keyboard extends Component {
     }
   }
 
-  getElement = () => this.refs.modal.getModal();
+  getElement = () => this.modal;
 
   getCancelIgnore= ()=> this.input;
 
@@ -134,7 +134,7 @@ export default class Keyboard extends Component {
     const _target = e.target;
     const getCancelIgnore = this.getCancelIgnore;
     const onCancel = this.props.onCancel;
-    this.refs.modal.getModal()
+    
     if (!getCancelIgnore || !getCancelIgnore() || this.getElement().contains(_target))
       return false;
     const elements = getCancelIgnore();
@@ -237,6 +237,7 @@ export default class Keyboard extends Component {
           fade={false}
           overlay={false}
           ref="modal"
+          innerRef={x=>this.modal = x}
           {...rest}
         >
           {toolbar}

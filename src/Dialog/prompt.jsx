@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Dialog from './Dialog';
-import mount, {unmount} from './mount';
 import {TextInput} from './Styled';
+import DialogBox from './DialogBox';
+
+const {mount, unmount} = DialogBox;
 
 export default function prompt (props = {}) {
   const {

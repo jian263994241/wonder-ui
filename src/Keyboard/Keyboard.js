@@ -83,14 +83,14 @@ var Keyboard = function (_Component) {
         _this.setState({ value: currentInput.value });
       }
     }, _this.getElement = function () {
-      return _this.refs.modal.getModal();
+      return _this.modal;
     }, _this.getCancelIgnore = function () {
       return _this.input;
     }, _this.cancelIgnore = function (e) {
       var _target = e.target;
       var getCancelIgnore = _this.getCancelIgnore;
       var onCancel = _this.props.onCancel;
-      _this.refs.modal.getModal();
+
       if (!getCancelIgnore || !getCancelIgnore() || _this.getElement().contains(_target)) return false;
       var elements = getCancelIgnore();
       var result = false;
@@ -226,7 +226,10 @@ var Keyboard = function (_Component) {
             inline: inline,
             fade: false,
             overlay: false,
-            ref: 'modal'
+            ref: 'modal',
+            innerRef: function innerRef(x) {
+              return _this2.modal = x;
+            }
           }, rest),
           toolbar,
           (0, _react.createElement)(keypad, props)
@@ -298,7 +301,7 @@ Keyboard.propTypes = {
   visible: _propTypes2.default.bool,
 
   /**
-   * 按键时触发    
+   * 按键时触发
    */
   onChange: _propTypes2.default.func
 

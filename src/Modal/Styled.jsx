@@ -18,6 +18,7 @@ const fade = css `
 
   &.fade-exit {
     opacity: 1;
+    visibility: visible;
   }
 
   &.fade-exit.fade-exit-active {
@@ -26,7 +27,7 @@ const fade = css `
   }
   &.fade-exit-done {
     visibility: hidden;
-    opacity: 0;
+    opacity: 0.01;
   }
 `
 

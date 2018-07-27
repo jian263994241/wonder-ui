@@ -21,40 +21,18 @@ export default class Modal extends Component {
     fade: true,
   }
 
+  static getDerivedStateFromProps(props, state){
+    return {
+      visible: props.visible
+    }
+  }
+
   state = {
     visible: false,
   }
 
-  componentDidMount(){
-    if(this.props.visible){
-      this.openModal();
-    }
-  }
-
-  getModal = ()=> this.modal
-
-  componentWillReceiveProps(nextProps) {
-
-    if(nextProps.visible != this.props.visible){
-      if(!nextProps.visible){
-        this.closeModal();
-      }else{
-        this.openModal();
-      }
-    }
-  }
-
-  openModal = ()=>{
-    this.setState({ visible: true })
-  }
-
-  closeModal = ()=>{
-    this.setState({ visible: false });
-  }
-
   didLeave = (node)=>{
     const {didLeave} = this.props;
-    // hide(node);
     didLeave && setTimeout(didLeave, 100);
   }
 
@@ -72,9 +50,9 @@ export default class Modal extends Component {
       onEnter,
       onEntered,
       onExit,
-      onExited
+      onExited,
+      innerRef
     } = this.props;
-
 
     if(inline){
       return <div className={className} style={style} ref="modal">{children}</div>
@@ -129,7 +107,7 @@ export default class Modal extends Component {
             classNames={classNames}
             onExited={this.didLeave}
           >
-            <Content innerRef={x=>this.modal=x}>{children}</Content>
+            <Content innerRef={innerRef}>{children}</Content>
           </CSSTransition>
         </Fragment>
       </Mounter>

@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Dialog from './Dialog';
-import mount, {unmount} from './mount';
 import IconSuccess from '../SvgIcon/Success';
 import IconClose from '../SvgIcon/CloseOutline';
 import IconOffline from '../SvgIcon/Offline';
 import IconWarring from '../SvgIcon/Warning';
+import DialogBox from './DialogBox';
+
+const {mount, unmount} = DialogBox;
 
 export default function toast (text = '', callback, conf = {}) {
   const noButtons = true;
