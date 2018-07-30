@@ -1,9 +1,15 @@
-import React, {Component, createElement} from 'react';
-import {render} from 'react-dom';
+import React, {Component} from 'react';
+import DialogBox from '../Dialog/DialogBox';
+import {
+  StylePreloaderWhite
+} from './Styled';
 
-import Preloader from  './Preloader';
+const {mount, unmount} = DialogBox;
 
 const element = document.createElement('div');
+
+const overlayStyle = {background: 'rgba(0,0,0,0)', zIndex: '13800'};
+const innerStyle = {padding: '8px'};
 
 let length = 0;
 
@@ -19,28 +25,20 @@ export function showPreloader (){
 
   if(length > 0) return add();
 
-  render(
-    createElement(
-      Preloader,
-      { visible: true }
-    ),
-    element,
-    add
-  );
+  mount({
+    title: (<StylePreloaderWhite/>),
+    noButtons: false,
+    toast: true,
+    innerStyle,
+    overlayStyle
+  }, add);
+
 }
 
 export function hidePreloader (){
 
   if(length > 1) return remove();
 
-  render(
-    createElement(
-      Preloader,
-      { visible: false }
-    ),
-    element,
-    remove
-  );
+  unmount();
+  remove();
 }
-
-export default Preloader;
