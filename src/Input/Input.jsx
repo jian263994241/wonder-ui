@@ -1,9 +1,5 @@
 import React, {Component, PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import addClass from 'dom-helpers/class/addClass';
-import removeClass from 'dom-helpers/class/removeClass';
-import hasClass from 'dom-helpers/class/removeClass';
-import events from 'dom-helpers/events';
 import {StyledInputWrap, StyledInputInner, StyledCleanButton, StyledInputFooter, StyledInputHeader} from './Styled';
 
 const noop = ()=>{};
@@ -29,13 +25,10 @@ export default class Input extends PureComponent {
   }
 
   componentDidMount(){
-    const {innerRef, onChange} = this.props;
+    const innerRef = this.props.innerRef;
     const input = this.refs.input;
 
     this.props.innerRef(input);
-    //
-    // events.on(input, 'focus', e=>this.toggleBtn(e));
-    // events.on(input, 'blur', e=>this.toggleBtn(e));
 
   }
 
@@ -101,6 +94,9 @@ export default class Input extends PureComponent {
       footer,
       innerRef,
       onChange,
+      onBlur,
+      onFocus,
+      value,
       ...rest
     } = this.props;
 
@@ -114,6 +110,7 @@ export default class Input extends PureComponent {
             onChange={this.handleChange}
             onBlur={this.handleBlur}
             onFocus={this.handleFocus}
+            value={value}
             {...rest}
           />
           <StyledCleanButton innerRef={x=>this._cleanBtn = x} onClick={this.clean}></StyledCleanButton>
