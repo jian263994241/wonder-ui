@@ -41,10 +41,9 @@ class DialogBox extends Component {
 
   unmount = ()=>{
     this.setState({visible: false});
-  }
-
-  didLeave = ()=>{
-    this.setState({ mountProps: null }, this.modalStackClearQueue);
+    setTimeout(()=>{
+      this.setState({ mountProps: null }, this.modalStackClearQueue);
+    }, 400);
   }
 
   render(){
@@ -52,7 +51,7 @@ class DialogBox extends Component {
     const {mountProps, visible} = this.state;
 
     return mountProps && (
-      <Dialog {...mountProps} visible={visible} didLeave={this.didLeave}/>
+      <Dialog {...mountProps} visible={visible}/>
     )
   }
 }

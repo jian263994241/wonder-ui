@@ -1,7 +1,7 @@
 import React, {Component, createElement, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import Mounter from 'rc-mounter';
-import CSSTransition from '../Core/react-transition-group/CSSTransition';
+import CSSTransition from 'react-transition-group/CSSTransition';
 
 import {PopupModal, StyleModal, StyleOverlay} from './Styled';
 
@@ -14,21 +14,37 @@ export default class Modal extends Component {
     fade: PropTypes.bool,
     component: PropTypes.func,
     onCancel: PropTypes.func,
+    timeout: PropTypes.number
   }
 
   static defaultProps = {
     overlay: true,
     fade: true,
+    timeout: 400,
+    visible: false,
   }
 
-  static getDerivedStateFromProps(props, state){
-    return {
-      visible: props.visible
-    }
-  }
+  // static getDerivedStateFromProps(props, state){
+  //   console.log(state);
+  //   return {
+  //     visible: props.visible
+  //   }
+  // }
 
   state = {
     visible: false,
+  }
+
+  componentDidMount(){
+    this.setState({
+      visible: this.props.visible
+    })
+  }
+
+  UNSAFE_componentWillReceiveProps(newProps){
+    this.setState({
+      visible: newProps.visible
+    })
   }
 
   didLeave = (node)=>{
@@ -51,7 +67,8 @@ export default class Modal extends Component {
       onEntered,
       onExit,
       onExited,
-      innerRef
+      innerRef,
+      timeout
     } = this.props;
 
     if(inline){
@@ -75,7 +92,7 @@ export default class Modal extends Component {
     const backdrop = overlay && (
       <CSSTransition
         in={this.state.visible}
-        timeout={400}
+        timeout={timeout}
         classNames="fade"
         onEnter={enter}
         onEntered={entered}
@@ -103,11 +120,16 @@ export default class Modal extends Component {
           <CSSTransition
             className={className}
             in={this.state.visible}
-            timeout={400}
+            timeout={timeout}
             classNames={classNames}
             onExited={this.didLeave}
           >
-            <Content innerRef={innerRef}>{children}</Content>
+            <Content
+              innerRef={innerRef}
+              style={style}
+            >
+              {children}
+            </Content>
           </CSSTransition>
         </Fragment>
       </Mounter>

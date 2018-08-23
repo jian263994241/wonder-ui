@@ -15,10 +15,14 @@ export default class Welcome extends Component {
 
   preloader = ()=>{
     showPreloader();
-
-    setTimeout(()=>{
-      hidePreloader();
-    }, 2000)
+    hidePreloader();
+    showPreloader();
+    hidePreloader();
+    showPreloader();
+    hidePreloader();
+    // setTimeout(()=>{
+    //   hidePreloader();
+    // }, 2000)
   }
 
   render() {

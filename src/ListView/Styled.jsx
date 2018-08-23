@@ -36,7 +36,7 @@ export const StyledItemHeader = styled.div `
   white-space: normal;
 `
 
-export const StyledItemFooter = StyledItemHeader.extend `
+export const StyledItemFooter = styled(StyledItemHeader) `
   color: #888;
 `
 

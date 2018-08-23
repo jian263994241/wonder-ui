@@ -6,11 +6,12 @@
 ```js
 // import {GridRow, GridCol} from 'wonder-ui/Grid';
 const Grid =  require('../src/Grid');
+const styled = require('styled-components');
 const {GridRow, GridCol} = Grid;
-const Row = GridRow.extend `
+const Row = styled(GridRow) `
   margin-bottom: 10px;
 `
-const Col = GridCol.extend `
+const Col = styled(GridCol) `
   border: 1px solid black;
 `
 ;

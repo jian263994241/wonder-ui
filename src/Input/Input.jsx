@@ -6,6 +6,8 @@ import hasClass from 'dom-helpers/class/removeClass';
 import events from 'dom-helpers/events';
 import {StyledInputWrap, StyledInputInner, StyledCleanButton, StyledInputFooter, StyledInputHeader} from './Styled';
 
+const noop = ()=>{};
+
 export default class Input extends PureComponent {
 
   static propTypes = {
@@ -16,8 +18,10 @@ export default class Input extends PureComponent {
 
   static defaultProps = {
     type: 'text',
-    onChange: e=>{},
-    innerRef: input=>{}
+    onChange: noop,
+    onFocus: noop,
+    onBlur: noop,
+    innerRef: noop
   }
 
   state = {
@@ -29,13 +33,25 @@ export default class Input extends PureComponent {
     const input = this.refs.input;
 
     this.props.innerRef(input);
-    events.on(input, 'input', e=>{
-      this.props.onChange(e);
-      this.toggleBtn(e);
-    });
-    events.on(input, 'focus', e=>this.toggleBtn(e));
-    events.on(input, 'blur', e=>this.toggleBtn(e));
+    //
+    // events.on(input, 'focus', e=>this.toggleBtn(e));
+    // events.on(input, 'blur', e=>this.toggleBtn(e));
 
+  }
+
+  handleFocus = (e)=>{
+    this.props.onFocus(e);
+    this.toggleBtn(e);
+  }
+
+  handleBlur = (e)=>{
+    this.props.onBlur(e);
+    this.toggleBtn(e);
+  }
+
+  handleChange = (e)=>{
+    this.props.onChange(e);
+    this.toggleBtn(e);
   }
 
   toggleBtn = (e)=>{
@@ -45,7 +61,7 @@ export default class Input extends PureComponent {
       return ;
     }
 
-    if(e.type === 'input' || e.type === 'focus'){
+    if(e.type === 'change' || e.type === 'focus'){
       let value = e.target.value;
       let cleanVisible = this.state.cleanVisible;
 
@@ -59,10 +75,21 @@ export default class Input extends PureComponent {
   }
 
   clean = ()=>{
-    const input = this.refs.input;
+    let input = this.refs.input;
+    let lastValue = input.value;
+
     input.value = '';
+
+    let tracker = input._valueTracker;
+    let event = new Event('change', { bubbles: true});
+
+    //react 15
+    event.simulated = true;
+    //react 16
+    tracker && tracker.setValue(lastValue);
+
+    input.dispatchEvent(event);
     input.focus();
-    input.dispatchEvent(new Event('input'));
   }
 
   render(){
@@ -81,7 +108,14 @@ export default class Input extends PureComponent {
       <StyledInputWrap className={className} style={style} >
         {header && <StyledInputHeader>{header}</StyledInputHeader>}
         <StyledInputInner cleanVisible={this.state.cleanVisible}>
-          <input ref="input" type={type} {...rest} />
+          <input
+            ref="input"
+            type={type}
+            onChange={this.handleChange}
+            onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
+            {...rest}
+          />
           <StyledCleanButton innerRef={x=>this._cleanBtn = x} onClick={this.clean}></StyledCleanButton>
         </StyledInputInner>
         {footer && <StyledInputFooter>{footer}</StyledInputFooter>}

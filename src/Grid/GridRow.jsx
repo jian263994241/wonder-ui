@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { StyledRow } from './Styled';
+import styled from 'styled-components';
 
 export default class GridRow extends Component {
 
@@ -10,8 +11,6 @@ export default class GridRow extends Component {
      */
     gutter: PropTypes.number.isRequired
   }
-
-  static extend = StyledRow.extend
 
   static childContextTypes = {
     gutter: PropTypes.number

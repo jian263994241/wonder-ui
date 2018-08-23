@@ -1,11 +1,12 @@
 import React, {Component, createElement} from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import {CheckboxIcon, Input} from '../Checkbox/Styled';
 
-const IconRight = CheckboxIcon.extend `
+const IconRight = styled(CheckboxIcon) `
   margin-left: 5px;
 `
-const IconLeft = CheckboxIcon.extend `
+const IconLeft = styled(CheckboxIcon) `
   margin-right: 15px;
 `
 

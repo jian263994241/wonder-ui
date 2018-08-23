@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {Page, PageContent, Link} from '../../src/Core';
-
+import styled from 'styled-components';
 import {GridRow, GridCol} from '../../src/Grid';
 
-const Row = GridRow.extend `
+const Row = styled(GridRow) `
   margin-bottom: 10px;
 `
-const Col = GridCol.extend `
+const Col = styled(GridCol) `
   border: 1px solid black;
 `
 ;
