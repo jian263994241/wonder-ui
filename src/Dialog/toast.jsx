@@ -5,9 +5,7 @@ import IconSuccess from '../SvgIcon/Success';
 import IconClose from '../SvgIcon/CloseOutline';
 import IconOffline from '../SvgIcon/Offline';
 import IconWarring from '../SvgIcon/Warning';
-import DialogBox from './DialogBox';
-
-const {mount, unmount} = DialogBox;
+import {mount, unmount} from './DialogBox';
 
 export default function toast (text = '', callback, conf = {}) {
   const noButtons = true;

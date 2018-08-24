@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Dialog from './Dialog';
-import DialogBox from './DialogBox';
-
-const {mount, unmount} = DialogBox;
+import {mount, unmount} from './DialogBox';
 
 export default function confirm (props = {}) {
   const {

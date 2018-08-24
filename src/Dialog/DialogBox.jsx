@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Dialog from './Dialog';
 
-class DialogBox extends Component {
-
-  static element = document.createElement('div');
+export default class DialogBox extends Component {
 
   state ={
     visible: false,
@@ -56,4 +54,4 @@ class DialogBox extends Component {
   }
 }
 
-export default render(<DialogBox/>, DialogBox.element);
+export const {mount, unmount} = render(<DialogBox/>, document.createElement('div'));
