@@ -44,7 +44,7 @@ export default class Views extends Component {
     }
   }
 
-  componentDidMount(){
+  componentWillMount(){
     const {onRouteChange, onRouteInit} = this.props;
     const history = this.history;
     this._unlisten = history.listen(onRouteChange);
