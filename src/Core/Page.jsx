@@ -1,13 +1,11 @@
 import React, {Component, PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {StylePage} from './Styled';
+import { StylePage } from './Styled';
+import { EventContext } from './View';
 
 export default class Page extends Component {
 
-  static contextTypes = {
-    onPageInit: PropTypes.func,
-    onPageRemove: PropTypes.func,
-  }
+  static contextType = EventContext;
 
   static defaultProps = {
     ready: true

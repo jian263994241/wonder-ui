@@ -1,8 +1,7 @@
 import React from 'react';
-import Route from 'react-router-dom/Route';
-import Switch from 'react-router-dom/Switch';
-import withRouter from 'react-router-dom/withRouter';
-import matchPath from 'react-router-dom/matchPath';
+import Route from 'react-router/Route';
+import Switch from 'react-router/Switch';
+import matchPath from 'react-router/matchPath';
 import PropTypes from 'prop-types';
 import find from 'lodash/find';
 import RouteTransition from './RouteTransition';
@@ -62,6 +61,7 @@ class AnimatedSwitch extends React.Component {
 
   render() {
     const { children, location, match, ...routeTransitionProps } = this.props;
+
 
     return (
       <RouteTransition

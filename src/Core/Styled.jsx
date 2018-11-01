@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import styled, {injectGlobal, css} from 'styled-components';
+import styled, {createGlobalStyle, css} from 'styled-components';
 import device from './device';
 
-injectGlobal `
+export const GlobalStyle = createGlobalStyle `
   html, body, .root{
     position: relative;
     height: 100%;

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { StyledCol } from './Styled';
 
-export default class GridCol extends StyledCol {
+export default class GridCol extends Component {
 
   static propTypes = {
     /**

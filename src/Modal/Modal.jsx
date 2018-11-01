@@ -67,12 +67,12 @@ export default class Modal extends Component {
       onEntered,
       onExit,
       onExited,
-      innerRef,
+      getContainer,
       timeout
     } = this.props;
 
     if(inline){
-      return <div className={className} style={style} ref="modal">{children}</div>
+      return <div className={className} style={style} ref={getContainer}>{children}</div>
     }
 
     const enter = (node)=>{
@@ -125,7 +125,7 @@ export default class Modal extends Component {
             onExited={this.didLeave}
           >
             <Content
-              innerRef={innerRef}
+              ref={getContainer}
               style={style}
             >
               {children}

@@ -146,6 +146,8 @@ export default class PickerCol extends Component {
 
   render (){
     const {
+      onValueChange,
+      selectedValue,
       itemStyle,
       indicatorStyle,
       indicatorClassName = '',
@@ -153,7 +155,6 @@ export default class PickerCol extends Component {
       ...rest
     } = this.props;
 
-    const { selectedValue } = this.state;
 
     const map = (item) => {
       const { className = '', value, ...rest } = item.props;
@@ -161,7 +162,7 @@ export default class PickerCol extends Component {
 
       return (
         <StyleItem
-          className={selectedValue === value ? className + space + 'selected' : className}
+          className={this.state.selectedValue === value ? className + space + 'selected' : className}
           key={value}
           {...rest}
         >
@@ -173,10 +174,10 @@ export default class PickerCol extends Component {
     const items = React.Children.map(children, map);
 
     return (
-      <StylePickerCol innerRef={x => { this.styleRef.root = x }} {...rest}>
-        <StyleMask innerRef={x => { this.styleRef.mask = x }}/>
-        <StyleIndicator innerRef={x => { this.styleRef.indicator = x }}/>
-        <StyleContent innerRef={x => { this.styleRef.content = x }}>
+      <StylePickerCol ref={x => { this.styleRef.root = x }} {...rest}>
+        <StyleMask ref={x => { this.styleRef.mask = x }}/>
+        <StyleIndicator ref={x => { this.styleRef.indicator = x }}/>
+        <StyleContent ref={x => { this.styleRef.content = x }}>
           {items}
         </StyleContent>
       </StylePickerCol>

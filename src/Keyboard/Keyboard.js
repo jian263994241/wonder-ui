@@ -184,16 +184,14 @@ var Keyboard = function (_Component) {
           onChange: setValue,
           random: random,
           maxLength: maxLength,
-          extraKey: extraKey,
-          ref: 'pad'
+          extraKey: extraKey
         };
       } else {
         props = {
           value: this.state.value,
           onChange: setValue,
           done: onCancel,
-          maxLength: maxLength,
-          ref: 'pad'
+          maxLength: maxLength
         };
       }
 
@@ -226,8 +224,7 @@ var Keyboard = function (_Component) {
             inline: inline,
             fade: false,
             overlay: false,
-            ref: 'modal',
-            innerRef: function innerRef(x) {
+            getContainer: function getContainer(x) {
               return _this2.modal = x;
             }
           }, rest),

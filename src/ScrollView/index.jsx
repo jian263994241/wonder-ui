@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import DOMScroller from 'zscroller/lib/DOMScroller';
 import {StylePreloader} from '../Preloader/Styled';
-import {Container, PullToRefreshContent, PullToRefreshLayer, PullToRefreshArrow} from './Styled';
+import {GlobalStyle, Container, PullToRefreshContent, PullToRefreshLayer, PullToRefreshArrow} from './Styled';
 
 export default class ScrollView extends Component {
 
@@ -78,6 +78,7 @@ export default class ScrollView extends Component {
 
     return (
       <PullToRefreshContent stage={this.state.stage} {...rest}>
+        <GlobalStyle/>
         <div ref="root" style={innerStyle}>
           <PullToRefreshLayer>
             <StylePreloader/>
@@ -101,6 +102,7 @@ export default class ScrollView extends Component {
     } = this.props;
     return (
       <Container {...rest}>
+        <GlobalStyle/>
         <div ref="root" style={innerStyle}>
           {children}
         </div>

@@ -1,24 +1,16 @@
 import React, {Component, Children, cloneElement} from 'react';
 import PropTypes from 'prop-types';
 import styled, {css} from 'styled-components';
-import createTag from '../utils/createTag';
 
 const width = ({width}) => width ;
 const gutter = ({width, gutter}) => `calc((100% - ${gutter}px*${100/parseFloat(width)-1}) / ${100/parseFloat(width)})`
 
-export const StyledCol = styled(createTag({
-  propsToOmit:['width', 'gutter'],
-})) `
+export const StyledCol = styled.div `
   width: ${width}%;
   width: ${gutter};
 `;
 
-export const StyledRow = styled(
-  createTag({
-    propsToOmit:['width', 'gutter'],
-    propsToNested: ['gutter']
-  })
-)`
+export const StyledRow = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap:wrap;

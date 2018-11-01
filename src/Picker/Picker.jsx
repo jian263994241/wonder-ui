@@ -1,4 +1,4 @@
-import React, {Component, cloneElement} from 'react';
+import React, {Component, cloneElement, createContext} from 'react';
 import PropTypes from 'prop-types';
 import {StylePicker} from './Styled';
 
@@ -13,7 +13,7 @@ export default class Picker extends Component {
   }
 
   static defaultProps = {
-    onValueChange(){}
+    onValueChange: ()=>{}
   }
 
   getValue = ()=>{
@@ -31,7 +31,7 @@ export default class Picker extends Component {
     }
   }
 
-  onValueChange = (i, v)=>{
+  handleChange = (i, v)=>{
     const value = this.getValue().concat();
     value[i] = v;
     this.props.onValueChange(value, i);
@@ -40,15 +40,17 @@ export default class Picker extends Component {
   render() {
 
     const {
+      selectedValue,
+      onValueChange,
       children,
       ...rest
     } = this.props;
 
-    const selectedValue = this.getValue();
+    const value = this.getValue();
     const colElements = React.Children.map(children, (col, i) => {
       return cloneElement(col, {
-        selectedValue: selectedValue[i],
-        onValueChange: (...args) => this.onValueChange(i, ...args)
+        selectedValue: value[i],
+        onValueChange: (...args) => this.handleChange(i, ...args)
       });
     });
 

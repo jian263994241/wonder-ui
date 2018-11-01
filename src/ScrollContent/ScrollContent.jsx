@@ -60,7 +60,7 @@ export default class ScrollContent extends Component {
       <PageContent
         className={className}
         style={style}
-        innerRef={x=>this.content = x}
+        ref={x=>this.content = x}
         onScroll={this.scrollHandler}
         children={children}
       />

@@ -241,7 +241,7 @@ export default class Citys extends Component {
               }
             </ul>
           </Panel>
-          <Panel innerRef={(x)=>this.cityPanel = x}>
+          <Panel ref={(x)=>this.cityPanel = x}>
             <ul>
               {
                 this.state.cityList.map(({id, name})=>{
@@ -258,7 +258,7 @@ export default class Citys extends Component {
               }
             </ul>
           </Panel>
-          <Panel innerRef={(x)=>this.areaPanel = x}>
+          <Panel ref={(x)=>this.areaPanel = x}>
             <ul>
               {
                 this.state.areaList.map(({id, name})=>{

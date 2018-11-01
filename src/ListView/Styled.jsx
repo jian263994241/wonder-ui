@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styled, {css} from 'styled-components';
-import createTag from '../utils/createTag';
 import hairline, {removeHairline} from '../styles/hairline';
 import arrow from '../styles/arrow';
 import bold from '../styles/bold';
@@ -17,7 +16,7 @@ const labelTitle = css `
   line-height: 1.4;
   align-self: center;
 `
-export const StyledItemTitle = styled( createTag({ propsToOmit: ['bold', 'label'] }) ) `
+export const StyledItemTitle = styled.div `
   white-space: nowrap;
   position: relative;
   overflow: hidden;
@@ -26,7 +25,7 @@ export const StyledItemTitle = styled( createTag({ propsToOmit: ['bold', 'label'
   min-width: 0;
   flex-shrink: 1;
   ${props=>props.bold && bold}
-  ${props=>props.label && labelTitle}
+  ${props=>props.$label && labelTitle}
 `
 
 export const StyledItemHeader = styled.div `
@@ -71,7 +70,7 @@ const arrowCss = css `
   ${arrow}
 `
 
-export const StyledItemTitleRow = styled( createTag({ propsToOmit: ['arrow'] }) ) `
+export const StyledItemTitleRow = styled.div `
   ${props=>props.arrow && arrowCss}
   background-position: right center!important;
   display: flex;
@@ -90,6 +89,7 @@ export const StyledItemAfter = styled.div `
 export const StyledItemInner = styled.div `
   padding-right: 15px;
   position: relative;
+  color: #000;
   width: 100%;
   padding-top: 8px;
   padding-bottom: 8px;
@@ -139,7 +139,7 @@ const itemLinkInnerCss = css `
   }
 `
 
-export const StyledListItemContent = styled( createTag({ propsToOmit: ['arrow'] }) ) `
+export const StyledListItemContent = styled.div `
   position: relative;
   box-sizing: border-box;
   padding-left: 15px;
@@ -149,7 +149,6 @@ export const StyledListItemContent = styled( createTag({ propsToOmit: ['arrow'] 
   justify-content:space-between;
   color: inherit;
   ${props=>props.arrow && itemLinkInnerCss}
-
 `
 
 const insetCss = css `
@@ -170,7 +169,7 @@ const insetCss = css `
     border-radius: 7px;
   }
 `
-export const StyledListItem = styled( createTag() ) `
+export const StyledListItem = styled.div `
   position: relative;
   box-sizing: border-box;
 `
@@ -190,7 +189,7 @@ export const StyledLIstItemDivider = styled.div `
   box-sizing: border-box;
 `
 
-export const StyledList = styled( createTag({ propsToOmit: ['inset', 'mediaList'] }) ) `
+export const StyledList = styled.div `
   background: ${listBlockBg};
   list-style: none;
   padding: 0;

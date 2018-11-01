@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import styled, {injectGlobal, css} from 'styled-components';
-import createTag from '../utils/createTag';
 
-export const StyledAccordion = styled(createTag()) `
+export const StyledAccordion = styled.div `
   box-sizing:border-box;
 `
-export const StyledAccordionItem = styled(createTag()) `
+export const StyledAccordionItem = styled.div `
   box-sizing:border-box;
 `
 
-export const StyledAccordionToggle = styled(createTag()) `
+export const StyledAccordionToggle = styled.div `
   box-sizing:border-box;
 `
 

@@ -17,7 +17,7 @@ export default class Input extends PureComponent {
     onChange: noop,
     onFocus: noop,
     onBlur: noop,
-    innerRef: noop
+    ref: noop
   }
 
   state = {
@@ -25,10 +25,10 @@ export default class Input extends PureComponent {
   }
 
   componentDidMount(){
-    const innerRef = this.props.innerRef;
+    const ref = this.props.ref;
     const input = this.refs.input;
 
-    this.props.innerRef(input);
+    this.props.ref(input);
 
   }
 
@@ -92,7 +92,7 @@ export default class Input extends PureComponent {
       type,
       header,
       footer,
-      innerRef,
+      ref,
       onChange,
       onBlur,
       onFocus,
@@ -113,7 +113,7 @@ export default class Input extends PureComponent {
             value={value}
             {...rest}
           />
-          <StyledCleanButton innerRef={x=>this._cleanBtn = x} onClick={this.clean}></StyledCleanButton>
+          <StyledCleanButton ref={x=>this._cleanBtn = x} onClick={this.clean}></StyledCleanButton>
         </StyledInputInner>
         {footer && <StyledInputFooter>{footer}</StyledInputFooter>}
       </StyledInputWrap>

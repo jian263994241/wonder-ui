@@ -1,21 +1,26 @@
-import React, {Component} from 'react';
+import React, {Component, createContext} from 'react';
 import PropTypes from 'prop-types';
 import { StyledList } from './Styled';
 
+export const TypeContext = createContext('listType');
+
 export default class List extends Component {
 
-  static childContextTypes = {
+  static propTypes = {
     mediaList: PropTypes.bool
-  }
-
-  getChildContext(){
-    return {
-      mediaList: this.props.mediaList
-    }
   }
 
   render(){
 
-    return <StyledList {...this.props}/>
+    const {
+      mediaList,
+      ...rest
+    } = this.props;
+
+    return (
+      <TypeContext.Provider value={{mediaList}}>
+        <StyledList mediaList={mediaList} {...rest}/>
+      </TypeContext.Provider>
+    )
   }
 };

@@ -2,14 +2,7 @@ import React, {Component, createElement} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {CheckboxIcon, Input} from '../Checkbox/Styled';
-
-const IconRight = styled(CheckboxIcon) `
-  margin-left: 5px;
-`
-const IconLeft = styled(CheckboxIcon) `
-  margin-right: 15px;
-`
-
+import {TypeContext} from './List';
 import {
   StyledListItem,
   StyledListItemContent,
@@ -23,6 +16,13 @@ import {
   StyledItemText,
   StyledItemAfter,
 } from './Styled';
+
+const IconRight = styled(CheckboxIcon) `
+  margin-left: 5px;
+`
+const IconLeft = styled(CheckboxIcon) `
+  margin-right: 15px;
+`
 
 function Mount({as, children, ...rest}){
   if(!children) return null;
@@ -46,9 +46,11 @@ export default class ListItem extends Component {
     type: PropTypes.oneOf(['checkbox', 'radio']),
   }
 
-  static contextTypes = {
-    mediaList: PropTypes.bool
-  }
+  // static contextTypes = {
+  //   mediaList: PropTypes.bool
+  // }
+
+  static contextType = TypeContext;
 
   renderItem = ()=>{
     const {
@@ -74,11 +76,11 @@ export default class ListItem extends Component {
 
       if(IconLeft){
         return (
-          <StyledListItemContent arrow={arrow} inset={inset} as="label" {...rest}>
+          <StyledListItemContent arrow={arrow} inset={inset} as="label">
             <Input type={type} {...inputProps}/>
             <IconLeft/>
-            <StyledItemInner style={innerStyle}>
-              <Mount as={StyledItemTitle} label={label} style={labelStyle}>
+            <StyledItemInner style={innerStyle} {...rest}>
+              <Mount as={StyledItemTitle} $label={label} style={labelStyle}>
                 <Mount as={StyledItemHeader}>{header}</Mount>
                 {title}
                 <Mount as={StyledItemFooter}>{footer}</Mount>
@@ -91,10 +93,10 @@ export default class ListItem extends Component {
       }
 
       return (
-        <StyledListItemContent arrow={arrow} inset={inset} as="label" {...rest}>
+        <StyledListItemContent arrow={arrow} inset={inset} as="label">
           <Mount as={StyledItemMedia}>{media}</Mount>
-          <StyledItemInner style={innerStyle}>
-            <Mount as={StyledItemTitle} label={label} style={labelStyle}>
+          <StyledItemInner style={innerStyle} {...rest}>
+            <Mount as={StyledItemTitle} $label={label} style={labelStyle}>
               <Mount as={StyledItemHeader}>{header}</Mount>
               {title}
               <Mount as={StyledItemFooter}>{footer}</Mount>
@@ -109,10 +111,10 @@ export default class ListItem extends Component {
 
     return (
 
-      <StyledListItemContent arrow={arrow} inset={inset} {...rest}>
+      <StyledListItemContent arrow={arrow} inset={inset}>
         <Mount as={StyledItemMedia}>{media}</Mount>
-        <StyledItemInner style={innerStyle}>
-          <Mount as={StyledItemTitle} label={label} style={labelStyle}>
+        <StyledItemInner style={innerStyle} {...rest}>
+          <Mount as={StyledItemTitle} $label={label} style={labelStyle}>
             <Mount as={StyledItemHeader}>{header}</Mount>
             {title}
             <Mount as={StyledItemFooter}>{footer}</Mount>
@@ -143,7 +145,7 @@ export default class ListItem extends Component {
       checkbox,
       ...rest
     } = this.props;
-
+    
     return (
 
       <StyledListItemContent inset={inset} {...rest}>

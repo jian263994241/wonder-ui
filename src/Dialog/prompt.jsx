@@ -16,7 +16,7 @@ export default function prompt (props = {}) {
 
   let input;
 
-  const afterText = <TextInput innerRef={x => { input = x }}/>;
+  const afterText = <TextInput ref={x => { input = x }}/>;
 
   const buttons = [
     {

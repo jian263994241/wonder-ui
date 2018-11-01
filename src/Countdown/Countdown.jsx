@@ -1,6 +1,6 @@
 import React, {Component, createElement} from 'react';
 import PropTypes from 'prop-types';
-import createTag from '../utils/createTag';
+import styled from 'styled-components';
 
 export default class Countdown extends Component{
 
@@ -118,7 +118,7 @@ export default class Countdown extends Component{
 
     const content = this.state.process ? text.replace(/%s/, this.state.secondsResidue) : this.state.initial ? defaultText : defaultText2;
 
-    const Wrapper = createTag();
+    const Wrapper = styled.div({});
 
     return (
       <Wrapper onClick={this.clickHandler} disabled={this.state.process} {...rest} >{content}</Wrapper>

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styled, {css} from 'styled-components';
-import createTag from '../utils/createTag';
 import {buttonTheme} from '../Theme';
 const disabledColor = '#CECECE';
 
@@ -46,12 +45,8 @@ const disabled = css `
   }
 `
 
-const ButtonTag = createTag({
-  tag: 'button',
-  propsToOmit: ['fill', 'round', 'active', 'big', 'block', 'theme']
-})
 
-export const StyledButton = styled(ButtonTag) `
+export const StyledButton = styled.button `
   border: 1px solid ${buttonTheme};
   color: ${buttonTheme};
   text-fill-color: ${buttonTheme};
@@ -114,9 +109,8 @@ const rowRound = css `
       border-radius: 0 27px 27px 0;
   }
 `
-const ButtonsRowTag = createTag({ tag: 'div', propsToOmit: ['round', 'theme'] });
 
-export const StyledButtonsRow = styled(ButtonsRowTag) `
+export const StyledButtonsRow = styled.div `
   display: flex;
   align-self: center;
   flex-wrap: nowrap;

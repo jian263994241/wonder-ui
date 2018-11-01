@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import styled, {injectGlobal, css} from 'styled-components';
+import styled, {createGlobalStyle, css} from 'styled-components';
 import {toolbarSize} from '../styles/vars';
 import {StylePreloader} from '../Preloader/Styled';
 import Arrow from '../SvgIcon/Arrow';
 
-injectGlobal `
+export const GlobalStyle = createGlobalStyle `
   .zscroller-scrollbar-y {
     position: absolute;
     z-index: 9999;

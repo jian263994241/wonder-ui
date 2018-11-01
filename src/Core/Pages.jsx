@@ -2,13 +2,11 @@ import React, {Component, createElement, Children} from 'react';
 import PropTypes from 'prop-types';
 import AnimatedSwitch from './transition/AnimatedSwitch';
 import styled from 'styled-components';
-import withRouter from 'react-router-dom/withRouter';
-import Route from 'react-router-dom/Route';
-import Redirect from 'react-router-dom/Redirect';
+import withRouter from 'react-router/withRouter';
+import Route from 'react-router/Route';
+import Redirect from 'react-router/Redirect';
 import classnames from 'classnames';
 import {StylePages} from './Styled';
-
-const Switch = StylePages.withComponent(AnimatedSwitch);
 
 class Pages extends Component {
 
@@ -86,8 +84,8 @@ class Pages extends Component {
     const timeout = cls === '' ? 0 : 400;
 
     return (
-      <Switch
-        ref="s"
+      <StylePages
+        as={AnimatedSwitch}
         timeout={timeout}
         classNames="slide"
         children={this.renderRoutes()}

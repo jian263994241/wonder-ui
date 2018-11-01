@@ -134,7 +134,7 @@ export default class Keyboard extends Component {
     const _target = e.target;
     const getCancelIgnore = this.getCancelIgnore;
     const onCancel = this.props.onCancel;
-    
+
     if (!getCancelIgnore || !getCancelIgnore() || this.getElement().contains(_target))
       return false;
     const elements = getCancelIgnore();
@@ -205,16 +205,14 @@ export default class Keyboard extends Component {
         onChange: setValue,
         random,
         maxLength,
-        extraKey,
-        ref: 'pad'
+        extraKey
       };
     }else{
       props = {
         value: this.state.value,
         onChange: setValue,
         done: onCancel,
-        maxLength,
-        ref: 'pad'
+        maxLength
       };
     }
 
@@ -236,8 +234,7 @@ export default class Keyboard extends Component {
           inline={inline}
           fade={false}
           overlay={false}
-          ref="modal"
-          innerRef={x=>this.modal = x}
+          getContainer={x=>this.modal = x}
           {...rest}
         >
           {toolbar}

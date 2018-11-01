@@ -51,7 +51,7 @@ export default class AccordionContent extends Component {
 
     return (
       <StyledContent
-        innerRef={x=>{this.content=x}}
+        ref={x=>{this.content=x}}
         {...rest}
       />
     )
