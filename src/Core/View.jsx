@@ -5,7 +5,6 @@ import Router from 'react-router/Router';
 import createHashHistory from 'history/createHashHistory';
 import attachFastClick from './fastclick';
 
-
 function noop(){};
 
 export const EventContext = createContext('events');
