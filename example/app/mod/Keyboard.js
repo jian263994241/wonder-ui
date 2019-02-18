@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
-import {Keyboard, Enpad, Numpad} from '../../src/Keyboard';
-import Logo from '../../src/Keyboard/Logo';
-import Input from '../../src/Keyboard/Input';
+import {Page, PageContent, Link} from '~/src/Core';
+import {Keyboard, Enpad, Numpad} from '~/src/Keyboard';
+import Logo from '~/src/Keyboard/Logo';
+import Input from '~/src/Keyboard/Input';
 
 const style = {
   padding: '10px 0'

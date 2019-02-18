@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
-import Popup from '../../src/Popup';
+import {Page, PageContent, Link} from '~/src/Core';
+import Popup from '~/src/Popup';
 
 export default class PopupDemo extends Component {
 

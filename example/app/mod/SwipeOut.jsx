@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
-import Button, {ButtonsRow} from '../../src/Button';
-import {BlockTitle} from '../../src/ContentBlock';
+import {Page, PageContent, Link} from '~/src/Core';
+import Button, {ButtonsRow} from '~/src/Button';
+import {BlockTitle} from '~/src/ContentBlock';
 
-import {List, ListItem, GroupTitle, ListItemDivider} from '../../src/ListView';
+import {List, ListItem, GroupTitle} from '~/src/ListView';
 
 const svgXml = `
 <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="29" height="29">
@@ -34,7 +34,6 @@ export default class ListDemo extends Component {
           <List>
             <ListItem title="Ivan Petrov" after="CEO" arrow media={Icon}></ListItem>
             <ListItem title="John Doe" after="2" arrow media={Icon}></ListItem>
-            <ListItemDivider text="Links Divider"></ListItemDivider>
             <ListItem title="Jenna Smith" arrow media={Icon}></ListItem>
           </List>
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {View, Pages} from '../src/Core';
+import {View, Pages} from '~/src/Core';
 
 import Welcome from './mod/Welcome';
 import Citys from './mod/Citys';
@@ -55,5 +55,5 @@ class App extends Component {
 
 render(
   <App/>,
-  document.querySelector('.root')
+  document.getElementById('root')
 )

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
-import Citys from '../../src/Citys';
+import {Page, PageContent, Link} from '~/src/Core';
+import Citys from '~/src/Citys';
 
 export default class CitysDemo extends Component {
 

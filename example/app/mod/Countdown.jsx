@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
-import Countdown from '../../src/Countdown';
+import {Page, PageContent, Link} from '~/src/Core';
+import Countdown from '~/src/Countdown';
 
 
 export default class CountdownDemo extends Component {

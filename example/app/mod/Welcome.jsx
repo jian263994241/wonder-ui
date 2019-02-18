@@ -1,9 +1,9 @@
 import React, {Component, createElement} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
-import Preloader, {showPreloader, hidePreloader} from '../../src/Preloader';
-import Button, {ButtonsRow} from '../../src/Button';
-import {GridRow, GridCol} from '../../src/Grid';
-import {List, ListItem, ListItemDivider} from '../../src/ListView';
+import {Page, PageContent, Link} from '~/src/Core';
+import Preloader, {showPreloader, hidePreloader} from '~/src/Preloader';
+import Button, {ButtonsRow} from '~/src/Button';
+import {GridRow, GridCol} from '~/src/Grid';
+import {List, ListItem, ListItemDivider} from '~/src/ListView';
 
 export default class Welcome extends Component {
 

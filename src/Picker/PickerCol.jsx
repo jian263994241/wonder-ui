@@ -109,7 +109,7 @@ export default class PickerCol extends Component {
   }
 
   select = (value) => {
-    const children: any = React.Children.toArray(this.props.children);
+    const children = React.Children.toArray(this.props.children);
     for (let i = 0, len = children.length; i < len; i++) {
       if (children[i].props.value === value) {
         this.selectByIndex(i);

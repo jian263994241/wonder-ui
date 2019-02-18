@@ -1,7 +1,7 @@
 import React, {Component, createElement} from 'react';
-import {Page, PageContent, Link, Route} from '../../src/Core';
+import {Page, PageContent, Link, Route} from '~/src/Core';
 
-import Popup from '../../src/Popup';
+import Popup from '~/src/Popup';
 
 
 

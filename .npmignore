@@ -1,0 +1,17 @@
+node_modules
+
+.languagebabel
+
+*.jsx
+*.es
+
+.Ds_Store
+
+*.md
+
+*.bak
+*.bak/**
+
+
+espack.config.demo.js
+styleguide.config.js

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
+import {Page, PageContent, Link} from '~/src/Core';
 import styled from 'styled-components';
-import {GridRow, GridCol} from '../../src/Grid';
+import {GridRow, GridCol} from '~/src/Grid';
 
 const Row = styled(GridRow) `
   margin-bottom: 10px;

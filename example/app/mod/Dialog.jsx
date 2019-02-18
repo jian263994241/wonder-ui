@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
-import Dialog from '../../src/Dialog';
-import {showPreloader, hidePreloader} from '../../src/Preloader';
+import {Page, PageContent, Link} from '~/src/Core';
+import Dialog from '~/src/Dialog';
+import {showPreloader, hidePreloader} from '~/src/Preloader';
 
 export default class DialogDemo extends Component {
 

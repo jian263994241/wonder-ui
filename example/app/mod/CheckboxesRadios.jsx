@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
-import {List, ListItem, GroupTitle} from '../../src/ListView';
-import {BlockTitle} from '../../src/ContentBlock';
-import Checkbox from '../../src/Checkbox';
+import {Page, PageContent, Link} from '~/src/Core';
+import {List, ListItem, GroupTitle} from '~/src/ListView';
+import {BlockTitle} from '~/src/ContentBlock';
+import Checkbox from '~/src/Checkbox';
 
 
 export default class CheckboxR extends Component {

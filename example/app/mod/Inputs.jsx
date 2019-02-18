@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
-import Button, {ButtonsRow} from '../../src/Button';
-import {BlockTitle} from '../../src/ContentBlock';
+import {Page, PageContent, Link} from '~/src/Core';
+import Button, {ButtonsRow} from '~/src/Button';
+import {BlockTitle} from '~/src/ContentBlock';
 
-import {List, ListItem, GroupTitle, ListItemDivider} from '../../src/ListView';
-import Input, {InputWrap} from '../../src/Input';
-import Toggle from '../../src/Toggle';
+import {List, ListItem, GroupTitle, ListItemDivider} from '~/src/ListView';
+import Input, {InputWrap} from '~/src/Input';
+import Toggle from '~/src/Toggle';
 
 const svgXml = `
 <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="29" height="29">

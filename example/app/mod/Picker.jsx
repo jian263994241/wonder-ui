@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
-import {Picker,PickerCol} from '../../src/Picker';
-import Modal from '../../src/Modal';
-import Toolbar from '../../src/Toolbar';
+import {Page, PageContent, Link} from '~/src/Core';
+import {Picker,PickerCol} from '~/src/Picker';
+import Modal from '~/src/Modal';
+import Toolbar from '~/src/Toolbar';
 
 export default class PickerDemo extends Component {
 

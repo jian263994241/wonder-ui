@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
-import Button, {ButtonsRow} from '../../src/Button';
-import {BlockTitle} from '../../src/ContentBlock';
+import {Page, PageContent, Link} from '~/src/Core';
+import Button, {ButtonsRow} from '~/src/Button';
+import {BlockTitle} from '~/src/ContentBlock';
 
 export default class ButtonsDemo extends Component {
 

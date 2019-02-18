@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '../../src/Core';
-import {Accordion, AccordionItem, AccordionToggle, AccordionContent} from '../../src/Accordion';
+import {Page, PageContent, Link} from '~/src/Core';
+import {Accordion, AccordionItem, AccordionToggle, AccordionContent} from '~/src/Accordion';
 
 export default class AccordionDemo extends Component {
 
