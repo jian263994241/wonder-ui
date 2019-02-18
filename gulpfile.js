@@ -2,18 +2,19 @@ var gulp = require('gulp');
 var babel = require('gulp-babel');
 var createConfig = require('js-start/plugin/babelify/createConfig')
 var del = require('del');
+var pkg = require('./package.json');
 
 var paths = {
   scripts: {
-    src: 'src/*.jsx',
-    dest: './lib'
+    src: ['src/**/*.js'],
+    dest: 'package'
   }
 }
 
 function clean() {
   // You can use multiple globbing patterns as you would with `gulp.src`,
   // for example if you are using del 2.0 or above, return its promise
-  return del([ 'lib' ]);
+  return del([ 'package' ]);
 }
 
 function watch() {
@@ -26,6 +27,11 @@ function scripts() {
     .pipe(gulp.dest(paths.scripts.dest));
 }
 
-gulp.task('build', scripts);
+function cpoyInfo(){
+  return gulp.src('./package.json')
+    .pipe(gulp.dest('./package'));
+}
 
-gulp.task('default', gulp.series(clean, scripts, watch));
+gulp.task('build', gulp.series(clean, cpoyInfo, scripts));
+
+gulp.task('default', gulp.series(clean, cpoyInfo, scripts, watch));
