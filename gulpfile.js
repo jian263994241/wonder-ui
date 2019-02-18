@@ -1,8 +1,8 @@
 var gulp = require('gulp');
 var babel = require('gulp-babel');
-var createConfig = require('js-start/plugin/babelify/createConfig')
+var preset = require('babel-preset');
 var del = require('del');
-var pkg = require('./package.json');
+
 
 var paths = {
   scripts: {
@@ -23,7 +23,7 @@ function watch() {
 
 function scripts() {
   return gulp.src(paths.scripts.src, { sourcemaps: false })
-    .pipe(babel(createConfig({react: true})))
+    .pipe(babel({ presets: [ preset ] }))
     .pipe(gulp.dest(paths.scripts.dest));
 }
 

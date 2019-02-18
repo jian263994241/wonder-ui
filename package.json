@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
+    "babel-preset": "^1.0.1",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
