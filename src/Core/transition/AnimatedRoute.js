@@ -1,6 +1,5 @@
 import React, {Component, createElement} from 'react';
-import Route from 'react-router/Route';
-import matchPath from 'react-router/matchPath';
+import { Route, matchPath } from 'react-router-dom';
 import RouteTransition from './RouteTransition';
 
 function getKey({ pathname }, path, exact) {

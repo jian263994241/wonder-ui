@@ -1,8 +1,8 @@
 import React, {Component, Children, createElement, createContext} from 'react';
 import PropTypes from 'prop-types';
-import {GlobalStyle, StyledView} from './Styled';
-import Router from 'react-router/Router';
-import createHashHistory from 'history/createHashHistory';
+import { GlobalStyle, StyledView } from './Styled';
+import { Router } from 'react-router-dom';
+import { createHashHistory } from 'history';
 import attachFastClick from './fastclick';
 
 function noop(){};

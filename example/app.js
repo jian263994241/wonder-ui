@@ -2,23 +2,23 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {View, Pages} from '~/src/Core';
 
-import Welcome from './mod/Welcome';
-import Citys from './mod/Citys';
-import Picker from './mod/Picker';
-import Countdown from './mod/Countdown';
-import Keyboard from './mod/Keyboard';
-import Popup from './mod/Popup';
-import Dialog from './mod/Dialog';
-import PopupPage from './mod/PopupPage';
-import Accordion from './mod/Accordion';
-import Buttons from './mod/Buttons';
-import Tabs from './mod/Tabs';
-import List from './mod/List';
-import MediaList from './mod/MediaList';
-import SwipeOut from './mod/SwipeOut';
-import CheckboxesRadios from './mod/CheckboxesRadios';
-import Inputs from './mod/Inputs';
-import Grid from './mod/Grid';
+import Welcome from './pages/Welcome';
+import Citys from './pages/Citys';
+import Picker from './pages/Picker';
+import Countdown from './pages/Countdown';
+import Keyboard from './pages/Keyboard';
+import Popup from './pages/Popup';
+import Dialog from './pages/Dialog';
+import PopupPage from './pages/PopupPage';
+import Accordion from './pages/Accordion';
+import Buttons from './pages/Buttons';
+import Tabs from './pages/Tabs';
+import List from './pages/List';
+import MediaList from './pages/MediaList';
+import SwipeOut from './pages/SwipeOut';
+import CheckboxesRadios from './pages/CheckboxesRadios';
+import Inputs from './pages/Inputs';
+import Grid from './pages/Grid';
 
 class App extends Component {
 

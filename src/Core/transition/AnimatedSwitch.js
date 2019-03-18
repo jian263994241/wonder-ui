@@ -1,7 +1,5 @@
 import React from 'react';
-import Route from 'react-router/Route';
-import Switch from 'react-router/Switch';
-import matchPath from 'react-router/matchPath';
+import { Route, Switch, matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import find from 'lodash/find';
 import RouteTransition from './RouteTransition';

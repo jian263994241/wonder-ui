@@ -2,11 +2,9 @@ import React, {Component, createElement, Children} from 'react';
 import PropTypes from 'prop-types';
 import AnimatedSwitch from './transition/AnimatedSwitch';
 import styled from 'styled-components';
-import withRouter from 'react-router/withRouter';
-import Route from 'react-router/Route';
-import Redirect from 'react-router/Redirect';
+import { withRouter, Route, Redirect } from 'react-router-dom';
 import classnames from 'classnames';
-import {StylePages} from './Styled';
+import { StylePages } from './Styled';
 
 class Pages extends Component {
 
