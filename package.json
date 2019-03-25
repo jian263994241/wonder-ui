@@ -1,6 +1,6 @@
 {
   "name": "wonder-ui",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "react ui",
   "main": "index.js",
   "keywords": [
@@ -29,7 +29,7 @@
     "lodash": "^4.17.11",
     "prop-types": "^15.7.2",
     "rc-mounter": "^1.1.9",
-    "react-router-dom": "^4.4.0",
+    "react-router-dom": "^5.0.0",
     "react-swipeable-views": "^0.13.1",
     "react-transition-group": "^2.6.1",
     "styled-components": "^4.1.3",
