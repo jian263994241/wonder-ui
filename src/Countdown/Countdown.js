@@ -1,6 +1,5 @@
-import React, {Component, createElement} from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React, {createElement, Component, Fragment} from 'react';
 
 export default class Countdown extends Component{
 
@@ -40,10 +39,7 @@ export default class Countdown extends Component{
     /**
      * 改变喧嚷的 node
      */
-    as: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.string
-    ])
+    render: PropTypes.func
   }
 
   static defaultProps = {
@@ -104,24 +100,25 @@ export default class Countdown extends Component{
 
   render() {
     const {
-      defaultText,
-      defaultText2,
-      text,
-      component,
-      onStart,
-      secondsResidue,
       children,
+      component,
+      defaultText2,
+      defaultText,
       onClick,
+      onStart,
+      render,
       runOnMount,
+      secondsResidue,
+      text,
       ...rest
     } = this.props;
 
     const content = this.state.process ? text.replace(/%s/, this.state.secondsResidue) : this.state.initial ? defaultText : defaultText2;
 
-    const Wrapper = styled.div({});
+    const Wrapper = render ? render : ({content, ...props})=> <div {...props}>{content}</div>;
 
     return (
-      <Wrapper onClick={this.clickHandler} disabled={this.state.process} {...rest} >{content}</Wrapper>
+      <Wrapper onClick={this.clickHandler} disabled={this.state.process} {...rest} content={content}/>
     )
 
   }
