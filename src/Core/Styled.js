@@ -1,6 +1,6 @@
+import device from './device';
 import React, {Component} from 'react';
 import styled, {createGlobalStyle, css} from 'styled-components';
-import device from './device';
 
 export const GlobalStyle = createGlobalStyle `
   html, body, .root{
@@ -148,7 +148,7 @@ export const StyledView = styled.div `
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
-  z-index: 5000;
+  z-index: 100;
   top: 0;
   left: 0;
 `
