@@ -16,6 +16,7 @@
     "styleguide:build": "styleguidist build"
   },
   "author": "jian.li",
+  "homepage": "https://github.com/jian263994241/wonderjs",
   "bugs": {
     "url": "https://github.com/jian263994241/wonderjs/issues"
   },
