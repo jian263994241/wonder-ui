@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import styled, {css} from 'styled-components';
 import {buttonTheme} from '../Theme';
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
+import styled, {css} from 'styled-components';
+
 const disabledColor = '#CECECE';
 
 const fill = css `
@@ -46,7 +47,7 @@ const disabled = css `
 `
 
 
-export const StyledButton = styled.button `
+export const StyledButton = styled(({fill, round, active, big, block, ...props})=> <button {...props}/>) `
   border: 1px solid ${buttonTheme};
   color: ${buttonTheme};
   text-fill-color: ${buttonTheme};
