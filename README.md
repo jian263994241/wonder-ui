@@ -4,7 +4,7 @@
 
 入口文件
 
-```jsx
+```js
 
 /* app.js */
 import React, {Component} from 'react';

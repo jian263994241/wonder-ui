@@ -1,5 +1,7 @@
-# <Preloader/>
+## Preloader
 指示器
+
+### 基本使用
 
 ```js
 import React, {Component} from 'react';
@@ -14,11 +16,11 @@ class Example extends Component {
 
 ```
 
-## Props
+### Props
 
 - visible `bool` 显示|隐藏 Preloader
 
 
-## 方法
+### 方法
 
 提供直接调用preloader的方法 `showPreloader` `hidePreloader`

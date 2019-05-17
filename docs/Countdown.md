@@ -1,7 +1,9 @@
 
+## Countdown
+
 短信60秒倒计时按钮
 
-# 基本使用
+### 基本使用
 
 ```jsx
 const Countdown = require('../src/Countdown').default;
@@ -11,7 +13,7 @@ const Button = require('../src/Button').default;
 ```
 
 
-# 更多参数
+### 更多参数
 
 ```jsx
 const Countdown = require('../src/Countdown').default;

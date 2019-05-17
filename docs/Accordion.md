@@ -1,7 +1,9 @@
 
+## Accordion
+
 自定义折叠面板
 
-#### Examples
+### 基本使用
 
 ```js
 const accordion = require('../src/Accordion');

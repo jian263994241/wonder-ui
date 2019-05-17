@@ -1,6 +1,8 @@
-# <Popup/>
+## Popup
 
 弹窗页
+
+### 基本使用
 
 ```js
 import React, {Component} from 'react';
@@ -25,12 +27,12 @@ class Example extends Component {
 }
 ```
 
-## Props
+### 参数
 
 - visible `bool` 显示|隐藏 Popup
 
 
-# <PopupRoute/>
+## PopupRoute
 
 路由弹窗页
 
