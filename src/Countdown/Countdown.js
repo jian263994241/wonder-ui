@@ -44,7 +44,6 @@ export default class Countdown extends Component{
 
   static defaultProps = {
     secondsResidue: 60,
-    as: 'div',
     defaultText: '获取验证码',
     defaultText2: '重新发送',
     text: '%ss'
@@ -115,7 +114,7 @@ export default class Countdown extends Component{
 
     const content = this.state.process ? text.replace(/%s/, this.state.secondsResidue) : this.state.initial ? defaultText : defaultText2;
 
-    const Wrapper = render ? render : ({content, ...props})=> <div {...props}>{content}</div>;
+    const Wrapper = render ? render : ({content, ...props})=> <a style={{wordBreak: 'keep-all'}} {...props}>{content}</a>;
 
     return (
       <Wrapper onClick={this.clickHandler} disabled={this.state.process} {...rest} content={content}/>

@@ -1,15 +1,15 @@
-import React, {Component, Children, createElement, createContext} from 'react';
-import PropTypes from 'prop-types';
-import { GlobalStyle, StyledView } from './Styled';
-import { Router } from 'react-router-dom';
-import { createHashHistory } from 'history';
 import attachFastClick from './fastclick';
+import { GlobalStyle, StyledView } from './Styled';
+import { createHashHistory } from 'history';
+import PropTypes from 'prop-types';
+import React, {createContext, createElement, Children, Component} from 'react';
+import { Router } from 'react-router-dom';
 
-function noop(){};
+function noop(){}
 
 export const EventContext = createContext('events');
 
-export default class Views extends Component {
+export default class View extends Component {
 
   static propTypes = {
     onRouteChange: PropTypes.func,

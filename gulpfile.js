@@ -1,8 +1,7 @@
-var gulp = require('gulp');
-var babel = require('gulp-babel');
 var preset = require('babel-preset');
 var del = require('del');
-
+var gulp = require('gulp');
+var babel = require('gulp-babel');
 
 var paths = {
   scripts: {
@@ -28,7 +27,7 @@ function scripts() {
 }
 
 function cpoyInfo(){
-  return gulp.src('./package.json')
+  return gulp.src(['./package.json'])
     .pipe(gulp.dest('./package'));
 }
 
