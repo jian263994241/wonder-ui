@@ -19,7 +19,7 @@ export default class Popup extends Component {
       extraRight,
       ...rest
     } = this.props;
-    console.log(this.props);
+
     return (
       <PopupModal
         visible={visible}
