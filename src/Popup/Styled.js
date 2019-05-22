@@ -4,6 +4,8 @@ import styled from 'styled-components';
 export const StylePopup = styled.div `
   width: 100%;
   height: 100%;
+  display:flex;
+  flex-direction: column;
   background-color: ${props=>props.bgColor? props.bgColor :'#fff'};
 
   html.with-statusbar-overlay {
@@ -19,4 +21,11 @@ export const StylePopup = styled.div `
         }
     }
 
+`
+
+export const StyledPopupBody = styled.div `
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 `

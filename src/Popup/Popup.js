@@ -1,6 +1,6 @@
 import Modal from '../Modal';
 import Toolbar from '../Toolbar';
-import {StylePopup} from './Styled';
+import {StyledPopupBody, StylePopup} from './Styled';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
@@ -36,7 +36,9 @@ export default class Popup extends Component {
             />
           )
         }
-        {children}
+        <StyledPopupBody>
+          {children}
+        </StyledPopupBody>
       </PopupModal>
     )
   }
