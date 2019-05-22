@@ -1,9 +1,9 @@
-import React, {Component, createElement} from 'react';
-import {Page, PageContent, Link} from '~/src/Core';
-import Preloader, {showPreloader, hidePreloader} from '~/src/Preloader';
+import React, {createElement, Component} from 'react';
 import Button, {ButtonsRow} from '~/src/Button';
-import {GridRow, GridCol} from '~/src/Grid';
+import {Link, Page, PageContent} from '~/src/Core';
+import {GridCol, GridRow} from '~/src/Grid';
 import {List, ListItem, ListItemDivider} from '~/src/ListView';
+import Preloader, {hidePreloader, showPreloader} from '~/src/Preloader';
 
 export default class Welcome extends Component {
 
@@ -14,10 +14,6 @@ export default class Welcome extends Component {
   // }
 
   preloader = ()=>{
-    showPreloader();
-    hidePreloader();
-    showPreloader();
-    hidePreloader();
     showPreloader();
     hidePreloader();
     // setTimeout(()=>{

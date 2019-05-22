@@ -1,9 +1,6 @@
-import React, {Component, createElement} from 'react';
-import {Page, PageContent, Link, Route} from '~/src/Core';
-
+import React, {createElement, Component} from 'react';
+import {Link, Page, PageContent, Route} from '~/src/Core';
 import Popup from '~/src/Popup';
-
-
 
 export default class PopupDemo extends Component {
 
@@ -29,8 +26,12 @@ export default class PopupDemo extends Component {
        <Page>
          <PageContent>
            <a onClick={this.open}>打开</a>
-           <Popup visible={this.state.visible}>
-             <a onClick={this.close}>关闭</a>
+           <Popup
+            visible={this.state.visible}
+            title="Popup Demo"
+            extraRight={<a onClick={this.close}>关闭</a>}
+          >
+            Popup content...
            </Popup>
          </PageContent>
        </Page>

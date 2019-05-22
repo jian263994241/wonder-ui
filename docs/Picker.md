@@ -72,11 +72,12 @@ export default class Example extends Component {
           visible={this.state.visible}
           overlay
         >
-          <Toolbar style={{background: '#F8F8F8'}}>
-            <div className="left"><a onClick={this.close}>取消</a></div>
-            <div className="center"><span>选择日期</span></div>
-            <div className="right"><a onClick={this.select}>确定</a></div>
-          </Toolbar>
+          <Toolbar
+            style={{background: '#F8F8F8'}}
+            extraLeft={<a onClick={this.close}>取消</a>}
+            extraRight={<a onClick={this.select}>确定</a>}
+            title="选择日期"
+          />
           <Picker
             selectedValue={this.state.selectedValue}
             onValueChange={(selectedValue)=>this.setState({selectedValue})}

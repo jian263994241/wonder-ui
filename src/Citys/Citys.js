@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import Modal from '../Modal';
-import {StyleCitys, Panel, Subbar} from './Styled';
+import ScrollView from '../ScrollView';
 import IconClose from '../SvgIcon/Close';
 import Toolbar from '../Toolbar';
-import ScrollView from '../ScrollView';
+import {Panel, StyleCitys, Subbar} from './Styled';
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 
 // 数据来源 http://passer-by.com/data_location/list.json
 
@@ -195,9 +195,10 @@ export default class Citys extends Component {
         visible={visible}
         fade={false}
       >
-        <Toolbar>
-          <div className="left"> <span onClick={onCancel} style={{padding: 4}}><IconClose/></span> </div>
-          <div className="center">所在地区</div>
+        <Toolbar
+          extraLeft={<span onClick={onCancel} style={{padding: 4}}><IconClose/></span>}
+          title="所在地区"
+        >
         </Toolbar>
         <Subbar onTouchMove={e=>e.preventDefault()}>
           <div

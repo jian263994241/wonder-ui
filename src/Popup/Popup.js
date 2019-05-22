@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {StylePopup} from './Styled';
 import Modal from '../Modal';
+import Toolbar from '../Toolbar';
+import {StylePopup} from './Styled';
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
+
 //
 const PopupModal = StylePopup.withComponent(Modal);
 
@@ -12,8 +14,12 @@ export default class Popup extends Component {
       visible,
       children,
       bgColor,
+      title,
+      extraLeft,
+      extraRight,
       ...rest
     } = this.props;
+    console.log(this.props);
     return (
       <PopupModal
         visible={visible}
@@ -21,6 +27,15 @@ export default class Popup extends Component {
         bgColor={bgColor}
         {...rest}
       >
+        {
+          (title || extraLeft || extraRight) && (
+            <Toolbar
+              title={title}
+              extraLeft={extraLeft}
+              extraRight={extraRight}
+            />
+          )
+        }
         {children}
       </PopupModal>
     )

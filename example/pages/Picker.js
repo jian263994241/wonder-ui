@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Page, PageContent, Link} from '~/src/Core';
-import {Picker,PickerCol} from '~/src/Picker';
+import {Link, Page, PageContent} from '~/src/Core';
 import Modal from '~/src/Modal';
+import {Picker,PickerCol} from '~/src/Picker';
 import Toolbar from '~/src/Toolbar';
 
 export default class PickerDemo extends Component {
@@ -75,11 +75,11 @@ export default class PickerDemo extends Component {
             overlay
             fade={false}
           >
-            <Toolbar style={{background: '#F8F8F8'}}>
-              <div className="left"><a onClick={this.close}>取消</a></div>
-              <div className="center"><span>选择日期</span></div>
-              <div className="right"><a onClick={this.select}>确定</a></div>
-            </Toolbar>
+            <Toolbar style={{background: '#F8F8F8'}}
+              extraLeft={<a onClick={this.close}>取消</a>}
+              extraRight={<a onClick={this.select}>确定</a>}
+              title="选择日期"
+            />
             <Picker
               selectedValue={this.state.selectedValue}
               onValueChange={(selectedValue)=>this.setState({selectedValue})}
