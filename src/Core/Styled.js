@@ -188,16 +188,20 @@ export const StylePage = styled.div `
   height: 100%;
   background: #F2F2F2;
 `
+const iosScrollTouch = css `
+  -webkit-overflow-scrolling: touch;
+`;
 
-export const StylePageContent = styled.div `
+export const StylePageContent = styled(({isScrolling, ...props})=> <div {...props}/>) `
   box-sizing: border-box;
   width: 100%;
   height: 100%;
   position: relative;
   z-index: 1;
   overflow: auto;
-  -webkit-overflow-scrolling: touch;
   will-change: scroll-position;
+  ${ props => !props.isScrolling && iosScrollTouch }
+
   html.ios & {
     &::before{
       content:'';

@@ -1,5 +1,7 @@
 'use strict';
 
+var device = require('./device').default;
+
 /**
  * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
  *
@@ -849,6 +851,9 @@ FastClick.notNeeded = function(layer) {
 	return false;
 };
 
+console.log(
+	Number(device.osVersion)
+);
 
 /**
  * Factory method for creating a FastClick object
@@ -857,6 +862,7 @@ FastClick.notNeeded = function(layer) {
  * @param {Object} [options={}] The options to override the defaults
  */
 FastClick.attach = function(layer, options) {
+	if(device.ios && Number(device.osVersion) >= 11) return {};
 	return new FastClick(layer, options);
 };
 

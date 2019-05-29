@@ -1,6 +1,6 @@
 {
   "name": "wonder-ui",
-  "version": "0.3.15",
+  "version": "0.3.16",
   "description": "Mobile UI base on react@16",
   "main": "index.js",
   "keywords": [
