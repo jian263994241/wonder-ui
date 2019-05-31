@@ -192,7 +192,7 @@ const iosScrollTouch = css `
   -webkit-overflow-scrolling: touch;
 `;
 
-export const StylePageContent = styled(({isScrolling, ...props})=> <div {...props}/>) `
+export const StylePageContent = styled(({iosScrollTouch, ...props})=> <div {...props}/>) `
   box-sizing: border-box;
   width: 100%;
   height: 100%;
@@ -200,7 +200,7 @@ export const StylePageContent = styled(({isScrolling, ...props})=> <div {...prop
   z-index: 1;
   overflow: auto;
   will-change: scroll-position;
-  ${ props => !props.isScrolling && iosScrollTouch }
+  ${ props => props.iosScrollTouch && iosScrollTouch }
 
   html.ios & {
     &::before{
@@ -217,3 +217,7 @@ export const StylePageContent = styled(({isScrolling, ...props})=> <div {...prop
     }
   }
 `
+
+StylePageContent.defaultProps = {
+  iosScrollTouch: true
+}

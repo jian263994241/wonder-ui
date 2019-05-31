@@ -62,6 +62,10 @@ export default class Keyboard extends Component {
     onCancel: PropTypes.func,
 
     /**
+     * 全键盘盘时可用
+     */
+    onOk: PropTypes.func,
+    /**
      * 是否显示键盘
      */
     visible: PropTypes.bool,
@@ -91,8 +95,8 @@ export default class Keyboard extends Component {
 
   input = null;
 
-  getInput = (input)=>{
-    const currentInput = document.getElementById(input);
+  _getInput = (input)=>{
+    const currentInput = document.getElementById(input) || document.createElement('input');
     const blur = document.activeElement.blur ;
 
     if(this.input && this.input !== currentInput){
@@ -108,7 +112,7 @@ export default class Keyboard extends Component {
   }
 
   componentDidMount() {
-    this.getInput(this.props.input);
+    this._getInput(this.props.input);
     if(!this.props.inline){
       document.addEventListener('touchstart', this.cancelIgnore);
     }
@@ -116,7 +120,7 @@ export default class Keyboard extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.input != this.props.input){
-      this.getInput(nextProps.input)
+      this._getInput(nextProps.input)
     }
   }
 
@@ -181,6 +185,7 @@ export default class Keyboard extends Component {
       visible,
       onCancel,
       onChange,
+      onOk,
       title,
       closeButton,
       closeText,
@@ -211,7 +216,7 @@ export default class Keyboard extends Component {
       props = {
         value: this.state.value,
         onChange: setValue,
-        done: onCancel,
+        done: onOk,
         maxLength
       };
     }

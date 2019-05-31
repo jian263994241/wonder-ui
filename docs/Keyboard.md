@@ -134,3 +134,79 @@ const style = {
 
 
 ```
+### porps
+
+```js
+{
+  /**
+   * 是否显示关闭按钮
+   */
+  closeButton: PropTypes.bool,
+
+  /**
+   * 关闭按钮的文本
+   */
+  closeText: PropTypes.string,
+
+  /**
+   * keypad = {Numpad} 时 定义左下角按键, 可以是 '00', 'x', '.' , null
+   */
+
+  extraKey: PropTypes.any,
+
+  /**
+   * 是否显示为暗色主题
+   */
+
+  dark: PropTypes.bool,
+
+  /**
+   * Input Id: document.getElementById(input) || document.createElement('input');
+   */
+
+  input: PropTypes.string,
+
+  /**
+   * 为ture时, 直接显示
+   */
+  inline: PropTypes.bool,
+
+  /**
+   * 忽略点击的区域
+   */
+  getCancelIgnore: PropTypes.func,
+
+  /**
+   * 键盘套件  Enpad/Numpad
+   */
+  keypad: PropTypes.func.isRequired,
+
+  /**
+   * 设置标题栏显示的内容
+   */
+  title: PropTypes.element,
+
+  /**
+   * 关闭时回调方法
+   */
+  onCancel: PropTypes.func,
+
+  /**
+   * 全键盘盘时可用
+   */
+  onOk: PropTypes.func,
+  /**
+   * 是否显示键盘
+   */
+  visible: PropTypes.bool,
+
+  /**
+   * 按键时触发
+   */
+  onChange: PropTypes.func,
+}
+```
+
+### API
+
+reset() : 清空输入值
