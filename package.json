@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp build",
     "watch": "gulp",
-    "demo": "ale dev",
+    "dev": "ale dev",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build"
   },
@@ -25,12 +25,13 @@
     "@babel/runtime": "^7.3.4",
     "classnames": "^2.2.6",
     "dom-helpers": "^3.3.1",
+    "dom7": "^2.1.3",
     "history": "^4.9.0",
     "install": "^0.12.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.14",
     "prop-types": "^15.7.2",
     "rc-mounter": "^1.1.9",
-    "react-router-dom": "^5.0.0",
+    "react-router-dom": "^5.0.1",
     "react-swipeable-views": "^0.13.1",
     "react-transition-group": "^2.6.1",
     "styled-components": "^4.2.0",
@@ -40,14 +41,14 @@
   "devDependencies": {
     "@babel/core": "^7.3.3",
     "ale-cli": "^0.1.2",
-    "ale-webpack": "^1.1.11",
+    "ale-webpack": "^1.1.19",
+    "babel-plugin-styled-components": "^1.10.6",
     "babel-preset": "^1.0.1",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
-    "js-start": "^1.2.3",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-styleguidist": "^6.1.0"
   }
 }
