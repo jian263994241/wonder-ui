@@ -43,6 +43,12 @@ export interface Utils {
   colorHsbToHsl: (h: number, s: number, b: number) => number[]
   /**  */
   colorHslToHsb: (h: number, s: number, l: number) => number[]
+  /** */
+  classnames: (...args: string) => string
+  /** */
+  slot: (children : array) => object
+  /** */
+  noop: ( target: T ) => T
 }
 
 declare const Utils : Utils;

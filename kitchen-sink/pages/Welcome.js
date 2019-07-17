@@ -2,14 +2,10 @@ import React, { createElement, Component } from 'react';
 import {Link, Page} from '@wonder-ui/core';
 import {List, ListItem, ListItemDivider} from '@wonder-ui/components/ListView';
 import Preloader, {hidePreloader, showPreloader} from '@wonder-ui/components/Preloader';
+import { log } from 'util';
+
 
 export default class Welcome extends Component {
-
-  // onRefresh = (scroller)=>{
-  //   setTimeout(()=>{
-  //     scroller.finishPullToRefresh()
-  //   }, 2000)
-  // }
 
   preloader = ()=>{
     showPreloader();
@@ -22,7 +18,17 @@ export default class Welcome extends Component {
   render() {
 
     return (
-      <Page name="首页">
+      <Page 
+        name="首页"
+        styledComponents={{
+          root: (styledComponent) => {
+            return styledComponent `
+              color: ${ props=> props.theme.colors.blue };
+            `
+          }
+        }}
+      >
+        <div slot="pageContentBefore">pageContentBefore</div>
         <List>
           <ListItem title="省市区选择器" to="/citys" as={Link} arrow/>
           <ListItem title="时间选择器" to="/picker" as={Link} arrow/>

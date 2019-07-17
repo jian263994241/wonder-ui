@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import AnimatedSwitch from '../transition/AnimatedSwitch';
 import { withRouter, Route, Redirect } from 'react-router-dom';
 import lazy from '@loadable/component';
-import classnames from 'classnames';
 import { WUI_pages } from './styles';
+import Utils from '../../utils/utils';
 
 class Pages extends Component {
 
@@ -93,10 +93,10 @@ class Pages extends Component {
       return null;
     })();
 
-    const cls = classnames({
-      'router-transition-backward': animationType === 'backward' && animationType!=null,
-      'router-transition-forward': animationType != 'backward'&& animationType!=null
-    });
+    const cls = Utils.classnames(
+      (animationType === 'backward' && animationType!=null) ? 'router-transition-backward': '',
+      (animationType != 'backward'&& animationType!=null) ? 'router-transition-forward': ''
+    )
 
     const timeout = cls === '' ? 0 : 400;
 

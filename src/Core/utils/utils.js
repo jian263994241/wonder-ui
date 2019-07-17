@@ -416,28 +416,26 @@ const Utils = {
 
     return [HSB.h, HSB.s, HSB.b];
   },
-  colorThemeCSSProperties(...args) {
-    let hex;
-    let rgb;
-    if (args.length === 1) {
-      hex = args[0];
-      rgb = Utils.colorHexToRgb(hex);
-    } else if (args.length === 3) {
-      rgb = args;
-      hex = Utils.colorRgbToHex(...rgb);
-    }
-    if (!rgb) return {};
-    const hsl = Utils.colorRgbToHsl(...rgb);
-    const hslShade = [hsl[0], hsl[1], Math.max(0, (hsl[2] - 0.08))];
-    const hslTint = [hsl[0], hsl[1], Math.max(0, (hsl[2] + 0.08))];
-    const shade = Utils.colorRgbToHex(...Utils.colorHslToRgb(...hslShade));
-    const tint = Utils.colorRgbToHex(...Utils.colorHslToRgb(...hslTint));
-    return {
-      '--f7-theme-color': hex,
-      '--f7-theme-color-rgb': rgb.join(', '),
-      '--f7-theme-color-shade': shade,
-      '--f7-theme-color-tint': tint,
-    };
+  classnames(){
+    return [].slice.apply(arguments).join(' ');
   },
+  slot(children) {
+    const result = { main: [] };
+    children.forEach((child)=>{
+      if(child.props && child.props.slot){
+        const slot = child.props.slot;
+        if(!result[slot]){
+          result[slot] = [];
+        }
+        result[slot].push(child);
+      }else{
+        result.main.push(child);
+      }
+    })
+    return result;
+  },
+  noop (target) {
+    return target;
+  }
 };
 export default Utils;

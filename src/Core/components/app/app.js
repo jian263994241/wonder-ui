@@ -5,6 +5,8 @@ import { createHashHistory } from 'history';
 import { Router } from 'react-router-dom';
 import AppClass from '../../utils/class';
 import utils from '../../utils/utils';
+import { ThemeProvider } from 'styled-components';
+import createTheme from '../style/createTheme';
 //modules
 import DeviceModule from '../../modules/device/device';
 import SupportModule from '../../modules/support/support';
@@ -20,6 +22,7 @@ export default class App extends Component {
   static defaultProps = {
     params: {},
     history: undefined,
+    theme: {}
   }
 
   constructor(props) {
@@ -62,16 +65,18 @@ export default class App extends Component {
 
   render(){
 
-    const { children } = this.props;
-    
+    const { children, theme } = this.props;
+
     return (
       <WUI_app ref="root">
         <WUI_global/>
-        <AppContext.Provider value={this.app}> 
-          <Router history={this.history}>
-          <>{children}</>
-          </Router>
-        </AppContext.Provider>
+        <ThemeProvider theme={createTheme(theme)}>
+          <AppContext.Provider value={this.app}> 
+            <Router history={this.history}>
+            <>{children}</>
+            </Router>
+          </AppContext.Provider>
+        </ThemeProvider>
       </WUI_app>
     );
   }

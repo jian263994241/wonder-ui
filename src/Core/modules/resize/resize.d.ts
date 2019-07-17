@@ -1,4 +1,4 @@
-import Framework7, { Framework7Plugin } from '../../components/app/app-class';
+
 
 export namespace Resize {
   interface AppMethods {
@@ -22,6 +22,6 @@ export namespace Resize {
   }
 }
 
-declare const ResizeModule: Framework7Plugin;
+
 
 export default ResizeModule;

@@ -1,4 +1,3 @@
-import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 
 export namespace Touch {
   interface AppMethods {
@@ -60,7 +59,5 @@ export namespace Touch {
     'touchend:passive': (event : Event) => void
   }
 }
-
-declare const TouchModule: Framework7Plugin;
 
 export default TouchModule;

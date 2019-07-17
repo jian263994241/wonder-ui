@@ -1,5 +1,5 @@
 import React from 'react';
-import styled,  { css } from 'styled-components';
+import styled, { css, withTheme } from 'styled-components';
 
 export const WUI_page = styled.div `
   box-sizing: border-box;
@@ -12,10 +12,10 @@ export const WUI_page = styled.div `
   z-index: 10;
 `
 
+
 const iosScrollTouch = css `
   -webkit-overflow-scrolling: touch;
-`;
-
+`
 export const WUI_pageContent = styled(({iosScrollTouch, ...props})=> <div {...props}/>) `
   box-sizing: border-box;
   width: 100%;
