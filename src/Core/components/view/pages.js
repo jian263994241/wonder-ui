@@ -1,6 +1,7 @@
 import React, { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 import AnimatedSwitch from '../transition/AnimatedSwitch';
+import appContext from '../app/appContext';
 import { withRouter, Route, Redirect } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { WUI_pages } from './styles';
@@ -20,10 +21,11 @@ class Pages extends Component {
     fallback: ()=> <div>Loading...</div>
   }
 
-  // static contextType = appContext;
+  static contextType = appContext;
 
   renderRoutes = ()=>{
     const { history, routes, fallback } = this.props;
+    const app = this.context;
 
     return routes.map(({ component: _component, async, redirect, ...rest }, i)=>{
         
@@ -63,11 +65,21 @@ class Pages extends Component {
           return (
             <Route 
               key={`route_${i}`}
-              render={(props)=> (
-                <div>
-                  <Component {...props} fallback={createElement(fallback, {history})}/>
-                </div>
-              )}
+              render={(props)=> {
+                const { location, match } = props;
+                const query = Utils.parseUrlQuery(location.search);
+                const urlParams = Utils.extend({}, query, match.params);
+                return (
+                  <div>
+                    <Component 
+                      {...urlParams} 
+                      {...props} 
+                      app={app} 
+                      fallback={createElement(fallback, {location, match})} 
+                    />
+                  </div>
+                )
+              }}
               {...rest} 
             />
           )
