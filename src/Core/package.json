@@ -34,6 +34,10 @@
     "react-transition-group": "^4.2.1",
     "styled-components": "^4.3.2"
   },
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
   "devDependencies": {
     "@babel/core": "^7.3.3",
     "@loadable/babel-plugin": "^5.10.0",
@@ -44,8 +48,6 @@
     "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
     "react-styleguidist": "^6.1.0"
   }
 }
