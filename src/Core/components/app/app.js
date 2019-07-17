@@ -14,8 +14,17 @@ import RequestModule from '../../modules/request/request';
 import ResizeModule from '../../modules/resize/resize';
 import TouchModule from '../../modules/touch/touch';
 import UtilsModule from '../../modules/utils/utils';
+import FastclickModule from '../../modules/fastclick/fastclick';
 
-AppClass.use([ DeviceModule, SupportModule, RequestModule, ResizeModule, TouchModule, UtilsModule ]);
+AppClass.use([ 
+  DeviceModule, 
+  SupportModule, 
+  RequestModule, 
+  ResizeModule, 
+  TouchModule, 
+  UtilsModule,
+  FastclickModule
+]);
 
 export default class App extends Component {
 

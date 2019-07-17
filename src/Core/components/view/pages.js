@@ -5,7 +5,6 @@ import { withRouter, Route, Redirect } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { WUI_pages } from './styles';
 import Utils from '../../utils/utils';
-console.log(Promise);
 
 class Pages extends Component {
 

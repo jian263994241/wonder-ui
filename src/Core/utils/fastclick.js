@@ -851,10 +851,6 @@ FastClick.notNeeded = function(layer) {
 	return false;
 };
 
-console.log(
-	Number(device.osVersion)
-);
-
 /**
  * Factory method for creating a FastClick object
  *
