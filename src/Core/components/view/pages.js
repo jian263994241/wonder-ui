@@ -1,8 +1,8 @@
-import React, { Component, Suspense, lazy, createElement } from 'react';
+import React, { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 import AnimatedSwitch from '../transition/AnimatedSwitch';
 import { withRouter, Route, Redirect } from 'react-router-dom';
-// import appContext from '../app/appContext';
+import lazy from '@loadable/component';
 import classnames from 'classnames';
 import { WUI_pages } from './styles';
 
@@ -31,7 +31,7 @@ class Pages extends Component {
       
         if(async){
           Component = lazy(
-            () => new Promise((resolve, reject)=> async(history, resolve, reject))
+            () => new Promise((resolve, reject) => async(history, resolve, reject))
           );
         }
 
@@ -48,14 +48,16 @@ class Pages extends Component {
         }
 
         if(Component){
+          if(Component.default){
+            Component = Component.default;
+          }
+
           return (
             <Route 
               key={`route_${i}`}
               render={(props)=> (
                 <div>
-                  <Suspense fallback={createElement(fallback, {history})}>
-                    <Component {...props}/>
-                  </Suspense>
+                  <Component {...props} fallback={createElement(fallback, {history})}/>
                 </div>
               )}
               {...rest} 

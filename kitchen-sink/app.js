@@ -21,9 +21,7 @@ const params = {
     },
     {
       path: '/index', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/Welcome'))
-      }
+      component: require('./pages/Welcome')
     },
     {
       path: '/citys', 
