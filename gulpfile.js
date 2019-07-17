@@ -5,8 +5,11 @@ var babel = require('gulp-babel');
 
 var paths = {
   scripts: {
-    src: ['src/**/*.js'],
-    dest: 'package'
+    core: {
+      src: ['src/core/**/*.js'],
+      dest: 'package/core',
+      packageInfo: 'src/core/package.json'
+    }
   }
 }
 
@@ -21,14 +24,14 @@ function watch() {
 }
 
 function scripts() {
-  return gulp.src(paths.scripts.src, { sourcemaps: false })
+  return gulp.src(paths.scripts.core.src, { sourcemaps: false })
     .pipe(babel({ presets: [ preset ] }))
-    .pipe(gulp.dest(paths.scripts.dest));
+    .pipe(gulp.dest(paths.scripts.core.dest));
 }
 
 function cpoyInfo(){
-  return gulp.src(['./package.json'])
-    .pipe(gulp.dest('./package'));
+  return gulp.src(paths.scripts.core.packageInfo)
+    .pipe(gulp.dest(paths.scripts.core.dest));
 }
 
 gulp.task('build', gulp.series(clean, cpoyInfo, scripts));

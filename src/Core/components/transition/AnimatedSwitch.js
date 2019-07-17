@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import find from 'lodash/find';
+import find from 'array.prototype.find';
 import RouteTransition from './RouteTransition';
 
 const NO_MATCH = {

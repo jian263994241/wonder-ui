@@ -2,9 +2,10 @@ import React, { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 import AnimatedSwitch from '../transition/AnimatedSwitch';
 import { withRouter, Route, Redirect } from 'react-router-dom';
-import lazy from '@loadable/component';
+import loadable from '@loadable/component';
 import { WUI_pages } from './styles';
 import Utils from '../../utils/utils';
+console.log(Promise);
 
 class Pages extends Component {
 
@@ -30,8 +31,13 @@ class Pages extends Component {
         let Component = _component;
       
         if(async){
-          Component = lazy(
-            () => new Promise((resolve, reject) => async(history, resolve, reject))
+          Component = loadable(
+            () => new Promise((resolve, reject) => {
+              const unblock = history.block();
+              const $resolve = (...arg)=> { unblock(); resolve(...arg) }
+              const $reject = (...arg)=>{ unblock(); reject(...arg) }
+              async(history, $resolve, $reject)
+            })
           );
         }
 
@@ -40,10 +46,13 @@ class Pages extends Component {
         }
 
         if(typeof redirect === 'function'){
-          Component = lazy(
-            ()=> 
-              new Promise((resolve, reject)=> redirect(history, resolve, reject))
-              .then((url, props)=> () => <Redirect to={url} {...props}/> )
+          Component = loadable(
+            ()=> new Promise((resolve, reject) => {
+              const unblock = history.block();
+              const $resolve = (...arg)=> { unblock(); resolve(...arg) }
+              const $reject = (...arg)=>{ unblock(); reject(...arg) }
+              redirect(history, $resolve, $reject);
+            }).then((url, props)=> () => <Redirect to={url} {...props}/> )
           )
         }
 
