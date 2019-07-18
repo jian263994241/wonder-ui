@@ -1,50 +1,24 @@
-import React, { cloneElement, createElement, Component } from 'react';
-import ReactDOM, {findDOMNode} from 'react-dom';
-import PropTypes from 'prop-types';
+import React from 'react';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 import CSSTransition from 'react-transition-group/CSSTransition';
 
+export default React.memo(function RouteTransition(props){
 
-class RouteTransition extends Component {
-  static defaultProps = {
-    wrapperComponent: 'div',
-  };
+  const { className, classNames, children, timeout, wrapperComponent = 'div', ...rest } = props;
 
-  static propTypes = {
-    className: PropTypes.string,
-    wrapperComponent: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.element,
-      PropTypes.string,
-    ]),
-  };
-
-  render() {
-    const {
-      className,
-      classNames,
-      children,
-      timeout,
-      wrapperComponent,
-      ...rest
-    } = this.props;
-
-    return (
-      <TransitionGroup
-        className={className}
-        component={wrapperComponent}
+  return (
+    <TransitionGroup
+      className={className}
+      component={wrapperComponent}
+    >
+      <CSSTransition
+        timeout={timeout}
+        key={children.key}
+        classNames={classNames}
+        {...rest}
       >
-        <CSSTransition
-          timeout={timeout}
-          key={children.key}
-          children={children}
-          classNames={classNames}
-          {...rest}
-        />
-      </TransitionGroup>
-    )
-
-  }
-}
-
-export default RouteTransition;
+      {children}
+      </CSSTransition>
+    </TransitionGroup>
+  )
+});

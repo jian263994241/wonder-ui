@@ -8,7 +8,10 @@ var paths = {
     core: {
       src: ['src/core/**/*.js'],
       dest: 'package/core',
-      packageInfo: 'src/core/package.json'
+      copylist: [
+        'src/core/package.json',
+        'src/core/**/*.d.ts'
+      ]
     }
   }
 }
@@ -20,7 +23,7 @@ function clean() {
 }
 
 function watch() {
-  gulp.watch(paths.scripts.src, scripts);
+  gulp.watch(paths.scripts.core.src, scripts);
 }
 
 function scripts() {
@@ -30,10 +33,10 @@ function scripts() {
 }
 
 function cpoyInfo(){
-  return gulp.src(paths.scripts.core.packageInfo)
+  return gulp.src(paths.scripts.core.copylist)
     .pipe(gulp.dest(paths.scripts.core.dest));
 }
 
-gulp.task('build', gulp.series(clean, cpoyInfo, scripts));
+gulp.task('build', gulp.series(cpoyInfo, scripts));
 
-gulp.task('default', gulp.series(clean, cpoyInfo, scripts, watch));
+gulp.task('default', gulp.series(cpoyInfo, scripts, watch));

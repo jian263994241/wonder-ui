@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, Switch, matchPath } from 'react-router-dom';
+import { withRouter, matchPath, __RouterContext } from 'react-router-dom';
+import Switch from './Switch';
 import PropTypes from 'prop-types';
 import find from 'array.prototype.find';
 import RouteTransition from './RouteTransition';
@@ -12,7 +13,8 @@ const NO_MATCH = {
  * Not every location object has a `key` property (e.g. HashHistory).
  */
 function getLocationKey(location) {
-  return typeof location.key === 'string' ? location.key : '';
+  return location.pathname;
+  // return typeof location.key === 'string' ? location.key : '';
 }
 
 /**
@@ -43,7 +45,7 @@ class AnimatedSwitch extends React.Component {
 
   matches = 0;
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const nextMatch = getMatchedRoute(
       nextProps.children,
       nextProps.location.pathname,
@@ -58,12 +60,10 @@ class AnimatedSwitch extends React.Component {
   }
 
   render() {
-    const { children, location, match, ...routeTransitionProps } = this.props;
+    const { children, location, match: contextMath, ...routeTransitionProps } = this.props;
 
     return (
-      <RouteTransition
-        {...routeTransitionProps}
-      >
+      <RouteTransition {...routeTransitionProps}>
         <Switch key={this.state.key} location={location}>
           {children}
         </Switch>
@@ -72,13 +72,4 @@ class AnimatedSwitch extends React.Component {
   }
 }
 
-// inject location as a prop so we can listen for changes
-const RouteWrapper = props => (
-  <Route
-    children={({ location, history }) => (
-      <AnimatedSwitch location={location} history={history} {...props} />
-    )}
-  />
-);
-
-export default RouteWrapper;
+export default withRouter(AnimatedSwitch);

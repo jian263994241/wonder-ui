@@ -6,6 +6,7 @@ import { withRouter, Route, Redirect } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { WUI_pages } from './styles';
 import Utils from '../../utils/utils';
+import { pageTransitionDuration } from './keyframes';
 
 class Pages extends Component {
 
@@ -21,11 +22,48 @@ class Pages extends Component {
     fallback: ()=> <div>Loading...</div>
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if(nextState.locationState != this.state.locationState){
+      return true;
+    }
+    return false;
+  }
+
+  lock = (fn)=>{
+
+    let locked = false;
+    return (...arg)=>{
+      if(!locked){
+        locked = true;
+        fn(...arg);
+        setTimeout(()=>{ locked = null }, 100);
+      }
+    };
+  }
+
+  state = {
+    locationState: 'POP',
+  }
+
+  componentDidMount() {
+    const app = this.context;    
+    this._isMounted = true;
+    const throttled = this.lock((location)=>{
+      if(this._isMounted){
+        this.setState({ locationState: location.action })
+      }
+    })
+    app.on('routeChange', throttled);
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
+  }
+
   static contextType = appContext;
 
   renderRoutes = ()=>{
     const { history, routes, fallback } = this.props;
-    const app = this.context;
 
     return routes.map(({ component: _component, async, redirect, ...rest }, i)=>{
         
@@ -33,12 +71,7 @@ class Pages extends Component {
       
         if(async){
           Component = loadable(
-            () => new Promise((resolve, reject) => {
-              const unblock = history.block();
-              const $resolve = (...arg)=> { unblock(); resolve(...arg) }
-              const $reject = (...arg)=>{ unblock(); reject(...arg) }
-              async(history, $resolve, $reject)
-            })
+            () => new Promise((resolve, reject) => async(history, resolve, reject))
           );
         }
 
@@ -48,12 +81,10 @@ class Pages extends Component {
 
         if(typeof redirect === 'function'){
           Component = loadable(
-            ()=> new Promise((resolve, reject) => {
-              const unblock = history.block();
-              const $resolve = (...arg)=> { unblock(); resolve(...arg) }
-              const $reject = (...arg)=>{ unblock(); reject(...arg) }
-              redirect(history, $resolve, $reject);
-            }).then((url, props)=> () => <Redirect to={url} {...props}/> )
+            ()=> new Promise(
+              (resolve, reject) => redirect(history, resolve, reject)
+            )
+            .then((url, props)=> () => <Redirect to={url} {...props}/> )
           )
         }
 
@@ -61,26 +92,26 @@ class Pages extends Component {
           if(Component.default){
             Component = Component.default;
           }
-
+          
           return (
             <Route 
+              {...rest}
               key={`route_${i}`}
               render={(props)=> {
                 const { location, match } = props;
-                const query = Utils.parseUrlQuery(location.search);
-                const urlParams = Utils.extend({}, query, match.params);
+                const urlQuery = Utils.parseUrlQuery(location.search);
                 return (
                   <div>
                     <Component 
-                      {...urlParams} 
-                      {...props} 
-                      app={app} 
-                      fallback={createElement(fallback, {location, match})} 
+                      exact
+                      strict
+                      query={urlQuery}
+                      fallback={createElement(fallback, {location, match})}
+                      {...props}
                     />
                   </div>
                 )
               }}
-              {...rest} 
             />
           )
         }
@@ -94,11 +125,11 @@ class Pages extends Component {
       noAnimation
     } = this.props;
 
-    const { action, location } = history;
+    const { location } = history;
 
-    const key = location.pathname;
+    const { locationState: action } = this.state;
 
-    const state = location.state || {};
+    const state = location.state || {};    
 
     const animationType = (()=>{
       if(noAnimation || state.nested === 0){
@@ -118,16 +149,17 @@ class Pages extends Component {
       (animationType != 'backward'&& animationType!=null) ? 'router-transition-forward': ''
     )
 
-    const timeout = cls === '' ? 0 : 400;
-
+    const timeout = cls === '' ? 0 : pageTransitionDuration;
+  
     return (
-      <WUI_pages
-        as={AnimatedSwitch}
-        timeout={timeout}
-        classNames="slide"
-        children={this.renderRoutes()}
-        className={cls}
-      />
+      <WUI_pages 
+        as={AnimatedSwitch} 
+        timeout={timeout} 
+        classNames="slide" 
+        className={cls} 
+      >
+        {this.renderRoutes()}
+      </WUI_pages>
     );
   }
 }

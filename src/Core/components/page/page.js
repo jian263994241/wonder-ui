@@ -9,8 +9,8 @@ export default class Page extends Component {
   static defaultProps = {
     pageContent: true,
     styledComponents: {
-      root: undefined, 
-      content: undefined
+      // root: undefined, 
+      // content: undefined
     }
   }
 
@@ -19,13 +19,13 @@ export default class Page extends Component {
   componentDidMount() {
     const app = this.context;
     const props = this.props;
-    app.emit('pageInit', app, props);
+    app.emit('pageInit', props, app.history);
   }
 
   componentWillUnmount(){
     const app = this.context;
     const props = this.props;
-    app.emit('pageRemove', app, props);
+    app.emit('pageRemove', props, app.history);
   }
 
   render(){

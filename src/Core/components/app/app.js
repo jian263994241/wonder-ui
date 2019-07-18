@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import { WUI_app, WUI_global } from './styles';
 import AppContext from './appContext';
 import { createHashHistory } from 'history';
@@ -10,7 +10,6 @@ import createTheme from '../style/createTheme';
 //modules
 import DeviceModule from '../../modules/device/device';
 import SupportModule from '../../modules/support/support';
-import RequestModule from '../../modules/request/request';
 import ResizeModule from '../../modules/resize/resize';
 import TouchModule from '../../modules/touch/touch';
 import UtilsModule from '../../modules/utils/utils';
@@ -19,7 +18,6 @@ import FastclickModule from '../../modules/fastclick/fastclick';
 AppClass.use([ 
   DeviceModule, 
   SupportModule, 
-  RequestModule, 
   ResizeModule, 
   TouchModule, 
   UtilsModule,
@@ -82,7 +80,7 @@ export default class App extends Component {
         <ThemeProvider theme={createTheme(theme)}>
           <AppContext.Provider value={this.app}> 
             <Router history={this.history}>
-            <>{children}</>
+              <Fragment>{children}</Fragment>
             </Router>
           </AppContext.Provider>
         </ThemeProvider>
