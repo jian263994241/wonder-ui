@@ -25,7 +25,7 @@ const pageFakeShadow = device.ios ? css `
   display; none;
 `
 
-const pageFakeOpacity = device.ios ? css `
+const pageFakeOpacity = css `
   position: absolute;
   left: 0;
   top: 0;
@@ -35,8 +35,6 @@ const pageFakeOpacity = device.ios ? css `
   content: '';
   opacity: 0;
   z-index: 10000;
-`: css `
-  display; none;
 `
 
 export const WUI_view = styled.div `

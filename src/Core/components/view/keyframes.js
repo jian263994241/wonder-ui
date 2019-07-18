@@ -67,7 +67,7 @@ export const pageCurrentToPrevious = iosPageCurrentToPrevious;
 
 export const pageCurrentToNext = iosPageCurrentToNext;
 
-export const pageTransitionDuration = device.ios ? 400: 330;
+export const pageTransitionDuration = device.ios ? 400: 380;
 
 export const iosPageElementFadeIn = keyframes `
   from {

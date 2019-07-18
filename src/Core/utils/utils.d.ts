@@ -48,7 +48,11 @@ export interface Utils {
   /** */
   slot: (children : array) => object
   /** */
-  noop: ( target: T ) => T
+  noop: ( target: T ) => T 
+  /** */
+  throttle: (delay: number, noTrailing: boolean, callback: (...arg:any) => any, debounceMode: boolean) => (...arg:any) => any
+  /** */
+  debounce: (delay: number, atBegin: boolean, callback: (...arg:any) => any) => (...arg:any) => any
 }
 
 declare const Utils : Utils;
