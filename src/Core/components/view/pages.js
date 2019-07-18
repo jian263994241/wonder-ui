@@ -7,6 +7,9 @@ import loadable from '@loadable/component';
 import { WUI_pages } from './styles';
 import Utils from '../../utils/utils';
 import { pageTransitionDuration } from './keyframes';
+import { log } from 'util';
+
+
 
 class Pages extends Component {
 
@@ -21,6 +24,8 @@ class Pages extends Component {
     routes: [],
     fallback: ()=> <div>Loading...</div>
   }
+
+  static contextType = appContext;
 
   shouldComponentUpdate(nextProps, nextState) {
     if(nextState.locationState != this.state.locationState){
@@ -60,8 +65,6 @@ class Pages extends Component {
     this._isMounted = false;
   }
 
-  static contextType = appContext;
-
   renderRoutes = ()=>{
     const { history, routes, fallback } = this.props;
 
@@ -100,6 +103,7 @@ class Pages extends Component {
               render={(props)=> {
                 const { location, match } = props;
                 const urlQuery = Utils.parseUrlQuery(location.search);
+
                 return (
                   <div>
                     <Component 

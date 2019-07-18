@@ -16,7 +16,11 @@ export const WUI_page = styled.div `
 const iosScrollTouch = css `
   -webkit-overflow-scrolling: touch;
 `
-export const WUI_pageContent = styled(({iosScrollTouch, ...props})=> <div {...props}/>) `
+export const WUI_pageContent = styled(
+  React.forwardRef(
+    ({iosScrollTouch, ...props}, ref)=> <div {...props} ref={ref}/>
+  )) 
+`
   box-sizing: border-box;
   width: 100%;
   height: 100%;

@@ -6,6 +6,9 @@ export default React.memo(function RouteTransition(props){
 
   const { className, classNames, children, timeout, wrapperComponent = 'div', ...rest } = props;
 
+  console.log(children);
+  
+
   return (
     <TransitionGroup
       className={className}

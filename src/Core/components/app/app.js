@@ -14,6 +14,7 @@ import ResizeModule from '../../modules/resize/resize';
 import TouchModule from '../../modules/touch/touch';
 import UtilsModule from '../../modules/utils/utils';
 import FastclickModule from '../../modules/fastclick/fastclick';
+import CacheModule from '../../modules/cache/cache';
 
 AppClass.use([ 
   DeviceModule, 
@@ -21,7 +22,8 @@ AppClass.use([
   ResizeModule, 
   TouchModule, 
   UtilsModule,
-  FastclickModule
+  FastclickModule,
+  CacheModule
 ]);
 
 export default class App extends Component {

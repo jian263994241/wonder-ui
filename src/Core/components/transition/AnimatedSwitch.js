@@ -60,7 +60,7 @@ class AnimatedSwitch extends React.Component {
   }
 
   render() {
-    const { children, location, match: contextMath, ...routeTransitionProps } = this.props;
+    const { children, location, ...routeTransitionProps } = this.props;
 
     return (
       <RouteTransition {...routeTransitionProps}>
