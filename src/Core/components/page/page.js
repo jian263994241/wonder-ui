@@ -17,7 +17,8 @@ export default class Page extends Component {
     store: {
       pageInit: ()=>{},
       pageRemove: ()=>{},
-    }
+    },
+    onScroll: ()=>{}
   }
 
   static contextType = appContext;
@@ -73,7 +74,9 @@ export default class Page extends Component {
   }
 
   handleScroll = (e)=>{
+    const { onScroll } = this.props;
     this.cached.scrollTop = e.currentTarget.scrollTop; 
+    onScroll(e);
   }
 
   render(){

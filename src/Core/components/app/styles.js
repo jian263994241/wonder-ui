@@ -44,6 +44,11 @@ export const WUI_global = createGlobalStyle `
     outline: 0;
   }
 
+  button {
+    appearance: none;
+    width: 100%;
+  }
+
   a {
     text-decoration: none;
     color: #5399ED;
