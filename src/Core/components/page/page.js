@@ -41,7 +41,7 @@ export default class Page extends Component {
 
   componentDidMount() {
     const app = this.context;
-    const { store } = this.props;
+    const { store, name } = this.props;
 
     this._mounted = true;
     if(this.contentRef.current){
@@ -50,7 +50,7 @@ export default class Page extends Component {
 
     store.pageInit && store.pageInit(this.cached.data);
 
-    app.emit('pageInit', this.props, app.history);
+    name && app.emit('pageInit', this.props, app.history);
   }
 
   shouldComponentUpdate(){
@@ -59,7 +59,7 @@ export default class Page extends Component {
 
   componentWillUnmount(){
     const app = this.context;
-    const { store, cacheKey } = this.props;
+    const { store, cacheKey, name } = this.props;
 
     if(cacheKey){
       this.cached.children = this.slots.main;
@@ -70,7 +70,7 @@ export default class Page extends Component {
     }
 
     this._mounted = false;
-    app.emit('pageRemove',  this.props, app.history);
+    name && app.emit('pageRemove',  this.props, app.history);
   }
 
   handleScroll = (e)=>{
