@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css, withTheme } from 'styled-components';
 
-export const WUI_page = styled.div `
+export const WUI_page_root = styled.div `
   box-sizing: border-box;
   position: absolute;
   left: 0;
@@ -16,9 +16,9 @@ export const WUI_page = styled.div `
 const iosScrollTouch = css `
   -webkit-overflow-scrolling: touch;
 `
-export const WUI_pageContent = styled(
+export const WUI_page_content = styled(
   React.forwardRef(
-    ({iosScrollTouch, ...props}, ref)=> <div {...props} ref={ref}/>
+    ({iosScrollTouch, ...props}, ref)=> <main {...props} ref={ref}/>
   )) 
 `
   box-sizing: border-box;
@@ -45,6 +45,6 @@ export const WUI_pageContent = styled(
     }
   }
 `
-WUI_pageContent.defaultProps = {
+WUI_page_content.defaultProps = {
   iosScrollTouch: true
 }

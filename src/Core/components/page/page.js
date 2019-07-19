@@ -1,5 +1,5 @@
 import React, { Component, Children } from 'react';
-import { WUI_page, WUI_pageContent } from './styles';
+import { WUI_page_root, WUI_page_content } from './styles';
 import appContext from '../app/appContext';
 import Utils from '../../utils/utils';
 import styledComponents from '../style/styledComponents';
@@ -7,8 +7,8 @@ import styledComponents from '../style/styledComponents';
 export default class Page extends Component {
 
   static styledComponents = {
-    Root: WUI_page,
-    PageContent: WUI_pageContent
+    Root: WUI_page_root,
+    PageContent: WUI_page_content
   }
 
   static defaultProps = {

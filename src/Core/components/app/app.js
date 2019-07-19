@@ -1,4 +1,4 @@
-import React, {Component, Fragment, useEffect, useContext} from 'react';
+import React, {useEffect} from 'react';
 import { WUI_app, WUI_global } from './styles';
 import AppContext from './appContext';
 import { createHashHistory } from 'history';
@@ -55,16 +55,24 @@ export default function App ({
 
   })
 
+  const _theme = createTheme(theme);
+
+  console.log(_theme);
+  
+
+
   return (
     <WUI_app ref={rootRef}>
       <WUI_global/>
-      <ThemeProvider theme={createTheme(theme)}>
+      
         <AppContext.Provider value={app}> 
           <Router history={app.history}>
-            <Fragment>{children}</Fragment>
+          <ThemeProvider theme={{ mode: 'a'}}>
+            {children}
+            </ThemeProvider>
           </Router>
         </AppContext.Provider>
-      </ThemeProvider>
+    
     </WUI_app>
   );
 }

@@ -1,6 +1,11 @@
 import Utils from '../../utils/utils';
+import theme from 'styled-theming';
+import * as a from 'styled-components';
 
-export default function createTheme (theme) {
+console.log(a);
+
+
+export default function createTheme (customTheme) {
 
   const defaultTheme = {
     colors: {
@@ -22,5 +27,5 @@ export default function createTheme (theme) {
     }
   };
 
-  return Utils.extend({}, defaultTheme, theme);
+  return theme('default', Utils.extend({}, defaultTheme, customTheme));
 }
