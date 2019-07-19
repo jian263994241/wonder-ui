@@ -13,7 +13,11 @@ export default class Page extends Component {
 
   static defaultProps = {
     pageContent: true,
-    styledComponents: {}
+    styledComponents: {},
+    store: {
+      pageInit: ()=>{},
+      pageRemove: ()=>{},
+    }
   }
 
   static contextType = appContext;
@@ -23,11 +27,12 @@ export default class Page extends Component {
   cached = {
     // scrollTop,
     // children
+    // data
   }
 
   componentWillMount() {
     const app = this.context;
-    const cacheKey = this.props.cacheKey;
+    const { cacheKey } = this.props;
     this.cached = cacheKey ? app.getCache(cacheKey, {}) : {} ;
     this.contentRef = React.createRef();
   }
@@ -35,13 +40,16 @@ export default class Page extends Component {
 
   componentDidMount() {
     const app = this.context;
-    const props = this.props;
+    const { store } = this.props;
+
     this._mounted = true;
     if(this.contentRef.current){
       this.contentRef.current.scrollTop = this.cached.scrollTop || 0;
     }
 
-    app.emit('pageInit', props, app.history);
+    store.pageInit && store.pageInit(this.cached.data);
+
+    app.emit('pageInit', this.props, app.history);
   }
 
   shouldComponentUpdate(){
@@ -50,16 +58,18 @@ export default class Page extends Component {
 
   componentWillUnmount(){
     const app = this.context;
-    const props = this.props;
-    const cacheKey = this.props.cacheKey;
+    const { store, cacheKey } = this.props;
 
     if(cacheKey){
       this.cached.children = this.slots.main;
+      if(store.pageRemove) {
+        this.cached.data = store.pageRemove()
+      }
       app.updateCache(cacheKey, this.cached);
     }
 
     this._mounted = false;
-    app.emit('pageRemove', props, app.history);
+    app.emit('pageRemove',  this.props, app.history);
   }
 
   handleScroll = (e)=>{
