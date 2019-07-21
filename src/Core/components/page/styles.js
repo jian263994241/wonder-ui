@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css, withTheme } from 'styled-components';
+import styled from 'styled-components';
 
 export const WUI_page_root = styled.div `
   box-sizing: border-box;
@@ -12,15 +12,7 @@ export const WUI_page_root = styled.div `
   z-index: 10;
 `
 
-
-const iosScrollTouch = css `
-  -webkit-overflow-scrolling: touch;
-`
-export const WUI_page_content = styled(
-  React.forwardRef(
-    ({iosScrollTouch, ...props}, ref)=> <main {...props} ref={ref}/>
-  )) 
-`
+export const WUI_page_content = styled.div `
   box-sizing: border-box;
   width: 100%;
   height: 100%;
@@ -28,7 +20,7 @@ export const WUI_page_content = styled(
   z-index: 1;
   overflow: auto;
   will-change: scroll-position;
-  ${ props => props.iosScrollTouch && iosScrollTouch }
+  -webkit-overflow-scrolling: touch;
 
   html.device-ios & {
     &::before{
@@ -45,6 +37,4 @@ export const WUI_page_content = styled(
     }
   }
 `
-WUI_page_content.defaultProps = {
-  iosScrollTouch: true
-}
+

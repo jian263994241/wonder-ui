@@ -5,8 +5,6 @@ import { createHashHistory } from 'history';
 import { Router } from 'react-router-dom';
 import AppClass from '../../utils/class';
 import utils from '../../utils/utils';
-import { ThemeProvider } from 'styled-components';
-import createTheme from '../style/createTheme';
 //modules
 import DeviceModule from '../../modules/device/device';
 import SupportModule from '../../modules/support/support';
@@ -14,9 +12,8 @@ import ResizeModule from '../../modules/resize/resize';
 import TouchModule from '../../modules/touch/touch';
 import UtilsModule from '../../modules/utils/utils';
 import FastclickModule from '../../modules/fastclick/fastclick';
-import CacheModule from '../../modules/cache/cache';
 
-AppClass.use([ DeviceModule, SupportModule, ResizeModule, TouchModule, UtilsModule, FastclickModule, CacheModule ]);
+AppClass.use([ DeviceModule, SupportModule, ResizeModule, TouchModule, UtilsModule, FastclickModule ]);
 
 export default function App ({
   params =  {},
@@ -43,7 +40,7 @@ export default function App ({
       app.emit('routeChange', {location, action})
     });
 
-    app.root = React.createRef().current;
+    app.root = rootRef.current;
 
     app.useModules();
     
@@ -53,26 +50,16 @@ export default function App ({
       _unlisten();
     }
 
-  })
-
-  const _theme = createTheme(theme);
-
-  console.log(_theme);
-  
-
+  });
 
   return (
-    <WUI_app ref={rootRef}>
-      <WUI_global/>
-      
-        <AppContext.Provider value={app}> 
+    <AppContext.Provider value={app}> 
+      <WUI_app ref={rootRef}>
+        <WUI_global/>
           <Router history={app.history}>
-          <ThemeProvider theme={{ mode: 'a'}}>
-            {children}
-            </ThemeProvider>
+          {children}
           </Router>
-        </AppContext.Provider>
-    
-    </WUI_app>
+      </WUI_app>
+    </AppContext.Provider>
   );
 }

@@ -1,7 +1,7 @@
 import App from './components/app/app';
 import View from './components/view/view';
-import Pages from './components/view/pages';
 import Page from './components/page/page';
+import theme from './components/theme';
 import { Link, matchPath, withRouter } from 'react-router-dom';
 
 import AppContext from './components/app/appContext';
@@ -11,11 +11,11 @@ import Request from './utils/request';
 import Utils from './utils/utils';
 import Events from './utils/events';
 
+
 export { 
   App, 
   AppContext,
   View, 
-  Pages, 
   Page, 
   Link, 
   matchPath, 
@@ -24,5 +24,6 @@ export {
   Support,
   Request,
   Utils,
-  Events
+  Events,
+  theme
 }

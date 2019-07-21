@@ -7,6 +7,7 @@ export default class ButtonsDemo extends Component {
 
   render (){
     console.log('button render');
+    
     return (
       <Page>
         <BlockTitle>按钮</BlockTitle>
