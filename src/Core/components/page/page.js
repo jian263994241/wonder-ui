@@ -5,7 +5,7 @@ import Utils from '../../utils/utils';
 import $ from 'dom7';
 
 
-const Page = React.forwardRef(({classes = {}, styles={}, name, pageContent, children, ...rest }, ref)=>{
+const Page = React.forwardRef(({classes = {}, styles={}, name, pageContent = true, children, ...rest }, ref)=>{
   const app = React.useContext(appContext);
   const childrenArray = Children.toArray(children);
   const slots = Utils.slot(childrenArray); 
