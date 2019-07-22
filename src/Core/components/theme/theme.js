@@ -25,10 +25,10 @@ const toolbar = {
 
 };
 
-
-
-export {
+const defaultTheme = {
   colors,
   appbar,
-  toolbar
+  toolbar,
 }
+
+export default defaultTheme;

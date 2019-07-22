@@ -18,9 +18,8 @@ AppClass.use([ DeviceModule, SupportModule, ResizeModule, TouchModule, UtilsModu
 export default function App ({
   params =  {},
   history,
-  theme = {},
   children
-}, ref){
+}){
   const defaultParmas = {
     touch: { fastClicks: true },
     routes: [],
@@ -36,19 +35,11 @@ export default function App ({
 
   useEffect(()=>{
 
-    const _unlisten = app.history.listen((location, action)=> {
-      app.emit('routeChange', {location, action})
-    });
-
     app.root = rootRef.current;
 
     app.useModules();
     
     app.emit('init'); 
-
-    return ()=>{
-      _unlisten();
-    }
 
   });
 

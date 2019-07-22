@@ -1,13 +1,12 @@
-import React, { Component, createElement } from 'react';
-import PropTypes from 'prop-types';
+import React, { createElement } from 'react';
 import AnimatedSwitch from '../transition/AnimatedSwitch';
-import appContext from '../app/appContext';
-import { withRouter, Route, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { WUI_pages } from './styles';
 import Utils from '../../utils/utils';
 import { pageTransitionDuration } from './keyframes';
 
+const anitmieState = {};
 
 const PageSwitch = React.memo(({ history, location, action, noAnimation, routes = [], fallback }) => {
   const { state =  {} } = location;
@@ -36,12 +35,24 @@ const PageSwitch = React.memo(({ history, location, action, noAnimation, routes 
 
   const timeout = cls === '' ? 0 : pageTransitionDuration;
 
+  
+
+  const setRouteAniState = (element, state)=> {
+    element.setAttribute('ani-state', state);
+  }
+
   return (
     <WUI_pages 
       as={AnimatedSwitch} 
       timeout={timeout} 
       classNames="slide" 
       className={cls} 
+      onEnter={(element)=> setRouteAniState(element, 'enter')}
+      onEntering={(element)=> setRouteAniState(element, 'entering')}
+      onEntered={(element)=> setRouteAniState(element, 'entered')}
+      onExit={(element)=> setRouteAniState(element, 'exit')}
+      onExiting={(element)=> setRouteAniState(element, 'exiting')}
+      onExited={(element)=> setRouteAniState(element, 'exited')}
     >
       {
         routes.map(({ component: _component, async, redirect, ...rest }, i)=>{
@@ -79,9 +90,8 @@ const PageSwitch = React.memo(({ history, location, action, noAnimation, routes 
                   render={(props)=> {
                     const { location, match } = props;
                     const urlQuery = Utils.parseUrlQuery(location.search);
-    
                     return (
-                      <div>
+                      <div className="router-transition-stage">
                         <Component 
                           exact
                           strict

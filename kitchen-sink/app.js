@@ -4,9 +4,11 @@ import {View, App} from '@wonder-ui/core';
 
 const params = {
   on: {
-    pageInit: (app, props)=>{
-      if(props.name){
-        document.title = props.name;
+    pageInit: (name, props)=>{
+      console.log(name);
+      
+      if(name){
+        document.title = name;
       }
     }
   },
