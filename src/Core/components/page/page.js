@@ -36,7 +36,7 @@ const Page = React.forwardRef(({classes = {}, styles={}, name, pageContent = tru
         pageContent ? (
           <WUI_page_content 
             className={classes.content}
-            css={styles.context}
+            css={styles.content}
           >{ slots.main }</WUI_page_content>
         ) : slots.main
       }
