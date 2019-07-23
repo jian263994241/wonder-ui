@@ -37,8 +37,6 @@
     "zscroller": "^0.4.8"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.3",
-    "@loadable/babel-plugin": "^5.10.0",
     "ale-cli": "^0.1.2",
     "ale-webpack": "^1.1.19",
     "babel-plugin-styled-components": "^1.10.6",

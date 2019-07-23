@@ -4,9 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { WUI_pages } from './styles';
 import Utils from '../../utils/utils';
-import { pageTransitionDuration } from './keyframes';
-
-const anitmieState = {};
+import { pageTransitionDuration } from '../styles/keyframes';
 
 const PageSwitch = React.memo(({ history, location, action, noAnimation, routes = [], fallback }) => {
   const { state =  {} } = location;
@@ -33,7 +31,7 @@ const PageSwitch = React.memo(({ history, location, action, noAnimation, routes 
     (animationType != 'backward'&& animationType!=null) ? 'router-transition-forward': ''
   )
 
-  const timeout = cls === '' ? 0 : pageTransitionDuration;
+  const timeout = cls === '' ? 0 : {enter: pageTransitionDuration, exit: pageTransitionDuration - 30};
 
   
 

@@ -9,7 +9,7 @@ import {
   pageTransitionDuration,
   iosPageElementFadeIn,
   iosPageElementFadeOut
-} from './keyframes';
+} from '../styles/keyframes';
 
 const pageFakeShadow = device.ios ? css `
   position: absolute;
@@ -54,11 +54,11 @@ export const WUI_pages = styled.div `
   height: 100%;
   overflow: hidden;
   background: transparent;
-  > div {
+  > .router-transition-stage {
     width: 100%;
     height: 100%;
-    background: #fff;
-    position: absolute;
+    background: ${props=>props.theme.page.backgroundColor};
+    position: fixed;
   }
 
   &.router-transition-forward{
@@ -131,3 +131,4 @@ export const WUI_pages = styled.div `
     }
   }
 `
+

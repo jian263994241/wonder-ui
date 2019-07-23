@@ -1,9 +1,9 @@
 import React from 'react';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 import CSSTransition from 'react-transition-group/CSSTransition';
-import { log } from 'util';
+import PropTypes from 'prop-types';
 
-export default React.memo(function RouteTransition(props){
+const RouteTransition = React.memo((props)=>{
 
   const { className, classNames, children, timeout, wrapperComponent = 'div', ...rest } = props;
 
@@ -23,3 +23,17 @@ export default React.memo(function RouteTransition(props){
     </TransitionGroup>
   )
 });
+
+RouteTransition.propTypes = {
+  classNames: PropTypes.string,
+  className: PropTypes.string,
+  children: PropTypes.element,
+  wrapperComponent: PropTypes.string,
+  timeout: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.shape({ enter: PropTypes.number, exit: PropTypes.number }),
+  ]),
+};
+
+export default RouteTransition;
+

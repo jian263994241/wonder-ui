@@ -17,6 +17,10 @@ const colors = {
   black: '#000000'
 };
 
+const page = {
+  backgroundColor: '#f2f2f2',
+}
+
 const appbar = {
 
 };
@@ -29,6 +33,7 @@ const defaultTheme = {
   colors,
   appbar,
   toolbar,
+  page
 }
 
 export default defaultTheme;

@@ -23,7 +23,6 @@ module.exports = {
     },
     babel(options) {
       options.plugins = [
-        '@loadable/babel-plugin',
         ['styled-components', { displayName: true, fileName: false }]
       ];
       return options;

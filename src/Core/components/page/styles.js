@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 export const WUI_page_root = styled.div `
@@ -8,7 +7,7 @@ export const WUI_page_root = styled.div `
   top: 0;
   width: 100%;
   height: 100%;
-  background: #F2F2F2;
+  background: ${props=>props.theme.page.backgroundColor};
   z-index: 10;
 `
 

@@ -1,10 +1,14 @@
 import styled, { createGlobalStyle } from 'styled-components';
 
 export const WUI_global = createGlobalStyle `
-  html, body, .root{
+  html, body, #root{
     height: 100%;
     width: 100%;
+  }
+  #root {
     overflow: hidden;
+    position: relative; 
+    z-index: 1;
   }
   body {
     font-family: PingFang SC ,PingHei, DroidSansFallback, Hiragino Sans GB, STHeiti, Roboto, Noto, Helvetica Neue, Helvetica, Arial, SimSun, sans-serif;
