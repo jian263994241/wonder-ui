@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { WUI_preloader, WUI_poreloader_overlay, WUI_preloader_root } from './styles';
 import SvgIcon from '../svgIcon/svgIcon';
-import $ from 'dom7';
 
 const stage = document.createElement('div');
 
@@ -35,23 +34,21 @@ const Preloader = React.forwardRef((props, ref)=>{
 
   const {
     indicator: Indicator = indicator,
-    container = 'body',
+    container = document.body,
     color = '#fff',
     navbarHeight = 0
   } = props;
 
   return ReactDOM.createPortal(
     <>
-      <WUI_poreloader_overlay
-        onTouchMove={e=>e.preventDefault()}
-      />
-      <WUI_preloader_root navbarHeight={navbarHeight}>
+      <WUI_poreloader_overlay onTouchMove={e=>e.preventDefault()} />
+      <WUI_preloader_root navbarHeight={navbarHeight} ref={ref}>
         <WUI_preloader>
           <Indicator color={color}/>
         </WUI_preloader>
       </WUI_preloader_root>
     </>,
-    $(container)[0]
+    container
   )
 })
 

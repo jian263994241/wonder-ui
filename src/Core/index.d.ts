@@ -4,7 +4,7 @@ import Page from './components/page/page';
 import Preloader from './components/preloader/preloader';
 import theme from './components/theme/theme';
 import request from './components/request/request';
-
+import device from './components/device/device';
 
 import { Link, Route, matchPath, withRouter } from 'react-router-dom';
 
@@ -19,6 +19,7 @@ export {
   Page, 
   Link, 
   Preloader,
+  device,
   matchPath, 
   withRouter,
   request,
