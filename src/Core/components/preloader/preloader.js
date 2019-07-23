@@ -16,7 +16,7 @@ const Preloader = React.forwardRef((props, ref)=>{
   return ReactDOM.createPortal(
     <>
       <WUI_poreloader_overlay onTouchMove={e=>e.preventDefault()} />    
-      <WUI_preloader_root navbarHeight={navbarHeight} ref={ref}>
+      <WUI_preloader_root navbarHeight={navbarHeight}>
         <WUI_preloader>
           <Indicator color={color}/>
         </WUI_preloader>
