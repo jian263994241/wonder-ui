@@ -154,5 +154,5 @@ const Device = (function Device() {
   return device;
 }());
 
-
 export default Device;
+

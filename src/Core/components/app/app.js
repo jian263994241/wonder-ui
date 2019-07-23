@@ -5,15 +5,15 @@ import { createHashHistory } from 'history';
 import { Router } from 'react-router-dom';
 import AppClass from '../../utils/class';
 import utils from '../../utils/utils';
+
 //modules
 import DeviceModule from '../../modules/device/device';
 import SupportModule from '../../modules/support/support';
 import ResizeModule from '../../modules/resize/resize';
 import TouchModule from '../../modules/touch/touch';
 import UtilsModule from '../../modules/utils/utils';
-import FastclickModule from '../../modules/fastclick/fastclick';
 
-AppClass.use([ DeviceModule, SupportModule, ResizeModule, TouchModule, UtilsModule, FastclickModule ]);
+AppClass.use([ DeviceModule, SupportModule, ResizeModule, TouchModule, UtilsModule ]);
 
 export default function App ({
   params =  {},
@@ -35,13 +35,14 @@ export default function App ({
 
   useEffect(()=>{
 
+
     app.root = rootRef.current;
 
     app.useModules();
     
     app.emit('init'); 
 
-  });
+  }, []);
 
   return (
     <AppContext.Provider value={app}> 
