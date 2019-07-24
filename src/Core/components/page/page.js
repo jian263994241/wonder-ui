@@ -21,21 +21,22 @@ const Page = withRouter(React.memo((props)=>{
   const slots = Utils.slot(childrenArray); 
   const root = React.useRef(null);
   const router = React.useContext(__RouterContext);
-  const pathname = match.url;
+  const pathname = location.pathname;
 
   React.useEffect(()=>{
 
-    // const aniState = $(root.current).parent('.router-transition-stage').attr('ani-state');
+    const aniState = $(root.current).parent('.router-transition-stage').attr('ani-state');
 
-    // if(!['exit', 'exiting', 'exited'].includes(aniState)){
-    //   app.emit('pageInit', name, rest);
-    // }
-
-    app.emit('pageInit', name, rest);
-    
+    if(!['exit', 'exiting', 'exited'].includes(aniState)){
+      if(pathname === match.url){
+        app.emit('pageInit', name, rest);
+      }
+    }
     
     return ()=>{
-      app.emit('pageRemove', name, rest);
+      if(pathname === match.url){
+        app.emit('pageRemove', name, rest);
+      }
     }
   }, [name, pathname])
 

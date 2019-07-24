@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import device from '../../utils/device';
+import AnimatedSwitch from '../transition/AnimatedSwitch';
 
 import {
   pageNextToCurrent,
@@ -37,18 +38,7 @@ const pageFakeOpacity = css `
   z-index: 10000;
 `
 
-export const WUI_view = styled.div `
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  box-sizing: border-box;
-  z-index: 10;
-  top: 0;
-  left: 0;
-`
-
-export const WUI_pages = styled.div `
+export const WUI_pages = styled(AnimatedSwitch) `
   position: absolute;
   width: 100%;
   height: 100%;
@@ -56,15 +46,11 @@ export const WUI_pages = styled.div `
   background: transparent;
   z-index: 1;
 
-  &.main{
-    z-index: 2;
-  }
-
   > .router-transition-stage {
     width: 100%;
     height: 100%;
     background: ${props=>props.theme.page.backgroundColor};
-    position: fixed;
+    position: absolute;
   }
 
   &.router-transition-forward{
@@ -138,3 +124,84 @@ export const WUI_pages = styled.div `
   }
 `
 
+export const WUI_view = styled.div `
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  z-index: 10;
+  top: 0;
+  left: 0;
+
+  .previous-enter {
+    z-index: 1;
+  }
+  .previous-enter-active {
+    animation: ${pagePreviousToCurrent} ${pageTransitionDuration}ms forwards;
+    &:after {
+      ${pageFakeOpacity}
+      animation: ${iosPageElementFadeOut} ${pageTransitionDuration}ms forwards;
+    }
+  }
+
+  .previous-enter-done {
+    z-index: 2;
+    will-change: transform;
+  }
+
+  .previous-exit {
+    z-index: 1;
+  }
+
+  .previous-exit-active {
+    animation: ${pageCurrentToPrevious} ${pageTransitionDuration}ms forwards;
+    &:after {
+      ${pageFakeOpacity}
+      animation: ${iosPageElementFadeIn} ${pageTransitionDuration}ms forwards;
+    }
+  }
+
+  .previous-exit-done{
+    display: none;
+  }
+
+  .next-enter {
+    z-index: 3!important;
+  }
+  .next-enter-active{
+    z-index: 3!important;
+  }
+
+  .next-enter-done{
+    ${'' /* z-index: 2; */}
+  }
+
+  .next-exit {
+    z-index: 3!important;
+  }
+  .next-exit-active{
+    z-index: 3!important;
+  }
+
+  .next-exit-done{
+    ${'' /* z-index: 1; */}
+  }
+
+  ${WUI_pages} {
+    
+  }
+
+  ${WUI_pages}.current {
+    z-index: 2;
+  }
+
+  ${WUI_pages}.previous {
+    z-index: 1;
+  }
+
+  ${WUI_pages}.next {
+    z-index: 1;
+  }
+
+`

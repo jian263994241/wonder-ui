@@ -23,22 +23,26 @@ const params = {
     },
     {
       path: '/index', 
-      component: require('./pages/Welcome')
+      component: require('./pages/Welcome'),
+      routes: [
+        {
+          path: '/index/citys', 
+          async: (history, resolve, reject)=>{
+            setTimeout(()=>{
+              resolve(import('./pages/Citys'))
+            }, 1000)
+          }
+        },
+        {
+          path: '/index/picker', 
+          async: (history, resolve, reject)=>{
+            resolve(import('./pages/Picker'))
+          }
+        },
+      ]
     },
-    {
-      path: '/citys', 
-      async: (history, resolve, reject)=>{
-        setTimeout(()=>{
-          resolve(import('./pages/Citys'))
-        }, 1000)
-      }
-    },
-    {
-      path: '/picker', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/Picker'))
-      }
-    },
+    
+    
     {
       path: '/countdown', 
       async: (history, resolve, reject)=>{
