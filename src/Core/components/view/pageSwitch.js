@@ -1,86 +1,124 @@
-import React, { createElement } from 'react';
+import React from 'react';
 import AnimatedSwitch from '../transition/AnimatedSwitch';
-import { Route, Redirect } from 'react-router-dom';
-import loadable from '@loadable/component';
+import { Route, matchPath } from 'react-router-dom';
 import { WUI_pages } from './styles';
 import Utils from '../../utils/utils';
 import { pageTransitionDuration } from '../styles/keyframes';
+import { getComponents} from './utils';
 
-const PageSwitch = React.memo(({ history, location, action, noAnimation, routes = [], fallback }) => {
-  const { state =  {} } = location;
+const AnimatedSwitchPages = WUI_pages.withComponent(AnimatedSwitch);
+
+const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fallback }) => {
+  const { state =  {}, pathname } = location;
   const [animationType, setAnimationType] = React.useState(null);
+  const [mainView, setMainView] = React.useState('main');
+  const nested = state.nested;
 
-  const _setAnimationType = ()=>{
-    if(noAnimation || state.nested === 0){
+  React.useEffect(() => {
+    if(noAnimation || nested === 0){
       setAnimationType(null);
     }
-    if(action === 'POP' || state.nested === -1){
+    if(action === 'POP' || nested === -1){
       setAnimationType('backward');
     }
-    if(action === 'PUSH'|| action === 'REPLACE' || state.nested === 1){
+    if(action === 'PUSH'|| action === 'REPLACE' || nested === 1){
       setAnimationType('forward');
     }
-  }
-
-  React.useLayoutEffect(()=>{
-    _setAnimationType()
-  })
+  }, [action, noAnimation])
 
   const cls = Utils.classnames(
-    (animationType === 'backward' && animationType!=null) ? 'router-transition-backward': '',
-    (animationType != 'backward'&& animationType!=null) ? 'router-transition-forward': ''
+    animationType === 'backward' ? 'router-transition-backward': '',
+    animationType === 'forward' ? 'router-transition-forward': '',
   )
 
   const timeout = cls === '' ? 0 : {enter: pageTransitionDuration, exit: pageTransitionDuration - 30};
 
-  
-
   const setRouteAniState = (element, state)=> {
-    element.setAttribute('ani-state', state);
+    element && element.setAttribute('ani-state', state);
   }
 
+  const [mainRoutes, subRoutes] = React.useMemo(() => {
+    const main = [];
+    let sub = [];
+    routes.forEach((route, i)=>{
+      const { routes, ...mainProps } = route;
+      main.push(mainProps);
+      if(routes){
+        sub = sub.concat(routes);
+      }
+    })
+    return [main, sub];
+  }, [routes]); 
+
+  const switchMain = (pathname)=>{
+    let matched;
+
+    for(let i = 0; i< mainRoutes.length; i++){
+      
+      matched = matchPath(pathname, {
+        path: mainRoutes[i].path,
+        exact: true
+      });
+
+      if(matched){
+        setTimeout(() => {
+          setMainView('main')
+        }, pageTransitionDuration);
+        return ;
+      }
+    }
+    
+    setMainView('nested');
+  }
+
+  React.useEffect(()=>{
+    switchMain(pathname);
+  }, [pathname]);
+
   return (
-    <WUI_pages 
-      as={AnimatedSwitch} 
-      timeout={timeout} 
-      classNames="slide" 
-      className={cls} 
-      onEnter={(element)=> setRouteAniState(element, 'enter')}
-      onEntering={(element)=> setRouteAniState(element, 'entering')}
-      onEntered={(element)=> setRouteAniState(element, 'entered')}
-      onExit={(element)=> setRouteAniState(element, 'exit')}
-      onExiting={(element)=> setRouteAniState(element, 'exiting')}
-      onExited={(element)=> setRouteAniState(element, 'exited')}
-    >
+    <>
       {
-        routes.map(({ component: _component, async, redirect, ...rest }, i)=>{
-        
-            let Component = _component;
-          
-            if(async){
-              Component = loadable(
-                () => new Promise((resolve, reject) => async(history, resolve, reject))
-              );
-            }
-    
-            if(typeof redirect === 'string'){
-              Component = () => <Redirect to={redirect}/>
-            }
-    
-            if(typeof redirect === 'function'){
-              Component = loadable(
-                ()=> new Promise(
-                  (resolve, reject) => redirect(history, resolve, reject)
+        mainRoutes.map(({component, async, redirect, ...rest}, i)=>{
+          let Component = getComponents({component, async, redirect});
+          return Component ? (
+            <Route 
+              {...rest}
+              key={`route_${i}`}
+              render={(props)=> {
+                const { location, match } = props;
+                const urlQuery = Utils.parseUrlQuery(location.search);
+                const isCurrent = match.url === location.pathname;
+         
+                return (
+                  <WUI_pages className={isCurrent ? 'main': ''}>
+                    <Component 
+                      query={urlQuery}
+                      fallback={fallback}
+                      {...props}
+                    />
+                  </WUI_pages>
                 )
-                .then((url, props)=> () => <Redirect to={url} {...props}/> )
-              )
-            }
-    
-            if(Component){
-              if(Component.default){
-                Component = Component.default;
-              }
-              
+              }}
+            />
+          ): null
+        })
+      }
+     
+      <AnimatedSwitchPages 
+        timeout={timeout} 
+        classNames="slide" 
+        className={Utils.classnames(cls, mainView == 'nested' ? 'main': '')} 
+        onEnter={(element)=> setRouteAniState(element, 'enter')}
+        onEntering={(element)=> setRouteAniState(element, 'entering')}
+        onEntered={(element)=> setRouteAniState(element, 'entered')}
+        onExit={(element)=> setRouteAniState(element, 'exit')}
+        onExiting={(element)=> setRouteAniState(element, 'exiting')}
+        onExited={(element)=> setRouteAniState(element, 'exited')}
+      >
+        {
+          subRoutes.map(({ component, async, redirect, ...rest }, i)=>{
+          
+              let Component = getComponents({component, async, redirect});
               return (
                 <Route 
                   {...rest}
@@ -88,13 +126,12 @@ const PageSwitch = React.memo(({ history, location, action, noAnimation, routes 
                   render={(props)=> {
                     const { location, match } = props;
                     const urlQuery = Utils.parseUrlQuery(location.search);
+                    // const isCurrent = match.url === location.pathname;
                     return (
                       <div className="router-transition-stage">
                         <Component 
-                          exact
-                          strict
                           query={urlQuery}
-                          fallback={ fallback ? createElement(fallback, {location, match}): null}
+                          fallback={fallback}
                           {...props}
                         />
                       </div>
@@ -102,11 +139,10 @@ const PageSwitch = React.memo(({ history, location, action, noAnimation, routes 
                   }}
                 />
               )
-            }
-            return null;
-        })
-      }
-    </WUI_pages>
+          })
+        }
+      </AnimatedSwitchPages>
+    </>
   );
 });
 

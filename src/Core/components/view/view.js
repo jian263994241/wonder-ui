@@ -10,7 +10,7 @@ const View =  withRouter(({history, location, ...rest}) => {
   const [action, setAction] = React.useState('PUSH');
   const { 
     routes, 
-    fallback = () => <Preloader/> 
+    fallback = <Preloader/> 
   } = app.params;
   const search = decodeURIComponent(location.search);
   const pathname = location.pathname;

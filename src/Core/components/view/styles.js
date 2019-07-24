@@ -49,11 +49,17 @@ export const WUI_view = styled.div `
 `
 
 export const WUI_pages = styled.div `
-  position: relative;
+  position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
   background: transparent;
+  z-index: 1;
+
+  &.main{
+    z-index: 2;
+  }
+
   > .router-transition-stage {
     width: 100%;
     height: 100%;
