@@ -7,7 +7,6 @@ const Switch = React.memo((props)=>{
 
   const {element, match} = React.useMemo(()=>{
     let element, match;
-
     // We use React.Children.forEach instead of React.Children.toArray().find()
     // here because toArray adds keys to all child elements and we do not want
     // to trigger an unmount/remount for two <Route>s that render the same
@@ -25,8 +24,8 @@ const Switch = React.memo((props)=>{
     });
 
     return { element, match }
-  })
-
+  }, [props.children, location.pathname])
+ 
   return match
     ? React.cloneElement(element, { location, computedMatch: match })
     : null;

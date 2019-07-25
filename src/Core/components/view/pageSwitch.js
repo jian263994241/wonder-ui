@@ -6,8 +6,26 @@ import { getComponents } from './utils';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import { duration } from '../styles/transitions';
 
+const PageWrapper = ({routeProps, ...props})=>{
+  const { children, isMain, init } = props;
+  const { location, match  } = routeProps;
+
+  if(!children) return null;
+  const urlQuery = Utils.parseUrlQuery(location.search);
+  const isCurrent = match.url === location.pathname;
+  if(isMain(isCurrent)){
+    init();
+  }
+
+  return (
+    <div className="router-transition-stage">
+      {React.cloneElement(children, {...routeProps, query: urlQuery})}
+    </div>
+  )
+}
+
 const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fallback }) => {
-  const { state =  {}, pathname } = location;
+  const { state =  {} } = location;
   const [animationType, setAnimationType] = React.useState(null);
   const [mainView, setMainView] = React.useState('main');
   const nested = state.nested;
@@ -35,6 +53,15 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
     element && element.setAttribute('ani-state', state);
   }
 
+  const eventsHandler = {
+    onEnter: (element)=> setRouteAniState(element, 'enter'),
+    onEntering: (element)=> setRouteAniState(element, 'entering'),
+    onEntered: (element)=> setRouteAniState(element, 'entered'),
+    onExit: (element)=> setRouteAniState(element, 'exit'),
+    onExiting: (element)=> setRouteAniState(element, 'exiting'),
+    onExited: (element)=> setRouteAniState(element, 'exited'),
+  }
+
   const [mainRoutes, subRoutes] = React.useMemo(() => {
     const main = [];
     let sub = [];
@@ -48,31 +75,6 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
     return [main, sub];
   }, [routes]); 
 
-  // const switchMain = (pathname)=>{
-  //   let matched;
-
-  //   for(let i = 0; i< mainRoutes.length; i++){
-      
-  //     matched = matchPath(pathname, {
-  //       path: mainRoutes[i].path,
-  //       exact: true
-  //     });
-
-  //     if(matched){
-  //       setTimeout(() => {
-  //         setMainView('main')
-  //       }, pageTransitionDuration);
-  //       return ;
-  //     }
-  //   }
-    
-  //   setMainView('nested');
-  // }
-
-  // React.useEffect(()=>{
-  //   switchMain(pathname);
-  // }, [pathname]);
-
   return (
     <>
       <CSSTransition
@@ -84,41 +86,26 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
           timeout={timeout} 
           classNames="slide" 
           className={Utils.classnames(cls, mainView == 'main' ? 'current': 'previous')} 
-          onEnter={(element)=> setRouteAniState(element, 'enter')}
-          onEntering={(element)=> setRouteAniState(element, 'entering')}
-          onEntered={(element)=> setRouteAniState(element, 'entered')}
-          onExit={(element)=> setRouteAniState(element, 'exit')}
-          onExiting={(element)=> setRouteAniState(element, 'exiting')}
-          onExited={(element)=> setRouteAniState(element, 'exited')}
+          {...eventsHandler}
         >
         {
           mainRoutes.map(({component, async, redirect, ...rest}, i)=>{
-            let Component = getComponents({component, async, redirect});
-            return Component ? (
+            const Component = getComponents({component, async, redirect});
+            return (
               <Route 
                 {...rest}
-                key={`route_${i}`}
-                render={(props)=> {
-                  const { location, match } = props;
-                  const urlQuery = Utils.parseUrlQuery(location.search);
-                  const isCurrent = match.url === location.pathname;
-
-                  if(mainView != 'main' && isCurrent){
-                    setMainView('main');
-                  }
-        
-                  return (
-                    <div className="router-transition-stage">
-                      <Component 
-                        query={urlQuery}
-                        fallback={fallback}
-                        {...props}
-                      />
-                    </div>
-                  )
-                }}
+                key={`route_main_${i}`}
+                render={ props => (
+                  <PageWrapper 
+                    routeProps={props}
+                    isMain={isCurrent=> mainView != 'main' && isCurrent}
+                    init={()=> setMainView('main')}
+                  >
+                    {Component && <Component fallback={fallback}/>}
+                  </PageWrapper>
+                )}
               />
-            ): null
+            )
           })
         }
         </WUI_pages>
@@ -132,12 +119,7 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
           timeout={timeout} 
           classNames="slide" 
           className={Utils.classnames(cls, mainView == 'nested' ? 'current': 'next')} 
-          onEnter={(element)=> setRouteAniState(element, 'enter')}
-          onEntering={(element)=> setRouteAniState(element, 'entering')}
-          onEntered={(element)=> setRouteAniState(element, 'entered')}
-          onExit={(element)=> setRouteAniState(element, 'exit')}
-          onExiting={(element)=> setRouteAniState(element, 'exiting')}
-          onExited={(element)=> setRouteAniState(element, 'exited')}
+          {...eventsHandler}
         >
           {
             subRoutes.map(({ component, async, redirect, ...rest }, i)=>{
@@ -146,30 +128,21 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
                   <Route 
                     {...rest}
                     key={`route_${i}`}
-                    render={(props)=> {
-                      const { location, match } = props;
-                      const urlQuery = Utils.parseUrlQuery(location.search);
-                      const isCurrent = match.url === location.pathname;
-                      if(mainView != 'nested' && isCurrent){
-                        setMainView('nested');
-                      }
-                      return (
-                        <div className="router-transition-stage">
-                          <Component 
-                            query={urlQuery}
-                            fallback={fallback}
-                            {...props}
-                          />
-                        </div>
-                      )
-                    }}
+                    render={props=>(
+                      <PageWrapper 
+                        routeProps={props}
+                        isMain={isCurrent=> mainView != 'nested' && isCurrent}
+                        init={()=> setMainView('nested')}
+                      >
+                        {Component && <Component fallback={fallback}/>}
+                      </PageWrapper>
+                    )}
                   />
                 )
             })
           }
         </WUI_pages>
       </CSSTransition>
-      
     </>
   );
 });

@@ -6,8 +6,8 @@ export const WUI_global = createGlobalStyle `
     width: 100%;
   }
   #root {
+    position: fixed;
     overflow: hidden;
-    position: relative; 
     z-index: 1;
   }
   body {

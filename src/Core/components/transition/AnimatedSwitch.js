@@ -61,7 +61,7 @@ class AnimatedSwitch extends React.Component {
 
   render() {
     const { children, location, ...routeTransitionProps } = this.props;
-
+    
     return (
       <RouteTransition {...routeTransitionProps}>
         <Switch key={this.state.key} location={location}>
