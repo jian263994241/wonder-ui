@@ -1,10 +1,11 @@
 import React from 'react';
 import SvgIcon from '../svgIcon/svgIcon';
 
-const Indicator = ({color = '#6c6c6c'})=>(
+const Indicator = ({color = '#6c6c6c', ...rest})=>(
   <SvgIcon 
     viewBox="0 0 120 120"
     width="35"
+    {...rest}
   >
     <defs>
       <line id='a1' x1='60' x2='60' y1='7' y2='27' stroke={color} strokeWidth='11' strokeLinecap='round'/>

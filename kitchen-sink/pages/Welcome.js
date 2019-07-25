@@ -1,15 +1,23 @@
 import React, { createElement, Component } from 'react';
-import {Link, Page, Preloader} from '@wonder-ui/core';
+import {Link, Page, Preloader, Fade} from '@wonder-ui/core';
 import {List, ListItem, ListItemDivider} from '@wonder-ui/components/ListView';
+
 
 export default class Welcome extends Component {
 
   preloader = ()=>{
     Preloader.show();
+    Preloader.show();
+    Preloader.show();
+
     setTimeout(()=>{
+      Preloader.show();
       Preloader.hide();
-    }, 2000)
+      Preloader.hide();
+    }, 1500)
   }
+
+
 
   render() {
 

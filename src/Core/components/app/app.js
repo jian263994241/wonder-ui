@@ -12,10 +12,10 @@ import defaultTheme from '../styles/defaultTheme';
 import DeviceModule from '../../modules/device/device';
 import SupportModule from '../../modules/support/support';
 import ResizeModule from '../../modules/resize/resize';
-// import TouchModule from '../../modules/touch/touch';
+import TouchModule from '../../modules/touch/touch';
 import UtilsModule from '../../modules/utils/utils';
 
-AppClass.use([ DeviceModule, SupportModule, ResizeModule, UtilsModule ]);
+AppClass.use([ DeviceModule, SupportModule, ResizeModule, UtilsModule, TouchModule ]);
 
 export default function App ({
   params =  {},

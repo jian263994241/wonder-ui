@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
+import Indicator from './Indicator';
 
 const spin = keyframes `
   100% {
@@ -22,7 +23,7 @@ export const WUI_preloader_root = styled.div `
   padding: 10px;
 `;
 
-export const WUI_preloader = styled.div `
+export const WUI_preloader = styled(Indicator) `
   display: inline-block;
   width: 34px;
   height: 34px;

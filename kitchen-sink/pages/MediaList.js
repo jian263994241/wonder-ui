@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Page, Link} from '@wonder-ui/core';
+import {Page, Link, Preloader} from '@wonder-ui/core';
 import {BlockTitle} from '@wonder-ui/components/ContentBlock';
 
 import {List, ListItem, GroupTitle} from '@wonder-ui/components/ListView';
@@ -7,6 +7,14 @@ import {List, ListItem, GroupTitle} from '@wonder-ui/components/ListView';
 
 
 export default class ListDemo extends Component {
+
+  componentDidMount() {
+    Preloader.show()
+  }
+
+  componentWillUnmount(){
+    Preloader.hide()
+  }
 
   render (){
 

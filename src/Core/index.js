@@ -4,6 +4,7 @@ import Page from './components/page';
 import Preloader from './components/preloader';
 import request from './components/request';
 import device from './components/device';
+import Fade from './components/fade';
 
 import { Link, Route, matchPath, withRouter } from 'react-router-dom';
 
@@ -20,5 +21,6 @@ export {
   matchPath, 
   withRouter,
   request,
-  Route
+  Route,
+  Fade
 }

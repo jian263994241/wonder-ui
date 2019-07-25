@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
-import useForkRef from './useForkRef';
+import { useForkRef } from '../../utils/reactUtils';
 import { easing, duration } from '../styles/transitions';
 const styles = {
   entering: {
@@ -64,6 +64,11 @@ const Fade = React.forwardRef(function Fade(props, ref) {
     ...other
   } = props;
   const handleRef = useForkRef(children.ref, ref);
+  const [inState, setInState] = React.useState(false);
+
+  React.useEffect(()=>{
+    setInState(inProp)
+  }, [inProp])
 
   const handleEnter = node => {
     reflow(node); // So the animation always start from the start.
@@ -76,7 +81,7 @@ const Fade = React.forwardRef(function Fade(props, ref) {
     );
     node.style.webkitTransition = transitions('opacity', transitionProps);
     node.style.transition = transitions('opacity', transitionProps);
-
+    
     if (onEnter) {
       onEnter(node);
     }
@@ -97,13 +102,11 @@ const Fade = React.forwardRef(function Fade(props, ref) {
     }
   };
 
-  
-  
 
   return (
     <Transition
       appear
-      in={inProp}
+      in={inState}
       onEnter={handleEnter}
       onExit={handleExit}
       timeout={timeout}

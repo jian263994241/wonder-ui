@@ -1,55 +1,43 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { WUI_preloader, WUI_poreloader_overlay, WUI_preloader_root } from './styles';
 import defaultIndicator from './Indicator';
-import { usePortal, render } from '../../utils/reactUtils';
-
+import { usePortal, createContainer } from '../../utils/reactUtils';
+import Backdrop from '../backdrop';
 
 const Preloader = (props)=>{
   const {
     indicator: Indicator = defaultIndicator,
     color = '#fff',
-    containerId = 'root',
+    containerId = 'wonder-modal',
     navbarHeight = 0,
     styles = {},
+    visible = true,
   } = props;
   
   const createPortal = usePortal(containerId);
 
   return createPortal(
     <>
-      <WUI_poreloader_overlay onTouchMove={e=>e.preventDefault()} />    
-      <WUI_preloader_root navbarHeight={navbarHeight} css={styles.root}>
-        <WUI_preloader css={styles.content}>
-          <Indicator color={color}/>
-        </WUI_preloader>
-      </WUI_preloader_root>
+      <Backdrop visible={visible} invisible/>  
+      {
+        visible && (
+          <WUI_preloader_root aria-hidden="true" navbarHeight={navbarHeight} css={styles.root}>
+            <WUI_preloader color={color} css={styles.content}/>
+          </WUI_preloader_root>
+        )
+      } 
     </>
   );
 }
 
+const render = createContainer('preloader');
 
-const container = document.createElement('div');
-
-container.setAttribute('id', 'aaaa')
-
-let showing = false;
-
-Preloader.show = (props)=> {
-  // if(!showing){    
-  //   showing = true;
-  //   ReactDOM.render(React.createElement('div'), container);
-  // }
-
-  ReactDOM.render(<Preloader/>, container);
+Preloader.show = ()=> {
+  render(<Preloader visible/>);
 }
 
 Preloader.hide = ()=> {
-  // if(showing){
-    
-  //   ReactDOM.unmountComponentAtNode(container)
-    
-  // }
+  render(<Preloader visible={false}/>);
 }
 
 export default Preloader;
