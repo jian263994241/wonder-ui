@@ -1,13 +1,10 @@
 import React from 'react';
-import AnimatedSwitch from '../transition/AnimatedSwitch';
-import { Route, matchPath } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { WUI_pages } from './styles';
 import Utils from '../../utils/utils';
-import { pageTransitionDuration } from '../styles/keyframes';
 import { getComponents } from './utils';
 import CSSTransition from 'react-transition-group/CSSTransition';
-
-// const AnimatedSwitchPages = WUI_pages.withComponent(AnimatedSwitch);
+import { duration } from '../styles/transitions';
 
 const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fallback }) => {
   const { state =  {}, pathname } = location;
@@ -32,7 +29,7 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
     animationType === 'forward' ? 'router-transition-forward': '',
   )
 
-  const timeout = cls === '' ? 0 : {enter: pageTransitionDuration, exit: pageTransitionDuration - 30};
+  const timeout = cls === '' ? 0 : duration.standard;
 
   const setRouteAniState = (element, state)=> {
     element && element.setAttribute('ani-state', state);

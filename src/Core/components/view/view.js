@@ -5,13 +5,10 @@ import appContext from '../app/appContext';
 import Pages from './PageSwitch';
 import Preloader from '../preloader';
 
-const View =  withRouter(({history, location, ...rest}) => {
+const View =  withRouter(({history, location, fallback = <Preloader/> , ...rest}) => {
   const app = React.useContext(appContext);
   const [action, setAction] = React.useState('PUSH');
-  const { 
-    routes, 
-    fallback = <Preloader/> 
-  } = app.params;
+  const { routes } = app.params;
   const search = decodeURIComponent(location.search);
   const pathname = location.pathname;
   

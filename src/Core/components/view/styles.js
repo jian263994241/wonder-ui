@@ -1,13 +1,13 @@
 import styled, { css } from 'styled-components';
 import device from '../../utils/device';
 import AnimatedSwitch from '../transition/AnimatedSwitch';
+import { easing, duration } from '../styles/transitions';
 
 import {
   pageNextToCurrent,
   pagePreviousToCurrent,
   pageCurrentToPrevious,
   pageCurrentToNext,
-  pageTransitionDuration,
   iosPageElementFadeIn,
   iosPageElementFadeOut
 } from '../styles/keyframes';
@@ -50,7 +50,7 @@ export const WUI_pages = styled(AnimatedSwitch) `
     width: 100%;
     height: 100%;
     background: ${props=>props.theme.page.backgroundColor};
-    position: absolute;
+    position: fixed;
   }
 
   &.router-transition-forward{
@@ -59,10 +59,10 @@ export const WUI_pages = styled(AnimatedSwitch) `
     }
 
     .slide-enter.slide-enter-active {
-      animation: ${pageNextToCurrent} ${pageTransitionDuration}ms forwards;
+      animation: ${pageNextToCurrent} ${duration.standard}ms ${easing.easeInOut} forwards;
       &:before {
         ${pageFakeShadow}
-        animation: ${iosPageElementFadeIn} ${pageTransitionDuration}ms forwards;
+        animation: ${iosPageElementFadeIn} ${duration.standard}ms ${easing.easeInOut} forwards;
       }
     }
 
@@ -76,15 +76,16 @@ export const WUI_pages = styled(AnimatedSwitch) `
     }
 
     .slide-exit.slide-exit-active {
-      animation: ${pageCurrentToPrevious} ${pageTransitionDuration}ms forwards;
+      animation: ${pageCurrentToPrevious} ${duration.standard}ms ${easing.easeInOut} forwards;
       &:after {
         ${pageFakeOpacity}
-        animation: ${iosPageElementFadeIn} ${pageTransitionDuration}ms forwards;
+        animation: ${iosPageElementFadeIn} ${duration.standard}ms ${easing.easeInOut} forwards;
       }
     }
 
     .slide-exit-done{
-      display: none;
+      z-index: 1;
+      ${'' /* display: none; */}
     }
 
   }
@@ -94,10 +95,10 @@ export const WUI_pages = styled(AnimatedSwitch) `
       z-index: 1;
     }
     .slide-enter.slide-enter-active {
-      animation: ${pagePreviousToCurrent} ${pageTransitionDuration}ms forwards;
+      animation: ${pagePreviousToCurrent} ${duration.standard}ms ${easing.easeInOut} forwards;
       &:after {
         ${pageFakeOpacity}
-        animation: ${iosPageElementFadeOut} ${pageTransitionDuration}ms forwards;
+        animation: ${iosPageElementFadeOut} ${duration.standard}ms ${easing.easeInOut} forwards;
       }
     }
 
@@ -111,15 +112,16 @@ export const WUI_pages = styled(AnimatedSwitch) `
     }
 
     .slide-exit.slide-exit-active {
-      animation: ${pageCurrentToNext} ${pageTransitionDuration}ms forwards;
+      animation: ${pageCurrentToNext} ${duration.standard}ms ${easing.easeInOut} forwards;
       &:before {
         ${pageFakeShadow}
-        animation: ${iosPageElementFadeOut} ${pageTransitionDuration}ms forwards;
+        animation: ${iosPageElementFadeOut} ${duration.standard}ms ${easing.easeInOut} forwards;
       }
     }
 
     .slide-exit-done{
-      display: none;
+      z-index: 2;
+      ${'' /* display: none; */}
     }
   }
 `
@@ -138,10 +140,10 @@ export const WUI_view = styled.div `
     z-index: 1;
   }
   .previous-enter-active {
-    animation: ${pagePreviousToCurrent} ${pageTransitionDuration}ms forwards;
+    animation: ${pagePreviousToCurrent} ${duration.standard}ms forwards;
     &:after {
       ${pageFakeOpacity}
-      animation: ${iosPageElementFadeOut} ${pageTransitionDuration}ms forwards;
+      animation: ${iosPageElementFadeOut} ${duration.standard}ms forwards;
     }
   }
 
@@ -155,10 +157,10 @@ export const WUI_view = styled.div `
   }
 
   .previous-exit-active {
-    animation: ${pageCurrentToPrevious} ${pageTransitionDuration}ms forwards;
+    animation: ${pageCurrentToPrevious} ${duration.standard}ms forwards;
     &:after {
       ${pageFakeOpacity}
-      animation: ${iosPageElementFadeIn} ${pageTransitionDuration}ms forwards;
+      animation: ${iosPageElementFadeIn} ${duration.standard}ms forwards;
     }
   }
 
