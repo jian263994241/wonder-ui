@@ -1,26 +1,15 @@
-import App from './components/app';
-import View from './components/view';
-import Page from './components/page';
-import Preloader from './components/preloader';
-import request from './components/request';
-import device from './components/device';
-import Fade from './components/fade';
+export { default as App} from './components/app';
+export { default as View} from './components/view';
+export { default as Page} from './components/page';
+export { default as Preloader} from './components/preloader';
+export { default as request} from './components/request';
+export { default as device} from './components/device';
+export { default as Fade} from './components/fade';
+export { default as Button } from './components/button';
 
-import { Link, Route, matchPath, withRouter } from 'react-router-dom';
+export { default as AppContext} from './components/app/appContext';
 
-import AppContext from './components/app/appContext';
+export * as hooks from './components/hooks';
 
-export { 
-  App, 
-  AppContext,
-  View, 
-  Page, 
-  Link, 
-  Preloader,
-  device,
-  matchPath, 
-  withRouter,
-  request,
-  Route,
-  Fade
-}
+export { Link, Route, matchPath, withRouter } from 'react-router-dom';
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { WUI_preloader, WUI_poreloader_overlay, WUI_preloader_root } from './styles';
+import { WUI_preloader, WUI_preloader_root } from './styles';
 import defaultIndicator from './Indicator';
 import { usePortal, createContainer } from '../../utils/reactUtils';
 import Backdrop from '../backdrop';
@@ -8,7 +8,7 @@ const Preloader = (props)=>{
   const {
     indicator: Indicator = defaultIndicator,
     color = '#fff',
-    containerId = 'wonder-modal',
+    containerId = 'root',
     navbarHeight = 0,
     styles = {},
     visible = true,
@@ -30,14 +30,14 @@ const Preloader = (props)=>{
   );
 }
 
-const render = createContainer('preloader');
+const render = createContainer(Preloader);
 
 Preloader.show = ()=> {
-  render(<Preloader visible/>);
+  render({visible: true});
 }
 
 Preloader.hide = ()=> {
-  render(<Preloader visible={false}/>);
+  render({visible: false}, 200);
 }
 
 export default Preloader;

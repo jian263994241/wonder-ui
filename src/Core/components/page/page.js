@@ -3,6 +3,8 @@ import { WUI_page_root, WUI_page_content } from './styles';
 import { withRouter } from 'react-router-dom';
 import appContext from '../app/appContext';
 import Utils from '../../utils/utils';
+import theme from '../styles/defaultTheme';
+import { ThemeProvider } from 'styled-components';
 import $ from 'dom7';
 
 const Page = withRouter(React.memo((props)=>{
@@ -39,21 +41,24 @@ const Page = withRouter(React.memo((props)=>{
   }, [name, pathname])
 
   return (
-    <WUI_page_root 
-      ref={root} 
-      pageroot={true}
-      css = {styles.root}
-    >
-      { slots['pageContentBefore'] }
-      {
-        pageContent ? (
-          <WUI_page_content 
-              css = {styles.content}
-            >{ slots.main }</WUI_page_content>
-        ) : slots.main
-      }
-      { slots['pageContentAfter'] }
-    </WUI_page_root>
+    <ThemeProvider theme={theme}>
+      <WUI_page_root 
+        ref={root} 
+        pageroot={true}
+        css = {styles.root}
+      >
+        { slots['pageContentBefore'] }
+        {
+          pageContent ? (
+            <WUI_page_content 
+                css = {styles.content}
+              >{ slots.main }</WUI_page_content>
+          ) : slots.main
+        }
+        { slots['pageContentAfter'] }
+      </WUI_page_root>
+    </ThemeProvider>
+    
   )
 }))
 

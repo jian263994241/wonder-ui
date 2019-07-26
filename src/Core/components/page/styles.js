@@ -7,7 +7,7 @@ export const WUI_page_root = styled.div `
   top: 0;
   width: 100%;
   height: 100%;
-  background: ${props=>props.theme.page.backgroundColor};
+  background: ${({theme})=>theme.palette.background.default};
   z-index: 10;
 `
 
@@ -16,7 +16,6 @@ export const WUI_page_content = styled.div `
   width: 100%;
   height: 100%;
   position: relative;
-  z-index: 1;
   overflow: auto;
   will-change: scroll-position;
   -webkit-overflow-scrolling: touch;

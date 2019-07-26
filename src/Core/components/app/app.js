@@ -5,8 +5,6 @@ import { createHashHistory } from 'history';
 import { Router } from 'react-router-dom';
 import AppClass from '../../utils/class';
 import utils from '../../utils/utils';
-import { ThemeProvider } from 'styled-components';
-import defaultTheme from '../styles/defaultTheme';
 
 //modules
 import DeviceModule from '../../modules/device/device';
@@ -20,7 +18,6 @@ AppClass.use([ DeviceModule, SupportModule, ResizeModule, UtilsModule, TouchModu
 export default function App ({
   params =  {},
   history,
-  theme: userTheme,
   children
 }){
   const defaultParmas = {
@@ -29,7 +26,6 @@ export default function App ({
     on: {},
     fallback: undefined,
   };
-  const theme = React.useMemo(()=> utils.extend({}, defaultTheme, userTheme), [userTheme]);
   const appParams = React.useMemo(()=>utils.extend({}, defaultParmas, params), [params]);
   const app = new AppClass(appParams);
   const rootRef = React.createRef();
@@ -47,15 +43,13 @@ export default function App ({
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <AppContext.Provider value={app}> 
-        <WUI_app ref={rootRef}>
-          <WUI_global/>
-            <Router history={app.history}>
-            {children}
-            </Router>
-        </WUI_app>
-      </AppContext.Provider>
-    </ThemeProvider>
+    <AppContext.Provider value={app}> 
+      <WUI_app ref={rootRef}>
+        <WUI_global/>
+          <Router history={app.history}>
+          {children}
+          </Router>
+      </WUI_app>
+    </AppContext.Provider>
   );
 }

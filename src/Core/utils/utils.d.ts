@@ -50,9 +50,7 @@ export interface Utils {
   /** */
   noop: ( target: T ) => T 
   /** */
-  throttle: (delay: number, noTrailing: boolean, callback: (...arg:any) => any, debounceMode: boolean) => (...arg:any) => any
-  /** */
-  debounce: (delay: number, atBegin: boolean, callback: (...arg:any) => any) => (...arg:any) => any
+  equal: (...args: array, returns: T) => T
 }
 
 declare const Utils : Utils;

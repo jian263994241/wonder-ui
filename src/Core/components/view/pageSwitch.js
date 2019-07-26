@@ -1,25 +1,42 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, matchPath } from 'react-router-dom';
 import { WUI_pages } from './styles';
 import Utils from '../../utils/utils';
 import { getComponents } from './utils';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import { duration } from '../styles/transitions';
 
-const PageWrapper = ({routeProps, ...props})=>{
+const PageWrapper = ({routeProps, routes, ...props})=>{
   const { children, isMain, init } = props;
   const { location, match  } = routeProps;
+  const [isRoute, setRouteState] = React.useState(false);
 
   if(!children) return null;
+
   const urlQuery = Utils.parseUrlQuery(location.search);
-  const isCurrent = match.url === location.pathname;
+
+  const isCurrent = match.url === location.pathname ;
+
   if(isMain(isCurrent)){
     init();
   }
 
+  React.useEffect(()=>{
+    const matchedRoute = routes.find(item=>item.path === match.path);
+    if(matchedRoute){
+      const matched = matchPath(location.pathname, {
+        path: matchedRoute.path,
+        exact: true
+      })
+      if(matched){
+        setRouteState(true);
+      } 
+    }
+  }, [location.pathname])
+
   return (
     <div className="router-transition-stage">
-      {React.cloneElement(children, {...routeProps, query: urlQuery})}
+      {isRoute && React.cloneElement(children, {...routeProps, query: urlQuery})}
     </div>
   )
 }
@@ -94,10 +111,12 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
             return (
               <Route 
                 {...rest}
+                strict
                 key={`route_main_${i}`}
                 render={ props => (
                   <PageWrapper 
                     routeProps={props}
+                    routes={mainRoutes}
                     isMain={isCurrent=> mainView != 'main' && isCurrent}
                     init={()=> setMainView('main')}
                   >
@@ -130,6 +149,7 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
                     key={`route_${i}`}
                     render={props=>(
                       <PageWrapper 
+                        routes={subRoutes}
                         routeProps={props}
                         isMain={isCurrent=> mainView != 'nested' && isCurrent}
                         init={()=> setMainView('nested')}

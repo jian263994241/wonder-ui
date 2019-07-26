@@ -90,10 +90,38 @@ export function usePortal(id) {
   }
 }
 
+/**
+ * render react element function
+ * 
+ * @param {function} Component 
+ * @param {object} defaultProps 
+ * @returns {function} render
+ */
+export function createContainer(Component, defaultProps){
+  const container = createRootElement();
+  let timeoutfn = null;
+  /**
+   * render
+   * @param {object} props
+   * @param {number} timeout
+   * @param {function} callback
+   * @returns {function} destroy
+   */
+  return function render (props, timeout, callback){
+    clearTimeout(timeoutfn);
+    ReactDOM.render(<Component {...defaultProps} {...props}/>, container, ()=>{
+      callback && callback();
+      if(timeout){
+        setTimeout(() => { destroy() }, timeout);
+      }
+    });
 
-export function createContainer(id){
-  const container = createRootElement(id);
-  return (element)=> ReactDOM.render(element, container); 
+    function destroy(){
+      ReactDOM.unmountComponentAtNode(container);
+    }
+
+    return destroy;
+  }; 
 }
 
 

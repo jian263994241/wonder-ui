@@ -1,3 +1,7 @@
+import palette from './palette';
+import shadows from './shadows';
+import shape from './shape';
+import typography from './typography';
 
 const colors = {
   red: '#ff3b30',
@@ -17,23 +21,13 @@ const colors = {
   black: '#000000'
 };
 
-const page = {
-  backgroundColor: '#f2f2f2',
-}
 
-const appbar = {
-
-};
-
-const toolbar = {
-
-};
 
 const defaultTheme = {
-  colors,
-  appbar,
-  toolbar,
-  page
+  shadows,
+  palette,
+  shape,
+  typography
 }
 
 export default defaultTheme;

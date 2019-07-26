@@ -49,7 +49,7 @@ export const WUI_pages = styled(AnimatedSwitch) `
   > .router-transition-stage {
     width: 100%;
     height: 100%;
-    background: ${props=>props.theme.page.backgroundColor};
+    background: ${({theme})=>theme.palette.background.default};
     position: absolute;
   }
 
