@@ -1,4 +1,6 @@
 
+const fontFamily = 'PingFang SC ,PingHei, DroidSansFallback, Hiragino Sans GB, STHeiti, Roboto, Noto, Helvetica Neue, Helvetica, Arial, SimSun, sans-serif';
+
 const fontSize = 14; // px
 const fontWeightLight = 300;
 const fontWeightRegular = 400;
@@ -11,8 +13,20 @@ const coef = fontSize / 14;
 
 const pxToRem = size => `${(size / htmlFontSize) * coef}rem`;
 
+function round(value) {
+  return Math.round(value * 1e5) / 1e5;
+}
+
 const typography = {
-  pxToRem
+  round,
+  pxToRem,
+  fontFamily,
+  fontSize,
+  fontWeightLight,
+  fontWeightRegular,
+  fontWeightMedium,
+  fontWeightBold,
+  htmlFontSize
 }
 
 

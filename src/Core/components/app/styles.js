@@ -9,11 +9,10 @@ export const WUI_global = createGlobalStyle `
     z-index: -1;
   }
   body {
-    font-family: PingFang SC ,PingHei, DroidSansFallback, Hiragino Sans GB, STHeiti, Roboto, Noto, Helvetica Neue, Helvetica, Arial, SimSun, sans-serif;
+    font-family: ${({theme})=>theme.typography.fontFamily};
     margin: 0;
     padding: 0;
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: ${({theme})=>theme.typography.fontSize}px;
     -webkit-highlight: none;
     -webkit-user-select: none;
     -webkit-text-size-adjust: 100%;

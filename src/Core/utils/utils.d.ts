@@ -51,6 +51,8 @@ export interface Utils {
   noop: ( target: T ) => T 
   /** */
   equal: (...args: array, returns: T) => T
+  /** */
+  exist: (...args: any, returns: T) => T
 }
 
 declare const Utils : Utils;

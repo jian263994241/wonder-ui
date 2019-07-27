@@ -33,11 +33,11 @@ const Preloader = (props)=>{
 const render = createContainer(Preloader);
 
 Preloader.show = ()=> {
-  render({visible: true});
+  render('preloader', {visible: true});
 }
 
 Preloader.hide = ()=> {
-  render({visible: false}, 200);
+  render('preloader', {visible: false}, 200);
 }
 
 export default Preloader;

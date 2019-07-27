@@ -97,19 +97,22 @@ export function usePortal(id) {
  * @param {object} defaultProps 
  * @returns {function} render
  */
-export function createContainer(Component, defaultProps){
+export function createContainer(Component){
   const container = createRootElement();
   let timeoutfn = null;
+  const prevProps = {};
   /**
    * render
+   * @param {string} id
    * @param {object} props
    * @param {number} timeout
    * @param {function} callback
    * @returns {function} destroy
    */
-  return function render (props, timeout, callback){
+  return function render (id, props, timeout, callback){
+    prevProps[id] = Object.assign({}, prevProps[id], props);
     clearTimeout(timeoutfn);
-    ReactDOM.render(<Component {...defaultProps} {...props}/>, container, ()=>{
+    ReactDOM.render(<Component {...prevProps[id]}/>, container, ()=>{
       callback && callback();
       if(timeout){
         setTimeout(() => { destroy() }, timeout);

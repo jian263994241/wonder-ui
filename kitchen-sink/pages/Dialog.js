@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Page, Link} from '@wonder-ui/core';
-import Dialog from '@wonder-ui/components/Dialog';
+import {Page, Dialog, toast} from '@wonder-ui/core';
 
 export default class DialogDemo extends Component {
 
@@ -29,19 +28,16 @@ export default class DialogDemo extends Component {
       okText: '好的',
       cancelText: '不好',
       onOk: ()=> {
-        Dialog.prompt({
-          title: '问题',
-          text: '你的名字?',
-          onOk: (val)=>Dialog.alert({text: val}),
-          onCancel: ()=>Dialog.alert({text: 'Cancel'}),
-        })
+        toast('toast', ()=>{
+          Dialog.alert({text: 'Toast hide.'});
+        });
       },
       onCancel: ()=>Dialog.alert({text: 'Confirm -> cancel'}),
     });
   }
 
   toast = ()=>{
-    Dialog.toast('toast');
+    toast('toast');
     // Dialog.toast.success('第2个toast');
     // Dialog.toast.fail('第3个toast');
     // Dialog.toast.warning('第4个toast');

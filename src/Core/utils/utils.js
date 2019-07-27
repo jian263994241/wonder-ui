@@ -447,5 +447,14 @@ const Utils = {
     }
     return returns;
   },
+  exist(...args){
+    const returns = args.pop();
+    for(let i = 0; i< args.length; i++){
+      if(!args[i]){
+        return null;
+      }
+    }
+    return returns;
+  }
 };
 export default Utils;

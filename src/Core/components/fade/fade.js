@@ -3,14 +3,6 @@ import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
 import { useForkRef } from '../../utils/reactUtils';
 import { easing, duration } from '../styles/transitions';
-const styles = {
-  entering: {
-    opacity: 1,
-  },
-  entered: {
-    opacity: 1,
-  },
-};
 
 const defaultTimeout = { enter: 225, exit: 195 };
 
@@ -60,7 +52,12 @@ const Fade = React.forwardRef(function Fade(props, ref) {
     onEnter,
     onExit,
     style,
+    styles = {
+      entering: { opacity: 1 },
+      entered: { opacity: 1 },
+    },
     timeout = defaultTimeout,
+    types = ['opacity'],
     ...other
   } = props;
   const handleRef = useForkRef(children.ref, ref);
@@ -79,8 +76,8 @@ const Fade = React.forwardRef(function Fade(props, ref) {
         mode: 'enter',
       },
     );
-    node.style.webkitTransition = transitions('opacity', transitionProps);
-    node.style.transition = transitions('opacity', transitionProps);
+    node.style.webkitTransition = transitions(types, transitionProps);
+    node.style.transition = transitions(types, transitionProps);
     
     if (onEnter) {
       onEnter(node);
@@ -94,8 +91,8 @@ const Fade = React.forwardRef(function Fade(props, ref) {
         mode: 'exit',
       },
     );
-    node.style.webkitTransition = transitions('opacity', transitionProps);
-    node.style.transition = transitions('opacity', transitionProps);
+    node.style.webkitTransition = transitions(types, transitionProps);
+    node.style.transition = transitions(types, transitionProps);
 
     if (onExit) {
       onExit(node);
@@ -150,6 +147,14 @@ Fade.propTypes = {
    * @ignore
    */
   style: PropTypes.object,
+  /** 
+   * overwrite animation type, default is opacity
+   */
+  types: PropTypes.array,
+  /**
+   * overwrite state style
+   */
+  styles: PropTypes.shape({ entering: PropTypes.object, entered: PropTypes.object }),
   /**
    * The duration for the transition, in milliseconds.
    * You may specify a single timeout for all transitions, or individually with an object.
