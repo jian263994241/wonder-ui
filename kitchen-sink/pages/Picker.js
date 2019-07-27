@@ -73,7 +73,6 @@ export default class PickerDemo extends Component {
 
     return (
       <Page name="年月日">
-        <Preloader visible={this.state.show}/>
         <div style={inputStyle} onClick={this.open}>选择日期: {this.state.value.toString()}</div>
           <Modal
             visible={this.state.visible}

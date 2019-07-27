@@ -12,10 +12,8 @@ export const WUI_global = createGlobalStyle `
     font-family: PingFang SC ,PingHei, DroidSansFallback, Hiragino Sans GB, STHeiti, Roboto, Noto, Helvetica Neue, Helvetica, Arial, SimSun, sans-serif;
     margin: 0;
     padding: 0;
-    color: #000;
     font-size: 14px;
     line-height: 1.4;
-    background-color: #fff;
     -webkit-highlight: none;
     -webkit-user-select: none;
     -webkit-text-size-adjust: 100%;

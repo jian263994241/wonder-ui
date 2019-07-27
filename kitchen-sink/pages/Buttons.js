@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {Page, Link} from '@wonder-ui/core';
-import Button, {ButtonsRow} from '@wonder-ui/components/Button';
-import {BlockTitle} from '@wonder-ui/components/ContentBlock';
+import { Page, Button } from '@wonder-ui/core';
 
 export default class ButtonsDemo extends Component {
 
@@ -10,25 +8,28 @@ export default class ButtonsDemo extends Component {
     
     return (
       <Page>
-        <BlockTitle>按钮</BlockTitle>
 
-        <Button>123</Button>
-        <Button fill>123</Button>
-        <Button fill big>123</Button>
+        <Button variant="outlined" color="default">按钮</Button>
+        <Button variant="outlined" color="primary">按钮</Button>
+        <Button variant="outlined" color="secondary">按钮</Button>
 
-        <BlockTitle>按钮组</BlockTitle>
+        <Button variant="contained" color="default">按钮</Button>
+        <Button variant="contained" color="primary">按钮</Button>
+        <Button variant="contained" color="secondary">按钮</Button>
+        
+        <Button variant="text" color="default">按钮</Button>
+        <Button variant="text" color="primary">按钮</Button>
+        <Button variant="text" color="secondary">按钮</Button>
 
-        <ButtonsRow round>
-          <Button>Tab 1</Button>
-          <Button>Tab 2</Button>
-          <Button>Tab 3</Button>
-        </ButtonsRow>
-        <br/>
-        <ButtonsRow>
-          <Button>Tab 1</Button>
-          <Button>Tab 2</Button>
-          <Button>Tab 3</Button>
-        </ButtonsRow>
+        <Button variant="contained" color="primary" size="small">small</Button>
+ 
+        <Button variant="contained" color="primary" size="medium">medium</Button>
+       
+        <Button variant="contained" color="primary" size="large">large</Button>
+
+
+        <Button variant="contained" color="primary" size="large" fullWidth>fullWidth large button</Button>
+
       </Page>
     )
   }

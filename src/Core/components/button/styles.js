@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { fade } from '../styles/colorManipulator';
 import utils from '../../utils/utils';
 
-export const WUI_button_base = styled.button({
+
+const buttonBase = {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -31,7 +32,9 @@ export const WUI_button_base = styled.button({
     pointerEvents: 'none', // Disable link interactions
     cursor: 'default',
   }
-})
+}
+
+export const WUI_button_base = styled.button(buttonBase);
 
 
 export const WUI_button = styled(WUI_button_base)( (props) => {
@@ -190,8 +193,9 @@ export const WUI_button = styled(WUI_button_base)( (props) => {
   const sizeSmall = utils.equal(
     [size, 'small'],
     {
-      padding: '4px 8px',
+      padding: '0px 8px',
       fontSize: theme.typography.pxToRem(13),
+      minWidth: 'auto',
     }
   )
 
@@ -211,6 +215,7 @@ export const WUI_button = styled(WUI_button_base)( (props) => {
   )
 
   return {
+    ...buttonBase,
     lineHeight: 1.75,
     boxSizing: 'border-box',
     minWidth: 64,
