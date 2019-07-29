@@ -2,7 +2,7 @@ import React, { Children } from 'react';
 import { WUI_page_root, WUI_page_content } from './styles';
 import { withRouter } from 'react-router-dom';
 import appContext from '../app/appContext';
-import Utils from '../../utils/utils';
+import utils from '../../utils/utils';
 import theme from '../styles/defaultTheme';
 import { ThemeProvider } from 'styled-components';
 import $ from 'dom7';
@@ -17,11 +17,18 @@ const Page = withRouter(React.memo((props)=>{
     match 
   } = props;
   const app = React.useContext(appContext);
-  const childrenArray = Children.toArray(children);
-  const slots = Utils.slot(childrenArray); 
   const root = React.useRef(null);
   const pathname = location.pathname;
+  const [visible, setVisible] = React.useState(false);
 
+  const slots = React.useMemo(()=>{
+    const childrenArray = Children.toArray(children);
+    return utils.slot(childrenArray); 
+  }, [children]);
+
+  React.useEffect(()=>{
+    utils.nextTick(()=>setVisible(true))
+  }, []);
 
   React.useEffect(()=>{
 
@@ -40,7 +47,7 @@ const Page = withRouter(React.memo((props)=>{
     }
   }, [name, pathname])
 
-  return (
+  return visible && (
     <ThemeProvider theme={theme}>
       <WUI_page_root 
         ref={root} 
