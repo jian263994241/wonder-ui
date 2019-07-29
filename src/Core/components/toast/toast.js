@@ -1,4 +1,4 @@
-import Dialog, { dialogTimeout } from '../dialog';
+import Dialog, { dialogTimeout } from '../dialog/dialog';
 import { createContainer } from '../../utils/reactUtils';
 import Manager from '../../utils/manager';
 
