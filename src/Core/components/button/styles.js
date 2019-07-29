@@ -1,46 +1,12 @@
 import styled from 'styled-components';
 import { fade } from '../styles/colorManipulator';
 import utils from '../../utils/utils';
+import ButtonBase from '../button-base';
 
 
-const buttonBase = {
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  position: 'relative',
-  // Remove grey highlight
-  WebkitTapHighlightColor: 'transparent',
-  backgroundColor: 'transparent', // Reset default value
-  // We disable the focus ring for mouse, touch and keyboard users.
-  outline: 'none',
-  border: 0,
-  margin: 0, // Remove the margin in Safari
-  borderRadius: 0,
-  padding: 0, // Remove the padding in Firefox
-  cursor: 'pointer',
-  userSelect: 'none',
-  verticalAlign: 'middle',
-  '-moz-appearance': 'none', // Reset
-  '-webkit-appearance': 'none', // Reset
-  textDecoration: 'none',
-  // So we take precedent over the style of a native <a /> element.
-  color: 'inherit',
-  '&::-moz-focus-inner': {
-    borderStyle: 'none', // Remove Firefox dotted outline.
-  },
-  '&[disabled]': {
-    pointerEvents: 'none', // Disable link interactions
-    cursor: 'default',
-  }
-}
-
-export const WUI_button_base = styled.button(buttonBase);
-
-
-export const WUI_button = styled(WUI_button_base)( (props) => {
+export const WUI_button = styled(ButtonBase)( (props) => {
   const { theme, variant, color, size, fullWidth: _fullWidth } = props;
-  console.log(props);
-  
+
   const text = utils.equal(
     [variant, 'text'], 
     {
@@ -215,39 +181,40 @@ export const WUI_button = styled(WUI_button_base)( (props) => {
   )
 
   return {
-    ...buttonBase,
-    lineHeight: 1.75,
-    boxSizing: 'border-box',
-    minWidth: 64,
-    padding: '4px 16px',
-    borderRadius: theme.shape.borderRadius,
-    '&:hover': {
-      textDecoration: 'none',
-      backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity),
-      // Reset on touch devices, it doesn't add specificity
-      '@media (hover: none)': {
-        backgroundColor: 'transparent',
+    '&&': {
+      lineHeight: 1.75,
+      boxSizing: 'border-box',
+      minWidth: 64,
+      padding: '4px 16px',
+      borderRadius: theme.shape.borderRadius,
+      '&:hover': {
+        textDecoration: 'none',
+        backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity),
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: 'transparent',
+        },
+        '&[disabled]': {
+          backgroundColor: 'transparent',
+        },
       },
       '&[disabled]': {
-        backgroundColor: 'transparent',
+        color: theme.palette.action.disabled,
       },
-    },
-    '&[disabled]': {
-      color: theme.palette.action.disabled,
-    },
-    ...text,
-    ...textPrimary,
-    ...textSecondary,
-    ...outlined,
-    ...outlinedPrimary,
-    ...outlinedSecondary,
-    ...contained,
-    ...containedPrimary,
-    ...containedSecondary,
-    ...colorInherit,
-    ...sizeSmall,
-    ...sizeLarge,
-    ...fullWidth
+      ...text,
+      ...textPrimary,
+      ...textSecondary,
+      ...outlined,
+      ...outlinedPrimary,
+      ...outlinedSecondary,
+      ...contained,
+      ...containedPrimary,
+      ...containedSecondary,
+      ...colorInherit,
+      ...sizeSmall,
+      ...sizeLarge,
+      ...fullWidth
+    }
   }
 })
 

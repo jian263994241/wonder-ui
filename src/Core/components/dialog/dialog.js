@@ -28,7 +28,7 @@ const Dialog = React.forwardRef((props, ref)=>{
     vertical,
     styles = {},
     toast,
-    containerId = 'root',
+    containerId = null,
   } = props;
 
   const createPortal = usePortal(containerId);
@@ -120,8 +120,6 @@ Dialog.alert = ({ title, text, onOk, okText = '确定' })=>{
       })
     }
   )
-
-  
 }
 
 Dialog.confirm = ({ title, text, onOk, okText = '确定', onCancel, cancelText = "取消" })=>{
@@ -147,7 +145,6 @@ Dialog.confirm = ({ title, text, onOk, okText = '确定', onCancel, cancelText =
       ]
     })
   })
-  
 }
 
 
