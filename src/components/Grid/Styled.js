@@ -8,6 +8,7 @@ const gutter = ({width, gutter}) => `calc((100% - ${gutter}px*${100/parseFloat(w
 export const StyledCol = styled.div `
   width: ${width}%;
   width: ${gutter};
+  box-sizing: border-box;
 `;
 
 export const StyledRow = styled.div`
@@ -15,13 +16,10 @@ export const StyledRow = styled.div`
   justify-content: space-between;
   flex-wrap:wrap;
   align-items: flex-start;
-  ${StyledCol} {
-    box-sizing: border-box;
-  }
 `
 
 StyledRow.defaultProps = {
-  gutter: 15
+  gutter: 8
 };
 
 StyledRow.propTypes = {

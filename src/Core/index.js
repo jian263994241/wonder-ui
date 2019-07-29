@@ -4,6 +4,7 @@ export { default as Page} from './components/page';
 export { default as Preloader} from './components/preloader';
 export { default as Fade} from './components/fade';
 export { default as Button } from './components/button';
+export { default as Flex } from './components/flex';
 export { default as Link } from './components/link';
 export { default as Dialog } from './components/dialog';
 export { default as toast} from './components/toast';

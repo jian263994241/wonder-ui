@@ -2,6 +2,9 @@ import palette from './palette';
 import shadows from './shadows';
 import shape from './shape';
 import typography from './typography';
+import createSpacing from './createSpacing';
+
+const spacing = createSpacing(8);
 
 const colors = {
   red: '#ff3b30',
@@ -27,7 +30,8 @@ const defaultTheme = {
   shadows,
   palette,
   shape,
-  typography
+  typography,
+  spacing
 }
 
 export default defaultTheme;
