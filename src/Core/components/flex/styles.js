@@ -202,10 +202,20 @@ const itemGutter = css(props=>{
   }
 })
 
+const fullWidth = css (props=>{
+  return utils.equal(
+    [props.fullWidth, true],
+    { 
+      width: '100%'
+    }
+  );
+})
+
 export const WUI_flex = styled.div `
   text-align: left;
   overflow: hidden;
   display: flex;
+  ${fullWidth}
   ${itemGutter}
   ${justify}
   ${align}

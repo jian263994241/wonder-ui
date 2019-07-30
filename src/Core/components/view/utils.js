@@ -1,25 +1,15 @@
 import React from 'react';
-import loadable from '@loadable/component';
 import { Redirect } from 'react-router-dom';
 
-export const getComponents = ({component, async, redirect})=>{
+export const getComponents = ({component, async, redirect, ...passProps})=>{
   if(async){
-    return loadable(
-      () => new Promise((resolve, reject) => async(history, resolve, reject))
-    );
+    return React.lazy(()=>{
+      return async(passProps).then(x => new Promise(resolve => setTimeout(() => resolve(x), 16)))
+    });
   }
 
   if(typeof redirect === 'string'){
     return () => <Redirect to={redirect}/>
-  }
-
-  if(typeof redirect === 'function'){
-    return loadable(
-      ()=> new Promise(
-        (resolve, reject) => redirect(history, resolve, reject)
-      )
-      .then((url, props)=> () => <Redirect to={url} {...props}/> )
-    )
   }
 
   if(component.default){

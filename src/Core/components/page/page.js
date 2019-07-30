@@ -27,7 +27,7 @@ const Page = withRouter(React.memo((props)=>{
   }, [children]);
 
   React.useEffect(()=>{
-    utils.nextTick(()=>setVisible(true), 60)
+    utils.nextTick(()=>setVisible(true), 12)
   }, []);
 
   React.useEffect(()=>{
@@ -57,9 +57,7 @@ const Page = withRouter(React.memo((props)=>{
         { slots['pageContentBefore'] }
         {
           pageContent ? (
-            <WUI_page_content 
-                css = {styles.content}
-              >{ slots.main }</WUI_page_content>
+            <WUI_page_content css = {styles.content} >{ slots.main }</WUI_page_content>
           ) : slots.main
         }
         { slots['pageContentAfter'] }

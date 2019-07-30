@@ -5,6 +5,7 @@ import Utils from '../../utils/utils';
 import { getComponents } from './utils';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import { duration } from '../styles/transitions';
+import { log } from 'util';
 
 const PageWrapper = ({routeProps, routes, ...props})=>{
   const { children, isMain, init } = props;
@@ -36,9 +37,15 @@ const PageWrapper = ({routeProps, routes, ...props})=>{
 
   return (
     <div className="router-transition-stage">
-      {isRoute && React.cloneElement(children, {...routeProps, query: urlQuery})}
+      {children({...routeProps, query: urlQuery})}
     </div>
   )
+
+  // return (
+  //   <div className="router-transition-stage">
+  //     {isRoute && React.cloneElement(children, {...routeProps, query: urlQuery})}
+  //   </div>
+  // )
 }
 
 const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fallback }) => {
@@ -106,26 +113,32 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
           {...eventsHandler}
         >
         {
-          mainRoutes.map(({component, async, redirect, ...rest}, i)=>{
-            const Component = getComponents({component, async, redirect});
-            return (
-              <Route 
-                {...rest}
-                strict
-                key={`route_main_${i}`}
-                render={ props => (
-                  <PageWrapper 
-                    routeProps={props}
-                    routes={mainRoutes}
-                    isMain={isCurrent=> mainView != 'main' && isCurrent}
-                    init={()=> setMainView('main')}
-                  >
-                    {Component && <Component fallback={fallback}/>}
-                  </PageWrapper>
-                )}
-              />
-            )
-          })
+          mainRoutes.map(({component, async, redirect, ...rest}, i)=>(
+            <Route 
+              {...rest}
+              strict
+              key={`route_main_${i}`}
+              render={ props => (
+                <PageWrapper 
+                  routeProps={props}
+                  routes={mainRoutes}
+                  isMain={isCurrent=> mainView != 'main' && isCurrent}
+                  init={()=> setMainView('main')}
+                >
+                  {
+                    (props)=>{
+                      const Component = React.useMemo(()=>getComponents({component, async, redirect, ...props}), []);
+                      return (
+                        <React.Suspense fallback={fallback}>
+                          <Component {...props}/>
+                        </React.Suspense>
+                      )
+                    }
+                  }
+                </PageWrapper>
+              )}
+            />
+          ))
         }
         </WUI_pages>
       </CSSTransition>
@@ -141,25 +154,31 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
           {...eventsHandler}
         >
           {
-            subRoutes.map(({ component, async, redirect, ...rest }, i)=>{
-                let Component = getComponents({component, async, redirect});
-                return (
-                  <Route 
-                    {...rest}
-                    key={`route_${i}`}
-                    render={props=>(
-                      <PageWrapper 
-                        routes={subRoutes}
-                        routeProps={props}
-                        isMain={isCurrent=> mainView != 'nested' && isCurrent}
-                        init={()=> setMainView('nested')}
-                      >
-                        {Component && <Component fallback={fallback}/>}
-                      </PageWrapper>
-                    )}
-                  />
-                )
-            })
+            subRoutes.map(({ component, async, redirect, ...rest }, i)=>(
+              <Route 
+                {...rest}
+                key={`route_${i}`}
+                render={props=>(
+                  <PageWrapper 
+                    routes={subRoutes}
+                    routeProps={props}
+                    isMain={isCurrent=> mainView != 'nested' && isCurrent}
+                    init={()=> setMainView('nested')}
+                  >
+                    {
+                      (props)=>{
+                        const Component = React.useMemo(()=>getComponents({component, async, redirect, ...props}), []);
+                        return (
+                          <React.Suspense fallback={fallback}>
+                            <Component {...props}/>
+                          </React.Suspense>
+                        )
+                      }
+                    }
+                  </PageWrapper>
+                )}
+              />
+            ))
           }
         </WUI_pages>
       </CSSTransition>

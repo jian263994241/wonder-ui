@@ -17,7 +17,6 @@ const View =  withRouter(({history, location, fallback = <Preloader/> , ...rest}
   React.useEffect(()=>{
     setAction(history.action); 
   }, [search, pathname])
-
   
   return (
     <ThemeProvider theme={theme}>

@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { WUI_flex, WUI_flexItem } from './styles';
 
 
-const Flex = React.forwardRef((props, ref)=>(
-  <WUI_flex {...props} ref={ref}/>
-))
+const Flex = WUI_flex;
 
 
 Flex.Item = WUI_flexItem;

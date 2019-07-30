@@ -1,15 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-
-export const useIsMounted = () => {
-  const isMounted = useRef(false)
-
-  React.useEffect(() => {
-    isMounted.current = true;
-    return () => isMounted.current = false;
-  }, []);
-  return isMounted;
-}
+import utils from './utils';
 
 /**
  * Creates DOM element to be used as React root.
@@ -112,12 +103,14 @@ export function createContainer(Component){
   return function render (id, props, timeout, callback){
     prevProps[id] = Object.assign({}, prevProps[id], props);
     clearTimeout(timeoutfn);
-    ReactDOM.render(<Component {...prevProps[id]}/>, container, ()=>{
-      callback && callback();
-      if(timeout){
-        setTimeout(() => { destroy() }, timeout);
-      }
-    });
+    utils.nextTick(()=>{
+      ReactDOM.render(<Component {...prevProps[id]}/>, container, ()=>{
+        callback && callback();
+        if(timeout){
+          setTimeout(() => { destroy() }, timeout);
+        }
+      });
+    })
 
     function destroy(){
       ReactDOM.unmountComponentAtNode(container);
