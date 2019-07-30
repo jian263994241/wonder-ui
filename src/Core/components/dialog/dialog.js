@@ -14,8 +14,9 @@ import Backdrop from '../backdrop';
 import Fade from '../fade';
 import { usePortal, createContainer } from '../../utils/reactUtils';
 import Manager from '../../utils/manager';
+import { duration } from '../styles/transitions';
 
-export const dialogTimeout = 400;
+export const dialogTimeout = duration.standard;
 
 const Dialog = React.forwardRef((props, ref)=>{
 

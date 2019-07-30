@@ -7,7 +7,7 @@ import CSSTransition from 'react-transition-group/CSSTransition';
 import { duration } from '../styles/transitions';
 
 const PageWrapper = ({routeProps, routes, ...props})=>{
-  const { children, isMain, init } = props;
+  const { children, isMain, init, childrenRoutes } = props;
   const { location, match  } = routeProps;
   // const [isRoute, setRouteState] = React.useState(false);
 
@@ -20,6 +20,16 @@ const PageWrapper = ({routeProps, routes, ...props})=>{
   if(isMain(isCurrent)){
     init();
   }
+
+  React.useEffect(()=>{
+    if(childrenRoutes){
+      childrenRoutes.forEach((item)=>{
+        if(item.async) {
+          item.async()
+        }
+      })
+    }
+  }, [childrenRoutes])
 
   // React.useEffect(()=>{
   //   const matchedRoute = routes.find(item=>item.path === match.path);
@@ -64,7 +74,7 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
     animationType === 'forward' ? 'router-transition-forward': '',
   )
 
-  const timeout = cls === '' ? 0 : duration.standard;
+  const timeout = cls === '' ? 0 : duration.complex;
 
   const setRouteAniState = (element, state)=> {
     element && element.setAttribute('ani-state', state);
@@ -105,7 +115,7 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
           {...eventsHandler}
         >
         {
-          mainRoutes.map(({component, async, redirect, ...rest}, i)=>(
+          mainRoutes.map(({component, async, redirect, routes: childrenRoutes, ...rest}, i)=>(
             <Route 
               {...rest}
               strict
@@ -114,12 +124,13 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
                 <PageWrapper 
                   routeProps={props}
                   routes={mainRoutes}
+                  childrenRoutes={childrenRoutes}
                   isMain={isCurrent=> mainView != 'main' && isCurrent}
                   init={()=> setMainView('main')}
                 >
                   {
                     (props)=>{
-                      const Component = React.useMemo(()=>getComponents({component, async, redirect, ...props}), []);
+                      const Component = React.useMemo(()=>getComponents({component, async, redirect}), []);
                       return (
                         <React.Suspense fallback={fallback}>
                           <Component {...props}/>
@@ -159,7 +170,7 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
                   >
                     {
                       (props)=>{
-                        const Component = React.useMemo(()=>getComponents({component, async, redirect, ...props}), []);
+                        const Component = React.useMemo(()=>getComponents({component, async, redirect}), []);
                         return (
                           <React.Suspense fallback={fallback}>
                             <Component {...props}/>

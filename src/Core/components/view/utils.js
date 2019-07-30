@@ -1,11 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-export const getComponents = ({component, async, redirect, ...passProps})=>{
+export const getComponents = ({component, async, redirect})=>{
   if(async){
-    return React.lazy(()=>{
-      return async(passProps).then(x => new Promise(resolve => setTimeout(() => resolve(x), 15)))
-    });
+    return React.lazy(async);
   }
 
   if(typeof redirect === 'string'){

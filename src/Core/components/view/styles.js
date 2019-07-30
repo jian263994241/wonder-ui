@@ -59,10 +59,10 @@ export const WUI_pages = styled(AnimatedSwitch) `
     }
 
     .slide-enter.slide-enter-active {
-      animation: ${pageNextToCurrent} ${duration.standard}ms ${easing.easeInOut} forwards;
+      animation: ${pageNextToCurrent} ${duration.complex}ms ${easing.easeInOut} forwards;
       &:before {
         ${pageFakeShadow}
-        animation: ${iosPageElementFadeIn} ${duration.standard}ms ${easing.easeInOut} forwards;
+        animation: ${iosPageElementFadeIn} ${duration.complex}ms ${easing.easeInOut} forwards;
       }
     }
 
@@ -76,10 +76,10 @@ export const WUI_pages = styled(AnimatedSwitch) `
     }
 
     .slide-exit.slide-exit-active {
-      animation: ${pageCurrentToPrevious} ${duration.standard}ms ${easing.easeInOut} forwards;
+      animation: ${pageCurrentToPrevious} ${duration.complex}ms ${easing.easeInOut} forwards;
       &:after {
         ${pageFakeOpacity}
-        animation: ${iosPageElementFadeIn} ${duration.standard}ms ${easing.easeInOut} forwards;
+        animation: ${iosPageElementFadeIn} ${duration.complex}ms ${easing.easeInOut} forwards;
       }
     }
 
@@ -95,10 +95,10 @@ export const WUI_pages = styled(AnimatedSwitch) `
       z-index: 1;
     }
     .slide-enter.slide-enter-active {
-      animation: ${pagePreviousToCurrent} ${duration.standard}ms ${easing.easeInOut} forwards;
+      animation: ${pagePreviousToCurrent} ${duration.complex}ms ${easing.easeInOut} forwards;
       &:after {
         ${pageFakeOpacity}
-        animation: ${iosPageElementFadeOut} ${duration.standard}ms ${easing.easeInOut} forwards;
+        animation: ${iosPageElementFadeOut} ${duration.complex}ms ${easing.easeInOut} forwards;
       }
     }
 
