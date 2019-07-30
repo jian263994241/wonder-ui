@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 export const getComponents = ({component, async, redirect, ...passProps})=>{
   if(async){
     return React.lazy(()=>{
-      return async(passProps).then(x => new Promise(resolve => setTimeout(() => resolve(x), 16)))
+      return async(passProps).then(x => new Promise(resolve => setTimeout(() => resolve(x), 15)))
     });
   }
 

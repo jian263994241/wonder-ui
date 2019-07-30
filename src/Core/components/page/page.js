@@ -27,7 +27,7 @@ const Page = withRouter(React.memo((props)=>{
   }, [children]);
 
   React.useEffect(()=>{
-    utils.nextTick(()=>setVisible(true), 12)
+    utils.nextTick(()=>setVisible(true), 15)
   }, []);
 
   React.useEffect(()=>{

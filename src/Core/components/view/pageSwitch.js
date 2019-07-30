@@ -5,12 +5,11 @@ import Utils from '../../utils/utils';
 import { getComponents } from './utils';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import { duration } from '../styles/transitions';
-import { log } from 'util';
 
 const PageWrapper = ({routeProps, routes, ...props})=>{
   const { children, isMain, init } = props;
   const { location, match  } = routeProps;
-  const [isRoute, setRouteState] = React.useState(false);
+  // const [isRoute, setRouteState] = React.useState(false);
 
   if(!children) return null;
 
@@ -22,30 +21,24 @@ const PageWrapper = ({routeProps, routes, ...props})=>{
     init();
   }
 
-  React.useEffect(()=>{
-    const matchedRoute = routes.find(item=>item.path === match.path);
-    if(matchedRoute){
-      const matched = matchPath(location.pathname, {
-        path: matchedRoute.path,
-        exact: true
-      })
-      if(matched){
-        setRouteState(true);
-      } 
-    }
-  }, [location.pathname])
+  // React.useEffect(()=>{
+  //   const matchedRoute = routes.find(item=>item.path === match.path);
+  //   if(matchedRoute){
+  //     const matched = matchPath(location.pathname, {
+  //       path: matchedRoute.path,
+  //       exact: true
+  //     })
+  //     if(matched){
+  //       setRouteState(true);
+  //     } 
+  //   }
+  // }, [location.pathname])
 
   return (
     <div className="router-transition-stage">
       {children({...routeProps, query: urlQuery})}
     </div>
   )
-
-  // return (
-  //   <div className="router-transition-stage">
-  //     {isRoute && React.cloneElement(children, {...routeProps, query: urlQuery})}
-  //   </div>
-  // )
 }
 
 const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fallback }) => {
@@ -90,10 +83,9 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
     const main = [];
     let sub = [];
     routes.forEach((route, i)=>{
-      const { routes, ...mainProps } = route;
-      main.push(mainProps);
-      if(routes){
-        sub = sub.concat(routes);
+      main.push(route);
+      if(route.routes){
+        sub = sub.concat(route.routes);
       }
     })
     return [main, sub];
