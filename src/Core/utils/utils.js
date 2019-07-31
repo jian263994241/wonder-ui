@@ -445,7 +445,17 @@ const Utils = {
         return null;
       }
     }
-    return returns;
+    return typeof returns === 'function' ? returns(): returns;
+  },
+  unequal(...args){
+    const returns = args.pop();
+    for(let i = 0; i< args.length; i++){
+      const [a, b] = args[i];
+      if(a == b){
+        return null;
+      }
+    }
+    return typeof returns === 'function' ? returns(): returns;
   },
   exist(...args){
     const returns = args.pop();

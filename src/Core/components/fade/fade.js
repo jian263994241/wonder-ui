@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
 import { useForkRef } from '../../utils/reactUtils';
-import { easing, duration } from '../styles/transitions';
+import * as transitions from '../styles/transitions';
 
 const defaultTimeout = { enter: 225, exit: 195 };
 
@@ -17,29 +17,6 @@ function getTransitionProps(props, options) {
     delay: style.transitionDelay,
   };
 }
-
-export const formatMs = milliseconds => `${Math.round(milliseconds)}ms`;
-export const isString = value => typeof value === 'string';
-export const isNumber = value => !isNaN(parseFloat(value));
-
-const transitions = (props = ['all'], options = {}) => {
-  const {
-    duration: durationOption = duration.standard,
-    easing: easingOption = easing.easeInOut,
-    delay = 0,
-    ...other
-  } = options;
-
-  return (Array.isArray(props) ? props : [props])
-    .map(
-      animatedProp =>
-        `${animatedProp} ${
-          typeof durationOption === 'string' ? durationOption : formatMs(durationOption)
-        } ${easingOption} ${typeof delay === 'string' ? delay : formatMs(delay)}`,
-    )
-    .join(',');
-}
-
 
 /**
  * The Fade transition is used by the [Modal](/components/modal/) component.
@@ -76,8 +53,8 @@ const Fade = React.forwardRef(function Fade(props, ref) {
         mode: 'enter',
       },
     );
-    node.style.webkitTransition = transitions(types, transitionProps);
-    node.style.transition = transitions(types, transitionProps);
+    node.style.webkitTransition = transitions.create(types, transitionProps);
+    node.style.transition = transitions.create(types, transitionProps);
     
     if (onEnter) {
       onEnter(node);
@@ -91,8 +68,8 @@ const Fade = React.forwardRef(function Fade(props, ref) {
         mode: 'exit',
       },
     );
-    node.style.webkitTransition = transitions(types, transitionProps);
-    node.style.transition = transitions(types, transitionProps);
+    node.style.webkitTransition = transitions.create(types, transitionProps);
+    node.style.transition = transitions.create(types, transitionProps);
 
     if (onExit) {
       onExit(node);

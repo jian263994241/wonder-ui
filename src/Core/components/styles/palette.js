@@ -3,13 +3,13 @@ import pink from '../colors/pink';
 import grey from '../colors/grey';
 import red from '../colors/red';
 import common from '../colors/common';
-import { getContrastRatio, darken, lighten } from './colorManipulator';
+import { getContrastRatio, darken, lighten, fade } from './colorManipulator';
 
 export const light = {
   // The colors used to style the text.
   text: {
     // The most important text.
-    primary: 'rgba(0, 0, 0, 0.87)',
+    primary: 'rgba(0, 0, 0, 0.80)',
     // Secondary text.
     secondary: 'rgba(0, 0, 0, 0.54)',
     // Disabled text have even lower visual prominence.
@@ -81,7 +81,7 @@ const error = {
 };
 
 const type = 'light';
-const contrastThreshold = 3;
+const contrastThreshold = 2.5;
 const tonalOffset = 0.2;
 
 const types = { dark, light };
@@ -163,11 +163,18 @@ function getContrastText(background) {
   //   `Material-UI: missing background argument in getContrastText(${background}).`,
   // );
 
+  // const contrastText =
+  //   getContrastRatio(background, dark.text.primary) >= contrastThreshold
+  //     ? dark.text.primary
+  //     : light.text.primary;
   const contrastText =
     getContrastRatio(background, dark.text.primary) >= contrastThreshold
       ? dark.text.primary
-      : light.text.primary;
-
+      : darken(background, 0.55);
+  
+   
+      
+  
   // if (process.env.NODE_ENV !== 'production') {
   //   const contrast = getContrastRatio(background, contrastText);
   //   warning(

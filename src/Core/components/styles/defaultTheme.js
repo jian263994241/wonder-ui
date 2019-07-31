@@ -3,6 +3,7 @@ import shadows from './shadows';
 import shape from './shape';
 import typography from './typography';
 import createSpacing from './createSpacing';
+import * as transitions from './transitions';
 
 const spacing = createSpacing(8);
 
@@ -31,7 +32,8 @@ const defaultTheme = {
   palette,
   shape,
   typography,
-  spacing
+  spacing,
+  transitions
 }
 
 export default defaultTheme;

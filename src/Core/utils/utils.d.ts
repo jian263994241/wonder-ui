@@ -52,6 +52,8 @@ export interface Utils {
   /** */
   equal: (...args: array, returns: T) => T
   /** */
+  unequal: (...args: array, returns: T) => T
+  /** */
   exist: (...args: any, returns: T) => T
 }
 
