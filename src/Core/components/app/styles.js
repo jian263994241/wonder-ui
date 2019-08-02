@@ -9,10 +9,9 @@ export const WUI_global = createGlobalStyle `
     z-index: -1;
   }
   body {
-    font-family: ${({theme})=>theme.typography.fontFamily};
+    ${({theme})=> theme.typography.body}
     margin: 0;
     padding: 0;
-    font-size: ${({theme})=>theme.typography.fontSize}px;
     -webkit-highlight: none;
     -webkit-user-select: none;
     -webkit-text-size-adjust: 100%;

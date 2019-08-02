@@ -2,8 +2,10 @@ import React from 'react';
 import { WUI_button_base } from './styles';
 
 
-const ButtonBase = ({ color, size, variant, fullWidth, ...rest})=>(
-  <WUI_button_base {...rest}/>
-);
+const ButtonBase = React.forwardRef(({ color, size, variant, fullWidth, ...rest}, ref)=> {
+  return (
+    <WUI_button_base {...rest} ref={ref}/>
+  )
+});
 
 export default ButtonBase;

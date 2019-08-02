@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const WUI_link = styled.a `
+export const WUI_link = styled.button `
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   outline: none;
