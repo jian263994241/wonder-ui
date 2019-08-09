@@ -42,7 +42,7 @@ export const WUI_dialog_body = styled.div `
   background: rgba(255,255,255,0.95);
   font-size: 14px;
   font-family: inherit;
-  ${({noButtons})=> noButtons ? css `border-radius: 13px;`: createHairline('bottom', 'rgba(0,0,0,0.2)')}
+  ${({noButtons})=> noButtons ? css `border-radius: 13px;`: createHairline('bottom', 'rgba(0,0,0,0.2)').css()}
   ${({toast})=> toast && css `
     display: inline-block;
     border-radius: 5px;
@@ -74,7 +74,7 @@ export const WUI_dialog_button = styled.span `
   color: ${({theme, primary})=> primary ? theme.palette.primary.main: theme.palette.text.primary};
   background: rgba(255,255,255,0.95);
   font-weight: 500;
-  ${createHairline('right', 'rgba(0,0,0,0.2)')}
+  ${createHairline('right', 'rgba(0,0,0,0.2)').css()}
 
   &:first-child {
       border-radius: 0 0 0 13px;

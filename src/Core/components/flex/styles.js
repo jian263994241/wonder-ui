@@ -4,6 +4,8 @@ import utils from '../../utils/utils';
 export const WUI_flexItem = styled.div `
   box-sizing: border-box;
   flex: 1;
+  height: 100%;
+  width: 100%;
 `
 
 const justify = css(props=>{

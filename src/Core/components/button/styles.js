@@ -5,7 +5,7 @@ import ButtonBase from '../button-base';
 
 
 export const WUI_button = styled(ButtonBase)( (props) => {
-  const { theme, variant, color, size, fullWidth: _fullWidth } = props;
+  const { theme, variant, color, size, fullWidth: _fullWidth, full: _full } = props;
 
   const text = utils.equal(
     [variant, 'text'], 
@@ -159,7 +159,7 @@ export const WUI_button = styled(ButtonBase)( (props) => {
   const sizeSmall = utils.equal(
     [size, 'small'],
     {
-      padding: '0px 8px',
+      padding: '0px 4px',
       fontSize: theme.typography.pxToRem(13),
       minWidth: 'auto',
     }
@@ -177,6 +177,15 @@ export const WUI_button = styled(ButtonBase)( (props) => {
     [_fullWidth, true],
     {
       width: '100%',
+    }
+  )
+
+  const full = utils.equal(
+    [_full, true],
+    {
+      width: '100%',
+      height: '100%',
+      borderRadius: 'none'
     }
   )
 
@@ -213,7 +222,8 @@ export const WUI_button = styled(ButtonBase)( (props) => {
       ...colorInherit,
       ...sizeSmall,
       ...sizeLarge,
-      ...fullWidth
+      ...fullWidth,
+      ...full
     }
   }
 })

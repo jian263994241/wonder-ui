@@ -1,6 +1,6 @@
 const Support = (function Support() {
   const testDiv = document.createElement('div');
-
+  
   return {
     touch: (function checkTouch() {
       return !!((window.navigator.maxTouchPoints > 0) || ('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch));

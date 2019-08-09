@@ -47,20 +47,26 @@ const Page = withRouter(React.memo((props)=>{
     }
   }, [name, pathname])
 
-  return visible && (
+  return (
     <ThemeProvider theme={theme}>
       <WUI_page_root 
         ref={root} 
         pageroot={true}
         css = {styles.root}
       >
-        { slots['pageContentBefore'] }
         {
-          pageContent ? (
-            <WUI_page_content css = {styles.content} >{ slots.main }</WUI_page_content>
-          ) : slots.main
+          visible && (
+            <>
+            { slots['pageContentBefore'] }
+            {
+              pageContent ? (
+                <WUI_page_content css = {styles.content} >{ slots.main }</WUI_page_content>
+              ) : slots.main
+            }
+            { slots['pageContentAfter'] }
+            </>
+          )
         }
-        { slots['pageContentAfter'] }
       </WUI_page_root>
     </ThemeProvider>
     

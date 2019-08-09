@@ -25,6 +25,7 @@ Button.propTypes = {
   style: PropTypes.object,
   disabled: PropTypes.bool,
   fullWidth: PropTypes.bool,
+  full: PropTypes.bool,
   href: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   color: PropTypes.oneOf(['default', 'inherit', 'primary', 'secondary']),

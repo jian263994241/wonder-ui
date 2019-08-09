@@ -35,13 +35,9 @@ export default function App ({
   app.history = React.useMemo(()=> history || createHashHistory({hashType: 'hashbang'}), [history]);
 
   useEffect(()=>{
-
     app.root = rootRef.current;
-
     app.useModules();
-    
     app.emit('init'); 
-
   }, []);
 
   return (
@@ -49,9 +45,9 @@ export default function App ({
       <AppContext.Provider value={app}> 
         <WUI_app ref={rootRef}>
           <WUI_global/>
-            <Router history={app.history}>
-            {children}
-            </Router>
+          <Router history={app.history}>
+          {children}
+          </Router>
         </WUI_app>
       </AppContext.Provider>
     </ThemeProvider>
