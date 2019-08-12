@@ -1,5 +1,6 @@
 import styled, {css} from 'styled-components';
 import { createHairline, removeHairline } from '../styles/hairline';
+import utils from '../../utils/utils';
 
 export const WUI_list_header = styled.div(({theme, center})=>{
   return  `
@@ -25,9 +26,43 @@ export const WUI_list_footer = styled.div(({theme, center})=>{
   `
 })
 
-export const WUI_list_item_arrow = styled.div `
+export const WUI_list_item_arrow = styled.div(({theme, ...props})=>{
 
-`
+  const vertical = utils.equal(
+    [props.arrow, 'vertical'], {
+      transform: 'rotate(90deg)'
+    }
+  )
+
+  const verticalUp = utils.equal(
+    [props.arrow, 'vertical-up'], {
+      transform: 'rotate(270deg)'
+    }
+  )
+
+  const align = utils.equal(
+    [props.align, 'top'], {
+      alignSelf: 'baseline',
+    }
+  )
+  
+  return {
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'relative',
+    top: 3,
+    marginLeft: 3,
+    ...align,
+    svg: {
+      display: 'block',
+      width: 15,
+      height: 15,
+      marginLeft: 8,
+      ...vertical,
+      ...verticalUp
+    }
+  }
+})
 
 export const WUI_list_item_line = styled.div(({theme})=>{
 
@@ -36,11 +71,12 @@ export const WUI_list_item_line = styled.div(({theme})=>{
     display: 'flex',
     flex: 1,
     alignSelf: 'stretch',
+    alignItems: 'center',
     paddingRight: 15,
     overflow: 'hidden',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
-    ...createHairline('bottom', theme.palette.divider).object,
+    ...createHairline('top', theme.palette.divider).object,
   }
 })
 
@@ -61,47 +97,76 @@ export const WUI_list_item_media = styled.div `
   }
 `
 
-export const WUI_list_item_content = styled.div(({theme})=>{
+export const WUI_list_item_content = styled.div(({theme, ...props})=>{
+  const ellipsis = utils.equal(
+    [props.wrap, false], 
+    theme.typography.ellipsis
+  )
+
+  const align = utils.equal(
+    [props.align, 'top'], {
+      alignSelf: 'baseline',
+    }
+  )
+  
   return {
     ...theme.typography.body1,
-    ...theme.typography.ellipsis,
+    ...ellipsis,
+    ...align,
     flex: 1,
     textAlign: 'left',
   }
 })
 
-export const WUI_list_item_extra = styled.div(({theme})=>({
-  ...theme.typography.body1,
-  color: theme.palette.text.secondary,
-  textAlign: 'right',
-  paddingLeft: theme.spacing(0.5),
-}))
+export const WUI_list_item_extra = styled.div(({theme, ...props})=>{
+  const align = utils.equal(
+    [props.align, 'top'], {
+      alignSelf: 'baseline',
+    }
+  )
+  return {
+    ...theme.typography.body1,
+    ...align,
+    color: theme.palette.text.secondary,
+    textAlign: 'right',
+    paddingLeft: theme.spacing(0.5),
+  }
+})
 
-export const WUI_list_item = styled.div(({theme})=>{
+export const WUI_list_item = styled.div(({theme, ...props})=>{
+  
+  const disabled = utils.equal(
+    [props.disabled, true],
+    {
+      '&&' : theme.disabled.text,
+      [`& ${WUI_list_item_brief}`]: theme.disabled.text,
+      [`& ${WUI_list_item_extra}`]: theme.disabled.text,
+      [`& ${WUI_list_item_content}`]: theme.disabled.text,
+    }
+  )
+
+  const activeState = utils.equal(
+    [props.activeState, true], {
+      '&:active, &.active-state': {
+        opacity: theme.palette.action.hoverOpacity,
+        // backgroundColor: theme.palette.action.active,
+      },
+    }
+  )
+
   return {
     position: 'relative',
     display: 'flex',
     backgroundColor: theme.palette.background.paper,
     paddingLeft: 15,
-    // minHeight: 44,
+    minHeight: 44,
     verticalAlign: 'middle',
     overflow: 'hidden',
     transition: 'background-color 200ms',
     alignItems: 'center',
-    '&:first-child': {
-      // ...createHairline('top', theme.palette.divider).object,
-    },
-    '&:last-child': {
-      // ...createHairline('bottom', theme.palette.divider).object,
-      // [`&& ${WUI_list_item_line}`]: {
-      //   ...removeHairline('bottom')
-      // }
-    },
-    // '&:only-child': {
-    //   [`&& ${WUI_list_item_line}`]: {
-    //     ...removeHairline('bottom')
-    //   }
-    // }
+    marginTop: -1,
+    ...activeState,
+    ...disabled
   }
 })
 
@@ -109,6 +174,7 @@ export const WUI_list_body = styled.div(({theme})=>{
   return {
     position: 'relative',
     backgroundColor: theme.palette.background.paper,
+    overflow: 'hidden',
     ...createHairline('top', theme.palette.divider).object,
     ...createHairline('bottom', theme.palette.divider).object,
   }

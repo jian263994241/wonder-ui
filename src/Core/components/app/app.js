@@ -23,7 +23,9 @@ export default function App ({
   theme
 }){
   const defaultParmas = {
-    touch: { fastClicks: true },
+    touch: { 
+      fastClicks: true,
+    },
     routes: [],
     on: {},
     fallback: undefined

@@ -4,6 +4,7 @@ import shape from './shape';
 import typography from './typography';
 import createSpacing from './createSpacing';
 import * as transitions from './transitions';
+import disabled from './disabled';
 
 const spacing = createSpacing(8);
 
@@ -33,7 +34,8 @@ const defaultTheme = {
   shape,
   typography,
   spacing,
-  transitions
+  transitions,
+  disabled
 }
 
 export default defaultTheme;
