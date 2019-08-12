@@ -17,32 +17,39 @@ class Page extends React.Component {
     init: false
   }
 
-  componentDidMount() {
-    const { name, match } = this.props;
+  init = ()=>{
     const app = this.context;
-
-    this.unlisten = app.history.listen((location, action)=>{
-      if(location.pathname === match.url){
-        app.emit('pageInit', name, this.props);
-      }else{
-        app.emit('pageRemove', name, this.props);
-      }  
-    })
-    
     setTimeout(() => {
       this.setState({ init: true }, ()=>{
-        this.forceUpdate();
-        app.emit('pageInit', name, this.props);
+        app.emit('pageInit', this.props.name, this.props);
       })
     }, duration.complex);
   }
 
-  componentWillUnmount(){
+  componentDidMount() {
+    const { name, match } = this.props;
+    const app = this.context;
 
+    this.init();
+
+    this.unlisten = app.history.listen((location, action)=>{
+      if(location.pathname === match.url){
+        //reinit
+        this.init();
+      }else{
+        //非当前页面, 页面缓存中的页面
+        this.setState({ init: false }, ()=>{
+          app.emit('pageRemove', name, this.props);
+        })
+      }  
+    })
+    
+  }
+
+  componentWillUnmount(){
     this.setState({ init: false }, ()=>{
       this.unlisten();
     });
-
   }
 
   shouldComponentUpdate(nextProps, nextState) {
