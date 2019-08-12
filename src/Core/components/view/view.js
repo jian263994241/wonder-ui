@@ -7,7 +7,7 @@ import Preloader from '../preloader';
 import theme from '../styles/defaultTheme';
 import { ThemeProvider } from 'styled-components';
 
-const View =  withRouter(({history, location, fallback = <Preloader/> , ...rest}) => {
+const View =  withRouter(({history, location, fallback = null , ...rest}) => {
   const app = React.useContext(appContext);
   const [action, setAction] = React.useState('PUSH');
   const { routes } = app.params;

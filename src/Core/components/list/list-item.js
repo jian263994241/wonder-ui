@@ -49,7 +49,7 @@ const ListItem = React.forwardRef((props, ref)=>{
 })
 
 ListItem.defaultProps = {
-
+  wrap: false,
 }
 
 ListItem.propTypes = {

@@ -12,10 +12,24 @@ const DEFAULT_SCROLL_RENDER_AHEAD = 1000;
 const DEFAULT_END_REACHED_THRESHOLD = 1000;
 const DEFAULT_SCROLL_CALLBACK_THROTTLE = 50;
 
+const ListContext = React.createContext();
 
-function StaticRenderer(props){
-  const { shouldUpdate, render } = props;
-  return render();
+// function StaticRenderer(props){
+//   const { shouldUpdate, render } = props;
+//   return render();
+// }
+
+class StaticRenderer extends React.Component {
+
+  shouldComponentUpdate(nextProps) {
+    if(this.props.timestamp != nextProps.timestamp){
+      return true;
+    }
+    return nextProps.shouldUpdate;
+  }
+  render() {
+    return this.props.render();
+  }
 }
 
 
@@ -50,7 +64,7 @@ export default class ListView extends React.Component {
   static defaultProps = {
     initialListSize: DEFAULT_INITIAL_ROWS,
     pageSize: DEFAULT_PAGE_SIZE,
-    renderScrollComponent: props => <ScrollView {...props} />,
+    renderScrollComponent: props => <ScrollView contentContainerStyle={{ width: '100%' }} {...props} />,
     renderBodyComponent: () => <WUI_list_body />,
     renderSectionBodyWrapper: (sectionID) => <div key={sectionID} />,
     sectionBodyClassName: 'list-view-section-body',
@@ -127,6 +141,7 @@ export default class ListView extends React.Component {
 
   render() {
     const dataSource = this.props.dataSource;
+    const timestamp = this.props.timestamp;
     const allRowIDs = dataSource.rowIdentities;
     const bodyComponents = [];
     let rowCount = 0;
@@ -147,6 +162,7 @@ export default class ListView extends React.Component {
           <StaticRenderer
             key={`s_${sectionID}`}
             shouldUpdate={!!shouldUpdateHeader}
+            timestamp={timestamp}
             render={this.props.renderSectionHeader.bind(
               null,
               dataSource.getSectionHeaderData(sectionIdx),
@@ -166,6 +182,7 @@ export default class ListView extends React.Component {
           <StaticRenderer
             key={`r_${comboID}`}
             shouldUpdate={!!shouldUpdateRow}
+            timestamp={timestamp}
             render={this.props.renderRow.bind(
               null,
               dataSource.getRowData(sectionIdx, rowIdx),

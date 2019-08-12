@@ -1,3 +1,4 @@
+import React from 'react';
 import styled, {css} from 'styled-components';
 import { createHairline, removeHairline } from '../styles/hairline';
 import utils from '../../utils/utils';
@@ -43,14 +44,14 @@ export const WUI_list_item_arrow = styled.div(({theme, ...props})=>{
   const align = utils.equal(
     [props.align, 'top'], {
       alignSelf: 'baseline',
+      position: 'relative',
+      top: 3,
     }
   )
   
   return {
     display: 'flex',
     justifyContent: 'center',
-    position: 'relative',
-    top: 3,
     marginLeft: 3,
     ...align,
     svg: {
@@ -97,7 +98,7 @@ export const WUI_list_item_media = styled.div `
   }
 `
 
-export const WUI_list_item_content = styled.div(({theme, ...props})=>{
+export const WUI_list_item_content = styled(({wrap, align,...props})=> <div {...props}/>)(({theme, ...props})=>{
   const ellipsis = utils.equal(
     [props.wrap, false], 
     theme.typography.ellipsis
