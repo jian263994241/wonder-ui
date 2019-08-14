@@ -150,3 +150,12 @@ export function isUiElement(element, uiName) {
   return React.isValidElement(element) && muiNames.indexOf(element.type.uiName) !== -1;
 }
 
+export function styledTag(ele, uiProps = []){
+  return (props)=> {
+    const _props = Object.assign({}, props);
+    uiProps.forEach((removePropName)=>{
+      delete _props[removePropName]
+    })
+    return React.createElement(ele, _props)
+  };
+}

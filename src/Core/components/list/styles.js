@@ -77,7 +77,7 @@ export const WUI_list_item_line = styled.div(({theme})=>{
     overflow: 'hidden',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
-    ...createHairline('top', theme.palette.divider).object,
+    ...createHairline('bottom', theme.palette.divider).object,
   }
 })
 
@@ -165,7 +165,7 @@ export const WUI_list_item = styled.div(({theme, ...props})=>{
     overflow: 'hidden',
     transition: 'background-color 200ms',
     alignItems: 'center',
-    marginTop: -1,
+    marginBottom: -1,
     ...activeState,
     ...disabled
   }

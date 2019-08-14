@@ -10,7 +10,10 @@ export const WUI_button = styled(ButtonBase)( (props) => {
   const text = utils.equal(
     [variant, 'text'], 
     {
-      padding: '6px 8px'
+      padding: '6px 8px',
+      '&[disabled]': {
+        color: theme.palette.action.disabled,
+      },
     }
   );
   const textPrimary = utils.equal(
@@ -18,10 +21,10 @@ export const WUI_button = styled(ButtonBase)( (props) => {
     [color, 'primary'],
     {
       color: theme.palette.primary.main,
-      '&:hover': {
+      '&:active': {
         backgroundColor: fade(theme.palette.primary.main, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
-        '@media (hover: none)': {
+        '@media (active: none)': {
           backgroundColor: 'transparent',
         },
       }
@@ -32,10 +35,10 @@ export const WUI_button = styled(ButtonBase)( (props) => {
     [color, 'secondary'],
     {
       color: theme.palette.secondary.main,
-      '&:hover': {
+      '&:active': {
         backgroundColor: fade(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
-        '@media (hover: none)': {
+        '@media (active: none)': {
           backgroundColor: 'transparent',
         },
       },
@@ -48,6 +51,7 @@ export const WUI_button = styled(ButtonBase)( (props) => {
       border: `1px solid rgba(255, 255, 255, 0.23)`,
       '&[disabled]': {
         border: `1px solid ${theme.palette.action.disabled}`,
+        color: theme.palette.action.disabled
       },
     }
   );
@@ -57,11 +61,11 @@ export const WUI_button = styled(ButtonBase)( (props) => {
     {
       color: theme.palette.primary.main,
       border: `1px solid ${fade(theme.palette.primary.main, 0.5)}`,
-      '&:hover': {
+      '&:active': {
         border: `1px solid ${theme.palette.primary.main}`,
         backgroundColor: fade(theme.palette.primary.main, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
-        '@media (hover: none)': {
+        '@media (active: none)': {
           backgroundColor: 'transparent',
         },
       },
@@ -73,11 +77,11 @@ export const WUI_button = styled(ButtonBase)( (props) => {
     {
       color: theme.palette.secondary.main,
       border: `1px solid ${fade(theme.palette.secondary.main, 0.5)}`,
-      '&:hover': {
+      '&:active': {
         border: `1px solid ${theme.palette.secondary.main}`,
         backgroundColor: fade(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
-        '@media (hover: none)': {
+        '@media (active: none)': {
           backgroundColor: 'transparent',
         },
       },
@@ -103,10 +107,10 @@ export const WUI_button = styled(ButtonBase)( (props) => {
         boxShadow: theme.shadows[0],
         backgroundColor: theme.palette.action.disabledBackground,
       },
-      '&:hover': {
+      '&:active': {
         backgroundColor: theme.palette.grey.A100,
         // Reset on touch devices, it doesn't add specificity
-        '@media (hover: none)': {
+        '@media (active: none)': {
           backgroundColor: theme.palette.grey[300],
         },
         '&[disabled]': {
@@ -122,10 +126,10 @@ export const WUI_button = styled(ButtonBase)( (props) => {
     {
       color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.primary.main,
-      '&:hover': {
+      '&:active': {
         backgroundColor: theme.palette.primary.dark,
         // Reset on touch devices, it doesn't add specificity
-        '@media (hover: none)': {
+        '@media (active: none)': {
           backgroundColor: theme.palette.primary.main,
         },
       },
@@ -138,10 +142,10 @@ export const WUI_button = styled(ButtonBase)( (props) => {
     {
       color: theme.palette.secondary.contrastText,
       backgroundColor: theme.palette.secondary.main,
-      '&:hover': {
+      '&:active': {
         backgroundColor: theme.palette.secondary.dark,
         // Reset on touch devices, it doesn't add specificity
-        '@media (hover: none)': {
+        '@media (active: none)': {
           backgroundColor: theme.palette.secondary.main,
         },
       },
@@ -196,20 +200,18 @@ export const WUI_button = styled(ButtonBase)( (props) => {
       minWidth: 64,
       padding: '4px 16px',
       borderRadius: theme.shape.borderRadius,
-      '&:hover': {
+      '&:active': {
         textDecoration: 'none',
         backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
-        '@media (hover: none)': {
+        '@media (active: none)': {
           backgroundColor: 'transparent',
         },
         '&[disabled]': {
           backgroundColor: 'transparent',
         },
       },
-      '&[disabled]': {
-        color: theme.palette.action.disabled,
-      },
+      
       ...text,
       ...textPrimary,
       ...textSecondary,

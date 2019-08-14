@@ -10,6 +10,8 @@ export const WUI_page_root = styled.div(({theme})=>{
     height: 100%;
     background: ${theme.palette.background.default};
     z-index: 10;
+    display: flex;
+    flex-direction: column;
   `
 })
 

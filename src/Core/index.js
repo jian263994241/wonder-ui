@@ -13,6 +13,7 @@ export { default as Tag } from './components/tag';
 export { default as ToggleButton } from './components/toggle-button';
 export { default as ListView } from './components/list-view';
 export { default as List } from './components/list';
+export { default as Block } from './components/block';
 
 export { default as AppContext} from './components/app/appContext';
 
