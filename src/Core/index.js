@@ -14,7 +14,10 @@ export { default as ToggleButton } from './components/toggle-button';
 export { default as ListView } from './components/list-view';
 export { default as List } from './components/list';
 export { default as Block } from './components/block';
+export { default as Toolbar } from './components/toolbar';
+export { default as SvgIcon } from './components/svgIcon';
 
+export { default as utils } from './components/utils';
 export { default as AppContext} from './components/app/appContext';
 
 export * as hooks from './components/hooks';

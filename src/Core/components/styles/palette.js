@@ -18,7 +18,7 @@ export const light = {
     hint: 'rgba(0, 0, 0, 0.38)',
   },
   // The color used to divide different elements.
-  divider: 'rgba(0, 0, 0, 0.12)',
+  divider: '#ddd',
   // The background colors used to style the surfaces.
   // Consistency between these values is important.
   background: {
@@ -31,7 +31,7 @@ export const light = {
     active: 'rgba(0, 0, 0, 0.54)',
     // The color of an hovered action.
     hover: 'rgba(0, 0, 0, 0.08)',
-    hoverOpacity: 0.08,
+    hoverOpacity: 0.1,
     // The color of a selected action.
     selected: 'rgba(0, 0, 0, 0.14)',
     // The color of a disabled action.

@@ -3,9 +3,6 @@ import { WUI_view } from './styles';
 import { withRouter } from 'react-router-dom';
 import appContext from '../app/appContext';
 import Pages from './PageSwitch';
-import Preloader from '../preloader';
-import theme from '../styles/defaultTheme';
-import { ThemeProvider } from 'styled-components';
 
 const View =  withRouter(({history, location, fallback = null , ...rest}) => {
   const app = React.useContext(appContext);
@@ -19,12 +16,9 @@ const View =  withRouter(({history, location, fallback = null , ...rest}) => {
   }, [search, pathname])
   
   return (
-    <ThemeProvider theme={theme}>
-      <WUI_view>
-        <Pages routes={routes} fallback={fallback} action={action} location={location} {...rest}/>
-      </WUI_view>
-    </ThemeProvider>
-    
+    <WUI_view>
+      <Pages routes={routes} fallback={fallback} action={action} location={location} {...rest}/>
+    </WUI_view>
   )
 })
 

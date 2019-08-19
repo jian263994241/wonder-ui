@@ -7,8 +7,6 @@ export interface Utils {
   requestAnimationFrame: (callback: Function) => number
   /** Cancels an animation frame request */
   cancelAnimationFrame: (requestID: number) => void
-  /** Replace diacritics in specified text string with standard latin characters */
-  removeDiacritics: (text: string) => string
   /** Executes code on next available animation frame */
   nextFrame: (callback: Function) => number
   /** executes code after required delay. Basically alias for setTimeout */
@@ -23,26 +21,8 @@ export interface Utils {
   uniqueNumber: () => number
   /** Generates random ID-like string */
   id: (mask: string, map: string) => string
-  /** Returns preloader inner content for MD theme */
-  mdPreloaderContent: () => string
-  /** Returns preloader inner content for iOS theme */
-  iosPreloaderContent: () => string
-  /** Returns preloader inner content for Aurora theme */
-  auroraPreloaderContent: () => string
   /** Deletes object properties */
   deleteProps: (obj: object) => void
-  /**  */
-  colorHexToRgb: (hex: string) => number[]
-  /**  */
-  colorRgbToHex: (r: number, g: number, b: number) => string
-  /**  */
-  colorRgbToHsl: (r: number, g: number, b: number) => number[]
-  /**  */
-  colorHslToRgb: (h: number, s: number, l: number) => number[]
-  /**  */
-  colorHsbToHsl: (h: number, s: number, b: number) => number[]
-  /**  */
-  colorHslToHsb: (h: number, s: number, l: number) => number[]
   /** */
   classnames: (...args: string) => string
   /** */

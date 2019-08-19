@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_button } from './styles';
-import theme from '../styles/defaultTheme';
-import { ThemeProvider } from 'styled-components';
 
 const Button =  ({
   icon,
@@ -10,13 +8,11 @@ const Button =  ({
   children,
   ...rest
 })=> (
-  <ThemeProvider theme={theme}>
-    <WUI_button {...rest}>
-      { iconPosition === 'before' && icon }
-      <span>{children}</span>
-      { iconPosition === 'after' && icon }
-    </WUI_button>
-  </ThemeProvider>
+  <WUI_button {...rest}>
+    { iconPosition === 'before' && icon }
+    <span>{children}</span>
+    { iconPosition === 'after' && icon }
+  </WUI_button>
 )
 
 Button.propTypes = {

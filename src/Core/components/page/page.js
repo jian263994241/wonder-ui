@@ -3,13 +3,14 @@ import { WUI_page_root, WUI_page_content } from './styles';
 import { withRouter } from 'react-router-dom';
 import appContext from '../app/appContext';
 import utils from '../../utils/utils';
-import theme from '../styles/defaultTheme';
-import { ThemeProvider } from 'styled-components';
 import { duration } from '../styles/transitions';
 
-class Page extends React.Component {
+@withRouter
+export default class Page extends React.Component {
 
   static contextType = appContext;
+
+  static Content = WUI_page_content;
 
   state = {
     init: false
@@ -67,28 +68,22 @@ class Page extends React.Component {
       })()
 
     return (
-      <ThemeProvider theme={theme}>
-        <WUI_page_root 
-          ref='root' 
-          pageroot={true}
-          css = {styles.root}
-        >
-          <>
-          { slots['pageContentBefore'] }
-          {
-            pageContent ? (
-              <WUI_page_content css = {styles.content} >{ slots.main }</WUI_page_content>
-            ) : slots.main
-          }
-          { slots['pageContentAfter'] }
-          </>
-        </WUI_page_root>
-      </ThemeProvider>
+      <WUI_page_root 
+        ref='root' 
+        pageroot={true}
+        css = {styles.root}
+        //onTouchMove={(e)=> e.preventDefault()}
+      >
+        <>
+        { slots['pageContentBefore'] }
+        {
+          pageContent ? (
+            <WUI_page_content css = {styles.content} >{ slots.main }</WUI_page_content>
+          ) : slots.main
+        }
+        { slots['pageContentAfter'] }
+        </>
+      </WUI_page_root>
     )
   }
 }
-
-Page.PageContent = WUI_page_content;
-
-
-export default withRouter(Page);

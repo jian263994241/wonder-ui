@@ -65,7 +65,7 @@ export const WUI_list_item_arrow = styled.div(({theme, ...props})=>{
   }
 })
 
-export const WUI_list_item_line = styled.div(({theme})=>{
+export const WUI_list_item_line = styled.div(({theme, ...props})=>{
 
   return {
     position: 'relative',
@@ -144,16 +144,16 @@ export const WUI_list_item = styled.div(({theme, ...props})=>{
       [`& ${WUI_list_item_extra}`]: theme.disabled.text,
       [`& ${WUI_list_item_content}`]: theme.disabled.text,
     }
-  )
+  );
 
   const activeState = utils.equal(
     [props.activeState, true], {
       '&:active, &.active-state': {
-        opacity: theme.palette.action.hoverOpacity,
+        backgroundColor : theme.palette.action.selected,
         // backgroundColor: theme.palette.action.active,
       },
     }
-  )
+  );
 
   return {
     position: 'relative',
@@ -166,8 +166,8 @@ export const WUI_list_item = styled.div(({theme, ...props})=>{
     transition: 'background-color 200ms',
     alignItems: 'center',
     marginBottom: -1,
-    ...activeState,
-    ...disabled
+    ...disabled,
+    ...activeState
   }
 })
 

@@ -3,9 +3,7 @@ import styled, {css} from 'styled-components';
 export const WUI_page_root = styled.div(({theme})=>{
   return css `
     box-sizing: border-box;
-    position: absolute;
-    left: 0;
-    top: 0;
+    position: relative;
     width: 100%;
     height: 100%;
     background: ${theme.palette.background.default};

@@ -8,13 +8,15 @@ import {
   WUI_dialog_button_group,
   WUI_dialog_button
 } from './styles';
-import theme from '../styles/defaultTheme';
+import createTheme from '../styles/createTheme';
 import { ThemeProvider } from 'styled-components';
+import { usePortal, createContainer } from '../../utils/reactUtils';
+import { duration } from '../styles/transitions';
 import Backdrop from '../backdrop';
 import Fade from '../fade';
-import { usePortal, createContainer } from '../../utils/reactUtils';
 import Manager from '../../utils/manager';
-import { duration } from '../styles/transitions';
+import AppContext from '../app/appContext';
+
 
 export const dialogTimeout = duration.standard;
 
@@ -30,9 +32,11 @@ const Dialog = React.forwardRef((props, ref)=>{
     styles = {},
     toast,
     containerId = null,
+    theme,
   } = props;
 
   const createPortal = usePortal(containerId);
+  const app = React.useContext(AppContext) || {};
   const transtions = {
     entering: {
       opacity: 1,
@@ -45,7 +49,7 @@ const Dialog = React.forwardRef((props, ref)=>{
   };
 
   return createPortal(
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={app.theme || createTheme(theme)}>
       <>
       <Backdrop visible={visible} timeout={dialogTimeout}/>
       <Fade 

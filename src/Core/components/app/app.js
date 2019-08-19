@@ -5,7 +5,7 @@ import { createHashHistory } from 'history';
 import { Router } from 'react-router-dom';
 import AppClass from '../../utils/class';
 import utils from '../../utils/utils';
-import defaultTheme from '../styles/defaultTheme';
+import createTheme from '../styles/createTheme';
 import { ThemeProvider } from 'styled-components';
 //modules
 import DeviceModule from '../../modules/device/device';
@@ -42,8 +42,12 @@ export default function App ({
     app.emit('init'); 
   }, []);
 
+  const appTheme = React.useMemo(()=> createTheme(theme), theme);
+
+  app.theme = appTheme;
+
   return (
-    <ThemeProvider theme={utils.extend({}, defaultTheme, theme)}>
+    <ThemeProvider theme={appTheme}>
       <AppContext.Provider value={app}> 
         <WUI_app ref={rootRef}>
           <WUI_global/>
