@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_app, WUI_global } from './styles';
 import AppContext from './appContext';
-import { createHashHistory } from 'history';
-import { Router } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import AppClass from '../../utils/class';
 import utils from '../../utils/utils';
 import createTheme from '../styles/createTheme';
@@ -18,19 +17,20 @@ AppClass.use([ DeviceModule, SupportModule, ResizeModule ]);
 const App = (props) => {
   const {
     params =  {},
-    history,
     children,
-    theme
+    theme,
+    router: Router = HashRouter,
+    ...rest
   } = props;
   const defaultParmas = { routes: [], on: {} };
   const appParams = React.useMemo(()=>utils.extend({}, defaultParmas, params), [params]);
   const app = new AppClass(appParams);
   const rootRef = React.createRef();
   
-  const appHistory = React.useMemo(()=> history || createHashHistory({hashType: 'hashbang'}), [history]);
+  // const appHistory = React.useMemo(()=> history || createHashHistory({hashType: 'hashbang'}), [history]);
   const appTheme = React.useMemo(()=> createTheme(theme), theme);
 
-  app.history = appHistory;
+  // app.history = appHistory;
   app.theme = appTheme;
 
   React.useEffect(()=>{
@@ -38,13 +38,13 @@ const App = (props) => {
     app.useModules();
     app.emit('init');
   }, []);
-
+  
   return (
     <ThemeProvider theme={appTheme}>
       <AppContext.Provider value={app}> 
         <WUI_app ref={rootRef}>
           <WUI_global/>
-          <Router history={app.history}>
+          <Router {...rest}>
           {children}
           </Router>
         </WUI_app>
@@ -60,7 +60,7 @@ App.propTypes = {
     on: PropTypes.object
   }),
   /**ignore */
-  history: PropTypes.object
+  Router: PropTypes.func
 }
 
 export default App;

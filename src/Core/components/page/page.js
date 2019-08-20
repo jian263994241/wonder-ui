@@ -29,12 +29,12 @@ export default class Page extends React.Component {
   }
 
   componentDidMount() {
-    const { name, match } = this.props;
+    const { name, match, history } = this.props;
     const app = this.context;
     this.mounted = true;
     this.init();
 
-    this.unlisten = app.history.listen((location, action)=>{
+    this.unlisten = history.listen((location, action)=>{
       if(location.pathname === match.url){
         //reinit
         this.init();
