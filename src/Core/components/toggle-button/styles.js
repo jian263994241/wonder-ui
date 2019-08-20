@@ -54,7 +54,7 @@ export const WUI_toggle_button_root = styled(Button)(({
     }),
   }),
   ...utils.equal([disabled, true], {
-    color: fade(theme.palette.action.disabled, 0.12),
+    color: fade(theme.palette.action.disabled, 0.35),
   }),
   ...utils.equal([size, 'small'], {
     height: 30,

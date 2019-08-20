@@ -13,22 +13,25 @@ export default class Page extends React.Component {
   static Content = WUI_page_content;
 
   state = {
-    init: false
+    current: false
   }
+
+  mounted = false;
 
   init = ()=>{
     const app = this.context;
+    app.emit('pageInit', this.props.name, this.props);
     setTimeout(() => {
-      this.setState({ init: true }, ()=>{
-        app.emit('pageInit', this.props.name, this.props);
-      })
-    }, duration.complex);
+      if(this.mounted){
+        this.setState({ current: true });
+      }
+    }, duration.complex * 0.05);
   }
 
   componentDidMount() {
     const { name, match } = this.props;
     const app = this.context;
-
+    this.mounted = true;
     this.init();
 
     this.unlisten = app.history.listen((location, action)=>{
@@ -37,22 +40,19 @@ export default class Page extends React.Component {
         this.init();
       }else{
         //非当前页面, 页面缓存中的页面
-        this.setState({ init: false }, ()=>{
-          app.emit('pageRemove', name, this.props);
-        })
+        app.emit('pageRemove', name, this.props);
+        this.setState({ current: false });
       }  
     })
-    
   }
 
   componentWillUnmount(){
-    this.setState({ init: false }, ()=>{
-      this.unlisten();
-    });
+    this.mounted = false;
+    this.unlisten();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextState.init
+    return nextState.current
   }
   
   render(){

@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { WUI_app, WUI_global } from './styles';
 import AppContext from './appContext';
 import { createHashHistory } from 'history';
@@ -11,40 +12,32 @@ import { ThemeProvider } from 'styled-components';
 import DeviceModule from '../../modules/device/device';
 import SupportModule from '../../modules/support/support';
 import ResizeModule from '../../modules/resize/resize';
-import TouchModule from '../../modules/touch/touch';
-import UtilsModule from '../../modules/utils/utils';
 
-AppClass.use([ DeviceModule, SupportModule, ResizeModule, UtilsModule, TouchModule ]);
+AppClass.use([ DeviceModule, SupportModule, ResizeModule ]);
 
-export default function App ({
-  params =  {},
-  history,
-  children,
-  theme
-}){
-  const defaultParmas = {
-    touch: { 
-      fastClicks: true,
-    },
-    routes: [],
-    on: {},
-    fallback: undefined
-  };
+const App = (props) => {
+  const {
+    params =  {},
+    history,
+    children,
+    theme
+  } = props;
+  const defaultParmas = { routes: [], on: {} };
   const appParams = React.useMemo(()=>utils.extend({}, defaultParmas, params), [params]);
   const app = new AppClass(appParams);
   const rootRef = React.createRef();
   
-  app.history = React.useMemo(()=> history || createHashHistory({hashType: 'hashbang'}), [history]);
-
-  useEffect(()=>{
-    app.root = rootRef.current;
-    app.useModules();
-    app.emit('init'); 
-  }, []);
-
+  const appHistory = React.useMemo(()=> history || createHashHistory({hashType: 'hashbang'}), [history]);
   const appTheme = React.useMemo(()=> createTheme(theme), theme);
 
+  app.history = appHistory;
   app.theme = appTheme;
+
+  React.useEffect(()=>{
+    app.root = rootRef.current;
+    app.useModules();
+    app.emit('init');
+  }, []);
 
   return (
     <ThemeProvider theme={appTheme}>
@@ -57,6 +50,17 @@ export default function App ({
         </WUI_app>
       </AppContext.Provider>
     </ThemeProvider>
-    
   );
 }
+
+App.propTypes = {
+  /** */
+  params: PropTypes.shape({
+    routes: PropTypes.array,
+    on: PropTypes.object
+  }),
+  /**ignore */
+  history: PropTypes.object
+}
+
+export default App;

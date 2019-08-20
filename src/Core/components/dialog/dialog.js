@@ -37,6 +37,7 @@ const Dialog = React.forwardRef((props, ref)=>{
 
   const createPortal = usePortal(containerId);
   const app = React.useContext(AppContext) || {};
+  
   const transtions = {
     entering: {
       opacity: 1,

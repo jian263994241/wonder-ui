@@ -23,7 +23,7 @@ export const light = {
   // Consistency between these values is important.
   background: {
     paper: common.white,
-    default: grey[50],
+    default: '#F4F5F7',
   },
   // The colors used to style the action elements.
   action: {

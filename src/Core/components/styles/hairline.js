@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-export function createHairline(position, color) {
+export function createHairline(position, color = '#000') {
   let style = {};
 
   const commomStyle = {
