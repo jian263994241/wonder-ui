@@ -112,6 +112,7 @@ module.exports = {
 		url: 'https://github.com/jian263994241/wonder-ui',
   },
   version: '0.5.4',
+  styleguideDir: './docs/styleguide', 
   compilerConfig: {
     transforms: {
       dangerousTaggedTemplateString: true,
