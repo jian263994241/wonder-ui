@@ -1,5 +1,5 @@
 import { keyframes } from 'styled-components';
-import device from '../../utils/device';
+import device from '../Device';
 
 export const iosPageNextToCurrent = keyframes `
   from {

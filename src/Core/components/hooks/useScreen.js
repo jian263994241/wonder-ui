@@ -1,5 +1,5 @@
 import React from 'react';
-import AppContext from '../app/appContext';
+import AppContext from '../App/AppContext';
 
 export default function useScreen(){
   const app = React.useContext(AppContext);

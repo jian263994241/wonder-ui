@@ -1,4 +1,4 @@
-import Support from '../../utils/support';
+import Support from '../../Support';
 
 export default {
   name: 'support',

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import device from '../../utils/device';
+import device from '../Device';
 import AnimatedSwitch from '../transition/AnimatedSwitch';
 import { easing, duration } from '../styles/transitions';
 

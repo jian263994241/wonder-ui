@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
 import {createHairline, removeHairline} from '../styles/hairline';
-
+import { fade } from '../styles/colorManipulator';
 
 export const WUI_dialog_root = styled.div `
   box-sizing: border-box;
-  position: fixed;
+  position: ${props=>props.fixed ? 'fixed': 'absolute'};
   top: 50%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0) scale(1.185);
@@ -71,10 +71,10 @@ export const WUI_dialog_button = styled.span `
   border: none;
   border-radius: 0;
   outline: none;
-  color: ${({theme, primary})=> primary ? theme.palette.primary.main: theme.palette.text.primary};
+  color: ${({theme, primary})=> primary ? theme.palette.primary.main: fade(theme.palette.text.primary, 0.6)};
   background: rgba(255,255,255,0.95);
   font-weight: 500;
-  ${createHairline('right', 'rgba(0,0,0,0.2)').css()}
+  ${createHairline('right', 'rgba(0,0,0,0.2)').css}
 
   &:first-child {
       border-radius: 0 0 0 13px;

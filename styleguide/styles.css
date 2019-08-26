@@ -1,0 +1,28 @@
+
+.example {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+}
+
+.mobile-preview {
+  width: 100%;
+  max-width: 377px; 
+  height: 620px;
+  position: relative;
+  background-color:#F5F5F9;
+  box-shadow: 1px 3px 10px #ccc;
+  transition: box-shadow 375ms ;
+}
+
+.mobile-preview.small {
+  height: 210px;
+}
+
+.mobile-preview.auto {
+  height: auto;
+}
+
+.mobile-preview:hover{
+  box-shadow: 1px 3px 20px #ccc;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { fade } from '../styles/colorManipulator';
 import utils from '../../utils/utils';
-import ButtonBase from '../button-base';
+import ButtonBase from '../ButtonBase';
 
 const Button = React.forwardRef(({spacing, ...props}, ref)=> <ButtonBase ref={ref} {...props}/>);
 

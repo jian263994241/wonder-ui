@@ -1,14 +1,19 @@
 import React, { Children } from 'react';
+import PropTypes from 'prop-types';
 import { WUI_page_root, WUI_page_content } from './styles';
 import { withRouter } from 'react-router-dom';
-import appContext from '../app/appContext';
+import AppContext from '../App/AppContext';
 import utils from '../../utils/utils';
 import { duration } from '../styles/transitions';
 
+/**
+ * 创建一个页面(长宽100%的容器)
+ * @visibleName Page 页面
+ */
 @withRouter
-export default class Page extends React.Component {
+class Page extends React.Component {
 
-  static contextType = appContext;
+  static contextType = AppContext;
 
   static Content = WUI_page_content;
 
@@ -87,3 +92,17 @@ export default class Page extends React.Component {
     )
   }
 }
+
+Page.defaultProps = {
+  name: undefined,
+}
+
+Page.propTypes = {
+  /** 
+   * 页面的名字
+   * 可以配合pageInit来设置页面标题
+   */
+  name: PropTypes.string,
+}
+
+export default Page;

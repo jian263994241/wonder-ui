@@ -60,6 +60,7 @@ export function createHairline(position, color = '#000') {
     case 'right':
       style = {
         '&:after': {
+          ...commomStyle,
           right: 0,
           top: 0,
           left: 'auto',

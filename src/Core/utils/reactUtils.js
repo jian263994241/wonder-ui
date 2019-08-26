@@ -150,12 +150,28 @@ export function isUiElement(element, uiName) {
   return React.isValidElement(element) && muiNames.indexOf(element.type.uiName) !== -1;
 }
 
+/**
+ * 在styled-components组件上过滤porps
+ * @param {string} ele html节点
+ * @param {array} uiProps 需要去掉的props
+ */
 export function styledTag(ele, uiProps = []){
   return (props)=> {
     const _props = Object.assign({}, props);
+    
+    delete _props['theme'];
+
     uiProps.forEach((removePropName)=>{
       delete _props[removePropName]
     })
     return React.createElement(ele, _props)
   };
+}
+/**
+ * 转换html的prop true => 'true'
+ * @param {*} key 
+ * @param {*} value 
+ */
+export function htmlProp(key, props){
+  return props[key] != undefined ? { [key]:  String(props[key]) } : {}
 }

@@ -1,11 +1,25 @@
-import Dialog, { dialogTimeout } from '../dialog/dialog';
+import Dialog, { dialogTimeout } from '../Dialog/Dialog';
 import { createContainer } from '../../utils/reactUtils';
 import Manager from '../../utils/manager';
 
 const toastManager = new Manager();
 const render = createContainer(Dialog);
 
-export default function toast(text, timeout, callback){
+/**
+ * 轻提示 默认一秒后消失
+ * 
+ * toast(
+ *   text: string, 
+ *   [timeout: number], 
+ *   callback: function 
+ * )
+ * 
+ * - `text` 提示内容
+ * - `timeout` 超时, 默认1000ms
+ * - `callback` 回调回调函数
+ * @visibleName Toast 轻提示
+ */
+const toast = (text, timeout, callback) => {
   if(typeof timeout === 'function'){
     callback = timeout;
     timeout = null;
@@ -21,7 +35,10 @@ export default function toast(text, timeout, callback){
       callback && callback();
       setTimeout(clearQueue, dialogTimeout);
     }, timeout);
-  })
-
-  
+  });
 }
+
+/**
+ * @component
+ */
+export default toast;

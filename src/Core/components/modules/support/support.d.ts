@@ -1,4 +1,4 @@
-import { Support } from '../../utils/support';
+import Support from '../../Support';
 
 export namespace Support {
   interface AppMethods {

@@ -1,1 +1,1 @@
-export { default } from './dialog';
+export { default } from './Dialog';

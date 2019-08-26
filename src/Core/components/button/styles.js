@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { fade } from '../styles/colorManipulator';
 import utils from '../../utils/utils';
-import ButtonBase from '../button-base';
+import ButtonBase from '../ButtonBase';
 
 
 export const WUI_button = styled(ButtonBase)( (props) => {
@@ -11,9 +11,7 @@ export const WUI_button = styled(ButtonBase)( (props) => {
     [variant, 'text'], 
     {
       padding: '6px 8px',
-      '&[disabled]': {
-        color: theme.palette.action.disabled,
-      },
+      color: theme.palette.getContrastText(theme.palette.background.paper),
     }
   );
   const textPrimary = utils.equal(
@@ -48,11 +46,8 @@ export const WUI_button = styled(ButtonBase)( (props) => {
     [variant, 'outlined'],
     {
       padding: '5px 16px',
-      border: `1px solid rgba(255, 255, 255, 0.23)`,
-      '&[disabled]': {
-        border: `1px solid ${theme.palette.action.disabled}`,
-        color: theme.palette.action.disabled
-      },
+      border: `1px solid ${theme.palette.grey[300]}`,
+      color: theme.palette.getContrastText(theme.palette.background.paper),
     }
   );
   const outlinedPrimary = utils.equal(
@@ -85,9 +80,6 @@ export const WUI_button = styled(ButtonBase)( (props) => {
           backgroundColor: 'transparent',
         },
       },
-      '&[disabled]': {
-        border: `1px solid ${theme.palette.action.disabled}`,
-      },
     }
   );
   const contained = utils.equal(
@@ -102,20 +94,12 @@ export const WUI_button = styled(ButtonBase)( (props) => {
       '&:active': {
         boxShadow: theme.shadows[8],
       },
-      '&[disabled]': {
-        color: theme.palette.action.disabled,
-        boxShadow: theme.shadows[0],
-        backgroundColor: theme.palette.action.disabledBackground,
-      },
       '&:active': {
         backgroundColor: theme.palette.grey.A100,
         // Reset on touch devices, it doesn't add specificity
         '@media (active: none)': {
           backgroundColor: theme.palette.grey[300],
-        },
-        '&[disabled]': {
-          backgroundColor: theme.palette.action.disabledBackground,
-        },
+        }
       },
     }
   );
@@ -196,10 +180,13 @@ export const WUI_button = styled(ButtonBase)( (props) => {
   return {
     '&&': {
       lineHeight: 1.75,
+      fontSize: 12,
+      textAlign: 'center',
       boxSizing: 'border-box',
       minWidth: 64,
       padding: '4px 16px',
       borderRadius: theme.shape.borderRadius,
+      display: 'inline-block',
       '&:active': {
         textDecoration: 'none',
         backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity),
@@ -211,7 +198,9 @@ export const WUI_button = styled(ButtonBase)( (props) => {
           backgroundColor: 'transparent',
         },
       },
-      
+      '&[disabled]': {
+        opacity: 0.38
+      },
       ...text,
       ...textPrimary,
       ...textSecondary,

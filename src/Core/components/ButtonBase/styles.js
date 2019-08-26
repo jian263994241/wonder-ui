@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Link from '../link';
+import Link from '../Link';
 
 export const WUI_button_base = styled(Link)({
   display: 'inline-flex',

@@ -2,19 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_view } from './styles';
 import { withRouter } from 'react-router-dom';
-import appContext from '../app/appContext';
+import AppContext from '../App/AppContext';
 import Pages from './PageSwitch';
 
+/**
+ * 用来包裹所有Page
+ * @visibleName View 视图
+ */
 const View =  (props) => {
   const {
     history, 
     location, 
-    fallback = null, 
+    fallback, 
     ...rest
   } = props;
-  const app = React.useContext(appContext);
+  const app = React.useContext(AppContext);
   const [action, setAction] = React.useState('PUSH');
-  const { routes } = app.params;
 
   const search = decodeURIComponent(location.search);
   const pathname = location.pathname;
@@ -25,13 +28,19 @@ const View =  (props) => {
   
   return (
     <WUI_view>
-      <Pages routes={routes} fallback={fallback} action={action} location={location} {...rest}/>
+      <Pages routes={app.routes} fallback={fallback} action={action} location={location} {...rest}/>
     </WUI_view>
   )
 }
 
+View.defaultProps = {
+  fallback: null
+}
+
 View.propTypes = {
-  /**async import fallback*/
+ /**
+  * 异步加载时的等待状态
+  */
   fallback: PropTypes.element
 }
 

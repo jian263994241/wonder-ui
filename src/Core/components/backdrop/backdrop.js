@@ -1,8 +1,15 @@
 import React from 'react';
 import { WUI_backdrop } from './styles';
-import Fade from '../fade';
+import Fade from '../Fade';
 
-const Backdrop = React.forwardRef(({ visible, timeout, ...rest}, ref)=> {
+const Backdrop = React.forwardRef((props, ref)=> {
+
+  const { 
+    visible, 
+    timeout, 
+    fixed, 
+    ...rest
+  } = props;
 
   const backdropRef = React.useRef();
 
@@ -24,11 +31,16 @@ const Backdrop = React.forwardRef(({ visible, timeout, ...rest}, ref)=> {
       <WUI_backdrop 
         {...rest} 
         aria-hidden
+        fixed={fixed}
         ref={backdropRef}
       />
     </Fade>
   )
 })
+
+Backdrop.defaultProps = {
+  fixed: true
+}
 
 
 

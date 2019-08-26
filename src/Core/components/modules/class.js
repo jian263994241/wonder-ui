@@ -1,5 +1,5 @@
-import Utils from './utils';
-import EventsClass from './events';
+import Utils from '../../utils/utils';
+import EventsClass from '../Events';
 
 class AppClass extends EventsClass {
   constructor(params = {}, parents = []) {

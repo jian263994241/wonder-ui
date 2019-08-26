@@ -1,1 +1,1 @@
-export { default } from './svgIcon';
+export { default } from './SvgIcon';

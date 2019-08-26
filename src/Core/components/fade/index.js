@@ -1,1 +1,1 @@
-export { default } from './fade';
+export { default } from './Fade';

@@ -1,4 +1,4 @@
-import Device from '../../utils/device';
+import Device from '../../Device';
 
 export default {
   name: 'device',

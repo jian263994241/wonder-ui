@@ -1,26 +1,12 @@
-## Preloader
-指示器
-
-### 基本使用
 
 ```js
-import React, {Component} from 'react';
-import Preloader, {showPreloader, hidePreloader} from '../../src/Preloader';
-class Example extends Component {
-  render(){
-    return (
-      <Preloader visible/>
-    )
-  }
-}
+import { Preloader, Button } from '@wonder-ui/core';
+
+const showPreloader = ()=> {
+  Preloader.show();
+  setTimeout(()=> Preloader.hide(), 1000);
+};
+
+<Button onClick={showPreloader}>Show Preloader</Button>
 
 ```
-
-### Props
-
-- visible `bool` 显示|隐藏 Preloader
-
-
-### 方法
-
-提供直接调用preloader的方法 `showPreloader` `hidePreloader`

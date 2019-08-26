@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { fade } from '../styles/colorManipulator';
 import utils from '../../utils/utils';
+import { styledTag } from '../../utils/reactUtils';
 
 export const WUI_tag_label = styled.span({
   display: 'flex',
@@ -12,7 +13,7 @@ export const WUI_tag_label = styled.span({
   cursor: 'inherit',
 })
 
-export const WUI_tag = styled.span(({theme, size, color, outlined})=>{
+export const WUI_tag = styled(styledTag('span', ['color', 'size', 'outlined']))(({theme, ...props})=>{
   const largeHeight = 32;
   const height = 24;
   const smallHeight = 16;
@@ -20,7 +21,7 @@ export const WUI_tag = styled.span(({theme, size, color, outlined})=>{
   // const deleteIconColor = fade(theme.palette.text.primary, 0.26);
 
   const sizeSmall = utils.equal(
-    [size, 'small'],
+    [props.size, 'small'],
     {
       height: smallHeight,
       fontSize: 11,
@@ -32,7 +33,7 @@ export const WUI_tag = styled.span(({theme, size, color, outlined})=>{
   )
 
   const sizeLarge = utils.equal(
-    [size, 'large'],
+    [props.size, 'large'],
     {
       height: largeHeight,
       [WUI_tag_label]: {
@@ -43,7 +44,7 @@ export const WUI_tag = styled.span(({theme, size, color, outlined})=>{
   )
 
   const colorPrimary = utils.equal(
-    [color, 'primary'],
+    [props.color, 'primary'],
     {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.primary.contrastText,
@@ -51,7 +52,7 @@ export const WUI_tag = styled.span(({theme, size, color, outlined})=>{
   )
 
   const colorSecondary = utils.equal(
-    [color, 'secondary'],
+    [props.color, 'secondary'],
     {
       backgroundColor: theme.palette.secondary.main,
       color: theme.palette.secondary.contrastText,
@@ -59,24 +60,24 @@ export const WUI_tag = styled.span(({theme, size, color, outlined})=>{
   )
 
   const colorCustom = utils.unequal(
-    [color, undefined],
-    [color, 'primary'],
-    [color, 'secondary'],
+    [props.color, undefined],
+    [props.color, 'primary'],
+    [props.color, 'secondary'],
     ()=>({
-      backgroundColor: color,
-      color: theme.palette.getContrastText(color),
+      backgroundColor: props.color,
+      color: theme.palette.getContrastText(props.color),
     })
   )
 
   const _outlined = utils.equal(
-    [outlined, true],
+    [props.outlined, true],
     {
       backgroundColor: 'transparent',
       color: theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)',
       border: `1px solid ${
         theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'
       }`,
-      '[clickable]&:hover, [clickable]&:focus, [deletable]&:focus': {
+      '[clickable]&:acitve, [clickable]&:focus, [deletable]&:focus': {
         backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity),
       },
       '& [avatar]': {
@@ -86,39 +87,40 @@ export const WUI_tag = styled.span(({theme, size, color, outlined})=>{
   )
 
   const outlinedPrimary = utils.equal(
-    [outlined, true],
-    [color, 'primary'],
+    [props.outlined, true],
+    [props.color, 'primary'],
     {
+      color: theme.palette.primary.main,
       border: `1px solid ${theme.palette.primary.main}`,
-      '[clickable]&:hover, [clickable]&:focus, [deletable]&:focus': {
+      '[clickable]&:active, [clickable]&:focus, [deletable]&:focus': {
         backgroundColor: fade(theme.palette.primary.main, theme.palette.action.hoverOpacity),
       },
     }
   )
 
   const outlinedSecondary = utils.equal(
-    [outlined, true],
-    [color, 'secondary'],
+    [props.outlined, true],
+    [props.color, 'secondary'],
     {
       color: theme.palette.secondary.main,
       border: `1px solid ${theme.palette.secondary.main}`,
-      '[clickable]&:hover, [clickable]&:focus, [deletable]&:focus': {
+      '[clickable]&:active, [clickable]&:focus, [deletable]&:focus': {
         backgroundColor: fade(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
       },
     }
   )
 
   const outlinedCustom = utils.equal(
-    [outlined, true],
+    [props.outlined, true],
     utils.unequal(
-      [color, undefined],
-      [color, 'primary'],
-      [color, 'secondary'],
+      [props.color, undefined],
+      [props.color, 'primary'],
+      [props.color, 'secondary'],
       ()=>({
-        color: color,
-        border: `1px solid ${color}`,
-        '[clickable]&:hover, [clickable]&:focus, [deletable]&:focus': {
-          backgroundColor: fade(color, theme.palette.action.hoverOpacity),
+        color: props.color,
+        border: `1px solid ${props.color}`,
+        '[clickable]&:active, [clickable]&:focus, [deletable]&:focus': {
+          backgroundColor: fade(props.color, theme.palette.action.hoverOpacity),
         },
       })
     )

@@ -1,5 +1,5 @@
 import React from 'react';
-import SvgIcon from '../svgIcon/svgIcon';
+import SvgIcon from '../SvgIcon';
 
 const Indicator = ({color = '#6c6c6c', ...rest})=>(
   <SvgIcon 
