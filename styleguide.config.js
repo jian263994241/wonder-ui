@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const preset = require('babel-preset');
-const { theme, styles } = require('./styleguide/styles');
+const { theme, styles } = require('./styleguide.styles');
 
 function resolve(...paths) {
   return fs.realpathSync(path.join(__dirname, ...paths));
@@ -75,7 +75,7 @@ module.exports = {
     return `import { ${name} } from '@wonder-ui/core';`
   },
   require: [
-    resolve('./styleguide/styles.css')
+    resolve('./styleguide.styles.css')
   ],
   theme,
   styles,
