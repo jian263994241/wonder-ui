@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const preset = require('babel-preset');
 const { theme, styles } = require('./styleguide.styles');
+const { version } = require('./src/core/package.json');
 
 function resolve(...paths) {
   return fs.realpathSync(path.join(__dirname, ...paths));
@@ -111,7 +112,7 @@ module.exports = {
   ribbon: {
 		url: 'https://github.com/jian263994241/wonder-ui',
   },
-  version: '0.5.4',
+  version,
   styleguideDir: './docs/styleguide', 
   compilerConfig: {
     transforms: {

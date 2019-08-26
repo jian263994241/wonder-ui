@@ -164,7 +164,7 @@ export function styledTag(ele, uiProps = []){
     uiProps.forEach((removePropName)=>{
       delete _props[removePropName]
     })
-    return React.createElement(ele, _props)
+    return React.createElement(ele, _props);
   };
 }
 /**

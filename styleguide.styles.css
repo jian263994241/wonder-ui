@@ -11,7 +11,8 @@
   height: 620px;
   position: relative;
   background-color:#F5F5F9;
-  box-shadow: 1px 3px 10px #ccc;
+  border: 10px solid #f0f0f0;
+  /* box-shadow: 1px 3px 10px #ccc; */
   transition: box-shadow 375ms ;
 }
 
@@ -24,5 +25,5 @@
 }
 
 .mobile-preview:hover{
-  box-shadow: 1px 3px 20px #ccc;
+  /* box-shadow: 1px 3px 20px #ccc; */
 }

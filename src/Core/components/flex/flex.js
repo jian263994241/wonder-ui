@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_flex, WUI_flexItem } from './styles';
+import styled from 'styled-components';
 
 /**
+ * flex box 样式
  * @visibleName Flex 布局
  */
-const Flex = React.forwardRef((props, ref) => (
-  <WUI_flex ref={ref} {...props}/>
-));
+const Flex = styled(WUI_flex) ``;
 
 Flex.Item = WUI_flexItem;
 
@@ -35,5 +35,7 @@ Flex.defaultProps = {
   gutter: 8
 }
 
-
+/**
+ * @component
+ */
 export default Flex;

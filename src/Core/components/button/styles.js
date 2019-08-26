@@ -180,13 +180,11 @@ export const WUI_button = styled(ButtonBase)( (props) => {
   return {
     '&&': {
       lineHeight: 1.75,
-      fontSize: 12,
       textAlign: 'center',
       boxSizing: 'border-box',
       minWidth: 64,
       padding: '4px 16px',
       borderRadius: theme.shape.borderRadius,
-      display: 'inline-block',
       '&:active': {
         textDecoration: 'none',
         backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity),

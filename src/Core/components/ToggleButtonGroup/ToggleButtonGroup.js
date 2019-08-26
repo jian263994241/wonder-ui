@@ -97,7 +97,7 @@ ToggleButtonGroup.propTypes = {
   /**
    * 按钮间距
    */
-  spacing: PropTypes.number,
+  spacing: PropTypes.bool,
   /**
    * 组件选中的值
    */

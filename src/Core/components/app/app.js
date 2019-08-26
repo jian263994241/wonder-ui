@@ -12,7 +12,7 @@ import SupportModule from '../modules/support/support';
 import ResizeModule from '../modules/resize/resize';
 import TouchModule from '../modules/touch/touch';
 
-AppClass.use([ DeviceModule, SupportModule, ResizeModule, TouchModule ]);
+AppClass.use([ DeviceModule, SupportModule, ResizeModule ]);
 /**
  * 创建一个App环境, 包裹其他组件
  * @visibleName App 顶层组件
@@ -27,7 +27,8 @@ const App = (props) => {
     ...rest
   } = props;
 
-  const app = new AppClass({ on, touch: { fastClicks: true } });
+  const app = new AppClass({ on });
+  
   const rootRef = React.createRef();
   
   const [ ThemeProvider ] = useTheme(props);
@@ -84,7 +85,10 @@ App.propTypes = {
        * 页面组件
        * require('~/pages/some/index'),
        */
-      component: PropTypes.func,
+      component: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.func
+      ]),
       /** 
        * 异步加载, 需要配合webpack import 使用
        * ()=>import('~/pages/some/index')

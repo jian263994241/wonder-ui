@@ -1,4 +1,4 @@
-import React, {Component, createElement} from 'react';
+import React from 'react';
 import { Route, matchPath } from 'react-router-dom';
 import RouteTransition from './RouteTransition';
 

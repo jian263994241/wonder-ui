@@ -36,7 +36,7 @@ const source = [
   source={source}
   value={state.value}
   onChange={(value)=> setState({value})}
-  spacing={1}
+  spacing
 />
 ```
 
@@ -78,7 +78,7 @@ const source = [
   source={source}
   value={state.value}
   onChange={(value)=> setState({value})}
-  spacing={1}
+  spacing
   exclusive
 />
 ```
