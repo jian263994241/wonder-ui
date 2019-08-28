@@ -110,6 +110,14 @@ export default class ListView extends React.Component {
      * 使用 html 的 body 作为滚动容器
      */
     useBodyScroll: PropTypes.bool,
+    /**
+     * 强制刷新列表,  默认情况下列表是静态组件, 渲染后不在刷新.
+     * 特许需求下, 修改`timestamp`强制重新渲染列表
+     */
+    timestamp: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ])
   }
 
   static defaultProps = {

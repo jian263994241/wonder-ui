@@ -16,10 +16,12 @@ export { default as ToggleButton } from './components/ToggleButton';
 export { default as ToggleButtonGroup } from './components/ToggleButtonGroup';
 export { default as List } from './components/List';
 export { default as ListItem } from './components/ListItem';
+export { default as CheckboxItem } from './components/CheckboxItem';
 export { default as ListView } from './components/ListView';
 export { default as Block } from './components/Block';
 export { default as Toolbar } from './components/Toolbar';
 export { default as SvgIcon } from './components/SvgIcon';
+export { default as Checkbox } from './components/Checkbox';
 
 export { default as utils } from './components/utils';
 export { default as AppContext} from './components/App/AppContext';

@@ -10,7 +10,8 @@ var paths = {
       dest: 'package/core',
       copylist: [
         'src/core/package.json',
-        'src/core/**/*.d.ts'
+        'src/core/**/*.d.ts',
+        'src/core/README.md'
       ]
     }
   }

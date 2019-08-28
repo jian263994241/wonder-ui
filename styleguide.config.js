@@ -42,7 +42,8 @@ module.exports = {
           name: '数据录入',
           components: ()=> [
             './src/core/components/Button/Button.js',
-            './src/core/components/ToggleButtonGroup/ToggleButtonGroup.js'
+            './src/core/components/ToggleButtonGroup/ToggleButtonGroup.js',
+            './src/core/components/Checkbox/Checkbox.js',
           ],
         },
         {
@@ -50,6 +51,7 @@ module.exports = {
           components: ()=> [
             './src/core/components/List/List.js',
             './src/core/components/ListItem/ListItem.js',
+            './src/core/components/CheckboxItem/CheckboxItem.js',
             './src/core/components/ListView/ListView.js',
             './src/core/components/Tag/Tag.js',
           ],
