@@ -96,6 +96,10 @@ App.propTypes = {
       async: PropTypes.func,
       /** 嵌套路由 仅支持2级 */
       routes: PropTypes.array,
+      /**
+       * 入口重定向
+       */
+      redirect: PropTypes.string
     })
   ),
   /** 
