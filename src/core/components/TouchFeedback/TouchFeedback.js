@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import elementAcceptingRef from '../../utils/elementAcceptingRef';
-import { classNames } from '../../utils/helpers';
+import { classnames } from '../../utils/helpers';
 
 const TouchFeedback = (props)=>{
   const { 
@@ -71,7 +71,7 @@ const TouchFeedback = (props)=>{
       if (activeStyle) {
         style = {...style, ...activeStyle };
       }
-      className = classNames(className, activeClassName);
+      className = classnames(className, activeClassName);
     }
 
     return React.cloneElement(child, {
