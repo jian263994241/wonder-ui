@@ -21,6 +21,7 @@ export const WUI_preloader_root = styled.div `
   border-radius: 5px;
   background-color: rgba(0,0,0,0.7);
   padding: 10px;
+  outline: none;
 `;
 
 export const WUI_preloader = styled(Indicator) `
