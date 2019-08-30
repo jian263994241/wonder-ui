@@ -158,6 +158,8 @@ const Device = (function Device() {
  * Add html classnames
  */
 Device.init = () => {
+  console.log(123);
+  
   const classNames = [];
   const html = document.querySelector('html');
   const metaStatusbar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');

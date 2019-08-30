@@ -31,7 +31,7 @@ export function createChainedFunction(...funcs) {
 /**
  * 合并classname
  */
-export function classNames(){
+export function classnames(){
   return [].slice.apply(arguments).join(' ');
 }
 
