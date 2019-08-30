@@ -1,68 +1,4 @@
 
-### 基本
-
-```js
-import { Dialog } from '@wonder-ui/core';
-
-const exampleStyle = {
-  position: 'relative', 
-  height: 200
-};
-
-<div className="example" style={exampleStyle}>
-  <Dialog 
-    containerId="dialog-example-alert"
-    visible={true}
-    fixed={false}
-    title="基本"
-    text="这是一个基础的弹框"
-    actions={[
-      {
-        text: '确定',
-        primary: true,
-        onClick: ()=> alert('确定')
-      }
-    ]}
-  />
-  <div id="dialog-example-alert"></div>
-</div>
-
-```
-
-### 警告框
-
-```js
-import { Dialog } from '@wonder-ui/core';
-
-const exampleStyle = {
-  position: 'relative', 
-  height: 200
-};
-
-<div className="example" style={exampleStyle}>
-  <Dialog 
-    containerId="dialog-example-confirm"
-    visible={true}
-    fixed={false}
-    title="警告"
-    text="这是一个警告弹框"
-    actions={[
-      {
-        text: '取消',
-        onClick: ()=> alert('取消')
-      },
-      {
-        text: '确定',
-        primary: true,
-        onClick: ()=> alert('确定')
-      }
-    ]}
-  />
-  <div id="dialog-example-confirm"></div>
-</div>
-
-```
-
 ### 方法调用
 
 `Dialog` 提供了两个方法调用对话框 `alert`, `confirm`
@@ -82,11 +18,10 @@ import { Button, Dialog, Flex } from '@wonder-ui/core';
   <div>
     <Button 
       onClick={
-        ()=> Dialog.alert({ 
-          text: 'Alert Text', 
-          title: 'Alert Title',
-          onOk: ()=> alert('ok')
-        })
+        ()=> {
+          Dialog.alert({ text: 'Alert 1', title: 'Dialog Menager', });
+          Dialog.alert({ text: 'Alert 2', title: 'Dialog Menager', });
+        }
       }
     >alert</Button>
   </div>

@@ -1,9 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { WUI_preloader, WUI_preloader_root } from './styles';
-import defaultIndicator from './Indicator';
-import { usePortal, createContainer } from '../../utils/reactUtils';
-import Backdrop from '../Backdrop';
+import Modal from '../Modal';
 
 /**
  * 用于加载/处理数据时候的等待状态
@@ -16,35 +15,31 @@ import Backdrop from '../Backdrop';
  * 
  * @visibleName Preloader 指示器
  */
-const Preloader = (props)=>{
+const Preloader = React.forwardRef((props, ref)=>{
   const {
     indicator: Indicator,
-    containerId,
     navbarHeight,
-    visible = true,
+    visible,
+    ...rest
   } = props;
   
-  const createPortal = usePortal(containerId);
-
-  return createPortal(
-    <>
-      <Backdrop visible={visible} invisible/>  
-      {
-        visible && (
-          <WUI_preloader_root aria-hidden="true" navbarHeight={navbarHeight}>
-            {
-              Indicator ? <Indicator/> : <WUI_preloader color="#fff"/>
-            }
-          </WUI_preloader_root>
-        )
-      } 
-    </>
+  return (
+    <Modal
+      visible={visible}
+      BackdropProps={{ style: {backgroundColor: 'transparent'}}}
+      {...rest}
+    >
+      <WUI_preloader_root aria-hidden="true" navbarHeight={navbarHeight} ref={ref}>
+        {
+          Indicator ? <Indicator/> : <WUI_preloader color="#fff"/>
+        }
+      </WUI_preloader_root> 
+    </Modal>
   );
-}
+})
 
 Preloader.defaultProps = {
   visible: false,
-  containerId: undefined,
   indicator: undefined,
   navbarHeight: 0,
 }
@@ -52,25 +47,22 @@ Preloader.defaultProps = {
 Preloader.propTypes = {
   /** 是否显示指示器 */
   visible: PropTypes.bool,
-  /** 挂载的节点id */
-  containerId: PropTypes.string,
   /** 中间的旋转部分 */
   indicator: PropTypes.element,
-  /** 设置Preloader偏移位置 */
+  /** 
+   * @ignore
+   */
   navbarHeight: PropTypes.number
 }
 
-const render = createContainer(Preloader);
+const container = document.createElement('div');
 
-Preloader.show = ()=> {
-  render('preloader', {visible: true});
+Preloader.show = (indicator)=> {
+  ReactDOM.render(<Preloader visible indicator={indicator}/>, container);
 }
 
 Preloader.hide = ()=> {
-  render('preloader', {visible: false}, 200);
+  ReactDOM.render(<Preloader visible={false}/>, container);
 }
 
-/**
- * @component
- */
 export default Preloader;

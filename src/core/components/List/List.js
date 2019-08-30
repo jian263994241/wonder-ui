@@ -7,6 +7,7 @@ import {
   WUI_list
 } from './styles';
 import ListItem from '../ListItem';
+import { ThemeProvider } from 'styled-components';
 import useTheme from '../styles/useTheme';
 
 /**
@@ -18,14 +19,13 @@ const List = React.forwardRef((props, ref)=>{
     children,
     renderHeader,
     renderFooter,
-    theme,
     ...rest
   } = props;
 
-  const [ThemeProvider] = useTheme(props);
+  const theme = useTheme();
 
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={theme}>
       <WUI_list ref={ref} {...rest}>
         {
           renderHeader ? (
@@ -70,32 +70,23 @@ List.propTypes = {
 
 
 List.Header = React.forwardRef((props, ref)=> {
-  const { theme, ...rest} = props;
-  const [ThemeProvider] = useTheme(props);
+  const theme = useTheme();
   return (
-    <ThemeProvider>
-      <WUI_list_header ref={ref} {...rest}/>
-    </ThemeProvider>
+    <WUI_list_header ref={ref} theme={theme} {...props}/>
   )
 });
 
 List.Body = React.forwardRef((props, ref)=> {
-  const { theme, ...rest} = props;
-  const [ThemeProvider] = useTheme(props);
+  const theme = useTheme();
   return (
-    <ThemeProvider>
-      <WUI_list_body ref={ref} {...rest}/>
-    </ThemeProvider>
+    <WUI_list_body ref={ref} theme={theme} {...props}/>
   )
 });
 
 List.Footer = React.forwardRef((props, ref)=> {
-  const { theme, ...rest} = props;
-  const [ThemeProvider] = useTheme(props);
+  const theme = useTheme();
   return (
-    <ThemeProvider>
-      <WUI_list_footer ref={ref} {...rest}/>
-    </ThemeProvider>
+    <WUI_list_footer ref={ref} theme={theme} {...props}/>
   )
 });
 

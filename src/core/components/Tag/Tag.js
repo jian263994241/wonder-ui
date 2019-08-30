@@ -1,23 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_tag, WUI_tag_label } from './styles';
+import { ThemeProvider } from 'styled-components';
 import useTheme from '../styles/useTheme';
-import { htmlProp } from '../../utils/reactUtils';
+import { htmlProp } from '../../utils/reactHelpers';
 
 /**
  * @visibleName Tag 标签
  */
 const Tag = React.forwardRef((props, ref)=>{
   const {
-    children, 
-    theme, 
+    children,
     clickable,
     ...rest
   } = props;
-  const [ThemeProvider] = useTheme(props);
+  const theme = useTheme();
   
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={theme}>
       <WUI_tag {...htmlProp('clickable', props)} ref={ref} {...rest}>
         <WUI_tag_label>{children}</WUI_tag_label>
       </WUI_tag>

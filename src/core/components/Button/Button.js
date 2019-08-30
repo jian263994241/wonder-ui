@@ -12,20 +12,17 @@ const Button =  React.forwardRef((props, ref)=> {
     icon,
     iconPosition = 'before',
     children,
-    theme,
     ...rest
   } = props;
 
-  const [ThemeProvider] = useTheme(props);
+  const theme = useTheme();
 
   return (
-    <ThemeProvider>
-      <WUI_button ref={ref} {...rest}>
-        { iconPosition === 'before' && icon }
-        <span>{children}</span>
-        { iconPosition === 'after' && icon }
-      </WUI_button>
-    </ThemeProvider>
+    <WUI_button role="button" ref={ref} theme={theme} {...rest}>
+      { iconPosition === 'before' && icon }
+      <span>{children}</span>
+      { iconPosition === 'after' && icon }
+    </WUI_button>
   );
 });
 
@@ -40,6 +37,10 @@ Button.propTypes = {
    * @ignore
    */
   style: PropTypes.object,
+  /**
+   * @ignore
+   */
+  theme: PropTypes.object,
   /** 禁用按钮 */
   disabled: PropTypes.bool,
   /** 100%宽度 */

@@ -1,9 +1,12 @@
-import Dialog, { dialogTimeout } from '../Dialog/Dialog';
-import { createContainer } from '../../utils/reactUtils';
-import Manager from '../../utils/manager';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Dialog from '../Dialog/Dialog';
+import DialogManager from '../Dialog/DialogManager';
+import toggleVisible from '../Dialog/toggleVisible';
+import { createChainedFunction } from  '../../utils/helpers';
 
-const toastManager = new Manager();
-const render = createContainer(Dialog);
+const toastManager = new DialogManager();
+const container = document.createElement('div');
 
 /**
  * 轻提示 默认一秒后消失
@@ -27,13 +30,23 @@ const toast = (text, timeout, callback) => {
 
   timeout = timeout || 1000;
 
+  const toggleToast = toggleVisible((visible, clearQueue)=>{
+    return ReactDOM.render(
+      <Dialog
+        visible={visible}
+        text={text}
+        afterClose={createChainedFunction(clearQueue, callback)}
+        toast
+      />,
+      container
+    )
+  })
 
-  toastManager.run((clearQueue)=>{
-    render('toast', { visible: true, toast: true, text })
-    setTimeout(() => {
-      render('toast', { visible: false });
-      callback && callback();
-      setTimeout(clearQueue, dialogTimeout);
+  toastManager.run(clearQueue=>{
+    toggleToast(clearQueue);
+
+    setTimeout(()=>{
+      toggleToast(clearQueue);
     }, timeout);
   });
 }

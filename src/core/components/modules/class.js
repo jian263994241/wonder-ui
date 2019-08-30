@@ -85,7 +85,7 @@ class AppClass extends EventsClass {
   useModules(modulesParams = {}) {
     const instance = this;
     if (!instance.modules) return;
-    Object.keys(instance.modules).forEach((moduleName) => {
+    Object.keys(instance.modules).forEach((moduleName) => {      
       const moduleParams = modulesParams[moduleName] || {};
       instance.useModule(moduleName, moduleParams);
     });

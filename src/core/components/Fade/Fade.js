@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
-import { useForkRef } from '../../utils/reactUtils';
+import { useForkRef } from '../../utils/reactHelpers';
 import * as transitions from '../styles/transitions';
 
 const defaultTimeout = { enter: 225, exit: 195 };

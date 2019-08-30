@@ -1,29 +1,14 @@
 import React from 'react';
-import { ThemeContext, ThemeProvider } from 'styled-components';
-import createTheme from './createTheme';
+import { ThemeContext } from 'styled-components';
+import defaultTheme from './defaultTheme';
 
 /**
  * 提供主题
  */
-const useTheme = (props)=>{
-
+const useTheme = ()=>{
   const appTheme = React.useContext(ThemeContext);
-  
-  const theme = React.useMemo(()=>{
 
-    if(appTheme){
-      return appTheme;
-    }
-
-    return createTheme(props.theme);
-
-  }, [props.theme, theme]);
-
-  const Provider = ThemeProvider;
-
-  Provider.defaultProps = { theme };
-
-  return [Provider, theme];
+  return appTheme || defaultTheme;
 }
 
 

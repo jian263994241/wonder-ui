@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { styledTag } from '../../utils/reactUtils';
+import { styledTag } from '../../utils/reactHelpers';
 
 export const WUI_block = styled(styledTag('div', [
   'blank', 

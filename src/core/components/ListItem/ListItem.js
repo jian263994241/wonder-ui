@@ -10,7 +10,9 @@ import {
   WUI_list_item_brief
 } from '../List/styles';
 import SvgIcon from '../SvgIcon';
+import { ThemeProvider } from 'styled-components';
 import useTheme from '../styles/useTheme';
+import TouchFeedback from '../TouchFeedback';
 
 /**
  * 列表项
@@ -31,33 +33,34 @@ const ListItem = React.forwardRef((props, ref)=>{
     align,
     wrap,
     multipleLine,
-    theme,
     ...rest
   } = props;
   
-  const [ThemeProvider] = useTheme(props);
+  const theme = useTheme();
 
   return (
-    <ThemeProvider>
-      <WUI_list_item ref={ref}  activeState={arrow!=undefined} disabled={disabled} {...rest}>
-        { thumb ? ( <WUI_list_item_media>{thumb}</WUI_list_item_media> ): null }
-        <WUI_list_item_line>
-          { children ? (<WUI_list_item_content wrap={wrap} align={align}>{children}</WUI_list_item_content>): null }
-          { extra ? ( <WUI_list_item_extra align={align}> {extra} </WUI_list_item_extra> ): null }
-          { arrow && (
-              <WUI_list_item_arrow arrow={arrow} align={align} aria-hidden="true">
-                <SvgIcon viewBox="0 0 16 26" width={15} height={15}>
-                  <g id="UI-KIT_基础元件" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                    <g id="9.9基础元件" transform="translate(-5809.000000, -8482.000000)" fill="#C7C7CC">
-                      <polygon id="Disclosure-Indicator" points="5811 8482 5809 8484 5820.5 8495 5809 8506 5811 8508 5825 8495"></polygon>
+    <ThemeProvider theme={theme}>
+      <TouchFeedback>
+        <WUI_list_item ref={ref}  activeState={arrow!=undefined} disabled={disabled} {...rest}>
+          { thumb ? ( <WUI_list_item_media>{thumb}</WUI_list_item_media> ): null }
+          <WUI_list_item_line>
+            { children ? (<WUI_list_item_content wrap={wrap} align={align}>{children}</WUI_list_item_content>): null }
+            { extra ? ( <WUI_list_item_extra align={align}> {extra} </WUI_list_item_extra> ): null }
+            { arrow && (
+                <WUI_list_item_arrow arrow={arrow} align={align} aria-hidden="true">
+                  <SvgIcon viewBox="0 0 16 26" width={15} height={15}>
+                    <g id="UI-KIT_基础元件" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                      <g id="9.9基础元件" transform="translate(-5809.000000, -8482.000000)" fill="#C7C7CC">
+                        <polygon id="Disclosure-Indicator" points="5811 8482 5809 8484 5820.5 8495 5809 8506 5811 8508 5825 8495"></polygon>
+                      </g>
                     </g>
-                  </g>
-                </SvgIcon>
-              </WUI_list_item_arrow>
-            )
-          }
-        </WUI_list_item_line>
-      </WUI_list_item>
+                  </SvgIcon>
+                </WUI_list_item_arrow>
+              )
+            }
+          </WUI_list_item_line>
+        </WUI_list_item>
+      </TouchFeedback>
     </ThemeProvider>
   )
 })

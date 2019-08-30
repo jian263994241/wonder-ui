@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouteLink } from 'react-router-dom';
 import { WUI_link } from './styles';
+import TouchFeedback from '../TouchFeedback';
 
 /**
  * 用来链接页面
@@ -19,7 +20,9 @@ const Link = React.forwardRef((props, ref)=>{
   }
 
   return (
-    <Component {...props} ref={ref}/>
+    <TouchFeedback>
+      <Component {...props} ref={ref}/>
+    </TouchFeedback>
   )
 })
 

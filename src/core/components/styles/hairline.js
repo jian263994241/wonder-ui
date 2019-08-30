@@ -72,7 +72,6 @@ export function createHairline(position, color = '#000') {
       break;
   }
 
-
   return {
     object: style,
     css: ()=> css(style)

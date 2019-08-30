@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import isValueSelected from './isValueSelected';
 import { WUI_toggle_button_group } from '../ToggleButton/styles';
 import ToggleButton from '../ToggleButton';
+import { ThemeProvider } from 'styled-components';
 import useTheme from '../styles/useTheme';
 
 /**
@@ -17,11 +18,10 @@ const ToggleButtonGroup = React.forwardRef((props, ref)=>{
     value,
     exclusive = false,
     spacing,
-    theme,
     ...rest
   } = props;
 
-  const [ThemeProvider] = useTheme(props);
+  const theme = useTheme();
 
   const handleChange = (buttonValue, event) => {
     if (!onChange) {
@@ -50,7 +50,7 @@ const ToggleButtonGroup = React.forwardRef((props, ref)=>{
   };
 
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={theme}>
       <WUI_toggle_button_group spacing={spacing} ref={ref} {...rest}>
       {
         source.map((item, i)=>(

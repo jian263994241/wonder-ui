@@ -59,6 +59,7 @@ module.exports = {
         {
           name: '用户反馈',
           components: ()=> [
+            './src/core/components/Modal/Modal.js',
             './src/core/components/Dialog/Dialog.js',
             './src/core/components/toast/toast.js',
             './src/core/components/Preloader/Preloader.js',

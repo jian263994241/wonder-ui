@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 import { WUI_app, WUI_global } from './styles';
 import AppContext from './AppContext';
 import { HashRouter } from 'react-router-dom';
-import useTheme from '../styles/useTheme';
+import { ThemeProvider } from 'styled-components';
+import defaultTheme from '../styles/defaultTheme';
 
 //modules
 import AppClass from '../modules/class';
 import DeviceModule from '../modules/device/device';
 import SupportModule from '../modules/support/support';
 import ResizeModule from '../modules/resize/resize';
-import TouchModule from '../modules/touch/touch';
 
 AppClass.use([ DeviceModule, SupportModule, ResizeModule ]);
+
 /**
  * 创建一个App环境, 包裹其他组件
  * @visibleName App 顶层组件
@@ -20,29 +21,32 @@ AppClass.use([ DeviceModule, SupportModule, ResizeModule ]);
 const App = (props) => {
   const {
     children,
-    theme,
+    theme: themeInput,
     routes,
     router: Router,
     on,
     ...rest
   } = props;
 
-  const app = new AppClass({ on });
+  const appParams = { on };
+
+  const app = new AppClass(appParams);
   
-  const rootRef = React.createRef();
+  const rootRef = React.createRef(null);
   
-  const [ ThemeProvider ] = useTheme(props);
+  const theme = typeof customTheme ==='function' ? themeInput(defaultTheme) : themeInput;
 
   app.routes = routes;
 
   React.useEffect(()=>{
     app.root = rootRef.current;
+    app.useModulesParams(appParams);
     app.useModules();
     app.emit('init');
   }, []);
   
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={theme}>
       <AppContext.Provider value={app}> 
         <WUI_app ref={rootRef}>
           <WUI_global/>
@@ -56,6 +60,7 @@ const App = (props) => {
 }
 
 App.defaultProps = {
+  theme: defaultTheme,
   router: HashRouter,
   routes: [],
   on: {},
@@ -107,7 +112,20 @@ App.propTypes = {
    * import { HashRouter, MemoryRouter, BrowserRouter} from 'react-router-dom';
    * @see [react-router-dom](https://reacttraining.com/react-router/web/api/HashRouter)
    */
-  router: PropTypes.func
+  router: PropTypes.func,
+  /**
+   * 主题
+   * @param {object} theme 默认主题
+   * @returns {object} 
+   */
+  theme: PropTypes.oneOfType([
+    /**
+     * @param {object} theme 默认主题
+     * @returns {object} 
+     */
+    PropTypes.func,
+    PropTypes.object
+  ]),
 }
 
 export default App;

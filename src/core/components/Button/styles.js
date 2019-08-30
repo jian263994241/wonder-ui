@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { fade } from '../styles/colorManipulator';
 import utils from '../../utils/utils';
 import ButtonBase from '../ButtonBase';
-import { styledTag } from '../../utils/reactUtils';
+import { styledTag } from '../../utils/reactHelpers';
 
 
 export const WUI_button = styled(
