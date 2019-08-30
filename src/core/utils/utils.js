@@ -220,9 +220,6 @@ const Utils = {
     }
     return to;
   },
-  classnames(){
-    return [].slice.apply(arguments).join(' ');
-  },
   slot(children) {
     const result = { main: [] };
     children.forEach((child)=>{

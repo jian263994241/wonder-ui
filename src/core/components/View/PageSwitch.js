@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, matchPath } from 'react-router-dom';
 import { WUI_pages } from './styles';
-import Utils from '../../utils/utils';
 import { getComponents } from './utils';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import { duration } from '../styles/transitions';
+import { classnames, parseUrlQuery } from '../../utils/helpers';
 
 const PageWrapper = ({routeProps, routes, ...props})=>{
   const { children, isMain, init, childrenRoutes } = props;
@@ -13,7 +13,7 @@ const PageWrapper = ({routeProps, routes, ...props})=>{
 
   if(!children) return null;
 
-  const urlQuery = Utils.parseUrlQuery(location.search);
+  const urlQuery = parseUrlQuery(location.search);
 
   const isCurrent = match.url === location.pathname ;
 
@@ -69,7 +69,7 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
     }
   }, [action, noAnimation])
 
-  const cls = Utils.classnames(
+  const cls = classnames(
     animationType === 'backward' ? 'router-transition-backward': '',
     animationType === 'forward' ? 'router-transition-forward': '',
   )
@@ -111,7 +111,7 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
         <WUI_pages 
           timeout={timeout} 
           classNames="slide" 
-          className={Utils.classnames(cls, mainView == 'main' ? 'current': 'previous')} 
+          className={classnames(cls, mainView == 'main' ? 'current': 'previous')} 
           {...eventsHandler}
         >
         {
@@ -153,7 +153,7 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
         <WUI_pages 
           timeout={timeout} 
           classNames="slide" 
-          className={Utils.classnames(cls, mainView == 'nested' ? 'current': 'next')} 
+          className={classnames(cls, mainView == 'nested' ? 'current': 'next')} 
           {...eventsHandler}
         >
           {
