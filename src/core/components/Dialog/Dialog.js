@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { 
   WUI_dialog_root, 
@@ -8,12 +9,13 @@ import {
   WUI_dialog_button_group,
   WUI_dialog_button
 } from './styles';
-import { usePortal, createContainer } from '../../utils/reactUtils';
 import { duration } from '../styles/transitions';
-import Backdrop from '../Backdrop';
+import Modal from '../Modal';
 import Fade from '../Fade';
-import Manager from '../../utils/manager';
-import useTheme from '../styles/useTheme';
+import DialogManager from './DialogManager';
+import { createChainedFunction } from  '../../utils/helpers';
+import toggleVisible from './toggleVisible';
+import TouchFeedback from '../TouchFeedback';
 
 export const dialogTimeout = duration.standard;
 
@@ -24,6 +26,7 @@ export const dialogTimeout = duration.standard;
 const Dialog = React.forwardRef((props, ref)=>{
 
   const {
+    afterClose,
     visible,
     title,
     text,
@@ -32,13 +35,9 @@ const Dialog = React.forwardRef((props, ref)=>{
     vertical,
     styles = {},
     toast,
-    containerId = null,
-    theme,
+    container,
     fixed
   } = props;
-
-  const createPortal = usePortal(containerId);
-  const [ThemeProvider] = useTheme(props);
   
   const transtions = {
     entering: {
@@ -51,22 +50,28 @@ const Dialog = React.forwardRef((props, ref)=>{
     }
   };
 
-  return createPortal(
-    <ThemeProvider>
-      <>
-      <Backdrop visible={visible} fixed={fixed} timeout={dialogTimeout}/>
-      <Fade 
-        in={visible} 
+  return (
+    <Modal
+      visible={visible}
+      container={container}
+      afterClose={afterClose}
+      hasTransition
+      closeAfterTransition
+      BackdropProps={{ fixed, timeout: dialogTimeout }}
+    >
+      <Fade
         timeout={dialogTimeout}
         types={['opacity', 'transform']}
         styles={transtions}
       >
         <WUI_dialog_root css={styles.root} ref={ref} fixed={fixed}>
+     
           <WUI_dialog_body css={styles.body} noButtons={!actions} toast={toast}>
             {title && <WUI_dialog_title css={styles.title}>{title}</WUI_dialog_title>}
             {text && <WUI_dialog_text css={styles.text}>{text}</WUI_dialog_text>}
             {textAfter}
           </WUI_dialog_body>
+
           {
             actions && (
               <WUI_dialog_button_group vertical={vertical}>
@@ -85,12 +90,16 @@ const Dialog = React.forwardRef((props, ref)=>{
           }
         </WUI_dialog_root>
       </Fade>
-      </>
-    </ThemeProvider>
+    </Modal>
   )
 })
 
 Dialog.propTypes = {
+  container: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.instanceOf(React.Component),
+    PropTypes.instanceOf(typeof Element === 'undefined' ? Object : Element),
+  ]),
   /** 是否显示对话框 */
   visible: PropTypes.bool,
   /** 是否为toast样式 */
@@ -123,8 +132,6 @@ Dialog.propTypes = {
     /** 组件text样式*/
     text: PropTypes.string,
   }),
-  /** 挂载的节点id */
-  containerId: PropTypes.string,
   /** 是否fixed定位 */
   fixed: PropTypes.bool,
 };
@@ -133,57 +140,67 @@ Dialog.defaultProps = {
   fixed: true
 };
 
-const dialogManager = new Manager();
-
-const render = createContainer(Dialog);
+const dialogManager = new DialogManager();
 
 /**
  * Dialog.alert
  */
 Dialog.alert = ({ title, text, onOk, okText = '确定' })=>{
+  const container = document.createElement('div');
+  const toggleAlert = toggleVisible((visible, clearQueue)=> {
+    ReactDOM.render(
+      <Dialog 
+        visible={visible}
+        title={title}
+        text={text}
+        afterClose={clearQueue}
+        actions={[
+          {
+            text: okText,
+            primary: true,
+            onClick: createChainedFunction(toggleAlert, onOk)
+          }
+        ]}
+      />,
+      container
+    )
+  })
   
   dialogManager.run(
-    (clearQueue)=> {
-      render('alert', {
-        visible: true, title, text,
-        actions: [{
-          text: okText,
-          primary: true,
-          onClick(){
-            render('alert', {visible: false}, null, onOk);
-            setTimeout(clearQueue, dialogTimeout);
-          }
-        }]
-      })
-    }
+    (clearQueue)=> toggleAlert(clearQueue)
   )
 }
 /**
  * Dialog.confirm
  */
 Dialog.confirm = ({ title, text, onOk, okText = '确定', onCancel, cancelText = "取消" })=>{
-  dialogManager.run((clearQueue)=>{
-    render('confirm', {
-      visible: true, title, text,
-      actions: [
-        {
-          text: cancelText,
-          onClick(){
-            render('confirm', {visible: false}, null, onCancel);
-            setTimeout(clearQueue, dialogTimeout);
+  const container = document.createElement('div');
+  const toggleConfirm = toggleVisible((visible, clearQueue)=> {
+    ReactDOM.render(
+      <Dialog 
+        visible={visible}
+        title={title}
+        text={text}
+        afterClose={clearQueue}
+        actions={[
+          {
+            text: cancelText,
+            onClick: createChainedFunction(toggleConfirm, onCancel)
+          },
+          {
+            text: okText,
+            primary: true,
+            onClick: createChainedFunction(toggleConfirm, onOk)
           }
-        },
-        {
-          text: okText,
-          primary: true,
-          onClick(){
-            render('confirm', {visible: false}, null, onOk);
-            setTimeout(clearQueue, dialogTimeout);
-          }
-        }
-      ]
-    })
+        ]}
+      />,
+      container
+    )
   })
+
+  dialogManager.run(
+    (clearQueue)=> toggleConfirm(clearQueue)
+  )
 }
 
 

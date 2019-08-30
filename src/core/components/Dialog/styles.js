@@ -16,6 +16,7 @@ export const WUI_dialog_root = styled.div `
   text-align: center;
   overflow: hidden;
   will-change: transform,opacity;
+  outline: none;
 `
 
 export const WUI_dialog_text = styled.div `
