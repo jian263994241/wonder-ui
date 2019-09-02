@@ -22,20 +22,25 @@ const Preloader = React.forwardRef((props, ref)=>{
     visible,
     ...rest
   } = props;
+
+  const rendered = React.useMemo(()=>{
+
+    return (
+      <Modal
+        visible={visible}
+        BackdropProps={{ style: {backgroundColor: 'transparent'}}}
+        {...rest}
+      >
+        <WUI_preloader_root aria-hidden="true" navbarHeight={navbarHeight} ref={ref}>
+          {
+            Indicator ? <Indicator/> : <WUI_preloader color="#fff"/>
+          }
+        </WUI_preloader_root> 
+      </Modal>
+    )
+  }, [visible])
   
-  return (
-    <Modal
-      visible={visible}
-      BackdropProps={{ style: {backgroundColor: 'transparent'}}}
-      {...rest}
-    >
-      <WUI_preloader_root aria-hidden="true" navbarHeight={navbarHeight} ref={ref}>
-        {
-          Indicator ? <Indicator/> : <WUI_preloader color="#fff"/>
-        }
-      </WUI_preloader_root> 
-    </Modal>
-  );
+  return rendered;
 })
 
 Preloader.defaultProps = {
@@ -58,11 +63,15 @@ Preloader.propTypes = {
 const container = document.createElement('div');
 
 Preloader.show = (indicator)=> {
-  ReactDOM.render(<Preloader visible indicator={indicator}/>, container);
+  setTimeout(() => {
+    ReactDOM.render(<Preloader visible indicator={indicator}/>, container);
+  }, 0);
 }
 
 Preloader.hide = ()=> {
-  ReactDOM.render(<Preloader visible={false}/>, container);
+  setTimeout(()=>{
+    ReactDOM.render(<Preloader visible={false}/>, container);
+  },  0);
 }
 
 export default Preloader;

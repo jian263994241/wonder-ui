@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import utils from './utils';
 
 /**
  * Creates DOM element to be used as React root.

@@ -4,6 +4,7 @@ import Switch from './Switch';
 import PropTypes from 'prop-types';
 import find from 'array.prototype.find';
 import RouteTransition from './RouteTransition';
+import { parseUrlQuery } from '../../utils/helpers';
 
 const NO_MATCH = {
   key: 'no-match',
@@ -13,8 +14,8 @@ const NO_MATCH = {
  * Not every location object has a `key` property (e.g. HashHistory).
  */
 function getLocationKey(location) {
-  return location.pathname;
-  // return typeof location.key === 'string' ? location.key : '';
+  const key = location.key || parseUrlQuery(location.search).location_key;
+  return typeof key === 'string' ? key : location.pathname;
 }
 
 /**
@@ -61,10 +62,10 @@ class AnimatedSwitch extends React.Component {
 
   render() {
     const { children, location, ...routeTransitionProps } = this.props;
-    
+
     return (
       <RouteTransition {...routeTransitionProps}>
-        <Switch key={this.state.key} location={location}>
+        <Switch key={this.state.key + location.search} location={location}>
           {children}
         </Switch>
       </RouteTransition>

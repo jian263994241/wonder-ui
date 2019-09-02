@@ -15,7 +15,6 @@ import Fade from '../Fade';
 import DialogManager from './DialogManager';
 import { createChainedFunction } from  '../../utils/helpers';
 import toggleVisible from './toggleVisible';
-import TouchFeedback from '../TouchFeedback';
 
 export const dialogTimeout = duration.standard;
 

@@ -73,7 +73,7 @@ const PageSwitch = React.memo(({ location, action, noAnimation, routes = [], fal
     animationType === 'backward' ? 'router-transition-backward': '',
     animationType === 'forward' ? 'router-transition-forward': '',
   )
-
+  
   const timeout = cls === '' ? 0 : duration.complex;
 
   const setRouteAniState = (element, state)=> {

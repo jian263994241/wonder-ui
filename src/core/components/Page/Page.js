@@ -1,97 +1,71 @@
 import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import { WUI_page_root, WUI_page_content } from './styles';
-import { withRouter } from 'react-router-dom';
+import { __RouterContext, matchPath } from 'react-router-dom';
 import AppContext from '../App/AppContext';
 import utils from '../../utils/utils';
-import { duration } from '../styles/transitions';
+import useEventCallback from '../../utils/useEventCallback'
 
 /**
  * 创建一个页面(长宽100%的容器)
  * @visibleName Page 页面
  */
-@withRouter
-class Page extends React.Component {
+const Page = React.forwardRef((props, ref)=>{
+  const { 
+    name,
+    children, 
+    styles = {}, 
+    pageContent = true
+  } = props;
+  const app = React.useContext(AppContext);
+  const router = React.useContext(__RouterContext);
+  const { location, match } = router;
 
-  static contextType = AppContext;
+  const matched = React.useMemo(()=> {
+    return matchPath(location.pathname, {
+      path: match.path
+    }) || {}
+  }, [location.pathname]);
 
-  static Content = WUI_page_content;
+  const pageEvent = useEventCallback((type, ...args)=>{
+    if(matched.isExact){
+      app.emit(`page${type}`, ...args);
+    }
+  });
 
-  state = {
-    current: false
-  }
+  React.useEffect(()=>{
 
-  mounted = false;
+    pageEvent('Init', name, props);
+ 
+    return ()=>{
+      pageEvent('Remove', name, props);
+    }
+  }, [location.pathname]);
 
-  init = ()=>{
-    const app = this.context;
-    app.emit('pageInit', this.props.name, this.props);
-    setTimeout(() => {
-      if(this.mounted){
-        this.setState({ current: true });
+  const slots = React.useMemo(()=>{
+    const childrenArray = Children.toArray(children);
+    return utils.slot(childrenArray); 
+  }, [children]);
+
+  return (
+    <WUI_page_root 
+      ref={ref} 
+      css = {styles.root}
+    >
+      <>
+      { slots['pageContentBefore'] }
+      {
+        pageContent ? (
+          <WUI_page_content css = {styles.content} >{ slots.main }</WUI_page_content>
+        ) : slots.main
       }
-    }, duration.complex * 0.05);
-  }
+      { slots['pageContentAfter'] }
+      </>
+    </WUI_page_root>
+  )
+});
 
-  componentDidMount() {
-    const { name, match, history } = this.props;
-    const app = this.context;
-    this.mounted = true;
-    this.init();
-
-    this.unlisten = history.listen((location, action)=>{
-      if(location.pathname === match.url){
-        //reinit
-        this.init();
-      }else{
-        //非当前页面, 页面缓存中的页面
-        app.emit('pageRemove', name, this.props);
-        this.setState({ current: false });
-      }  
-    })
-  }
-
-  componentWillUnmount(){
-    this.mounted = false;
-    this.unlisten();
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextState.current
-  }
-  
-  render(){
-    const {
-      pageContent = true, 
-      children, 
-      styles = {},
-    } = this.props;
-
-      const slots = (()=>{
-        const childrenArray = Children.toArray(children);
-        return utils.slot(childrenArray); 
-      })()
-
-    return (
-      <WUI_page_root 
-        ref='root' 
-        pageroot={true}
-        css = {styles.root}
-        //onTouchMove={(e)=> e.preventDefault()}
-      >
-        <>
-        { slots['pageContentBefore'] }
-        {
-          pageContent ? (
-            <WUI_page_content css = {styles.content} >{ slots.main }</WUI_page_content>
-          ) : slots.main
-        }
-        { slots['pageContentAfter'] }
-        </>
-      </WUI_page_root>
-    )
-  }
-}
+Page.Content = WUI_page_content;
 
 Page.defaultProps = {
   name: undefined,

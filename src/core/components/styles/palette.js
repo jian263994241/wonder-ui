@@ -81,7 +81,7 @@ const error = {
 };
 
 const type = 'light';
-const contrastThreshold = 2.5;
+const contrastThreshold = 2.2;
 const tonalOffset = 0.2;
 
 const types = { dark, light };
@@ -170,7 +170,7 @@ function getContrastText(background) {
   const contrastText =
     getContrastRatio(background, dark.text.primary) >= contrastThreshold
       ? dark.text.primary
-      : darken(background, 0.55);
+      : darken(background, 0.50);
   
    
       
