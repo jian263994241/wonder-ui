@@ -34,7 +34,7 @@ const App = (props) => {
   
   const rootRef = React.createRef(null);
   
-  const theme = typeof customTheme ==='function' ? themeInput(defaultTheme) : themeInput;
+  const theme = typeof themeInput ==='function' ? themeInput(defaultTheme) : themeInput;
 
   app.routes = routes;
 

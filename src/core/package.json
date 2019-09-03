@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/core",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Mobile UI base on react@16",
   "main": "index.js",
   "keywords": [
@@ -28,13 +28,13 @@
     "array.prototype.find": "^2.1.0",
     "dom7": "^2.1.3",
     "prop-types": "^15.7.2",
-    "react-router-dom": "^5.0.1",
     "react-transition-group": "^4.2.1",
     "rmc-list-view": "^0.11.5"
   },
   "peerDependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
