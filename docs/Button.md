@@ -80,27 +80,27 @@ const FlexItem = Flex.Item;
 
 <Flex>
   <FlexItem>
-    <Button>
+    <Button variant="text">
       默认按钮
     </Button>
   </FlexItem>
   <FlexItem>
-    <Button color="primary">
+    <Button  variant="text" color="primary">
       主要按钮
     </Button>
   </FlexItem>
   <FlexItem>
-    <Button color="secondary">
+    <Button  variant="text" color="secondary">
       次要按钮
     </Button>
   </FlexItem>
   <FlexItem>
-    <Button color="secondary" disabled>
+    <Button  variant="text" color="secondary" disabled>
       禁用
     </Button>
   </FlexItem>
   <FlexItem>
-    <Button href="#section-button-按钮">
+    <Button  variant="text" href="#section-button-按钮">
       Link
     </Button>
   </FlexItem>
