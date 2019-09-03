@@ -16,7 +16,7 @@ import DialogManager from './DialogManager';
 import { createChainedFunction } from  '../../utils/helpers';
 import toggleVisible from './toggleVisible';
 
-export const dialogTimeout = duration.standard;
+export const dialogTimeout = { enter: duration.enteringScreen, exit: duration.leavingScreen * 0.5 };
 
 /**
  * 系统信息提示, 并请求用户进行下一步操作
@@ -56,7 +56,7 @@ const Dialog = React.forwardRef((props, ref)=>{
       afterClose={afterClose}
       hasTransition
       closeAfterTransition
-      BackdropProps={{ fixed, timeout: dialogTimeout }}
+      BackdropProps={{ fixed, timeout: 0 }}
     >
       <Fade
         timeout={dialogTimeout}

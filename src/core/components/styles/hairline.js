@@ -9,19 +9,32 @@ export function createHairline(position, color = '#000') {
     backgroundColor: color,
     display: 'block',
     zIndex: 15,
+  };
+
+  const scaleY = {
     'html.device-pixel-ratio-2 &': {
       transform: 'scaleY(0.5)'
     },
     'html.device-pixel-ratio-3 &': {
       transform: 'scaleY(0.33)'
     },
-  }
+  };
+
+  const scaleX = {
+    'html.device-pixel-ratio-2 &': {
+      transform: 'scaleX(0.5)'
+    },
+    'html.device-pixel-ratio-3 &': {
+      transform: 'scaleX(0.33)'
+    },
+  };
 
   switch (position) {
     case 'top':
         style = {
           '&::before' :{
             ...commomStyle,
+            ...scaleY,
             left: 0,
             top: 0,
             bottom: 'auto',
@@ -35,6 +48,7 @@ export function createHairline(position, color = '#000') {
       style = {
         '&:before': {
           ...commomStyle,
+          ...scaleX,
           left: 0,
           top: 0,
           bottom: 'auto',
@@ -48,6 +62,7 @@ export function createHairline(position, color = '#000') {
       style = {
         '&:after': {
           ...commomStyle,
+          ...scaleY,
           left: 0,
           bottom: 0,
           right: 'auto',
@@ -61,6 +76,7 @@ export function createHairline(position, color = '#000') {
       style = {
         '&:after': {
           ...commomStyle,
+          ...scaleX,
           right: 0,
           top: 0,
           left: 'auto',

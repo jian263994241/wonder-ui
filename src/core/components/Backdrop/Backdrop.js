@@ -18,8 +18,6 @@ const Backdrop = React.forwardRef((props, ref)=> {
     ...rest
   } = props;
 
-  const backdropRef = React.useRef();
-
   return (
     <Fade 
       in={visible} 
@@ -29,7 +27,7 @@ const Backdrop = React.forwardRef((props, ref)=> {
         <WUI_backdrop
           aria-hidden
           fixed={fixed}
-          ref={backdropRef}
+          ref={ref}
           {...rest} 
         />
       </TouchFeedback>
