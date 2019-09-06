@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ListViewDataSource from 'rmc-list-view/es/ListViewDataSource';
 import ScrollView from 'rmc-list-view/es/ScrollView';
 import List from '../List';
+import Empty from '../Empty';
 
 const DEFAULT_PAGE_SIZE = 1;
 const DEFAULT_INITIAL_ROWS = 10;
@@ -34,7 +35,9 @@ export default class ListView extends React.Component {
   static DataSource = ListViewDataSource
   static propTypes = {
     ...ScrollView.propTypes,
-    /** ListView.DataSource 实例 */
+    /**
+     * An instance of [ListView.DataSource](https://facebook.github.io/react-native/docs/listviewdatasource) to use
+     */
     dataSource: PropTypes.instanceOf(ListViewDataSource).isRequired,
     /**
      * 如果提供了此属性，一个可渲染的组件会被渲染在每一行下面，除了小节标题的前面的最后一行。
@@ -52,6 +55,10 @@ export default class ListView extends React.Component {
      * @param {function} highlightRow
      */
     renderRow: PropTypes.func.isRequired,
+    /**
+     * 没有数据时展示
+     */
+    notDataContent: PropTypes.func,
     /**  指定在组件刚挂载的时候渲染多少行数据，用这个属性来确保首屏显示合适数量的数据 */
     initialListSize: PropTypes.number,
     /**
@@ -123,7 +130,7 @@ export default class ListView extends React.Component {
   static defaultProps = {
     initialListSize: DEFAULT_INITIAL_ROWS,
     pageSize: DEFAULT_PAGE_SIZE,
-    renderScrollComponent: props => <ScrollView contentContainerStyle={{ width: '100%' }} {...props} />,
+    renderScrollComponent: props => <ScrollView contentContainerStyle={{ width: '100%', height: '100%' }} {...props} />,
     renderBodyComponent: () => <List.Body />,
     renderSectionBodyWrapper: (sectionID) => <div key={sectionID} />,
     sectionBodyClassName: 'list-view-section-body',
@@ -132,6 +139,7 @@ export default class ListView extends React.Component {
     onEndReachedThreshold: DEFAULT_END_REACHED_THRESHOLD,
     scrollEventThrottle: DEFAULT_SCROLL_CALLBACK_THROTTLE,
     scrollerOptions: {},
+    noDataContent: null
   }
 
   state = {
@@ -293,8 +301,9 @@ export default class ListView extends React.Component {
       }
     }
 
-    const { renderScrollComponent, ...props } = this.props;
 
+    const { renderScrollComponent, ...props } = this.props;
+    
     return React.cloneElement(
       renderScrollComponent({ ...props, onScroll: this._onScroll }),
       {
@@ -303,7 +312,8 @@ export default class ListView extends React.Component {
         onLayout: this._onLayout,
       },
       this.props.renderHeader ? this.props.renderHeader(List.Header) : null,
-      React.cloneElement(props.renderBodyComponent(), {}, bodyComponents),
+      (allRowIDs.length === 0 && this.props.noDataContent) ? React.createElement(this.props.noDataContent, {key: 'no-data'}) : null,
+      React.cloneElement(props.renderBodyComponent(), {}, bodyComponents),  
       this.props.renderFooter ? this.props.renderFooter(List.Footer) : null,
       props.children
     );

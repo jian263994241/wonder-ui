@@ -27,16 +27,17 @@
     "@babel/runtime": "^7.5.5",
     "array.prototype.find": "^2.1.0",
     "dom7": "^2.1.3",
+    "history": "^4.9.0",
     "prop-types": "^15.7.2",
-    "react-transition-group": "^4.2.1",
-    "react-router-dom": "^5.0.1",
     "rc-mounter": "^2.0.0",
+    "react-router-dom": "^5.0.1",
+    "react-transition-group": "^4.2.1",
     "rmc-list-view": "^0.11.5"
   },
   "peerDependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",   
-    "styled-components": "^4.3.2"
+    "react": ">=16.8.6",
+    "react-dom": ">=16.8.6",
+    "styled-components": ">=4.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",

@@ -1,7 +1,6 @@
 
 ```jsx
 import { App, Page, View, Link, Button } from '@wonder-ui/core';
-import { MemoryRouter } from 'react-router-dom';
 
 const params = {
   routes: [
@@ -33,7 +32,7 @@ const params = {
 };
 
 <div className="mobile-preview">
-  <App router={MemoryRouter} routes={params.routes}>
+  <App historyType="memory" routes={params.routes}>
     <View/>
   </App>
 </div>

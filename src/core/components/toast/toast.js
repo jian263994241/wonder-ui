@@ -28,7 +28,7 @@ const toast = (text, timeout, callback) => {
     timeout = null;
   }
 
-  timeout = timeout || 1000;
+  timeout = timeout || 1500;
 
   const toggleToast = toggleVisible((visible, clearQueue)=>{
     return ReactDOM.render(

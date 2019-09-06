@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_app, WUI_global } from './styles';
 import AppContext from './AppContext';
-import { HashRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+import * as history from 'history';
 import defaultTheme from '../styles/defaultTheme';
+import { useForkRef } from '../../utils/reactHelpers';
 
 //modules
 import AppClass from '../modules/class';
@@ -18,50 +20,69 @@ AppClass.use([ DeviceModule, SupportModule, ResizeModule ]);
  * 创建一个App环境, 包裹其他组件
  * @visibleName App 顶层组件
  */
-const App = (props) => {
+const App = React.forwardRef((props, ref) => {
   const {
     children,
     theme: themeInput,
+    historyType,
+    historyConfig = {},
     routes,
-    router: Router,
     on,
     ...rest
   } = props;
 
   const appParams = { on };
-
   const app = new AppClass(appParams);
-  
   const rootRef = React.createRef(null);
+  const handleRef = useForkRef(rootRef, ref);
   
-  const theme = typeof themeInput ==='function' ? themeInput(defaultTheme) : themeInput;
+  const theme = React.useMemo(()=> {
+    return typeof themeInput ==='function' ? themeInput(defaultTheme) : themeInput;
+  }, [themeInput]);
+  
+  const appHistory = React.useMemo(()=>{
+    let createHistory;
+    if(historyType=== 'hash'){
+      createHistory = history.createHashHistory;
+    }
+    if(historyType=== 'browser'){
+      createHistory = history.createBrowserHistory;
+    }
+    if(historyType=== 'memory'){
+      createHistory = history.createMemoryHistory;
+    }
+    return createHistory(historyConfig);
+  }, [historyType]);
 
   app.routes = routes;
+  app.history = appHistory;
 
   React.useEffect(()=>{
     app.root = rootRef.current;
     app.useModulesParams(appParams);
     app.useModules();
     app.emit('init');
+
+    return ()=>{
+      app.emit('destroy');
+    }
   }, []);
   
   return (
     <ThemeProvider theme={theme}>
       <AppContext.Provider value={app}> 
-        <WUI_app ref={rootRef}>
+        <WUI_app ref={handleRef} {...rest}>
           <WUI_global/>
-          <Router {...rest}>
-          {children}
-          </Router>
+          <Router history={appHistory}> {children} </Router>
         </WUI_app>
       </AppContext.Provider>
     </ThemeProvider>
   );
-}
+})
 
 App.defaultProps = {
   theme: defaultTheme,
-  router: HashRouter,
+  historyType: 'hash',
   routes: [],
   on: {},
 }
@@ -107,12 +128,14 @@ App.propTypes = {
       redirect: PropTypes.string
     })
   ),
-  /** 
-   * 路由类型: 
-   * import { HashRouter, MemoryRouter, BrowserRouter} from 'react-router-dom';
-   * @see [react-router-dom](https://reacttraining.com/react-router/web/api/HashRouter)
+  /**
+   * 路由类型
    */
-  router: PropTypes.func,
+  historyType: PropTypes.oneOf(['browser', 'memory', 'hash']),
+  /**
+   * @see [路由配置](https://github.com/ReactTraining/history/blob/master/README.md)
+   */
+  historyConfig: PropTypes.object,
   /**
    * 主题
    * @param {object} theme 默认主题

@@ -5,6 +5,7 @@ export { default as Preloader} from './components/Preloader';
 export { default as Fade} from './components/Fade';
 export { default as Button } from './components/Button';
 export { default as ButtonBase } from './components/ButtonBase';
+export { default as Empty } from './components/Empty';
 export { default as Flex } from './components/Flex';
 export { default as Link } from './components/Link';
 export { default as Dialog } from './components/Dialog';
@@ -26,6 +27,8 @@ export { default as TouchFeedback } from './components/TouchFeedback';
 
 export { default as utils } from './components/utils';
 export { default as AppContext} from './components/App/AppContext';
+
+export { default as useHistory } from './components/useHistory';
 
 export * as hooks from './components/hooks';
 
