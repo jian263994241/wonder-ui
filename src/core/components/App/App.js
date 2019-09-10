@@ -1,61 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_app, WUI_global } from './styles';
-import AppContext from './AppContext';
-import { Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import * as history from 'history';
 import defaultTheme from '../styles/defaultTheme';
 import { useForkRef } from '../../utils/reactHelpers';
-
-//modules
-import AppClass from '../modules/class';
-import DeviceModule from '../modules/device/device';
-import SupportModule from '../modules/support/support';
-import ResizeModule from '../modules/resize/resize';
-
-AppClass.use([ DeviceModule, SupportModule, ResizeModule ]);
+import Router from '../Router';
+import RouterStore from '../RouterStore';
+import AppContext from './AppContext';
+import AppClass from '../AppClass';
 
 /**
  * 创建一个App环境, 包裹其他组件
- * @visibleName App 顶层组件
+ * @visibleName App 
  */
 const App = React.forwardRef((props, ref) => {
   const {
+    app: appInput,
     children,
     theme: themeInput,
     historyType,
     historyConfig = {},
     routes,
     on,
+    routerStore: routerStoreInput,
     ...rest
   } = props;
 
   const appParams = { on };
-  const app = new AppClass(appParams);
+  const app = React.useMemo(()=> appInput || new AppClass(appParams), [appParams]);
   const rootRef = React.createRef(null);
   const handleRef = useForkRef(rootRef, ref);
   
   const theme = React.useMemo(()=> {
     return typeof themeInput ==='function' ? themeInput(defaultTheme) : themeInput;
   }, [themeInput]);
-  
-  const appHistory = React.useMemo(()=>{
-    let createHistory;
-    if(historyType=== 'hash'){
-      createHistory = history.createHashHistory;
-    }
-    if(historyType=== 'browser'){
-      createHistory = history.createBrowserHistory;
-    }
-    if(historyType=== 'memory'){
-      createHistory = history.createMemoryHistory;
-    }
-    return createHistory(historyConfig);
-  }, [historyType]);
 
   app.routes = routes;
-  app.history = appHistory;
+  app.routing = React.useMemo(()=> routerStoreInput || new RouterStore(), [routerStoreInput]);
 
   React.useEffect(()=>{
     app.root = rootRef.current;
@@ -73,7 +54,13 @@ const App = React.forwardRef((props, ref) => {
       <AppContext.Provider value={app}> 
         <WUI_app ref={handleRef} {...rest}>
           <WUI_global/>
-          <Router history={appHistory}> {children} </Router>
+          <Router 
+            type={historyType} 
+            routerStore={app.routing}
+            {...historyConfig}
+          > 
+            {children} 
+          </Router>
         </WUI_app>
       </AppContext.Provider>
     </ThemeProvider>
@@ -88,6 +75,13 @@ App.defaultProps = {
 }
 
 App.propTypes = {
+  /**
+   * 全局app对象
+   */
+  app: PropTypes.instanceOf(AppClass),
+  /**
+   * app events
+   */
   on: PropTypes.shape({
     /** 
      * `Page组件`挂载的时候触发
@@ -149,6 +143,10 @@ App.propTypes = {
     PropTypes.func,
     PropTypes.object
   ]),
+  /**
+   * 全局路由状态 
+   */
+  routerStore: PropTypes.instanceOf(RouterStore),
 }
 
 export default App;

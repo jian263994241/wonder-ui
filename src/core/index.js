@@ -1,4 +1,5 @@
 export { default as App} from './components/App';
+export { default as AppClass} from './components/AppClass';
 export { default as View} from './components/View';
 export { default as Page} from './components/Page';
 export { default as Preloader} from './components/Preloader';
@@ -24,11 +25,12 @@ export { default as Toolbar } from './components/Toolbar';
 export { default as SvgIcon } from './components/SvgIcon';
 export { default as Checkbox } from './components/Checkbox';
 export { default as TouchFeedback } from './components/TouchFeedback';
+export { default as RouterStore } from './components/RouterStore';
 
 export { default as utils } from './components/utils';
 export { default as AppContext} from './components/App/AppContext';
 
-export { default as useHistory } from './components/useHistory';
+export { default as useRouterStore } from './components/useRouterStore';
 
 export * as hooks from './components/hooks';
 

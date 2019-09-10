@@ -4,7 +4,8 @@ import { WUI_pages } from './styles';
 import { getComponents } from './utils';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import { duration } from '../styles/transitions';
-import { classnames, parseUrlQuery } from '../../utils/helpers';
+import { classnames } from '../../utils/helpers';
+import { parse } from '../../utils/queryString';
 
 const PageWrapper = ({routeProps, routes, ...props})=>{
   const { children, isMain, init, childrenRoutes } = props;
@@ -13,7 +14,7 @@ const PageWrapper = ({routeProps, routes, ...props})=>{
 
   if(!children) return null;
 
-  const urlQuery = parseUrlQuery(location.search);
+  const urlQuery = parse(location.search);
 
   const isCurrent = match.url === location.pathname ;
 

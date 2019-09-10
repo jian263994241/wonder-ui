@@ -4,7 +4,7 @@ import Switch from './Switch';
 import PropTypes from 'prop-types';
 import find from 'array.prototype.find';
 import RouteTransition from './RouteTransition';
-import { parseUrlQuery } from '../../utils/helpers';
+import { parse } from '../../utils/queryString';
 
 const NO_MATCH = {
   key: 'no-match',
@@ -14,7 +14,7 @@ const NO_MATCH = {
  * Not every location object has a `key` property (e.g. HashHistory).
  */
 function getLocationKey(location) {
-  const key = location.key || parseUrlQuery(location.search).location_key;
+  const key = location.key || parse(location.search).location_key;
   return typeof key === 'string' ? key : location.pathname;
 }
 

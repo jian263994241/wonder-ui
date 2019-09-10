@@ -130,7 +130,7 @@ export default class ListView extends React.Component {
   static defaultProps = {
     initialListSize: DEFAULT_INITIAL_ROWS,
     pageSize: DEFAULT_PAGE_SIZE,
-    renderScrollComponent: props => <ScrollView contentContainerStyle={{ width: '100%', height: '100%' }} {...props} />,
+    renderScrollComponent: props => <ScrollView contentContainerStyle={{ width: '100%', minHeight: '100%' }} {...props} />,
     renderBodyComponent: () => <List.Body />,
     renderSectionBodyWrapper: (sectionID) => <div key={sectionID} />,
     sectionBodyClassName: 'list-view-section-body',
@@ -139,7 +139,7 @@ export default class ListView extends React.Component {
     onEndReachedThreshold: DEFAULT_END_REACHED_THRESHOLD,
     scrollEventThrottle: DEFAULT_SCROLL_CALLBACK_THROTTLE,
     scrollerOptions: {},
-    noDataContent: null
+    noDataContent: () => <Empty/>
   }
 
   state = {
