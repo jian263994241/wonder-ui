@@ -11,7 +11,7 @@ import AppClass from '../AppClass';
 
 /**
  * 创建一个App环境, 包裹其他组件
- * @visibleName App 
+ * @visibleName App 顶层组件
  */
 const App = React.forwardRef((props, ref) => {
   const {
@@ -76,7 +76,7 @@ App.defaultProps = {
 
 App.propTypes = {
   /**
-   * 全局app对象
+   * @ignore
    */
   app: PropTypes.instanceOf(AppClass),
   /**
@@ -144,7 +144,7 @@ App.propTypes = {
     PropTypes.object
   ]),
   /**
-   * 全局路由状态 
+   * routerStore
    */
   routerStore: PropTypes.instanceOf(RouterStore),
 }

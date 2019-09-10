@@ -1,5 +1,4 @@
 import styled, { keyframes, css } from 'styled-components';
-import Indicator from './Indicator';
 
 const spin = keyframes `
   100% {
@@ -22,25 +21,4 @@ export const WUI_preloader_root = styled.div `
   background-color: rgba(0,0,0,0.7);
   padding: 10px;
   outline: none;
-`;
-
-export const WUI_preloader = styled(Indicator) `
-  display: inline-block;
-  width: 34px;
-  height: 34px;
-  vertical-align: middle;
-  animation: ${spin} 1s steps(12, end) infinite;
-`
-
-export const WUI_poreloader_overlay = styled.div `
-  box-sizing: border-box;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0);
-  will-change: opacity;
-  contain: strict;
-  z-index: 13500;
 `;

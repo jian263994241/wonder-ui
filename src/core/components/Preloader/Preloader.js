@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { WUI_preloader, WUI_preloader_root } from './styles';
+import { WUI_preloader_root } from './styles';
 import Modal from '../Modal';
+import Indicator from '../ActivityIndicator';
 
 /**
  * 用于加载/处理数据时候的等待状态
@@ -17,7 +18,7 @@ import Modal from '../Modal';
  */
 const Preloader = React.forwardRef((props, ref)=>{
   const {
-    indicator: Indicator,
+    indicator = <Indicator size="medium" color="#fff"/>,
     navbarHeight,
     visible,
     ...rest
@@ -32,9 +33,7 @@ const Preloader = React.forwardRef((props, ref)=>{
         {...rest}
       >
         <WUI_preloader_root aria-hidden="true" navbarHeight={navbarHeight} ref={ref}>
-          {
-            Indicator ? <Indicator/> : <WUI_preloader color="#fff"/>
-          }
+          { indicator }
         </WUI_preloader_root> 
       </Modal>
     )

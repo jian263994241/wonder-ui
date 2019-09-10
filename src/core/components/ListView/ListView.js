@@ -124,13 +124,17 @@ export default class ListView extends React.Component {
     timestamp: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
-    ])
+    ]),
+    /**
+     * ScrollView prop
+     */
+    contentContainerStyle: PropTypes.object,
   }
 
   static defaultProps = {
     initialListSize: DEFAULT_INITIAL_ROWS,
     pageSize: DEFAULT_PAGE_SIZE,
-    renderScrollComponent: props => <ScrollView contentContainerStyle={{ width: '100%', minHeight: '100%' }} {...props} />,
+    renderScrollComponent: props => <ScrollView {...props} />,
     renderBodyComponent: () => <List.Body />,
     renderSectionBodyWrapper: (sectionID) => <div key={sectionID} />,
     sectionBodyClassName: 'list-view-section-body',
@@ -302,7 +306,7 @@ export default class ListView extends React.Component {
     }
 
 
-    const { renderScrollComponent, ...props } = this.props;
+    const { renderScrollComponent, ...props } = this.props;    
     
     return React.cloneElement(
       renderScrollComponent({ ...props, onScroll: this._onScroll }),
@@ -312,7 +316,7 @@ export default class ListView extends React.Component {
         onLayout: this._onLayout,
       },
       this.props.renderHeader ? this.props.renderHeader(List.Header) : null,
-      (allRowIDs.length === 0 && this.props.noDataContent) ? React.createElement(this.props.noDataContent, {key: 'no-data'}) : null,
+      (dataSource.getRowCount() === 0 && this.props.noDataContent) ? React.createElement(this.props.noDataContent, {key: 'no-data'}) : null,
       React.cloneElement(props.renderBodyComponent(), {}, bodyComponents),  
       this.props.renderFooter ? this.props.renderFooter(List.Footer) : null,
       props.children

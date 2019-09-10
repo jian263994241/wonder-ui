@@ -34,3 +34,13 @@ export function createChainedFunction(...funcs) {
 export function classnames(){
   return [].slice.apply(arguments).join(' ');
 }
+
+/**
+ * 生成id
+ * @param {*} mask 
+ * @param {*} map 
+ */
+export function idxx(mask = 'xxxxxxxxxx', map = '0123456789abcdef') {
+  const length = map.length;
+  return mask.replace(/x/g, () => map[Math.floor((Math.random() * length))]);
+};
