@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_view } from './styles';
 import { withRouter } from 'react-router-dom';
-import AppContext from '../App/AppContext';
+import AppContext from '../AppContext';
 import Pages from './PageSwitch';
 
 /**

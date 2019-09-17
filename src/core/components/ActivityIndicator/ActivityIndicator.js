@@ -56,7 +56,7 @@ const Wrapper = styled.div(props=>{
 });
 
 /**
- * @visibleName Indicator 指示器
+ * @visibleName Indicator 活动指示器
  */
 const ActivityIndicator = React.forwardRef((props, ref)=>{
   const {
@@ -80,8 +80,9 @@ const ActivityIndicator = React.forwardRef((props, ref)=>{
   )
 })
 
-Indicator.propTypes = {
+ActivityIndicator.propTypes = {
   size: PropTypes.oneOf(['small', 'medium', 'large']),
+  text: PropTypes.string,
 }
 
 export default ActivityIndicator;

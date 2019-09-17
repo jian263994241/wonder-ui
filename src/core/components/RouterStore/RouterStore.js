@@ -12,12 +12,14 @@ const stripQuery = (loc) => {
 	return loc;
 };
 
-
-export default class RouterStore {
+/**
+ * 一个全局的路由状态.
+ * @visibleName RouterStore 路由状态
+ */
+class RouterStore {
 
 	location = {};
 	prevLocation = null;
-
 
   update(location) {
 		this.prevLocation = this.location;
@@ -37,3 +39,8 @@ export default class RouterStore {
 	}
   
 }
+
+/**
+ * @component
+ */
+export default RouterStore;

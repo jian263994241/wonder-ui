@@ -134,7 +134,7 @@ export default class ListView extends React.Component {
   static defaultProps = {
     initialListSize: DEFAULT_INITIAL_ROWS,
     pageSize: DEFAULT_PAGE_SIZE,
-    renderScrollComponent: props => <ScrollView {...props} />,
+    renderScrollComponent: props => <ScrollView contentContainerStyle={{width: '100%'}} {...props} />,
     renderBodyComponent: () => <List.Body />,
     renderSectionBodyWrapper: (sectionID) => <div key={sectionID} />,
     sectionBodyClassName: 'list-view-section-body',

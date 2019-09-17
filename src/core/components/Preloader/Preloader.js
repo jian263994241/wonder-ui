@@ -14,7 +14,7 @@ import Indicator from '../ActivityIndicator';
  * 
  * `Preloader.hide` - 隐藏`Preloader`
  * 
- * @visibleName Preloader 指示器
+ * @visibleName Preloader 指示器浮层
  */
 const Preloader = React.forwardRef((props, ref)=>{
   const {

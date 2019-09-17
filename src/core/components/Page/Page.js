@@ -2,7 +2,7 @@ import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import { WUI_page_root, WUI_page_content } from './styles';
 import { __RouterContext, matchPath } from 'react-router-dom';
-import AppContext from '../App/AppContext';
+import AppContext from '../AppContext';
 import utils from '../../utils/utils';
 import useEventCallback from '../../utils/useEventCallback'
 

@@ -1,7 +1,7 @@
 //core
 export { default as App} from './components/App';
 export { default as AppClass} from './components/AppClass';
-export { default as AppContext} from './components/App/AppContext';
+export { default as AppContext} from './components/AppContext';
 export { default as View} from './components/View';
 export { default as Page} from './components/Page';
 export { default as Link } from './components/Link';

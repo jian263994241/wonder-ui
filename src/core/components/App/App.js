@@ -76,7 +76,7 @@ App.defaultProps = {
 
 App.propTypes = {
   /**
-   * @ignore
+   * 全局的App对象
    */
   app: PropTypes.instanceOf(AppClass),
   /**
@@ -121,7 +121,7 @@ App.propTypes = {
        */
       redirect: PropTypes.string
     })
-  ),
+  ).isRequired,
   /**
    * 路由类型
    */
@@ -144,7 +144,7 @@ App.propTypes = {
     PropTypes.object
   ]),
   /**
-   * routerStore
+   * routerStore 全局的路由对象
    */
   routerStore: PropTypes.instanceOf(RouterStore),
 }

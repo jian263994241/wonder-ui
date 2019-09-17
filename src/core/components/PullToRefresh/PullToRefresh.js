@@ -11,7 +11,7 @@ const WUI_PullToRefresh = styled.div((props)=>{
     .${prefixCls} {
       &-content {
         &-wrapper {
-          overflow: hidden;
+          
         }
         transform-origin: left top 0;
       }

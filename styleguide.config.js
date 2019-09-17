@@ -28,6 +28,7 @@ module.exports = {
             './src/core/components/View/View.js',
             './src/core/components/Page/Page.js',
             './src/core/components/Link/Link.js',
+            './src/core/components/RouterStore/RouterStore.js',
           ]
         },
         {
@@ -54,6 +55,7 @@ module.exports = {
             './src/core/components/CheckboxItem/CheckboxItem.js',
             './src/core/components/ListView/ListView.js',
             './src/core/components/Tag/Tag.js',
+            './src/core/components/Empty/Empty.js',
           ],
         },
         {
@@ -63,6 +65,7 @@ module.exports = {
             './src/core/components/Dialog/Dialog.js',
             './src/core/components/toast/toast.js',
             './src/core/components/Preloader/Preloader.js',
+            './src/core/components/ActivityIndicator/ActivityIndicator.js',
           ],
         },
       ]

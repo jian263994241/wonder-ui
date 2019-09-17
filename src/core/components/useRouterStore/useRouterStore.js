@@ -1,5 +1,5 @@
 import React from 'react';
-import AppContext from '../App/AppContext';
+import AppContext from '../AppContext';
 
 const useRouterStore = ()=>{
   const app = React.useContext(AppContext);
