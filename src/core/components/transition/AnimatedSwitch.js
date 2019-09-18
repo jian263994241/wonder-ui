@@ -1,10 +1,8 @@
 import React from 'react';
-import { withRouter, matchPath, __RouterContext } from 'react-router-dom';
-import Switch from './Switch';
+import { withRouter, matchPath, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import find from 'array.prototype.find';
 import RouteTransition from './RouteTransition';
-import { parse } from '../../utils/queryString';
 
 const NO_MATCH = {
   key: 'no-match',
@@ -14,7 +12,7 @@ const NO_MATCH = {
  * Not every location object has a `key` property (e.g. HashHistory).
  */
 function getLocationKey(location) {
-  const key = location.key || parse(location.search).location_key;
+  const key = location.key || null;
   return typeof key === 'string' ? key : location.pathname;
 }
 
@@ -30,6 +28,7 @@ function getMatchedRoute(children, pathname) {
    });
  }) || NO_MATCH;
 }
+
 
 class AnimatedSwitch extends React.Component {
   static propTypes = {
@@ -65,7 +64,7 @@ class AnimatedSwitch extends React.Component {
 
     return (
       <RouteTransition {...routeTransitionProps}>
-        <Switch key={this.state.key + location.search} location={location}>
+        <Switch key={this.state.key} location={location}>
           {children}
         </Switch>
       </RouteTransition>
