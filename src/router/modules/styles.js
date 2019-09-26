@@ -85,7 +85,8 @@ export const RouteWrapper = styled.div `
   background: transparent;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  
+  z-index: 1;
+
   /** scale */
   &.scale-enter {
     display: block;

@@ -60,7 +60,7 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
 
   const routing = React.useContext(RouterStore.Context);
   const [animationType, setAnimation] = React.useState('null');
-  const timeout = duration[animation] || 0;
+  const timeout = duration[animationType] || 0;
 
   React.useEffect(()=>{
     setTimeout(() => setAnimation(animation), 0);
@@ -75,7 +75,6 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
       {(routeProps)=>{
         const { match, history } = routeProps;
         const visible = !!match && match.isExact;
-        const isForward = history.action === 'PUSH';
         
         const content = (
           <RouteWrapper className={className} style={style} ref={ref}>
@@ -93,14 +92,14 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
         if(animationDisabled){
           return visible ? content : null;
         }
-     
+
         return (
           <Transition
             in={visible}
             classNames={animationType}
             timeout={timeout}
             unmountOnExit={!match}
-            className={isForward ? 'forward': 'backward'}
+            action={history.action}
           >
             {content}
           </Transition>
@@ -159,8 +158,5 @@ AnimationRoute.propTypes = {
     }
   }
 }
-
-console.log();
-
 
 export default AnimationRoute;

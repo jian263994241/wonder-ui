@@ -4,20 +4,34 @@ import CSSTransition from 'react-transition-group/CSSTransition';
 const Transition = React.forwardRef((props, ref)=>{
   const { 
     in: inProp,
+    action,
     ...rest 
   } = props;
-  
-  const [inState, setInState] = React.useState(false);
 
+  const [inState, setInState] = React.useState(false);
+  const [prefix, setPrefix] = React.useState('');
+  
   React.useEffect(()=>{
-    setInState(inProp);
+    setTimeout(() => {
+      setInState(inProp);
+    }, 0);    
   }, [inProp]);
 
+ React.useEffect(()=>{
+  if(action === 'PUSH'){
+    setPrefix('forward');
+  }else{
+    setPrefix('backward');
+  }
+ }, [action]);
+
   return (
-    <CSSTransition 
-      in={inState} 
+    <CSSTransition
       mountOnEnter
-      ref={ref} 
+      unmountOnExit
+      in={inState}
+      className={prefix}
+      ref={ref}    
       {...rest}
     />
   )
