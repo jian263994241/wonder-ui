@@ -34,7 +34,7 @@ const params = {
 };
 
 <div className="mobile-preview">
-  <App historyType="memory" routes={params.routes}>
+  <App type="memory" routes={params.routes}>
     <View/>
   </App>
 </div>
