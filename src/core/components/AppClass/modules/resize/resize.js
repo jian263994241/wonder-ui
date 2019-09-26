@@ -1,15 +1,16 @@
-import $ from 'dom7';
+import offset from 'dom-helpers/offset';
 
 export default {
   name: 'resize',
   instance: {
     getSize() {
       const app = this;
-      app.root = $(app.root);
       
-      if (!app.root[0]) return { width: 0, height: 0, left: 0, top: 0 };
-      const offset = app.root.offset();
-      const [width, height, left, top] = [app.root[0].offsetWidth, app.root[0].offsetHeight, offset.left, offset.top];
+      if (!app.root) return { width: 0, height: 0, left: 0, top: 0 };
+
+      const _offset = offset(app.root);
+
+      const [width, height, left, top] = [app.root.offsetWidth, app.root.offsetHeight, _offset.left, _offset.top];
       app.width = width;
       app.height = height;
       app.left = left;
