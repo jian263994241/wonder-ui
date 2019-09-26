@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link as RouteLink } from 'react-router-dom';
+import { Link as RouteLink } from '@wonder-ui/router';
 import { WUI_link } from './styles';
 import TouchFeedback from '../TouchFeedback';
 

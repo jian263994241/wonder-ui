@@ -12,15 +12,10 @@ export const WUI_global = createGlobalStyle `
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
   }
-  html, body, #root {
-    height: 100%;
-    width: 100%;
-    position: relative;
-  }
 `
 
-export const WUI_app = styled.div `
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-`
+// export const WUI_app = styled.div `
+//   height: 100%;
+//   width: 100%;
+//   overflow: hidden;
+// `

@@ -6,8 +6,6 @@ export { default as View} from './components/View';
 export { default as Page} from './components/Page';
 export { default as Link } from './components/Link';
 export { default as RouterStore } from './components/RouterStore';
-export { default as useRouterStore } from './components/useRouterStore';
-export { default as NestedRoute } from './components/NestedRoute';
 //animation
 export { default as Fade} from './components/Fade';
 

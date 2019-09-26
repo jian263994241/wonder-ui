@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { WUI_app, WUI_global } from './styles';
+import { WUI_global } from './styles';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../styles/defaultTheme';
 import { useForkRef } from '../../utils/reactHelpers';
-import Router from '../Router';
-import RouterStore from '../RouterStore';
+import { Router, RouterStore } from '@wonder-ui/router';
 import AppContext from './AppContext';
 import AppClass from '../AppClass';
 
@@ -18,8 +17,7 @@ const App = React.forwardRef((props, ref) => {
     app: appInput,
     children,
     theme: themeInput,
-    historyType,
-    historyConfig = {},
+    type,
     routes,
     on,
     routerStore: routerStoreInput,
@@ -52,16 +50,17 @@ const App = React.forwardRef((props, ref) => {
   return (
     <ThemeProvider theme={theme}>
       <AppContext.Provider value={app}> 
-        <WUI_app ref={handleRef} {...rest}>
+        <>
           <WUI_global/>
           <Router 
-            type={historyType} 
+            type={type} 
             routerStore={app.routing}
-            {...historyConfig}
+            ref={handleRef}
+            {...rest}
           > 
             {children} 
           </Router>
-        </WUI_app>
+        </>
       </AppContext.Provider>
     </ThemeProvider>
   );
@@ -69,7 +68,7 @@ const App = React.forwardRef((props, ref) => {
 
 App.defaultProps = {
   theme: defaultTheme,
-  historyType: 'hash',
+  type: 'hash',
   routes: [],
   on: {},
 }
@@ -124,12 +123,9 @@ App.propTypes = {
   ).isRequired,
   /**
    * 路由类型
-   */
-  historyType: PropTypes.oneOf(['browser', 'memory', 'hash']),
-  /**
    * @see [路由配置](https://github.com/ReactTraining/history/blob/master/README.md)
    */
-  historyConfig: PropTypes.object,
+  type: PropTypes.oneOf(['browser', 'memory', 'hash']),
   /**
    * 主题
    * @param {object} theme 默认主题

@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { WUI_view } from './styles';
-import { withRouter } from 'react-router-dom';
 import AppContext from '../AppContext';
-import Pages from './PageSwitch';
+import { AnimationRoutes } from '@wonder-ui/router';
 
 /**
  * 用来包裹所有Page
@@ -11,37 +9,37 @@ import Pages from './PageSwitch';
  */
 const View =  (props) => {
   const {
-    history, 
-    location, 
-    fallback, 
-    ...rest
+    fallback,
+    animationDisabled,
+    animation, 
   } = props;
   const app = React.useContext(AppContext);
-  const [action, setAction] = React.useState('PUSH');
 
-  const search = decodeURIComponent(location.search);
-  const pathname = location.pathname;
-  
-  React.useEffect(()=>{
-    setAction(history.action); 
-  }, [search, pathname])
-  
   return (
-    <WUI_view>
-      <Pages routes={app.routes} fallback={fallback} action={action} location={location} {...rest}/>
-    </WUI_view>
+    <AnimationRoutes
+      dataSource={app.routes}
+      fallback={fallback}
+      animationDisabled={animationDisabled}
+      animation={animation}
+    />
   )
 }
 
-View.defaultProps = {
-  fallback: null
-}
+
 
 View.propTypes = {
  /**
   * 异步加载时的等待状态
   */
-  fallback: PropTypes.element
+  fallback: PropTypes.element,
+  /**
+   * 禁用切换动画
+   */
+  animationDisabled: PropTypes.bool,
+  /**
+   * 切换动画
+   */
+  animation : PropTypes.oneOf(['slide', 'fade', 'scale'])
 }
 
-export default withRouter(View);
+export default View;
