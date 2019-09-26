@@ -1,5 +1,5 @@
 
-# Wonderui - Router
+# WonderUI - Router
 
 ```
 npm install --save @wonder-ui/router

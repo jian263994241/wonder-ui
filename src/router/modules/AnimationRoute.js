@@ -3,6 +3,42 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import Transition from './Transition';
 import { RouteWrapper, duration } from './styles';
+import RouterStore from './RouterStore';
+
+
+const RouteComp = (props)=>{
+  const {
+    async,
+    fallback = null,
+    redirect,
+    component,
+    ...routeProps
+  } = props;
+
+  const Component = React.useMemo(()=>{
+    if(typeof async === 'function') return React.lazy(async);
+    if(typeof redirect === 'string') return () => <Redirect to={redirect}/>;
+    if(component) return component.default || component;
+  }, [async, component, redirect]);
+
+  const [content, setContent] = React.useState(null);
+
+  React.useEffect(()=>{
+    if(async != undefined){
+      setContent(
+        <React.Suspense fallback={fallback}>
+          <Component {...routeProps} />
+        </React.Suspense>
+      )
+    }else{
+      setContent(
+        <Component {...routeProps}/>
+      )
+    }
+  }, []);
+
+  return content;
+};
 
 /**
  * 
@@ -18,15 +54,11 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
     async,
     fallback = null,
     redirect,
+    disabled,
     ...rest
   } = props;
 
-  const Component = React.useMemo(()=>{
-    if(typeof async === 'function') return React.lazy(async);
-    if(typeof redirect === 'string') return () => <Redirect to={redirect}/>;
-    if(component) return component.default || component;
-  }, [async, component]);
-
+  const routing = React.useContext(RouterStore.Context);
   const [animationType, setAnimation] = React.useState('null');
   const timeout = duration[animation] || 0;
 
@@ -34,31 +66,34 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
     setTimeout(() => setAnimation(animation), 0);
   }, [animation]);
 
+  if(disabled){
+    return null;
+  }
+
   return (
     <Route {...rest}>
       {(routeProps)=>{
         const { match, history } = routeProps;
         const visible = !!match && match.isExact;
         const isForward = history.action === 'PUSH';
- 
+        
         const content = (
           <RouteWrapper className={className} style={style} ref={ref}>
-            {
-              async != undefined ? (
-                <React.Suspense fallback={fallback}>
-                  <Component {...routeProps}/>
-                </React.Suspense>
-              ): (
-                <Component {...routeProps}/>
-              )
-            }
+            <RouteComp
+              component={component}
+              fallback={fallback}
+              redirect={redirect}
+              async={async}
+              query={routing.location.query}
+              {...routeProps}
+            />
           </RouteWrapper>
         );
 
         if(animationDisabled){
           return visible ? content : null;
         }
- 
+     
         return (
           <Transition
             in={visible}
@@ -76,6 +111,7 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
 });
 
 AnimationRoute.propTypes = {
+  ...Route.propTypes,
   /**
    * Animation type
    */
@@ -106,8 +142,25 @@ AnimationRoute.propTypes = {
    * Disable animation
    */
   animationDisabled: PropTypes.bool,
-  ...Route.propTypes
+  /**
+   * Disable route
+   */
+  disabled: PropTypes.bool,
+  /**
+   * component
+   */
+  component: (props, propName)=>{
+    const propsCopy = Object.assign({}, props);
+    if(props[propName]){
+      if(props[propName].default){
+        propsCopy[propName] = props[propName].default
+      }
+      return Route.propTypes.component(propsCopy, propName);
+    }
+  }
 }
+
+console.log();
 
 
 export default AnimationRoute;

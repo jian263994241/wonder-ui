@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import flatMap from 'array.prototype.flatmap';
 import RouterStore from './RouterStore';
-import resolve from '../utils/path-resolve';
+
 import { 
   BrowserRouter, 
   HashRouter, 
@@ -20,7 +20,7 @@ const Store = withRouter((props)=>{
     location,
     history,
   } = props;
-
+  const Provider = RouterStore.Context.Provider;
   const store = React.useMemo(()=> {
     if(routerStore){
       routerStore.__initial(history);
@@ -32,16 +32,15 @@ const Store = withRouter((props)=>{
     if(store){
       store.update(location);
     }
-  }, [
-    location.pathname,
-    location.state,
-    location.hash, 
-    location.search
-  ])
+  }, [ location ])
 
   updateLocation();
 
-  return children;
+  return (
+    <Provider value={routerStore}>
+      {children}
+    </Provider>
+  )
 });
 
 Store.propTypes = {
@@ -51,7 +50,7 @@ Store.propTypes = {
 /**
  * Wrap ReactRouter
  */
-const Router = (props)=>{
+const Router = React.forwardRef((props, ref)=>{
   const { 
     children,
     type,
@@ -96,7 +95,7 @@ const Router = (props)=>{
     <RouterComp {...rest}>
       <Store routerStore={routerStore}>
         <GlobalStyles />
-        <RouterWrapper>
+        <RouterWrapper ref={ref}>
           <AnimationRoutes 
             dataSource={routeList} 
             animation={animation} 
@@ -107,7 +106,7 @@ const Router = (props)=>{
       </Store>
     </RouterComp>
   )
-}
+})
 
 
 Router.defaultProps = {

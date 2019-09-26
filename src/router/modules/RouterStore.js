@@ -1,3 +1,4 @@
+import React from 'react';
 import qs from 'query-string';
 
 const qsOpts = {
@@ -42,6 +43,8 @@ class Location {
  */
 class RouterStore {
 
+	static Context = React.createContext();
+
 	location = new Location();
 	prevLocation = null;
 
@@ -68,3 +71,5 @@ class RouterStore {
  * @component
  */
 export default RouterStore;
+
+

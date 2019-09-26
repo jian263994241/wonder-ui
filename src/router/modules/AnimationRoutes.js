@@ -2,13 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import flatMap from 'array.prototype.flatmap';
 import Route from './AnimationRoute';
-
+import resolve from '../utils/path-resolve';
 
 const AnimationRoutes = (props)=>{
   const {
     dataSource = [],
     animation,
     animationDisabled,
+    fallback,
+    className,
+    style,
   } = props;
   
   const renderRoutes = (routes)=>{  
@@ -39,6 +42,9 @@ const AnimationRoutes = (props)=>{
       key={index} 
       animation={animation} 
       animationDisabled={animationDisabled} 
+      fallback={fallback}
+      className={className}
+      style={style}
       {...routeConf}  
     />
   ))
@@ -87,7 +93,7 @@ AnimationRoutes.propTypes = {
        */
       redirect: PropTypes.string
     })
-  )
+  ).isRequired
 }
 
 export default AnimationRoutes;
