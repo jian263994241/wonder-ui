@@ -13,6 +13,14 @@ var paths = {
         'src/core/**/*.d.ts',
         'src/core/README.md'
       ]
+    },
+    router: {
+      src: ['src/router/**/*.js'],
+      dest: 'package/router',
+      copylist: [
+        'src/router/package.json',
+        'src/router/README.md'
+      ]
     }
   }
 }
@@ -27,17 +35,19 @@ function watch() {
   gulp.watch(paths.scripts.core.src, scripts);
 }
 
-function scripts() {
-  return gulp.src(paths.scripts.core.src, { sourcemaps: false })
+function scripts(target = 'core') {
+  return gulp.src(paths.scripts[target].src, { sourcemaps: false })
     .pipe(babel({ presets: [ preset ] }))
-    .pipe(gulp.dest(paths.scripts.core.dest));
+    .pipe(gulp.dest(paths.scripts[target].dest));
 }
 
-function cpoyInfo(){
-  return gulp.src(paths.scripts.core.copylist)
-    .pipe(gulp.dest(paths.scripts.core.dest));
+function cpoyInfo(target = 'core'){
+  return gulp.src(paths.scripts[target].copylist)
+    .pipe(gulp.dest(paths.scripts[target].dest));
 }
 
-gulp.task('build', gulp.series(cpoyInfo, scripts));
+
+gulp.task('build:core', gulp.series(()=>cpoyInfo('core'), ()=>scripts('core')));
+gulp.task('build:router', gulp.series(()=>cpoyInfo('router'), ()=>scripts('router')));
 
 gulp.task('default', gulp.series(cpoyInfo, scripts, watch));

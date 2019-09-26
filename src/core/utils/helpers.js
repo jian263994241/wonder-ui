@@ -32,7 +32,7 @@ export function createChainedFunction(...funcs) {
  * 合并classname
  */
 export function classnames(){
-  return [].slice.apply(arguments).join(' ');
+  return arguments.length > 0 ? [].slice.apply(arguments).join(' ') : '';
 }
 
 /**

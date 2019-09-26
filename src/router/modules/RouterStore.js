@@ -1,10 +1,13 @@
-import Location from './Location';
-import { stringify } from '../../utils/queryString';
+import qs from 'query-string';
+
+const qsOpts = {
+	arrayFormat: 'comma'
+};
 
 const stripQuery = (loc) => {
 	if (loc.query) {
 		const { search, query, ...other } = loc;
-		const queryString = stringify(query);
+		const queryString = qs.stringify(query, qsOpts);
 		return {
 			...other,
 			search: queryString && `?${queryString}`,
@@ -12,6 +15,26 @@ const stripQuery = (loc) => {
 	}
 	return loc;
 };
+
+class Location {
+  hash = undefined;
+  pathname = undefined;
+  search = undefined;
+  state = undefined;
+
+  get query(){
+    if(this.search){
+      return qs.parse(this.search, qsOpts)
+    }
+    return {};
+  }
+
+  set query(value){
+    if(utils.isObject(value)){
+      this.search = qs.stringify(value, qsOpts);
+    }
+  }
+}
 
 /**
  * 一个全局的路由状态.

@@ -6,12 +6,14 @@ import RouterStore from '../RouterStore';
 const Store = withRouter((props)=>{
   const { 
     children,
-    routerStore = {},
+    routerStore,
     location,
     history,
   } = props;
 
   const store = React.useMemo(()=> {
+    console.log(routerStore);
+    
     if(routerStore){
       routerStore.__initial(history);
     }
@@ -27,7 +29,7 @@ const Store = withRouter((props)=>{
     location.state,
     location.hash, 
     location.search
-  ])
+  ]);
 
   updateLocation();
 
@@ -67,7 +69,7 @@ const Router = (props)=>{
 
 
 Router.defaultProps = {
-  type: 'memory'
+  type: 'hash'
 }
 
 Router.propTypes = {

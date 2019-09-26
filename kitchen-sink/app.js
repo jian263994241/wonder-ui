@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {View, App} from '@wonder-ui/core';
+import {View, App } from '@wonder-ui/core';
+import { Router } from '@wonder-ui/router';
+
+import Welcome from './pages/Welcome';
 
 const params = {
   on: {
@@ -16,28 +19,19 @@ const params = {
     {
       path: '/', 
       exact: true,
-      // redirect: '/index'
-      redirect: (history, resolve, reject)=>{
-        resolve('/index')
-      }
+      redirect: '/index'
     },
     {
       path: '/index', 
-      component: require('./pages/Welcome'),
-      routes: [
+      component: Welcome,
+      children: [
         {
-          path: '/index/citys', 
-          async: (history, resolve, reject)=>{
-            setTimeout(()=>{
-              resolve(import('./pages/Citys'))
-            }, 1000)
-          }
+          path: 'citys', 
+          async: ()=>import('./pages/Citys')
         },
         {
-          path: '/index/picker', 
-          async: (history, resolve, reject)=>{
-            resolve(import('./pages/Picker'))
-          }
+          path: 'picker', 
+          async: ()=>import('./pages/Picker')
         },
       ]
     },
@@ -45,81 +39,55 @@ const params = {
     
     {
       path: '/countdown', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/Countdown'))
-      }
+      async: ()=>import('./pages/Countdown')
     },
     {
       path: '/keyboard', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/Keyboard'))
-      }
+      async: ()=> import('./pages/Keyboard')
     },
     {
       path: '/popup', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/Popup'))
-      }
+      async: () =>import('./pages/Popup')
     },
     {
       path: '/dialog', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/Dialog'))
-      }
+      async: () => import('./pages/Dialog')
     },
     {
       path: '/accordion', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/Accordion'))
-      }
+      async: () => import('./pages/Accordion')
     },
     {
       path: '/buttons', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/Buttons'))
-      }
+      async: () => import('./pages/Buttons')
     },
     {
       path: '/tabs', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/Tabs'))
-      }
+      async: () => import('./pages/Tabs')
     },
     {
       path: '/list', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/List'))
-      }
+      async: () => import('./pages/List')
     },
     {
       path: '/media-list', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/MediaList'))
-      }
+      async: () => import('./pages/MediaList')
     },
     {
       path: '/swipe-out', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/SwipeOut'))
-      }
+      async: () => import('./pages/SwipeOut')
     },
     {
       path: '/CheckboxesRadios', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/CheckboxesRadios'))
-      }
+      async: ()=> import('./pages/CheckboxesRadios')
     },
     {
       path: '/inputs', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/Inputs'))
-      }
+      async: ()=>import('./pages/Inputs')
     },
     {
       path: '/grid', 
-      async: (history, resolve, reject)=>{
-        resolve(import('./pages/Grid'))
-      }
+      async: ()=>import('./pages/Grid')
     },
   ]
 }
@@ -127,8 +95,13 @@ const params = {
 class MyApp extends Component {
 
   render(){
+    
     return (
-      <App params={params}>
+      <Router routes={params.routes}/>
+    )
+
+    return (
+      <App {...params}>
         <View />
       </App>
     )

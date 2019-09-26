@@ -5,7 +5,7 @@ import { __RouterContext, matchPath } from 'react-router-dom';
 import AppContext from '../AppContext';
 import utils from '../../utils/utils';
 import useEventCallback from '../../utils/useEventCallback'
-
+import useTheme from '../styles/useTheme';
 /**
  * 创建一个页面(长宽100%的容器)
  * @visibleName Page 页面
@@ -19,16 +19,21 @@ const Page = React.forwardRef((props, ref)=>{
   } = props;
   const app = React.useContext(AppContext);
   const router = React.useContext(__RouterContext);
+  const theme = useTheme();
   const { location, match } = router;
   
   const matched = React.useMemo(()=> {
-    return matchPath(location.pathname, {
-      path: match.path
-    }) || {}
-  }, [location.pathname]);
+    let matched = null;
+    if(match){
+      matched = matchPath(location.pathname, {
+        path: match.path
+      });
+    }
+    return matched || {};
+  }, [location.pathname, match]);
 
   const pageEvent = useEventCallback((type, ...args)=>{
-    if(matched.isExact){
+    if(matched.isExact && app){
       app.emit(`page${type}`, ...args);
     }
   });
@@ -51,6 +56,7 @@ const Page = React.forwardRef((props, ref)=>{
     <WUI_page_root 
       ref={ref} 
       css = {styles.root}
+      theme={theme}
     >
       <>
       { slots['pageContentBefore'] }
