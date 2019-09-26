@@ -113,8 +113,8 @@ App.propTypes = {
        * ()=>import('~/pages/some/index')
        */
       async: PropTypes.func,
-      /** 嵌套路由 仅支持2级 */
-      routes: PropTypes.array,
+      /** 嵌套路由 */
+      children : PropTypes.array,
       /**
        * 入口重定向
        */
