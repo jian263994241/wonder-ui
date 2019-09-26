@@ -1,15 +1,10 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {View, App } from '@wonder-ui/core';
-import { Router } from '@wonder-ui/router';
-
-import Welcome from './pages/Welcome';
 
 const params = {
   on: {
     pageInit: (name, props)=>{
-      console.log(name);
-      
       if(name){
         document.title = name;
       }
@@ -23,7 +18,7 @@ const params = {
     },
     {
       path: '/index', 
-      component: Welcome,
+      component: require('./pages/Welcome'),
       children: [
         {
           path: 'citys', 
@@ -95,10 +90,6 @@ const params = {
 class MyApp extends Component {
 
   render(){
-    
-    return (
-      <Router routes={params.routes}/>
-    )
 
     return (
       <App {...params}>

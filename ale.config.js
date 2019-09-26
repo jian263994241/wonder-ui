@@ -12,7 +12,7 @@ module.exports = {
     alias: {
       '~': __dirname,
       '@wonder-ui/core': path.resolve(__dirname, './src/core'),
-      // '@wonder-ui/router': path.resolve(__dirname, './src/router'),
+      '@wonder-ui/router': path.resolve(__dirname, './src/router'),
       '@wonder-ui/components': path.resolve(__dirname, './src/components')
     }
   },
