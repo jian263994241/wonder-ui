@@ -152,7 +152,7 @@ export const RouteWrapper = styled.div `
   /** slide-ios */
   &.forward.slide-enter {
     display: block;
-    z-index: 2;
+    z-index: 3;
     transform: translate3d(100%,0,0);
   }
 
@@ -167,7 +167,6 @@ export const RouteWrapper = styled.div `
 
   &.forward.slide-enter-done {
     display: block;
-    z-index: 2;
   }
 
   &.forward.slide-exit {
@@ -187,7 +186,6 @@ export const RouteWrapper = styled.div `
 
   &.forward.slide-exit-done {
     display: none;
-    z-index: 1;
   }
 
   /** slide right */
@@ -208,12 +206,11 @@ export const RouteWrapper = styled.div `
 
   &.backward.slide-enter-done {
     display: block;
-    z-index: 1;
   }
 
   &.backward.slide-exit {
     display: block;
-    z-index: 2;
+    z-index: 3;
     transform: translate3d(0,0,0);
   }
 
@@ -228,7 +225,6 @@ export const RouteWrapper = styled.div `
 
   &.backward.slide-exit-done {
     display: none;
-    z-index: 2;
   }
 
 `

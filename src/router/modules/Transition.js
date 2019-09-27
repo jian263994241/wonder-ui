@@ -9,21 +9,19 @@ const Transition = React.forwardRef((props, ref)=>{
   } = props;
 
   const [inState, setInState] = React.useState(false);
-  const [prefix, setPrefix] = React.useState('');
-  
+
   React.useEffect(()=>{
     setTimeout(() => {
       setInState(inProp);
     }, 0);    
   }, [inProp]);
 
- React.useEffect(()=>{
-  if(action === 'PUSH'){
-    setPrefix('forward');
-  }else{
-    setPrefix('backward');
-  }
- }, [action]);
+  const prefix = React.useMemo(()=>{
+    if(action === 'POP'){
+      return 'backward';
+    }
+    return 'forward';
+  }, [inProp]);
 
   return (
     <CSSTransition
