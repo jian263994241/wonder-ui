@@ -23,7 +23,7 @@ const propTypes = {
 
 export default class ScrollView extends React.Component {
   static propTypes = propTypes;
-  componentWillUpdate(nextProps) {
+  UNSAFE_componentWillUpdate(nextProps) {
     // https://github.com/ant-design/ant-design-mobile/issues/1480
     // https://stackoverflow.com/questions/1386696/make-scrollleft-scrolltop-changes-not-trigger-scroll-event
     // 问题情景：用户滚动内容后，改变 dataSource 触发 ListView componentWillReceiveProps

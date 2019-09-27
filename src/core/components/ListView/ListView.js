@@ -3,7 +3,7 @@ react/prop-types: 0, react/sort-comp: 0, no-unused-expressions: 0 */
 import React from 'react';
 import PropTypes from 'prop-types';
 import ListViewDataSource from 'rmc-list-view/es/ListViewDataSource';
-import ScrollView from 'rmc-list-view/es/ScrollView';
+import ScrollView from './ScrollView';
 import List from '../List';
 import Empty from '../Empty';
 
@@ -174,7 +174,7 @@ export default class ListView extends React.Component {
     this.ListViewRef.scrollTo(...args);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // this data should never trigger a render pass, so don't put in state
     this.scrollProperties = {
       visibleLength: null,
@@ -188,7 +188,7 @@ export default class ListView extends React.Component {
     this.setState({metrics: this.scrollProperties});
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.dataSource !== nextProps.dataSource ||
         this.props.initialListSize !== nextProps.initialListSize) {
       this.setState((state, props) => {
