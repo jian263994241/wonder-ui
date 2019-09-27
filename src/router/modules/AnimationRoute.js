@@ -12,6 +12,7 @@ const RouteComp = (props)=>{
     fallback = null,
     redirect,
     component,
+    shouldUpdate,
     ...routeProps
   } = props;
 
@@ -23,7 +24,9 @@ const RouteComp = (props)=>{
 
   const [content, setContent] = React.useState(null);
 
-  React.useEffect(()=>{
+  const {location} = routeProps;
+
+  function rendered(){
     if(async != undefined){
       setContent(
         <React.Suspense fallback={fallback}>
@@ -35,7 +38,13 @@ const RouteComp = (props)=>{
         <Component {...routeProps}/>
       )
     }
-  }, []);
+  }
+  
+  React.useEffect(()=>{
+    if(shouldUpdate){
+      rendered();
+    }  
+  }, [location, shouldUpdate]);
 
   return content;
 };
@@ -84,6 +93,7 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
               redirect={redirect}
               async={async}
               query={routing.location.query}
+              shouldUpdate={visible}
               {...routeProps}
             />
           </RouteWrapper>
