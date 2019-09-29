@@ -19,6 +19,7 @@ const Store = withRouter((props)=>{
     routerStore,
     location,
     history,
+    noMatch,
   } = props;
   const Provider = RouterStore.Context.Provider;
   const store = React.useMemo(()=> {
@@ -96,12 +97,16 @@ const Router = React.forwardRef((props, ref)=>{
       <Store routerStore={routerStore}>
         <GlobalStyles />
         <RouterWrapper ref={ref}>
-          <AnimationRoutes 
-            dataSource={routeList} 
-            animation={animation} 
-            animationDisalbed={animationDisalbed}   
-          />
-          { routeList.length <= 0 && children }
+          {
+            routeList.length > 0 ? (
+              <AnimationRoutes 
+                dataSource={routeList} 
+                animation={animation} 
+                animationDisalbed={animationDisalbed}  
+                noMatch={noMatch} 
+              />
+            ): children
+          }
         </RouterWrapper>
       </Store>
     </RouterComp>

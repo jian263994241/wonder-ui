@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import flatMap from 'array.prototype.flatmap';
 import Route from './AnimationRoute';
 import resolve from '../utils/path-resolve';
+import { __RouterContext, matchPath, Redirect } from 'react-router-dom';
 
 const AnimationRoutes = (props)=>{
   const {
@@ -12,8 +13,12 @@ const AnimationRoutes = (props)=>{
     fallback,
     className,
     style,
+    noMatch = '/404',
   } = props;
-  
+
+  const context = React.useContext(__RouterContext);
+  const location = context.location;
+
   const renderRoutes = (routes)=>{  
     return flatMap(routes, (route, index)=>{
       const { children, ...routeConf } = route;
@@ -29,27 +34,54 @@ const AnimationRoutes = (props)=>{
     })
   };
   
-  const [routeList, setRoute] = React.useState([]);
-  React.useEffect(()=>{
+  const routeList = React.useMemo(()=>{
     if(dataSource){
-      const result = renderRoutes(dataSource);
-      setRoute(result);   
+      return renderRoutes(dataSource);
     }
+    return [];
   }, [dataSource]);
 
-  return routeList.map((routeConf, index)=> (
-    <Route 
-      key={index} 
-      animation={animation} 
-      animationDisabled={animationDisabled} 
-      fallback={fallback}
-      className={className}
-      style={style}
-      {...routeConf}  
-    />
-  ))
+  const matched = React.useMemo(()=>{
+    let match;
+    routeList.forEach((child)=>{
+      const path = child.path || child.from;
+
+      const _match = path
+          ? matchPath(location.pathname, { ...child, path })
+          : context.match;
+     
+      if(_match) {
+        match = _match;
+      }
+    });
+    return match;
+  }, [routeList, location]);
+  
+  return (
+    <>
+      {
+        routeList.map((routeConf, index)=> (
+          <Route 
+            key={index} 
+            animation={animation} 
+            animationDisabled={animationDisabled} 
+            fallback={fallback}
+            className={className}
+            style={style}
+            {...routeConf}  
+          />
+        ))
+      }
+      {
+        !matched && (<Redirect to={noMatch}/>)
+      }
+    </>
+  )
 }
 
+AnimationRoutes.defaultProps = {
+  noMatch: '/404'
+};
 
 AnimationRoutes.propTypes = {
   /**
@@ -91,9 +123,13 @@ AnimationRoutes.propTypes = {
       /**
        * 入口重定向
        */
-      redirect: PropTypes.string
+      redirect: PropTypes.string,
     })
-  ).isRequired
+  ).isRequired,
+  /**
+   * 404
+   */
+  noMatch: Redirect.propTypes.to
 }
 
 export default AnimationRoutes;
