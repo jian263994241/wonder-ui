@@ -1,3 +1,11 @@
-export { default as usePageInit } from './usePageInit';
-export { default as useIsMounted } from './useIsMounted'; 
-export { default as useScreen } from './useScreen';
+import usePageInit from './usePageInit';
+import useScreen from './useScreen';
+
+
+const hooks = {
+  usePageInit,
+  useScreen
+};
+
+
+export default hooks;

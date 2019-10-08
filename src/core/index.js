@@ -41,5 +41,5 @@ export { default as PullToRefresh } from './components/PullToRefresh';
 export { default as utils } from './components/utils';
 
 
-export * as hooks from './components/hooks';
+export { default as hooks } from './components/hooks';
 
