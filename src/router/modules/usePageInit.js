@@ -1,7 +1,7 @@
 import React from 'react';
 import { __RouterContext } from 'react-router-dom';
 
-const usePageInit = (callback) => {
+const usePageInit = (callback, vars = []) => {
   const context = React.useContext(__RouterContext);
   const matched = context.match || {};
 
@@ -9,7 +9,7 @@ const usePageInit = (callback) => {
     if(matched.isExact){
       return callback && callback();
     }
-  }, [matched.isExact]);
+  }, [matched.isExact].concat(vars));
 }
 
 
