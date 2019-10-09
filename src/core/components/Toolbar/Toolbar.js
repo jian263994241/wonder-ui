@@ -13,11 +13,14 @@ const WUI_toolbar = styled(Flex) `
  * @see 基于[Flex组件](#/组件?id=flex)扩展, props相同 
  * @visibleName Toolbar 工具栏
  */
-const Toolbar = React.forwardRef((props, ref)=>(
-  <Slot name="pageContentAfter">
-    <WUI_toolbar role="toolbar" ref={ref} gutter={1} {...props}/>
-  </Slot>
-))
+const Toolbar = React.forwardRef((props, ref)=>{
+  const { slot = 'pageContentAfter', ...rest } = props;
+  return (
+    <Slot name={slot}>
+      <WUI_toolbar role="toolbar" ref={ref} gutter={1} {...rest}/>
+    </Slot>
+  )
+})
 
 
 export default Toolbar;
