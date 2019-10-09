@@ -4,6 +4,7 @@ import flatMap from 'array.prototype.flatmap';
 import Route from './AnimationRoute';
 import resolve from '../utils/path-resolve';
 import { __RouterContext, matchPath, Redirect } from 'react-router-dom';
+import getPropTypes from '../utils/getPropTypes';
 
 const AnimationRoutes = (props)=>{
   const {
@@ -129,7 +130,7 @@ AnimationRoutes.propTypes = {
   /**
    * 404
    */
-  noMatch: Redirect.propTypes.to
+  noMatch: getPropTypes(Redirect, 'to')
 }
 
 export default AnimationRoutes;
