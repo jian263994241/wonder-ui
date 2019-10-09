@@ -9,6 +9,12 @@ export { default as RouterStore } from './components/RouterStore';
 //animation
 export { default as Fade} from './components/Fade';
 
+//hooks
+export { default as hooks } from './components/hooks';
+
+//utils
+export { default as utils } from './components/utils';
+
 //feedback
 export { default as Modal } from './components/Modal';
 export { default as Preloader} from './components/Preloader';
@@ -36,10 +42,10 @@ export { default as Toolbar } from './components/Toolbar';
 export { default as SvgIcon } from './components/SvgIcon';
 export { default as Checkbox } from './components/Checkbox';
 export { default as PullToRefresh } from './components/PullToRefresh';
-
-//utils
-export { default as utils } from './components/utils';
+export { default as Slot } from './components/Slot';
 
 
-export { default as hooks } from './components/hooks';
+
+
+
 

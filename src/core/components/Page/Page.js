@@ -5,6 +5,11 @@ import AppContext from '../AppContext';
 import utils from '../../utils/utils';
 import useTheme from '../styles/useTheme';
 import hooks from '../hooks';
+import Slot from '../Slot';
+
+const SlotGroup = Slot.Group;
+const SlotContent = Slot.Content;
+
 /**
  * 创建一个页面(长宽100%的容器)
  * @visibleName Page 页面
@@ -26,27 +31,22 @@ const Page = React.forwardRef((props, ref)=>{
     }
   });
 
-  const slots = React.useMemo(()=>{
-    const childrenArray = Children.toArray(children);
-    return utils.slot(childrenArray); 
-  }, [children]);
-
   return (
-    <WUI_page_root 
-      ref={ref} 
-      css = {styles.root}
-      theme={theme}
-    >
-      <>
-      { slots['pageContentBefore'] }
-      {
-        pageContent ? (
-          <WUI_page_content css = {styles.content} >{ slots.main }</WUI_page_content>
-        ) : slots.main
-      }
-      { slots['pageContentAfter'] }
-      </>
-    </WUI_page_root>
+    <SlotGroup>
+      <WUI_page_root 
+        ref={ref} 
+        css = {styles.root}
+        theme={theme}
+      >
+        <SlotContent name="pageContentBefore"/>
+        {
+          pageContent ? 
+          <WUI_page_content css={styles.content} >{ children }</WUI_page_content> 
+          : children
+        }
+        <SlotContent name="pageContentAfter"/>
+      </WUI_page_root>
+    </SlotGroup>  
   )
 });
 

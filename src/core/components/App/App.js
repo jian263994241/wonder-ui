@@ -28,7 +28,7 @@ const App = React.forwardRef((props, ref) => {
   const app = React.useMemo(()=> appInput || new AppClass(appParams), [appParams]);
   const rootRef = React.createRef(null);
   const handleRef = useForkRef(rootRef, ref);
-  
+
   const theme = React.useMemo(()=> {
     return typeof themeInput ==='function' ? themeInput(defaultTheme) : themeInput;
   }, [themeInput]);
