@@ -40,6 +40,7 @@ const CheckboxItem = React.forwardRef((props, ref)=> {
   return (
     <ListItem
       ref={ref}
+      disabled={disabled}
       {...checkboxInner}
       {...rest}
     />
