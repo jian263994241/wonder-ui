@@ -54,7 +54,7 @@ const fakeOpacity = css `
   position: absolute;
   left: 0;
   top: 0;
-  background: rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.4);
   width: 100%;
   bottom: 0;
   content: '';
@@ -82,7 +82,7 @@ export const RouteWrapper = styled.div `
   position: absolute;
   width: 100%;
   height: 100%;
-  background: transparent;
+  background: #fff;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   z-index: 1;
@@ -180,7 +180,7 @@ export const RouteWrapper = styled.div `
     transition: transform ${easing.easeInOut} ${formatMs(duration.slide)};
     &:after {
       ${fakeOpacity}
-      animation: ${fadeIn} ${formatMs(duration.slide)}s ${easing.easeInOut} forwards;
+      animation: ${fadeIn} ${formatMs(duration.slide)} ${easing.easeInOut} forwards;
     }
   }
 
@@ -200,7 +200,7 @@ export const RouteWrapper = styled.div `
     transition: transform ${easing.easeInOut} ${formatMs(duration.slide)};
     &:after {
       ${fakeOpacity}
-      animation: ${fadeOut} ${formatMs(duration.slide)}s ${easing.easeInOut} forwards;
+      animation: ${fadeOut} ${formatMs(duration.slide)} ${easing.easeInOut} forwards;
     }
   }
 
@@ -219,7 +219,7 @@ export const RouteWrapper = styled.div `
     transition: transform ${easing.easeInOut} ${formatMs(duration.slide)};
     &:before {
       ${fakeShadow}
-      animation: ${fadeOut} ${formatMs(duration.slide)}s ${easing.easeInOut} forwards;
+      animation: ${fadeOut} ${formatMs(duration.slide)} ${easing.easeInOut} forwards;
     }
   }
 
