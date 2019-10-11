@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RmcPullToRefresh from 'rmc-pull-to-refresh';
-import Indicator from '../ActivityIndicator';
 import styled, { css } from 'styled-components';
 
 const WUI_PullToRefresh = styled.div((props)=>{
@@ -59,10 +58,10 @@ PullToRefresh.defaultProps = {
   damping: 100,
   prefixCls: 'pull-to-refresh',
   indicator: {
-    activate: '松开立即刷新',
-    deactivate: '下拉可以刷新',
-    finish: '完成刷新',
-    release: <Indicator size="small"/>
+    activate: '释放即可刷新',
+    deactivate: '下拉即可刷新',
+    finish: '加载完成',
+    release: '正在刷新数据中...'
   }
 }
 

@@ -33,7 +33,7 @@ const Checkbox = React.forwardRef((props, ref)=> {
   }
 
   return (
-    <WUI_checkbox_wrap role={type} className={className} style={style}>
+    <WUI_checkbox_wrap role={type} className={className} style={style} disabled={disabled}>
       <input 
         ref={ref}
         name={name}

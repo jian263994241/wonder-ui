@@ -32,6 +32,10 @@ export const WUI_checkbox_wrap = styled.span `
   width: 21px;
   height: 21px;
 
+  &[disabled] {
+    opacity: 0.45;
+  }
+
   > input {
     position: absolute;
     top: 0;

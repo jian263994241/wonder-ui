@@ -195,13 +195,7 @@ const flexDirection = css(props=>{
 const itemGutter = css(props=>{
   const { gutter } = props;
   return {
-    // [WUI_flexItem]: {
-    //   marginLeft: gutter,
-    //   '&:first-child':{
-    //     marginLeft: 0
-    //   }
-    // },
-    '>div': {
+    '>div, >a': {
       marginLeft: gutter,
       '&:first-child':{
         marginLeft: 0

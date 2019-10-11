@@ -21,6 +21,7 @@ export const WUI_page_content = styled.div `
   overflow: auto;
   will-change: scroll-position;
   -webkit-overflow-scrolling: touch;
+  flex-shrink: 1;
 
   html.device-ios & {
     &:before{

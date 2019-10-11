@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { idxx } from '../../utils/helpers';
 import hooks from '../hooks';
+import flatMap from 'array.prototype.flatmap';
 
 const SlotContext = React.createContext({});
 
@@ -43,7 +44,7 @@ Slot.Content = (props)=> {
   const context = React.useContext(SlotContext);
 
   if(context.content){
-    return context.content.flatMap((item)=>{
+    return flatMap(context.content, (item)=>{
       if(item.name === name){
         return item.component;
       }
