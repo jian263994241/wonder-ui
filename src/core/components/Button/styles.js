@@ -2,12 +2,9 @@ import styled from 'styled-components';
 import { fade } from '../styles/colorManipulator';
 import utils from '../../utils/utils';
 import ButtonBase from '../ButtonBase';
-import { styledTag } from '../../utils/reactHelpers';
+import createTag from '../createTag';
 
-
-export const WUI_button = styled(
-  styledTag(ButtonBase, ['color', 'fullWidth', 'full', 'variant'])
-)( (props) => {
+export const WUI_button = styled(createTag(ButtonBase))( (props) => {
   const { theme, variant, color, size, fullWidth: _fullWidth, full: _full } = props;
 
   const text = utils.equal(

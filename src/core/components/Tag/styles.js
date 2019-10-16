@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { fade } from '../styles/colorManipulator';
 import utils from '../../utils/utils';
-import { styledTag } from '../../utils/reactHelpers';
+import createTag from '../createTag';
 
 export const WUI_tag_label = styled.span({
   display: 'flex',
@@ -13,7 +13,7 @@ export const WUI_tag_label = styled.span({
   cursor: 'inherit',
 })
 
-export const WUI_tag = styled(styledTag('span', ['color', 'size', 'outlined']))(({theme, ...props})=>{
+export const WUI_tag = styled(createTag.span)(({theme, ...props})=>{
   const largeHeight = 32;
   const height = 24;
   const smallHeight = 16;

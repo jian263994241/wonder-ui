@@ -1,4 +1,5 @@
 import styled, {css} from 'styled-components';
+import Bouncefix from './Bouncefix';
 
 export const WUI_page_root = styled.div(({theme})=>{
   return css `
@@ -10,18 +11,27 @@ export const WUI_page_root = styled.div(({theme})=>{
     z-index: 10;
     display: flex;
     flex-direction: column;
+    & > * {
+      flex-shrink: 0;
+    }
   `
 })
 
-export const WUI_page_content = styled.div `
-  box-sizing: border-box;
+export const WUI_page_body = styled.div `
+  flex-shrink: 1;
   width: 100%;
   height: 100%;
   position: relative;
+  overflow: hidden;
+`
+
+export const WUI_page_content = styled(Bouncefix) `
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
   overflow: auto;
   will-change: scroll-position;
   -webkit-overflow-scrolling: touch;
-  flex-shrink: 1;
 
   html.device-ios & {
     &:before{

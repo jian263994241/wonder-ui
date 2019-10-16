@@ -1,14 +1,7 @@
 import styled from 'styled-components';
-import { styledTag } from '../../utils/reactHelpers';
+import createTag from '../createTag';
 
-export const WUI_block = styled(styledTag('div', [
-  'blank', 
-  'space',
-  'left',
-  'right',
-  'top',
-  'bottom'
-]))(({theme, ...props})=> {
+export const WUI_block = styled(createTag.div)(({theme, ...props})=> {
 
   const defaultValue = (a,b) => theme.spacing(a != undefined ? a : b);
 

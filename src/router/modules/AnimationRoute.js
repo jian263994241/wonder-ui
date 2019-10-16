@@ -84,9 +84,14 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
       {(routeProps)=>{
         const { match, history } = routeProps;
         const visible = !!match && match.isExact;
-   
+
         const content = (
-          <RouteWrapper className={className} style={style} ref={ref}>
+          <RouteWrapper 
+            className={className} 
+            style={style} 
+            ref={ref}
+            data-url={match && match.url}
+          >
             <RouteComp
               component={component}
               fallback={fallback}

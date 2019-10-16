@@ -1,8 +1,7 @@
-import React, { Children } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { WUI_page_root, WUI_page_content } from './styles';
+import { WUI_page_root, WUI_page_body, WUI_page_content } from './styles';
 import AppContext from '../AppContext';
-import utils from '../../utils/utils';
 import useTheme from '../styles/useTheme';
 import hooks from '../hooks';
 import Slot from '../Slot';
@@ -18,8 +17,8 @@ const Page = React.forwardRef((props, ref)=>{
   const { 
     name,
     children, 
-    styles = {}, 
-    pageContent = true
+    pageContent = true,
+    ...rest
   } = props;
   const app = React.useContext(AppContext);
   const theme = useTheme();
@@ -34,16 +33,20 @@ const Page = React.forwardRef((props, ref)=>{
   return (
     <SlotGroup>
       <WUI_page_root 
-        ref={ref} 
-        css = {styles.root}
+        ref={ref}
         theme={theme}
+        {...rest}
       >
         <SlotContent name="pageContentBefore"/>
+        <WUI_page_body>
         {
-          pageContent ? 
-          <WUI_page_content css={styles.content} >{ children }</WUI_page_content> 
-          : children
+          pageContent ? (
+            <WUI_page_content>
+             {children}
+            </WUI_page_content>
+          ): children
         }
+        </WUI_page_body>
         <SlotContent name="pageContentAfter"/>
       </WUI_page_root>
     </SlotGroup>  
@@ -51,10 +54,6 @@ const Page = React.forwardRef((props, ref)=>{
 });
 
 Page.Content = WUI_page_content;
-
-Page.defaultProps = {
-  name: undefined,
-}
 
 Page.propTypes = {
   /** 

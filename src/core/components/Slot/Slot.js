@@ -1,94 +1,70 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { idxx } from '../../utils/helpers';
-import hooks from '../hooks';
-import flatMap from 'array.prototype.flatmap';
 
 const SlotContext = React.createContext({});
 
 const Slot = (props)=>{
-  const { 
-    name, 
-    children
-  } = props;
-  const context = React.useContext(SlotContext);
+  const { name, children } = props;
+  const slotContext = React.useContext(SlotContext);
   const id = React.useMemo(()=> idxx(), []);
+  const { dispatch } = slotContext;
 
   React.useEffect(()=>{
-    if(context.setContent && name){
-      context.setContent({
-        id, name, component: children
-      });
+    if(name && dispatch){
+      dispatch({ type: 'add', data: { id, name, component: children } })
     }
     return ()=>{
-      if(context.setContent && name){
-        context.removeContent(id);
-      }
+      dispatch({ type: 'remove', data: { id, name, component: children } })
     }
   }, [name, children]);
 
-  if(!context.setContent){
-    return children;
-  }
-  
+  if(!dispatch || !name) return children;
   return null;
 };
 
 Slot.propTypes = {
   name: PropTypes.string,
-}
-
+};
 
 Slot.Content = (props)=> {
-  const { name } = props;
-  const context = React.useContext(SlotContext);
-
-  if(context.content){
-    return flatMap(context.content, (item)=>{
-      if(item.name === name){
-        return item.component;
-      }
-      return [];
-    });
-  }
-  return null;
-}
-
+  const slotContext = React.useContext(SlotContext);
+  const { state = [] } = slotContext;
+  return state.map((item)=>{
+    if(item.name === props.name) return item.component;
+    return null;
+  });
+};
 
 Slot.Group = (props)=>{
-  const { children } = props;
-  const [content] = React.useState([]);
-  const [, forceUpdate] = hooks.useForceUpdate();
-  
-  const setContent = (value)=>{
-    const target = content.find((item)=> value.id === item.id);
-    
-    if(target){
-      Object.assign(target, value);
-    }else{
-      content.push(value);
-    }
-    
-    forceUpdate();
-  }
-
-  const removeContent = (id)=>{
-    const index = content.findIndex((item)=>{
-      return item.id = id;
-    });
-
-    if(index> -1){
-      content.splice(index, 1);
-      forceUpdate();
-    }
-  }
-
+  const [state, dispatch] = React.useReducer(reducer, []);
   return (
-    <SlotContext.Provider value={{content, setContent, removeContent}}>
-      {children}
+    <SlotContext.Provider value={{state, dispatch}}>
+      {props.children}
     </SlotContext.Provider>
-  )
-}
+  );
 
+  function reducer(state, action) {
+    const _state = [].concat(state);
+    const data = action.data;
+
+    switch (action.type) {
+      case 'add':
+        const target = _state.find((item)=> data.id === item.id);
+        if(target){
+          Object.assign(target, data);
+        }else{
+          _state.push(data);
+        }
+        return _state;
+      case 'remove':
+          const index = _state.findIndex((item)=> item.id == data.id);
+          _state.splice(index, 1);
+          return _state;
+      default:
+        return state;
+    }
+  }
+}
 
 export default Slot;

@@ -43,6 +43,7 @@ export { default as SvgIcon } from './components/SvgIcon';
 export { default as Checkbox } from './components/Checkbox';
 export { default as PullToRefresh } from './components/PullToRefresh';
 export { default as Slot } from './components/Slot';
+export { default as Placeholder } from './components/Placeholder';
 
 
 
