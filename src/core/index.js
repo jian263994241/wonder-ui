@@ -7,7 +7,7 @@ export { default as Page} from './components/Page';
 export { default as Link } from './components/Link';
 export { default as RouterStore } from './components/RouterStore';
 //animation
-export { default as Fade} from './components/Fade';
+export { default as Transition } from './components/Transition';
 
 //hooks
 export { default as hooks } from './components/hooks';

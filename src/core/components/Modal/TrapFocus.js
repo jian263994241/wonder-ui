@@ -13,7 +13,7 @@ function TrapFocus(props) {
   const {
     children,
     disableAutoFocus = false,
-    disableEnforceFocus = false,
+    disableEnforceFocus = true,
     disableRestoreFocus = false,
     getDoc,
     isEnabled,

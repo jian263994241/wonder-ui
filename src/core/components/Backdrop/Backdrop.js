@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_backdrop } from './styles';
-import Fade from '../Fade';
 import TouchFeedback from '../TouchFeedback';
-
+import { useDisabledRefTouchMove, useForkRef } from '../../utils/reactHelpers';
+import { Fade } from '../Transition';
 /**
  * 遮层
  * @visibleName Backdrop - 背板
  */
 const Backdrop = React.forwardRef((props, ref)=> {
-
   const { 
     visible, 
     timeout, 
@@ -17,21 +16,17 @@ const Backdrop = React.forwardRef((props, ref)=> {
     onClick,
     ...rest
   } = props;
+  const rootRef = React.useRef();
+  const handleRef = useForkRef(rootRef, ref);
 
+  useDisabledRefTouchMove(rootRef);
+  
   return (
-    <Fade 
-      in={visible} 
-      timeout={timeout}
-    >
-      <TouchFeedback disabled={!onClick}>
-        <WUI_backdrop
-          aria-hidden
-          fixed={fixed}
-          ref={ref}
-          {...rest} 
-        />
-      </TouchFeedback>
-    </Fade>
+    <TouchFeedback>
+      <Fade in={visible} timeout={timeout} >
+        <WUI_backdrop aria-hidden fixed={fixed} ref={handleRef} {...rest} />
+      </Fade>
+    </TouchFeedback>
   )
 })
 

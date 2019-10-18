@@ -5,9 +5,6 @@ import { fade } from '../styles/colorManipulator';
 export const WUI_dialog_root = styled.div `
   box-sizing: border-box;
   position: ${props=>props.fixed ? 'fixed': 'absolute'};
-  top: 50%;
-  left: 50%;
-  transform: translate3d(-50%, -50%, 0) scale(1.185);
   contain: content;
   width: 270px;
   z-index: 13500;

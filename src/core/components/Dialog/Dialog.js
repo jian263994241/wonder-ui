@@ -11,12 +11,12 @@ import {
 } from './styles';
 import { duration } from '../styles/transitions';
 import Modal from '../Modal';
-import Fade from '../Fade';
 import DialogManager from './DialogManager';
 import { createChainedFunction } from  '../../utils/helpers';
 import toggleVisible from './toggleVisible';
+import { Fade } from '../Transition';
 
-export const dialogTimeout = { enter: duration.standard, exit: 0};
+export const dialogTimeout = { enter: 400, exit: 400};
 
 /**
  * 系统信息提示, 并请求用户进行下一步操作
@@ -38,7 +38,7 @@ const Dialog = React.forwardRef((props, ref)=>{
     fixed
   } = props;
   
-  const transtions = {
+  const transtionStyles = {
     entering: {
       opacity: 1,
       transform: 'translate3d(-50%, -50%, 0) scale(1)'
@@ -56,12 +56,18 @@ const Dialog = React.forwardRef((props, ref)=>{
       afterClose={afterClose}
       hasTransition
       closeAfterTransition
-      BackdropProps={{ fixed, timeout: dialogTimeout }}
+      BackdropProps={{ fixed }}
     >
       <Fade
-        timeout={dialogTimeout}
-        types={['opacity', 'transform']}
-        styles={transtions}
+        //timeout={dialogTimeout}
+        propertys={['opacity', 'transform']}
+        styles={transtionStyles}
+        style={{
+          top: '50%',
+          left: '50%',
+          opacity: 0,
+          transform: 'translate3d(-50%, -50%, 0) scale(1.085)'
+        }}
       >
         <WUI_dialog_root css={styles.root} ref={ref} fixed={fixed}>
      
