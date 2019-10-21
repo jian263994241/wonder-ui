@@ -9,14 +9,11 @@ import {
   WUI_dialog_button_group,
   WUI_dialog_button
 } from './styles';
-import { duration } from '../styles/transitions';
 import Modal from '../Modal';
 import DialogManager from './DialogManager';
 import { createChainedFunction } from  '../../utils/helpers';
 import toggleVisible from './toggleVisible';
-import { Fade } from '../Transition';
-
-export const dialogTimeout = { enter: 400, exit: 400};
+import Fade from '../Fade';
 
 /**
  * 系统信息提示, 并请求用户进行下一步操作
@@ -59,7 +56,6 @@ const Dialog = React.forwardRef((props, ref)=>{
       BackdropProps={{ fixed }}
     >
       <Fade
-        //timeout={dialogTimeout}
         propertys={['opacity', 'transform']}
         styles={transtionStyles}
         style={{

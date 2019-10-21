@@ -6,6 +6,7 @@ import createSpacing from './createSpacing';
 import * as transitions from './transitions';
 import disabled from './disabled';
 import * as hairline from './hairline';
+import zIndex from './zIndex';
 
 
 export default function createTheme(options={}){
@@ -30,6 +31,7 @@ export default function createTheme(options={}){
     transitions,
     disabled,
     shape,
+    zIndex,
     ...rest
   }
   

@@ -6,8 +6,10 @@ export { default as View} from './components/View';
 export { default as Page} from './components/Page';
 export { default as Link } from './components/Link';
 export { default as RouterStore } from './components/RouterStore';
-//animation
+//transition
 export { default as Transition } from './components/Transition';
+export { default as Fade } from './components/Fade';
+export { default as Slide } from './components/Slide';
 
 //hooks
 export { default as hooks } from './components/hooks';
@@ -44,6 +46,7 @@ export { default as Checkbox } from './components/Checkbox';
 export { default as PullToRefresh } from './components/PullToRefresh';
 export { default as Slot } from './components/Slot';
 export { default as Placeholder } from './components/Placeholder';
+export { default as Drawer} from './components/Drawer';
 
 
 

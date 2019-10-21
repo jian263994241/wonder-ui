@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { WUI_backdrop } from './styles';
 import TouchFeedback from '../TouchFeedback';
 import { useDisabledRefTouchMove, useForkRef } from '../../utils/reactHelpers';
-import { Fade } from '../Transition';
+import Fade from '../Fade';
 /**
  * 遮层
  * @visibleName Backdrop - 背板
@@ -13,7 +13,6 @@ const Backdrop = React.forwardRef((props, ref)=> {
     visible, 
     timeout, 
     fixed, 
-    onClick,
     ...rest
   } = props;
   const rootRef = React.useRef();

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Flex from '../Flex';
 import Slot from '../Slot';
-import { Fade } from '../Transition';
+import Fade from '../Fade';
 import { useDisabledRefTouchMove, useForkRef } from '../../utils/reactHelpers';
 
 const WUI_toolbar = styled(Flex) `

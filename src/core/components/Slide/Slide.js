@@ -1,77 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Transition } from 'react-transition-group';
-import { duration } from '../styles/transitions';
-
-
-const defaultTimeout = {
-  enter: duration.enteringScreen,
-  exit: duration.leavingScreen,
-};
+import Transition from '../Transition';
 
 const Slide = React.forwardRef((props, ref)=>{
   const {
-    children,
-    direction = 'down',
-    in: inProp,
-    onEnter,
-    onEntering,
-    onExit,
-    onExited,
-    style,
-    timeout = defaultTimeout,
+    direction,
     ...rest
   } = props;
-  
-})
 
-Slide.defaultProps = {
-  timeout: defaultTimeout,
-  direction: 'down'
-}
+  const style = React.useMemo(()=>{
+    if(direction === 'left'){
+      return {
+        transform: 'translate3d(100% , 0 , 0)'
+      };
+    }
+    
+    if(direction === 'right'){
+      return {
+        transform: 'translate3d(-100% , 0 , 0)'
+      };
+    }
 
+    if(direction === 'up'){
+      return {
+        transform: 'translate3d(0 , 100% , 0)'
+      };
+    }
+
+    if(direction === 'down'){
+      return {
+        transform: 'translate3d(0 , -100% , 0)'
+      };
+    }
+  }, [direction]);
+
+  return (
+    <Transition
+      ref={ref}
+      style={style}
+      styles = {{
+        entering: { transform: 'translate3d(0 , 0 , 0)' },
+        entered: { transform: 'translate3d(0 , 0 , 0)' }
+      }}
+      propertys={['transform']}
+      {...rest}
+    />
+  )
+});
 
 Slide.propTypes = {
-  /**
-   * A single child content element.
-   */
-  children: elementAcceptingRef,
-  /**
-   * Direction the child node will enter from.
-   */
   direction: PropTypes.oneOf(['left', 'right', 'up', 'down']),
-  /**
-   * If `true`, show the component; triggers the enter or exit animation.
-   */
-  in: PropTypes.bool,
-  /**
-   * @ignore
-   */
-  onEnter: PropTypes.func,
-  /**
-   * @ignore
-   */
-  onEntering: PropTypes.func,
-  /**
-   * @ignore
-   */
-  onExit: PropTypes.func,
-  /**
-   * @ignore
-   */
-  onExited: PropTypes.func,
-  /**
-   * @ignore
-   */
-  style: PropTypes.object,
-  /**
-   * The duration for the transition, in milliseconds.
-   * You may specify a single timeout for all transitions, or individually with an object.
-   */
-  timeout: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.shape({ enter: PropTypes.number, exit: PropTypes.number }),
-  ]),
+  ...Transition.propTypes
 };
 
 export default Slide;

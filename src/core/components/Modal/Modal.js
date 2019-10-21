@@ -164,7 +164,7 @@ const Modal = React.forwardRef((props, ref) => {
           ref={handleRef}
           {...rest}
         >
-          {hideBackdrop ? null : <Backdrop visible={visible} {...BackdropProps}/>}
+          {hideBackdrop ? null : <Backdrop visible={visible} onClick={onClose} {...BackdropProps}/>}
           <TrapFocus
             disableEnforceFocus={disableEnforceFocus}
             disableAutoFocus={disableAutoFocus}
