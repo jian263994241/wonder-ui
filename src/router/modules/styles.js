@@ -166,6 +166,7 @@ export const RouteWrapper = styled.div `
   }
 
   &.forward.slide-enter-done {
+    z-index: 3;
     display: block;
   }
 

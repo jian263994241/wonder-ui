@@ -199,7 +199,7 @@ const Modal = React.forwardRef((props, ref) => {
           ref={handleRef}
           {...rest}
         >
-          
+          {hideBackdrop ? null : <Backdrop ref={backdropRef} visible={visible} onClick={onCancel} {...BackdropProps}/>}
           <TrapFocus
             disableEnforceFocus={disableEnforceFocus}
             disableAutoFocus={disableAutoFocus}
@@ -208,11 +208,7 @@ const Modal = React.forwardRef((props, ref) => {
             isEnabled={isTopModal}
             open={visible}
           >
-            <div>
-            {hideBackdrop ? null : <Backdrop ref={backdropRef} visible={visible} onClick={onCancel} {...BackdropProps}/>}
             {React.cloneElement(children, childProps)}
-            </div>
-            
           </TrapFocus>
         </div>
       </Portal>

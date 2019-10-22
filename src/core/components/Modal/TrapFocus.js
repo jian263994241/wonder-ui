@@ -55,7 +55,7 @@ function TrapFocus(props) {
         warning(
           false,
           [
-            'Material-UI: the modal content node does not accept focus.',
+            'TrapFocus: the modal content node does not accept focus.',
             'For the benefit of assistive technologies, ' +
               'the tabIndex of the node is being set to "-1".',
           ].join('\n'),
