@@ -33,7 +33,11 @@ const Picker = React.forwardRef((props, ref)=>{
   };
 
   const [_visible, setVisible] = React.useState(visible);
-  const [_extra, setExtra] = React.useState(getExtra());
+  const [_extra, setExtra] = React.useState(null);
+
+  React.useEffect(()=>{
+    setExtra( getExtra() )
+  }, [cascaderProps.data])
 
   const handleClick = (e)=>{
     if(disabled) return ;
@@ -61,7 +65,7 @@ const Picker = React.forwardRef((props, ref)=>{
     onChange && onChange(values, result);
     onOk && onOk(values, result);
   };
-
+  
   return (
     <React.Fragment>
       { 
