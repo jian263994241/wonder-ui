@@ -46,7 +46,10 @@ export { default as Checkbox } from './components/Checkbox';
 export { default as PullToRefresh } from './components/PullToRefresh';
 export { default as Slot } from './components/Slot';
 export { default as Placeholder } from './components/Placeholder';
-export { default as Drawer} from './components/Drawer';
+export { default as Drawer } from './components/Drawer';
+export { default as Picker } from './components/Picker';
+export { default as LcnPicker } from './components/LcnPicker';
+export { default as DatePicker } from './components/DatePicker';
 
 
 

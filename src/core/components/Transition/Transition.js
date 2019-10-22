@@ -32,6 +32,7 @@ const Transition = React.forwardRef((props, ref)=>{
     styles = { entering: {}, entered: {} },
     propertys = [],
     timeout,
+    easing,
     ...rest
   } = props;
   const handleRef = useForkRef(children.ref, ref);
@@ -39,14 +40,14 @@ const Transition = React.forwardRef((props, ref)=>{
   const handleEnter = node => {
     reflow(node); // So the animation always start from the start.
 
-    const transitionProps = getTransitionProps({ style, timeout }, { mode: 'enter' });
+    const transitionProps = getTransitionProps({ style, timeout }, { mode: 'enter', easing });
     node.style.webkitTransition = transitions.create(propertys, transitionProps);
     node.style.transition = transitions.create(propertys, transitionProps);
     onEnter && onEnter(node);
   };
 
   const handleExit = node => {
-    const transitionProps = getTransitionProps({ style, timeout }, { mode: 'exit' });
+    const transitionProps = getTransitionProps({ style, timeout }, { mode: 'exit', easing });
     node.style.webkitTransition = transitions.create(propertys, transitionProps);
     node.style.transition = transitions.create(propertys, transitionProps);
     onExit && onExit(node);

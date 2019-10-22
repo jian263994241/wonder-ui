@@ -4,7 +4,6 @@ import Slide from '../Slide';
 import Modal from '../Modal';
 import { Wrapper } from './styles';
 
-
 const oppositeDirection = {
   left: 'right',
   right: 'left',
@@ -12,13 +11,16 @@ const oppositeDirection = {
   bottom: 'up',
 };
 
-
+/**
+ * @visibleName Drawer 抽屉
+ * 一个半屏幕的浮层
+ */
 const Drawer = React.forwardRef((props, ref)=>{
   const { 
     anchor = 'right',
     children,
     visible,
-    onClose,
+    onCancel,
     style,
     className,
     modalProps,
@@ -54,7 +56,7 @@ const Drawer = React.forwardRef((props, ref)=>{
     <Modal
       disableEnforceFocus={false}
       visible={visible}
-      onClose={onClose}
+      onCancel={onCancel}
       hasTransition
       {...modalProps}
     >
@@ -64,7 +66,34 @@ const Drawer = React.forwardRef((props, ref)=>{
 });
 
 Drawer.propTypes = {
+  /**
+   * 是否显示浮层
+   */
+  visible: PropTypes.bool,
+  /**
+   * 渲染方式
+   */
   variant: PropTypes.oneOf(['permanent', 'persistent', 'temporary']),
+  /**
+   * Modal props
+   */
+  modalProps: PropTypes.object,
+  /**
+   * 点击背景触发关闭事件
+   */
+  onCancel: PropTypes.func,
+  /**
+   * 出现的位置
+   */
+  anchor: PropTypes.oneOf(['left' ,'right', 'top', 'bottom']),
+  /**
+   * root element classnames
+   */
+  className: PropTypes.string,
+  /**
+   * root element style
+   */
+  style: PropTypes.object,
 }
 
 

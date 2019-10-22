@@ -10,9 +10,7 @@ const WUI_toolbar = styled(Flex) `
   width: 100%;
   height: 44px;
   flex-shrink: 0;
-  .device-iphone-x &{
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+  padding-bottom: env(safe-area-inset-bottom);
 `
 /**
  * 提供一个44像素的通栏, 子元素Flex布局

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import css from 'dom-helpers/css';
 import { ThemeProvider } from 'styled-components';
 import Backdrop from '../Backdrop';
 import useTheme from '../styles/useTheme';
@@ -41,7 +42,7 @@ const Modal = React.forwardRef((props, ref) => {
     hasTransition,
     closeAfterTransition,
     keepMounted,
-    onClose,
+    onCancel,
     afterClose,
     ...rest
   } = props;
@@ -52,6 +53,8 @@ const Modal = React.forwardRef((props, ref) => {
   const mountNodeRef = React.useRef(null);
   const modalRef = React.useRef(null);
   const handleRef = useForkRef(modalRef, ref);
+  const childrenRef = React.useRef(null);
+  const backdropRef = React.useRef(null);
 
   const getDoc = () => ownerDocument(mountNodeRef.current);
   const getModal = () => {
@@ -60,7 +63,37 @@ const Modal = React.forwardRef((props, ref) => {
     return modal.current;
   };
 
+  const originZIndex = React.useMemo(()=>{
+    if(childrenRef.current){
+      const zIndex = css(childrenRef.current, 'zIndex');
+      if(zIndex){
+        return Number(zIndex);
+      }
+    }
+    return null;
+  }, [childrenRef.current]);
+
+  const setZIndex = (zindex)=>{
+    if(!originZIndex) return null;
+
+    if(childrenRef.current){
+      childrenRef.current.style.zIndex = originZIndex + zindex + 1;
+    }
+    if(backdropRef.current){
+      backdropRef.current.style.zIndex = originZIndex + zindex;
+    }
+  };
+
   const isTopModal = React.useCallback(() => manager.isTopModal(getModal()), [manager]);
+
+  React.useEffect(()=>{
+    if(isTopModal()){
+      setZIndex(manager.modals.length);
+    }else{
+      setZIndex(-1);
+    }
+  }, [visible, originZIndex, childrenRef, backdropRef, manager.modals.length]);
+  
 
   const handleMounted = ()=>{
     manager.mount(getModal(), { disableScrollLock });
@@ -139,6 +172,8 @@ const Modal = React.forwardRef((props, ref) => {
 
   const childProps = {};
 
+  childProps.ref = childrenRef;
+
   if (children.role === undefined) {
     childProps.role = children.role || 'document';
   }
@@ -164,7 +199,7 @@ const Modal = React.forwardRef((props, ref) => {
           ref={handleRef}
           {...rest}
         >
-          {hideBackdrop ? null : <Backdrop visible={visible} onClick={onClose} {...BackdropProps}/>}
+          
           <TrapFocus
             disableEnforceFocus={disableEnforceFocus}
             disableAutoFocus={disableAutoFocus}
@@ -173,7 +208,11 @@ const Modal = React.forwardRef((props, ref) => {
             isEnabled={isTopModal}
             open={visible}
           >
+            <div>
+            {hideBackdrop ? null : <Backdrop ref={backdropRef} visible={visible} onClick={onCancel} {...BackdropProps}/>}
             {React.cloneElement(children, childProps)}
+            </div>
+            
           </TrapFocus>
         </div>
       </Portal>
@@ -211,6 +250,10 @@ Modal.propTypes = {
    * 保持节点
    */
   keepMounted: PropTypes.bool,
+  /**
+   * 点击背景关闭浮层
+   */
+  onCancel: PropTypes.func,
 }
 
 

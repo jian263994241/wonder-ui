@@ -29,8 +29,6 @@ export const StyleIndicator = styled.div `
   left: 0;
   top: 102px;
   z-index: 3;
-  ${'' /* border-top: 1PX solid #ddd;
-  border-bottom: 1PX solid #ddd; */}
 `
 
 export const StyleItem = styled.div `

@@ -1,10 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Transition from '../Transition';
+import { easing, duration } from '../styles/transitions';
+
+const defaultTimeout = {
+  enter: duration.enteringScreen,
+  exit: duration.leavingScreen,
+};
 
 const Slide = React.forwardRef((props, ref)=>{
   const {
     direction,
+    timeout = defaultTimeout,
     ...rest
   } = props;
 
@@ -43,6 +50,7 @@ const Slide = React.forwardRef((props, ref)=>{
         entered: { transform: 'translate3d(0 , 0 , 0)' }
       }}
       propertys={['transform']}
+      easing={easing.sharp}
       {...rest}
     />
   )
