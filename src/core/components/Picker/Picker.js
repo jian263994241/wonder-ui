@@ -37,17 +37,19 @@ const Picker = React.forwardRef((props, ref)=>{
   const [visible, setVisible] = React.useState(visible);
   const [extra, setExtra] = React.useState('');
 
-  const valueProps = React.useMemo(()=>{
-    if(!value) return ;
-    const result = treeFilter(data, (item, level)=>{
-      return item.value === value[level];
-    });
-    return result;
-  }, [data, value]);
+  const getValueProps = (value)=>{
+    if(value){
+      const result = treeFilter(data, (item, level)=>{
+        return item.value === value[level];
+      });
+      return result;
+    }
+    return [];
+  };
 
   React.useEffect(()=>{
     if(value){
-      setExtra(format(valueProps));
+      setExtra(format(getValueProps(value)));
     }else{
       setExtra( getExtra() )
     }
@@ -70,6 +72,7 @@ const Picker = React.forwardRef((props, ref)=>{
 
   const handleOk = (value)=>{
     setVisible(false);
+    const valueProps = getValueProps(value);
     onChange && onChange(value, valueProps);
     onOk && onOk(value, valueProps);
   };

@@ -39,6 +39,10 @@ const Cascader = (props)=>{
 
   const [value, setValue] = React.useState(inValue);
 
+  const headData = React.useMemo(()=>{
+    return getHeadData(data);
+  }, data);
+
   React.useEffect(()=>{
     if(inValue != value){
       setValue(inValue);
@@ -60,8 +64,8 @@ const Cascader = (props)=>{
   );
 
   const handleOk = ()=>{
-    onChange && onChange(value || getHeadData(data));
-    onOk && onOk(value || getHeadData(data));
+    onChange && onChange(value || headData);
+    onOk && onOk(value || headData);
   };
 
   return (

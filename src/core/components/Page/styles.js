@@ -11,6 +11,7 @@ export const WUI_page_root = styled.div(({theme})=>{
     z-index: 10;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     & > * {
       flex-shrink: 0;
     }
