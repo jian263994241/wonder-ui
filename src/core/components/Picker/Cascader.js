@@ -1,85 +1,85 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { 
-  WUI_Picker, 
+  WUI_picker, 
   WUI_picker_header, 
   WUI_picker_header_button,
   WUI_picker_header_title,
-  WUI_picker_body
+  WUI_picker_cascader
 } from './styles';
-import RMCCascader from 'rmc-cascader/lib/Cascader';
+
+function getHeadData(data){
+  const result = [];
+  const _getHeadData = (data)=>{
+    const head = data[0];
+    if(!head) return ;
+    result.push(head.value);
+    if(head.children && head.children.length > 0){
+      return _getHeadData(head.children);
+    }
+  }
+  _getHeadData(data);
+  return result;
+}
 
 const Cascader = (props)=>{
   const {
-    data = [],
     cancelText = '取消',
     okText = '确定',
-    title,
-    onChange,
-    value,
     onOk, 
     onCancel,
-    visible,
-    cols,
+    onChange,
+    onPickerChange,
+    title,
+    visible = false,
+    cols = 1,
+    data = [],
+    value: inValue,
   } = props;
 
-  const [_value, setValue] = React.useState(value);
+  const [value, setValue] = React.useState(inValue);
 
   React.useEffect(()=>{
-    const result = [];
-    const getHeadData = (data)=>{
-      const head = data[0];
-      if(!head) return ;
-      result.push(head.value);
-      if(head.children && head.children.length > 0){
-        return getHeadData(head.children);
-      }
+    if(inValue != value){
+      setValue(inValue);
     }
-    if(visible && !_value){
-      getHeadData(data);
-      setValue(result);
-    }
-  }, [_value, visible]);
+  }, [inValue]);
 
   const handleChange = (val)=>{
     setValue(val);
-    onChange && onChange(val);
+    onPickerChange && onPickerChange(val);
   }
-  
+
   const cascader = (
-    <WUI_picker_body>
-      <RMCCascader 
-        data={data} 
-        onChange={handleChange}
-        value={_value}
-        cols={cols}
-      />
-    </WUI_picker_body>
+    <WUI_picker_cascader
+      data={data}
+      cols={cols}
+      value={value}
+      onChange={handleChange}
+    />
   );
 
   const handleOk = ()=>{
-    onOk && onOk(_value);
+    onChange && onChange(value || getHeadData(data));
+    onOk && onOk(value || getHeadData(data));
   };
 
   return (
-    <WUI_Picker 
-      visible={visible} 
-      anchor="bottom"
-      onCancel={onCancel}
-    >
+    <WUI_picker visible={visible} anchor="bottom" onCancel={onCancel} >
       <WUI_picker_header>
         <WUI_picker_header_button onClick={onCancel}>{cancelText}</WUI_picker_header_button>
         <WUI_picker_header_title>{title}</WUI_picker_header_title>
         <WUI_picker_header_button onClick={handleOk}>{okText}</WUI_picker_header_button>
       </WUI_picker_header>
       {cascader}
-    </WUI_Picker>
+    </WUI_picker>
   )
 };
 
 
 Cascader.propTypes = {
   title: PropTypes.string,
+  visible: PropTypes.bool,
 }
 
 export default Cascader;

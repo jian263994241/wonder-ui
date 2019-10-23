@@ -17,30 +17,46 @@ const Picker = React.forwardRef((props, ref)=>{
   const {
     children,
     placeholder,
-    visible,
     onCancel,
     onOk,
     onChange,
+    value,
     triggerType = 'onClick',
     labelProps = 'extra',
     format = defaultFormat,
     disabled,
+    extra: extraProp,
+    data = [],
     ...cascaderProps
   } = props;
 
   const getExtra = ()=>{
-    return placeholder || children.props.extra || cascaderProps.value;
+    return placeholder|| extraProp || children.props.extra;
   };
 
-  const [_visible, setVisible] = React.useState(visible);
-  const [_extra, setExtra] = React.useState(null);
+  const [visible, setVisible] = React.useState(visible);
+  const [extra, setExtra] = React.useState('');
+
+  const valueProps = React.useMemo(()=>{
+    if(!value) return ;
+    const result = treeFilter(data, (item, level)=>{
+      return item.value === value[level];
+    });
+    return result;
+  }, [data, value]);
 
   React.useEffect(()=>{
-    setExtra( getExtra() )
-  }, [cascaderProps.data])
+    if(value){
+      setExtra(format(valueProps));
+    }else{
+      setExtra( getExtra() )
+    }
+  }, [data, value]);
 
   const handleClick = (e)=>{
-    if(disabled) return ;
+    if(disabled) {
+      return false;
+    }
     setVisible(true);
     if(children.props.onClick){
       children.props.onClick(e);
@@ -52,33 +68,27 @@ const Picker = React.forwardRef((props, ref)=>{
     onCancel && onCancel();
   };
 
-  const handleOk = (values)=>{
+  const handleOk = (value)=>{
     setVisible(false);
-    if(!values) return ;
-
-    const result = treeFilter(cascaderProps.data, (item, level)=>{
-      return item.value === values[level];
-    });
-    
-    setExtra(format(result));
-    
-    onChange && onChange(values, result);
-    onOk && onOk(values, result);
+    onChange && onChange(value, valueProps);
+    onOk && onOk(value, valueProps);
   };
   
   return (
     <React.Fragment>
       { 
         React.cloneElement(children, { 
-          [labelProps]: _extra, 
+          [labelProps]: extra, 
           [triggerType]: handleClick,
           readOnly: true
         }) 
       }
       <Cascader 
-        visible={_visible} 
+        visible={visible}
+        value={value}
         onCancel={handleCancel}
         onOk={handleOk}
+        data={data}
         {...cascaderProps}
       />
     </React.Fragment>
@@ -91,9 +101,62 @@ Picker.defaultProps = {
 };
 
 Picker.propTypes = {
+  /**
+   * @ignore
+   */
   children: elementAcceptingRef,
+  /**
+   * 占位提示
+   */
   placeholder: PropTypes.string,
-  ...Cascader.propTypes
+  /**
+   * same as placeholder
+   */
+  extra: PropTypes.string,
+  /**
+   * The data of picker
+   */
+  data: PropTypes.array,
+  /**
+   * selected value
+   */
+  value: PropTypes.array,
+  /**
+   * click ok callback
+   */
+  onOk: PropTypes.func,
+  /**
+   * click cancel callback
+   */
+  onCancel: PropTypes.func,
+  /**
+   * rc-from callback
+   */
+  onChange: PropTypes.func,
+  /**
+   * button text
+   */
+  okText: PropTypes.string,
+  /**
+   * button text
+   */
+  cancelText: PropTypes.string,
+  /**
+   * title
+   */
+  title: PropTypes.string,
+  /**
+   * format
+   */
+  format: PropTypes.func,
+  /**
+   * 每列数据选择变化后的回调函数
+   */
+  onPickerChange: PropTypes.func,
+  /**
+   * 是否禁用
+   */
+  disabled: PropTypes.bool,
 };
 
 export default Picker;

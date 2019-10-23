@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Drawer from '../Drawer';
+import Cascader from 'rmc-cascader/lib/Cascader';
 
 export const WUI_picker_header = styled.div `
   background-image: -webkit-linear-gradient(top, #e7e7e7, #e7e7e7, transparent, transparent);
@@ -52,13 +53,11 @@ export const WUI_picker_header_right = styled.span `
     background-color: #ddd;
   }
 `
-export const WUI_picker_body = styled.div `
-  
-  .rmc-cascader, .rmc-date-picker{
-    display: flex;
-    box-align: center;
-    align-items: center;
-  }
+export const WUI_picker_cascader = styled(Cascader) `
+
+  display: flex;
+  box-align: center;
+  align-items: center;
 
   .rmc-picker,.rmc-multi-picker {
     height: 238px;
@@ -127,7 +126,7 @@ export const WUI_picker_body = styled.div `
   }
 `
 
-export const WUI_Picker = styled(Drawer) `
+export const WUI_picker = styled(Drawer) `
   background-color: #fff;
   padding-bottom: env(safe-area-inset-bottom);
 `

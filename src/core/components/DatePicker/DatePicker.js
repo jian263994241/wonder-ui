@@ -45,7 +45,6 @@ const DatePicker = React.forwardRef((props, ref)=>{
   const {
     children,
     placeholder,
-    visible,
     onCancel,
     onOk,
     onChange,
@@ -53,15 +52,30 @@ const DatePicker = React.forwardRef((props, ref)=>{
     labelProps = 'extra',
     format,
     disabled,
-    ...datePickerViewProps
+    extra: extraProp,
+    value,
+    ...rest
   } = props;
 
   const getExtra = ()=>{
-    return placeholder || children.props.extra || datePickerViewProps.value;
+    return placeholder || extraProp || children.props.extra;
   };
 
-  const [_visible, setVisible] = React.useState(visible);
-  const [_extra, setExtra] = React.useState(getExtra());
+  const [visible, setVisible] = React.useState(visible);
+  const [extra, setExtra] = React.useState('');
+
+  const formatDate = React.useMemo(()=>{
+    if(!value) return ;
+    return formatFn(props, value);
+  }, [value]);
+
+  React.useEffect(()=>{
+    if(value){
+      setExtra(formatDate);
+    }else{
+      setExtra( getExtra() )
+    }
+  }, [value]);
 
   const handleClick = (e)=>{
     if(disabled) return ;
@@ -78,9 +92,6 @@ const DatePicker = React.forwardRef((props, ref)=>{
 
   const handleOk = (values)=>{
     setVisible(false);
-    if(!values) return ;
-    const result = formatFn(props, values);
-    setExtra(result);
     onChange && onChange(values);
     onOk && onOk(values);
   };
@@ -89,16 +100,17 @@ const DatePicker = React.forwardRef((props, ref)=>{
     <React.Fragment>
       { 
         React.cloneElement(children, { 
-          [labelProps]: _extra, 
+          [labelProps]: extra, 
           [triggerType]: handleClick,
           readOnly: true
         }) 
       }
       <DatePickerView 
-        visible={_visible} 
+        visible={visible} 
         onCancel={handleCancel}
         onOk={handleOk}
-        {...datePickerViewProps}
+        value={value}
+        {...rest}
       />
     </React.Fragment>
   );
@@ -110,9 +122,96 @@ DatePicker.defaultProps = {
 };
 
 DatePicker.propTypes = {
+  /**
+   * @ignore
+   */
   children: elementAcceptingRef,
+  /**
+   * 占位提示
+   */
   placeholder: PropTypes.string,
-  ...DatePickerView.propTypes
+  /**
+   * same as placeholder
+   */
+  extra: PropTypes.string,
+  /**
+   * selected value
+   */
+  value: PropTypes.array,
+  /**
+   * click ok callback
+   */
+  onOk: PropTypes.func,
+  /**
+   * click cancel callback
+   */
+  onCancel: PropTypes.func,
+  /**
+   * rc-from callback
+   */
+  onChange: PropTypes.func,
+  /**
+   * button text
+   */
+  okText: PropTypes.string,
+  /**
+   * button text
+   */
+  cancelText: PropTypes.string,
+  /**
+   * title
+   */
+  title: PropTypes.string,
+  /**
+   * the locale of area
+   */
+  locale: PropTypes.object,
+  /**
+   * The date picker mode.
+   */
+  mode: PropTypes.oneOf(['date', 'time', 'datetime', 'year', 'month']),
+  /**
+   * min date
+   */
+  minDate: PropTypes.instanceOf(Date),
+  /**
+   * max date
+   */
+  maxDate: PropTypes.instanceOf(Date),
+  /**
+   * min Hour [0, 23]
+   */
+  minHour: PropTypes.number,
+  /**
+   * max Hour [0, 23]
+   */
+  maxHour: PropTypes.number,
+  /**
+   * min Minute [0, 59]
+   */
+  minMinute: PropTypes.number,
+  /**
+   * max Minute [0, 59]
+   */
+  maxMinute: PropTypes.number,
+  /**
+   * 12 hours display mode
+   */
+  use12Hours: PropTypes.bool,
+  /**
+   * he amount of time, in minutes, between each minute item.
+   */
+  minuteStep: PropTypes.number,
+  /**
+   * Customize display value of months
+   */
+  format: PropTypes.string,
+  /**
+   * 每列 picker 改变时的回调
+   */
+  onDateChange: PropTypes.func
 };
+
+
 
 export default DatePicker;
