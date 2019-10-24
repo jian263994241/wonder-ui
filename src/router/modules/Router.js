@@ -16,26 +16,23 @@ import AnimationRoutes from './AnimationRoutes';
 const Store = withRouter((props)=>{
   const { 
     children,
-    routerStore,
+    routerStore = {},
     location,
-    history,
-    noMatch,
+    history
   } = props;
   const Provider = RouterStore.Context.Provider;
   const store = React.useMemo(()=> {
-    if(routerStore){
+    if(routerStore.__initial){
       routerStore.__initial(history);
     }
     return routerStore;
   }, [routerStore]);
 
-  const updateLocation = React.useCallback(()=>{
-    if(store){
+  React.useEffect(()=>{
+    if(store.update){
       store.update(location);
     }
-  }, [ location ])
-
-  updateLocation();
+  }, [ location ]);
 
   return (
     <Provider value={routerStore}>
@@ -56,7 +53,7 @@ const Router = React.forwardRef((props, ref)=>{
     children,
     type,
     routes,
-    routerStore,
+    routerStore = new RouterStore(),
     animation,
     animationDisalbed,
     ...rest
@@ -91,7 +88,7 @@ const Router = React.forwardRef((props, ref)=>{
       setRoute(result);   
     }
   }, [routes]);
-  
+ 
   return (
     <RouterComp {...rest}>
       <Store routerStore={routerStore}>

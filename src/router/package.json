@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/router",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "UI Router base on react@16.8 & react-router-dom",
   "main": "index.js",
   "keywords": [
