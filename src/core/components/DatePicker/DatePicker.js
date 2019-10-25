@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DatePickerView from './DatePickerView';
-import elementAcceptingRef from '../../utils/elementAcceptingRef';
-import treeFilter from 'array-tree-filter';
+import useEventCallback from '../../utils/useEventCallback';
 
 function formatIt(date, form) {
   const pad = (n) => (n < 10 ? `0${n}` : n);
@@ -49,7 +48,7 @@ const DatePicker = React.forwardRef((props, ref)=>{
     onOk,
     onChange,
     triggerType = 'onClick',
-    labelProps = 'extra',
+    labelProp = 'extra',
     format,
     disabled,
     extra: extraProp,
@@ -67,7 +66,7 @@ const DatePicker = React.forwardRef((props, ref)=>{
   const formatDate = React.useMemo(()=>{
     if(!value) return ;
     return formatFn(props, value);
-  }, [value]);
+  }, [value, format]);
 
   React.useEffect(()=>{
     if(value){
@@ -75,35 +74,43 @@ const DatePicker = React.forwardRef((props, ref)=>{
     }else{
       setExtra( getExtra() )
     }
-  }, [value]);
+  }, [value, format]);
 
-  const handleClick = (e)=>{
+  const handleClick = useEventCallback((e)=>{
     if(disabled) return ;
     setVisible(true);
     if(children.props.onClick){
       children.props.onClick(e);
     }
-  };
+  });
 
-  const handleCancel = ()=>{
+  const handleCancel = useEventCallback(()=>{
     setVisible(false);
     onCancel && onCancel();
-  };
+  });
 
-  const handleOk = (values)=>{
+  const handleOk = useEventCallback((values)=>{
     setVisible(false);
     onChange && onChange(values);
     onOk && onOk(values);
-  };
+  });
 
   return (
     <React.Fragment>
       { 
-        React.cloneElement(children, { 
-          [labelProps]: extra, 
+        (
+          children && 
+          typeof children !== 'string' &&
+          React.isValidElement(children)
+        ) ? React.cloneElement(children, { 
+          [labelProp]: extra, 
           [triggerType]: handleClick,
-          readOnly: true
-        }) 
+          readOnly: true,
+          disabled,
+          ref  
+        }) : (
+          <a disabled={disabled} onClick={handleClick} ref={ref}>{extra}</a>
+        )
       }
       <DatePickerView 
         visible={visible} 
@@ -118,14 +125,14 @@ const DatePicker = React.forwardRef((props, ref)=>{
 
 DatePicker.defaultProps = {
   triggerType:  'onClick',
-  labelProps:  'extra'
+  labelProp:  'extra'
 };
 
 DatePicker.propTypes = {
   /**
    * @ignore
    */
-  children: elementAcceptingRef,
+  children: PropTypes.element,
   /**
    * 占位提示
    */
@@ -137,7 +144,7 @@ DatePicker.propTypes = {
   /**
    * selected value
    */
-  value: PropTypes.array,
+  value: PropTypes.instanceOf(Date),
   /**
    * click ok callback
    */
@@ -205,7 +212,10 @@ DatePicker.propTypes = {
   /**
    * Customize display value of months
    */
-  format: PropTypes.string,
+  format: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func
+  ]),
   /**
    * 每列 picker 改变时的回调
    */

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import useEventCallback from '../../utils/useEventCallback';
 import { 
   WUI_picker, 
   WUI_picker_header, 
@@ -36,23 +37,17 @@ const Cascader = (props)=>{
     data = [],
     value: inValue,
   } = props;
-
+  
   const [value, setValue] = React.useState(inValue);
 
-  const headData = React.useMemo(()=>{
-    return getHeadData(data);
-  }, data);
-
-  React.useEffect(()=>{
-    if(inValue != value){
-      setValue(inValue);
-    }
+  React.useEffect(()=>{ 
+    setValue(inValue);
   }, [inValue]);
 
-  const handleChange = (val)=>{
+  const handleChange = useEventCallback((val)=>{
     setValue(val);
     onPickerChange && onPickerChange(val);
-  }
+  });
 
   const cascader = (
     <WUI_picker_cascader
@@ -63,13 +58,14 @@ const Cascader = (props)=>{
     />
   );
 
-  const handleOk = ()=>{
-    onChange && onChange(value || headData);
-    onOk && onOk(value || headData);
-  };
+  const handleOk = useEventCallback(()=>{
+    const _value = value || getHeadData(data);
+    onChange && onChange(_value);
+    onOk && onOk(_value);
+  });
 
   return (
-    <WUI_picker visible={visible} anchor="bottom" onCancel={onCancel} >
+    <WUI_picker visible={visible} anchor="bottom" onCancel={onCancel}>
       <WUI_picker_header>
         <WUI_picker_header_button onClick={onCancel}>{cancelText}</WUI_picker_header_button>
         <WUI_picker_header_title>{title}</WUI_picker_header_title>

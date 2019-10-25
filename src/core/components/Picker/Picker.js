@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Cascader from './Cascader';
-import elementAcceptingRef from '../../utils/elementAcceptingRef';
 import treeFilter from 'array-tree-filter';
+import useEventCallback from '../../utils/useEventCallback';
 
 const defaultFormat = (values = [])=>{
   return values.map(item=>item.label).join(',');
@@ -22,7 +22,7 @@ const Picker = React.forwardRef((props, ref)=>{
     onChange,
     value,
     triggerType = 'onClick',
-    labelProps = 'extra',
+    labelProp = 'extra',
     format = defaultFormat,
     disabled,
     extra: extraProp,
@@ -36,7 +36,7 @@ const Picker = React.forwardRef((props, ref)=>{
 
   const [visible, setVisible] = React.useState(visible);
   const [extra, setExtra] = React.useState('');
-
+  
   const getValueProps = (value)=>{
     if(value){
       const result = treeFilter(data, (item, level)=>{
@@ -55,7 +55,7 @@ const Picker = React.forwardRef((props, ref)=>{
     }
   }, [data, value]);
 
-  const handleClick = (e)=>{
+  const handleClick = useEventCallback((e)=>{
     if(disabled) {
       return false;
     }
@@ -63,28 +63,36 @@ const Picker = React.forwardRef((props, ref)=>{
     if(children.props.onClick){
       children.props.onClick(e);
     }
-  };
+  });
 
-  const handleCancel = ()=>{
+  const handleCancel = useEventCallback(()=>{
     setVisible(false);
     onCancel && onCancel();
-  };
+  });
 
-  const handleOk = (value)=>{
+  const handleOk = useEventCallback((value)=>{
     setVisible(false);
     const valueProps = getValueProps(value);
     onChange && onChange(value, valueProps);
     onOk && onOk(value, valueProps);
-  };
-  
+  });
+
   return (
     <React.Fragment>
       { 
-        React.cloneElement(children, { 
-          [labelProps]: extra, 
+        (
+          children && 
+          typeof children !== 'string' &&
+          React.isValidElement(children)
+        ) ? React.cloneElement(children, { 
+          [labelProp]: extra, 
           [triggerType]: handleClick,
-          readOnly: true
-        }) 
+          readOnly: true,
+          disabled,
+          ref
+        }) : (
+          <a disabled={disabled} onClick={handleClick} ref={ref}>{extra}</a>
+        )
       }
       <Cascader 
         visible={visible}
@@ -100,14 +108,14 @@ const Picker = React.forwardRef((props, ref)=>{
 
 Picker.defaultProps = {
   triggerType:  'onClick',
-  labelProps:  'extra'
+  labelProp:  'extra'
 };
 
 Picker.propTypes = {
   /**
    * @ignore
    */
-  children: elementAcceptingRef,
+  children: PropTypes.element,
   /**
    * 占位提示
    */

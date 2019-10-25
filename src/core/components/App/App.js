@@ -23,9 +23,15 @@ const App = React.forwardRef((props, ref) => {
     routerStore: routerStoreInput,
     ...rest
   } = props;
-
-  const appParams = { on };
-  const app = React.useMemo(()=> appInput || new AppClass(appParams), [appParams]);
+  
+  const app = React.useMemo(()=> {
+    const appParams = { on };
+    const _app = appInput || new AppClass(appParams);
+    _app.routes = routes;
+    _app.useModulesParams(appParams);
+    _app.useModules();
+    return _app;
+  }, [on, routes]);
   const rootRef = React.createRef(null);
   const handleRef = useForkRef(rootRef, ref);
 
@@ -33,15 +39,11 @@ const App = React.forwardRef((props, ref) => {
     return typeof themeInput ==='function' ? themeInput(defaultTheme) : themeInput;
   }, [themeInput]);
 
-  app.routes = routes;
   app.routing = React.useMemo(()=> routerStoreInput || new RouterStore(), [routerStoreInput]);
-
+  
   React.useEffect(()=>{
     app.root = rootRef.current;
-    app.useModulesParams(appParams);
-    app.useModules();
     app.emit('init');
-
     return ()=>{
       app.emit('destroy');
     }
