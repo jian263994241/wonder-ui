@@ -25,12 +25,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.6.3",
     "array.prototype.flatmap": "^1.2.1",
     "prop-types": "^15.7.2",
     "query-string": "^5.1.1",
-    "react-router-dom": "^5.0.1",
-    "react-transition-group": "^4.2.1"
+    "react-router-dom": "^5.1.2",
+    "react-transition-group": "^4.3.0"
   },
   "peerDependencies": {
     "react": ">=16.8.6",
