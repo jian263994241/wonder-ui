@@ -1,9 +1,8 @@
 import React from 'react';
 import qs from 'query-string';
+import isObject from '../utils/isObject';
 
-const qsOpts = {
-	arrayFormat: 'comma'
-};
+const qsOpts = { arrayFormat: 'comma' };
 
 const stripQuery = (loc) => {
 	if (loc.query) {
@@ -21,7 +20,19 @@ class Location {
   hash = undefined;
   pathname = undefined;
   search = undefined;
-  state = undefined;
+	state = undefined;
+	prev = {};
+
+	__updateState(newState){
+		this.prev.hash = this.hash;
+		this.prev.pathname = this.pathname;
+		this.prev.search = this.search;
+		this.prev.state = this.state;
+		this.hash = newState.hash;
+		this.pathname = newState.pathname;
+		this.search = newState.search;
+		this.state = newState.state;
+	}
 
   get query(){
     if(this.search){
@@ -31,7 +42,7 @@ class Location {
   }
 
   set query(value){
-    if(utils.isObject(value)){
+    if(isObject(value)){
       this.search = qs.stringify(value, qsOpts);
     }
   }
@@ -46,24 +57,36 @@ class RouterStore {
 	static Context = React.createContext();
 
 	location = new Location();
-	prevLocation = null;
 
-  update(location) {
-		this.prevLocation = Object.assign({}, this.location);
-		Object.assign(this.location, location);
+	history = null;
+
+  __updateLocation(newState) {
+		this.location.__updateState(newState);
 	}
-	
+
   __initial(history) {
 		this.history = history;
 	}
   
-  push(loc, state) {
-		return this.history.push(stripQuery(loc), state);
+  push = (loc, state) => {
+		this.history.push(stripQuery(loc), state);
 	}
 
-	replace(loc, state) {
-		return this.history.replace(stripQuery(loc), state);
+	replace = (loc, state) => {
+		this.history.replace(stripQuery(loc), state);
 	}
+
+	go = (n) => {
+    this.history.go(n);
+	}
+	
+  goBack = () => {
+    this.history.goBack();
+	}
+	
+  goForward = () => {
+    this.history.goForward();
+  }
   
 }
 

@@ -4,42 +4,42 @@ import flatMap from 'array.prototype.flatmap';
 import RouterStore from './RouterStore';
 
 import { 
+  __RouterContext,
   BrowserRouter, 
   HashRouter, 
   MemoryRouter, 
-  Router as RcRouter, 
-  withRouter
+  Router as RcRouter
 } from 'react-router-dom';
 import { GlobalStyles, RouterWrapper } from './styles';
 import AnimationRoutes from './AnimationRoutes';
 
-const Store = withRouter((props)=>{
+const Store = (props)=>{
   const { 
     children,
-    routerStore = {},
-    location,
-    history
+    routerStore = new RouterStore(),
   } = props;
+
+  const routerContext = React.useContext(__RouterContext);
   const Provider = RouterStore.Context.Provider;
-  const store = React.useMemo(()=> {
-    if(routerStore.__initial){
-      routerStore.__initial(history);
-    }
-    return routerStore;
-  }, [routerStore]);
 
   React.useEffect(()=>{
-    if(store.update){
-      store.update(location);
+    if(routerStore.__initial){
+      routerStore.__initial(routerContext.history);
     }
-  }, [ location ]);
+  }, [routerStore]);
+
+  React.useEffect(() => {
+    if(routerStore.__updateLocation){
+      routerStore.__updateLocation(routerContext.location);
+    }
+  }, [routerContext.location]); 
 
   return (
     <Provider value={routerStore}>
       {children}
     </Provider>
   )
-});
+};
 
 Store.propTypes = {
   routerStore: PropTypes.instanceOf(RouterStore)
@@ -53,7 +53,7 @@ const Router = React.forwardRef((props, ref)=>{
     children,
     type,
     routes,
-    routerStore = new RouterStore(),
+    routerStore,
     animation,
     animationDisalbed,
     ...rest
