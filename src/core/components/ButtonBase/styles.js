@@ -28,6 +28,10 @@ export const WUI_button_base = styled(Link)({
   },
   '&[disabled]': {
     pointerEvents: 'none', // Disable link interactions
-    cursor: 'default',
+    cursor: 'not-allowed',
   }
 });
+
+WUI_button_base.defaultProps = {
+  type: 'button'
+};

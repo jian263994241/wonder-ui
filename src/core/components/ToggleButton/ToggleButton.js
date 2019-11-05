@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_toggle_button_root } from './styles';
+import useEventCallback from '../../utils/useEventCallback';
 
 /**
  * 可以选择的按钮
@@ -19,20 +20,18 @@ const ToggleButton = React.forwardRef((props, ref)=>{
     ...rest
   } = props;
 
-  
-
-  const handleChange = event => {
+  const handleChange = useEventCallback(e => {
     if (onClick) {
-      onClick(value, event);
-      if (event.isDefaultPrevented()) {
+      onClick(value, e);
+      if (e.isDefaultPrevented()) {
         return;
       }
     }
 
     if (onChange) {
-      onChange(value, event);
+      onChange(value, e);
     }
-  };
+  });
 
   return (
     <WUI_toggle_button_root 

@@ -1,27 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link as RouteLink } from '@wonder-ui/router';
+import { Link as RouteLink, qs } from '@wonder-ui/router';
 import { WUI_link } from './styles';
 import TouchFeedback from '../TouchFeedback';
+import useTheme from '../styles/useTheme';
+import createTag from '../createTag';
 
 /**
  * 用来链接页面
  * @visibleName Link 链接
  */
 const Link = React.forwardRef((props, ref)=>{
-  const { to, href } = props;
-  let Component = WUI_link;
-  if(to){
-    Component = WUI_link.withComponent(RouteLink);
-  }
+  const { to, href, ...rest } = props;
+  
+  const component = React.useMemo(()=>{
+    if(to){
+      return React.createElement(
+        WUI_link.withComponent(createTag(RouteLink)),
+        { to: qs.stripQuery(to) }
+      )
+    }
+  
+    if(href){
+      return React.createElement( WUI_link.withComponent(createTag.a), {href} )
+    }
 
-  if(href){
-    Component = WUI_link.withComponent('a');
-  }
+    return React.createElement(WUI_link);
+  }, [to, href]);
+
+  const theme = useTheme();
 
   return (
     <TouchFeedback>
-      <Component {...props} ref={ref}/>
+      { React.cloneElement(component, { theme, ref, ...rest }) }
     </TouchFeedback>
   )
 })

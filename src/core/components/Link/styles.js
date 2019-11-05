@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const WUI_link = styled.button `
   text-decoration: none;
-  -webkit-tap-highlight-color: transparent;
   outline: none;
   margin: 0;
   padding: 0;
@@ -13,8 +12,18 @@ export const WUI_link = styled.button `
   vertical-align: middle;
   appearance: none;
   color: inherit;
+  transition: ${
+    props => props.theme.transitions.create(['opacity', 'background'], {
+      duration: props.theme.transitions.duration.shorter
+    })
+  };
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  &[type='button']{
+    -webkit-appearance: none;
+  }
   &[disabled]{
     pointer-events: none;
-    cursor: default;
+    cursor: not-allowed;
   }
 `

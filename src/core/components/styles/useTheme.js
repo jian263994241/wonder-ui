@@ -7,8 +7,9 @@ import defaultTheme from './defaultTheme';
  */
 const useTheme = ()=>{
   const appTheme = React.useContext(ThemeContext);
-
-  return appTheme || defaultTheme;
+  return React.useMemo(()=>{
+    return appTheme || defaultTheme;
+  }, []);
 }
 
 

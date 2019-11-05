@@ -130,3 +130,8 @@ export const WUI_picker = styled(Drawer) `
   background-color: #fff;
   padding-bottom: env(safe-area-inset-bottom);
 `
+
+
+export const WUI_picker_error = styled.span `
+  color: ${props=>props.theme.palette.error.main};
+`

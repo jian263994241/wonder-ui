@@ -44,3 +44,18 @@ export function idxx(mask = 'xxxxxxxxxx', map = '0123456789abcdef') {
   const length = map.length;
   return mask.replace(/x/g, () => map[Math.floor((Math.random() * length))]);
 };
+
+/**
+ * It should to be noted that this function isn't equivalent to `text-transform: capitalize`.
+ * A strict capitalization should uppercase the first letter of each word a the sentence.
+ * We only handle the first word.
+ */
+export function capitalize(string) {
+  if (process.env.NODE_ENV !== 'production') {
+    if (typeof string !== 'string') {
+      throw new Error('Capitalize(string) expects a string argument.');
+    }
+  }
+
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}

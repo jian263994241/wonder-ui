@@ -33,6 +33,7 @@ const ListItem = React.forwardRef((props, ref)=>{
     align,
     wrap,
     multipleLine,
+    activeState,
     ...rest
   } = props;
   
@@ -41,7 +42,7 @@ const ListItem = React.forwardRef((props, ref)=>{
   return (
     <ThemeProvider theme={theme}>
       <TouchFeedback>
-        <WUI_list_item ref={ref}  activeState={arrow!=undefined} disabled={disabled} {...rest}>
+        <WUI_list_item ref={ref}  activeState={arrow!=undefined || activeState} disabled={disabled} {...rest}>
           { thumb ? ( <WUI_list_item_media>{thumb}</WUI_list_item_media> ): null }
           <WUI_list_item_line>
             { children ? (<WUI_list_item_content wrap={wrap} align={align}>{children}</WUI_list_item_content>): null }
@@ -72,7 +73,8 @@ ListItem.defaultProps = {
   extra: undefined,
   children: undefined,
   arrow: undefined,
-  align: 'center'
+  align: 'center',
+  activeState: undefined,
 }
 
 ListItem.propTypes = {
@@ -90,6 +92,11 @@ ListItem.propTypes = {
   thumb: PropTypes.any,
   /** 是否换行，默认情况下，文字超长会被隐藏 */
   wrap: PropTypes.bool,
+  /**
+   * 点击反馈
+   * arrow 存在是强制为 true
+   */
+  activeState: PropTypes.bool,
 }
 
 ListItem.Brief = WUI_list_item_brief;

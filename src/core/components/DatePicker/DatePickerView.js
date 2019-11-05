@@ -29,21 +29,12 @@ const DatePickView = React.forwardRef((props, ref)=>{
     ...mDatePickerProps
   } = props;
   
+
   const [value, setValue] = React.useState(inValue || defaultValue);
 
   React.useEffect(()=>{
-    setValue(inValue);
+    setValue(inValue || defaultValue);
   }, [inValue]);
-
-  const dataPickerView = (
-    <WUI_picker_date_picker 
-      onDateChange={handleChange}
-      date={value}
-      locale={locale}
-      ref={ref}
-      {...mDatePickerProps}
-    />
-  );
 
   const handleChange = useEventCallback((val)=>{
     setValue(val);
@@ -54,6 +45,16 @@ const DatePickView = React.forwardRef((props, ref)=>{
     onChange && onChange(value);
     onOk && onOk(value);
   });
+
+  const dataPickerView = (
+    <WUI_picker_date_picker 
+      onDateChange={handleChange}
+      date={value}
+      locale={locale}
+      ref={ref}
+      {...mDatePickerProps}
+    />
+  );
 
   return (
     <WUI_picker visible={visible} anchor="bottom" onCancel={onCancel} ref={ref}>

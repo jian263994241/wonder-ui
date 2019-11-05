@@ -1,18 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { WUI_svg_icon } from './styles';
+import { capitalize, classnames } from '../../utils/helpers';
 
 const SvgIcon = React.forwardRef((props, ref)=>{
   const {
     children,
-    component: Component = 'svg',
+    component = 'svg',
+    color = 'inherit',
+    className,
+    fontSize = 'default',
     htmlColor,
     titleAccess,
-    viewBox = '0 0 24 24',
+    viewBox = '0 0 24 24',  
     ...rest
   } = props;
 
+  const Component = React.useMemo(()=>{
+    return WUI_svg_icon.withComponent(component);
+  }, [component]);
+
   return (
     <Component
+      className={
+        classnames(
+          color !== 'inherit' && `color${capitalize(color)}`,
+          fontSize !== 'default' && `fontSize${capitalize(fontSize)}`,
+          className
+        )
+      }
       color={htmlColor}
       focusable="false"
       viewBox={viewBox}

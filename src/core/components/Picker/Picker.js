@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import Cascader from './Cascader';
 import treeFilter from 'array-tree-filter';
 import useEventCallback from '../../utils/useEventCallback';
+import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
+import { WUI_picker_error } from './styles';
+import useTheme from '../styles/useTheme';
 
 const defaultFormat = (values = [])=>{
   return values.map(item=>item.label).join(',');
@@ -27,8 +30,13 @@ const Picker = React.forwardRef((props, ref)=>{
     disabled,
     extra: extraProp,
     data = [],
+    [FIELD_DATA_PROP]: fieldData = {},
+    [FIELD_META_PROP]: fieldMeta = {},
+    showError = false,
     ...cascaderProps
   } = props;
+  
+  const theme = useTheme();
 
   const getExtra = ()=>{
     return placeholder|| extraProp || children.props.extra;
@@ -36,6 +44,12 @@ const Picker = React.forwardRef((props, ref)=>{
 
   const [visible, setVisible] = React.useState(visible);
   const [extra, setExtra] = React.useState('');
+
+  const error = React.useMemo(()=>{
+    if(fieldData.errors){
+      return fieldData.errors[0];
+    }
+  }, [fieldData.errors]);
   
   const getValueProps = (value)=>{
     if(value){
@@ -77,6 +91,15 @@ const Picker = React.forwardRef((props, ref)=>{
     onOk && onOk(value, valueProps);
   });
 
+  const _extra = React.useMemo(()=>{
+    if(showError && error){
+      return (
+        <WUI_picker_error theme={theme}>{error.message}</WUI_picker_error>
+      )
+    }
+    return extra;
+  }, [extra, error]);
+
   return (
     <React.Fragment>
       { 
@@ -85,13 +108,13 @@ const Picker = React.forwardRef((props, ref)=>{
           typeof children !== 'string' &&
           React.isValidElement(children)
         ) ? React.cloneElement(children, { 
-          [labelProp]: extra, 
+          [labelProp]: _extra, 
           [triggerType]: handleClick,
           readOnly: true,
           disabled,
           ref
         }) : (
-          <a disabled={disabled} onClick={handleClick} ref={ref}>{extra}</a>
+          <a disabled={disabled} onClick={handleClick} ref={ref}>{_extra}</a>
         )
       }
       <Cascader 
@@ -168,6 +191,10 @@ Picker.propTypes = {
    * 是否禁用
    */
   disabled: PropTypes.bool,
+  /**
+   * 
+   */
+  showError: PropTypes.bool,
 };
 
 export default Picker;

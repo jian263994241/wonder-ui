@@ -173,7 +173,7 @@ export const WUI_button = styled(createTag(ButtonBase))( (props) => {
     {
       width: '100%',
       height: '100%',
-      borderRadius: 'none'
+      borderRadius: 0
     }
   )
 

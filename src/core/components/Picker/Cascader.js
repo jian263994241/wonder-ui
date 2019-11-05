@@ -35,13 +35,14 @@ const Cascader = (props)=>{
     visible = false,
     cols = 1,
     data = [],
+    defaultValue,
     value: inValue,
   } = props;
   
   const [value, setValue] = React.useState(inValue);
 
   React.useEffect(()=>{ 
-    setValue(inValue);
+    setValue(inValue || defaultValue);
   }, [inValue]);
 
   const handleChange = useEventCallback((val)=>{
@@ -49,6 +50,14 @@ const Cascader = (props)=>{
     onPickerChange && onPickerChange(val);
   });
 
+  const handleOk = useEventCallback(()=>{
+    console.log(value);
+    
+    const _value = value || getHeadData(data);
+    onChange && onChange(_value);
+    onOk && onOk(_value);
+  });
+  
   const cascader = (
     <WUI_picker_cascader
       data={data}
@@ -57,12 +66,6 @@ const Cascader = (props)=>{
       onChange={handleChange}
     />
   );
-
-  const handleOk = useEventCallback(()=>{
-    const _value = value || getHeadData(data);
-    onChange && onChange(_value);
-    onOk && onOk(_value);
-  });
 
   return (
     <WUI_picker visible={visible} anchor="bottom" onCancel={onCancel}>

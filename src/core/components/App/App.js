@@ -7,6 +7,7 @@ import { useForkRef } from '../../utils/reactHelpers';
 import { Router, RouterStore } from '@wonder-ui/router';
 import AppContext from './AppContext';
 import AppClass from '../AppClass';
+import useEventCallback from '../../utils/useEventCallback';
 
 /**
  * 创建一个App环境, 包裹其他组件
@@ -48,6 +49,10 @@ const App = React.forwardRef((props, ref) => {
       app.emit('destroy');
     }
   }, []);
+
+  const handleRouteChange = useEventCallback((mached, location, name)=>{
+    app.emit('routeChange', mached, location, name);
+  });
   
   return (
     <ThemeProvider theme={theme}>
@@ -58,6 +63,7 @@ const App = React.forwardRef((props, ref) => {
             type={type} 
             routerStore={app.routing}
             ref={handleRef}
+            onRouteChange={handleRouteChange}
             {...rest}
           > 
             {children} 
@@ -88,6 +94,10 @@ App.propTypes = {
      * `Page组件`挂载的时候触发
      */
     pageInit: PropTypes.func,
+    /**
+     * 路由改变时回调 {matched, location, name}
+     */
+    routeChange: PropTypes.func
   }),
   /**
    * 路由列表
@@ -120,7 +130,14 @@ App.propTypes = {
       /**
        * 入口重定向
        */
-      redirect: PropTypes.string
+      redirect: PropTypes.string,
+      /**
+       * route name
+       */
+      name: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.func
+      ])
     })
   ).isRequired,
   /**

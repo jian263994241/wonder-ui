@@ -37,6 +37,8 @@ const Page = React.forwardRef((props, ref)=>{
         theme={theme}
         {...rest}
       >
+        <SlotContent name="pageNavbar"/>
+        <SlotContent name="pageSearchbar"/>
         <SlotContent name="pageContentBefore"/>
         <WUI_page_body>
         {
@@ -48,6 +50,7 @@ const Page = React.forwardRef((props, ref)=>{
         }
         </WUI_page_body>
         <SlotContent name="pageContentAfter"/>
+        <SlotContent name="pageToolbar"/>
       </WUI_page_root>
     </SlotGroup>  
   )

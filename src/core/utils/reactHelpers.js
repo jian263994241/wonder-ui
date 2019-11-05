@@ -47,9 +47,9 @@ export function useDisabledRefTouchMove(ref){
     };
     if(ref.current){
       const root = ref.current;    
-      root.addEventListener('touchmove', disableTouchMove, false);
+      root.addEventListener('touchmove', disableTouchMove, {passive: false});
       return ()=>{
-        root.removeEventListener('touchmove', disableTouchMove, false);
+        root.removeEventListener('touchmove', disableTouchMove, {passive: false});
       }
     }
   }, [ref.current]);

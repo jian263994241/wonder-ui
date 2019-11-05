@@ -18,6 +18,7 @@ const Block = React.forwardRef((props, ref) => (
 Block.defaultProps = {
   blank: 0,
   space: 0,
+  inline: false,
 }
 
 Block.propTypes = {
@@ -33,7 +34,10 @@ Block.propTypes = {
   top: PropTypes.number,
   /** 下边的距离 */
   bottom: PropTypes.number,
-
+  /**
+   * display: inline-block
+   */
+  inline: PropTypes.bool,
 }
 
 
