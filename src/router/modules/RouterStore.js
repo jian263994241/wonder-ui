@@ -1,20 +1,5 @@
-import React from 'react';
-import qs from 'query-string';
 import isObject from '../utils/isObject';
-
-const qsOpts = { arrayFormat: 'comma' };
-
-const stripQuery = (loc) => {
-	if (loc.query) {
-		const { search, query, ...other } = loc;
-		const queryString = qs.stringify(query, qsOpts);
-		return {
-			...other,
-			search: queryString && `?${queryString}`,
-		};
-	}
-	return loc;
-};
+import { stripQuery, parse, stringify } from '../utils/query-string';
 
 class Location {
   hash = undefined;
@@ -36,14 +21,14 @@ class Location {
 
   get query(){
     if(this.search){
-      return qs.parse(this.search, qsOpts)
+      return parse(this.search)
     }
     return {};
   }
 
   set query(value){
     if(isObject(value)){
-      this.search = qs.stringify(value, qsOpts);
+      this.search = stringify(value);
     }
   }
 }
@@ -53,8 +38,6 @@ class Location {
  * @visibleName RouterStore 路由状态
  */
 class RouterStore {
-
-	static Context = React.createContext();
 
 	location = new Location();
 

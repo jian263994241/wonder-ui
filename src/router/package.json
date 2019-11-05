@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/router",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "UI Router base on react@16.8 & react-router-dom",
   "main": "index.js",
   "keywords": [
@@ -29,6 +29,7 @@
     "array.prototype.flatmap": "^1.2.1",
     "prop-types": "^15.7.2",
     "query-string": "^5.1.1",
+    "react-is": "^16.11.0",
     "react-router-dom": "^5.1.2",
     "react-transition-group": "^4.3.0"
   },

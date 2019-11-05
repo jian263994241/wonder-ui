@@ -1,48 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import flatMap from 'array.prototype.flatmap';
 import RouterStore from './RouterStore';
-
-import { 
-  __RouterContext,
-  BrowserRouter, 
-  HashRouter, 
-  MemoryRouter, 
-  Router as RcRouter
-} from 'react-router-dom';
+import UIRouterContext from './UIRouterContext';
+import { __RouterContext, BrowserRouter, HashRouter, MemoryRouter, Router as RcRouter } from 'react-router-dom';
 import { GlobalStyles, RouterWrapper } from './styles';
 import AnimationRoutes from './AnimationRoutes';
 
 const Store = (props)=>{
-  const { 
-    children,
-    routerStore = new RouterStore(),
-  } = props;
-
   const routerContext = React.useContext(__RouterContext);
-  const Provider = RouterStore.Context.Provider;
-
+  const {routerStore} = React.useContext(UIRouterContext);
+  
   React.useEffect(()=>{
     if(routerStore.__initial){
       routerStore.__initial(routerContext.history);
     }
   }, [routerStore]);
 
-  React.useEffect(() => {
-    if(routerStore.__updateLocation){
-      routerStore.__updateLocation(routerContext.location);
-    }
-  }, [routerContext.location]); 
+  if(routerStore.__updateLocation){
+    routerStore.__updateLocation(routerContext.location);
+  }
 
-  return (
-    <Provider value={routerStore}>
-      {children}
-    </Provider>
-  )
-};
-
-Store.propTypes = {
-  routerStore: PropTypes.instanceOf(RouterStore)
+  return props.children;
 };
 
 /**
@@ -52,14 +30,14 @@ const Router = React.forwardRef((props, ref)=>{
   const { 
     children,
     type,
-    routes,
-    routerStore,
+    routes = [],
+    routerStore = new RouterStore(),
     animation,
     animationDisalbed,
+    onRouteChange,
     ...rest
   } = props;
 
-  const [routeList, setRoute] = React.useState([]);
   const RouterComp = React.useMemo(()=>{
     if(type === 'hash') return HashRouter;
     if(type === 'browser') return BrowserRouter;
@@ -67,46 +45,27 @@ const Router = React.forwardRef((props, ref)=>{
     return RcRouter;
   }, [type]);
 
-  const renderRoutes = (routes)=>{  
-    return flatMap(routes, (route, index)=>{
-      const { children, ...routeConf } = route;
-      if(children){
-        children.forEach((child)=>{
-          if(routeConf.path && child.path){ 
-            child.path = resolve(routeConf.path, child.path);
-          }
-        })
-        return renderRoutes([routeConf, ...children]);
-      }
-      return routeConf;
-    })
-  };
-
-  React.useEffect(()=>{
-    if(routes){
-      const result = renderRoutes(routes);
-      setRoute(result);   
-    }
-  }, [routes]);
- 
   return (
-    <RouterComp {...rest}>
-      <Store routerStore={routerStore}>
-        <GlobalStyles />
-        <RouterWrapper ref={ref}>
-          {
-            routeList.length > 0 ? (
-              <AnimationRoutes 
-                dataSource={routeList} 
-                animation={animation} 
-                animationDisalbed={animationDisalbed}  
-                noMatch={noMatch} 
-              />
-            ): children
-          }
-        </RouterWrapper>
-      </Store>
-    </RouterComp>
+    <UIRouterContext.Provider value={{routerStore, onRouteChange}}>
+      <RouterComp {...rest}>
+        <Store>
+          <GlobalStyles />
+          <RouterWrapper ref={ref}>
+            {
+              routes.length > 0 ? (
+                <AnimationRoutes 
+                  dataSource={routes} 
+                  animation={animation} 
+                  animationDisalbed={animationDisalbed}  
+                  noMatch={noMatch} 
+                />
+              ): children
+            }
+          </RouterWrapper>
+        </Store>
+      </RouterComp>
+    </UIRouterContext.Provider>
+    
   )
 })
 
@@ -122,6 +81,18 @@ Router.propTypes = {
    * 路由类型
    */
   type: PropTypes.oneOf(['browser', 'memory', 'hash']),
+  /**
+   * 路由改变时候出发回调
+   */
+  onRouteChange: PropTypes.func,
+  /**
+   * 禁用动画
+   */
+  animationDisalbed: PropTypes.func,
+  /**
+   * Animation type
+   */
+  animation: PropTypes.oneOf(['slide', 'fade', 'scale']),
   /**
    * 路由
    */
@@ -153,7 +124,14 @@ Router.propTypes = {
       /**
        * 入口重定向
        */
-      redirect: PropTypes.string
+      redirect: PropTypes.string,
+      /**
+       * route name
+       */
+      name: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.func
+      ])
     })
   )
 }

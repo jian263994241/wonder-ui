@@ -125,6 +125,13 @@ AnimationRoutes.propTypes = {
        * 入口重定向
        */
       redirect: PropTypes.string,
+      /**
+       * route name
+       */
+      name: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.func
+      ])
     })
   ).isRequired,
   /**

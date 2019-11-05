@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import Transition from './Transition';
 import { RouteWrapper, duration } from './styles';
-import RouterStore from './RouterStore';
-
+import usePageInit from './usePageInit';
+import UIRouterContext from './UIRouterContext';
+import UIRouteContext from './UIRouteContext';
 
 const RouteComp = (props)=>{
   const {
@@ -13,9 +14,10 @@ const RouteComp = (props)=>{
     redirect,
     component,
     shouldUpdate,
+    name,
     ...routeProps
   } = props;
-
+  const { onRouteChange, routerStore } = React.useContext(UIRouterContext);
   const Component = React.useMemo(()=>{
     if(typeof async === 'function') return React.lazy(async);
     if(typeof redirect === 'string') return () => <Redirect to={redirect}/>;
@@ -46,6 +48,13 @@ const RouteComp = (props)=>{
     }  
   }, [location, shouldUpdate]);
 
+  usePageInit(()=>{
+    if(onRouteChange){
+      const _name = typeof name === 'function' ? name(routeProps.match, routerStore.location) : name;
+      onRouteChange(routeProps.match, routerStore.location, _name);
+    }
+  })
+
   return content;
 };
 
@@ -64,10 +73,11 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
     fallback = null,
     redirect,
     disabled,
+    name,
     ...rest
   } = props;
 
-  const routing = React.useContext(RouterStore.Context);
+  const { routerStore: routing } = React.useContext(UIRouterContext);
   const [animationType, setAnimation] = React.useState('null');
   const timeout = duration[animationType] || 0;
 
@@ -80,47 +90,50 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
   }
 
   return (
-    <Route {...rest}>
-      {(routeProps)=>{
-        const { match, history } = routeProps;
-        const visible = !!match && match.isExact;
+    <UIRouteContext.Provider value={{animationType, timeout}}>
+      <Route {...rest}>
+        {(routeProps)=>{
+          const { match, history } = routeProps;
+          const visible = !!match && match.isExact;
 
-        const content = (
-          <RouteWrapper 
-            className={className} 
-            style={style} 
-            ref={ref}
-            data-url={match && match.url}
-          >
-            <RouteComp
-              component={component}
-              fallback={fallback}
-              redirect={redirect}
-              async={async}
-              query={routing.location.query}
-              shouldUpdate={visible}
-              {...routeProps}
-            />
-          </RouteWrapper>
-        );
+          const content = (
+            <RouteWrapper 
+              className={className} 
+              style={style} 
+              ref={ref}
+              data-url={match && match.url}
+            >
+              <RouteComp
+                component={component}
+                fallback={fallback}
+                redirect={redirect}
+                async={async}
+                query={routing.location.query}
+                shouldUpdate={visible}
+                name={name}
+                {...routeProps}
+              />
+            </RouteWrapper>
+          );
 
-        if(animationDisabled){
-          return visible ? content : null;
-        }
+          if(animationDisabled){
+            return visible ? content : null;
+          }
 
-        return (
-          <Transition
-            in={visible}
-            classNames={animationType}
-            timeout={timeout}
-            unmountOnExit={!match}
-            action={history.action}
-          >
-            {content}
-          </Transition>
-        )
-      }}
-    </Route>
+          return (
+            <Transition
+              in={visible}
+              classNames={animationType}
+              timeout={timeout}
+              unmountOnExit={!match}
+              action={history.action}
+            >
+              {content}
+            </Transition>
+          )
+        }}
+      </Route>
+    </UIRouteContext.Provider>
   );
 });
 

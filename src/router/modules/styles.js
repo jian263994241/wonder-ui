@@ -34,7 +34,7 @@ const fadeOut = keyframes `
 
 export const duration = {
   scale: 300,
-  slide: 400,
+  slide: 375,
   fade: 275,
   null: 0
 };
