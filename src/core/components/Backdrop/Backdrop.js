@@ -4,6 +4,8 @@ import { WUI_backdrop } from './styles';
 import TouchFeedback from '../TouchFeedback';
 import { useDisabledRefTouchMove, useForkRef } from '../../utils/reactHelpers';
 import Fade from '../Fade';
+
+
 /**
  * 遮层
  * @visibleName Backdrop - 背板
@@ -22,7 +24,7 @@ const Backdrop = React.forwardRef((props, ref)=> {
   
   return (
     <TouchFeedback>
-      <Fade in={visible} timeout={timeout} >
+      <Fade in={visible} timeout={timeout}>
         <WUI_backdrop aria-hidden fixed={fixed} ref={handleRef} {...rest} />
       </Fade>
     </TouchFeedback>

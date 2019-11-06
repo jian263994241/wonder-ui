@@ -12,6 +12,9 @@ const Wrap = styled.div `
 
 const Description = styled.p  `
   color: rgba(0,0,0,0.38);
+  line-height: 1;
+  padding: 0;
+  margin: 0;
 `
 /**
  * @visibleName Empty 空状态

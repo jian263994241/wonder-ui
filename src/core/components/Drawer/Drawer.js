@@ -48,16 +48,13 @@ const Drawer = React.forwardRef((props, ref)=>{
     </Slide>
   );
 
-  if(variant === 'persistent'){
-    return slidingDrawer;
-  }
-
   return (
     <Modal
       disableEnforceFocus={false}
       visible={visible}
       onCancel={onCancel}
       hasTransition
+      keepMounted={variant === 'persistent'}
       {...modalProps}
     >
       {slidingDrawer}

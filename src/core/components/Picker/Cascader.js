@@ -51,8 +51,6 @@ const Cascader = (props)=>{
   });
 
   const handleOk = useEventCallback(()=>{
-    console.log(value);
-    
     const _value = value || getHeadData(data);
     onChange && onChange(_value);
     onOk && onOk(_value);

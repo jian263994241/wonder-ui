@@ -62,7 +62,7 @@ const Dialog = React.forwardRef((props, ref)=>{
           top: '50%',
           left: '50%',
           opacity: 0,
-          transform: 'translate3d(-50%, -50%, 0) scale(1.085)'
+          transform: 'translate3d(-50%, -50%, 0) scale(1.185)'
         }}
       >
         <WUI_dialog_root css={styles.root} ref={ref} fixed={fixed}>

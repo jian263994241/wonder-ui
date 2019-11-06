@@ -1,8 +1,8 @@
 import React from 'react';
 import SvgIcon from '../SvgIcon';
 
-const EmptyIcon = ()=>(
-  <SvgIcon width="64" height="41" viewBox="0 0 64 41">
+const EmptyIcon = (props)=>(
+  <SvgIcon width="64" height="41" viewBox="0 0 64 41" fontSize="large" {...props}>
     <g transform="translate(0 1)" fill="none" fillRule="evenodd">
       <ellipse fill="#F5F5F5" cx="32" cy="33" rx="32" ry="7" />
       <g fillRule="nonzero" stroke="#D9D9D9">

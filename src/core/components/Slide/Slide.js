@@ -51,6 +51,7 @@ const Slide = React.forwardRef((props, ref)=>{
       }}
       propertys={['transform']}
       easing={easing.sharp}
+      timeout={timeout}
       {...rest}
     />
   )
