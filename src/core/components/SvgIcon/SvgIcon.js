@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_svg_icon } from './styles';
 import { capitalize, classnames } from '../../utils/helpers';
+import useTheme from '../styles/useTheme';
 
 const SvgIcon = React.forwardRef((props, ref)=>{
   const {
@@ -15,7 +16,7 @@ const SvgIcon = React.forwardRef((props, ref)=>{
     viewBox = '0 0 24 24',  
     ...rest
   } = props;
-
+  const theme = useTheme();
   const Component = React.useMemo(()=>{
     return WUI_svg_icon.withComponent(component);
   }, [component]);
@@ -35,6 +36,7 @@ const SvgIcon = React.forwardRef((props, ref)=>{
       aria-hidden={titleAccess ? 'false' : 'true'}
       role={titleAccess ? 'img' : 'presentation'}
       ref={ref}
+      theme={theme}
       {...rest}
     >
       {children}
