@@ -62,12 +62,6 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/*!
- * regjsgen 0.5.0
- * Copyright 2014-2018 Benjamin Tan <https://bnjmnt4n.now.sh/>
- * Available under MIT license <https://github.com/bnjmnt4n/regjsgen/blob/master/LICENSE>
- */
-
 /** @license React v16.11.0
  * react-is.production.min.js
  *
@@ -75,4 +69,10 @@ object-assign
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
+ */
+
+/*!
+ * regjsgen 0.5.0
+ * Copyright 2014-2018 Benjamin Tan <https://bnjmnt4n.now.sh/>
+ * Available under MIT license <https://github.com/bnjmnt4n/regjsgen/blob/master/LICENSE>
  */
