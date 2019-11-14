@@ -1,7 +1,5 @@
 
-#### 基本使用
-
-```jsx
+```js 
 import { App, Page, View, Link, Button } from '@wonder-ui/core';
 
 const params = {
@@ -30,12 +28,19 @@ const params = {
         </Page>
       )
     },
+    {
+      path: '/sub2',
+      exact: true,
+      component: (props)=> (
+        <Page>
+          <Button onClick={()=> props.history.goBack()}>返回</Button>
+        </Page>
+      )
+    },
   ]
 };
 
-<div className="mobile-preview">
-  <App type="memory" routes={params.routes}>
-    <View/>
-  </App>
-</div>
+<App type="memory" routes={params.routes}>
+  <View/>
+</App>
 ```

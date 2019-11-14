@@ -2,7 +2,7 @@ import React from 'react';
 import { __RouterContext } from 'react-router-dom';
 
 const usePageInit = (callback, vars = []) => {
-  const context = React.useContext(__RouterContext);
+  const context = React.useContext(__RouterContext) || {};
   const matched = context.match || {};
 
   React.useEffect(()=>{

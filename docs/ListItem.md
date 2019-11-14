@@ -4,7 +4,7 @@
 ```jsx
 import { List, ListItem } from '@wonder-ui/core';
 
-<div className="mobile-preview small">
+<div>
   <List renderHeader={()=> `带箭头的列表`}>
     <ListItem extra="horizontal" arrow="horizontal">Title</ListItem>
     <ListItem extra="vertical" arrow="vertical">Title</ListItem>
@@ -20,7 +20,7 @@ import { List, ListItem } from '@wonder-ui/core';
 ```jsx
 import { List, ListItem } from '@wonder-ui/core';
 
-<div className="mobile-preview">
+<div>
   <List renderHeader={()=> `超出内容隐藏`}>
     <ListItem>
       Title Title Title Title Title Title Title Title Title Title Title Title Title Title

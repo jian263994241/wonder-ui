@@ -56,18 +56,16 @@ class ListViewExample extends React.Component {
       <ListItem>{rowData.label} {rowID}</ListItem>
     );
     return (
-      <div className="mobile-preview">
-        <ListView
-          dataSource={this.state.dataSource}
-          pageSize={this.pageSize}
-          initialListSize={this.pageSize}
-          renderHeader={(Header)=> <Header>列表头</Header>}
-          renderFooter={(Footer)=> <Footer>列表底部</Footer>}
-          renderRow={row}
-          onEndReached={onEndReached}
-          style={{width:'100%', height: '100%', boxSizing: ' border-box'}}
-        />
-      </div>
+      <ListView
+        dataSource={this.state.dataSource}
+        pageSize={this.pageSize}
+        initialListSize={this.pageSize}
+        renderHeader={(Header)=> <Header>列表头</Header>}
+        renderFooter={(Footer)=> <Footer>列表底部</Footer>}
+        renderRow={row}
+        onEndReached={onEndReached}
+        style={{width:'100%', height: '100%', boxSizing: ' border-box'}}
+      />
     )
   }
 };

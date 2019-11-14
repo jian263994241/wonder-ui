@@ -8,7 +8,6 @@ import Checkbox from '@wonder-ui/components/Checkbox';
 export default class CheckboxR extends Component {
 
   render() {
-    console.log('render checkbox');
     return (
       <Page title="多选单选">
         <BlockTitle>多选</BlockTitle>

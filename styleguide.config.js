@@ -1,16 +1,18 @@
 const fs = require('fs');
 const path = require('path');
 const preset = require('babel-preset');
-const { theme, styles } = require('./styleguide.styles');
+const { theme, styles } = require('./styleguide/styleguide.styles');
 const { version } = require('./src/core/package.json');
+const styleguideComponents = require('./styleguide/styleguideComponents');
 
 function resolve(...paths) {
   return fs.realpathSync(path.join(__dirname, ...paths));
 }
 
 module.exports = {
-  title: 'Wonder-UI 移动端 React 组件库',
+  title: 'Wonder-UI',
   usageMode: 'expand',
+  exampleMode: 'expand',
   pagePerSection: true,
   sections : [
     {
@@ -19,7 +21,7 @@ module.exports = {
     },
     {
       name: '组件',
-      sectionDepth: 0,
+      sectionDepth: 2,
       sections: [
         {
           name: '路由',
@@ -82,8 +84,10 @@ module.exports = {
     return `import { ${name} } from '@wonder-ui/core';`
   },
   require: [
-    resolve('./styleguide.styles.css')
+    'babel-polyfill',
+    resolve('./styleguide/doc.css'),
   ],
+  styleguideComponents,
   theme,
   styles,
   webpackConfig: {
@@ -111,12 +115,14 @@ module.exports = {
             require.resolve('style-loader'),
             require.resolve('css-loader')
           ]
+        },{
+          test: /\.(svg|png)$/,
+          use: [
+            require.resolve('file-loader')
+          ]
         }
       ]
     }
-  },
-  ribbon: {
-		url: 'https://github.com/jian263994241/wonder-ui',
   },
   version,
   styleguideDir: './docs/styleguide', 

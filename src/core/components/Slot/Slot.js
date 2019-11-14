@@ -15,7 +15,9 @@ const Slot = (props)=>{
       dispatch({ type: 'add', data: { id, name, component: children } })
     }
     return ()=>{
-      dispatch({ type: 'remove', data: { id, name, component: children } })
+      if(dispatch){
+        dispatch({ type: 'remove', data: { id, name, component: children } })
+      }
     }
   }, [name, children]);
 

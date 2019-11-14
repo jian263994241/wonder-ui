@@ -15,11 +15,11 @@ import { Toolbar, Button } from '@wonder-ui/core';
 ### 三按钮工具栏
 
 ```jsx
-import { Toolbar, Button, Flex } from '@wonder-ui/core';
+import { Toolbar, Button, Flex, Page } from '@wonder-ui/core';
 
 const FlexItem = Flex.Item;
 
-<div className="mobile-preview auto">
+<Page>
   <Toolbar gutter={1}>
     <FlexItem>
       <Button full color="primary">操作一</Button>
@@ -31,5 +31,6 @@ const FlexItem = Flex.Item;
       <Button full color="primary">操作二</Button>
     </FlexItem>
   </Toolbar>
-</div>
+</Page>
+
 ```
