@@ -23,7 +23,6 @@ export default function ComponentsListRenderer(props){
 			{visibleItems.map((item) => {
         const { heading, visibleName, href, content, shouldOpenInNewTab, sections } = item;
 				const isItemSelected = windowHash === href;
-        console.log( item );
 
 				return (
 					<li

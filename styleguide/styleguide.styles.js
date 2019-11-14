@@ -65,24 +65,43 @@ exports.styles = {
       display: 'none'
     }
   },
-  ComponentsList: {
-    list: {
-      paddingLeft: 10,
-      margin: 0
-    },
-    item: {
-      color: theme.color.base,
-      display: 'block',
-      margin: 0,
-      padding: '5px 0',
+  Table: {
+    table: {
+      borderCollapse: 'collapse',
+      borderSpacing: 0,
+      emptyCells: 'show',
+      border: '1px solid #e9e9e9',
+      width: '100%',
+      marginBottom: 24,
       fontFamily: theme.fontFamily.base,
-      fontSize: theme.fontSize.base,
-      listStyle: 'none',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
+      fontSize: 13
     },
-    isSelected: {
-
+    cellHeading: {
+      border: '1px solid #e9e9e9',
+      padding: '8px 16px',
+      textAlign: 'left',
+      whiteSpace: 'nowrap',
+      color: '#5c6b77',
+      fontWeight: 600,
+      background: '#f7f7f7'
+    },
+    cell: {
+      border: '1px solid #e9e9e9',
+      padding: '8px 16px',
+      textAlign: 'left',
+    }
+  },
+  Code: {
+    code: {
+      margin: '0 3px',
+      padding: '1px 6px',
+      borderRadius: 3,
+      color: '#777',
+      fontSize: 12.8,
+      border: '1px solid #e9e9e9',
+      background: '#f7f7f7',
+      fontFamily: theme.fontFamily.base,
+      display: 'inline-block',
     }
   }
 }
