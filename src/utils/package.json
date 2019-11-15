@@ -1,0 +1,37 @@
+{
+  "name": "@wonder-ui/utils",
+  "version": "0.0.1",
+  "description": "wonder-ui utils",
+  "main": "index.js",
+  "keywords": [
+    "react",
+    "react ui",
+    "react-component"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jian.li",
+  "homepage": "https://github.com/jian263994241/wonder-ui",
+  "bugs": {
+    "url": "https://github.com/jian263994241/wonder-ui/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime": "^7.6.3",
+    "clsx": "^1.0.4",
+    "decode-uri-component": "^0.2.0",
+    "prop-types": "^15.7.2",
+    "react-is": "^16.11.0",
+    "split-on-first": "^2.0.0",
+    "strict-uri-encode": "^2.0.0",
+    "warning": "^4.0.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jian263994241/wonder-ui.git"
+  }
+}
