@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import flatMap from 'array.prototype.flatmap';
 import Route from './AnimationRoute';
-import resolve from '../utils/path-resolve';
-import { __RouterContext, matchPath, Redirect } from 'react-router-dom';
+import resolve from '@wonder-ui/utils/resolvePath';
+import { matchPath, Redirect } from 'react-router-dom';
+import { useRouterContext } from './Context';
 import getPropTypes from '../utils/getPropTypes';
 
 const AnimationRoutes = (props)=>{
@@ -17,11 +17,11 @@ const AnimationRoutes = (props)=>{
     noMatch = '/404',
   } = props;
 
-  const context = React.useContext(__RouterContext);
+  const context = useRouterContext();
   const location = context.location;
 
   const renderRoutes = (routes)=>{  
-    return flatMap(routes, (route, index)=>{
+    return routes.flatMap((route, index)=>{
       const { children, ...routeConf } = route;
       if(children){
         children.forEach((child)=>{

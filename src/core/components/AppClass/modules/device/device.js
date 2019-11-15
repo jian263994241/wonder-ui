@@ -1,14 +1,14 @@
-import Device from '../../../Device';
+import device, { init } from '@wonder-ui/utils/device';
 
 export default {
   name: 'device',
   proto: {
-    device: Device,
+    device: device,
   },
   static: {
-    device: Device,
+    device: device,
   },
   on: {
-    init: Device.init
+    init: init
   },
 };

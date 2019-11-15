@@ -8,14 +8,6 @@ const Transition = React.forwardRef((props, ref)=>{
     ...rest 
   } = props;
 
-  const [inState, setInState] = React.useState(false);
-
-  React.useEffect(()=>{
-    setTimeout(() => {
-      setInState(inProp);
-    }, 0);    
-  }, [inProp]);
-
   const prefix = React.useMemo(()=>{
     if(action === 'POP'){
       return 'backward';
@@ -27,7 +19,7 @@ const Transition = React.forwardRef((props, ref)=>{
     <CSSTransition
       mountOnEnter
       unmountOnExit
-      in={inState}
+      in={inProp}
       className={prefix}
       ref={ref}    
       {...rest}

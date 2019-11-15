@@ -1,48 +1,6 @@
 /* eslint no-control-regex: "off" */
 
-let uniqueNumber = 1;
-
 const Utils = {
-  uniqueNumber() {
-    uniqueNumber += 1;
-    return uniqueNumber;
-  },
-  eventNameToColonCase(eventName) {
-    let hasColon;
-    return eventName.split('').map((char, index) => {
-      if (char.match(/[A-Z]/) && index !== 0 && !hasColon) {
-        hasColon = true;
-        return `:${char.toLowerCase()}`;
-      }
-      return char.toLowerCase();
-    }).join('');
-  },
-  deleteProps(obj) {
-    const object = obj;
-    Object.keys(object).forEach((key) => {
-      try {
-        object[key] = null;
-      } catch (e) {
-        // no setter for object
-      }
-      try {
-        delete object[key];
-      } catch (e) {
-        // something got wrong
-      }
-    });
-  },
-  nextTick(callback, delay = 0) {
-    return setTimeout(callback, delay);
-  },
-  nextFrame(callback) {
-    return Utils.requestAnimationFrame(() => {
-      Utils.requestAnimationFrame(callback);
-    });
-  },
-  now() {
-    return Date.now();
-  },
   isObject(o) {
     return typeof o === 'object' && o !== null && o.constructor && o.constructor === Object;
   },
@@ -104,9 +62,6 @@ const Utils = {
     }
     return to;
   },
-  noop (target) {
-    return target;
-  },
   equal(...args){
     const returns = args.pop();
     for(let i = 0; i< args.length; i++){
@@ -126,15 +81,6 @@ const Utils = {
       }
     }
     return typeof returns === 'function' ? returns(): returns;
-  },
-  exist(...args){
-    const returns = args.pop();
-    for(let i = 0; i< args.length; i++){
-      if(!args[i]){
-        return null;
-      }
-    }
-    return returns;
   }
 };
 export default Utils;

@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import Flex from '../Flex';
 import Slot from '../Slot';
 import Fade from '../Fade';
-import { useDisabledRefTouchMove, useForkRef } from '../../utils/reactHelpers';
+import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
+import useForkRef from '@wonder-ui/utils/useForkRef';
 
 const WUI_toolbar = styled(Flex) `
   width: 100%;

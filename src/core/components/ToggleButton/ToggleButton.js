@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_toggle_button_root } from './styles';
-import useEventCallback from '../../utils/useEventCallback';
+import useEventCallback from '@wonder-ui/utils/useEventCallback';
 
 /**
  * 可以选择的按钮

@@ -1,6 +1,6 @@
 import React from 'react';
 import SvgIcon from '../SvgIcon';
-import { idxx } from '../../utils/helpers';
+import idxx from '@wonder-ui/utils/idxx';
 
 const Indicator = React.forwardRef((props, ref)=>{
   const {

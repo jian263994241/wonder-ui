@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Dialog from '../Dialog/Dialog';
 import DialogManager from '../Dialog/DialogManager';
 import toggleVisible from '../Dialog/toggleVisible';
-import { createChainedFunction } from  '../../utils/helpers';
+import createChainedFunction from  '@wonder-ui/utils/createChainedFunction';
 
 const toastManager = new DialogManager();
 const container = document.createElement('div');

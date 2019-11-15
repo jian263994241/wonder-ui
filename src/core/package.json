@@ -26,6 +26,7 @@
   "dependencies": {
     "@babel/runtime": "^7.6.3",
     "@wonder-ui/router": "^0.0.16",
+    "@wonder-ui/utils": "^0.0.1",
     "array-tree-filter": "^2.1.0",
     "dom-helpers": "^5.1.0",
     "lcn": "^1.0.3",

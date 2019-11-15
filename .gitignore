@@ -2,3 +2,4 @@ node_modules
 .Ds_Store
 package/*
 package-lock.json
+lerna-debug.log

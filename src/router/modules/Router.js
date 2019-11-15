@@ -1,23 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RouterStore from './RouterStore';
-import UIRouterContext from './UIRouterContext';
-import { __RouterContext, BrowserRouter, HashRouter, MemoryRouter, Router as RcRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter, MemoryRouter, Router as RcRouter } from 'react-router-dom';
 import { GlobalStyles, RouterWrapper } from './styles';
+import { Provider, useRouterContext } from './Context';
 import AnimationRoutes from './AnimationRoutes';
 
 const Store = (props)=>{
-  const routerContext = React.useContext(__RouterContext);
-  const {routerStore} = React.useContext(UIRouterContext);
+  const {routerStore, history, location} = useRouterContext();
   
   React.useEffect(()=>{
     if(routerStore.__initial){
-      routerStore.__initial(routerContext.history);
+      routerStore.__initial(history);
     }
   }, [routerStore]);
 
   if(routerStore.__updateLocation){
-    routerStore.__updateLocation(routerContext.location);
+    routerStore.__updateLocation(location);
   }
 
   return props.children;
@@ -46,8 +45,8 @@ const Router = React.forwardRef((props, ref)=>{
   }, [type]);
 
   return (
-    <UIRouterContext.Provider value={{routerStore, onRouteChange}}>
-      <RouterComp {...rest}>
+    <RouterComp {...rest}>
+      <Provider value={{routerStore, onRouteChange}}>
         <Store>
           <GlobalStyles />
           <RouterWrapper ref={ref}>
@@ -63,9 +62,8 @@ const Router = React.forwardRef((props, ref)=>{
             }
           </RouterWrapper>
         </Store>
-      </RouterComp>
-    </UIRouterContext.Provider>
-    
+      </Provider>
+    </RouterComp>
   )
 })
 

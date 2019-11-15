@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { classnames } from '../../utils/helpers';
+import classnames from '@wonder-ui/utils/classnames';
 import throttle from 'lodash.throttle';
 
 

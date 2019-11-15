@@ -4,8 +4,8 @@ import { Route, Redirect } from 'react-router-dom';
 import Transition from './Transition';
 import { RouteWrapper, duration } from './styles';
 import usePageInit from './usePageInit';
-import UIRouterContext from './UIRouterContext';
 import UIRouteContext from './UIRouteContext';
+import {useRouterContext} from './Context';
 
 const RouteComp = (props)=>{
   const {
@@ -17,36 +17,36 @@ const RouteComp = (props)=>{
     name,
     ...routeProps
   } = props;
-  const { onRouteChange, routerStore } = React.useContext(UIRouterContext);
+  const { onRouteChange, routerStore } = useRouterContext();
   const Component = React.useMemo(()=>{
     if(typeof async === 'function') return React.lazy(async);
     if(typeof redirect === 'string') return () => <Redirect to={redirect}/>;
     if(component) return component.default || component;
   }, [async, component, redirect]);
 
-  const [content, setContent] = React.useState(null);
+  // const [content, setContent] = React.useState(null);
 
-  const {location} = routeProps;
+  // const {location} = routeProps;
 
-  function rendered(){
-    if(async != undefined){
-      setContent(
-        <React.Suspense fallback={fallback}>
-          <Component {...routeProps} />
-        </React.Suspense>
-      )
-    }else{
-      setContent(
-        <Component {...routeProps}/>
-      )
-    }
-  }
+  // function rendered(){
+  //   if(async != undefined){
+  //     setContent(
+  //       <React.Suspense fallback={fallback}>
+  //         <Component {...routeProps} />
+  //       </React.Suspense>
+  //     )
+  //   }else{
+  //     setContent(
+  //       <Component {...routeProps}/>
+  //     )
+  //   }
+  // }
   
-  React.useEffect(()=>{
-    if(shouldUpdate){
-      rendered();
-    }  
-  }, [location, shouldUpdate]);
+  // React.useEffect(()=>{
+  //   if(shouldUpdate){
+  //     rendered();
+  //   }  
+  // }, [location, shouldUpdate]);
 
   usePageInit(()=>{
     if(onRouteChange){
@@ -54,6 +54,16 @@ const RouteComp = (props)=>{
       onRouteChange(routeProps.match, routerStore.location, _name);
     }
   })
+
+  const rendered = <Component {...routeProps} />;
+
+  if(async){
+    return (
+      <React.Suspense fallback={fallback}> {rendered} </React.Suspense>
+    )
+  }else{
+    return rendered;
+  }
 
   return content;
 };
@@ -77,7 +87,7 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
     ...rest
   } = props;
 
-  const { routerStore: routing } = React.useContext(UIRouterContext);
+  const { routerStore: routing } = useRouterContext();
   const [animationType, setAnimation] = React.useState('null');
   const timeout = duration[animationType] || 0;
 

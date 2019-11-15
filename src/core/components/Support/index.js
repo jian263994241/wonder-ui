@@ -1,1 +1,1 @@
-export { default } from './Support';
+export { default } from '@wonder-ui/utils/support';

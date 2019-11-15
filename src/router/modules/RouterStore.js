@@ -1,4 +1,4 @@
-import isObject from '../utils/isObject';
+import isObject from '@wonder-ui/utils/isObject';
 import { stripQuery, parse, stringify } from '../utils/query-string';
 
 class Location {

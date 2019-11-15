@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { WUI_global } from './styles';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../styles/defaultTheme';
-import { useForkRef } from '../../utils/reactHelpers';
+import useForkRef from '@wonder-ui/utils/useForkRef';
 import { Router, RouterStore } from '@wonder-ui/router';
 import AppContext from './AppContext';
 import AppClass from '../AppClass';
-import useEventCallback from '../../utils/useEventCallback';
+import useEventCallback from '@wonder-ui/utils/useEventCallback';
 
 /**
  * 创建一个App环境, 包裹其他组件

@@ -6,12 +6,12 @@ import { ThemeProvider } from 'styled-components';
 import Backdrop from '../Backdrop';
 import useTheme from '../styles/useTheme';
 import Portal from 'rc-mounter';
-import { useForkRef } from '../../utils/reactHelpers';
-import useEventCallback from '../../utils/useEventCallback';
-import elementAcceptingRef from '../../utils/elementAcceptingRef';
+import useForkRef from '@wonder-ui/utils/useForkRef';
+import useEventCallback from '@wonder-ui/utils/useEventCallback';
+import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
 import ModalManager, { ariaHidden }  from './ModalManager';
-import ownerDocument from '../../utils/ownerDocument';
-import { createChainedFunction } from '../../utils/helpers';
+import ownerDocument from '@wonder-ui/utils/ownerDocument';
+import createChainedFunction from '@wonder-ui/utils/createChainedFunction';
 import TrapFocus from './TrapFocus';
 
 const defaultManager = new ModalManager();

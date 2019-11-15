@@ -5,14 +5,8 @@ export { default as RouterStore } from './modules/RouterStore';
 export { default as usePageInit } from './modules/usePageInit';
 export { default as qs } from './utils/query-string';
 export { default as effect } from './modules/effect';
+export { default as RouterContext } from './modules/Context';
 
-export { 
-  Link, 
-  Redirect, 
-  Route,
-  Switch,
-  matchPath, 
-  withRouter,
-  __RouterContext
-} from 'react-router-dom';
+//react-router-dom
+export { Link, Redirect, Route, Switch, matchPath, withRouter, __RouterContext } from 'react-router-dom';
 

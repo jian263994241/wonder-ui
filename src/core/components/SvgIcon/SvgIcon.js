@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_svg_icon } from './styles';
-import { capitalize, classnames } from '../../utils/helpers';
+import classnames from '@wonder-ui/utils/classnames';
+import capitalize from '@wonder-ui/utils/capitalize';
 import useTheme from '../styles/useTheme';
 
 const SvgIcon = React.forwardRef((props, ref)=>{

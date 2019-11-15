@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_backdrop } from './styles';
 import TouchFeedback from '../TouchFeedback';
-import { useDisabledRefTouchMove, useForkRef } from '../../utils/reactHelpers';
+import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
+import useForkRef from '@wonder-ui/utils/useForkRef';
 import Fade from '../Fade';
 
 

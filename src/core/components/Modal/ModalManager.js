@@ -1,6 +1,6 @@
-import getScrollbarSize from '../../utils/getScrollbarSize';
-import ownerDocument from '../../utils/ownerDocument';
-import ownerWindow from '../../utils/ownerWindow';
+import getScrollbarSize from '@wonder-ui/utils/getScrollbarSize';
+import ownerDocument from '@wonder-ui/utils/ownerDocument';
+import ownerWindow from '@wonder-ui/utils/ownerWindow';
 
 // Do we have a vertical scrollbar?
 function isOverflowing(container) {

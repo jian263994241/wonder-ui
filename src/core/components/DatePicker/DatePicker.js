@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DatePickerView from './DatePickerView';
-import useEventCallback from '../../utils/useEventCallback';
+import useEventCallback from '@wonder-ui/utils/useEventCallback';
 
 function formatIt(date, form) {
   const pad = (n) => (n < 10 ? `0${n}` : n);

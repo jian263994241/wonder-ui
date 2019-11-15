@@ -1,1 +1,1 @@
-export { default } from './Device';
+export { default } from '@wonder-ui/utils/device';

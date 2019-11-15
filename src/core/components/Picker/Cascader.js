@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useEventCallback from '../../utils/useEventCallback';
+import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import { 
   WUI_picker, 
   WUI_picker_header, 

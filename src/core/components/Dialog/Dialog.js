@@ -11,7 +11,7 @@ import {
 } from './styles';
 import Modal from '../Modal';
 import DialogManager from './DialogManager';
-import { createChainedFunction } from  '../../utils/helpers';
+import createChainedFunction from  '@wonder-ui/utils/createChainedFunction';
 import toggleVisible from './toggleVisible';
 import Fade from '../Fade';
 

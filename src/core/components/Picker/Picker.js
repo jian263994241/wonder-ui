@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Cascader from './Cascader';
 import treeFilter from 'array-tree-filter';
-import useEventCallback from '../../utils/useEventCallback';
+import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
 import { WUI_picker_error } from './styles';
 import useTheme from '../styles/useTheme';

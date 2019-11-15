@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import warning from 'warning';
-import ownerDocument from '../../utils/ownerDocument';
-import { useForkRef } from '../../utils/reactHelpers';
+import ownerDocument from '@wonder-ui/utils/ownerDocument';
+import useForkRef from '@wonder-ui/utils/useForkRef';
 
 /**
  * @ignore - internal component.

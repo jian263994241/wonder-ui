@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RtgTransition from 'react-transition-group/Transition';
-import { useForkRef } from '../../utils/reactHelpers';
+import useForkRef from '@wonder-ui/utils/useForkRef';
 import * as transitions from '../styles/transitions';
-import elementAcceptingRef from '../../utils/elementAcceptingRef';
+import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
 
 const reflow = node => node.scrollTop;
 

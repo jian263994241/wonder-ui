@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { idxx } from '../../utils/helpers';
+import idxx from '@wonder-ui/utils/idxx';
 import styled, { css, keyframes } from 'styled-components';
 import Indicator from './Indicator';
 

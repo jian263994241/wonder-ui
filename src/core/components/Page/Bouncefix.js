@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useForkRef } from '../../utils/reactHelpers';
+import useForkRef from '@wonder-ui/utils/useForkRef';
 
 const Bouncefix = React.forwardRef(function Bouncefix(props, ref){
 

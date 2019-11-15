@@ -1,14 +1,8 @@
-import qs from 'query-string';
+import qs from '@wonder-ui/utils/queryString';
 
-const qsOpts = { arrayFormat: 'bracket' };
+export const stringify = qs.stringify;
 
-export const stringify = (value)=>{
-  return qs.stringify(value, qsOpts);
-};
-
-export const parse = (value)=>{
-  return qs.parse(value, qsOpts);
-}
+export const parse = qs.parse;
 
 export const stripQuery = (loc) => {
 	if (loc.query) {

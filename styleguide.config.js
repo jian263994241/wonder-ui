@@ -93,7 +93,6 @@ module.exports = {
   webpackConfig: {
     resolve: {
       alias: {
-        '~': __dirname,
         '@wonder-ui/core': path.resolve(__dirname, './src/core'),
         '@wonder-ui/router': path.resolve(__dirname, './src/router')
       }
@@ -106,7 +105,18 @@ module.exports = {
           use: [{
             loader: require.resolve('babel-loader'),
             options: {
-              presets: [preset]
+              presets: [
+                [preset, {
+                  targets: [
+                    'ie >= 9',
+                    'edge >= 14',
+                    'firefox >= 52',
+                    'chrome >= 49',
+                    'safari >= 10',
+                    'node 8.0',
+                  ]
+                }]
+              ]
             }
           }]
         },{

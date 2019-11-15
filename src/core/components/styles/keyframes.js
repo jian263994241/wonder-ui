@@ -1,5 +1,5 @@
 import { keyframes } from 'styled-components';
-import device from '../Device';
+import device from '@wonder-ui/utils/device';
 
 export const iosPageNextToCurrent = keyframes `
   from {

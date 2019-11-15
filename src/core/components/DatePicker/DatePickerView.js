@@ -9,7 +9,7 @@ import {
 } from '../Picker/styles';
 import RCDatePicker from 'rmc-date-picker/lib/DatePicker';
 import defaultLocale from 'rmc-date-picker/lib/locale/zh_CN';
-import useEventCallback from '../../utils/useEventCallback';
+import useEventCallback from '@wonder-ui/utils/useEventCallback';
 
 const WUI_picker_date_picker = WUI_picker_cascader.withComponent(RCDatePicker);
 

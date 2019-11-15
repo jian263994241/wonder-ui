@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import elementAcceptingRef from '../../utils/elementAcceptingRef';
-import { classnames } from '../../utils/helpers';
+import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
+import classnames from '@wonder-ui/utils/classnames';
 
 const TouchFeedback = (props)=>{
   const { 

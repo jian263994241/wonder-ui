@@ -1,12 +1,12 @@
-import Support from '../../../Support';
+import support from '@wonder-ui/utils/support';
 
 export default {
   name: 'support',
   proto: {
-    support: Support,
+    support: support,
   },
   static: {
-    support: Support,
+    support: support,
   },
   on: {
     init() {

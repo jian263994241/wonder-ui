@@ -1,8 +1,8 @@
 import React from 'react';
-import { __RouterContext } from 'react-router-dom';
+import { useRouterContext } from './Context';
 
 const usePageInit = (callback, vars = []) => {
-  const context = React.useContext(__RouterContext) || {};
+  const context = useRouterContext();
   const matched = context.match || {};
 
   React.useEffect(()=>{
