@@ -28,6 +28,14 @@ var paths = {
         'src/utils/package.json',
         'src/utils/README.md'
       ]
+    },
+    styles: {
+      src: ['src/styles/**/*.js', '!**/node_modules/**'],
+      dest: 'package/styles',
+      copylist: [
+        'src/styles/package.json',
+        'src/styles/README.md'
+      ]
     }
   }
 }
@@ -70,5 +78,6 @@ function cpoyInfo(target = 'core'){
 gulp.task('build:core', gulp.series(()=>cpoyInfo('core'), ()=>scripts('core')));
 gulp.task('build:router', gulp.series(()=>cpoyInfo('router'), ()=>scripts('router')));
 gulp.task('build:utils', gulp.series(()=>cpoyInfo('utils'), ()=>scripts('utils')));
+gulp.task('build:styles', gulp.series(()=>cpoyInfo('styles'), ()=>scripts('styles')));
 
 gulp.task('default', gulp.series(cpoyInfo, scripts, watch));

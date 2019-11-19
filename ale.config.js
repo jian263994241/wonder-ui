@@ -2,10 +2,10 @@ const path = require('path');
 
 module.exports = {
   //app 入口
-  entry : './kitchen-sink/app.js',
+  entry : path.resolve(__dirname, './src/kitchen-sink/app.js'),
   //输出配置
   output: {
-    path: path.resolve(__dirname, 'kitchen-sink-build'),
+    path: path.resolve(__dirname, 'kitchen-sink'),
     filename: 'app.bunld.js',
   },
   resolve: {
@@ -13,6 +13,8 @@ module.exports = {
       '~': __dirname,
       '@wonder-ui/core': path.resolve(__dirname, './src/core'),
       '@wonder-ui/router': path.resolve(__dirname, './src/router'),
+      '@wonder-ui/utils': path.resolve(__dirname, './src/utils'),
+      '@wonder-ui/styles': path.resolve(__dirname, './src/styles'),
       '@wonder-ui/components': path.resolve(__dirname, './src/components')
     }
   },

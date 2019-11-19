@@ -12,6 +12,8 @@
     "build:core": "gulp build:core",
     "build:router": "gulp build:router",
     "build:utils": "gulp build:utils",
+    "build:styles": "gulp build:styles",
+    "kitchen-sink:dev": "ale dev",
     "watch": "gulp",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build"
