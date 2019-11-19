@@ -1,0 +1,38 @@
+{
+  "name": "@wonder-ui/styles",
+  "version": "0.0.2",
+  "description": "wonder-ui styles",
+  "main": "index.js",
+  "keywords": [
+    "react",
+    "react ui",
+    "styled-components",
+    "css in js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jian.li",
+  "homepage": "https://github.com/jian263994241/wonder-ui",
+  "bugs": {
+    "url": "https://github.com/jian263994241/wonder-ui/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime": "^7.6.3",
+    "prop-types": "^15.7.2",
+    "react-is": "^16.11.0",
+    "styled-components": "^4.4.1",
+    "warning": "^4.0.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jian263994241/wonder-ui.git"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.10.6"
+  }
+}
