@@ -1,7 +1,6 @@
 import React from 'react';
 import MarkdownHeading from 'rsg-components/Markdown/MarkdownHeading';
 import { Flex } from '@wonder-ui/core';
-import { CodeWrapper } from './styles';
 
 const FlexItem = Flex.Item;
 
@@ -26,7 +25,7 @@ export default function PlaygroundRenderer(props){
           </FlexItem>
           <div>{toolbar}</div>
         </Flex>
-        <CodeWrapper>{tabBody}</CodeWrapper>
+        <div className="code-wrapper">{tabBody}</div>
 			</FlexItem>
 			<div {...previewProps} data-preview={name} data-testid="preview-wrapper">
 				{preview}
