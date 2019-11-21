@@ -178,42 +178,41 @@ export const WUI_button = styled(createTag(ButtonBase))( (props) => {
   )
 
   return {
-    '&&': {
-      lineHeight: 1.75,
-      textAlign: 'center',
-      boxSizing: 'border-box',
-      minWidth: 64,
-      padding: '4px 16px',
-      borderRadius: theme.shape.borderRadius,
-      '&:active': {
-        textDecoration: 'none',
-        backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity),
-        // Reset on touch devices, it doesn't add specificity
-        '@media (active: none)': {
-          backgroundColor: 'transparent',
-        },
-        '&[disabled]': {
-          backgroundColor: 'transparent',
-        },
+    lineHeight: 1.75,
+    textAlign: 'center',
+    boxSizing: 'border-box',
+    minWidth: 64,
+    padding: '4px 16px',
+    borderRadius: theme.shape.borderRadius,
+    fontSize: theme.typography.pxToRem(14),
+    '&:active': {
+      textDecoration: 'none',
+      backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity),
+      // Reset on touch devices, it doesn't add specificity
+      '@media (active: none)': {
+        backgroundColor: 'transparent',
       },
       '&[disabled]': {
-        opacity: 0.38
+        backgroundColor: 'transparent',
       },
-      ...text,
-      ...textPrimary,
-      ...textSecondary,
-      ...outlined,
-      ...outlinedPrimary,
-      ...outlinedSecondary,
-      ...contained,
-      ...containedPrimary,
-      ...containedSecondary,
-      ...colorInherit,
-      ...sizeSmall,
-      ...sizeLarge,
-      ...fullWidth,
-      ...full
-    }
+    },
+    '&[disabled]': {
+      opacity: 0.38
+    },
+    ...text,
+    ...textPrimary,
+    ...textSecondary,
+    ...outlined,
+    ...outlinedPrimary,
+    ...outlinedSecondary,
+    ...contained,
+    ...containedPrimary,
+    ...containedSecondary,
+    ...colorInherit,
+    ...sizeSmall,
+    ...sizeLarge,
+    ...fullWidth,
+    ...full
   }
 })
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from '@wonder-ui/utils/classnames';
+import clsx from 'clsx';
 import throttle from 'lodash.throttle';
 
 
@@ -129,12 +129,12 @@ export default class ScrollView extends React.Component {
     const containerProps = {
       ref: el => this.ScrollViewRef = el || this.ScrollViewRef,
       style: { ...(useBodyScroll ? {} : styleBase), ...style },
-      className: classnames(className, `${preCls}-scrollview`),
+      className: clsx(className, `${preCls}-scrollview`),
     };
     const contentContainerProps = {
       ref: el => this.InnerScrollViewRef = el,
       style: { position: 'absolute', minWidth: '100%', ...contentContainerStyle },
-      className: classnames(`${preCls}-scrollview-content`, listPrefixCls),
+      className: clsx(`${preCls}-scrollview-content`, listPrefixCls),
     };
 
     const clonePullToRefresh = isBody => React.cloneElement(pullToRefresh, {

@@ -11,28 +11,21 @@ import createTag from '../createTag';
  * @visibleName Link 链接
  */
 const Link = React.forwardRef((props, ref)=>{
-  const { to, href, ...rest } = props;
+  const { to } = props;
   
-  const component = React.useMemo(()=>{
+  const Component = React.useMemo(()=>{
     if(to){
-      return React.createElement(
-        WUI_link.withComponent(createTag(RouteLink)),
-        { to: qs.stripQuery(to) }
-      )
-    }
-  
-    if(href){
-      return React.createElement( WUI_link.withComponent(createTag.a), {href} )
+      return WUI_link.withComponent(createTag(RouteLink));
     }
 
-    return React.createElement(WUI_link);
-  }, [to, href]);
+    return WUI_link;
+  }, [to]);
 
   const theme = useTheme();
 
   return (
     <TouchFeedback>
-      { React.cloneElement(component, { theme, ref, ...rest }) }
+      <Component theme={theme} {...props}/>
     </TouchFeedback>
   )
 })

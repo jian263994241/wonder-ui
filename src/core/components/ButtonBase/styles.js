@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import Link from '../Link';
 
-export const WUI_button_base = styled(Link)({
+export const WUI_button_base = styled.button({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -18,9 +17,9 @@ export const WUI_button_base = styled(Link)({
   cursor: 'pointer',
   userSelect: 'none',
   verticalAlign: 'middle',
-  '-moz-appearance': 'none', // Reset
-  '-webkit-appearance': 'none', // Reset
+  appearance: 'none', // Reset
   textDecoration: 'none',
+  fontSize: 'inherit',
   // So we take precedent over the style of a native <a /> element.
   color: 'inherit',
   '&::-moz-focus-inner': {

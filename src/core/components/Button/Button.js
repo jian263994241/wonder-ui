@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_button } from './styles';
+import Link from '../Link';
 import useTheme from '../styles/useTheme';
 
 /**
@@ -17,12 +18,19 @@ const Button =  React.forwardRef((props, ref)=> {
   
   const theme = useTheme();
 
+  const Component = React.useMemo(()=>{
+    if(props.to != undefined || props.href != undefined){
+      return WUI_button.withComponent(Link);
+    }
+    return WUI_button;
+  }, [props.to, props.href]);
+
   return (
-    <WUI_button role="button" ref={ref} theme={theme} {...rest}>
+    <Component role="button" ref={ref} theme={theme} {...rest}>
       { iconPosition === 'before' && icon }
       <span>{children}</span>
       { iconPosition === 'after' && icon }
-    </WUI_button>
+    </Component>
   );
 });
 

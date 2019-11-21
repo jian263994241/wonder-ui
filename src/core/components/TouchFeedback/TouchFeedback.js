@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
-import classnames from '@wonder-ui/utils/classnames';
+import clsx from 'clsx';
 
 const TouchFeedback = (props)=>{
   const { 
@@ -71,7 +71,7 @@ const TouchFeedback = (props)=>{
       if (activeStyle) {
         style = {...style, ...activeStyle };
       }
-      className = classnames(className, activeClassName);
+      className = clsx(className, activeClassName);
     }
 
     return React.cloneElement(child, {

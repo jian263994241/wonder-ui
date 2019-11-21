@@ -65,11 +65,11 @@ const Dialog = React.forwardRef((props, ref)=>{
           transform: 'translate3d(-50%, -50%, 0) scale(1.185)'
         }}
       >
-        <WUI_dialog_root css={styles.root} ref={ref} fixed={fixed}>
+        <WUI_dialog_root ref={ref} fixed={fixed}>
      
-          <WUI_dialog_body css={styles.body} noButtons={!actions} toast={toast}>
-            {title && <WUI_dialog_title css={styles.title}>{title}</WUI_dialog_title>}
-            {text && <WUI_dialog_text css={styles.text}>{text}</WUI_dialog_text>}
+          <WUI_dialog_body noButtons={!actions} toast={toast}>
+            {title && <WUI_dialog_title>{title}</WUI_dialog_title>}
+            {text && <WUI_dialog_text>{text}</WUI_dialog_text>}
             {textAfter}
           </WUI_dialog_body>
 
@@ -81,7 +81,6 @@ const Dialog = React.forwardRef((props, ref)=>{
                     <WUI_dialog_button 
                       onClick={action.onClick} 
                       key={i} 
-                      css={styles.button}
                       primary={action.primary}
                     >{action.text}</WUI_dialog_button>
                   ))
