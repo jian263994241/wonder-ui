@@ -1,5 +1,5 @@
 node_modules
 .Ds_Store
-package/*
+npm-packages/*
 package-lock.json
 lerna-debug.log

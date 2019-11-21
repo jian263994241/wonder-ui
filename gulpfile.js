@@ -7,7 +7,7 @@ var paths = {
   scripts: {
     core: {
       src: ['src/core/**/*.js', '!**/node_modules/**'],
-      dest: 'package/core',
+      dest: 'npm-packages/wonder-ui-core',
       copylist: [
         'src/core/package.json',
         'src/core/README.md'
@@ -15,15 +15,15 @@ var paths = {
     },
     router: {
       src: ['src/router/**/*.js', '!**/node_modules/**'],
-      dest: 'package/router',
+      dest: 'npm-packages/wonder-ui-router',
       copylist: [
         'src/router/package.json',
         'src/router/README.md'
       ]
     },
     utils: {
-      src: ['src/utils/**/*.js', '!**/node_modules/**'],
-      dest: 'package/utils',
+      src: ['src/utils/src/**/*.js', '!**/node_modules/**'],
+      dest: 'npm-packages/wonder-ui-utils',
       copylist: [
         'src/utils/package.json',
         'src/utils/README.md'
@@ -31,7 +31,7 @@ var paths = {
     },
     styles: {
       src: ['src/styles/**/*.js', '!**/node_modules/**'],
-      dest: 'package/styles',
+      dest: 'npm-packages/wonder-ui-styles',
       copylist: [
         'src/styles/package.json',
         'src/styles/README.md'

@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/utils",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "wonder-ui utils",
   "main": "index.js",
   "keywords": [
@@ -19,7 +19,6 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.6.3",
-    "clsx": "^1.0.4",
     "decode-uri-component": "^0.2.0",
     "prop-types": "^15.7.2",
     "react-is": "^16.11.0",

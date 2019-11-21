@@ -13,9 +13,9 @@ module.exports = {
       '~': __dirname,
       '@wonder-ui/core': path.resolve(__dirname, './src/core'),
       '@wonder-ui/router': path.resolve(__dirname, './src/router'),
-      '@wonder-ui/utils': path.resolve(__dirname, './src/utils'),
-      '@wonder-ui/styles': path.resolve(__dirname, './src/styles'),
-      '@wonder-ui/components': path.resolve(__dirname, './src/components')
+      '@wonder-ui/utils': path.resolve(__dirname, './src/utils/src'),
+      // '@wonder-ui/styles': path.resolve(__dirname, './src/styles'),
+      // '@wonder-ui/components': path.resolve(__dirname, './src/components')
     }
   },
   ale: {
@@ -26,7 +26,7 @@ module.exports = {
     },
     babel(options) {
       options.plugins = [
-        ['styled-components', { displayName: true, fileName: false }]
+        ['styled-components', { displayName: true, fileName: true }]
       ];
       return options;
     }
