@@ -26,7 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.6.3",
-    "@wonder-ui/utils": "^0.0.1",
+    "@wonder-ui/utils": "^0.0.2",
     "prop-types": "^15.7.2",
     "react-is": "^16.11.0",
     "react-router-dom": "^5.1.2",

@@ -1,26 +1,23 @@
 import React from 'react';
 import {__RouterContext} from 'react-router-dom';
 
-const Context = React.createContext({});
+const RouterContext = React.createContext({});
 
-export default Context;
+export default RouterContext;
 
 /**
  * Merge context
  * @param {*} props 
  */
-export function Provider(props){
+export function RouterProvider(props){
   const {children, value} = props;
   const routerContext = React.useContext(__RouterContext);
   const merge = React.useMemo(()=>({ ...routerContext, ...value }), [routerContext, value]);
-
   return (
-    <Context.Provider value={merge}>
+    <RouterContext.Provider value={merge}>
       {children}
-    </Context.Provider>
+    </RouterContext.Provider>
   )
 }
 
-export function useRouterContext(){
-  return React.useContext(Context) || {};
-}
+export const RouterConsumer = RouterContext.Consumer;

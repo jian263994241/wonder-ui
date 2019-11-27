@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import Route from './AnimationRoute';
 import resolve from '@wonder-ui/utils/resolvePath';
 import { matchPath, Redirect } from 'react-router-dom';
-import { useRouterContext } from './Context';
+import useRouterContext from './useRouterContext';
 import getPropTypes from '../utils/getPropTypes';
+import flatMap from '@wonder-ui/utils/flatMap';
 
 const AnimationRoutes = (props)=>{
   const {
@@ -21,7 +22,7 @@ const AnimationRoutes = (props)=>{
   const location = context.location;
 
   const renderRoutes = (routes)=>{  
-    return routes.flatMap((route, index)=>{
+    return flatMap(routes, (route, index)=>{
       const { children, ...routeConf } = route;
       if(children){
         children.forEach((child)=>{

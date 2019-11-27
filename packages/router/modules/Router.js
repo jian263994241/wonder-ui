@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import RouterStore from './RouterStore';
 import { BrowserRouter, HashRouter, MemoryRouter, Router as RcRouter } from 'react-router-dom';
 import { GlobalStyles, RouterWrapper } from './styles';
-import { Provider, useRouterContext } from './Context';
+import { RouterProvider } from './Context';
+import useRouterContext from './useRouterContext';
 import AnimationRoutes from './AnimationRoutes';
 
 const Store = (props)=>{
@@ -46,7 +47,7 @@ const Router = React.forwardRef((props, ref)=>{
 
   return (
     <RouterComp {...rest}>
-      <Provider value={{routerStore, onRouteChange}}>
+      <RouterProvider value={{routerStore, onRouteChange}}>
         <Store>
           <GlobalStyles />
           <RouterWrapper ref={ref}>
@@ -62,7 +63,7 @@ const Router = React.forwardRef((props, ref)=>{
             }
           </RouterWrapper>
         </Store>
-      </Provider>
+      </RouterProvider>
     </RouterComp>
   )
 })

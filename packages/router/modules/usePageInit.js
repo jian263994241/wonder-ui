@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRouterContext } from './Context';
+import useRouterContext from './useRouterContext';
 
 const usePageInit = (callback, vars = []) => {
   const context = useRouterContext();

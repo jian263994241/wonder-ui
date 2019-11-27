@@ -5,7 +5,7 @@ import Transition from './Transition';
 import { RouteWrapper, duration } from './styles';
 import usePageInit from './usePageInit';
 import UIRouteContext from './UIRouteContext';
-import {useRouterContext} from './Context';
+import useRouterContext from './useRouterContext';
 
 const RouteComp = (props)=>{
   const {
