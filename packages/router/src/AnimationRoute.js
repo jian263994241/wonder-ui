@@ -24,13 +24,6 @@ const RouteComp = (props)=>{
     if(component) return component.default || component;
   }, [async, component, redirect]);
 
-  usePageInit(()=>{
-    if(onRouteChange){
-      const _name = typeof name === 'function' ? name(routeProps.match, routerStore.location) : name;
-      onRouteChange(routeProps.match, routerStore.location, _name);
-    }
-  })
-
   const rendered = React.useRef(null);
   const [, forceUpdate] = React.useState();
 
@@ -40,6 +33,13 @@ const RouteComp = (props)=>{
       forceUpdate(Date.now())
     }
   }, [shouldUpdate, component]);
+
+  usePageInit(()=>{
+    if(onRouteChange){
+      const _name = typeof name === 'function' ? name(routeProps.match, routerStore.location) : name;
+      onRouteChange(routeProps.match, routerStore.location, _name);
+    }
+  })
 
   if(async){
     return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import useRouterContext from './useRouterContext';
 
-const usePageInit = (callback, vars = []) => {
+export default function usePageInit(callback, values = []) {
   const context = useRouterContext();
   const matched = context.match || {};
 
@@ -9,8 +9,5 @@ const usePageInit = (callback, vars = []) => {
     if(matched.isExact){
       return callback && callback();
     }
-  }, [matched.isExact].concat(vars));
+  }, [matched.isExact].concat(values));
 }
-
-
-export default usePageInit;

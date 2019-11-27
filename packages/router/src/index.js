@@ -4,7 +4,6 @@ export { default as Router } from './Router';
 export { default as RouterStore } from './RouterStore';
 export { default as Link } from './Link';
 export { default as effect } from './effect';
-export { default as RouterContext } from './Context';
 export { default as useRouterContext } from './useRouterContext';
 export { default as usePageInit } from './usePageInit';
 
