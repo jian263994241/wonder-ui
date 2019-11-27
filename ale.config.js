@@ -14,7 +14,6 @@ module.exports = {
       '@wonder-ui/core': path.resolve(__dirname, './src/core'),
       '@wonder-ui/router': path.resolve(__dirname, './src/router'),
       '@wonder-ui/utils': path.resolve(__dirname, './src/utils/src'),
-      // '@wonder-ui/styles': path.resolve(__dirname, './src/styles'),
       // '@wonder-ui/components': path.resolve(__dirname, './src/components')
     }
   },

@@ -6,35 +6,35 @@ var babel = require('gulp-babel');
 var paths = {
   scripts: {
     core: {
-      src: ['src/core/**/*.js', '!**/node_modules/**'],
+      src: ['packages/core/**/*.js', '!**/node_modules/**'],
       dest: 'npm-packages/wonder-ui-core',
       copylist: [
-        'src/core/package.json',
-        'src/core/README.md'
+        'packages/core/package.json',
+        'packages/core/README.md'
       ]
     },
     router: {
-      src: ['src/router/**/*.js', '!**/node_modules/**'],
+      src: ['packages/router/**/*.js', '!**/node_modules/**'],
       dest: 'npm-packages/wonder-ui-router',
       copylist: [
-        'src/router/package.json',
-        'src/router/README.md'
+        'packages/router/package.json',
+        'packages/router/README.md'
       ]
     },
     utils: {
-      src: ['src/utils/src/**/*.js', '!**/node_modules/**'],
+      src: ['packages/utils/src/**/*.js', '!**/node_modules/**'],
       dest: 'npm-packages/wonder-ui-utils',
       copylist: [
-        'src/utils/package.json',
-        'src/utils/README.md'
+        'packages/utils/package.json',
+        'packages/utils/README.md'
       ]
     },
     styles: {
-      src: ['src/styles/**/*.js', '!**/node_modules/**'],
+      src: ['packages/styles/**/*.js', '!**/node_modules/**'],
       dest: 'npm-packages/wonder-ui-styles',
       copylist: [
-        'src/styles/package.json',
-        'src/styles/README.md'
+        'packages/styles/package.json',
+        'packages/styles/README.md'
       ]
     }
   }
