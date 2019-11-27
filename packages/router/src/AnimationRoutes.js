@@ -4,8 +4,11 @@ import Route from './AnimationRoute';
 import resolve from '@wonder-ui/utils/resolvePath';
 import { matchPath, Redirect } from 'react-router-dom';
 import useRouterContext from './useRouterContext';
-import getPropTypes from '../utils/getPropTypes';
 import flatMap from '@wonder-ui/utils/flatMap';
+
+function getPropTypes(Component, propType){
+  return Component.propTypes && Component.propTypes[propType];
+}
 
 const AnimationRoutes = (props)=>{
   const {

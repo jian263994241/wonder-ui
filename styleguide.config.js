@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const preset = require('babel-preset');
 const { theme, styles } = require('./styleguide/styleguide.styles');
-const { version } = require('./src/core/package.json');
+const { version } = require('./packages/core/package.json');
 const styleguideComponents = require('./styleguide/styleguideComponents');
 
 function resolve(...paths) {
@@ -17,7 +17,7 @@ module.exports = {
   sections : [
     {
       name: '介绍',
-      content: './docs/introduction.md'
+      content: './docs/markdown/introduction.md'
     },
     {
       name: '组件',
@@ -26,48 +26,48 @@ module.exports = {
         {
           name: '路由',
           components: ()=> [
-            './src/core/components/App/App.js',
-            './src/core/components/View/View.js',
-            './src/core/components/Page/Page.js',
-            './src/core/components/Link/Link.js',
-            './src/core/components/RouterStore/RouterStore.js',
+            './packages/core/components/App/App.js',
+            './packages/core/components/View/View.js',
+            './packages/core/components/Page/Page.js',
+            './packages/core/components/Link/Link.js',
+            './packages/core/components/RouterStore/RouterStore.js',
           ]
         },
         {
           name: '布局',
           components: ()=> [
-            './src/core/components/Flex/Flex.js',
-            './src/core/components/Block/Block.js',
-            './src/core/components/Toolbar/Toolbar.js'
+            './packages/core/components/Flex/Flex.js',
+            './packages/core/components/Block/Block.js',
+            './packages/core/components/Toolbar/Toolbar.js'
           ],
         },
         {
           name: '数据录入',
           components: ()=> [
-            './src/core/components/Button/Button.js',
-            './src/core/components/ToggleButtonGroup/ToggleButtonGroup.js',
-            './src/core/components/Checkbox/Checkbox.js',
+            './packages/core/components/Button/Button.js',
+            './packages/core/components/ToggleButtonGroup/ToggleButtonGroup.js',
+            './packages/core/components/Checkbox/Checkbox.js',
           ],
         },
         {
           name: '数据展示',
           components: ()=> [
-            './src/core/components/List/List.js',
-            './src/core/components/ListItem/ListItem.js',
-            './src/core/components/CheckboxItem/CheckboxItem.js',
-            './src/core/components/ListView/ListView.js',
-            './src/core/components/Tag/Tag.js',
-            './src/core/components/Empty/Empty.js',
+            './packages/core/components/List/List.js',
+            './packages/core/components/ListItem/ListItem.js',
+            './packages/core/components/CheckboxItem/CheckboxItem.js',
+            './packages/core/components/ListView/ListView.js',
+            './packages/core/components/Tag/Tag.js',
+            './packages/core/components/Empty/Empty.js',
           ],
         },
         {
           name: '用户反馈',
           components: ()=> [
-            './src/core/components/Modal/Modal.js',
-            './src/core/components/Dialog/Dialog.js',
-            './src/core/components/toast/toast.js',
-            './src/core/components/Preloader/Preloader.js',
-            './src/core/components/ActivityIndicator/ActivityIndicator.js',
+            './packages/core/components/Modal/Modal.js',
+            './packages/core/components/Dialog/Dialog.js',
+            './packages/core/components/toast/toast.js',
+            './packages/core/components/Preloader/Preloader.js',
+            './packages/core/components/ActivityIndicator/ActivityIndicator.js',
           ],
         },
       ]
@@ -76,7 +76,7 @@ module.exports = {
   ],
   getExampleFilename(componentPath){
     const name = path.basename(componentPath, '.js');
-    return path.join( __dirname, 'docs', name + '.md' );
+    return path.join( __dirname, 'docs/markdown', name + '.md' );
   },
   getComponentPathLine(componentPath) {
     let name = path.basename(componentPath, '.js');
@@ -93,8 +93,9 @@ module.exports = {
   webpackConfig: {
     resolve: {
       alias: {
-        '@wonder-ui/core': path.resolve(__dirname, './src/core'),
-        '@wonder-ui/router': path.resolve(__dirname, './src/router')
+        '@wonder-ui/core': path.resolve(__dirname, './packages/core'),
+        '@wonder-ui/router': path.resolve(__dirname, './packages/router/src'),
+        '@wonder-ui/utils': path.resolve(__dirname, './packages/utils/src')
       }
     },
     module: {

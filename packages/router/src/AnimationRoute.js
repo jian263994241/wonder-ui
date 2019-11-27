@@ -24,30 +24,6 @@ const RouteComp = (props)=>{
     if(component) return component.default || component;
   }, [async, component, redirect]);
 
-  // const [content, setContent] = React.useState(null);
-
-  // const {location} = routeProps;
-
-  // function rendered(){
-  //   if(async != undefined){
-  //     setContent(
-  //       <React.Suspense fallback={fallback}>
-  //         <Component {...routeProps} />
-  //       </React.Suspense>
-  //     )
-  //   }else{
-  //     setContent(
-  //       <Component {...routeProps}/>
-  //     )
-  //   }
-  // }
-  
-  // React.useEffect(()=>{
-  //   if(shouldUpdate){
-  //     rendered();
-  //   }  
-  // }, [location, shouldUpdate]);
-
   usePageInit(()=>{
     if(onRouteChange){
       const _name = typeof name === 'function' ? name(routeProps.match, routerStore.location) : name;
@@ -55,17 +31,25 @@ const RouteComp = (props)=>{
     }
   })
 
-  const rendered = <Component {...routeProps} />;
+  const rendered = React.useRef(null);
+  const [, forceUpdate] = React.useState();
+
+  React.useEffect(()=>{
+    if(shouldUpdate){
+      rendered.current = <Component {...routeProps} />;
+      forceUpdate(Date.now())
+    }
+  }, [shouldUpdate, component]);
 
   if(async){
     return (
-      <React.Suspense fallback={fallback}> {rendered} </React.Suspense>
+      <React.Suspense fallback={fallback}>
+        {rendered.current}
+      </React.Suspense>
     )
-  }else{
-    return rendered;
   }
 
-  return content;
+  return rendered.current;
 };
 
 /**

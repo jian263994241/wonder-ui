@@ -14,7 +14,7 @@ var paths = {
       ]
     },
     router: {
-      src: ['packages/router/**/*.js', '!**/node_modules/**'],
+      src: ['packages/router/src/**/*.js', '!**/node_modules/**'],
       dest: 'npm-packages/wonder-ui-router',
       copylist: [
         'packages/router/package.json',

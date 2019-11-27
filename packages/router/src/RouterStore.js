@@ -1,5 +1,26 @@
 import isObject from '@wonder-ui/utils/isObject';
-import { stripQuery, parse, stringify } from '../utils/query-string';
+import { parse, stringify } from '@wonder-ui/utils/queryString';
+
+const deleteEmptyValue = (value = {})=> {
+	for(let k in value){
+		if(value[k] === undefined || value[k] === null){
+			delete value[k];
+		}
+	}
+	return value;
+}
+
+export const stripQuery = (loc) => {
+	if (loc.query) {
+		const { search, query, ...other } = loc;
+		const queryString = stringify(deleteEmptyValue(query));
+		return {
+			...other,
+			search: queryString && `?${queryString}`,
+		};
+	}
+	return loc;
+};
 
 class Location {
   hash = undefined;
