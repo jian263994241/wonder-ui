@@ -12,7 +12,6 @@ import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
 import ModalManager, { ariaHidden }  from './ModalManager';
 import ownerDocument from '@wonder-ui/utils/ownerDocument';
 import createChainedFunction from '@wonder-ui/utils/createChainedFunction';
-import TrapFocus from './TrapFocus';
 
 const defaultManager = new ModalManager();
 
@@ -36,9 +35,9 @@ const Modal = React.forwardRef((props, ref) => {
     onRendered,
     manager = defaultManager,
     disableScrollLock,
-    disableEnforceFocus,
-    disableAutoFocus,
-    disableRestoreFocus,
+    // disableEnforceFocus,
+    // disableAutoFocus,
+    // disableRestoreFocus,
     hasTransition,
     closeAfterTransition,
     keepMounted,
@@ -200,16 +199,7 @@ const Modal = React.forwardRef((props, ref) => {
           {...rest}
         >
           {hideBackdrop ? null : <Backdrop ref={backdropRef} visible={visible} onClick={onCancel} {...BackdropProps}/>}
-          <TrapFocus
-            disableEnforceFocus={disableEnforceFocus}
-            disableAutoFocus={disableAutoFocus}
-            disableRestoreFocus={disableRestoreFocus}
-            getDoc={getDoc}
-            isEnabled={isTopModal}
-            open={visible}
-          >
-            {React.cloneElement(children, childProps)}
-          </TrapFocus>
+          {React.cloneElement(children, childProps)}
         </div>
       </Portal>
     </ThemeProvider>

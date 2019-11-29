@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_toggle_button_root } from './styles';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
+import useTheme from '../styles/useTheme';
 
 /**
  * 可以选择的按钮
  * @visibleName ToggleButton 切换按钮
  */
-const ToggleButton = React.forwardRef((props, ref)=>{
+const ToggleButton = React.forwardRef(function ToggleButton(props, ref){
   const{ 
     children,
     onChange,
@@ -16,16 +17,14 @@ const ToggleButton = React.forwardRef((props, ref)=>{
     value,
     selected,
     size = 'medium',
-    theme,
     ...rest
   } = props;
+
+  const theme = useTheme();
 
   const handleChange = useEventCallback(e => {
     if (onClick) {
       onClick(value, e);
-      if (e.isDefaultPrevented()) {
-        return;
-      }
     }
 
     if (onChange) {
@@ -42,6 +41,7 @@ const ToggleButton = React.forwardRef((props, ref)=>{
       size={size}
       selected={selected}
       ref={ref}
+      theme={theme}
       {...rest}
     >
       {children}

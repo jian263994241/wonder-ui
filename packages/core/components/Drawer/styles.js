@@ -34,14 +34,14 @@ const anchorBottom = css `
 `
 
 export const Wrapper = styled.div `
-  position: fixed;
+  position: absolute;
   height: 100%;
   z-index: ${props=> props.theme.zIndex.drawer};
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   outline: 0;
   top: 0;
-  box-shadow: ${props=>props.theme.shadows[16]};
+  box-shadow: ${props=> props.theme.shadows[16]};
   ${props=> props.anchor === 'left' && anchorLeft}
   ${props=> props.anchor === 'right' && anchorRight}
   ${props=> props.anchor === 'top' && anchorTop}

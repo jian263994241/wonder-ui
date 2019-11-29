@@ -50,7 +50,6 @@ const Drawer = React.forwardRef((props, ref)=>{
 
   return (
     <Modal
-      disableEnforceFocus={false}
       visible={visible}
       onCancel={onCancel}
       hasTransition

@@ -3,7 +3,6 @@ import Drawer from '../Drawer';
 import Cascader from 'rmc-cascader/lib/Cascader';
 
 export const WUI_picker_header = styled.div `
-  background-image: -webkit-linear-gradient(top, #e7e7e7, #e7e7e7, transparent, transparent);
   background-image: linear-gradient(to bottom, #e7e7e7, #e7e7e7, transparent, transparent);
   background-position: bottom;
   background-size: 100% 1PX;
@@ -14,19 +13,16 @@ export const WUI_picker_header = styled.div `
 `
 
 export const WUI_picker_header_button = styled.span `
-  color: #108ee9;
+  color: #577AED;
   font-size: 17px;
   padding: 9px 15px;
   height: 42px;
   box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   align-items: center;
   justify-content: center;
   &:active {
-    background-color: #ddd;
+    opacity: 0.5;
   }
 `
 
@@ -43,9 +39,6 @@ export const WUI_picker_header_right = styled.span `
   padding: 9px 15px;
   height: 42px;
   box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,7 +54,7 @@ export const WUI_picker_cascader = styled(Cascader) `
 
   .rmc-picker,.rmc-multi-picker {
     height: 238px;
-    background-color: #ccc;
+    background-color: #f5f5f5;
   }
 
   .rmc-multi-picker {
@@ -121,8 +114,8 @@ export const WUI_picker_cascader = styled(Cascader) `
     left: 0;
     top: 102px;
     z-index: 3;
-    border-top: 1PX solid #ddd;
-    border-bottom: 1PX solid #ddd;
+    border-top: 1PX solid #f5f5f5;
+    border-bottom: 1PX solid #f5f5f5;
   }
 `
 

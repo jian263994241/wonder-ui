@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 export const WUI_global = createGlobalStyle `
   body {
@@ -13,9 +13,3 @@ export const WUI_global = createGlobalStyle `
     -webkit-tap-highlight-color: transparent;
   }
 `
-
-// export const WUI_app = styled.div `
-//   height: 100%;
-//   width: 100%;
-//   overflow: hidden;
-// `

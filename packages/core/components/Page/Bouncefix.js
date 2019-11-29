@@ -29,8 +29,15 @@ const Bouncefix = React.forwardRef(function Bouncefix(props, ref){
 
   const onTouchStart = (e) => {
       var el = root.current;
-      var isScrollable = el.scrollHeight > el.offsetHeight;
+      var touchEl = e.target;
 
+      //fix ios 11
+      if(!el.contains(touchEl)){
+        return ;
+      }
+
+      var isScrollable = el.scrollHeight > el.offsetHeight;
+      
       // If scrollable, adjust
       if (isScrollable) {
           // this._blockTouchMove = false;

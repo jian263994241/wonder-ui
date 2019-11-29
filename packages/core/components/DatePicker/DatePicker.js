@@ -40,7 +40,7 @@ function formatFn(props, value) {
  * 
  * 时间选择器
  */
-const DatePicker = React.forwardRef((props, ref)=>{
+const DatePicker = React.forwardRef(function DatePicker(props, ref){
   const {
     children,
     placeholder,
@@ -95,8 +95,9 @@ const DatePicker = React.forwardRef((props, ref)=>{
     onOk && onOk(values);
   });
 
+
   return (
-    <React.Fragment>
+    <>
       { 
         (
           children && 
@@ -106,8 +107,7 @@ const DatePicker = React.forwardRef((props, ref)=>{
           [labelProp]: extra, 
           [triggerType]: handleClick,
           readOnly: true,
-          disabled,
-          ref  
+          disabled
         }) : (
           <a disabled={disabled} onClick={handleClick} ref={ref}>{extra}</a>
         )
@@ -119,7 +119,7 @@ const DatePicker = React.forwardRef((props, ref)=>{
         value={value}
         {...rest}
       />
-    </React.Fragment>
+    </>
   );
 });
 
@@ -144,7 +144,10 @@ DatePicker.propTypes = {
   /**
    * selected value
    */
-  value: PropTypes.instanceOf(Date),
+  value: PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
+    PropTypes.string
+  ]),
   /**
    * click ok callback
    */

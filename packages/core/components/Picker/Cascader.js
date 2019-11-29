@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
+import HeaderBar from '../HeaderBar';
 import { 
   WUI_picker, 
-  WUI_picker_header, 
   WUI_picker_header_button,
-  WUI_picker_header_title,
   WUI_picker_cascader
 } from './styles';
 
@@ -67,11 +66,11 @@ const Cascader = (props)=>{
 
   return (
     <WUI_picker visible={visible} anchor="bottom" onCancel={onCancel}>
-      <WUI_picker_header>
-        <WUI_picker_header_button onClick={onCancel}>{cancelText}</WUI_picker_header_button>
-        <WUI_picker_header_title>{title}</WUI_picker_header_title>
-        <WUI_picker_header_button onClick={handleOk}>{okText}</WUI_picker_header_button>
-      </WUI_picker_header>
+      <HeaderBar
+        title={title}
+        barLeft={<WUI_picker_header_button onClick={onCancel}>{cancelText}</WUI_picker_header_button>}
+        barRight={<WUI_picker_header_button onClick={handleOk}>{okText}</WUI_picker_header_button>}
+      />
       {cascader}
     </WUI_picker>
   )

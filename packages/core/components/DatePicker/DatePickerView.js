@@ -10,10 +10,11 @@ import {
 import RCDatePicker from 'rmc-date-picker/lib/DatePicker';
 import defaultLocale from 'rmc-date-picker/lib/locale/zh_CN';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
+import HeaderBar from '../HeaderBar';
 
 const WUI_picker_date_picker = WUI_picker_cascader.withComponent(RCDatePicker);
 
-const DatePickView = React.forwardRef((props, ref)=>{
+const DatePickView = React.forwardRef(function DatePickView(props, ref){
   const {
     cancelText = '取消',
     okText = '确定',
@@ -58,11 +59,11 @@ const DatePickView = React.forwardRef((props, ref)=>{
 
   return (
     <WUI_picker visible={visible} anchor="bottom" onCancel={onCancel} ref={ref}>
-      <WUI_picker_header>
-        <WUI_picker_header_button onClick={onCancel}>{cancelText}</WUI_picker_header_button>
-        <WUI_picker_header_title>{title}</WUI_picker_header_title>
-        <WUI_picker_header_button onClick={handleOk}>{okText}</WUI_picker_header_button>
-      </WUI_picker_header>
+      <HeaderBar
+        title={title}
+        barLeft={<WUI_picker_header_button onClick={onCancel}>{cancelText}</WUI_picker_header_button>}
+        barRight={<WUI_picker_header_button onClick={handleOk}>{okText}</WUI_picker_header_button>}
+      />
       {dataPickerView}
     </WUI_picker>
   )

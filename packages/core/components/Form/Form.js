@@ -15,9 +15,7 @@ const Form = React.forwardRef((props, ref)=>{
   
   const handleSubmit = useEventCallback((e)=>{
     e.preventDefault();
-    if(onSubmit){
-      onSubmit && onSubmit(e);
-    }
+    onSubmit && onSubmit(e);
   });
 
   return (

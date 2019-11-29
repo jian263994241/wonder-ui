@@ -1,12 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '../styled';
 import { fade } from '../styles/colorManipulator';
 import utils from '../../utils/utils';
 import ButtonBase from '../ButtonBase';
 
-const Button = React.forwardRef(({spacing, ...props}, ref)=> <ButtonBase ref={ref} {...props}/>);
-
-export const WUI_toggle_button_root = styled(Button)(({
+export const WUI_toggle_button_root = styled(ButtonBase)(({
   theme, selected, disabled, size, spacing
 })=>({
   ...theme.typography.button,
@@ -68,8 +66,10 @@ export const WUI_toggle_button_root = styled(Button)(({
   }),
   ...utils.equal([spacing, true], {
     borderRadius: '4px',
+    marginRight: theme.spacing(1),
+    marginBottom: 5,
     '&:not(:first-child)': {
-      marginLeft: theme.spacing(1),
+      
       border: `1px solid ${fade(theme.palette.action.active, 0.05)}`,
     },
     '&:first-child': {
@@ -77,6 +77,7 @@ export const WUI_toggle_button_root = styled(Button)(({
     },
     '&:last-child': {
       borderRadius: '4px',
+      marginRight: 0
     }
   })
 }))
@@ -86,5 +87,6 @@ const Div = React.forwardRef(({spacing, ...props}, ref)=> <div ref={ref} {...pro
 export const WUI_toggle_button_group = styled(Div)(({theme, spacing})=>({
   backgroundColor: spacing ? 'transparent' : theme.palette.background.paper,
   borderRadius: 2,
-  display: 'inline-flex'
+  display: 'flex',
+  flexWrap: spacing ? 'wrap': 'nowrap'
 }))

@@ -7,6 +7,7 @@ import * as transitions from './transitions';
 import disabled from './disabled';
 import * as hairline from './hairline';
 import zIndex from './zIndex';
+import * as utils from './utils';
 
 
 export default function createTheme(options={}){
@@ -32,6 +33,7 @@ export default function createTheme(options={}){
     disabled,
     shape,
     zIndex,
+    utils,
     ...rest
   }
   

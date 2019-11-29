@@ -1,10 +1,9 @@
-import styled from 'styled-components';
 import { fade } from '../styles/colorManipulator';
 import utils from '../../utils/utils';
 import ButtonBase from '../ButtonBase';
-import createTag from '../createTag';
+import styled from '../styled';
 
-export const WUI_button = styled(createTag(ButtonBase))( (props) => {
+export const WUI_button = styled(ButtonBase)((props) => {
   const { theme, variant, color, size, fullWidth: _fullWidth, full: _full } = props;
 
   const text = utils.equal(
@@ -185,6 +184,9 @@ export const WUI_button = styled(createTag(ButtonBase))( (props) => {
     padding: '4px 16px',
     borderRadius: theme.shape.borderRadius,
     fontSize: theme.typography.pxToRem(14),
+    wordBreak: 'keep-all',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     '&:active': {
       textDecoration: 'none',
       backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity),

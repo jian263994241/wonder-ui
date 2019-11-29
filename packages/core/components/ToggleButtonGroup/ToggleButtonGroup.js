@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import isValueSelected from './isValueSelected';
 import { WUI_toggle_button_group } from '../ToggleButton/styles';
 import ToggleButton from '../ToggleButton';
-import { ThemeProvider } from 'styled-components';
 import useTheme from '../styles/useTheme';
 
 /**
  * 按钮的扩展组件, 实现单选,多选功能
  * @visibleName ToggleButtonGroup 可选按钮
  */
-const ToggleButtonGroup = React.forwardRef((props, ref)=>{
+const ToggleButtonGroup = React.forwardRef(function ToggleButtonGroup(props, ref) {
   const {
     source = [],
     size,
@@ -48,27 +47,25 @@ const ToggleButtonGroup = React.forwardRef((props, ref)=>{
 
     onChange(event, value === buttonValue ? null : buttonValue);
   };
-
+  
   return (
-    <ThemeProvider theme={theme}>
-      <WUI_toggle_button_group spacing={spacing} ref={ref} {...rest}>
-      {
-        source.map((item, i)=>(
-          <ToggleButton 
-            value={item.value} 
-            key={i}
-            size={size}
-            onChange={exclusive ? handleExclusiveChange : handleChange}
-            selected={item.selected === undefined ? isValueSelected(item.value, value) : item.selected}
-            spacing={spacing}
-            {...rest}
-            >
-          {item.label}
-          </ToggleButton>
-        ))
-      }
-      </WUI_toggle_button_group>
-    </ThemeProvider>
+    <WUI_toggle_button_group spacing={spacing} theme={theme} ref={ref} {...rest}>
+    {
+      source.map((item, i)=>(
+        <ToggleButton 
+          value={item.value} 
+          key={i}
+          size={size}
+          onChange={exclusive ? handleExclusiveChange : handleChange}
+          selected={item.selected === undefined ? isValueSelected(item.value, value) : item.selected}
+          spacing={spacing}
+          {...rest}
+          >
+        {item.label}
+        </ToggleButton>
+      ))
+    }
+    </WUI_toggle_button_group>
   )
 });
 

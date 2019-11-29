@@ -175,7 +175,6 @@ export const WUI_list_body = styled.div(({theme})=>{
   return {
     position: 'relative',
     backgroundColor: theme.palette.background.paper,
-    overflow: 'hidden',
     ...createHairline('top', theme.palette.divider).object,
     ...createHairline('bottom', theme.palette.divider).object,
   }
