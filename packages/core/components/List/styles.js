@@ -167,16 +167,19 @@ export const WUI_list_item = styled.div(({theme, ...props})=>{
     alignItems: 'center',
     marginBottom: -1,
     ...disabled,
-    ...activeState
+    ...activeState,
+    [`&:last-child ${WUI_list_item_line}`]: {
+      ...removeHairline('bottom'),
+    }
   }
 })
 
 export const WUI_list_body = styled.div(({theme})=>{
   return {
     position: 'relative',
-    backgroundColor: theme.palette.background.paper,
-    ...createHairline('top', theme.palette.divider).object,
-    ...createHairline('bottom', theme.palette.divider).object,
+    backgroundColor: 'transparent',
+    // ...createHairline('top', theme.palette.divider).object,
+    // ...createHairline('bottom', theme.palette.divider).object,
   }
 })
 

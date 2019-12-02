@@ -34,11 +34,7 @@ const List = React.forwardRef((props, ref)=>{
             </WUI_list_header>
           ) : null
         }
-        {
-          children? (
-            <WUI_list_body>{children}</WUI_list_body>
-          ): null
-        }
+        <WUI_list_body>{children}</WUI_list_body>
         {
           renderFooter ? (
             <WUI_list_footer>
