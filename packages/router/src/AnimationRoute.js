@@ -29,7 +29,7 @@ const RouteComp = (props)=>{
 
   React.useEffect(()=>{
     if(shouldUpdate){
-      rendered.current = <Component {...routeProps} />;
+      rendered.current = <Component {...routeProps} routerStore={routerStore} />;
       forceUpdate(Date.now())
     }
   }, [shouldUpdate, component]);
