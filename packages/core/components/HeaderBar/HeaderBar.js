@@ -5,7 +5,8 @@ import useForkRef from '@wonder-ui/utils/useForkRef';
 import {
   HeaderBarRoot,
   HeaderBarTitle,
-  HeaderBarLeftRight
+  HeaderBarLeft,
+  HeaderBarRight
 } from './styles';
 
 const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
@@ -25,9 +26,9 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
 
   return (
     <HeaderBarRoot className={classes.root} ref={handleRef} spacing={spacing} bordered={bordered} {...rest}>
-      <HeaderBarLeftRight className={classes.left}>{barLeft}</HeaderBarLeftRight>
+      <HeaderBarLeft className={classes.left}>{barLeft}</HeaderBarLeft>
       <HeaderBarTitle className={classes.title}>{title}</HeaderBarTitle>
-      <HeaderBarLeftRight  className={classes.right}>{barRight}</HeaderBarLeftRight>
+      <HeaderBarRight  className={classes.right}>{barRight}</HeaderBarRight>
     </HeaderBarRoot>
   )
 });

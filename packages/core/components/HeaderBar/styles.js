@@ -1,4 +1,4 @@
-import styled from '../styled';
+import styled, { css } from '../styled';
 import { textEllipsis, borderBox } from '../styles/utils';
 import { createHairline } from '../styles/hairline';
 
@@ -11,20 +11,32 @@ export const HeaderBarRoot = styled('div') `
   position: relative;
   padding: 0 ${props=> props.spacing}px;
   ${borderBox}
-  ${props=>props.bordered && createHairline('bottom', '#ddd').css}
+  ${props => props.bordered && createHairline('bottom', '#ddd').css}
+`
+
+const commonItemstyle = css `
+  font-size: 17px;
+  align-self: center;
+  
 `
 
 export const HeaderBarTitle = styled('div') `
-  font-size: 17px;
-  text-align: center;
-  align-self: center;
-  width: 99%;
+  ${commonItemstyle}
   ${textEllipsis}
+  text-align: center;
+  flex: 2;
 ` 
 
-export const HeaderBarLeftRight = styled('div') `
-  align-self: center;
-  width: 50px;
+export const HeaderBarLeft = styled('div') `
+  ${commonItemstyle}
   word-break: keep-all;
-  overflow: hidden;
+  text-align: left;
+  flex: 1;
+`
+
+export const HeaderBarRight = styled('div') `
+  ${commonItemstyle}
+  word-break: keep-all;
+  text-align: right;
+  flex: 1;
 `

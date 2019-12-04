@@ -5,7 +5,7 @@ import { createHairline } from '../styles/hairline';
 export const SearchRoot = styled('div') `
   background-color: #fff;
   width: 100%;
-  height: 54px;
+  height: 44px;
   display: flex;
   position: relative;
   ${props=>props.bordered && createHairline('bottom', '#ddd').css}
@@ -16,7 +16,7 @@ export const SearchBody = styled('form') `
   height: 100%;
   overflow: hidden;
   position: relative;
-  padding: 7px 0 7px 12px;
+  padding: 5px 0 5px 12px;
   ${borderBox}
 `
 
@@ -71,7 +71,7 @@ export const CancelText = styled('span') `
 export const SearchClear = styled('i') `
   ${display}
   width: 20px;
-  height: 20px;
+  height: 100%;
   border-radius: 50%;
   background-position: center;
   background-repeat: no-repeat;

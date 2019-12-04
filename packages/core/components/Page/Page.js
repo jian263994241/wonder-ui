@@ -5,6 +5,7 @@ import AppContext from '../AppContext';
 import useTheme from '../styles/useTheme';
 import hooks from '../hooks';
 import Slot from '../Slot';
+import Navbar from '../NavBar';
 
 const SlotGroup = Slot.Group;
 const SlotContent = Slot.Content;
@@ -18,6 +19,9 @@ const Page = React.forwardRef((props, ref)=>{
     name,
     children, 
     pageContent = true,
+    navbarProps,
+    navbar = false,
+    showBackButton = true,
     ...rest
   } = props;
   const app = React.useContext(AppContext);
@@ -37,7 +41,15 @@ const Page = React.forwardRef((props, ref)=>{
         theme={theme}
         {...rest}
       >
-        <SlotContent name="pageNavbar"/>
+        {
+          navbar && (
+            <Navbar 
+              title={name} 
+              showBackButton={showBackButton} 
+              {...navbarProps}
+            />
+          )
+        }
         <SlotContent name="pageSearchbar"/>
         <SlotContent name="pageContentBefore"/>
         <WUI_page_body>
@@ -59,6 +71,7 @@ const Page = React.forwardRef((props, ref)=>{
 Page.Content = WUI_page_content;
 
 Page.propTypes = {
+  navbarProps: PropTypes.object,
   /** 
    * 页面的名字
    * 可以配合pageInit来设置页面标题

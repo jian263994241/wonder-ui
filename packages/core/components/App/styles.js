@@ -5,8 +5,9 @@ export const WUI_global = createGlobalStyle `
     margin: 0;
     padding: 0;
     font-size: ${props=>props.theme.typography.fontSize}px;
-    -webkit-highlight: none;
-    -webkit-user-select: none;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-highlight: none;  
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -webkit-touch-callout: none;

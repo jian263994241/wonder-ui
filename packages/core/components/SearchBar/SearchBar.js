@@ -59,9 +59,9 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
   }, [onChange]);
 
   const handleClear = React.useCallback(()=>{
-    clearTimeout(inputProcess.current);
+    clearTimeout(inputProcess.current);   
+    changeValue(''); 
     inputRef.current.focus();
-    changeValue('');
     onClear && onClear();
   }, []);
 
@@ -74,7 +74,7 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
     inputProcess.current = setTimeout(() => {
       setFocus(false);
       onBlur && onBlur(e);
-    }, 0);
+    }, 10);
   }, [onBlur]);
 
   const handleCancel = React.useCallback((e)=>{

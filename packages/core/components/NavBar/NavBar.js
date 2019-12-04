@@ -1,79 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createStyles } from '@wonder-ui/styles';
 import BackButton from './BackButton';
+import HeaderBar from '../HeaderBar';
+import Slot from '../Slot';
 
-const styles = (theme)=>{
-
-  const {hairline, typography, palette} = theme;
-  
-  const flexItem = {
-    flex: 1,
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-  }
-
-  return {
-    root: {
-      fontFamily: typography.fontFamily,
-      position: 'relative',
-      height: 45,
-      textAlign: 'center',
-      backgroundColor: '#fff',
-      userSelect: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      ...hairline.create('bottom', '#ccbfbf').object,
-    },
-    title: {
-      ...flexItem,
-      color: palette.text.primary,
-      fontWeight: 500,
-      fontSize: 18,
-      justifyContent: 'center',
-      whiteSpace: 'nowrap'
-    },
-    left: {
-      ...flexItem,
-      fontSize: 16,
-    },
-    right: {
-      ...flexItem,
-      justifyContent: 'flex-end',
-      fontSize: 16,
-    }
-  }
-}
-
-
-export function Navbar(props){
+const Navbar = React.forwardRef(function Navbar(props, ref){
   const {
     title,
     classes,
-    leftContent,
-    rightContent,
-    showBackButton,
-    slotName,
+    barLeft,
+    barRight,
+    showBackButton = true,
+    ...rest
   } = props;
 
   return (
-    <div css={classes.root}>
-      <div css={classes.left}>
-        {showBackButton && <BackButton/> }
-        {leftContent}
-      </div>
-      <div css={classes.title}>{title}</div>
-      <div css={classes.right}>{rightContent}</div>
-    </div>
+    <HeaderBar
+      bordered
+      spacing={0}
+      ref={ref}
+      classes={classes}
+      title={title}
+      barRight={barRight}
+      barLeft={
+        <>
+          {showBackButton && <BackButton/>}
+          {barLeft}
+        </>
+      }
+      {...rest}
+    />
   )
-}
+});
 
 Navbar.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object,
   title: PropTypes.node,
-  leftContent: PropTypes.node,
-  rightContent: PropTypes.node,
+  barLeft: PropTypes.node,
+  barRight: PropTypes.node,
+  showBackButton: PropTypes.bool
 };
 
-export default createStyles(styles)(Navbar);
+export default Navbar;

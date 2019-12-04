@@ -1,5 +1,5 @@
 import styled, {css} from 'styled-components';
-import Bouncefix from './Bouncefix';
+import ScrollContent from '../ScrollContent';
 
 export const WUI_page_root = styled.div(({theme})=>{
   return css `
@@ -26,14 +26,8 @@ export const WUI_page_body = styled.div `
   overflow: hidden;
 `
 
-export const WUI_page_content = styled(Bouncefix) `
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  will-change: scroll-position;
-  -webkit-overflow-scrolling: touch;
-
+export const WUI_page_content = styled(ScrollContent) `
+ 
   html.device-ios & {
     &:before{
       content:'';
