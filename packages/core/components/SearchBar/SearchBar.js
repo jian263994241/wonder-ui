@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
+import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import {
   SearchRoot,
   SearchBody,
@@ -53,42 +54,42 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
     onChange && onChange(value);
   };
 
-  const handleChange = React.useCallback((e)=>{
+  const handleChange = useEventCallback((e)=>{
     const val = e.target.value;
     changeValue(val);
-  }, [onChange]);
+  });
 
-  const handleClear = React.useCallback(()=>{
+  const handleClear = useEventCallback(()=>{
     clearTimeout(inputProcess.current);   
     changeValue(''); 
     inputRef.current.focus();
     onClear && onClear();
-  }, []);
+  });
 
-  const handleFocus = React.useCallback((e)=>{
+  const handleFocus = useEventCallback((e)=>{
     setFocus(true);
     onFocus && onFocus(e);
-  }, [onFocus]);
+  });
 
-  const handleBlur = React.useCallback((e)=>{
+  const handleBlur = useEventCallback((e)=>{
     inputProcess.current = setTimeout(() => {
       setFocus(false);
       onBlur && onBlur(e);
     }, 10);
-  }, [onBlur]);
+  });
 
-  const handleCancel = React.useCallback((e)=>{
+  const handleCancel = useEventCallback((e)=>{
     setFocus(false);
     changeValue('');
     onCancel && onCancel(e);
-  }, [onCancel]);
+  });
 
-  const handleSearch = React.useCallback((e)=>{
+  const handleSearch = useEventCallback((e)=>{
     e.preventDefault();
     const val = e.target.searchField ? e.target.searchField.value: null;
     inputRef.current.blur();
     onSearch && onSearch(val);
-  }, [onSearch])
+  });
   
   return (
     <SearchRoot className={classes.root} bordered={bordered} ref={rootRef}>   

@@ -187,6 +187,11 @@ export const WUI_button = styled(ButtonBase)((props) => {
     wordBreak: 'keep-all',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    display: 'flex',
+    justifyContent: 'center',
+    '&>span': {
+      alignSelf: 'center',
+    }, 
     '&:active': {
       textDecoration: 'none',
       backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity),
