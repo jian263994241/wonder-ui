@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RouterStore from './RouterStore';
 import { BrowserRouter, HashRouter, MemoryRouter, Router as RcRouter } from 'react-router-dom';
-import { GlobalStyles, RouterWrapper } from './styles';
 import { RouterProvider } from './Context';
 import useRouterContext from './useRouterContext';
 import AnimationRoutes from './AnimationRoutes';
+import classes from './styles.module.less';
 
 const Store = (props)=>{
   const {routerStore, history, location} = useRouterContext();
@@ -49,8 +49,7 @@ const Router = React.forwardRef((props, ref)=>{
     <RouterComp {...rest}>
       <RouterProvider value={{routerStore, onRouteChange}}>
         <Store>
-          <GlobalStyles />
-          <RouterWrapper ref={ref}>
+          <div ref={ref} className={classes.router}>
             {
               routes.length > 0 ? (
                 <AnimationRoutes 
@@ -61,7 +60,7 @@ const Router = React.forwardRef((props, ref)=>{
                 />
               ): children
             }
-          </RouterWrapper>
+          </div>
         </Store>
       </RouterProvider>
     </RouterComp>

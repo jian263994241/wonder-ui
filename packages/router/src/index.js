@@ -1,3 +1,4 @@
+import './styles.module.less';
 export { default as AnimationRoute } from './AnimationRoute';
 export { default as AnimationRoutes } from './AnimationRoutes';
 export { default as Router } from './Router';
@@ -14,6 +15,9 @@ export {
   Switch, 
   matchPath, 
   withRouter, 
+  useHistory,
+  useLocation,
+  useParams,
+  useRouteMatch,
   __RouterContext 
 } from 'react-router-dom';
-

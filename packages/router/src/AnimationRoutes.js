@@ -10,7 +10,7 @@ function getPropTypes(Component, propType){
   return Component.propTypes && Component.propTypes[propType];
 }
 
-const AnimationRoutes = (props)=>{
+function AnimationRoutes(props) {
   const {
     dataSource = [],
     animation,

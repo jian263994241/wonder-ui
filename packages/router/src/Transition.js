@@ -1,34 +1,34 @@
 import React from 'react';
 import CSSTransition from 'react-transition-group/CSSTransition';
 
-const Transition = React.forwardRef((props, ref)=>{
+export default function Transition(props) {
   const { 
     in: inProp,
     action,
+    className,
+    classNames,
+    children,
     ...rest 
   } = props;
-
-  const prefix = React.useMemo(()=>{
-    if(action === 'POP'){
-      return 'backward';
-    }
-    return 'forward';
-  }, [inProp]);
-
+  
+  const prefix = action === 'POP'? 'backward': 'forward';
+  
+  if(!!!classNames){
+    return inProp ? children : null;
+  }
+  
   return (
     <CSSTransition
       mountOnEnter
       unmountOnExit
       in={inProp}
-      className={prefix}
-      ref={ref}    
+      className={className + ' ' + prefix}
+      classNames={classNames} 
       {...rest}
-    />
+    >{children}</CSSTransition>
   )
-});
+};
 
 Transition.propTypes = {
   ...CSSTransition.propTypes
 };
-
-export default Transition;

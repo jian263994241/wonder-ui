@@ -1,0 +1,220 @@
+@value duration-fade: 275ms;
+@value duration-scale: 300ms;
+@value duration-slide: 375ms;
+
+@easeInOut: cubic-bezier(0.4, 0, 0.2, 1);
+@easeOut: cubic-bezier(0.0, 0, 0.2, 1);
+@easeIn: cubic-bezier(0.4, 0, 1, 1);
+@sharp: cubic-bezier(0.4, 0, 0.6, 1);
+
+.fake-shadow() {
+  position: absolute;
+  top: 0;
+  width: 16px;
+  bottom: 0;
+  z-index: -1;
+  content: '';
+  opacity: 0;
+  right: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+}
+
+.fake-opacity() {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0,0,0,0.4);
+  width: 100%;
+  bottom: 0;
+  content: '';
+  opacity: 0;
+  z-index: 10000;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+html, body, :global(#root), :global(#react-app) {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.router {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.route {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  position: absolute;
+  left: 0;
+  top:0;
+  z-index: 1;
+  overflow: hidden auto;
+  -webkit-overflow-scrolling: touch;
+
+  // fade
+  &:global(.fade-enter) {
+    display: block;
+    opacity: 0;
+  }
+
+  &:global(.fade-enter-active) {
+    opacity: 1;
+    transition: opacity duration-fade;
+  }
+
+  &:global(.fade-enter-done) {
+    display: block;
+  }
+
+  &:global(.fade-exit) {
+    display: block;
+    opacity: 1;
+  }
+
+  &:global(.fade-exit-active) {
+    opacity: 0;
+    transition: opacity duration-fade;
+  }
+
+  &:global(.fade-exit-done) {
+    display: none;
+  }
+
+  //scale
+  &:global(.scale-enter) {
+    display: block;
+    opacity: 0;
+    transform: scale(1.1);
+  }
+
+  &:global(.scale-enter-active) {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity duration-scale, transform duration-scale;
+  }
+
+  &:global(.scale-enter-done) {
+    display: block;
+  }
+
+  &:global(.scale-exit) {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  &:global(.scale-exit-active) {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity duration-scale, transform duration-scale;
+  }
+
+  &:global(.scale-exit-done) {
+    display: none;
+  }
+
+  //slide-ios
+  
+  &:global(.forward.slide-enter) {
+    display: block;
+    z-index: 3;
+    transform: translate3d(100%,0,0);
+  }
+
+  &:global(.forward.slide-enter-active) {
+    transform: translate3d(0, 0, 0);
+    transition: transform @easeInOut duration-slide;
+    &:before {
+      .fake-shadow();
+      animation: fadeIn duration-slide @easeInOut forwards;
+    }
+  }
+
+  &:global(.forward.slide-enter-done) {
+    z-index: 3;
+    display: block;
+  }
+
+  &:global(.forward.slide-exit) {
+    z-index: 1;
+    display: block;
+    transform: translate3d(0,0,0);
+  }
+
+  &:global(.forward.slide-exit-active) {
+    transform: translate3d(-20%,0,0);
+    transition: transform @easeInOut duration-slide;
+    &:after {
+      .fake-opacity();
+      animation: fadeIn duration-slide @easeInOut forwards;
+    }
+  }
+
+  &:global(.forward.slide-exit-done) {
+    display: none;
+  }
+
+  /** slide right */
+  &:global(.backward.slide-enter) {
+    display: block;
+    z-index: 1;
+    transform: translate3d(-20%,0,0);
+  }
+
+  &:global(.backward.slide-enter-active) {
+    transform: translate3d(0,0,0);
+    transition: transform @easeInOut duration-slide;
+    &:after {
+      .fake-opacity();
+      animation: fadeOut duration-slide @easeInOut forwards;
+    }
+  }
+
+  &:global(.backward.slide-enter-done) {
+    display: block;
+  }
+
+  &:global(.backward.slide-exit) {
+    display: block;
+    z-index: 3;
+    transform: translate3d(0,0,0);
+  }
+
+  &:global(.backward.slide-exit-active) {
+    transform: translate3d(100%,0,0);
+    transition: transform @easeInOut duration-slide;
+    &:before {
+      .fake-shadow();
+      animation: fadeOut duration-slide @easeInOut forwards;
+    }
+  }
+
+  &:global(.backward.slide-exit-done){
+    display: none;
+  }
+}
+
+
