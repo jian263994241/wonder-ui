@@ -1,0 +1,1 @@
+export { useRouterContext as default } from '@wonder-ui/router';

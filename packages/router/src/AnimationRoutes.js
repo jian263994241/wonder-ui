@@ -55,7 +55,7 @@ const AnimationRoutes = (props)=>{
           ? matchPath(location.pathname, { ...child, path })
           : context.match;
      
-      if(_match) {
+      if(_match && _match.isExact) {
         match = _match;
       }
     });

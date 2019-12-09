@@ -8,7 +8,7 @@ const strictUriEncode = require('strict-uri-encode');
 const decodeComponent = require('decode-uri-component');
 const splitOnFirst = require('split-on-first');
 
-const arrayFormat = 'comma';
+const arrayFormat = 'bracket';
 
 function encoderForArrayFormat(options) {
 	switch (options.arrayFormat) {

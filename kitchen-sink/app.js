@@ -1,88 +1,28 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {View, App } from '@wonder-ui/core';
+import { View, App } from '@wonder-ui/core';
+
+import IndexPage from './pages/IndexPage';
 
 const params = {
+  //events bus
   on: {
-    pageInit: (name, props)=>{
-      if(name){
-        document.title = name;
-      }
+    routeChange(props){
+      // console.log('Route change');
     }
   },
   routes: [
     {
-      path: '/', 
-      exact: true,
-      redirect: '/index'
-    },
-    {
-      path: '/index', 
-      component: require('./pages/Welcome'),
+      path: '/',
+      component: IndexPage,
       children: [
-        {
-          path: 'citys', 
-          async: ()=>import('./pages/Citys')
-        },
-        {
-          path: 'picker', 
-          async: ()=>import('./pages/Picker')
-        },
+        { path: 'about', async: ()=> import('./pages/About') },
+        { path: 'button', async: ()=> import('./pages/Button') },
       ]
     },
-    
-    
     {
-      path: '/countdown', 
-      async: ()=>import('./pages/Countdown')
-    },
-    {
-      path: '/keyboard', 
-      async: ()=> import('./pages/Keyboard')
-    },
-    {
-      path: '/popup', 
-      async: () =>import('./pages/Popup')
-    },
-    {
-      path: '/dialog', 
-      async: () => import('./pages/Dialog')
-    },
-    {
-      path: '/accordion', 
-      async: () => import('./pages/Accordion')
-    },
-    {
-      path: '/buttons', 
-      async: () => import('./pages/Buttons')
-    },
-    {
-      path: '/tabs', 
-      async: () => import('./pages/Tabs')
-    },
-    {
-      path: '/list', 
-      async: () => import('./pages/List')
-    },
-    {
-      path: '/media-list', 
-      async: () => import('./pages/MediaList')
-    },
-    {
-      path: '/swipe-out', 
-      async: () => import('./pages/SwipeOut')
-    },
-    {
-      path: '/CheckboxesRadios', 
-      async: ()=> import('./pages/CheckboxesRadios')
-    },
-    {
-      path: '/inputs', 
-      async: ()=>import('./pages/Inputs')
-    },
-    {
-      path: '/grid', 
-      async: ()=>import('./pages/Grid')
+      path: '/404',
+      async: ()=> import('./pages/NoMatch')
     },
   ]
 }
@@ -100,9 +40,5 @@ class MyApp extends Component {
 }
 
 
-const rootElement = document.getElementById('root');
 
-rootElement.style.height = "100%";
-
-
-render( <MyApp/>, rootElement )
+render( <MyApp/>, document.getElementById('root') );

@@ -19,7 +19,7 @@ const Description = styled.p  `
 /**
  * @visibleName Empty 空状态
  */
-const Empty = React.forwardRef((props, ref)=>{
+const Empty = React.forwardRef(function Empty(props, ref) {
   const { 
     description = '暂无数据',
     image: Image = EmptyIcon,

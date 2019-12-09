@@ -21,6 +21,7 @@
     "@babel/runtime": "^7.6.3",
     "decode-uri-component": "^0.2.0",
     "prop-types": "^15.7.2",
+    "query-string": "5.1.1",
     "react-is": "^16.11.0",
     "split-on-first": "^2.0.0",
     "strict-uri-encode": "^2.0.0",
