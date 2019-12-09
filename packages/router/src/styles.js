@@ -79,13 +79,15 @@ export const RouterWrapper = styled.div `
 `;
 
 export const RouteWrapper = styled.div `
-  position: absolute;
   width: 100%;
   height: 100%;
   background: #fff;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
+  position: absolute;
+  left: 0;
+  top:0;
   z-index: 1;
+  overflow: hidden auto;
+  -webkit-overflow-scrolling: touch;
 
   /** scale */
   &.scale-enter {

@@ -7,32 +7,28 @@ import usePageInit from './usePageInit';
 import UIRouteContext from './UIRouteContext';
 import useRouterContext from './useRouterContext';
 
-const RouteComp = (props)=>{
+const RouteComponent = React.memo(function RouteComponent(props) {
   const {
     async,
     fallback = null,
     redirect,
     component,
-    shouldUpdate,
+    current,
     name,
     ...routeProps
   } = props;
   const { onRouteChange, routerStore } = useRouterContext();
   const Component = React.useMemo(()=>{
-    if(typeof async === 'function') return React.lazy(async);
-    if(typeof redirect === 'string') return () => <Redirect to={redirect}/>;
-    if(component) return component.default || component;
-  }, [async, component, redirect]);
-
-  const rendered = React.useRef(null);
-  const [, forceUpdate] = React.useState();
-
-  React.useEffect(()=>{
-    if(shouldUpdate){
-      rendered.current = <Component {...routeProps} routerStore={routerStore} />;
-      forceUpdate(Date.now())
-    }
-  }, [shouldUpdate, component]);
+    if(typeof async === 'function') {
+      return React.lazy(async)
+    }else if(typeof redirect === 'string') {
+      return function RedirectTo() {
+        return <Redirect to={redirect}/>;
+      }
+    }else if(component) {
+      return component.default || component;
+    };
+  }, [ async, component, redirect ]);
 
   usePageInit(()=>{
     if(onRouteChange){
@@ -44,13 +40,19 @@ const RouteComp = (props)=>{
   if(async){
     return (
       <React.Suspense fallback={fallback}>
-        {rendered.current}
+        <Component {...routeProps} routerStore={routerStore} />
       </React.Suspense>
     )
   }
 
-  return rendered.current;
-};
+  return (
+    <Component {...routeProps} routerStore={routerStore} />
+  );
+}, function shouldUpdate(prevProps, nextProps) {
+  if(prevProps.current && prevProps.current != nextProps.current){
+    return true;
+  }
+});
 
 /**
  * 
@@ -76,7 +78,7 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
   const timeout = duration[animationType] || 0;
 
   React.useEffect(()=>{
-    setTimeout(() => setAnimation(animation), 0);
+    setTimeout(() => setAnimation(animationDisabled ? null: animation), 0);
   }, [animation]);
 
   if(disabled){
@@ -90,30 +92,6 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
           const { match, history } = routeProps;
           const visible = !!match && match.isExact;
 
-          const content = (
-            <RouteWrapper 
-              className={className} 
-              style={style} 
-              ref={ref}
-              data-url={match && match.url}
-            >
-              <RouteComp
-                component={component}
-                fallback={fallback}
-                redirect={redirect}
-                async={async}
-                query={routing.location.query}
-                shouldUpdate={visible}
-                name={name}
-                {...routeProps}
-              />
-            </RouteWrapper>
-          );
-
-          if(animationDisabled){
-            return visible ? content : null;
-          }
-
           return (
             <Transition
               in={visible}
@@ -122,7 +100,23 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
               unmountOnExit={!match}
               action={history.action}
             >
-              {content}
+              <RouteWrapper 
+                className={className} 
+                style={style}
+                ref={ref}
+                data-url={match && match.url}
+              >
+                <RouteComponent
+                  component={component}
+                  fallback={fallback}
+                  redirect={redirect}
+                  async={async}
+                  query={routing.location.query}
+                  current={visible}
+                  name={name}
+                  {...routeProps}
+                />
+              </RouteWrapper>
             </Transition>
           )
         }}
