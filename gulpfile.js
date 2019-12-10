@@ -30,7 +30,7 @@ var paths = {
       ]
     },
     styles: {
-      src: ['packages/styles/**/*.js', '!**/node_modules/**'],
+      src: ['packages/styles/src/**/*.js', '!**/node_modules/**'],
       dest: 'npm-packages/wonder-ui-styles',
       copylist: [
         'packages/styles/package.json',

@@ -1,0 +1,46 @@
+{
+  "name": "@wonder-ui/styles",
+  "version": "1.0.0",
+  "description": "wonder-ui styles",
+  "main": "index.js",
+  "keywords": [
+    "react",
+    "react ui",
+    "styled-components",
+    "css in js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jian.li",
+  "homepage": "https://github.com/jian263994241/wonder-ui",
+  "bugs": {
+    "url": "https://github.com/jian263994241/wonder-ui/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime": "^7.6.3",
+    "hoist-non-react-statics": "^3.3.1",
+    "jss": "^10.0.0",
+    "jss-plugin-camel-case": "^10.0.0",
+    "jss-plugin-compose": "^10.0.0",
+    "jss-plugin-default-unit": "^10.0.0",
+    "jss-plugin-expand": "^10.0.0",
+    "jss-plugin-extend": "^10.0.0",
+    "jss-plugin-global": "^10.0.0",
+    "jss-plugin-nested": "^10.0.0",
+    "jss-plugin-props-sort": "^10.0.0",
+    "jss-plugin-rule-value-function": "^10.0.0",
+    "jss-plugin-vendor-prefixer": "^10.0.0",
+    "prop-types": "^15.7.2",
+    "theming": "^3.2.0",
+    "warning": "^4.0.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jian263994241/wonder-ui.git"
+  }
+}
