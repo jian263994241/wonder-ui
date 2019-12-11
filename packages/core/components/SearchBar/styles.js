@@ -16,7 +16,7 @@ export const SearchBody = styled('form') `
   height: 100%;
   overflow: hidden;
   position: relative;
-  padding: 5px 0 5px 12px;
+  padding: 5px 0 5px 10px;
   ${borderBox}
 `
 

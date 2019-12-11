@@ -187,7 +187,7 @@ export const WUI_button = styled(ButtonBase)((props) => {
     wordBreak: 'keep-all',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    display: 'flex',
+    display: 'inline-flex',
     justifyContent: 'center',
     '&>span': {
       alignSelf: 'center',

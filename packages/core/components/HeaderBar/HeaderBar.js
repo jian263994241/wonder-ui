@@ -15,7 +15,7 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
     title,
     barLeft,
     barRight,
-    spacing = 10,
+    spacing = 0,
     bordered = true,
     ...rest
   } = props;

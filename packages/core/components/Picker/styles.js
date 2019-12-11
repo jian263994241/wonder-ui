@@ -2,23 +2,13 @@ import styled from 'styled-components';
 import Drawer from '../Drawer';
 import Cascader from 'rmc-cascader/lib/Cascader';
 
-export const WUI_picker_header = styled.div `
-  background-image: linear-gradient(to bottom, #e7e7e7, #e7e7e7, transparent, transparent);
-  background-position: bottom;
-  background-size: 100% 1PX;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  position: relative;
-`
-
 export const WUI_picker_header_button = styled.span `
   color: #577AED;
   font-size: 17px;
   padding: 9px 15px;
   height: 42px;
   box-sizing: border-box;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   &:active {
@@ -26,26 +16,6 @@ export const WUI_picker_header_button = styled.span `
   }
 `
 
-export const WUI_picker_header_title = styled.div `
-  flex: 1;
-  text-align: center;
-  color: #000;
-  font-size: 17px;
-`
-
-export const WUI_picker_header_right = styled.span `
-  color: #108ee9;
-  font-size: 17px;
-  padding: 9px 15px;
-  height: 42px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &:active {
-    background-color: #ddd;
-  }
-`
 export const WUI_picker_cascader = styled(Cascader) `
 
   display: flex;
@@ -120,7 +90,6 @@ export const WUI_picker_cascader = styled(Cascader) `
 `
 
 export const WUI_picker = styled(Drawer) `
-  background-color: #fff;
   padding-bottom: env(safe-area-inset-bottom);
 `
 

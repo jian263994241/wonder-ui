@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { 
   WUI_picker, 
-  WUI_picker_header, 
   WUI_picker_header_button,
-  WUI_picker_header_title,
   WUI_picker_cascader
 } from '../Picker/styles';
 import RCDatePicker from 'rmc-date-picker/lib/DatePicker';
