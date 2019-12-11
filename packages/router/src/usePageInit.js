@@ -1,9 +1,8 @@
 import React from 'react';
-import useRouterContext from './useRouterContext';
+import { useRouteMatch } from 'react-router-dom';
 
 const usePageInit = (callback, vars = []) => {
-  const context = useRouterContext();
-  const matched = context.match || {};
+  const matched = useRouteMatch() || {};
 
   React.useEffect(()=>{
     if(matched.isExact){

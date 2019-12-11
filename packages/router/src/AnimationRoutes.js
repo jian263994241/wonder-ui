@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Route from './AnimationRoute';
+import Route from './RouteTransition';
 import resolve from '@wonder-ui/utils/resolvePath';
 import { matchPath, Redirect } from 'react-router-dom';
 import useRouterContext from './useRouterContext';

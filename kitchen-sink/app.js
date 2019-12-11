@@ -8,7 +8,7 @@ const params = {
   //events bus
   on: {
     routeChange(props){
-      // console.log('Route change');
+      console.log(props);
     }
   },
   routes: [

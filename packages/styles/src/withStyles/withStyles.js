@@ -4,6 +4,7 @@ import warning from 'warning';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import getDisplayName from '@wonder-ui/utils/getDisplayName';
 import chainPropTypes from '@wonder-ui/utils/chainPropTypes';
+import getThemeProps from './getThemeProps';
 import makeStyles from '../makeStyles';
 import useTheme from '../useTheme';
 
