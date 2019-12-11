@@ -2,6 +2,7 @@ var preset = require('babel-preset');
 var del = require('del');
 var gulp = require('gulp');
 var babel = require('gulp-babel');
+var aleWebpack = require('ale-webpack');
 
 var paths = {
   scripts: {
@@ -74,9 +75,12 @@ function cpoyInfo(target = 'core'){
     .pipe(gulp.dest(paths.scripts[target].dest));
 }
 
+function dist_router (){
+  return aleWebpack(require('./packages/router/webpack.config'))
+}
 
 gulp.task('build:core', gulp.series(()=>cpoyInfo('core'), ()=>scripts('core')));
-gulp.task('build:router', gulp.series(()=>cpoyInfo('router'), ()=>scripts('router')));
+// gulp.task('build:router', gulp.series(()=>cpoyInfo('router'), dist_router));
 gulp.task('build:utils', gulp.series(()=>cpoyInfo('utils'), ()=>scripts('utils')));
 gulp.task('build:styles', gulp.series(()=>cpoyInfo('styles'), ()=>scripts('styles')));
 
