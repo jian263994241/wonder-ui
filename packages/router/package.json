@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/router",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "UI Router base on react@16.8 & react-router-dom",
   "main": "index.js",
   "keywords": [
@@ -26,6 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.6.3",
+    "@loadable/component": "^5.11.0",
     "@wonder-ui/utils": "^0.0.2",
     "prop-types": "^15.7.2",
     "react-is": "^16.11.0",

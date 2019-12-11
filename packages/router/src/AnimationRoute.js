@@ -1,11 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
+import loadable from "@loadable/component";
 import Transition from './Transition';
 import { RouteWrapper, duration } from './styles';
 import usePageInit from './usePageInit';
 import UIRouteContext from './UIRouteContext';
 import useRouterContext from './useRouterContext';
+
+function timeout(callback, time){
+  return new Promise((resolve, reject)=>{
+    setTimeout(() => {
+      resolve(callback());
+    }, time);
+  })
+}
 
 const RouteComponent = React.memo(function RouteComponent(props) {
   const {
@@ -20,7 +29,7 @@ const RouteComponent = React.memo(function RouteComponent(props) {
   const { onRouteChange, routerStore } = useRouterContext();
   const Component = React.useMemo(()=>{
     if(typeof async === 'function') {
-      return React.lazy(async)
+      return loadable(()=> timeout(async, 0), {fallback})
     }else if(typeof redirect === 'string') {
       return function RedirectTo() {
         return <Redirect to={redirect}/>;
@@ -32,18 +41,11 @@ const RouteComponent = React.memo(function RouteComponent(props) {
 
   usePageInit(()=>{
     if(onRouteChange){
-      const _name = typeof name === 'function' ? name(routeProps.match, routerStore.location) : name;
+      const _name = typeof name === 'function' 
+        ? name(routeProps.match, routerStore.location) : name;
       onRouteChange(routeProps.match, routerStore.location, _name);
     }
   })
-
-  if(async){
-    return (
-      <React.Suspense fallback={fallback}>
-        <Component {...routeProps} routerStore={routerStore} />
-      </React.Suspense>
-    )
-  }
 
   return (
     <Component {...routeProps} routerStore={routerStore} />

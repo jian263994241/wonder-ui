@@ -9,7 +9,7 @@ const usePageInit = (callback, vars = []) => {
     if(matched.isExact){
       return callback && callback();
     }
-  }, [matched.isExact].concat(vars));
+  }, [matched.isExact, ...vars]);
 }
 
 
