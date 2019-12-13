@@ -43,6 +43,7 @@ export const Wrapper = styled.div `
   -webkit-overflow-scrolling: touch;
   box-shadow: ${props=> props.theme.shadows[16]};
   background-color: #fff;
+  outline: 0;
   ${props=> props.anchor === 'left' && anchorLeft}
   ${props=> props.anchor === 'right' && anchorRight}
   ${props=> props.anchor === 'top' && anchorTop}
