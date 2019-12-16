@@ -1,52 +1,49 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { bindStyles } from '../styledProps';
 
-
-const anchorLeft = css `
-  top: 0;
-  left: 0;
-  right: auto;
-  border-right: 1px solid ${props=>props.theme.palette.divider};
-`
-
-const anchorRight = css `
-  top: 0;
-  left: auto;
-  right: 0;
-  border-left: 1px solid ${props=>props.theme.palette.divider};
-`
-
-const anchorTop = css `
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: auto;
-  height: auto;
-  max-height: 100%;
-  border-bottom: 1px solid ${props=>props.theme.palette.divider};
-`
-
-const anchorBottom = css `
-  top: auto;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: auto;
-  max-height: 100%;
-  border-top: 1px solid ${props=>props.theme.palette.divider};
-`
+const styles = bindStyles({
+  anchor: {
+    left: {
+      top: 0,
+      left: 0,
+      right: 'auto',
+      borderRight: `1px solid ${props=>props.theme.palette.divider}`
+    },
+    right: {
+      top: 0,
+      left: 'auto',
+      right: 0,
+      borderLeft: `1px solid ${props=>props.theme.palette.divider}`
+    },
+    top: {
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 'auto',
+      height: 'auto',
+      maxHeight: '100%',
+      borderBottom: `1px solid ${props=>props.theme.palette.divider}`
+    },
+    bottom: {
+      top: 'auto',
+      left: 0,
+      right: 0,
+      bottom: 0,
+      height: 'auto',
+      maxHeight: '100%',
+      borderTop: `1px solid ${props=>props.theme.palette.divider}`
+    }
+  }
+});
 
 export const Wrapper = styled.div `
+  ${styles.anchor}
   position: absolute;
   height: 100%;
-  z-index: ${props=> props.theme.zIndex.drawer};
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
+  outline: 0;
   box-shadow: ${props=> props.theme.shadows[16]};
   background-color: #fff;
-  outline: 0;
-  ${props=> props.anchor === 'left' && anchorLeft}
-  ${props=> props.anchor === 'right' && anchorRight}
-  ${props=> props.anchor === 'top' && anchorTop}
-  ${props=> props.anchor === 'bottom' && anchorBottom}
+  z-index: ${props=> props.theme.zIndex.drawer};
 `
 

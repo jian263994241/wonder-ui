@@ -59,7 +59,6 @@ const ToggleButtonGroup = React.forwardRef(function ToggleButtonGroup(props, ref
           onChange={exclusive ? handleExclusiveChange : handleChange}
           selected={item.selected === undefined ? isValueSelected(item.value, value) : item.selected}
           spacing={spacing}
-          {...rest}
           >
         {item.label}
         </ToggleButton>
