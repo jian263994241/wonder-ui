@@ -1,5 +1,12 @@
 import React from 'react';
-import { Page, Block } from '@wonder-ui/core';
+import { Page, Block, Button } from '@wonder-ui/core';
+import styled from 'styled-components';
+
+const FullButton = styled(Button) `
+  & + & {
+    margin-top: 10px;
+  }
+`
 
 
 
@@ -9,7 +16,7 @@ const Row = (props)=>(
 
 export default function ButtonPage(props){
   return (
-    <Page name="按钮" navbar>
+    <Page name="Button" navbar>
       <Row>
       
       </Row>

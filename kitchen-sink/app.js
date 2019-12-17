@@ -18,6 +18,7 @@ const params = {
       children: [
         { path: 'about', async: ()=> import('./pages/About') },
         { path: 'button', async: ()=> import('./pages/Button') },
+        { path: 'drawer', async: ()=> import('./pages/Drawer') },
       ]
     },
     {

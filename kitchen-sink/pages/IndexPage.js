@@ -23,6 +23,7 @@ export default function IndexPage(props) {
       </List>
       <List renderHeader={()=> `组件`}>
         <LinkDetail to="/button">Button 按钮</LinkDetail>
+        <LinkDetail to="/drawer">Drawer 抽屉</LinkDetail>
       </List>
     </Page>
   )

@@ -25,7 +25,7 @@ module.exports = {
     },
     babel(options) {
       options.plugins = [
-        ['styled-components', { displayName: true, fileName: true }]
+        ['styled-components', { displayName: true, fileName: false }]
       ];
       return options;
     }
