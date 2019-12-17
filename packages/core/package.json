@@ -25,7 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.6.3",
-    "@wonder-ui/router": "^0.0.20",
+    "@wonder-ui/router": "^0.0.21",
     "@wonder-ui/utils": "^0.1.0",
     "array-tree-filter": "^2.1.0",
     "dom-helpers": "^5.1.0",
