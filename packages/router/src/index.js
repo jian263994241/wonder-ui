@@ -1,4 +1,4 @@
-export { default as AnimationRoute } from './AnimationRoute';
+export { default as RouteTransition } from './RouteTransition';
 export { default as AnimationRoutes } from './AnimationRoutes';
 export { default as Router } from './Router';
 export { default as RouterStore } from './RouterStore';

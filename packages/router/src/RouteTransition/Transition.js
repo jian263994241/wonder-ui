@@ -1,9 +1,6 @@
 import React from 'react';
 import CSSTransition from 'react-transition-group/CSSTransition';
-
-function mergeClassName() {
-  return Array.prototype.slice.apply(arguments).join(' ');
-}
+import classnames from '@wonder-ui/utils/classnames';
 
 export default function Transition(props) {
   const { 
@@ -26,7 +23,7 @@ export default function Transition(props) {
       mountOnEnter
       unmountOnExit
       in={inProp}
-      className={mergeClassName(prefix, className)}
+      className={classnames(prefix, className)}
       classNames={classNames} 
       {...rest}
     >{children}</CSSTransition>

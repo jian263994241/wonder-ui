@@ -1,20 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Redirect } from 'react-router-dom';
-import loadable from "@loadable/component";
+import { Route } from 'react-router-dom';
 import Transition from './Transition';
-import { RouteWrapper, duration } from './styles';
-import usePageInit from './usePageInit';
-import UIRouteContext from './UIRouteContext';
-import useRouterContext from './useRouterContext';
-
-function timeout(callback, time){
-  return new Promise((resolve, reject)=>{
-    setTimeout(() => {
-      resolve(callback());
-    }, time);
-  })
-}
+import { RouteRoot, duration } from './styles';
+import usePageInit from '../usePageInit';
+import UIRouteContext from '../UIRouteContext';
+import useRouterContext from '../useRouterContext';
+import useComponent from './useComponent';
 
 const RouteComponent = React.memo(function RouteComponent(props) {
   const {
@@ -27,17 +19,8 @@ const RouteComponent = React.memo(function RouteComponent(props) {
     ...routeProps
   } = props;
   const { onRouteChange, routerStore } = useRouterContext();
-  const Component = React.useMemo(()=>{
-    if(typeof async === 'function') {
-      return loadable(()=> timeout(async, 0), {fallback})
-    }else if(typeof redirect === 'string') {
-      return function RedirectTo() {
-        return <Redirect to={redirect}/>;
-      }
-    }else if(component) {
-      return component.default || component;
-    };
-  }, [ async, component, redirect ]);
+
+  const Component = useComponent({ async, fallback, component, redirect });
 
   usePageInit(()=>{
     if(onRouteChange){
@@ -60,7 +43,7 @@ const RouteComponent = React.memo(function RouteComponent(props) {
  * 
  * @visibleName AnimatedRoute
  */
-const AnimationRoute = React.forwardRef((props, ref)=>{
+const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
   const {
     component,
     animation = 'slide',
@@ -102,7 +85,8 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
               unmountOnExit={!match}
               action={history.action}
             >
-              <RouteWrapper 
+              <RouteRoot
+                transition={animationType}
                 className={className} 
                 style={style}
                 ref={ref}
@@ -118,7 +102,7 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
                   name={name}
                   {...routeProps}
                 />
-              </RouteWrapper>
+              </RouteRoot>
             </Transition>
           )
         }}
@@ -127,7 +111,7 @@ const AnimationRoute = React.forwardRef((props, ref)=>{
   );
 });
 
-AnimationRoute.propTypes = {
+RouteTransition.propTypes = {
   ...Route.propTypes,
   /**
    * Animation type
@@ -177,4 +161,4 @@ AnimationRoute.propTypes = {
   }
 }
 
-export default AnimationRoute;
+export default RouteTransition;
