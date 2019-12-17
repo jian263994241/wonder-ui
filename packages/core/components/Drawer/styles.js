@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { bindStyles } from '../styledProps';
+import { bindStyles } from '@wonder-ui/utils/styledProps';
 
 const styles = bindStyles({
   anchor: {
@@ -7,12 +7,14 @@ const styles = bindStyles({
       top: 0,
       left: 0,
       right: 'auto',
+      height: '100%',
       borderRight: `1px solid ${props=>props.theme.palette.divider}`
     },
     right: {
       top: 0,
       left: 'auto',
       right: 0,
+      height: '100%',
       borderLeft: `1px solid ${props=>props.theme.palette.divider}`
     },
     top: {
@@ -20,7 +22,6 @@ const styles = bindStyles({
       left: 0,
       right: 0,
       bottom: 'auto',
-      height: 'auto',
       maxHeight: '100%',
       borderBottom: `1px solid ${props=>props.theme.palette.divider}`
     },
@@ -29,17 +30,16 @@ const styles = bindStyles({
       left: 0,
       right: 0,
       bottom: 0,
-      height: 'auto',
       maxHeight: '100%',
       borderTop: `1px solid ${props=>props.theme.palette.divider}`
-    }
+    },
+    default: 'right'
   }
 });
 
 export const Wrapper = styled.div `
   ${styles.anchor}
   position: absolute;
-  height: 100%;
   overflow: hidden;
   outline: 0;
   box-shadow: ${props=> props.theme.shadows[16]};

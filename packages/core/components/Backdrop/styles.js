@@ -6,7 +6,6 @@ const invisible = css `
 
 export const WUI_backdrop = styled.div `
   box-sizing: border-box;
-  ${'' /* position: ${props=>props.fixed ? 'fixed': 'absolute'}; */}
   position: absolute;
   left: 0;
   top: 0;
