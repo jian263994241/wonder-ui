@@ -7,7 +7,7 @@ const BackButton = React.forwardRef(function BackButton() {
 
   return (
     <Button 
-      onClick={router.history.goBack}
+      back
       variant="text" 
       color="primary"
     > 返回 </Button>

@@ -1,6 +1,7 @@
 import warning from 'warning';
+import isObject from '../isObject';
 
-export default function styledProps({ default: defaultPropKey, ...map}, fallback) {
+export default function styledProps({ defaultValue, ...map}, fallback) {
   return function styledCssFn(props) {
     const keysFromProps = Object.keys(map).filter(key => !!props[key]);
     
@@ -17,15 +18,54 @@ export default function styledProps({ default: defaultPropKey, ...map}, fallback
       }
     }
 
-    if (map[keyFromProps] !== undefined || map[defaultPropKey] !== undefined)  {
-      return map[keyFromProps] || map[defaultPropKey];
-    }
+    const styledCss = map[keyFromProps] || map[defaultValue];
     
-    warning(
-      false,
-      `[styledProps] Unknown fallback prop provided: ${fallback}.`
-    );
-
-    return undefined;
+    return renderCssfnInObject(styledCss, props);
   }
+}
+
+
+
+function renderCssfnInObject(styleObject, props = {}){
+  if(isFunction(styleObject)){
+    return deepCall(styleObject, props);
+  }
+
+  if(isObject(styleObject)){
+    let result = { ...styleObject };
+
+    for(let k in result){
+      if(isFunction(result[k])){
+        result[k] = deepCall(result[k], props);
+      }
+      // else if(typeof result[k] === 'string') {
+      //   const marched = result[k].match(/(\$[\w\d]+)[^\s]/);
+      //   if(marched){
+      //     result[k] = result[k].replace(/(\$[\w\d]+)[^\s]/, deepCall(result[marched[0]], props));
+      //   }
+      // }
+      else if(isObject(result[k])){
+        result[k] = renderCssfnInObject(result[k], props);
+      }
+    }
+
+    return result;
+  }
+
+  return styleObject;
+}
+
+function deepCall(callback, args) {
+  let result = callback;
+  if(isFunction(callback)){
+    result = callback(args);
+  }else{
+    return result;
+  }
+  return deepCall(result, args);
+}
+
+
+function isFunction(fn){
+  return typeof fn === 'function'
 }

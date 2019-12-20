@@ -1,11 +1,13 @@
-import { Link, RouterContext } from '@wonder-ui/router';
-import styled from '../styled';
+import { Link } from '@wonder-ui/router';
+import styled from 'styled-components';
 
 /**
  * UI Wrap react-router Link
  * @visibleName Link 链接
  */
-export default styled(Link)({
+export default styled(Link).withConfig({
+  displayName: 'Link'
+})({
   textDecoration: 'none',
   outline: 'none',
   margin: 0,

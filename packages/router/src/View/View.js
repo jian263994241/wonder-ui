@@ -1,16 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Route from './RouteTransition';
+import Route from '../RouteTransition';
 import resolve from '@wonder-ui/utils/resolvePath';
-import { matchPath, Redirect } from 'react-router-dom';
-import useRouterContext from './useRouterContext';
+import { matchPath } from 'react-router-dom';
+import useRouterContext from '../useRouterContext';
 import flatMap from '@wonder-ui/utils/flatMap';
 
-function getPropTypes(Component, propType){
-  return Component.propTypes && Component.propTypes[propType];
-}
 
-const AnimationRoutes = (props)=>{
+export default function View(props) {
   const {
     dataSource = [],
     animation,
@@ -18,7 +15,7 @@ const AnimationRoutes = (props)=>{
     fallback,
     className,
     style,
-    noMatch = '/404',
+    noMatch,
   } = props;
 
   const context = useRouterContext();
@@ -77,18 +74,13 @@ const AnimationRoutes = (props)=>{
           />
         ))
       }
-      {
-        !matched && (<Redirect to={noMatch}/>)
-      }
+      { !matched && noMatch }
     </>
   )
 }
 
-AnimationRoutes.defaultProps = {
-  noMatch: '/404'
-};
 
-AnimationRoutes.propTypes = {
+View.propTypes = {
   /**
    * Animation type
    */
@@ -141,7 +133,5 @@ AnimationRoutes.propTypes = {
   /**
    * 404
    */
-  noMatch: getPropTypes(Redirect, 'to')
+  noMatch: PropTypes.node
 }
-
-export default AnimationRoutes;

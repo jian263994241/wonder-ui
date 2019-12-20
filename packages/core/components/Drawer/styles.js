@@ -33,7 +33,7 @@ const styles = bindStyles({
       maxHeight: '100%',
       borderTop: `1px solid ${props=>props.theme.palette.divider}`
     },
-    default: 'right'
+    defaultValue: 'right'
   }
 });
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { WUI_button } from './styles';
+import { ButtonRoot } from './styles';
 import Link from '../Link';
 import useTheme from '../styles/useTheme';
 
-const WUI_button_link = WUI_button.withComponent(Link);
+const ButtonLink = ButtonRoot.withComponent(Link);
 
 /**
  * 允许用户轻按一下即可做出选择.
@@ -19,7 +19,7 @@ const Button =  React.forwardRef((props, ref)=> {
   } = props;
   
   const theme = useTheme();
-  const Component = props.to != undefined ? WUI_button_link: WUI_button;
+  const Component = (props.to || props.back) ? ButtonLink: ButtonRoot;
 
   return (
     <Component role="button" ref={ref} theme={theme} {...rest}>

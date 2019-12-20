@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RouterStore from '../RouterStore';
 import { BrowserRouter, HashRouter, MemoryRouter, Router as RcRouter } from 'react-router-dom';
-import { GlobalStyles, RouterRoot } from './styles';
+import styles from './styles';
+import { widthStyles, classnames } from '@wonder-ui/styles';
 import { RouterProvider } from '../Context';
 import useRouterContext from '../useRouterContext';
-import AnimationRoutes from '../AnimationRoutes';
+import View from '../View';
 
 const Store = (props)=>{
   const {routerStore, history, location} = useRouterContext();
@@ -28,6 +29,8 @@ const Store = (props)=>{
  */
 const Router = React.forwardRef((props, ref)=>{
   const { 
+    classes,
+    className,
     children,
     type,
     routes = [],
@@ -49,11 +52,10 @@ const Router = React.forwardRef((props, ref)=>{
     <RouterComp {...rest}>
       <RouterProvider value={{routerStore, onRouteChange}}>
         <Store>
-          <GlobalStyles />
-          <RouterRoot ref={ref}>
+          <div ref={ref} className={classnames(classes.root, className)}>
             {
               routes.length > 0 ? (
-                <AnimationRoutes 
+                <View 
                   dataSource={routes} 
                   animation={animation} 
                   animationDisalbed={animationDisalbed}  
@@ -61,7 +63,7 @@ const Router = React.forwardRef((props, ref)=>{
                 />
               ): children
             }
-          </RouterRoot>
+          </div>
         </Store>
       </RouterProvider>
     </RouterComp>
@@ -135,5 +137,5 @@ Router.propTypes = {
   )
 }
 
-export default Router;
+export default widthStyles(styles, { name: 'Router' })(Router);
 

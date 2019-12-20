@@ -1,10 +1,10 @@
 import React from 'react';
-import styled from '../styled';
+import styled from 'styled-components';
 import { fade } from '../styles/colorManipulator';
 import utils from '../../utils/utils';
-import ButtonBase from '../ButtonBase';
+import Button from '../ButtonBase';
 
-export const WUI_toggle_button_root = styled(ButtonBase)(({
+export const WUI_toggle_button_root = styled(Button)(({
   theme, selected, disabled, size, spacing
 })=>({
   ...theme.typography.button,

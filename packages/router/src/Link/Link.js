@@ -1,11 +1,12 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import useRouterContext from './useRouterContext';
+import useRouterContext from '../useRouterContext';
 
 const Link = React.forwardRef(function Link(props, ref) {
   const { 
     to,
     replace,
+    back,
     component: Comp = 'a',
     onClick,
     ...rest
@@ -17,6 +18,10 @@ const Link = React.forwardRef(function Link(props, ref) {
     if(onClick){
       onClick(e);
     }
+    if(back){
+      routerStore.goBack();
+      return ;
+    } 
     const target = typeof to === 'function' ? to(location) : to;
     const state = target.state || {};
     if(replace){
@@ -25,10 +30,10 @@ const Link = React.forwardRef(function Link(props, ref) {
       routerStore.push(target, state);
     }
     
-  }, [onClick, to]);
+  }, [onClick, to, back, replace]);
 
   return (
-    <Comp onClick={handleClick} {...rest}/>
+    <Comp onClick={handleClick} ref={ref} {...rest}/>
   )
 });
 

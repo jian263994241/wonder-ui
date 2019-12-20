@@ -81,7 +81,7 @@ ToggleButton.propTypes = {
   /**
    * ToggleButtonGroup 选中后的值
    */
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any,
 };
 
 export default ToggleButton;

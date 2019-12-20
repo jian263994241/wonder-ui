@@ -32,7 +32,7 @@ export default function DrawerPage(props){
       </Block>
       <Drawer visible={visible} anchor={anchor} onCancel={handleClose}>
         <Block space={2} blank={2}>
-          Components are here...
+          I am here.
         </Block>
       </Drawer>
     </Page>

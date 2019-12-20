@@ -61,16 +61,32 @@ Preloader.propTypes = {
 
 const container = document.createElement('div');
 
+let count = 0;
+
 Preloader.show = (indicator)=> {
   setTimeout(() => {
-    ReactDOM.render(<Preloader visible indicator={indicator}/>, container);
+    ++ count;
+    if(count <= 1){
+      ReactDOM.render(<Preloader visible indicator={indicator}/>, container);
+    }
   }, 0);
 }
 
 Preloader.hide = ()=> {
   setTimeout(()=>{
-    ReactDOM.render(<Preloader visible={false}/>, container);
+    if(count > 0){
+       -- count;
+    }
+    if(count <= 0) {
+      ReactDOM.render(<Preloader visible={false}/>, container);
+    }
+    
   },  0);
+}
+
+Preloader.hideAll = ()=> {
+  count = 0;
+  ReactDOM.render(<Preloader visible={false}/>, container);
 }
 
 export default Preloader;

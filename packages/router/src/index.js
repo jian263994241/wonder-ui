@@ -1,5 +1,5 @@
 export { default as RouteTransition } from './RouteTransition';
-export { default as AnimationRoutes } from './AnimationRoutes';
+export { default as View, default as AnimationRoutes} from './View';
 export { default as Router } from './Router';
 export { default as RouterStore } from './RouterStore';
 export { default as Link } from './Link';

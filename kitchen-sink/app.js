@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import { View, App } from '@wonder-ui/core';
 
 import IndexPage from './pages/IndexPage';
+import NoMatch from './pages/NoMatch';
 
 const params = {
   //events bus
@@ -18,12 +19,10 @@ const params = {
       children: [
         { path: 'about', async: ()=> import('./pages/About') },
         { path: 'button', async: ()=> import('./pages/Button') },
+        { path: 'toggle-button', async: ()=> import('./pages/ToggleButton') },
         { path: 'drawer', async: ()=> import('./pages/Drawer') },
+        { path: 'preloader', async: ()=> import('./pages/Preloader') },
       ]
-    },
-    {
-      path: '/404',
-      async: ()=> import('./pages/NoMatch')
     },
   ]
 }
@@ -34,7 +33,7 @@ class MyApp extends Component {
 
     return (
       <App {...params}>
-        <View />
+        <View/>
       </App>
     )
   }

@@ -34,7 +34,6 @@ export { default as Form } from './components/Form';
 export { default as HeaderBar } from './components/HeaderBar';
 export { default as SearchBar } from './components/SearchBar';
 export { default as Button } from './components/Button';
-export { default as ButtonBase } from './components/ButtonBase';
 export { default as Empty } from './components/Empty';
 export { default as Flex } from './components/Flex';
 export { default as Device} from './components/Device';

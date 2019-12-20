@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import Transition from './Transition';
-import { RouteRoot, duration } from './styles';
+import { styles, duration } from './styles';
 import usePageInit from '../usePageInit';
 import UIRouteContext from '../UIRouteContext';
 import useRouterContext from '../useRouterContext';
 import useComponent from './useComponent';
+import { widthStyles, classnames } from '@wonder-ui/styles';
 
 const RouteComponent = React.memo(function RouteComponent(props) {
   const {
@@ -46,6 +47,7 @@ const RouteComponent = React.memo(function RouteComponent(props) {
 const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
   const {
     component,
+    classes,
     animation = 'slide',
     animationDisabled,
     className,
@@ -81,13 +83,13 @@ const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
             <Transition
               in={visible}
               classNames={animationType}
+              className={classes.root}
               timeout={timeout}
               unmountOnExit={!match}
               action={history.action}
             >
-              <RouteRoot
-                transition={animationType}
-                className={className} 
+              <div
+                className={classnames(classes.root, className)} 
                 style={style}
                 ref={ref}
                 data-url={match && match.url}
@@ -102,7 +104,7 @@ const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
                   name={name}
                   {...routeProps}
                 />
-              </RouteRoot>
+              </div>
             </Transition>
           )
         }}
@@ -161,4 +163,4 @@ RouteTransition.propTypes = {
   }
 }
 
-export default RouteTransition;
+export default widthStyles(styles, { name: 'RouteTransition' })(RouteTransition);

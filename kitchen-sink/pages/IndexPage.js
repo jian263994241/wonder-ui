@@ -23,7 +23,9 @@ export default function IndexPage(props) {
       </List>
       <List renderHeader={()=> `组件`}>
         <LinkDetail to="/button">Button 按钮</LinkDetail>
+        <LinkDetail to="/toggle-button">ToggleButton 切换按钮</LinkDetail>
         <LinkDetail to="/drawer">Drawer 抽屉</LinkDetail>
+        <LinkDetail to="/preloader">Preloader 数据指示器</LinkDetail>
       </List>
     </Page>
   )
