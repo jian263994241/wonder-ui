@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PageRoot, PageBody } from './styles';
 import AppContext from '../AppContext';
-import useTheme from '../styles/useTheme';
 import hooks from '../hooks';
 import Slot from '../Slot';
 import Navbar from '../NavBar';
 import ScrollContent from '../ScrollContent';
+import styles from './styles';
+import { withStyles, classnames } from '@wonder-ui/styles';
 
 const SlotGroup = Slot.Group;
 const SlotContent = Slot.Content;
@@ -16,17 +16,18 @@ const SlotContent = Slot.Content;
  * @visibleName Page 页面
  */
 const Page = React.forwardRef((props, ref)=>{
-  const { 
-    name,
+  const {
+    classes,
+    className,
     children, 
     pageContent = true,
     navbarProps,
     navbar = false,
+    name,
     showBackButton = true,
     ...rest
   } = props;
   const app = React.useContext(AppContext);
-  const theme = useTheme();
 
   hooks.usePageInit(()=>{
     app.emit(`pageInit`, name, props);
@@ -37,9 +38,9 @@ const Page = React.forwardRef((props, ref)=>{
 
   return (
     <SlotGroup>
-      <PageRoot 
+      <div 
         ref={ref}
-        theme={theme}
+        className={classnames(classes.root, className)}
         {...rest}
       >
         {
@@ -53,7 +54,7 @@ const Page = React.forwardRef((props, ref)=>{
         }
         <SlotContent name="pageSearchbar"/>
         <SlotContent name="pageContentBefore"/>
-        <PageBody>
+        <div className={classes.body}>
         {
           pageContent ? (
             <ScrollContent>
@@ -61,10 +62,10 @@ const Page = React.forwardRef((props, ref)=>{
             </ScrollContent>
           ): children
         }
-        </PageBody>
+        </div>
         <SlotContent name="pageContentAfter"/>
         <SlotContent name="pageToolbar"/>
-      </PageRoot>
+      </div>
     </SlotGroup>  
   )
 });
@@ -78,4 +79,4 @@ Page.propTypes = {
   name: PropTypes.string,
 }
 
-export default Page;
+export default withStyles(styles, { name: 'Page' })(Page);

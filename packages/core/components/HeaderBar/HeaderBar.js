@@ -2,16 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
 import useForkRef from '@wonder-ui/utils/useForkRef';
-import {
-  HeaderBarRoot,
-  HeaderBarTitle,
-  HeaderBarLeft,
-  HeaderBarRight
-} from './styles';
+import { withStyles, classnames } from '@wonder-ui/styles';
+import styles from './styles';
 
 const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
   const {
-    classes = {},
+    classes,
+    className,
     title,
     barLeft,
     barRight,
@@ -25,11 +22,11 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
   useDisabledRefTouchMove(rootRef);
 
   return (
-    <HeaderBarRoot className={classes.root} ref={handleRef} spacing={spacing} bordered={bordered} {...rest}>
-      <HeaderBarLeft className={classes.left}>{barLeft}</HeaderBarLeft>
-      <HeaderBarTitle className={classes.title}>{title}</HeaderBarTitle>
-      <HeaderBarRight  className={classes.right}>{barRight}</HeaderBarRight>
-    </HeaderBarRoot>
+    <div className={classnames(classes.root, className)} ref={handleRef} {...rest}>
+      <div className={classes.left}>{barLeft}</div>
+      <div className={classes.title}>{title}</div>
+      <div  className={classes.right}>{barRight}</div>
+    </div>
   )
 });
 
@@ -41,4 +38,4 @@ HeaderBar.propTypes = {
   bordered: PropTypes.bool,
 }
 
-export default HeaderBar;
+export default withStyles(styles, {name: 'HeaderBar'})(HeaderBar);

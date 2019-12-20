@@ -7,7 +7,7 @@ import usePageInit from '../usePageInit';
 import UIRouteContext from '../UIRouteContext';
 import useRouterContext from '../useRouterContext';
 import useComponent from './useComponent';
-import { widthStyles, classnames } from '@wonder-ui/styles';
+import { withStyles, classnames } from '@wonder-ui/styles';
 
 const RouteComponent = React.memo(function RouteComponent(props) {
   const {
@@ -163,4 +163,4 @@ RouteTransition.propTypes = {
   }
 }
 
-export default widthStyles(styles, { name: 'RouteTransition' })(RouteTransition);
+export default withStyles(styles, { name: 'RouteTransition' })(RouteTransition);

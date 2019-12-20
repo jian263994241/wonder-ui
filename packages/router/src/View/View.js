@@ -5,17 +5,20 @@ import resolve from '@wonder-ui/utils/resolvePath';
 import { matchPath } from 'react-router-dom';
 import useRouterContext from '../useRouterContext';
 import flatMap from '@wonder-ui/utils/flatMap';
+import { withStyles, classnames } from '@wonder-ui/styles';
+import styles from './styles';
 
-
-export default function View(props) {
+function View(props) {
   const {
     dataSource = [],
     animation,
     animationDisabled,
     fallback,
+    classes,
     className,
     style,
     noMatch,
+    ...rest
   } = props;
 
   const context = useRouterContext();
@@ -60,7 +63,7 @@ export default function View(props) {
   }, [routeList, location]);
   
   return (
-    <>
+    <div className={classnames(classes.root, className)} {...rest}>
       {
         routeList.map((routeConf, index)=> (
           <Route 
@@ -75,7 +78,7 @@ export default function View(props) {
         ))
       }
       { !matched && noMatch }
-    </>
+    </div>
   )
 }
 
@@ -135,3 +138,6 @@ View.propTypes = {
    */
   noMatch: PropTypes.node
 }
+
+
+export default withStyles(styles, {name: 'View'})(View);

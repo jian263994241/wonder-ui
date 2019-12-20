@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RouterStore from '../RouterStore';
 import { BrowserRouter, HashRouter, MemoryRouter, Router as RcRouter } from 'react-router-dom';
-import styles from './styles';
-import { widthStyles, classnames } from '@wonder-ui/styles';
 import { RouterProvider } from '../Context';
 import useRouterContext from '../useRouterContext';
 import View from '../View';
@@ -27,7 +25,7 @@ const Store = (props)=>{
 /**
  * Wrap ReactRouter
  */
-const Router = React.forwardRef((props, ref)=>{
+const Router = React.forwardRef(function Router(props, ref) {
   const { 
     classes,
     className,
@@ -49,10 +47,10 @@ const Router = React.forwardRef((props, ref)=>{
   }, [type]);
 
   return (
-    <RouterComp {...rest}>
+    <RouterComp ref={ref} {...rest}>
       <RouterProvider value={{routerStore, onRouteChange}}>
         <Store>
-          <div ref={ref} className={classnames(classes.root, className)}>
+          <>
             {
               routes.length > 0 ? (
                 <View 
@@ -63,7 +61,7 @@ const Router = React.forwardRef((props, ref)=>{
                 />
               ): children
             }
-          </div>
+          </>
         </Store>
       </RouterProvider>
     </RouterComp>
@@ -137,5 +135,4 @@ Router.propTypes = {
   )
 }
 
-export default widthStyles(styles, { name: 'Router' })(Router);
-
+export default Router;
