@@ -66,8 +66,8 @@ const fakeOpacity = {
 
 const styles = bindStyles({
   transition: {
-    default: 'none',
-    none: {},
+    default: 'null',
+    null: {},
     fade: {
       '&.fade-enter': {
         display: 'block',

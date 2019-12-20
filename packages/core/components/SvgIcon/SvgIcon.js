@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_svg_icon } from './styles';
-import classnames from '@wonder-ui/utils/classnames';
+import clsx from 'clsx';
 import capitalize from '@wonder-ui/utils/capitalize';
 import useTheme from '../styles/useTheme';
 
@@ -25,7 +25,7 @@ const SvgIcon = React.forwardRef((props, ref)=>{
   return (
     <Component
       className={
-        classnames(
+        clsx(
           color !== 'inherit' && `color${capitalize(color)}`,
           fontSize !== 'default' && `fontSize${capitalize(fontSize)}`,
           className

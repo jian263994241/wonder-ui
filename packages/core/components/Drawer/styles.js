@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { bindStyles } from '@wonder-ui/utils/styledProps';
+import { bindStyles } from '../styledProps';
 
 const styles = bindStyles({
   anchor: {

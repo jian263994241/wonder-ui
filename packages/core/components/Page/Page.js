@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PageRoot, PageBody } from './styles';
+import { WUI_page_root, WUI_page_body, WUI_page_content } from './styles';
 import AppContext from '../AppContext';
 import useTheme from '../styles/useTheme';
 import hooks from '../hooks';
 import Slot from '../Slot';
 import Navbar from '../NavBar';
-import ScrollContent from '../ScrollContent';
 
 const SlotGroup = Slot.Group;
 const SlotContent = Slot.Content;
@@ -37,7 +36,7 @@ const Page = React.forwardRef((props, ref)=>{
 
   return (
     <SlotGroup>
-      <PageRoot 
+      <WUI_page_root 
         ref={ref}
         theme={theme}
         {...rest}
@@ -53,21 +52,23 @@ const Page = React.forwardRef((props, ref)=>{
         }
         <SlotContent name="pageSearchbar"/>
         <SlotContent name="pageContentBefore"/>
-        <PageBody>
+        <WUI_page_body>
         {
           pageContent ? (
-            <ScrollContent>
+            <WUI_page_content>
              {children}
-            </ScrollContent>
+            </WUI_page_content>
           ): children
         }
-        </PageBody>
+        </WUI_page_body>
         <SlotContent name="pageContentAfter"/>
         <SlotContent name="pageToolbar"/>
-      </PageRoot>
+      </WUI_page_root>
     </SlotGroup>  
   )
 });
+
+Page.Content = WUI_page_content;
 
 Page.propTypes = {
   navbarProps: PropTypes.object,

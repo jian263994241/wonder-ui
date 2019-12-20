@@ -59,11 +59,11 @@ const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
   } = props;
 
   const { routerStore: routing } = useRouterContext();
-  const [animationType, setAnimation] = React.useState('none');
+  const [animationType, setAnimation] = React.useState('null');
   const timeout = duration[animationType] || 0;
 
   React.useEffect(()=>{
-    setTimeout(() => setAnimation(animationDisabled ? 'none': animation), 0);
+    setTimeout(() => setAnimation(animationDisabled ? null: animation), 0);
   }, [animation]);
 
   if(disabled){
