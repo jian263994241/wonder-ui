@@ -7,7 +7,8 @@ import usePageInit from '../usePageInit';
 import UIRouteContext from '../UIRouteContext';
 import useRouterContext from '../useRouterContext';
 import useComponent from './useComponent';
-import { withStyles, classnames } from '@wonder-ui/styles';
+import { withStyles } from '@wonder-ui/styles';
+import clsx from 'clsx';
 
 const RouteComponent = React.memo(function RouteComponent(props) {
   const {
@@ -89,7 +90,7 @@ const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
               action={history.action}
             >
               <div
-                className={classnames(classes.root, className)} 
+                className={clsx(classes.root, className)} 
                 style={style}
                 ref={ref}
                 data-url={match && match.url}

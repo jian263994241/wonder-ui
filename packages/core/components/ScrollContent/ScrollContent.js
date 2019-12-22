@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useForkRef from '@wonder-ui/utils/useForkRef';
-import { withStyles, classnames } from '@wonder-ui/styles';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 
 const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
 
@@ -75,7 +76,7 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
 
   return (
     <Component
-      className={classnames(classes.root, className)}
+      className={clsx(classes.root, className)}
       {...rest}
       {...handleEvents}
       ref={handleRef}

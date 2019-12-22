@@ -5,7 +5,8 @@ import resolve from '@wonder-ui/utils/resolvePath';
 import { matchPath } from 'react-router-dom';
 import useRouterContext from '../useRouterContext';
 import flatMap from '@wonder-ui/utils/flatMap';
-import { withStyles, classnames } from '@wonder-ui/styles';
+import { withStyles } from '@wonder-ui/styles';
+import clsx from 'clsx';
 import styles from './styles';
 
 function View(props) {
@@ -63,7 +64,7 @@ function View(props) {
   }, [routeList, location]);
   
   return (
-    <div className={classnames(classes.root, className)} {...rest}>
+    <div className={clsx(classes.root, className)} {...rest}>
       {
         routeList.map((routeConf, index)=> (
           <Route 

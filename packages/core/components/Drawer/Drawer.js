@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Slide from '../Slide';
 import Modal from '../Modal';
-import styles from './styles';
-import { withStyles, classnames } from '@wonder-ui/styles';
 import capitalize from '@wonder-ui/utils/capitalize';
-
+import styles from './styles';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 /**
  * @visibleName Drawer 抽屉
  * 一个半屏幕的浮层
@@ -26,7 +26,7 @@ const Drawer = React.forwardRef((props, ref)=>{
  
   const drawer = (
     <div 
-      className={classnames(
+      className={clsx(
         classes.root, 
         classes['anchor' + capitalize(anchor)],
         className

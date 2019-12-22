@@ -6,7 +6,8 @@ import Slot from '../Slot';
 import Navbar from '../NavBar';
 import ScrollContent from '../ScrollContent';
 import styles from './styles';
-import { withStyles, classnames } from '@wonder-ui/styles';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 
 const SlotGroup = Slot.Group;
 const SlotContent = Slot.Content;
@@ -40,7 +41,7 @@ const Page = React.forwardRef((props, ref)=>{
     <SlotGroup>
       <div 
         ref={ref}
-        className={classnames(classes.root, className)}
+        className={clsx(classes.root, className)}
         {...rest}
       >
         {

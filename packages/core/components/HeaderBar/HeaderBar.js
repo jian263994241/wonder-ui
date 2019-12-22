@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
 import useForkRef from '@wonder-ui/utils/useForkRef';
-import { withStyles, classnames } from '@wonder-ui/styles';
 import styles from './styles';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 
 const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
   const {
@@ -22,7 +23,7 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
 
   return (
     <div 
-      className={classnames(classes.root, bordered&&classes.hairline, className)} 
+      className={clsx(classes.root, bordered&&classes.hairline, className)} 
       ref={handleRef} 
       {...rest}
     >

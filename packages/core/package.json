@@ -28,6 +28,7 @@
     "@wonder-ui/router": "^0.0.21",
     "@wonder-ui/utils": "^0.1.0",
     "array-tree-filter": "^2.1.0",
+    "clsx": "^1.0.4",
     "dom-helpers": "^5.1.0",
     "lcn": "^1.0.3",
     "lodash.throttle": "^4.1.1",

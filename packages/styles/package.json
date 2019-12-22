@@ -20,6 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.6.3",
+    "clsx": "^1.0.4",
     "hoist-non-react-statics": "^3.3.1",
     "jss": "^10.0.0",
     "jss-plugin-camel-case": "^10.0.0",
