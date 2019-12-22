@@ -12,7 +12,6 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
     title,
     barLeft,
     barRight,
-    spacing = 0,
     bordered = true,
     ...rest
   } = props;
@@ -22,7 +21,11 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
   useDisabledRefTouchMove(rootRef);
 
   return (
-    <div className={classnames(classes.root, className)} ref={handleRef} {...rest}>
+    <div 
+      className={classnames(classes.root, bordered&&classes.hairline, className)} 
+      ref={handleRef} 
+      {...rest}
+    >
       <div className={classes.left}>{barLeft}</div>
       <div className={classes.title}>{title}</div>
       <div  className={classes.right}>{barRight}</div>

@@ -1,7 +1,7 @@
 import createHairline from '../styles/createHairline';
 
 export default {
-  root: props => Object.assign({
+  root: {
     width: '100%',
     height: 44,
     display: 'flex',
@@ -9,28 +9,26 @@ export default {
     justifyContent: 'space-between',
     position: 'relative',
     boxSizing: 'border-box',
-    paddingLeft: props => props.spacing,
-    paddingRight: props => props.spacing,
-  }, props.bordered && createHairline('bottom', '#ddd') ),
-  common: {
-    fontSize: 17,
-    alignSelf: 'center',
-    wordBreak: 'keep-all',
+    '& $title,& $left,& $right': {
+      fontSize: 17,
+      alignSelf: 'center',
+      wordBreak: 'keep-all',
+    },
+  },
+  hairline: {
+    ...createHairline('bottom', '#ddd')
   },
   title: {
-    extend: 'common',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     textAlign: 'center',
     flex: 2,
   },
   left: {
-    extend: 'common',
     textAlign: 'left',
     flex: 1,
   },
   right: {
-    extend: 'common',
     textAlign: 'right',
     flex: 1,
   }
