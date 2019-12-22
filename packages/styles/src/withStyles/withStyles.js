@@ -13,15 +13,13 @@ export default function withStyles(stylesOrCreator, options = {}) {
   return function injectStyles(Component) {
     const { defaultTheme, withTheme = false, name, ...stylesOptions } = options;
     
-    if (Component === undefined) { 
-      warning(
-        false,
-        [
-          'You are calling withStyles(styles)(Component) with an undefined component.',
-          'You may have forgotten to import it.',
-        ].join('\n'),
-      );
-    }
+    warning(
+      Component != undefined,
+      [
+        'You are calling withStyles(styles)(Component) with an undefined component.',
+        'You may have forgotten to import it.',
+      ].join('\n'),
+    );
 
     let classNamePrefix = name;
 

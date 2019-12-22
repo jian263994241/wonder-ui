@@ -2,14 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Slide from '../Slide';
 import Modal from '../Modal';
-import { Wrapper } from './styles';
-
-const oppositeDirection = {
-  left: 'right',
-  right: 'left',
-  top: 'down',
-  bottom: 'up',
-};
+import styles from './styles';
+import { withStyles, classnames } from '@wonder-ui/styles';
+import capitalize from '@wonder-ui/utils/capitalize';
 
 /**
  * @visibleName Drawer 抽屉
@@ -19,23 +14,28 @@ const Drawer = React.forwardRef((props, ref)=>{
   const { 
     anchor = 'right',
     children,
+    classes,
+    className,
     visible,
     onCancel,
     style,
-    className,
     modalProps,
     variant='temporary'
   } = props;
-
+  const oppositeDirection = { left: 'right', right: 'left', top: 'down', bottom: 'up' };
+ 
   const drawer = (
-    <Wrapper 
-      anchor={anchor} 
-      className={className} 
+    <div 
+      className={classnames(
+        classes.root, 
+        classes['anchor' + capitalize(anchor)],
+        className
+      )} 
       style={style}
       ref={ref}
     >
       {children}
-    </Wrapper>
+    </div>
   );
 
   if(variant=== 'permanent'){
@@ -93,4 +93,4 @@ Drawer.propTypes = {
 }
 
 
-export default Drawer;
+export default withStyles(styles, { name: 'Drawer' })(Drawer);

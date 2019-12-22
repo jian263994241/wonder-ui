@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { WUI_global } from './styles';
 import { ThemeProvider } from 'styled-components';
+import { ThemeProvider as ThemeProvider2 } from '@wonder-ui/styles';
 import defaultTheme from '../styles/defaultTheme';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 import { Router, RouterStore } from '@wonder-ui/router';
@@ -55,22 +56,25 @@ const App = React.forwardRef((props, ref) => {
   });
   
   return (
-    <ThemeProvider theme={theme}>
-      <AppContext.Provider value={app}> 
-        <>
-          <WUI_global/>
-          <Router 
-            type={type} 
-            routerStore={app.routing}
-            ref={handleRef}
-            onRouteChange={handleRouteChange}
-            {...rest}
-          > 
-            {children} 
-          </Router>
-        </>
-      </AppContext.Provider>
-    </ThemeProvider>
+    <ThemeProvider2 theme={theme}>
+      <ThemeProvider theme={theme}>
+        <AppContext.Provider value={app}>
+          <>
+            <WUI_global/>
+            <Router 
+              type={type} 
+              routerStore={app.routing}
+              ref={handleRef}
+              onRouteChange={handleRouteChange}
+              {...rest}
+            > 
+              {children} 
+            </Router>
+          </>
+        </AppContext.Provider>
+      </ThemeProvider>
+    </ThemeProvider2>
+    
   );
 })
 
