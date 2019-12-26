@@ -2,7 +2,6 @@ import indigo from '../colors/indigo';
 import pink from '../colors/pink';
 import grey from '../colors/grey';
 import red from '../colors/red';
-import common from '../colors/common';
 import { getContrastRatio, darken, lighten, fade } from './colorManipulator';
 
 export const light = {
@@ -22,7 +21,7 @@ export const light = {
   // The background colors used to style the surfaces.
   // Consistency between these values is important.
   background: {
-    paper: common.white,
+    paper: '#fff',
     default: '#F4F5F7',
   },
   // The colors used to style the action elements.
@@ -43,7 +42,7 @@ export const light = {
 
 const dark = {
   text: {
-    primary: common.white,
+    primary: '#fff',
     secondary: 'rgba(255, 255, 255, 0.7)',
     disabled: 'rgba(255, 255, 255, 0.5)',
     hint: 'rgba(255, 255, 255, 0.5)',
@@ -55,7 +54,7 @@ const dark = {
     default: '#303030',
   },
   action: {
-    active: common.white,
+    active: '#fff',
     hover: 'rgba(255, 255, 255, 0.1)',
     hoverOpacity: 0.1,
     selected: 'rgba(255, 255, 255, 0.2)',
@@ -87,8 +86,6 @@ const tonalOffset = 0.2;
 const types = { dark, light };
 
 const palette = {
-  // A collection of common colors.
-  common,
   // The palette type, can be light or dark.
   type,
   // The colors used to represent primary interface elements for a user.

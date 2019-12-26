@@ -3,7 +3,7 @@ export default theme => ({
     position: 'absolute',
     overflow: 'hidden',
     outline: 0,
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.background.default,
     boxShadow: theme.shadows[16],
     zIndex: theme.zIndex.drawer,
   },

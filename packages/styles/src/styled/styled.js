@@ -5,7 +5,7 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import getDisplayName from '@wonder-ui/utils/getDisplayName';
 import chainPropTypes from '@wonder-ui/utils/chainPropTypes';
 import makeStyles from '../makeStyles';
-import clsx from '../classnames';
+import clsx from 'clsx';
 
 export default function styled(Component) {
   const componentCreator = (style, options = {}) => {

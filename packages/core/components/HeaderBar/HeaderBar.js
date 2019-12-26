@@ -23,7 +23,7 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
 
   return (
     <div 
-      className={clsx(classes.root, bordered&&classes.hairline, className)} 
+      className={clsx(classes.root, { [classes.hairline]: bordered }, className)} 
       ref={handleRef} 
       {...rest}
     >

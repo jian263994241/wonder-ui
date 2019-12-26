@@ -14,6 +14,10 @@ export {
   Switch, 
   matchPath, 
   withRouter, 
-  __RouterContext 
+  __RouterContext,
+  useHistory,
+  useLocation,
+  useParams,
+  useRouteMatch,
 } from 'react-router-dom';
 

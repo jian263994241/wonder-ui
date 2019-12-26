@@ -1,32 +1,66 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ButtonRoot } from './styles';
-import Link from '../Link';
-import useTheme from '../styles/useTheme';
-
-const ButtonLink = ButtonRoot.withComponent(Link);
+import styles from './styles';
+import clsx from 'clsx';
+import withStyles from '../styles/withStyles';
+import capitalize from '@wonder-ui/utils/capitalize';
+import ButtonBase from '../ButtonBase';
+import { useRouterContext } from '@wonder-ui/router';
 
 /**
  * 允许用户轻按一下即可做出选择.
  * @visibleName Button 按钮
  */
-const Button =  React.forwardRef((props, ref)=> {
+const Button =  React.forwardRef(function Button(props, ref) {
   const {
+    children,
+    classes,
+    className,
+    color='default',
+    fullWidth,
+    full,
     icon,
     iconPosition = 'before',
-    children,
+    variant='contained',
+    size = 'medium',
+    to,
+    back,
+    replace,
+    onClick,
     ...rest
   } = props;
-  
-  const theme = useTheme();
-  const Component = (props.to || props.back) ? ButtonLink: ButtonRoot;
+  const { routerStore } = useRouterContext();
+  const handleClick = React.useCallback((e)=>{
+    if(routerStore){
+      if(to){
+        routerStore[replace ? 'replace': 'push'](to);
+      }else if(back){
+        routerStore.goBack();
+      }
+    }
+    onClick && onClick(e);
+  }, [to, back, onClick, replace]);
 
   return (
-    <Component role="button" ref={ref} theme={theme} {...rest}>
+    <ButtonBase 
+      className={clsx(
+        classes.root,
+        classes['variant' + capitalize(variant)],
+        classes['size' + capitalize(size)],
+        { 
+          [classes.fullWidth]: fullWidth,
+          [classes.full]: full
+        },
+        className
+      )}
+      ref={ref} 
+      onClick={handleClick}
+      {...rest}
+    >
       { iconPosition === 'before' && icon }
-      <span>{children}</span>
+      <span className={classes.body}>{children}</span>
       { iconPosition === 'after' && icon }
-    </Component>
+    </ButtonBase>
   );
 });
 
@@ -41,10 +75,6 @@ Button.propTypes = {
    * @ignore
    */
   style: PropTypes.object,
-  /**
-   * @ignore
-   */
-  theme: PropTypes.object,
   /** 禁用按钮 */
   disabled: PropTypes.bool,
   /** 100%宽度 */
@@ -72,4 +102,4 @@ Button.defaultProps = {
   color: 'default'
 }
 
-export default Button;
+export default withStyles(styles, {name: 'Button'})(Button);

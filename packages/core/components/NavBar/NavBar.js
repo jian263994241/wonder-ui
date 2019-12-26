@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BackButton from './BackButton';
 import HeaderBar from '../HeaderBar';
-import Slot from '../Slot';
 
 const Navbar = React.forwardRef(function Navbar(props, ref){
   const {
     title,
-    classes,
     barLeft,
     barRight,
     showBackButton = true,
@@ -17,9 +15,7 @@ const Navbar = React.forwardRef(function Navbar(props, ref){
   return (
     <HeaderBar
       bordered
-      spacing={0}
       ref={ref}
-      classes={classes}
       title={title}
       barRight={barRight}
       barLeft={

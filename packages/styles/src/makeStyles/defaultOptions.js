@@ -1,9 +1,9 @@
 import { create } from 'jss';
-import jssPeset from '../jssPeset';
+import jssPreset from '../jssPreset';
 import createGenerateClassName from './createGenerateClassName';
 
 
-const jss = create(jssPeset());
+const jss = create(jssPreset());
 const sheetsManager = new Map();
 const generateClassName = createGenerateClassName();
 

@@ -1,16 +1,16 @@
-import { createGlobalStyle } from 'styled-components';
-
-export const WUI_global = createGlobalStyle `
-  body {
-    margin: 0;
-    padding: 0;
-    font-size: ${props=>props.theme.typography.fontSize}px;
-    touch-action: manipulation;
-    user-select: none;
-    -webkit-highlight: none;  
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    -webkit-touch-callout: none;
-    -webkit-tap-highlight-color: transparent;
+export default theme => ({
+  '@global': {
+    body: {
+      margin: 0,
+      padding: 0,
+      fontSize: theme.typography.fontSize,
+      touchAction: 'manipulation',
+      userSelect: 'none',
+      highlight: 'none',  
+      textSizeAdjust: '100%',
+      fontSmoothing: 'antialiased',
+      WebkitTouchCallout: 'none',
+      tapHighlightColor: 'transparent',
+    }
   }
-`
+})

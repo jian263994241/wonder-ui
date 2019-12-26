@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { WUI_global } from './styles';
+import styles from './styles';
+import withStyles from '../styles/withStyles';
 import { ThemeProvider } from 'styled-components';
 // import { ThemeProvider } from '@wonder-ui/styles';
 import defaultTheme from '../styles/defaultTheme';
@@ -18,6 +19,7 @@ const App = React.forwardRef((props, ref) => {
   const {
     app: appInput,
     children,
+    classes,
     theme: themeInput,
     type,
     routes,
@@ -25,7 +27,7 @@ const App = React.forwardRef((props, ref) => {
     routerStore: routerStoreInput,
     ...rest
   } = props;
-  
+
   const app = React.useMemo(()=> {
     const appParams = { on };
     const _app = appInput || new AppClass(appParams);
@@ -58,18 +60,15 @@ const App = React.forwardRef((props, ref) => {
   return (
     <ThemeProvider theme={theme}>
       <AppContext.Provider value={app}>
-        <>
-          <WUI_global/>
-          <Router 
-            type={type} 
-            routerStore={app.routing}
-            ref={handleRef}
-            onRouteChange={handleRouteChange}
-            {...rest}
-          > 
-            {children} 
-          </Router>
-        </>
+        <Router 
+          type={type} 
+          routerStore={app.routing}
+          ref={handleRef}
+          onRouteChange={handleRouteChange}
+          {...rest}
+        > 
+          {children} 
+        </Router>
       </AppContext.Provider>
     </ThemeProvider>    
   );
@@ -165,4 +164,4 @@ App.propTypes = {
   routerStore: PropTypes.instanceOf(RouterStore),
 }
 
-export default App;
+export default withStyles(styles, {name: 'App' })(App);

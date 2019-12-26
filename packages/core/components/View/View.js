@@ -1,45 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppContext from '../AppContext';
-import { AnimationRoutes } from '@wonder-ui/router';
+import { View as RouteView } from '@wonder-ui/router';
 
 /**
  * 用来包裹所有Page
  * @visibleName View 视图
  */
-const View =  (props) => {
-  const {
-    fallback,
-    animationDisabled,
-    animation, 
-  } = props;
+export default function View (props) {
   const app = React.useContext(AppContext);
-
   return (
-    <AnimationRoutes
-      dataSource={app.routes}
-      fallback={fallback}
-      animationDisabled={animationDisabled}
-      animation={animation}
-    />
+    <RouteView dataSource={app.routes} {...props} />
   )
 }
 
-
-
 View.propTypes = {
  /**
-  * 异步加载时的等待状态
-  */
-  fallback: PropTypes.element,
+   * Animation type
+   */
+  animation: PropTypes.oneOf(['slide', 'fade', 'scale']),
   /**
-   * 禁用切换动画
+   * Disable animation
    */
   animationDisabled: PropTypes.bool,
   /**
-   * 切换动画
+   * 404
    */
-  animation : PropTypes.oneOf(['slide', 'fade', 'scale'])
+  noMatch: PropTypes.node
 }
 
-export default View;

@@ -1,15 +1,15 @@
-export default {
+export default theme => ({
   root: {
     boxSizing: 'border-box',
     position: 'relative',
     width: '100%',
     height: '100%',
-    background: '#F4F5F7',
+    background: theme.palette.background.default,
     zIndex: 10,
     display: 'flex',
     flexDirection: 'column',
     overflow: 'hidden',
-    '& > *': {
+    '& > div': {
       flexShrink: 0
     }
   },
@@ -20,5 +20,4 @@ export default {
     position: 'relative',
     overflow: 'hidden',
   }
-}
-
+})
