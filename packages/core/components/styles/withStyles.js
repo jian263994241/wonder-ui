@@ -1,11 +1,6 @@
-import { withStyles as withStylesWithoutDefault } from '@wonder-ui/styles';
-import defaultTheme from './defaultTheme';
+import { withStyles as withStylesWithoutDefault } from 'react-jss';
+import theming from './theming';
 
-function withStyles(stylesOrCreator, options) {
-  return withStylesWithoutDefault(stylesOrCreator, {
-    defaultTheme,
-    ...options,
-  });
+export default function withStyles(stylesOrCreator, options) {
+  return withStylesWithoutDefault(stylesOrCreator, { theming, ...options });
 }
-
-export default withStyles;

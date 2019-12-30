@@ -1,10 +1,5 @@
-import styled from 'styled-components';
-
-export const WUI_svg_icon = styled.svg(props=>{
-
-  const { theme } = props;
-
-  return {
+export default theme =>({
+  root: {
     userSelect: 'none',
     width: '1em',
     height: '1em',
@@ -46,6 +41,6 @@ export const WUI_svg_icon = styled.svg(props=>{
     /* Styles applied to the root element if `fontSize="large"`. */
     '&.fontSizeLarge': {
       fontSize: theme.typography.pxToRem(35),
-    },
+    }
   }
 })

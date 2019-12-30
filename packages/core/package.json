@@ -30,17 +30,19 @@
     "array-tree-filter": "^2.1.0",
     "clsx": "^1.0.4",
     "dom-helpers": "^5.1.0",
+    "hoist-non-react-statics": "^3.3.1",
     "lcn": "^1.0.3",
     "lodash.throttle": "^4.1.1",
     "prop-types": "^15.7.2",
     "rc-form": "^2.4.8",
     "rc-mounter": "^2.0.0",
+    "react-jss": "^10.0.1",
     "react-transition-group": "^4.2.1",
     "rmc-cascader": "~5.0.3",
     "rmc-date-picker": "^6.0.10",
     "rmc-list-view": "^0.11.5",
     "rmc-pull-to-refresh": "^1.0.11",
-    "warning": "^4.0.3"
+    "tiny-warning": "^1.0.3"
   },
   "peerDependencies": {
     "react": ">=16.8.6",

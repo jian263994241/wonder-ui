@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { 
-  WUI_picker, 
-  WUI_picker_header_button,
-  WUI_picker_cascader
-} from '../Picker/styles';
+import useStyles from '../Picker/styles';
 import RCDatePicker from 'rmc-date-picker/lib/DatePicker';
 import defaultLocale from 'rmc-date-picker/lib/locale/zh_CN';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
+import Drawer from '../Drawer';
 import HeaderBar from '../HeaderBar';
-
-const WUI_picker_date_picker = WUI_picker_cascader.withComponent(RCDatePicker);
+import Button from '../Button';
 
 const DatePickView = React.forwardRef(function DatePickView(props, ref){
   const {
@@ -27,8 +23,7 @@ const DatePickView = React.forwardRef(function DatePickView(props, ref){
     locale = defaultLocale,
     ...mDatePickerProps
   } = props;
-  
-
+  const classes = useStyles();
   const [value, setValue] = React.useState(inValue || defaultValue);
 
   React.useEffect(()=>{
@@ -46,7 +41,9 @@ const DatePickView = React.forwardRef(function DatePickView(props, ref){
   });
 
   const dataPickerView = (
-    <WUI_picker_date_picker 
+    <RCDatePicker 
+      prefixCls={classes.root}
+      pickerPrefixCls="wui-picker"
       onDateChange={handleChange}
       date={value}
       locale={locale}
@@ -56,14 +53,14 @@ const DatePickView = React.forwardRef(function DatePickView(props, ref){
   );
 
   return (
-    <WUI_picker visible={visible} anchor="bottom" onCancel={onCancel} ref={ref}>
+    <Drawer visible={visible} anchor="bottom" iosSafe onCancel={onCancel} ref={ref}>
       <HeaderBar
         title={title}
-        barLeft={<WUI_picker_header_button onClick={onCancel}>{cancelText}</WUI_picker_header_button>}
-        barRight={<WUI_picker_header_button onClick={handleOk}>{okText}</WUI_picker_header_button>}
+        barLeft={<Button variant="text" color="primary" onClick={onCancel}>{cancelText}</Button>}
+        barRight={<Button variant="text" color="primary" onClick={handleOk}>{okText}</Button>}
       />
       {dataPickerView}
-    </WUI_picker>
+    </Drawer>
   )
 });
 

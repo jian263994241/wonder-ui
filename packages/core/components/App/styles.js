@@ -4,7 +4,6 @@ export default theme => ({
       margin: 0,
       padding: 0,
       fontSize: theme.typography.fontSize,
-      touchAction: 'manipulation',
       userSelect: 'none',
       highlight: 'none',  
       textSizeAdjust: '100%',

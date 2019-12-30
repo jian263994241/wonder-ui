@@ -92,6 +92,8 @@ ScrollContent.defaultProps = {
   componentClass: 'div'
 };
 
+ScrollContent.displayName = 'ScrollContent';
+
 export default withStyles({
   root: {
     width: '100%',
@@ -100,5 +102,6 @@ export default withStyles({
     boxSizing: 'border-box',
     willChange: 'scroll-position',
     WebkitOverflowScrolling: 'touch',
+    touchAction: 'pan-x pan-y'
   }
-}, {name: 'ScrollContent'})(ScrollContent);
+})(ScrollContent);

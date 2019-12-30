@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { fade } from '../styles/colorManipulator';
-import utils from '../../utils/utils';
 import Button from '../ButtonBase';
 
 export const WUI_toggle_button_root = styled(Button)(({
@@ -39,47 +38,47 @@ export const WUI_toggle_button_root = styled(Button)(({
     borderBottomRightRadius: 2,
     paddingLeft: 12,
   },
-  ...utils.equal([selected, true], {
-    color: '#4C7DFF',
-    backgroundColor: fade('#4C7DFF', 0.12),
-    border: `1px solid ${fade('#4C7DFF', 0.05)}`,
-    '&:hover': {
-      backgroundColor: fade('#4C7DFF', 0.15),
-    },
-    '& + &': utils.unequal([spacing, true], {
-      borderLeft: 0,
-      marginLeft: 0,
-    }),
-  }),
-  ...utils.equal([disabled, true], {
-    color: fade(theme.palette.action.disabled, 0.35),
-  }),
-  ...utils.equal([size, 'small'], {
-    height: 30,
-    minWidth: 40,
-    fontSize: theme.typography.pxToRem(12),
-  }),
-  ...utils.equal([size, 'large'], {
-    height: 50,
-    minWidth: 60,
-    fontSize: theme.typography.pxToRem(15),
-  }),
-  ...utils.equal([spacing, true], {
-    borderRadius: '4px',
-    marginRight: theme.spacing(1),
-    marginBottom: 5,
-    '&:not(:first-child)': {
+  // ...utils.equal([selected, true], {
+  //   color: '#4C7DFF',
+  //   backgroundColor: fade('#4C7DFF', 0.12),
+  //   border: `1px solid ${fade('#4C7DFF', 0.05)}`,
+  //   '&:hover': {
+  //     backgroundColor: fade('#4C7DFF', 0.15),
+  //   },
+  //   '& + &': utils.unequal([spacing, true], {
+  //     borderLeft: 0,
+  //     marginLeft: 0,
+  //   }),
+  // }),
+  // ...utils.equal([disabled, true], {
+  //   color: fade(theme.palette.action.disabled, 0.35),
+  // }),
+  // ...utils.equal([size, 'small'], {
+  //   height: 30,
+  //   minWidth: 40,
+  //   fontSize: theme.typography.pxToRem(12),
+  // }),
+  // ...utils.equal([size, 'large'], {
+  //   height: 50,
+  //   minWidth: 60,
+  //   fontSize: theme.typography.pxToRem(15),
+  // }),
+  // ...utils.equal([spacing, true], {
+  //   borderRadius: '4px',
+  //   marginRight: theme.spacing(1),
+  //   marginBottom: 5,
+  //   '&:not(:first-child)': {
       
-      border: `1px solid ${fade(theme.palette.action.active, 0.05)}`,
-    },
-    '&:first-child': {
-      borderRadius: '4px',
-    },
-    '&:last-child': {
-      borderRadius: '4px',
-      marginRight: 0
-    }
-  })
+  //     border: `1px solid ${fade(theme.palette.action.active, 0.05)}`,
+  //   },
+  //   '&:first-child': {
+  //     borderRadius: '4px',
+  //   },
+  //   '&:last-child': {
+  //     borderRadius: '4px',
+  //     marginRight: 0
+  //   }
+  // })
 }))
 
 const Div = React.forwardRef(({spacing, ...props}, ref)=> <div ref={ref} {...props}/>)

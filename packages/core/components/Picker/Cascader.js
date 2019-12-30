@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import HeaderBar from '../HeaderBar';
-import { 
-  WUI_picker, 
-  WUI_picker_header_button,
-  WUI_picker_cascader
-} from './styles';
+import Button from '../Button';
+import Drawer from '../Drawer';
+import RmcCascader from 'rmc-cascader/lib/Cascader';
+import useStyles from './styles';
 
 function getHeadData(data){
   const result = [];
@@ -22,7 +21,7 @@ function getHeadData(data){
   return result;
 }
 
-const Cascader = (props)=>{
+const Cascader = React.forwardRef(function Cascader(props, ref) {
   const {
     cancelText = '取消',
     okText = '确定',
@@ -37,7 +36,7 @@ const Cascader = (props)=>{
     defaultValue,
     value: inValue,
   } = props;
-  
+  const classes = useStyles();
   const [value, setValue] = React.useState(inValue);
 
   React.useEffect(()=>{ 
@@ -56,30 +55,35 @@ const Cascader = (props)=>{
   });
   
   const cascader = (
-    <WUI_picker_cascader
+    <RmcCascader
+      prefixCls={classes.root}
+      pickerPrefixCls="wui-picker"
       data={data}
       cols={cols}
       value={value}
       onChange={handleChange}
+      ref={ref}
     />
   );
 
   return (
-    <WUI_picker visible={visible} anchor="bottom" onCancel={onCancel}>
+    <Drawer visible={visible} anchor="bottom" iosSafe onCancel={onCancel}>
       <HeaderBar
         title={title}
-        barLeft={<WUI_picker_header_button onClick={onCancel}>{cancelText}</WUI_picker_header_button>}
-        barRight={<WUI_picker_header_button onClick={handleOk}>{okText}</WUI_picker_header_button>}
+        barLeft={<Button variant="text" color="primary" onClick={onCancel}>{cancelText}</Button>}
+        barRight={<Button variant="text" color="primary" onClick={handleOk}>{okText}</Button>}
       />
       {cascader}
-    </WUI_picker>
+    </Drawer>
   )
-};
+});
 
 
 Cascader.propTypes = {
   title: PropTypes.string,
   visible: PropTypes.bool,
-}
+};
+
+Cascader.displayName = 'Cascader';
 
 export default Cascader;

@@ -1,1 +1,3 @@
-export { default } from './toast';
+import Dialog from '../Dialog';
+
+export default Dialog.toast;

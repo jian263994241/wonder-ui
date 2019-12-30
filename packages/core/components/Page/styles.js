@@ -8,10 +8,7 @@ export default theme => ({
     zIndex: 10,
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden',
-    '& > div': {
-      flexShrink: 0
-    }
+    overflow: 'hidden'
   },
   body: {
     flexShrink: 1,

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Page, Block, Button, Preloader } from '@wonder-ui/core';
+import { Page, Button, Preloader, ActivityIndicator, ContentBlock } from '@wonder-ui/core';
 
 export default function PreloaderExamples() {
 
   const close = () => setTimeout(() => {
     Preloader.hide();
-  }, 400);
+  }, 800);
 
   const show = ()=>{
     Preloader.show();
@@ -13,10 +13,15 @@ export default function PreloaderExamples() {
   }
   
   return (
-    <Page name="Preloader" navbar>
-      <Block blank={1} space={1}>
+    <Page name="Indicator" navbar>
+      <ContentBlock header="Preloader">
         <Button onClick={show}>show preloader</Button>
-      </Block>
+      </ContentBlock>
+      <ContentBlock header="ActivityIndicator">
+        <ActivityIndicator text="default text"/>
+        <ActivityIndicator vertical text="Vertical ActivityIndicator"/>
+      </ContentBlock>
+      
     </Page>
   )
 }

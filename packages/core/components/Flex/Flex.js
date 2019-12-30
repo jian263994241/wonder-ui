@@ -1,15 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { WUI_flex, WUI_flexItem } from './styles';
-import styled from 'styled-components';
-
+import styles from './styles';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 /**
  * flex box 样式
  * @visibleName Flex 布局
  */
-const Flex = styled(WUI_flex) ``;
-
-Flex.Item = WUI_flexItem;
+const Flex = React.forwardRef(function Flex(props, ref) {
+  const { 
+    classes, 
+    className, 
+    flex, 
+    justify, 
+    wrap, 
+    direction, 
+    alignContent, 
+    gutter,
+    ...rest 
+  } = props;
+  
+  return (
+    <div
+      ref={ref}
+      className={clsx( 
+        classes.root, 
+        {
+          [classes.flex]: flex,
+        },
+        className 
+      )}
+      {...rest}
+    />
+  )
+});
 
 Flex.propTypes = {
   /** 子元素在交叉轴上的对齐方式 */
@@ -23,8 +47,12 @@ Flex.propTypes = {
   /** 项目定位方向 */
   direction: PropTypes.oneOf(['row','row-reverse','column','column-reverse']),
   /** 子元素间距 */
-  gutter: PropTypes.number.isRequired
-}
+  gutter: PropTypes.number,
+  /**
+   * cidlren flex: 1
+   */
+  flex: PropTypes.bool,
+};
 
 Flex.defaultProps = {
   align: 'center',
@@ -32,10 +60,13 @@ Flex.defaultProps = {
   wrap: 'nowrap',
   direction: 'row',
   alignContent: 'stretch',
-  gutter: 8
-}
+  gutter: 1,
+  flex: false,
+};
+
+Flex.displayName = 'Flex';
 
 /**
  * @component
  */
-export default Flex;
+export default withStyles(styles)(Flex);

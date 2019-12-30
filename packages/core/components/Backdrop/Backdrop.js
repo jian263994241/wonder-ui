@@ -41,6 +41,8 @@ Backdrop.propTypes = {
   onClick: PropTypes.func,
 }
 
+Backdrop.displayName = 'Backdrop';
+
 export default withStyles({
   root: {
     boxSizing: 'border-box',
@@ -56,4 +58,4 @@ export default withStyles({
     touchAction: 'none',
     WebkitTapHighlightColor: 'transparent'
   }
-}, {name: 'Backdrop'})(Backdrop);
+})(Backdrop);

@@ -22,6 +22,14 @@ const params = {
         { path: 'toggle-button', async: ()=> import('./pages/ToggleButton') },
         { path: 'drawer', async: ()=> import('./pages/Drawer') },
         { path: 'preloader', async: ()=> import('./pages/Preloader') },
+        { path: 'dialog', async: ()=> import('./pages/Dialog') },
+        { path: 'picker', async: ()=> import('./pages/Picker') },
+        { path: 'date-picker', async: ()=> import('./pages/DatePicker') },
+        { path: 'lcn-picker', async: ()=> import('./pages/LcnPicker') },
+        { path: 'typography', async: ()=> import('./pages/Typography') },
+        { path: 'toolbar', async: ()=> import('./pages/Toolbar') },
+        { path: 'tag', async: ()=> import('./pages/Tag') },
+        { path: 'searchbar', async: ()=> import('./pages/SearchBar') },
       ]
     },
   ]

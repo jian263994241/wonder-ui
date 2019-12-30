@@ -18,12 +18,11 @@ export default theme => {
 
   return {
     root: {
-      ...theme.typography.button,
       lineHeight: 1.75,
       textAlign: 'center',
       boxSizing: 'border-box',
-      minWidth: 64,
-      borderRadius: 4,
+      minWidth: 56,
+      borderRadius: theme.shape.borderRadius,
       transition: 'opacity ease 200ms', 
       '&:active': {
         opacity: 0.75
@@ -62,7 +61,6 @@ export default theme => {
     variantContained: {
       color: props => theme.palette.getContrastText(bgColor[props.color]),
       backgroundColor: props => bgColor[props.color],
-      boxShadow: theme.shadows[1],
     },
     fullWidth: {
       width: '100%'

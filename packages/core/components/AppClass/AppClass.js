@@ -1,7 +1,20 @@
-import AppClass from './modules/class';
-import DeviceModule from './modules/device/device';
-import SupportModule from './modules/support/support';
+import EventsClass from '@wonder-ui/utils/Events';
+import device, { init as deviceInit } from '@wonder-ui/utils/device';
 
-AppClass.use([ DeviceModule, SupportModule ]);
+export default class AppClass extends EventsClass {
+  constructor(params = {}, parents = []) {
+    super(parents);
+    const self = this;
+    self.params = params;
 
-export default AppClass;
+    if (self.params && self.params.on) {
+      Object.keys(self.params.on).forEach((eventName) => {
+        self.on(eventName, self.params.on[eventName]);
+      });
+    }
+
+    self.device = device;
+
+    deviceInit();
+  }
+}

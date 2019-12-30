@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { WUI_svg_icon } from './styles';
-import classnames from '@wonder-ui/utils/classnames';
+import styles from './styles';
 import capitalize from '@wonder-ui/utils/capitalize';
-import useTheme from '../styles/useTheme';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 
 const SvgIcon = React.forwardRef((props, ref)=>{
   const {
     children,
-    component = 'svg',
+    classes,
+    component: Component = 'svg',
     color = 'inherit',
     className,
     fontSize = 'default',
@@ -17,15 +18,12 @@ const SvgIcon = React.forwardRef((props, ref)=>{
     viewBox = '0 0 24 24',  
     ...rest
   } = props;
-  const theme = useTheme();
-  const Component = React.useMemo(()=>{
-    return WUI_svg_icon.withComponent(component);
-  }, [component]);
 
   return (
     <Component
       className={
-        classnames(
+        clsx(
+          classes.root,
           color !== 'inherit' && `color${capitalize(color)}`,
           fontSize !== 'default' && `fontSize${capitalize(fontSize)}`,
           className
@@ -37,7 +35,6 @@ const SvgIcon = React.forwardRef((props, ref)=>{
       aria-hidden={titleAccess ? 'false' : 'true'}
       role={titleAccess ? 'img' : 'presentation'}
       ref={ref}
-      theme={theme}
       {...rest}
     >
       {children}
@@ -94,5 +91,7 @@ SvgIcon.propTypes = {
   viewBox: PropTypes.string,
 };
 
+SvgIcon.displayName = 'SvgIcon';
 
-export default SvgIcon;
+
+export default withStyles(styles)(SvgIcon);

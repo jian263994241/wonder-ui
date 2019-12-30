@@ -1,5 +1,5 @@
 import getDisplayName from '@wonder-ui/utils/getDisplayName';
-import warning from 'warning';
+import warning from 'tiny-warning';
 
 export default function mergeClasses(options = {}) {
   const { baseClasses, newClasses, Component } = options;

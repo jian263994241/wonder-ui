@@ -1,18 +1,31 @@
 import React from 'react';
 import Button from '../Button';
-import { useRouterContext } from '@wonder-ui/router';
+import Arrow from '../icons/Arrow';
+import withStyles from '../styles/withStyles';
 
-const BackButton = React.forwardRef(function BackButton() {
-  const router = useRouterContext();
-
+function BackButton({classes}) {
   return (
     <Button 
-      back
+      back 
       variant="text" 
-      color="primary"
-    > 返回 </Button>
+      size="small"
+      className={classes.root}
+    > 
+      <Arrow className={classes.arrow}/> 
+    </Button>
   )
-});
+}
 
 
-export default BackButton;
+export default withStyles({
+  root: {
+    minWidth: 50
+  },
+  arrow: {
+    display: 'block',
+    width: 15,
+    height: 15,
+    color: '#c7c7c7',
+    transform: 'rotate(180deg)'
+  }
+})(BackButton);

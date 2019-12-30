@@ -16,48 +16,52 @@ export { default as Slide } from './components/Slide';
 export { default as hooks } from './components/hooks';
 
 //utils
-export { default as utils } from './components/utils';
 export { default as effect } from './components/effect';
+export { default as Portal } from './components/Portal';
+export { default as DisabledTouchMove } from './components/DisabledTouchMove';
+export { default as styled } from './components/styled';
 
 //feedback
+export { default as ActivityIndicator } from './components/ActivityIndicator';
+export { default as Dialog } from './components/Dialog';
 export { default as Modal } from './components/Modal';
 export { default as Preloader} from './components/Preloader';
-export { default as Dialog } from './components/Dialog';
 export { default as toast} from './components/toast';
 export { default as TouchFeedback } from './components/TouchFeedback';
-export { default as ActivityIndicator } from './components/ActivityIndicator';
 
 //form
 export { default as Form } from './components/Form';
 
 //components
-export { default as HeaderBar } from './components/HeaderBar';
-export { default as SearchBar } from './components/SearchBar';
+export { default as Block } from './components/Block';
+export { default as Brief } from './components/Brief';
 export { default as Button } from './components/Button';
+export { default as CheckableTag } from './components/CheckableTag';
+export { default as Checkbox } from './components/Checkbox';
+export { default as CheckboxItem } from './components/CheckboxItem';
+export { default as ContentBlock } from './components/ContentBlock';
+export { default as DatePicker } from './components/DatePicker';
+export { default as Drawer } from './components/Drawer';
 export { default as Empty } from './components/Empty';
 export { default as Flex } from './components/Flex';
-export { default as Device} from './components/Device';
-export { default as Support} from './components/Support';
+export { default as HeaderBar } from './components/HeaderBar';
+export { default as LcnPicker } from './components/LcnPicker';
+export { default as List } from './components/List';
+export { default as ListItem } from './components/ListItem';
+export { default as ListView } from './components/ListView';
+export { default as NavBar } from './components/NavBar';
+export { default as Picker } from './components/Picker';
+export { default as Placeholder } from './components/Placeholder';
+export { default as PullToRefresh } from './components/PullToRefresh';
+export { default as ScrollContent } from './components/ScrollContent';
+export { default as SearchBar } from './components/SearchBar';
+export { default as Slot } from './components/Slot';
+export { default as SvgIcon } from './components/SvgIcon';
 export { default as Tag } from './components/Tag';
 export { default as ToggleButton } from './components/ToggleButton';
 export { default as ToggleButtonGroup } from './components/ToggleButtonGroup';
-export { default as List } from './components/List';
-export { default as ListItem } from './components/ListItem';
-export { default as CheckboxItem } from './components/CheckboxItem';
-export { default as ListView } from './components/ListView';
-export { default as Block } from './components/Block';
 export { default as Toolbar } from './components/Toolbar';
-export { default as SvgIcon } from './components/SvgIcon';
-export { default as Checkbox } from './components/Checkbox';
-export { default as PullToRefresh } from './components/PullToRefresh';
-export { default as Slot } from './components/Slot';
-export { default as Placeholder } from './components/Placeholder';
-export { default as Drawer } from './components/Drawer';
-export { default as Picker } from './components/Picker';
-export { default as LcnPicker } from './components/LcnPicker';
-export { default as DatePicker } from './components/DatePicker';
-export { default as NavBar } from './components/NavBar';
-export { default as ScrollContent } from './components/ScrollContent';
+export { default as Typography } from './components/Typography';
 
 
 

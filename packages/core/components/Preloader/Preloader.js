@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { WUI_preloader_root } from './styles';
 import Modal from '../Modal';
 import Indicator from '../ActivityIndicator';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 
 /**
  * 用于加载/处理数据时候的等待状态
@@ -16,37 +16,32 @@ import Indicator from '../ActivityIndicator';
  * 
  * @visibleName Preloader 指示器浮层
  */
-const Preloader = React.forwardRef((props, ref)=>{
+const Preloader = React.forwardRef(function Preloader(props, ref) {
   const {
     indicator = <Indicator size="medium" color="#fff"/>,
-    navbarHeight,
+    classes,
+    className,
     visible,
+    navbarHeight,
     ...rest
   } = props;
 
-  const rendered = React.useMemo(()=>{
-
-    return (
-      <Modal
-        visible={visible}
-        BackdropProps={{ style: {backgroundColor: 'transparent'}}}
-        {...rest}
-      >
-        <WUI_preloader_root aria-hidden="true" navbarHeight={navbarHeight} ref={ref}>
-          { indicator }
-        </WUI_preloader_root> 
-      </Modal>
-    )
-  }, [visible])
-  
-  return rendered;
-})
+  return (
+    <Modal
+      visible={visible}
+      BackdropProps={{ style: {backgroundColor: 'transparent'}}}
+      {...rest}
+    >
+      <div className={clsx(classes.root, className)} aria-hidden="true" ref={ref}>
+        { indicator }
+      </div> 
+    </Modal>
+  );
+});
 
 Preloader.defaultProps = {
-  visible: false,
-  indicator: undefined,
-  navbarHeight: 0,
-}
+  visible: false
+};
 
 Preloader.propTypes = {
   /** 是否显示指示器 */
@@ -57,36 +52,25 @@ Preloader.propTypes = {
    * @ignore
    */
   navbarHeight: PropTypes.number
-}
+};
 
-const container = document.createElement('div');
+Preloader.displayName = 'Preloader';
 
-let count = 0;
-
-Preloader.show = (indicator)=> {
-  setTimeout(() => {
-    ++ count;
-    if(count <= 1){
-      ReactDOM.render(<Preloader visible indicator={indicator}/>, container);
-    }
-  }, 0);
-}
-
-Preloader.hide = ()=> {
-  setTimeout(()=>{
-    if(count > 0){
-       -- count;
-    }
-    if(count <= 0) {
-      ReactDOM.render(<Preloader visible={false}/>, container);
-    }
-    
-  },  0);
-}
-
-Preloader.hideAll = ()=> {
-  count = 0;
-  ReactDOM.render(<Preloader visible={false}/>, container);
-}
-
-export default Preloader;
+export default withStyles({
+  root: {
+    boxSizing: 'border-box',
+    position: 'fixed',
+    top: props => `calc(50% + ${props.navbarHeight || 0}px)`,
+    left: '50%',
+    transform: 'translate3d(-50%, -50%, 0)',
+    zIndex: 13500,
+    contain: 'content',
+    willChange: 'transform, opacity',
+    color: '#fff',
+    display: 'inline-block',
+    borderRadius: 5,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    padding: 10,
+    outline: 'none'
+  }
+})(Preloader);

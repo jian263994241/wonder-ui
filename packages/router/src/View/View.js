@@ -5,7 +5,7 @@ import resolve from '@wonder-ui/utils/resolvePath';
 import { matchPath } from 'react-router-dom';
 import useRouterContext from '../useRouterContext';
 import flatMap from '@wonder-ui/utils/flatMap';
-import { withStyles } from '@wonder-ui/styles';
+import { withStyles } from 'react-jss';
 import clsx from 'clsx';
 import styles from './styles';
 
@@ -140,5 +140,6 @@ View.propTypes = {
   noMatch: PropTypes.node
 }
 
+View.displayName = 'View';
 
-export default withStyles(styles, {name: 'View'})(View);
+export default withStyles(styles)(View);

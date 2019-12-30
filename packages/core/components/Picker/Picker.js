@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Typography from '../Typography';
 import Cascader from './Cascader';
 import treeFilter from 'array-tree-filter';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
-import { WUI_picker_error } from './styles';
-import useTheme from '../styles/useTheme';
 
 const defaultFormat = (values = [])=>{
   return values.map(item=>item.label).join(',');
@@ -16,7 +15,7 @@ const defaultFormat = (values = [])=>{
  * 
  * 级联选择器
  */
-const Picker = React.forwardRef((props, ref)=>{
+const Picker = React.forwardRef(function Picker(props, ref) {
   const {
     children,
     placeholder,
@@ -35,8 +34,6 @@ const Picker = React.forwardRef((props, ref)=>{
     showError = false,
     ...cascaderProps
   } = props;
-  
-  const theme = useTheme();
 
   const getExtra = ()=>{
     return placeholder|| extraProp || children.props.extra;
@@ -94,7 +91,7 @@ const Picker = React.forwardRef((props, ref)=>{
   const _extra = React.useMemo(()=>{
     if(showError && error){
       return (
-        <WUI_picker_error theme={theme}>{error.message}</WUI_picker_error>
+        <Typography error inline>{error.message}</Typography>
       )
     }
     return extra;

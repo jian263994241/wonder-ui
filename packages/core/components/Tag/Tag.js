@@ -1,44 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { WUI_tag, WUI_tag_label } from './styles';
-import { ThemeProvider } from 'styled-components';
-import useTheme from '../styles/useTheme';
-import { htmlProp } from '../../utils/reactHelpers';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
+import styles from './styles';
 
 /**
  * @visibleName Tag 标签
  */
 const Tag = React.forwardRef((props, ref)=>{
   const {
+    classes,
+    className,
     children,
+    color,
+    outlined,
     clickable,
     ...rest
   } = props;
-  const theme = useTheme();
   
   return (
-    <ThemeProvider theme={theme}>
-      <WUI_tag {...htmlProp('clickable', props)} ref={ref} {...rest}>
-        <WUI_tag_label>{children}</WUI_tag_label>
-      </WUI_tag>
-    </ThemeProvider>
+    <div className={clsx(classes.root, className)} ref={ref} {...rest}>
+      <span className={classes.label}>{children}</span>
+    </div>
   )
 })
 
 Tag.propTypes = {
   /** 标签颜色 `primary`, `secondary`, 或者 自定颜色'#ccc' */
   color: PropTypes.string,
-  /** 标签大小 */
-  size: PropTypes.oneOf(['large', 'small']),
   /** 是否空心标签 */
   outlined: PropTypes.bool,
-  /** 是否可点击 */
+
   clickable: PropTypes.bool,
 }
 
-// Tag.defaultProps = {
-//   clickable: true
-// }
+Tag.displayName = 'Tag';
 
-
-export default Tag;
+export default withStyles(styles)(Tag);

@@ -1,12 +1,11 @@
 import React from 'react';
-import { Page, Block, Drawer, Button } from '@wonder-ui/core';
-import styled from 'styled-components';
+import { Page, Block, Drawer, Button, styled, ContentBlock } from '@wonder-ui/core';
 
-const FullButton = styled(Button).attrs({ fullWidth: true }) `
-  & + & {
-    margin-top: 10px;
+const FullButton = styled(Button)({
+  '& + &': {
+    marginTop: 10
   }
-`
+});
 
 export default function DrawerPage(props){
   const [visible, setVisible] = React.useState(false);
@@ -23,13 +22,13 @@ export default function DrawerPage(props){
   
   return (
     <Page name="Drawer" navbar>
-      <Block space={2} blank={2}>
-        <p>点击按钮从四个方向出现一个半屏的浮层. </p>
-        <FullButton onClick={handleOpen.bind(null, 'right')}>Anchor Right</FullButton>
-        <FullButton onClick={handleOpen.bind(null, 'left')}>Anchor Left</FullButton>
-        <FullButton onClick={handleOpen.bind(null, 'top')}>Anchor Top</FullButton>
-        <FullButton onClick={handleOpen.bind(null, 'bottom')}>Anchor Bottom</FullButton>
-      </Block>
+      <ContentBlock>
+        <p>点击按钮从四个方向出现一个半屏的浮层.</p>
+        <FullButton fullWidth onClick={handleOpen.bind(null, 'right')}>Anchor Right</FullButton>
+        <FullButton fullWidth onClick={handleOpen.bind(null, 'left')}>Anchor Left</FullButton>
+        <FullButton fullWidth onClick={handleOpen.bind(null, 'top')}>Anchor Top</FullButton>
+        <FullButton fullWidth onClick={handleOpen.bind(null, 'bottom')}>Anchor Bottom</FullButton>
+      </ContentBlock>
       <Drawer visible={visible} anchor={anchor} onCancel={handleClose}>
         <Block space={2} blank={2}>
           I am here.

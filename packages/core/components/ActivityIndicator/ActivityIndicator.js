@@ -1,88 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import idxx from '@wonder-ui/utils/idxx';
-import styled, { css, keyframes } from 'styled-components';
 import Indicator from './Indicator';
-
-const spin = keyframes `
-  100% {
-      transform: rotate(360deg);
-  }
-`;
-
-const Text = styled.span `
-  color: rgba(0,0,0,0.38);
-  margin-left: 3px;
-`;  
-
-const Wrapper = styled.div(props=>{
-
-  const { size, animating = true } = props;
-
-  let ani, box;
-
-  box = css `
-    width: 34px;
-    height: 34px;
-  `
-
-  if(size == 'small'){
-    box = css `
-      width: 22px;
-      height: 22px;
-    `
-  }
-
-  if(size == 'large'){
-    box = css `
-      width: 46px;
-      height: 46px;
-    `
-  }
-
-  if(animating){
-    ani = css `animation: ${spin} 1s steps(12, end) infinite;`
-  }
-
-  return css `
-    text-align: center;
-    svg {
-      display: inline-block;
-      vertical-align: middle;
-      ${ani}
-      ${box}
-    }
-  `
-});
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 
 /**
  * @visibleName Indicator 活动指示器
  */
-const ActivityIndicator = React.forwardRef((props, ref)=>{
-  const {
-    id: inputId, 
-    animating = true,
-    size = 'small',
-    text,
-    className,
-    ...rest
-  } = props;
-
-  const id = React.useMemo(()=> ( inputId || idxx()), [id]);
-
+const ActivityIndicator = React.forwardRef(function ActivityIndicator(props, ref) {
+  const { text, classes, className, vertical, ...rest } = props;
   return (
-    <Wrapper size={size} animating={animating} className={className}>
+    <div className={clsx(classes.root, className)} ref={ref}>
       <Indicator {...rest}/>
-      {
-        text && ( <Text>{text}</Text>)
-      }
-    </Wrapper>
+      { text && ( <div className={clsx(classes.text, {[classes.vertical]: vertical})}>{text}</div>) }
+    </div>
   )
-})
+});
 
 ActivityIndicator.propTypes = {
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   text: PropTypes.string,
-}
+};
 
-export default ActivityIndicator;
+ActivityIndicator.displayName = 'ActivityIndicator';
+
+export default withStyles({
+  root: {
+    textAlign: 'center',
+    lineHeight: 1
+  },
+  text: {
+    color: 'rgba(0,0,0,0.38)',
+    marginLeft: 5,
+    display: 'inline-block'
+  },
+  vertical: {
+    display: 'block',
+    marginLeft: 0
+  }
+})(ActivityIndicator);

@@ -94,12 +94,14 @@ Button.propTypes = {
     PropTypes.string,
     PropTypes.object
   ])
-}
+};
 
 Button.defaultProps = {
   variant: 'contained',
   size: 'medium',
   color: 'default'
-}
+};
 
-export default withStyles(styles, {name: 'Button'})(Button);
+Button.displayName = 'Button';
+
+export default withStyles(styles)(Button);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Block, ToggleButton, ToggleButtonGroup } from '@wonder-ui/core';
+import { Page, Block, ToggleButton, ToggleButtonGroup, ContentBlock } from '@wonder-ui/core';
 import styled from 'styled-components';
 
 const Title = styled.div `

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link as LinkNoStyle } from '@wonder-ui/router';
 import clsx from 'clsx';
 import withStyles from '../styles/withStyles';
@@ -6,6 +7,14 @@ import withStyles from '../styles/withStyles';
  * UI Wrap react-router Link
  * @visibleName Link 链接
  */
+
+const Link = React.forwardRef(function Link(props, ref){
+  const { classes, className, ...rest } = props;
+  return (<LinkNoStyle className={clsx(classes.root, className)} ref={ref} {...rest}/>)
+});
+
+Link.displayName = 'Link';
+
 export default withStyles({
   root: {
     textDecoration: 'none',
@@ -25,8 +34,5 @@ export default withStyles({
       cursor: 'not-allowed'
     }
   }
-}, {name: 'Link'})(function Link(props){
-  const { classes, className, ...rest } = props;
-  return (<LinkNoStyle className={clsx(classes.root, className)} {...rest}/>)
-})
+})(Link);
 

@@ -1,4 +1,4 @@
-import indigo from '../colors/indigo';
+import blue from '../colors/blue';
 import pink from '../colors/pink';
 import grey from '../colors/grey';
 import red from '../colors/red';
@@ -22,7 +22,8 @@ export const light = {
   // Consistency between these values is important.
   background: {
     paper: '#fff',
-    default: '#F4F5F7',
+    default: '#f4f5f7',
+    modal: 'rgba(255,255,255,0.95)'
   },
   // The colors used to style the action elements.
   action: {
@@ -64,9 +65,9 @@ const dark = {
 };
 
 const primary = {
-  light: indigo[300],
-  main: indigo[500],
-  dark: indigo[700],
+  light: blue.A200,
+  main: blue.A400,
+  dark: blue.A700,
 };
 const secondary = {
   light: pink.A200,

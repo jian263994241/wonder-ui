@@ -1,18 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 import Flex from '../Flex';
 import Slot from '../Slot';
-import Fade from '../Fade';
-import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
-import useForkRef from '@wonder-ui/utils/useForkRef';
+import isWuiComponent from '@wonder-ui/utils/isWuiComponent';
+import DisabledTouchMove from '../DisabledTouchMove';
 
-const WUI_toolbar = styled(Flex) `
-  width: 100%;
-  height: 44px;
-  flex-shrink: 0;
-  padding-bottom: env(safe-area-inset-bottom);
-`
 /**
  * 提供一个44像素的通栏, 子元素Flex布局
  * Slot位置 `pageContentAfter`
@@ -21,49 +15,89 @@ const WUI_toolbar = styled(Flex) `
  */
 const Toolbar = React.forwardRef((props, ref)=>{
   const { 
-    slot, 
-    gutter,
+    bottomFixed,
+    classes,
+    className,
     children,
-    visible,
-    style: styleInput,
+    safeAreaBottom = false,
+    buttonFull = true,
     ...rest
   } = props;
 
-  const rootRef = React.useRef(null);
-  const handleRef = useForkRef(rootRef, ref);
-  const isEmpty = (React.Children.toArray(children).length === 0);
 
-  useDisabledRefTouchMove(rootRef);
-
-  const style = Object.assign({}, styleInput, isEmpty? { display: 'none' }: null);
+  React.useEffect(()=>{
+    React.Children.toArray(children).forEach((child)=>{
+    
+      if(isWuiComponent('button', child)){
+        React.cloneElement(child, { full: true })
+      }
+      
+    });
   
-  return (
-    <Slot name={slot}>
-      <Fade in={visible}>
-        <WUI_toolbar role="toolbar" style={style} ref={handleRef} gutter={gutter} {...rest}>
-          {children}
-        </WUI_toolbar>
-      </Fade>
-    </Slot>
-  )
+  }, [children]);
+
+  
+  const bar = (
+    <DisabledTouchMove ref={ref}>
+      <Flex 
+        className={clsx(
+          classes.root,
+          {
+            [classes.safeAreaBottom]: bottomFixed || safeAreaBottom
+          },
+          className
+        )}
+        flex
+        role="toolbar"
+        {...rest}
+      >
+        {
+          React.Children.toArray(children).map((child)=>{
+            if(isWuiComponent('Button', child) && buttonFull){
+              return React.cloneElement(child, { full: true })
+            }
+            return child;
+          })
+        }
+      </Flex>
+    </DisabledTouchMove>
+  );
+  
+  if(bottomFixed){
+    return ( <Slot name="pageToolbar"> {bar} </Slot> )
+  }
+  return bar;
 });
 
 Toolbar.defaultProps = {
-  slot: 'pageContentAfter',
-  gutter: 1,
-  visible: true,
+  gutter: 0.25,
 }
 
 Toolbar.propTypes = {
   /**
-   * Toolbar 出现的位置 
+   * 固定底部
    */
-  slot: PropTypes.string,
+  bottomFixed: PropTypes.bool,
   /**
    * 子元素间距
    */
-  gutter: PropTypes.number
-}
+  gutter: PropTypes.number,
+
+  safeAreaBottom: PropTypes.bool,
+
+  buttonFull: PropTypes.bool,
+};
+
+Toolbar.displayName = 'Toolbar';
 
 
-export default Toolbar;
+export default withStyles({
+  root: {
+    width: '100%',
+    height: 44,
+    flexShrink: 0
+  },
+  safeAreaBottom: {
+    paddingBottom: 'env(safe-area-inset-bottom)',
+  }
+})(Toolbar);

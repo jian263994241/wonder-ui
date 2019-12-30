@@ -4,10 +4,9 @@ import shape from './shape';
 import typography from './typography';
 import createSpacing from './createSpacing';
 import * as transitions from './transitions';
-import disabled from './disabled';
-import * as hairline from './hairline';
+import * as svg from './svg';
 import zIndex from './zIndex';
-import * as utils from './utils';
+import createHairline, {removeHairline} from './createHairline';
 
 
 export default function createTheme(options={}){
@@ -26,14 +25,13 @@ export default function createTheme(options={}){
     typography: Object.assign({}, typography, typographyInput),
     palette: Object.assign({}, palette, paletteInput),
     hairline: {
-      create: hairline.createHairline,
-      remove: hairline.removeHairline
+      create: (position)=> createHairline(position, palette.divider),
+      remove: removeHairline
     },
     transitions,
-    disabled,
     shape,
     zIndex,
-    utils,
+    svg,
     ...rest
   }
   

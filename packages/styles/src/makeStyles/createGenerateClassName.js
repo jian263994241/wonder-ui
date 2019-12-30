@@ -1,4 +1,4 @@
-import warning from 'warning';
+import warning from 'tiny-warning';
 /**
  * This is the list of the style rule name we use as drop in replacement for the built-in
  * pseudo classes (:checked, :disabled, :focused, etc.).

@@ -1,6 +1,4 @@
-import createHairline from '../styles/createHairline';
-
-export default {
+export default theme => ({
   root: {
     width: '100%',
     height: 44,
@@ -11,7 +9,7 @@ export default {
     boxSizing: 'border-box',
   },
   hairline: {
-    ...createHairline('bottom', '#ddd')
+    ...theme.hairline.create('bottom')
   },
   title: {
     overflow: 'hidden',
@@ -34,4 +32,4 @@ export default {
     wordBreak: 'keep-all',
     flex: 1,
   }
-}
+})

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import chainPropTypes from './chainPropTypes';
-import warning from 'warning';
+import warning from 'tiny-warning';
 
 function isClassComponent(elementType) {
   // elementType.prototype?.isReactComponent

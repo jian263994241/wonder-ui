@@ -13,10 +13,13 @@ const ButtonBase = React.forwardRef(function ButtonBase(props, ref){
       {...rest}
     />
   )
-})
+});
 
-export default withStyles({
+ButtonBase.displayName = 'ButtonBase';
+
+export default withStyles(theme => ({
   root: {
+    ...theme.typography.button,
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -46,4 +49,4 @@ export default withStyles({
       cursor: 'not-allowed',
     }
   }
-}, {name: 'ButtonBase'})(ButtonBase);
+}))(ButtonBase);

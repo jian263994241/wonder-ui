@@ -37,4 +37,7 @@ export default theme => ({
     maxHeight: '100%',
     borderTop: theme.palette.divider
   },
+  safeAreaBottom: {
+    paddingBottom: 'env(safe-area-inset-bottom)',
+  }
 })

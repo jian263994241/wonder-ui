@@ -78,6 +78,8 @@ Page.propTypes = {
    * 可以配合pageInit来设置页面标题
    */
   name: PropTypes.string,
-}
+};
 
-export default withStyles(styles, { name: 'Page' })(Page);
+Page.displayName = 'Page';
+
+export default withStyles(styles)(Page);

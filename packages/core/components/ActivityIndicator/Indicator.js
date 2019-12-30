@@ -1,20 +1,26 @@
 import React from 'react';
 import SvgIcon from '../SvgIcon';
-import idxx from '@wonder-ui/utils/idxx';
+import useId from '@wonder-ui/utils/useId';
+import capitalize from '@wonder-ui/utils/capitalize';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 
-const Indicator = React.forwardRef((props, ref)=>{
+const Indicator = React.forwardRef(function Indicator(props, ref) {
   const {
+    classes,
+    className,
     color = '#6c6c6c',
-    id: inputId,  
+    id: inputId,
+    size = 'small',
     ...rest
   } = props;
 
-  const id = React.useMemo(()=> ( inputId || idxx()), [id]);
+  const id = inputId || useId();
 
   return (
-    <SvgIcon 
+    <SvgIcon
+      className={clsx(classes.root, classes['size'+ capitalize(size)], className )}
       viewBox="0 0 120 120"
-      width="34"
       ref={ref}
       {...rest}
     >
@@ -39,4 +45,28 @@ const Indicator = React.forwardRef((props, ref)=>{
   )
 });
 
-export default Indicator;
+Indicator.displayName = 'Indicator';
+
+export default withStyles({
+  '@keyframes spin': {
+    '100%': {
+      transform: 'rotate(360deg)'
+    }
+  },
+  root: {
+    animation: '$spin 1s steps(12, end) infinite',
+    verticalAlign: 'middle'
+  },
+  sizeSmall: {
+    width: 22,
+    height: 22,
+  },
+  sizeMedium: {
+    width: 34,
+    height: 34,
+  },
+  sizeLarge: {
+    width: 46,
+    height: 46,
+  }
+})(Indicator);

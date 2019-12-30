@@ -3,14 +3,11 @@ import PropTypes from 'prop-types';
 import styles from './styles';
 import withStyles from '../styles/withStyles';
 import { ThemeProvider } from 'styled-components';
-// import { ThemeProvider } from '@wonder-ui/styles';
 import defaultTheme from '../styles/defaultTheme';
-import useForkRef from '@wonder-ui/utils/useForkRef';
 import { Router, RouterStore } from '@wonder-ui/router';
 import AppContext from './AppContext';
 import AppClass from '../AppClass';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
-
 /**
  * 创建一个App环境, 包裹其他组件
  * @visibleName App 顶层组件
@@ -32,12 +29,8 @@ const App = React.forwardRef((props, ref) => {
     const appParams = { on };
     const _app = appInput || new AppClass(appParams);
     _app.routes = routes;
-    _app.useModulesParams(appParams);
-    _app.useModules();
     return _app;
   }, [on, routes]);
-  const rootRef = React.createRef(null);
-  const handleRef = useForkRef(rootRef, ref);
 
   const theme = React.useMemo(()=> {
     return typeof themeInput ==='function' ? themeInput(defaultTheme) : themeInput;
@@ -46,7 +39,6 @@ const App = React.forwardRef((props, ref) => {
   app.routing = React.useMemo(()=> routerStoreInput || new RouterStore(), [routerStoreInput]);
   
   React.useEffect(()=>{
-    app.root = rootRef.current;
     app.emit('init');
     return ()=>{
       app.emit('destroy');
@@ -63,7 +55,7 @@ const App = React.forwardRef((props, ref) => {
         <Router 
           type={type} 
           routerStore={app.routing}
-          ref={handleRef}
+          ref={ref}
           onRouteChange={handleRouteChange}
           {...rest}
         > 
@@ -164,4 +156,6 @@ App.propTypes = {
   routerStore: PropTypes.instanceOf(RouterStore),
 }
 
-export default withStyles(styles, {name: 'App' })(App);
+App.displayName = 'App';
+
+export default withStyles(styles)(App);

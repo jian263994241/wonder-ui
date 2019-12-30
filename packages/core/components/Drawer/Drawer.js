@@ -20,6 +20,7 @@ const Drawer = React.forwardRef((props, ref)=>{
     onCancel,
     style,
     modalProps,
+    safeAreaBottom = false,
     variant='temporary'
   } = props;
   const oppositeDirection = { left: 'right', right: 'left', top: 'down', bottom: 'up' };
@@ -29,6 +30,7 @@ const Drawer = React.forwardRef((props, ref)=>{
       className={clsx(
         classes.root, 
         classes['anchor' + capitalize(anchor)],
+        safeAreaBottom && anchor === 'bottom' && classes.safeAreaBottom,
         className
       )} 
       style={style}
@@ -90,7 +92,8 @@ Drawer.propTypes = {
    * root element style
    */
   style: PropTypes.object,
-}
+};
 
+Drawer.displayName = 'Drawer';
 
-export default withStyles(styles, { name: 'Drawer' })(Drawer);
+export default withStyles(styles)(Drawer);

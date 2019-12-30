@@ -1,4 +1,4 @@
-import warning from 'warning';
+import warning from 'tiny-warning';
 import deepmerge from '@wonder-ui/utils/deepmerge';
 
 export default function getStylesCreator(stylesOrCreator){

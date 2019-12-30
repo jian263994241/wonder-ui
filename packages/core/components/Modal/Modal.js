@@ -2,10 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import css from 'dom-helpers/css';
-import { ThemeProvider } from 'styled-components';
 import Backdrop from '../Backdrop';
-import useTheme from '../styles/useTheme';
-import Portal from 'rc-mounter';
+import Portal from '../Portal';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
@@ -35,9 +33,6 @@ const Modal = React.forwardRef((props, ref) => {
     onRendered,
     manager = defaultManager,
     disableScrollLock,
-    // disableEnforceFocus,
-    // disableAutoFocus,
-    // disableRestoreFocus,
     hasTransition,
     closeAfterTransition,
     keepMounted,
@@ -45,8 +40,6 @@ const Modal = React.forwardRef((props, ref) => {
     afterClose,
     ...rest
   } = props;
-
-  const theme = useTheme();
   const [exited, setExited] = React.useState(true);
   const modal = React.useRef({});
   const mountNodeRef = React.useRef(null);
@@ -187,22 +180,20 @@ const Modal = React.forwardRef((props, ref) => {
   }
   
   return (
-    <ThemeProvider theme={theme}>
-      <Portal 
-        ref={handlePortalRef} 
-        container={container} 
-        disablePortal={disablePortal}
+    <Portal 
+      ref={handlePortalRef} 
+      container={container} 
+      disablePortal={disablePortal}
+    >
+      <div 
+        role="presentation"
+        ref={handleRef}
+        {...rest}
       >
-        <div 
-          role="presentation"
-          ref={handleRef}
-          {...rest}
-        >
-          {hideBackdrop ? null : <Backdrop ref={backdropRef} visible={visible} onClick={onCancel} {...BackdropProps}/>}
-          {React.cloneElement(children, childProps)}
-        </div>
-      </Portal>
-    </ThemeProvider>
+        {hideBackdrop ? null : <Backdrop ref={backdropRef} visible={visible} onClick={onCancel} {...BackdropProps}/>}
+        {React.cloneElement(children, childProps)}
+      </div>
+    </Portal>
   )
 });
 

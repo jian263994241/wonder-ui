@@ -1,38 +1,29 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { 
-  WUI_dialog_root, 
-  WUI_dialog_body, 
-  WUI_dialog_title, 
-  WUI_dialog_text,
-  WUI_dialog_button_group,
-  WUI_dialog_button
-} from './styles';
+import styles from './styles';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 import Modal from '../Modal';
-import DialogManager from './DialogManager';
-import createChainedFunction from  '@wonder-ui/utils/createChainedFunction';
-import toggleVisible from './toggleVisible';
 import Fade from '../Fade';
+import Buttonbase from '../ButtonBase';
 
 /**
  * 系统信息提示, 并请求用户进行下一步操作
  * @visibleName Dialog 对话框
  */
-const Dialog = React.forwardRef((props, ref)=>{
+const Dialog = React.forwardRef(function Dialog(props, ref) {
 
   const {
     afterClose,
+    classes,
+    className,
     visible,
     title,
     text,
     textAfter,
-    actions,
-    vertical,
-    styles = {},
+    actions = [],
     toast,
     container,
-    fixed
   } = props;
   
   const transtionStyles = {
@@ -46,6 +37,9 @@ const Dialog = React.forwardRef((props, ref)=>{
     }
   };
 
+  const noButtons = actions.length <= 0 ;
+  const vertical = actions.length >= 3 ;
+
   return (
     <Modal
       visible={visible}
@@ -53,42 +47,57 @@ const Dialog = React.forwardRef((props, ref)=>{
       afterClose={afterClose}
       hasTransition
       closeAfterTransition
-      BackdropProps={{ fixed }}
     >
       <Fade
         propertys={['opacity', 'transform']}
         styles={transtionStyles}
         style={{
-          top: '50%',
-          left: '50%',
-          opacity: 0,
+          top: '50%', left: '50%', opacity: 0,
           transform: 'translate3d(-50%, -50%, 0) scale(1.185)'
         }}
       >
-        <WUI_dialog_root ref={ref} fixed={fixed}>
-     
-          <WUI_dialog_body noButtons={!actions} toast={toast}>
-            {title && <WUI_dialog_title>{title}</WUI_dialog_title>}
-            {text && <WUI_dialog_text>{text}</WUI_dialog_text>}
+        <div className={clsx(classes.root, className)} ref={ref}>
+          <div 
+            className={clsx(
+              classes.body,
+              {
+                noButtons: noButtons,
+                toast: toast
+              }
+            )}
+          >
+            {title && <div className={classes.title}>{title}</div>}
+            {text && <div className={classes.text}>{text}</div>}
             {textAfter}
-          </WUI_dialog_body>
+          </div>
 
           {
-            actions && (
-              <WUI_dialog_button_group vertical={vertical}>
+            !noButtons && (
+              <div className={clsx(
+                  classes.buttonGroup,
+                  {
+                    vertical: vertical
+                  }
+                )}
+              >
                 {
                   actions.map((action, i)=>(
-                    <WUI_dialog_button 
+                    <Buttonbase 
+                      className={clsx(
+                        classes.button,
+                        {
+                          primary: action.primary
+                        }
+                      )}
                       onClick={action.onClick} 
-                      key={i} 
-                      primary={action.primary}
-                    >{action.text}</WUI_dialog_button>
+                      key={i}
+                    >{action.text}</Buttonbase>
                   ))
                 }
-              </WUI_dialog_button_group>
+              </div>
             )
           }
-        </WUI_dialog_root>
+        </div>
       </Fade>
     </Modal>
   )
@@ -121,87 +130,11 @@ Dialog.propTypes = {
       onClick: PropTypes.func
     })
   ),
-  /** 样式API */
-  styles: PropTypes.shape({
-    /** 组件root样式*/
-    root: PropTypes.string,
-    /** 组件body样式*/
-    body: PropTypes.string,
-    /** 组件title样式*/
-    title: PropTypes.string,
-    /** 组件text样式*/
-    text: PropTypes.string,
-  }),
-  /** 是否fixed定位 */
-  fixed: PropTypes.bool,
 };
 
-Dialog.defaultProps = {
-  fixed: true
-};
+Dialog.defaultProps = {};
 
-const dialogManager = new DialogManager();
-
-/**
- * Dialog.alert
- */
-Dialog.alert = ({ title, text, onOk, okText = '确定' })=>{
-  const container = document.createElement('div');
-  const toggleAlert = toggleVisible((visible, clearQueue)=> {
-    ReactDOM.render(
-      <Dialog 
-        visible={visible}
-        title={title}
-        text={text}
-        afterClose={clearQueue}
-        actions={[
-          {
-            text: okText,
-            primary: true,
-            onClick: createChainedFunction(toggleAlert, onOk)
-          }
-        ]}
-      />,
-      container
-    )
-  })
-  
-  dialogManager.run(
-    (clearQueue)=> toggleAlert(clearQueue)
-  )
-}
-/**
- * Dialog.confirm
- */
-Dialog.confirm = ({ title, text, onOk, okText = '确定', onCancel, cancelText = "取消" })=>{
-  const container = document.createElement('div');
-  const toggleConfirm = toggleVisible((visible, clearQueue)=> {
-    ReactDOM.render(
-      <Dialog 
-        visible={visible}
-        title={title}
-        text={text}
-        afterClose={clearQueue}
-        actions={[
-          {
-            text: cancelText,
-            onClick: createChainedFunction(toggleConfirm, onCancel)
-          },
-          {
-            text: okText,
-            primary: true,
-            onClick: createChainedFunction(toggleConfirm, onOk)
-          }
-        ]}
-      />,
-      container
-    )
-  })
-
-  dialogManager.run(
-    (clearQueue)=> toggleConfirm(clearQueue)
-  )
-}
+Dialog.displayName = 'Dialog';
 
 
-export default Dialog;
+export default withStyles(styles)(Dialog);

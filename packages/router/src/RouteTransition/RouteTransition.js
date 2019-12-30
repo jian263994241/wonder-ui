@@ -7,7 +7,7 @@ import usePageInit from '../usePageInit';
 import UIRouteContext from '../UIRouteContext';
 import useRouterContext from '../useRouterContext';
 import useComponent from './useComponent';
-import { withStyles } from '@wonder-ui/styles';
+import { withStyles } from 'react-jss';
 import clsx from 'clsx';
 
 const RouteComponent = React.memo(function RouteComponent(props) {
@@ -164,4 +164,6 @@ RouteTransition.propTypes = {
   }
 }
 
-export default withStyles(styles, { name: 'RouteTransition' })(RouteTransition);
+RouteTransition.displayName = 'RouteTransition';
+
+export default withStyles(styles)(RouteTransition);

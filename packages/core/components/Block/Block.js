@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { WUI_block } from './styles';
+import getRendered from '@wonder-ui/utils/getRendered';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 
 /**
  * 内容块用来设置统一的边距, 边距大小为 `theme.spacing` 的倍数
@@ -11,14 +13,25 @@ import { WUI_block } from './styles';
  * 
  * @visibleName Block 内容块
  */
-const Block = React.forwardRef((props, ref) => (
-  <WUI_block ref={ref} {...props}/>
-));
+const Block = React.forwardRef(function Block (props, ref) {
+  const { classes, className, space, blank, top, left, right, bottom, header, strong, inset, children, ...rest } = props;
+  return (
+    <div className={clsx( classes.root, className )} ref={ref} {...rest}>
+      {header && <div className={classes.header}>{getRendered(header)}</div>}
+      <div className={clsx(
+        classes.body,
+        {
+          [classes.bodyStrong]: strong,
+          [classes.bodyInset]: inset
+        },
+      )}>{children}</div>
+    </div>
+  )
+});
 
 Block.defaultProps = {
   blank: 0,
   space: 0,
-  inline: false,
 }
 
 Block.propTypes = {
@@ -35,10 +48,53 @@ Block.propTypes = {
   /** 下边的距离 */
   bottom: PropTypes.number,
   /**
-   * display: inline-block
+   * white background
    */
-  inline: PropTypes.bool,
-}
+  strong: PropTypes.bool,
+  /**
+   * set border radius
+   */
+  inset: PropTypes.bool,
+  /** 列表头部 */
+  header: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.node
+  ]),
+};
 
+Block.displayName = 'Block';
 
-export default Block;
+export default withStyles(theme => {
+  const defaultValue = (a,b) => theme.spacing(a != undefined ? a : b);
+  return {
+    root: {
+      display: 'block',
+    },
+    header: {
+      width: '100%',
+      width: '100%',
+      boxSizing: 'border-box',
+      color: theme.palette.text.hint,
+      padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+      display: 'flex',
+      justifyContent: 'start',
+      ...theme.typography.subtitle2,
+      paddingLeft: props => defaultValue(props.left, props.blank),
+      paddingRight: props => defaultValue(props.right, props.blank),
+    },
+    body: {
+      ...theme.typography.body2,
+      paddingTop: props => defaultValue(props.top, props.space),
+      paddingBottom: props => defaultValue(props.bottom, props.space),
+      paddingLeft: props => defaultValue(props.left, props.blank),
+      paddingRight: props => defaultValue(props.right, props.blank),
+    },
+    bodyStrong: {
+      background: theme.palette.background.paper
+    },
+    bodyInset: {
+      borderRadius: theme.spacing(1),
+      margin: `0 ${theme.spacing(2)}px`
+    }
+  }
+})(Block);

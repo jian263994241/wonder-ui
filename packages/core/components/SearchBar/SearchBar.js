@@ -3,20 +3,14 @@ import PropTypes from 'prop-types';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
-import {
-  SearchRoot,
-  SearchBody,
-  IconSearch,
-  SearchInput,
-  CancelText,
-  SearchClear,
-  Extra,
-  End
-} from './styles';
+import styles from './styles';
+import withStyles from '../styles/withStyles';
+import clsx from 'clsx';
 
 const SearchBar = React.forwardRef(function SearchBar(props, ref){
   const {
     classes = {},
+    className,
     defaultValue = '',
     value,
     cancelText = '取消',
@@ -40,6 +34,9 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
   const [innerValue, setInnerValue] = React.useState('');
   const [inFocus, setFocus] = React.useState(false);
   const inputProcess = React.useRef();
+
+  const showCancel = showCancelButton && !extra && inFocus;
+  const showClear = inFocus && (innerValue != '');
 
   useDisabledRefTouchMove(rootRef);
 
@@ -92,10 +89,19 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
   });
   
   return (
-    <SearchRoot className={classes.root} bordered={bordered} ref={rootRef}>   
-      <SearchBody className={classes.body} onSubmit={handleSearch}>
-        <SearchInput className={classes.input} start={showCancelButton && inFocus} transitionDisabled={!!extra}>
-          {showSearchIcon && <IconSearch/>}
+    <div 
+      className={clsx(
+        classes.root,
+        {
+          [classes.bordered]: bordered
+        },
+        className
+      )} 
+      ref={rootRef}
+    >   
+      <form className={classes.body} onSubmit={handleSearch}>
+        <div className={clsx(classes.input, showCancel && classes.inputStart)}>
+          {showSearchIcon && <i className={classes.iconSearch}/>}
           <input
             type="search"
             autoComplete="off"
@@ -107,18 +113,24 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
             onBlur={handleBlur}
             {...rest}
           />
-          <SearchClear visible={inFocus && (innerValue != '')} onClick={handleClear}/>
-        </SearchInput>
-        {showCancelButton && <CancelText visible={inFocus} onClick={handleCancel}><span>{cancelText}</span></CancelText>}
-      </SearchBody>
+          <i className={clsx(classes.iconClear, !showClear && classes.hide)} onClick={handleClear}/>
+        </div>
+        <span 
+          className={clsx(
+            classes.cancelText,
+            !showCancel&& classes.hidden
+          )} 
+          onClick={handleCancel}
+        >{cancelText}</span>
+      </form>
       {
         extra ? (
-          <Extra visible={showCancelButton ? !inFocus: true }>{extra}</Extra>
+          <div className={classes.extra}>{extra}</div>
         ): (
-          <End/>
+          <div className={classes.end}/>
         )
       }
-    </SearchRoot>
+    </div>
   )
 });
 
@@ -139,4 +151,6 @@ SearchBar.propTypes={
   bordered: PropTypes.bool
 }; 
 
-export default SearchBar;
+SearchBar.displayName = 'SearchBar';
+
+export default withStyles(styles)(SearchBar);
