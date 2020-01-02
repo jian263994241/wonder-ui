@@ -21,6 +21,7 @@ export default theme => ({
     color: theme.palette.text.hint,
     padding: '10px 15px',
     display: 'flex',
-    justifyContent: 'start'
+    justifyContent: 'start',
+    ...theme.typography.caption,
   }
 }) 

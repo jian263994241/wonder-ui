@@ -16,15 +16,19 @@ export { default as Slide } from './components/Slide';
 export { default as hooks } from './components/hooks';
 
 //utils
-export { default as effect } from './components/effect';
-export { default as Portal } from './components/Portal';
 export { default as DisabledTouchMove } from './components/DisabledTouchMove';
+export { default as effect } from './components/effect';
+export { default as Modal } from './components/Modal';
+export { default as Portal } from './components/Portal';
+
+// styles
+export { default as createUseStyles } from './components/createUseStyles';
 export { default as styled } from './components/styled';
+export { default as withStyles } from './components/withStyles';
 
 //feedback
 export { default as ActivityIndicator } from './components/ActivityIndicator';
 export { default as Dialog } from './components/Dialog';
-export { default as Modal } from './components/Modal';
 export { default as Preloader} from './components/Preloader';
 export { default as toast} from './components/toast';
 export { default as TouchFeedback } from './components/TouchFeedback';
@@ -36,7 +40,9 @@ export { default as Form } from './components/Form';
 export { default as Block } from './components/Block';
 export { default as Brief } from './components/Brief';
 export { default as Button } from './components/Button';
+export { default as CheckableGroup } from './components/CheckableGroup';
 export { default as CheckableTag } from './components/CheckableTag';
+export { default as CheckableTagGroup } from './components/CheckableTagGroup';
 export { default as Checkbox } from './components/Checkbox';
 export { default as CheckboxItem } from './components/CheckboxItem';
 export { default as ContentBlock } from './components/ContentBlock';
@@ -45,6 +51,7 @@ export { default as Drawer } from './components/Drawer';
 export { default as Empty } from './components/Empty';
 export { default as Flex } from './components/Flex';
 export { default as HeaderBar } from './components/HeaderBar';
+export { default as InputItem } from './components/InputItem';
 export { default as LcnPicker } from './components/LcnPicker';
 export { default as List } from './components/List';
 export { default as ListItem } from './components/ListItem';
@@ -58,9 +65,7 @@ export { default as SearchBar } from './components/SearchBar';
 export { default as Slot } from './components/Slot';
 export { default as SvgIcon } from './components/SvgIcon';
 export { default as Tag } from './components/Tag';
-export { default as ToggleButton } from './components/ToggleButton';
-export { default as ToggleButtonGroup } from './components/ToggleButtonGroup';
-export { default as Toolbar } from './components/Toolbar';
+export { default as ToolBar } from './components/ToolBar';
 export { default as Typography } from './components/Typography';
 
 

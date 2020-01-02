@@ -1,136 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { WUI_checkbox_wrap, WUI_checkbox_inner } from './styles';
+import styles from './styles';
+import withStyles from '../withStyles';
+import clsx from 'clsx';
 
 /**
  * checkbox, radio的UI包装
  * @visibleName Checkbox 选择项
  */
-const Checkbox = React.forwardRef((props, ref)=> {
-
-  const {
-    className,
-    style,
-    name,
-    id,
-    type,
-    readOnly,
-    disabled,
-    tabIndex,
-    checked,
-    onFocus,
-    onClick,
-    onBlur,
-    onChange,
-    autoFocus,
-    value,
-    defaultValue,
-    defaultChecked,
-  } = props;
-
-  const handleChange = (e)=>{
-    onChange && onChange(e);
-  }
+const Checkbox = React.forwardRef(function Checkbox(props, ref) {
+  const { classes, className, checked, onChange, onClick, ...rest } = props;
+  const triggerFn = onChange || onClick;
+  const handleClick = React.useCallback((e)=>{
+    if (triggerFn) {
+      triggerFn(!checked, e);
+    }
+  }, [checked, triggerFn]);
 
   return (
-    <WUI_checkbox_wrap role={type} className={className} style={style} disabled={disabled}>
-      <input 
-        ref={ref}
-        name={name}
-        id={id}
-        type={type}
-        readOnly={readOnly}
-        disabled={disabled}
-        tabIndex={tabIndex}
-        checked={checked}
-        onClick={onClick}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onChange={handleChange}
-        autoFocus={autoFocus}
-        value={value}
-        defaultValue={defaultValue}
-        defaultChecked={defaultChecked}
-      />
-      <WUI_checkbox_inner/>
-    </WUI_checkbox_wrap>
+    <span 
+      {...rest}
+      ref={ref}
+      role="checkbox" 
+      className={clsx(classes.root, className)}
+      onClick={handleClick}
+    > 
+      <i className={clsx(classes.body, checked && classes.checked)} />
+    </span>
   )
 })
 
 Checkbox.propTypes = {
-  /**
-   * @ignore
-   */
-  className: PropTypes.string,
-  /**
-   * @ignore
-   */
-  style: PropTypes.object,
-  /**
-   * 组件类型: 多选或者单选
-   */
-  type: PropTypes.oneOf(['checkbox', 'radio']),
-  /**
-   * @ignore
-   */
-  id: PropTypes.string,
-  /**
-   * input prop name
-   */
-  name: PropTypes.string,
-  /**
-   * @ignore
-   */
-  readOnly: PropTypes.bool,
-  /**
-   * @ignore
-   */
-  disabled: PropTypes.bool,
-  /**
-   * @ignore
-   */
-  tabIndex: PropTypes.string,
-  /**
-   * 受控组件的值, 配合onChange使用.
-   */
+  onChange: PropTypes.func,
   checked: PropTypes.bool,
   /**
-   * 默认选中
-   */
-  defaultChecked:  PropTypes.bool,
-  /**
    * @ignore
    */
-  onFocus: PropTypes.func,
-  /**
-   * @ignore
-   */
-  onClick: PropTypes.func,
-  /**
-   * @ignore
-   */
-  onBlur: PropTypes.func,
-  /**
-   * 受控组件的方法, 配合value使用.
-   */
-  onChange: PropTypes.func,
-  /**
-   * @ignore
-   */
-  autoFocus: PropTypes.bool,
-  /**
-   * @ignore
-   */
-  value: PropTypes.any,
-  /**
-   * @ignore
-   */
-  defaultValue: PropTypes.any,
-}
+  classes: PropTypes.object
+};
 
-Checkbox.defaultProps = {
-  type: 'checkbox'
-}
+Checkbox.displayName = 'Checkbox';
 
-
-export default Checkbox;
+export default withStyles(styles)(Checkbox);

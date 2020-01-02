@@ -19,7 +19,6 @@ const params = {
       children: [
         { path: 'about', async: ()=> import('./pages/About') },
         { path: 'button', async: ()=> import('./pages/Button') },
-        { path: 'toggle-button', async: ()=> import('./pages/ToggleButton') },
         { path: 'drawer', async: ()=> import('./pages/Drawer') },
         { path: 'preloader', async: ()=> import('./pages/Preloader') },
         { path: 'dialog', async: ()=> import('./pages/Dialog') },
@@ -27,9 +26,12 @@ const params = {
         { path: 'date-picker', async: ()=> import('./pages/DatePicker') },
         { path: 'lcn-picker', async: ()=> import('./pages/LcnPicker') },
         { path: 'typography', async: ()=> import('./pages/Typography') },
-        { path: 'toolbar', async: ()=> import('./pages/Toolbar') },
+        { path: 'toolbar', async: ()=> import('./pages/ToolBar') },
         { path: 'tag', async: ()=> import('./pages/Tag') },
         { path: 'searchbar', async: ()=> import('./pages/SearchBar') },
+        { path: 'list', async: ()=> import('./pages/List') },
+        { path: 'list-view', async: ()=> import('./pages/ListView') },
+        { path: 'checkable-group', async: ()=> import('./pages/CheckableGroup') },
       ]
     },
   ]

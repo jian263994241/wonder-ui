@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import clsx from 'clsx';
-import withStyles from '../styles/withStyles';
+import withStyles from '../withStyles';
 import capitalize from '@wonder-ui/utils/capitalize';
 import ButtonBase from '../ButtonBase';
 import { useRouterContext } from '@wonder-ui/router';

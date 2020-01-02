@@ -4,7 +4,7 @@ import useForkRef from '@wonder-ui/utils/useForkRef';
 import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import styles from './styles';
-import withStyles from '../styles/withStyles';
+import withStyles from '../withStyles';
 import clsx from 'clsx';
 
 const SearchBar = React.forwardRef(function SearchBar(props, ref){

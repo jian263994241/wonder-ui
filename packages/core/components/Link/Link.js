@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link as LinkNoStyle } from '@wonder-ui/router';
 import clsx from 'clsx';
-import withStyles from '../styles/withStyles';
+import withStyles from '../withStyles';
 
 /**
  * UI Wrap react-router Link

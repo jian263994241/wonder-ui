@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import withStyles from '../styles/withStyles'
+import withStyles from '../withStyles'
 
 const ButtonBase = React.forwardRef(function ButtonBase(props, ref){
   const { classes, className, ...rest } = props;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getRendered from '@wonder-ui/utils/getRendered';
-import withStyles from '../styles/withStyles';
+import withStyles from '../withStyles';
 import clsx from 'clsx';
 
 /**

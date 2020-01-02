@@ -8,7 +8,6 @@ import * as svg from './svg';
 import zIndex from './zIndex';
 import createHairline, {removeHairline} from './createHairline';
 
-
 export default function createTheme(options={}){
 
   const {

@@ -1,4 +1,4 @@
-import createUseStyles from '../styles/createUseStyles';
+import createUseStyles from '../createUseStyles';
 
 export default createUseStyles(theme => ({
   root: {

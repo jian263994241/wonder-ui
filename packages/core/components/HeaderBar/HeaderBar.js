@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DisabledTouchMove from '../DisabledTouchMove';
 import styles from './styles';
-import withStyles from '../styles/withStyles';
+import withStyles from '../withStyles';
 import clsx from 'clsx';
 
 const HeaderBar = React.forwardRef(function HeaderBar(props, ref){

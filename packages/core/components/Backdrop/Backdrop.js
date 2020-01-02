@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 import Fade from '../Fade';
-import withStyles from '../styles/withStyles';
+import withStyles from '../withStyles';
 import clsx from 'clsx';
 /**
  * 遮层

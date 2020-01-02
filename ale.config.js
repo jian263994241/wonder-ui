@@ -8,13 +8,16 @@ module.exports = {
     path: path.resolve(__dirname, 'kitchen-sink'),
     filename: 'app.bunld.js',
   },
+  devServer: {
+    port: 3001,
+  },
   resolve: {
     alias: {
       '~': __dirname,
       '@wonder-ui/core': path.resolve(__dirname, './packages/core'),
       '@wonder-ui/router': path.resolve(__dirname, './packages/router/src'),
       '@wonder-ui/utils': path.resolve(__dirname, './packages/utils/src'),
-      '@wonder-ui/styles': path.resolve(__dirname, './packages/styles/src'),
+      // '@wonder-ui/styles': path.resolve(__dirname, './packages/styles/src'),
     }
   },
   ale: {

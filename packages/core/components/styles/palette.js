@@ -53,6 +53,7 @@ const dark = {
   background: {
     paper: grey[800],
     default: '#303030',
+    modal: 'rgba(255,255,255,0.95)'
   },
   action: {
     active: '#fff',

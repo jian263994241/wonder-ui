@@ -1,24 +1,28 @@
 import React from 'react';
-import { Page, Button, DatePicker, ContentBlock } from '@wonder-ui/core';
+import { Page, Button, DatePicker, ContentBlock, Form } from '@wonder-ui/core';
 
-
-const ExtraButton = props => {
+const ExtraButton = React.forwardRef((props, ref) => {
   const {extra='请选择', ...rest} = props;
+
   return (
-    <Button {...rest}>{extra}</Button>
+    <Button ref={ref} {...rest}>{extra}</Button>
   )
-}
+})
 
-
-
-export default function PickerExamples() {
+export default Form.create()(function PickerExamples(props) {
+  const { form } = props;
   
   return (
     <Page name="DatePicker" navbar>
-      <ContentBlock header={<span>Button&Picker</span>}>
-        <DatePicker><ExtraButton/></DatePicker>
-        
+      <ContentBlock header={<span>DatePickerPicker & Button</span>}>
+        {
+          form.getFieldDecorator('group', {
+
+          })(
+            <DatePicker><ExtraButton/></DatePicker>
+          )
+        }
       </ContentBlock>
     </Page>
   )
-}
+})

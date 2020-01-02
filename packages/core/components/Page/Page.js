@@ -6,7 +6,7 @@ import Slot from '../Slot';
 import Navbar from '../NavBar';
 import ScrollContent from '../ScrollContent';
 import styles from './styles';
-import withStyles from '../styles/withStyles';
+import withStyles from '../withStyles';
 import clsx from 'clsx';
 
 const SlotGroup = Slot.Group;

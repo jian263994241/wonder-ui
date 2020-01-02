@@ -2,7 +2,7 @@ import React from 'react';
 import SvgIcon from '../SvgIcon';
 import useId from '@wonder-ui/utils/useId';
 import capitalize from '@wonder-ui/utils/capitalize';
-import withStyles from '../styles/withStyles';
+import withStyles from '../withStyles';
 import clsx from 'clsx';
 
 const Indicator = React.forwardRef(function Indicator(props, ref) {

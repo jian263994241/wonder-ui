@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../Button';
 import Arrow from '../icons/Arrow';
-import withStyles from '../styles/withStyles';
+import withStyles from '../withStyles';
 
 function BackButton({classes}) {
   return (

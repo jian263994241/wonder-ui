@@ -1,16 +1,17 @@
 import React from 'react';
 import { Page, Button, ContentBlock, styled } from '@wonder-ui/core';
 
-const ButtonDemo = styled(Button)({
+const ButtonDemo = styled(Button)(props=> ({
+  marginLeft: (props.fullWidth || props.full) ? 0: 10,
   marginBottom: 10,
-  marginLeft: props => (props.fullWidth || props.full) ? 0: 10,
   '&:first-child': {
     marginLeft: 0
   }
-});
+}));
 
 
 export default function ButtonExamples(props){
+
   return (
     <Page name="Button" navbar>
       <ContentBlock header="size">

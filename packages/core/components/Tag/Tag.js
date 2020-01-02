@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '../styles/withStyles';
+import withStyles from '../withStyles';
 import clsx from 'clsx';
-import styles from './styles';
+import styles, { createColor } from './styles';
 
 /**
  * @visibleName Tag 标签
@@ -13,24 +13,40 @@ const Tag = React.forwardRef((props, ref)=>{
     className,
     children,
     color,
-    outlined,
     clickable,
+    checked,
+    style,
     ...rest
   } = props;
+
+  const customColor = React.useMemo(()=> createColor(color), [color]);
   
   return (
-    <div className={clsx(classes.root, className)} ref={ref} {...rest}>
-      <span className={classes.label}>{children}</span>
-    </div>
+    <span className={clsx(
+        classes.root, 
+        {
+          [classes.colorPrimary]: color === 'primary',
+          [classes.colorSecondary]: color === 'secondary',
+          [classes.clickable]: clickable,
+          [classes.checked]: checked && clickable
+        },
+        className
+      )} 
+      style={{...customColor, ...style}}
+      ref={ref} 
+      {...rest}
+    >
+      {children}
+    </span>
   )
 })
 
 Tag.propTypes = {
   /** 标签颜色 `primary`, `secondary`, 或者 自定颜色'#ccc' */
   color: PropTypes.string,
-  /** 是否空心标签 */
-  outlined: PropTypes.bool,
-
+  /**
+   * @ignore
+   */
   clickable: PropTypes.bool,
 }
 

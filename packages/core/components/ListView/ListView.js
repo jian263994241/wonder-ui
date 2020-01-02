@@ -137,7 +137,7 @@ export default class ListView extends React.Component {
     initialListSize: DEFAULT_INITIAL_ROWS,
     pageSize: DEFAULT_PAGE_SIZE,
     renderScrollComponent: props => <ScrollView contentContainerStyle={{width: '100%'}} {...props} />,
-    renderBodyComponent: () => <List.Body />,
+    renderBodyComponent: () => <List/>,
     renderSectionBodyWrapper: (sectionID) => <div key={sectionID} />,
     sectionBodyClassName: 'list-view-section-body',
     listViewPrefixCls: 'wui-list-view',
@@ -317,10 +317,10 @@ export default class ListView extends React.Component {
         onContentSizeChange: this._onContentSizeChange,
         onLayout: this._onLayout,
       },
-      this.props.renderHeader ? this.props.renderHeader(List.Header) : null,
+      this.props.renderHeader ? this.props.renderHeader(()=>null) : null,
       (dataSource.getRowCount() === 0 && this.props.noDataContent) ? React.createElement(this.props.noDataContent, {key: 'no-data'}) : null,
       React.cloneElement(props.renderBodyComponent(), {}, bodyComponents),  
-      this.props.renderFooter ? this.props.renderFooter(List.Footer) : null,
+      this.props.renderFooter ? this.props.renderFooter(()=>null) : null,
       props.children
     );
   }

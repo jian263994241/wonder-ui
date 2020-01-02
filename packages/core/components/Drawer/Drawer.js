@@ -4,7 +4,7 @@ import Slide from '../Slide';
 import Modal from '../Modal';
 import capitalize from '@wonder-ui/utils/capitalize';
 import styles from './styles';
-import withStyles from '../styles/withStyles';
+import withStyles from '../withStyles';
 import clsx from 'clsx';
 /**
  * @visibleName Drawer 抽屉
