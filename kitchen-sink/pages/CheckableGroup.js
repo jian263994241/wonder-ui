@@ -125,7 +125,7 @@ export default Form.create()(function CheckableGroupExamples(props) {
                 ({label, ...props})=>(
                   <CheckboxItem 
                     visible 
-                    renderIcon={({checked})=> checked && '选中'}
+                    renderIcon={({checked})=> checked && 'selected'}
                     position="right"
                     {...props} 
                     >{label}</CheckboxItem>

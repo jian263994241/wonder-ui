@@ -30,25 +30,23 @@
     "array-tree-filter": "^2.1.0",
     "clsx": "^1.0.4",
     "dom-helpers": "^5.1.0",
-    "hoist-non-react-statics": "^3.3.1",
     "lcn": "^1.0.3",
-    "lodash.throttle": "^4.1.1",
     "prop-types": "^15.7.2",
     "rc-form": "^2.4.8",
     "rc-mounter": "^2.0.0",
-    "react-jss": "^10.0.1",
-    "react-lifecycles-compat": "^3.0.4",
+    "react-jss": "^10.0.2",
     "react-transition-group": "^4.2.1",
+    "react-virtualized-auto-sizer": "^1.0.2",
+    "react-window-infinite-loader": "^1.0.5",
+    "react-window": "^1.8.5",
     "rmc-cascader": "~5.0.3",
     "rmc-date-picker": "^6.0.10",
-    "rmc-list-view": "^0.11.5",
     "rmc-pull-to-refresh": "^1.0.11",
     "tiny-warning": "^1.0.3"
   },
   "peerDependencies": {
     "react": ">=16.8.6",
-    "react-dom": ">=16.8.6",
-    "styled-components": ">=4.3.2"
+    "react-dom": ">=16.8.6"
   },
   "repository": {
     "type": "git",

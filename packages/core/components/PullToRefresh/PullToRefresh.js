@@ -1,62 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RmcPullToRefresh from 'rmc-pull-to-refresh';
-import styled, { css } from 'styled-components';
-
-const WUI_PullToRefresh = styled.div((props)=>{
-  const { prefixCls } = props;
-
-  return css `
-    .${prefixCls} {
-      &-content {
-        &-wrapper {
-          
-        }
-        transform-origin: left top 0;
-      }
-
-      &-transition {
-        transition: transform 0.3s;
-      }
-
-      &-indicator {
-        color: grey;
-        text-align: center;
-        height: 25px;
-      }
-
-      &-down .${prefixCls}-indicator {
-        margin-top: -25px;
-      }
-
-      &-up .${prefixCls}-indicator {
-        margin-bottom: -25px;
-      }
-    }
-  `
-});
+import withStyles from '../withStyles';
+import styles from './styles';
 
 /**
  * 配合ListView 实现长列表下拉刷新
  * @visibleName PullToRefresh 下拉刷新
  */
 const PullToRefresh = React.forwardRef((props, ref)=>{
-
-  const { prefixCls } = props;
+  const { 
+    classes,
+    prefixCls,
+    ...rest
+  } = props;
   
   return (
-    <WUI_PullToRefresh prefixCls={prefixCls}>
-      <RmcPullToRefresh ref={ref} {...props}/>
-    </WUI_PullToRefresh>
+    <RmcPullToRefresh 
+      ref={ref}
+      prefixCls={classes.root}
+      {...rest}
+    />
   )
 })
 
+PullToRefresh.displayName = 'PullToRefresh';
+
 PullToRefresh.defaultProps = {
+  damping: 100,
   direction: 'down',
   distanceToRefresh: 50,
-  refreshing: false,
-  damping: 100,
   prefixCls: 'pull-to-refresh',
+  refreshing: false,
   indicator: {
     activate: '释放即可刷新',
     deactivate: '下拉即可刷新',
@@ -105,4 +80,4 @@ PullToRefresh.propTypes = {
   damping: PropTypes.number
 }
 
-export default PullToRefresh;
+export default withStyles(styles)(PullToRefresh);

@@ -1,8 +1,6 @@
 export default theme => ({
   root: {
-    ...theme.typography.body1
-  },
-  body: {
+    ...theme.typography.body1,
     position: 'relative',
     backgroundColor: 'transparent',
   },

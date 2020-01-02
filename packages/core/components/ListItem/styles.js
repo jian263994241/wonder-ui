@@ -1,15 +1,17 @@
 export default theme => ({
   root: {
-    position: 'relative',
-    display: 'flex',
-    backgroundColor: theme.palette.background.paper,
-    paddingLeft: 15,
-    minHeight: 44,
-    verticalAlign: 'middle',
-    overflow: 'hidden',
-    transition: 'background-color 200ms',
+    ...theme.typography.body1,
     alignItems: 'center',
+    backgroundColor: theme.palette.background.paper,
+    display: 'flex',
     marginBottom: -1,
+    minHeight: 44,
+    overflow: 'hidden',
+    paddingLeft: 15,
+    position: 'relative',
+    transition: 'background-color 200ms',
+    verticalAlign: 'middle',
+    boxSizing: 'border-box',
     '&[disabled], &[disabled] $extra, &[disabled] [role=brief]': {
       pointerEvents: 'none',
       cursor: 'default',
@@ -64,7 +66,6 @@ export default theme => ({
   content: {
     flex: 1,
     textAlign: 'left',
-    ...theme.typography.body1
   },
   alignTop: {
     alignSelf: 'baseline',
