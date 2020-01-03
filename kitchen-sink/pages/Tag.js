@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Block, CheckableTag, CheckableTagGroup, ContentBlock, Tag, Form } from '@wonder-ui/core';
+import { Page, CheckableTag, CheckableTagGroup, ContentBlock, Tag, Form } from '@wonder-ui/core';
 
 export default Form.create()(function TagExamples(props) {
   const { form } = props;

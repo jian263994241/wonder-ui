@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 import withStyles from '../withStyles';
-import clsx from 'clsx';
 
 const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
-
   const { 
-    componentClass: Component,
+    children,
     classes,
     className,
     ...rest
   } = props;
 
-  const [_blockTouchMove, set_blockTouchMove] = React.useState(false);
+  const blockTouchMove = React.useRef(false);
+
   const root = React.useRef(null);
   const handleRef = useForkRef(root, ref);
 
@@ -41,30 +41,27 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
       }
 
       var isScrollable = el.scrollHeight > el.offsetHeight;
-      
+
       // If scrollable, adjust
       if (isScrollable) {
-          // this._blockTouchMove = false;
-          set_blockTouchMove(false);
+          blockTouchMove.current = false;
           return scrollToEnd(el);
       }
       // Else block touchmove
       else {
-          // this._blockTouchMove = true;
-          set_blockTouchMove(true);
+          blockTouchMove.current = true;
       }
 
   }
 
   const onTouchMove = (e) => {
-      if (_blockTouchMove) {
-          e.preventDefault();
-      }
+    if (blockTouchMove.current) {
+        e.preventDefault();
+    }
   }
 
   const onTouchEnd = (e) => {
-      // this._blockTouchMove = false;
-      set_blockTouchMove(false);
+    blockTouchMove.current = false;
   }
 
   const handleEvents = { 
@@ -75,22 +72,21 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
   };
 
   return (
-    <Component
+    <div
       className={clsx(classes.root, className)}
       {...rest}
       {...handleEvents}
       ref={handleRef}
-    />
+    >
+      <div className={classes.body}>{children}</div>
+    </div>
   )
-})
+});
 
 ScrollContent.componentClass = {
-  componentClass: PropTypes.node
+  className: PropTypes.string
 };
 
-ScrollContent.defaultProps = {
-  componentClass: 'div'
-};
 
 ScrollContent.displayName = 'ScrollContent';
 
@@ -101,7 +97,12 @@ export default withStyles({
     overflow: 'auto',
     boxSizing: 'border-box',
     willChange: 'scroll-position',
-    WebkitOverflowScrolling: 'touch',
-    touchAction: 'pan-x pan-y'
+    touchAction: 'pan-x pan-y',
+    position: 'relative',
+    zIndex: 1,
+  },
+  body: {
+    width: '100%',
+    minHeight: '100.3%',
   }
 })(ScrollContent);

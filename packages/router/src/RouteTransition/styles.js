@@ -62,7 +62,8 @@ export const styles = {
     top:0,
     zIndex: 1,
     overflow: 'hidden auto',
-    WebkitOverflowScrolling: 'touch',
+    touchAction: 'pan-x pan-y',
+    willChange: 'auto',
     //fade
     '&.fade-enter': {
       display: 'block',

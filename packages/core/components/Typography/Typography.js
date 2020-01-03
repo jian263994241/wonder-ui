@@ -1,10 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '../withStyles';
 import clsx from 'clsx';
+import withStyles from '../withStyles';
 
 const Typography = React.forwardRef(function Typography(props, ref) {
-  const { component = 'div', classes, className, type, inline, primary, secondary, error, ...rest } = props;
+  const { 
+    classes, 
+    className, 
+    component = 'div', 
+    error, 
+    inline, 
+    primary, 
+    secondary, 
+    type, 
+    ...rest 
+  } = props;
   return React.createElement(component, {
     ref,
     className: clsx(

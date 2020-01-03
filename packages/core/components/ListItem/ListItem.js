@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './styles';
-import withStyles from '../withStyles';
-import clsx from 'clsx';
-import TouchFeedback from '../TouchFeedback';
-import capitalize from '@wonder-ui/utils/capitalize';
 import Arrow from '../icons/Arrow';
+import capitalize from '@wonder-ui/utils/capitalize';
+import clsx from 'clsx';
+import styles from './styles';
+import TouchFeedback from '../TouchFeedback';
+import withStyles from '../withStyles';
 
 /**
  * 列表项
@@ -18,17 +18,17 @@ import Arrow from '../icons/Arrow';
  */
 const ListItem = React.forwardRef(function ListItem(props, ref) {
   const {
-    classes,
-    className,
+    activeState,
+    align = 'center',
     arrow,
     children,
+    classes,
+    className,
     disabled,
     extra,
-    thumb,
-    align = 'center',
-    wrap,
     multipleLine,
-    activeState,
+    thumb,
+    wrap,
     ...rest
   } = props;
 

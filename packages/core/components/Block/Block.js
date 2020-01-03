@@ -56,10 +56,7 @@ Block.propTypes = {
    */
   inset: PropTypes.bool,
   /** 列表头部 */
-  header: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.node
-  ]),
+  header: PropTypes.oneOfType([ PropTypes.func, PropTypes.node ]),
 };
 
 Block.displayName = 'Block';

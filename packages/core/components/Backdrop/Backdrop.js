@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import Fade from '../Fade';
 import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
 import useForkRef from '@wonder-ui/utils/useForkRef';
-import Fade from '../Fade';
 import withStyles from '../withStyles';
-import clsx from 'clsx';
 /**
  * 遮层
  * @visibleName Backdrop - 背板
  */
 const Backdrop = React.forwardRef(function Backdrop(props, ref) {
   const { 
-    visible, 
-    timeout,
     classes,
     className,
+    timeout,
+    visible, 
     ...rest
   } = props;
   const rootRef = React.useRef();

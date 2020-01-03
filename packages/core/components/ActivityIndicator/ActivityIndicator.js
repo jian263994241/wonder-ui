@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import Indicator from './Indicator';
 import withStyles from '../withStyles';
-import clsx from 'clsx';
 
 /**
  * @visibleName Indicator 活动指示器
  */
 const ActivityIndicator = React.forwardRef(function ActivityIndicator(props, ref) {
-  const { text, classes, className, vertical, ...rest } = props;
+  const { classes, className, text, vertical, ...rest } = props;
   return (
     <div className={clsx(classes.root, className)} ref={ref}>
       <Indicator {...rest}/>

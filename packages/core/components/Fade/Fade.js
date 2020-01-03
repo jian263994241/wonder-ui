@@ -1,7 +1,7 @@
 import React from 'react';
-import Transition from '../Transition';
 import { easing, duration } from '../styles/transitions';
 import css from 'dom-helpers/css';
+import Transition from '../Transition';
 
 const defaultTimeout = {
   enter: duration.enteringScreen,
@@ -10,10 +10,10 @@ const defaultTimeout = {
 
 const Fade = React.forwardRef((props, ref)=>{
   const {
-    timeout = defaultTimeout,
     easing: easingInput = easing.sharp,
     onEnter,
     onExited,
+    timeout = defaultTimeout,
     ...rest
   } = props;
 

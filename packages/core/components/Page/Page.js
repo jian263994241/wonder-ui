@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppContext from '../AppContext';
+import clsx from 'clsx';
 import hooks from '../hooks';
-import Slot from '../Slot';
 import Navbar from '../NavBar';
 import ScrollContent from '../ScrollContent';
+import Slot from '../Slot';
 import styles from './styles';
 import withStyles from '../withStyles';
-import clsx from 'clsx';
 
 const SlotGroup = Slot.Group;
 const SlotContent = Slot.Content;
@@ -18,13 +18,13 @@ const SlotContent = Slot.Content;
  */
 const Page = React.forwardRef((props, ref)=>{
   const {
+    children, 
     classes,
     className,
-    children, 
-    pageContent = true,
-    navbarProps,
-    navbar = false,
     name,
+    navbar = false,
+    navbarProps,
+    pageContent = true,
     showBackButton = true,
     ...rest
   } = props;

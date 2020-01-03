@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Slide from '../Slide';
-import Modal from '../Modal';
 import capitalize from '@wonder-ui/utils/capitalize';
+import clsx from 'clsx';
+import Modal from '../Modal';
+import Slide from '../Slide';
 import styles from './styles';
 import withStyles from '../withStyles';
-import clsx from 'clsx';
 /**
  * @visibleName Drawer 抽屉
  * 一个半屏幕的浮层
@@ -16,12 +16,12 @@ const Drawer = React.forwardRef((props, ref)=>{
     children,
     classes,
     className,
-    visible,
-    onCancel,
-    style,
     modalProps,
+    onCancel,
     safeAreaBottom = false,
-    variant='temporary'
+    style,
+    variant='temporary',
+    visible,
   } = props;
   const oppositeDirection = { left: 'right', right: 'left', top: 'down', bottom: 'up' };
  

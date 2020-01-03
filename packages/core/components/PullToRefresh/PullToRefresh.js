@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RmcPullToRefresh from 'rmc-pull-to-refresh';
-import withStyles from '../withStyles';
 import styles from './styles';
+import withStyles from '../withStyles';
 
 /**
  * 配合ListView 实现长列表下拉刷新

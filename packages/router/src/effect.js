@@ -1,6 +1,7 @@
 import React from 'react';
 import UIRouteContext from './UIRouteContext';
 import * as ReactIs from "react-is";
+import useEnhancedEffect from '@wonder-ui/utils/useEnhancedEffect';
 
 export default function effect(options = {}){
   const {
@@ -14,7 +15,7 @@ export default function effect(options = {}){
       const [visible, setVisible] = React.useState(false);
       const routeContext = React.useContext(UIRouteContext);
       const timeout = delay || routeContext.timeout || 0;
-      React.useEffect(()=>{
+      useEnhancedEffect(()=>{
         setTimeout(() => setVisible(true), timeout);
       }, [delay]);
   

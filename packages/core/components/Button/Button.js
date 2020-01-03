@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './styles';
-import clsx from 'clsx';
-import withStyles from '../withStyles';
-import capitalize from '@wonder-ui/utils/capitalize';
-import ButtonBase from '../ButtonBase';
 import { useRouterContext } from '@wonder-ui/router';
+import ButtonBase from '../ButtonBase';
+import capitalize from '@wonder-ui/utils/capitalize';
+import clsx from 'clsx';
+import styles from './styles';
+import withStyles from '../withStyles';
 
 /**
  * 允许用户轻按一下即可做出选择.
@@ -13,20 +13,20 @@ import { useRouterContext } from '@wonder-ui/router';
  */
 const Button =  React.forwardRef(function Button(props, ref) {
   const {
+    back,
     children,
     classes,
     className,
     color='default',
-    fullWidth,
     full,
+    fullWidth,
     icon,
     iconPosition = 'before',
-    variant='contained',
+    onClick,
+    replace,
     size = 'medium',
     to,
-    back,
-    replace,
-    onClick,
+    variant='contained',
     ...rest
   } = props;
   const { routerStore } = useRouterContext();

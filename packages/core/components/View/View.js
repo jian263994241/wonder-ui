@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppContext from '../AppContext';
 import { View as RouteView } from '@wonder-ui/router';
+import AppContext from '../AppContext';
 
 /**
  * 用来包裹所有Page

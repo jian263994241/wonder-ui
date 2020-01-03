@@ -1,15 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import styles from './styles';
 import withStyles from '../withStyles';
-import clsx from 'clsx';
 
 /**
  * checkbox, radio的UI包装
  * @visibleName Checkbox 选择项
  */
 const Checkbox = React.forwardRef(function Checkbox(props, ref) {
-  const { classes, className, checked, onChange, onClick, ...rest } = props;
+  const { 
+    checked, 
+    classes, 
+    className, 
+    onChange, 
+    onClick, 
+    ...rest 
+  } = props;
   const triggerFn = onChange || onClick;
   const handleClick = React.useCallback((e)=>{
     if (triggerFn) {

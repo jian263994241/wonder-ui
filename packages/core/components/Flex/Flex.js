@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import styles from './styles';
 import withStyles from '../withStyles';
-import clsx from 'clsx';
 /**
  * flex box 样式
  * @visibleName Flex 布局
  */
 const Flex = React.forwardRef(function Flex(props, ref) {
   const { 
+    alignContent, 
     classes, 
     className, 
+    direction, 
     flex, 
+    gutter,
     justify, 
     wrap, 
-    direction, 
-    alignContent, 
-    gutter,
     ...rest 
   } = props;
   

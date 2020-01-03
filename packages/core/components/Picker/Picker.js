@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '../Typography';
+import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
 import Cascader from './Cascader';
 import treeFilter from 'array-tree-filter';
+import Typography from '../Typography';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
-import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
 
 const defaultFormat = (values = [])=>{
   return values.map(item=>item.label).join(',');
@@ -17,21 +17,21 @@ const defaultFormat = (values = [])=>{
  */
 const Picker = React.forwardRef(function Picker(props, ref) {
   const {
-    children,
-    placeholder,
-    onCancel,
-    onOk,
-    onChange,
-    value,
-    triggerType = 'onClick',
-    labelProp = 'extra',
-    format = defaultFormat,
-    disabled,
-    extra: extraProp,
-    data = [],
     [FIELD_DATA_PROP]: fieldData = {},
     [FIELD_META_PROP]: fieldMeta = {},
+    children,
+    data = [],
+    disabled,
+    extra: extraProp,
+    format = defaultFormat,
+    labelProp = 'extra',
+    onCancel,
+    onChange,
+    onOk,
+    placeholder,
     showError = false,
+    triggerType = 'onClick',
+    value,
     ...cascaderProps
   } = props;
 

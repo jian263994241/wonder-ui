@@ -8,7 +8,12 @@ import TouchFeedback from '../TouchFeedback';
  * 受控组件
  */
 const CheckableTag = React.forwardRef(function CheckableTag(props, ref) {
-  const { checked, onChange, onClick, ...rest } = props;
+  const { 
+    checked, 
+    onChange, 
+    onClick, 
+    ...rest 
+  } = props;
   const triggerFn = onChange || onClick;
   const handleClick = React.useCallback((e)=>{
     if (triggerFn) {

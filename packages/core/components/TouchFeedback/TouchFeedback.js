@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
 import clsx from 'clsx';
+import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
 
 const TouchFeedback = (props)=>{
   const { 
-    disabled,
-    children,
+    activeClassName,
     activeStyle,
-    activeClassName
+    children,
+    disabled,
   } = props;
   const [active, setActive] = React.useState(false);
 

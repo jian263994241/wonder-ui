@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import EmptyIcon from './EmptyIcon';
 import withStyles from '../withStyles';
-import clsx from 'clsx';
 
 /**
  * @visibleName Empty 空状态
  */
 const Empty = React.forwardRef(function Empty(props, ref) {
   const { 
+    children,
     classes, 
     className,
     description = '暂无数据',
     image: Image = EmptyIcon,
     imageStyle,
-    children,
     ...rest
   } = props;
   

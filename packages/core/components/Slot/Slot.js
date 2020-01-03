@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import idxx from '@wonder-ui/utils/idxx';
+import useEnhancedEffect from '@wonder-ui/utils/useEnhancedEffect';
 
 const SlotContext = React.createContext({});
 
@@ -10,7 +11,7 @@ const Slot = (props)=>{
   const id = React.useMemo(()=> idxx(), []);
   const { dispatch } = slotContext;
 
-  React.useEffect(()=>{
+  useEnhancedEffect(()=>{
     if(name && dispatch){
       dispatch({ type: 'add', data: { id, name, component: children } })
     }

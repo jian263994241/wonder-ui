@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
-import Transition from './Transition';
 import { styles, duration } from './styles';
-import usePageInit from '../usePageInit';
-import UIRouteContext from '../UIRouteContext';
-import useRouterContext from '../useRouterContext';
-import useComponent from './useComponent';
 import { withStyles } from 'react-jss';
 import clsx from 'clsx';
+import Transition from './Transition';
+import UIRouteContext from '../UIRouteContext';
+import useComponent from './useComponent';
+import useEnhancedEffect from '@wonder-ui/utils/useEnhancedEffect';
+import usePageInit from '../usePageInit';
+import useRouterContext from '../useRouterContext';
 
 const RouteComponent = React.memo(function RouteComponent(props) {
   const {
@@ -65,7 +66,7 @@ const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
   const [animationType, setAnimation] = React.useState('none');
   const timeout = duration[animationType] || 0;
 
-  React.useEffect(()=>{
+  useEnhancedEffect(()=>{
     setTimeout(() => setAnimation(animationDisabled ? 'none': animation), 0);
   }, [animation]);
 

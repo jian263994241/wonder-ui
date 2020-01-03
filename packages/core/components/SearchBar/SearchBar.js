@@ -1,29 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useForkRef from '@wonder-ui/utils/useForkRef';
+import clsx from 'clsx';
+import styles from './styles';
 import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
-import styles from './styles';
+import useForkRef from '@wonder-ui/utils/useForkRef';
 import withStyles from '../withStyles';
-import clsx from 'clsx';
 
 const SearchBar = React.forwardRef(function SearchBar(props, ref){
   const {
+    bordered = true,
+    cancelText = '取消',
     classes = {},
     className,
     defaultValue = '',
-    value,
-    cancelText = '取消',
-    onChange,
-    onFocus,
+    extra,
     onBlur,
-    onSearch,
     onCancel,
+    onChange,
     onClear,
+    onFocus,
+    onSearch,
     showCancelButton = true,
     showSearchIcon = true,
-    extra,
-    bordered = true,
+    value,
     ...rest
   } = props;
   const rootRef = React.useRef(null);

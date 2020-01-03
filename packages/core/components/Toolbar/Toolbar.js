@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '../withStyles';
 import clsx from 'clsx';
-import Flex from '../Flex';
-import Slot from '../Slot';
-import isWuiComponent from '@wonder-ui/utils/isWuiComponent';
 import DisabledTouchMove from '../DisabledTouchMove';
+import Flex from '../Flex';
+import isWuiComponent from '@wonder-ui/utils/isWuiComponent';
+import Slot from '../Slot';
+import withStyles from '../withStyles';
 
 /**
  * 提供一个44像素的通栏, 子元素Flex布局
@@ -16,11 +16,11 @@ import DisabledTouchMove from '../DisabledTouchMove';
 const ToolBar = React.forwardRef(function ToolBar(props, ref) {
   const { 
     bottomFixed,
+    buttonFull = true,
+    children,
     classes,
     className,
-    children,
     safeAreaBottom = false,
-    buttonFull = true,
     ...rest
   } = props;
 

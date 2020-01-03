@@ -1,7 +1,7 @@
 import React from 'react';
+import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
 import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
 import useForkRef from '@wonder-ui/utils/useForkRef';
-import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
 
 const DisabledTouchMove = React.forwardRef(function DisabledTouchMove (props, ref){
   const { children } = props;

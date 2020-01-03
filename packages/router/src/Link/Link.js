@@ -23,6 +23,9 @@ const Link = React.forwardRef(function Link(props, ref) {
       return ;
     } 
     const target = typeof to === 'function' ? to(location) : to;
+
+    if(!target) return null;
+    
     const state = target.state || {};
     if(replace){
       routerStore.replace(target, state);

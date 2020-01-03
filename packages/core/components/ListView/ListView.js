@@ -25,16 +25,16 @@ ListViewRow.propTypes =  {
 const ListView = React.forwardRef(function ListView(props, ref) {
   const {
     data = [],
+    initialScrollOffset = 0,
     isItemLoaded = index => true ,
+    itemKey,
     itemSize = 44,
+    layout = 'vertical',
     loadMoreItems,
+    PullToRefresh: allowPullToRefresh = false,
+    PullToRefreshProps = {},
     renderRow,
     useIsScrolling = false,
-    initialScrollOffset = 0,
-    itemKey,
-    layout = 'vertical',
-    PullToRefresh = false,
-    PullToRefreshProps = {}
   } = props;
 
   const itemCount = data.length;
@@ -70,7 +70,7 @@ const ListView = React.forwardRef(function ListView(props, ref) {
       }
     </InfiniteLoader>
   );
-  if(PullToRefresh){
+  if(allowPullToRefresh){
     return (
       <AutoSizer>
         {

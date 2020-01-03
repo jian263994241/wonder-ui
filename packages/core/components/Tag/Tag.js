@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '../withStyles';
 import clsx from 'clsx';
 import styles, { createColor } from './styles';
+import withStyles from '../withStyles';
 
 /**
  * @visibleName Tag 标签
  */
 const Tag = React.forwardRef((props, ref)=>{
   const {
+    checked,
+    children,
     classes,
     className,
-    children,
-    color,
     clickable,
-    checked,
+    color,
     style,
     ...rest
   } = props;

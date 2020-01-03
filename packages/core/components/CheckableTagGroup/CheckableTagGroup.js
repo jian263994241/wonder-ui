@@ -3,8 +3,13 @@ import CheckableGroup from '../CheckableGroup';
 import CheckableTag from '../CheckableTag';
 
 const CheckableTagGroup = React.forwardRef(function CheckableTagGroup(props, ref) {
-  
-  const { data = [], exclusive, value, onChange, ...rest } = props;
+  const { 
+    data = [], 
+    exclusive, 
+    onChange, 
+    value, 
+    ...rest 
+  } = props;
 
   return (
     <CheckableGroup

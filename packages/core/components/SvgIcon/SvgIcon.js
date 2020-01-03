@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './styles';
 import capitalize from '@wonder-ui/utils/capitalize';
-import withStyles from '../withStyles';
 import clsx from 'clsx';
+import styles from './styles';
+import withStyles from '../withStyles';
 
 const SvgIcon = React.forwardRef((props, ref)=>{
   const {
     children,
     classes,
-    component: Component = 'svg',
-    color = 'inherit',
     className,
+    color = 'inherit',
+    component: Component = 'svg',
     fontSize = 'default',
     htmlColor,
     titleAccess,

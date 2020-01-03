@@ -1,26 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useStyles from '../Picker/styles';
-import RCDatePicker from 'rmc-date-picker/lib/DatePicker';
+import Button from '../Button';
 import defaultLocale from 'rmc-date-picker/lib/locale/zh_CN';
-import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import Drawer from '../Drawer';
 import HeaderBar from '../HeaderBar';
-import Button from '../Button';
+import RCDatePicker from 'rmc-date-picker/lib/DatePicker';
+import useEventCallback from '@wonder-ui/utils/useEventCallback';
+import useStyles from '../Picker/styles';
 
 const DatePickView = React.forwardRef(function DatePickView(props, ref){
   const {
     cancelText = '取消',
-    okText = '确定',
-    title,
-    onChange,
-    onDateChange,
-    value: inValue,
-    onOk,
-    onCancel,
-    visible = false,
     defaultValue = new Date(),
     locale = defaultLocale,
+    okText = '确定',
+    onCancel,
+    onChange,
+    onDateChange,
+    onOk,
+    title,
+    value: inValue,
+    visible = false,
     ...mDatePickerProps
   } = props;
   const classes = useStyles();

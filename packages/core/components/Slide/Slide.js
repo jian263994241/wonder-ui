@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Transition from '../Transition';
 import { easing, duration } from '../styles/transitions';
 import css from 'dom-helpers/css';
+import Transition from '../Transition';
 
 const defaultTimeout = {
   enter: duration.enteringScreen,
@@ -12,9 +12,9 @@ const defaultTimeout = {
 const Slide = React.forwardRef((props, ref)=>{
   const {
     direction,
-    timeout = defaultTimeout,
     onEnter,
     onExited,
+    timeout = defaultTimeout,
     ...rest
   } = props;
 

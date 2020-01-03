@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './styles';
-import getRendered from '@wonder-ui/utils/getRendered';
-import withStyles from '../withStyles';
 import clsx from 'clsx';
+import getRendered from '@wonder-ui/utils/getRendered';
+import styles from './styles';
+import withStyles from '../withStyles';
 
 /**
  * 单个连续模块垂直排列，显示当前的内容、状态和可进行的操作
@@ -11,11 +11,11 @@ import clsx from 'clsx';
  */
 const List = React.forwardRef(function List(props, ref) {
   const { 
+    children,
     classes,
     className,
-    children,
-    renderHeader,
     renderFooter,
+    renderHeader,
     ...rest
   } = props;
   return (

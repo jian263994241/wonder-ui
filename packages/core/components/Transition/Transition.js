@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RtgTransition from 'react-transition-group/Transition';
-import useForkRef from '@wonder-ui/utils/useForkRef';
 import * as transitions from '../styles/transitions';
 import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
+import RtgTransition from 'react-transition-group/Transition';
+import useForkRef from '@wonder-ui/utils/useForkRef';
 
 const reflow = node => node.scrollTop;
 
@@ -19,20 +19,20 @@ const getTransitionProps = (props, options) => {
 const Transition = React.forwardRef((props, ref)=>{
   const { 
     children,
+    easing,
     in: inProp,
     mountOnEnter,
-    unmountOnExit,
     onEnter,
-    onEntering,
     onEntered,
+    onEntering,
     onExit,
-    onExiting,
     onExited,
+    onExiting,
+    propertys = [],
     style,
     styles = { entering: {}, entered: {} },
-    propertys = [],
     timeout,
-    easing,
+    unmountOnExit,
     ...rest
   } = props;
   const handleRef = useForkRef(children.ref, ref);

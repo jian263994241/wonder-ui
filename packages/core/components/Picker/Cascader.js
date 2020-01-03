@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useEventCallback from '@wonder-ui/utils/useEventCallback';
-import HeaderBar from '../HeaderBar';
 import Button from '../Button';
 import Drawer from '../Drawer';
+import HeaderBar from '../HeaderBar';
 import RmcCascader from 'rmc-cascader/lib/Cascader';
+import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import useStyles from './styles';
 
 function getHeadData(data){
@@ -24,17 +24,17 @@ function getHeadData(data){
 const Cascader = React.forwardRef(function Cascader(props, ref) {
   const {
     cancelText = '取消',
-    okText = '确定',
-    onOk, 
-    onCancel,
-    onChange,
-    onPickerChange,
-    title,
-    visible = false,
     cols = 1,
     data = [],
     defaultValue,
+    okText = '确定',
+    onCancel,
+    onChange,
+    onOk, 
+    onPickerChange,
+    title,
     value: inValue,
+    visible = false,
   } = props;
   const classes = useStyles();
   const [value, setValue] = React.useState(inValue);

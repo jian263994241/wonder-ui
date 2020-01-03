@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import css from 'dom-helpers/css';
 import Backdrop from '../Backdrop';
-import Portal from '../Portal';
-import useForkRef from '@wonder-ui/utils/useForkRef';
-import useEventCallback from '@wonder-ui/utils/useEventCallback';
+import createChainedFunction from '@wonder-ui/utils/createChainedFunction';
+import css from 'dom-helpers/css';
 import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
 import ModalManager, { ariaHidden }  from './ModalManager';
 import ownerDocument from '@wonder-ui/utils/ownerDocument';
-import createChainedFunction from '@wonder-ui/utils/createChainedFunction';
+import Portal from '../Portal';
+import useEventCallback from '@wonder-ui/utils/useEventCallback';
+import useForkRef from '@wonder-ui/utils/useForkRef';
 
 const defaultManager = new ModalManager();
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ListItem from '../ListItem';
 import Checkbox from '../Checkbox';
+import ListItem from '../ListItem';
 
 const defaultRenderIcon = ({checked})=>( 
   <Checkbox checked={checked} /> 
@@ -12,16 +12,15 @@ const defaultRenderIcon = ({checked})=>(
  * List.Item的`thumb|extra`属性固定传入Checkbox,其他属性和List.Item一致。
  * @visibleName CheckboxItem 复选框
  */
-const CheckboxItem = React.forwardRef((props, ref)=> {
-
+const CheckboxItem = React.forwardRef(function CheckboxItem(props, ref) {
   const {
-    visible,
-    disabled,
     checked,
+    disabled,
     onChange,
     onClick,
     position = 'left',
     renderIcon = defaultRenderIcon,
+    visible,
     ...rest
   } = props;
 
@@ -49,6 +48,7 @@ const CheckboxItem = React.forwardRef((props, ref)=> {
   )
 })
 
+CheckboxItem.displayName = 'CheckboxItem';
 
 CheckboxItem.defaultProps = {
   visible: false,

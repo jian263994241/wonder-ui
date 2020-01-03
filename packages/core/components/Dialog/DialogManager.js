@@ -1,5 +1,3 @@
-
-
 export default class DialogManager {
 
   modalStack = [];

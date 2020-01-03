@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../Modal';
-import Indicator from '../ActivityIndicator';
-import withStyles from '../withStyles';
 import clsx from 'clsx';
+import Indicator from '../ActivityIndicator';
+import Modal from '../Modal';
+import withStyles from '../withStyles';
 
 /**
  * 用于加载/处理数据时候的等待状态
@@ -18,11 +18,11 @@ import clsx from 'clsx';
  */
 const Preloader = React.forwardRef(function Preloader(props, ref) {
   const {
-    indicator = <Indicator size="medium" color="#fff"/>,
     classes,
     className,
-    visible,
+    indicator = <Indicator size="medium" color="#fff"/>,
     navbarHeight,
+    visible,
     ...rest
   } = props;
 

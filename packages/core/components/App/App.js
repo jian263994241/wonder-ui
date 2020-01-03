@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './styles';
-import withStyles from '../withStyles';
-import { ThemeProvider } from '../styles/theming';
 import { Router, RouterStore } from '@wonder-ui/router';
-import AppContext from './AppContext';
+import { ThemeProvider } from '../styles/theming';
 import AppClass from '../AppClass';
+import AppContext from './AppContext';
+import styles from './styles';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
+import withStyles from '../withStyles';
 
 /**
  * 创建一个App环境, 包裹其他组件
@@ -17,11 +17,11 @@ const App = React.forwardRef((props, ref) => {
     app: appInput,
     children,
     classes,
-    theme: themeInput = {},
-    type,
-    routes,
     on,
     routerStore: routerStoreInput,
+    routes,
+    theme: themeInput = {},
+    type,
     ...rest
   } = props;
 

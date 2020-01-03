@@ -3,27 +3,35 @@ import PropTypes from 'prop-types';
 import BackButton from './BackButton';
 import HeaderBar from '../HeaderBar';
 
+const styles = {
+  root: {
+    position: 'sticky'
+  }
+}
+
 const Navbar = React.forwardRef(function Navbar(props, ref){
   const {
-    title,
     barLeft,
     barRight,
     showBackButton = true,
+    style,
+    title,
     ...rest
   } = props;
 
   return (
     <HeaderBar
-      bordered
-      ref={ref}
-      title={title}
-      barRight={barRight}
       barLeft={
         <>
           {showBackButton && <BackButton/>}
           {barLeft}
         </>
       }
+      barRight={barRight}
+      bordered
+      ref={ref}
+      style={{...styles, ...style}}
+      title={title}
       {...rest}
     />
   )

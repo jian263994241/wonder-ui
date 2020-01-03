@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Buttonbase from '../ButtonBase';
+import clsx from 'clsx';
+import Fade from '../Fade';
+import Modal from '../Modal';
 import styles from './styles';
 import withStyles from '../withStyles';
-import clsx from 'clsx';
-import Modal from '../Modal';
-import Fade from '../Fade';
-import Buttonbase from '../ButtonBase';
 
 /**
  * 系统信息提示, 并请求用户进行下一步操作
@@ -14,16 +14,16 @@ import Buttonbase from '../ButtonBase';
 const Dialog = React.forwardRef(function Dialog(props, ref) {
 
   const {
+    actions = [],
     afterClose,
     classes,
     className,
-    visible,
-    title,
+    container,
     text,
     textAfter,
-    actions = [],
+    title,
     toast,
-    container,
+    visible,
   } = props;
   
   const transtionStyles = {

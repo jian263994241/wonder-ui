@@ -1,5 +1,14 @@
 import React from 'react';
-import { Page, Block, CheckableTagGroup, ContentBlock, List, CheckboxItem, CheckableGroup, Form } from '@wonder-ui/core';
+import { 
+  Block, 
+  CheckableGroup, 
+  CheckableTagGroup, 
+  CheckboxItem, 
+  ContentBlock, 
+  Form, 
+  List, 
+  Page,
+} from '@wonder-ui/core';
 
 
 export default Form.create()(function CheckableGroupExamples(props) {
@@ -7,7 +16,6 @@ export default Form.create()(function CheckableGroupExamples(props) {
 
   return (
     <Page name="CheckableGroup" navbar>
-
       <ContentBlock header="Default">
         <Block bottom={1}>
           <span>多选: </span>
