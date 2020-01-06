@@ -1,26 +1,36 @@
 import React from 'react';
-import { Page, Button, LcnPicker, ContentBlock } from '@wonder-ui/core';
+import { Page, Button, Picker, ContentBlock, Form } from '@wonder-ui/core';
+import lcnForm from 'lcn/lcn-form';
 
-
-const ExtraButton = props => {
+const ExtraButton = React.forwardRef((props, ref) => {
   const {extra='请选择', ...rest} = props;
 
-  
   return (
-    <Button {...rest}>{extra}</Button>
+    <Button ref={ref} {...rest}>{extra}</Button>
   )
-}
+})
+
+const LcnPicker = React.forwardRef(function LcnPicker(props, ref) {
+  return (
+    <Picker ref={ref} data={lcnForm} cols={3} {...props}/>
+  )
+});
 
 
 
-export default function PickerExamples() {
-  
+export default Form.create()(function PickerExamples(props) {
+  const { form } = props;
   return (
     <Page name="Picker" navbar>
-      <ContentBlock header={<span>Button&Picker</span>}>
-        <LcnPicker><ExtraButton/></LcnPicker>
-        
+      <ContentBlock header={<span>LcnPicker & Button</span>}>
+        {
+          form.getFieldDecorator('group', {
+
+          })(
+            <LcnPicker><ExtraButton/></LcnPicker>
+          )
+        }
       </ContentBlock>
     </Page>
   )
-}
+})

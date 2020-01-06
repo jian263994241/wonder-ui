@@ -54,7 +54,6 @@ export { default as Flex } from './components/Flex';
 export { default as HeaderBar } from './components/HeaderBar';
 export { default as InputBase } from './components/InputBase';
 export { default as InputItem } from './components/InputItem';
-export { default as LcnPicker } from './components/LcnPicker';
 export { default as List } from './components/List';
 export { default as ListItem } from './components/ListItem';
 export { default as ListView } from './components/ListView';

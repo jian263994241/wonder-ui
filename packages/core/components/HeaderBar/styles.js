@@ -17,7 +17,7 @@ export default theme => ({
     textAlign: 'center',
     alignSelf: 'center',
     wordBreak: 'keep-all',
-    fontSize: 17,
+    fontSize: theme.typography.pxToRem(17),
     flex: 2,
   },
   left: {

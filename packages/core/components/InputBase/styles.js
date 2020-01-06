@@ -67,7 +67,7 @@ export default theme => {
       border: 0,
       boxSizing: 'content-box',
       background: 'none',
-      height: '1.1875em', // Reset (19px), match the native input line-height
+      height: theme.typography.pxToRem(19), // Reset (19px), match the native input line-height
       margin: 0, // Reset for Safari
       WebkitTapHighlightColor: 'transparent',
       display: 'block',
@@ -88,7 +88,11 @@ export default theme => {
       },
       '&::-webkit-search-decoration': {
         // Remove the padding when type=search.
-        '-webkit-appearance': 'none',
+        'appearance': 'none',
+      },
+      '&::-webkit-search-cancel-button': {
+        // Remove the cancel button when type=search.
+        display: 'none'
       },
       // Show and hide the placeholder logic
       'label[data-shrink=false] + $formControl &': {
@@ -137,5 +141,21 @@ export default theme => {
     inputAdornedEnd: {},
     /* Styles applied to the `input` element if `hiddenLabel={true}`. */
     inputHiddenLabel: {},
+    iconClear: {
+      width: 20,
+      height: 20,
+      marginLeft: 4,
+      flexShrink: 0,
+      borderRadius: '50%',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      position: 'relative',
+      alignSelf: 'center',
+      backgroundImage: theme.svg.create(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28"><circle cx="14" cy="14" r="14" fill="#ccc"/><path stroke="#fff" stroke-width="2" stroke-miterlimit="10" d="M8 8l12 12"/><path fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="10" d="M20 8L8 20"/></svg>`),
+    },
+    textAlignRight: {
+      textAlign: 'right',
+    },
   };
 };

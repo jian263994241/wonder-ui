@@ -5,7 +5,7 @@ import HeaderBar from '../HeaderBar';
 
 const styles = {
   root: {
-    position: 'sticky'
+    position: 'fixed'
   }
 }
 

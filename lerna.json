@@ -1,5 +1,5 @@
 {
-  "packages": [ "packages/*" ],
+  "packages": [ "packages/*", "kitchen-sink" ],
   "npmClient": "npm",
   "version": "independent"
 }

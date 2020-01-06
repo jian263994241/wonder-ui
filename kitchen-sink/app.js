@@ -24,7 +24,6 @@ const params = {
         { path: 'dialog', async: ()=> import('./pages/Dialog') },
         { path: 'drawer', async: ()=> import('./pages/Drawer') },
         { path: 'form', async: ()=> import('./pages/Form') },
-        { path: 'lcn-picker', async: ()=> import('./pages/LcnPicker') },
         { path: 'list-view', async: ()=> import('./pages/ListView') },
         { path: 'list', async: ()=> import('./pages/List') },
         { path: 'picker', async: ()=> import('./pages/Picker') },

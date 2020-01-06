@@ -13,13 +13,14 @@ export default theme => ({
     overflow: 'hidden',
     willChange: 'transform,opacity',
     outline: 'none',
+    fontFamily: theme.typography.fontFamily,
   },
   body: {
     padding: 15,
     borderRadius: '13px 13px 0 0',
     position: 'relative',
     background: theme.palette.background.modal,
-    fontSize: 14,
+    fontSize: theme.typography.pxToRem(14),
     ...theme.hairline.create('bottom'),
     '&.noButtons': {
       borderRadius: 13,
@@ -35,7 +36,7 @@ export default theme => ({
     }
   },
   title: {
-    fontSize: 18,
+    fontSize: theme.typography.pxToRem(18),
     textAlign: 'center',
     fontWeight: 500,
     color: theme.palette.text.primary,
@@ -72,7 +73,7 @@ export default theme => ({
     width: '100%',
     padding: '0 5px',
     height: 44,
-    fontSize: 17,
+    fontSize: theme.typography.pxToRem(17),
     fontWeight: 'normal',
     lineHeight: '44px',
     textAlign: 'center',

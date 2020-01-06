@@ -30,7 +30,6 @@
     "array-tree-filter": "^2.1.0",
     "clsx": "^1.0.4",
     "dom-helpers": "^5.1.0",
-    "lcn": "^1.0.3",
     "prop-types": "^15.7.2",
     "rc-form": "^2.4.8",
     "rc-mounter": "^2.0.0",

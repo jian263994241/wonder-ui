@@ -20,7 +20,6 @@ export default createUseStyles(theme => ({
     '& .wui-picker-item': {
       touchAction: 'manipulation',
       textAlign: 'center',
-      fontSize: 16,
       height: 34,
       lineHeight: '34px',
       color: '#000',

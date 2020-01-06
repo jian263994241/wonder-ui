@@ -6,6 +6,7 @@ import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 import withStyles from '../withStyles';
+import InputBase from '../InputBase';
 
 const SearchBar = React.forwardRef(function SearchBar(props, ref){
   const {
@@ -33,10 +34,8 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
   
   const [innerValue, setInnerValue] = React.useState('');
   const [inFocus, setFocus] = React.useState(false);
-  const inputProcess = React.useRef();
 
   const showCancel = showCancelButton && !extra && inFocus;
-  const showClear = inFocus && (innerValue != '');
 
   useDisabledRefTouchMove(rootRef);
 
@@ -56,10 +55,8 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
     changeValue(val);
   });
 
-  const handleClear = useEventCallback(()=>{
-    clearTimeout(inputProcess.current);   
+  const handleClear = useEventCallback(()=>{ 
     changeValue(''); 
-    inputRef.current.focus();
     onClear && onClear();
   });
 
@@ -69,10 +66,8 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
   });
 
   const handleBlur = useEventCallback((e)=>{
-    inputProcess.current = setTimeout(() => {
-      setFocus(false);
-      onBlur && onBlur(e);
-    }, 10);
+    setFocus(false);
+    onBlur && onBlur(e);
   });
 
   const handleCancel = useEventCallback((e)=>{
@@ -92,9 +87,7 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
     <div 
       className={clsx(
         classes.root,
-        {
-          [classes.bordered]: bordered
-        },
+        bordered && classes.bordered, 
         className
       )} 
       ref={rootRef}
@@ -102,7 +95,9 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
       <form className={classes.body} onSubmit={handleSearch}>
         <div className={clsx(classes.input, showCancel && classes.inputStart)}>
           {showSearchIcon && <i className={classes.iconSearch}/>}
-          <input
+          <InputBase
+            fullWidth
+            clearButton
             type="search"
             autoComplete="off"
             name="searchField"
@@ -111,9 +106,9 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
             onChange={handleChange} 
             onFocus={handleFocus}
             onBlur={handleBlur}
+            onClear={handleClear}
             {...rest}
           />
-          <i className={clsx(classes.iconClear, !showClear && classes.hide)} onClick={handleClear}/>
         </div>
         <span 
           className={clsx(

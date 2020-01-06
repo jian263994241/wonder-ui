@@ -43,6 +43,7 @@
     "webpack": "^4.41.2"
   },
   "dependencies": {
+    "lcn": "^1.0.3",
     "react-jss": "^10.0.0"
   }
 }

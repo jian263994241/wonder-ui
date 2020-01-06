@@ -29,7 +29,6 @@ export default function IndexPage(props) {
           <LinkDetail to="/dialog">Dialog 提示</LinkDetail>
           <LinkDetail to="/drawer">Drawer 抽屉</LinkDetail>
           <LinkDetail to="/form">Form 表单</LinkDetail>
-          <LinkDetail to="/lcn-picker">LcnPicker 选择器</LinkDetail>
           <LinkDetail to="/list-view">ListView 长列表</LinkDetail>
           <LinkDetail to="/list">List 列表</LinkDetail>
           <LinkDetail to="/picker">Picker 选择器</LinkDetail>
