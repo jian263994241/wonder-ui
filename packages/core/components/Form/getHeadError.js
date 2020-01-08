@@ -26,17 +26,4 @@ export const flatError = (error)=>{
   return error;
 }
 
-const getFirstError = (errors)=>{
-  let firstError;
-  for(let k in errors){
-    if(!firstError){
-      firstError = errors[k];
-      break;
-    }
-  }
-  return flatError(firstError).message;
-}
-
-
-
-export default getFirstError;
+export default flatError;

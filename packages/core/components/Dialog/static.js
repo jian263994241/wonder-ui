@@ -6,7 +6,7 @@ import createChainedFunction from  '@wonder-ui/utils/createChainedFunction';
 import toggleVisible from './toggleVisible';
 
 const dialogManager = new DialogManager();
-
+const noop = ()=>{};
 /**
  * Dialog.alert
  */
@@ -72,6 +72,7 @@ Dialog.confirm = function DialogConfirm({ title, text, onOk, okText = '确定', 
  */
 Dialog.toast = function DialogToast(text, callback) {
   const container = document.createElement('div');
+  callback = typeof callback === 'function' ? callback : noop;
   const toggleToast = toggleVisible((visible, clearQueue)=> {
     ReactDOM.render(
       <Dialog   
@@ -90,7 +91,7 @@ Dialog.toast = function DialogToast(text, callback) {
 
       setTimeout(()=>{
         toggleToast(clearQueue);
-        callback && callback();
+        callback();
       }, 1000);
     }
   );

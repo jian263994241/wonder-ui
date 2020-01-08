@@ -23,7 +23,11 @@ export default theme =>({
     },
     '&:last-child $line': {
       ...theme.hairline.remove('bottom'),
-    }
+    },
+  },
+  multiline: {
+    height: 'auto',
+    minHeight: 44,
   },
   line: {
     position: 'relative',
@@ -33,8 +37,8 @@ export default theme =>({
     alignItems: 'center',
     paddingRight: 15,
     overflow: 'hidden',
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.5),
     ...theme.hairline.create('bottom')
   },
   label: {
@@ -46,6 +50,7 @@ export default theme =>({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     padding: '4px 0',
+    flexShrink: 0,
     '&.label-size-2': {
       width: 2 * fontSize,
     },
@@ -66,14 +71,14 @@ export default theme =>({
     },
   },
   input: {
-    lineHeight: theme.typography.pxToRem(fontSize),
-    height: theme.typography.pxToRem(fontSize),
+    // lineHeight: theme.typography.pxToRem(fontSize),
+    // height: theme.typography.pxToRem(fontSize),
+    alignSelf: 'center',
   },
   extra: {
     color: theme.palette.text.secondary,
     textAlign: 'right',
     paddingLeft: theme.spacing(0.5),
-    font: 'inherit',
-    lineHeight: theme.typography.pxToRem(fontSize),
+    alignSelf: 'center',
   }
 })

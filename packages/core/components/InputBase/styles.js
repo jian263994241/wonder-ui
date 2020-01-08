@@ -63,7 +63,7 @@ export default theme => {
     input: {
       font: 'inherit',
       color: 'currentColor',
-      padding: `${8 - 2}px 0 ${8 - 1}px`,
+      padding: `${8 - 2}px 0 ${8 - 4}px`,
       border: 0,
       boxSizing: 'content-box',
       background: 'none',

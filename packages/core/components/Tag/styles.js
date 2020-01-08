@@ -23,9 +23,9 @@ export default theme =>({
     color: theme.palette.text.primary,
     transition: theme.transitions.create('all'),
     userSelect: 'none',
-    marginLeft: theme.spacing(1),
-    '&:firstChild': {
-      marginLeft: 0
+    
+    '& + &': {
+      marginLeft: theme.spacing(1),
     }
   },
   colorPrimary: {

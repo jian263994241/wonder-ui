@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FIELD_META_PROP, FIELD_DATA_PROP } from './constants';
 import createDOMForm from 'rc-form/lib/createDOMForm';
-import getFirstError from './getFirstError';
+import getHeadError from './getHeadError';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
 
 const Form = React.forwardRef((props, ref)=>{
@@ -41,6 +41,8 @@ Form.create = options => createDOMForm({
   fieldDataProp: FIELD_DATA_PROP
 });
 
-Form.getFirstError = getFirstError;
+Form.getHeadError = getHeadError;
+
+Form.displayName = 'displayName';
 
 export default Form;

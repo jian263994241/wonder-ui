@@ -48,7 +48,7 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     rowsMin,
     startAdornment,
     type = 'text',
-    value: valueProp,
+    value: valueProp = '',
     ...rest
   } = props;
 
@@ -57,11 +57,11 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
   const inputRef = React.useRef();
   const handleInputRefProp = useForkRef(inputRefProp, inputPropsProp.ref);
   const handleInputRef = useForkRef(inputRef, handleInputRefProp);
-  
   const [focused, setFocused] = React.useState(false);
   const [clearButtonVisible, setClearButtonVisibled] = React.useState(false);
-  const muiFormControl = null;
 
+  const muiFormControl = null;
+  
   const fcs = formControlState({
     props,
     muiFormControl,
@@ -110,6 +110,20 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     }
   };
 
+  const hideClearButtonTimeOut = React.useRef();
+
+  useEnhancedEffect(()=>{
+    const element = inputRef.current;
+    if(focused){
+      clearTimeout(hideClearButtonTimeOut.current);
+      showClearButton(element);
+    }else{
+      hideClearButtonTimeOut.current = setTimeout(() => {
+        setClearButtonVisibled(false);
+      }, 0);
+    }
+  }, [focused]);
+
   const handleFocus = event => {
     // Fix a bug with IE 11 where the focus/blur events are triggered
     // while the input is disabled.
@@ -130,19 +144,6 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     } else {
       setFocused(true);
     }
-
-    const element = event.target || inputRef.current
-    setTimeout(()=> showClearButton(element), 0);
-    
-    if(alignRight){
-      const inputValue = element.value;
-      if(inputValue){
-        element.value = '';
-        setTimeout(() => {
-          element.value = inputValue;
-        }, 0);
-      }
-    }
   };
 
   const handleBlur = event => {
@@ -158,15 +159,13 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     } else {
       setFocused(false);
     }
-
-    setTimeout(() => {
-      setClearButtonVisibled(false);
-    }, 166);
   };
 
-  const handleChange = (event, ...args) => {
+  const handleChange = (event) => {
+    const element = event.target || inputRef.current;
+
     if (!isControlled) {
-      const element = event.target || inputRef.current;
+      
       if (element == null) {
         throw new TypeError( 'InputBase: Expected valid input target. ' );
       }
@@ -176,13 +175,14 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
       });
     }
 
+    
     if (inputPropsProp.onChange) {
-      inputPropsProp.onChange(event, ...args);
+      inputPropsProp.onChange(element.value);
     }
 
     // Perform in the willUpdate
     if (onChange) {
-      onChange(event, ...args);
+      onChange(element.value);
     }
 
     showClearButton(event.target);
@@ -249,19 +249,27 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
   };
 
   const handleClear = event => {
+    const element = inputRef.current;
+ 
     if(!isControlled){
-      if(inputRef.current){
-        inputRef.current.value = '';
-      }
-      checkDirty({
-        value: '',
-      });
+      element.value = '';
+
+      checkDirty({ value: '' });
     }
     
+    element.focus();
+
+    if (inputPropsProp.onChange) {
+      inputPropsProp.onChange();
+    }
+
+    if (onChange) {
+      onChange();
+    }
+
     if (onClear) {
       onClear(event);
     }
-    setClearButtonVisibled(false);
   }
 
   React.useEffect(() => {

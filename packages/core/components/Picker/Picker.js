@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
 import Cascader from './Cascader';
 import treeFilter from 'array-tree-filter';
-import Typography from '../Typography';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
 
 const defaultFormat = (values = [])=>{
@@ -17,8 +16,8 @@ const defaultFormat = (values = [])=>{
  */
 const Picker = React.forwardRef(function Picker(props, ref) {
   const {
-    [FIELD_DATA_PROP]: fieldData = {},
-    [FIELD_META_PROP]: fieldMeta = {},
+    [FIELD_DATA_PROP]: fieldData,
+    [FIELD_META_PROP]: fieldMeta,
     children,
     data = [],
     disabled,
@@ -41,12 +40,6 @@ const Picker = React.forwardRef(function Picker(props, ref) {
 
   const [visible, setVisible] = React.useState(visible);
   const [extra, setExtra] = React.useState('');
-
-  const error = React.useMemo(()=>{
-    if(fieldData.errors){
-      return fieldData.errors[0];
-    }
-  }, [fieldData.errors]);
   
   const getValueProps = (value)=>{
     if(value){
@@ -88,15 +81,6 @@ const Picker = React.forwardRef(function Picker(props, ref) {
     onOk && onOk(value, valueProps);
   });
 
-  const _extra = React.useMemo(()=>{
-    if(showError && error){
-      return (
-        <Typography error inline>{error.message}</Typography>
-      )
-    }
-    return extra;
-  }, [extra, error]);
-
   return (
     <React.Fragment>
       { 
@@ -105,11 +89,13 @@ const Picker = React.forwardRef(function Picker(props, ref) {
           typeof children !== 'string' &&
           React.isValidElement(children)
         ) ? React.cloneElement(children, { 
-          [labelProp]: _extra, 
+          [FIELD_DATA_PROP]: fieldData,
+          [FIELD_META_PROP]: fieldMeta,
+          [labelProp]: extra, 
           [triggerType]: handleClick,
-          readOnly: true,
           disabled,
-          ref
+          readOnly: true,
+          ref,
         }) : (
           <a disabled={disabled} onClick={handleClick} ref={ref}>{_extra}</a>
         )

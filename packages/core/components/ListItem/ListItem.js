@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
 import Arrow from '../icons/Arrow';
 import capitalize from '@wonder-ui/utils/capitalize';
 import clsx from 'clsx';
+import IconInfoOutlined from '../icons/InfoOutlined';
 import styles from './styles';
 import TouchFeedback from '../TouchFeedback';
 import withStyles from '../withStyles';
-
 /**
  * 列表项
  * 
@@ -18,6 +19,8 @@ import withStyles from '../withStyles';
  */
 const ListItem = React.forwardRef(function ListItem(props, ref) {
   const {
+    [FIELD_DATA_PROP]: fieldData = {},
+    [FIELD_META_PROP]: fieldMeta,
     activeState,
     align = 'center',
     arrow,
@@ -31,6 +34,14 @@ const ListItem = React.forwardRef(function ListItem(props, ref) {
     wrap,
     ...rest
   } = props;
+
+  const error = React.useMemo(()=>{
+    if(fieldData.errors){
+      return fieldData.errors[0];
+    }
+    return {};
+  }, [fieldData.errors]);
+  
 
   return (
     <TouchFeedback>
@@ -66,7 +77,10 @@ const ListItem = React.forwardRef(function ListItem(props, ref) {
               )}
             > {extra} </div> 
           )}
-          { !!arrow && (
+          {
+            error.message && <IconInfoOutlined color="error" style={{marginLeft:3}}/>
+          }
+          { !error.message && !!arrow && (
               <div className={classes['arrowAlign' + capitalize(align)]} aria-hidden="true" >
                 <Arrow 
                   className={clsx(
