@@ -25,7 +25,9 @@ export { default as Portal } from './components/Portal';
 export { default as createTheme } from './components/createTheme';
 export { default as createUseStyles } from './components/createUseStyles';
 export { default as styled } from './components/styled';
+export { default as useTheme } from './components/useTheme';
 export { default as withStyles } from './components/withStyles';
+export { default as withTheme } from './components/withTheme';
 
 //feedback
 export { default as ActivityIndicator } from './components/ActivityIndicator';

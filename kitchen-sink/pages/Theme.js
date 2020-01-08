@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, List, ListItem, createTheme, Switch, CheckableGroup, CheckboxItem } from '@wonder-ui/core';
+import { Page, List, ListItem, createTheme, Switch, CheckableGroup, CheckboxItem, useTheme } from '@wonder-ui/core';
 
 
 const darkTheme = createTheme({
@@ -21,8 +21,9 @@ const colors = [
 ]
 
 export default function ThemeExamples(props) {
+  const theme = useTheme();
   const setTheme = window.setTheme;
-  const [dark, setDark] = React.useState(false);
+  const [dark, setDark] = React.useState(theme.palette.type === 'dark');
   const [currentColor, setCurrentColor] = React.useState();
 
   const changeDark = (checked)=>{
@@ -40,7 +41,7 @@ export default function ThemeExamples(props) {
         palette: {
           type: dark ? 'dark': 'light',
           primary: {
-            main: value
+            main: value,
           },
         },
       })
