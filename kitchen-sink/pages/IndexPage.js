@@ -42,7 +42,7 @@ export default function IndexPage(props) {
           <LinkDetail to="/theme">Theme 主题</LinkDetail>
         </List>
         <List renderHeader={()=> `Router`}>
-          <LinkDetail to="/typography">RouteTransition 页面过渡</LinkDetail>
+          <LinkDetail to="/route-transition">RouteTransition 页面过渡</LinkDetail>
         </List>
       </Block>
     </Page>

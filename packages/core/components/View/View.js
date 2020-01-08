@@ -2,15 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View as RouteView } from '@wonder-ui/router';
 import AppContext from '../AppContext';
+import styles from './styles';
+import withStyles from '../styles/withStyles';
 
 /**
  * 用来包裹所有Page
  * @visibleName View 视图
  */
-export default function View (props) {
+function View (props) {
+  const {classes, ...rest} = props;
   const app = React.useContext(AppContext);
+
   return (
-    <RouteView dataSource={app.routes} {...props} />
+    <RouteView dataSource={app.routes} routeProps={{classes: {root: classes.root}}} {...rest} />
   )
 }
 
@@ -29,3 +33,4 @@ View.propTypes = {
   noMatch: PropTypes.node
 }
 
+export default withStyles(styles)(View);

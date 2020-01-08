@@ -1,18 +1,14 @@
 import React from 'react';
-import { Page, List, ListItem, createTheme, Switch, CheckableGroup, CheckboxItem, useTheme } from '@wonder-ui/core';
-
-
-const darkTheme = createTheme({
-  palette: {
-    type: 'dark',
-    // primary: {
-    //   main: '#1DA57A'
-    // },
-    // secondary: {
-    //   main: '#754CC6'
-    // }
-  },
-});
+import { 
+  CheckableGroup, 
+  CheckboxItem, 
+  createTheme, 
+  List, 
+  ListItem, 
+  Page, 
+  Switch, 
+  useTheme,
+} from '@wonder-ui/core';
 
 const colors = [
   {label: '4791db', value: '#4791db'},
@@ -24,8 +20,8 @@ export default function ThemeExamples(props) {
   const theme = useTheme();
   const setTheme = window.setTheme;
   const [dark, setDark] = React.useState(theme.palette.type === 'dark');
-  const [currentColor, setCurrentColor] = React.useState();
-
+  const [currentColor, setCurrentColor] = React.useState(theme.palette.primary.main);
+  
   const changeDark = (checked)=>{
     if(checked){
       setTheme(darkTheme)

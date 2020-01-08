@@ -34,6 +34,7 @@ const params = {
         { path: 'theme', async: ()=> import('./pages/Theme') },
         { path: 'toolbar', async: ()=> import('./pages/ToolBar') },
         { path: 'typography', async: ()=> import('./pages/Typography') },
+        { path: 'route-transition', async: ()=> import('./pages/routeTransition') },
       ]
     },
   ]
@@ -43,14 +44,21 @@ const params = {
 function MyApp() {
 
   const [theme, setTheme] = React.useState({});
+  const [animation, setAnimation] = React.useState('slide');
   
   window.setTheme = (theme = {})=>{
     setTheme(theme);
   }
 
+  window._animation = animation;
+
+  window.setTransitionType = (type = 'slide')=>{
+    setAnimation(type)
+  }
+
   return (
     <App theme={theme} {...params}>
-      <View noMatch={<NoMatch/>}/>
+      <View noMatch={<NoMatch/>} animation={animation}/>
     </App>
   )
 }

@@ -19,9 +19,10 @@ function View(props) {
     className,
     style,
     noMatch,
+    routeProps,
     ...rest
   } = props;
-
+  
   const context = useRouterContext();
   const location = context.location;
 
@@ -74,6 +75,7 @@ function View(props) {
             fallback={fallback}
             className={className}
             style={style}
+            {...routeProps}
             {...routeConf}  
           />
         ))
