@@ -14,7 +14,12 @@ function View (props) {
   const app = React.useContext(AppContext);
 
   return (
-    <RouteView dataSource={app.routes} routeProps={{classes: {root: classes.root}}} {...rest} />
+    <RouteView 
+      dataSource={app.routes} 
+      classes={{root: classes.root}} 
+      routeProps={{classes: {root: classes.routeRoot}}} 
+      {...rest}  
+    />
   )
 }
 

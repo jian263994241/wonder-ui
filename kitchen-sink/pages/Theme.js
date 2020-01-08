@@ -14,7 +14,13 @@ const colors = [
   {label: '4791db', value: '#4791db'},
   {label: 'ffb74d', value: '#ffb74d'},
   {label: '4caf50', value: '#4caf50'},
-]
+];
+
+const darkTheme = createTheme({
+  palette: {
+    type: 'dark',
+  },
+});
 
 export default function ThemeExamples(props) {
   const theme = useTheme();
