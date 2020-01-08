@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { View, App } from '@wonder-ui/core';
+import { View, App, createTheme } from '@wonder-ui/core';
 
 import IndexPage from './pages/IndexPage';
 import NoMatch from './pages/NoMatch';
+
 
 const params = {
   //events bus
@@ -30,6 +31,7 @@ const params = {
         { path: 'preloader', async: ()=> import('./pages/Preloader') },
         { path: 'searchbar', async: ()=> import('./pages/SearchBar') },
         { path: 'tag', async: ()=> import('./pages/Tag') },
+        { path: 'theme', async: ()=> import('./pages/Theme') },
         { path: 'toolbar', async: ()=> import('./pages/ToolBar') },
         { path: 'typography', async: ()=> import('./pages/Typography') },
       ]
@@ -37,16 +39,22 @@ const params = {
   ]
 }
 
-class MyApp extends Component {
 
-  render(){
+function MyApp() {
 
-    return (
-      <App {...params}>
-        <View/>
-      </App>
-    )
+  const [theme, setTheme] = React.useState({});
+  
+  window.setTheme = (theme = {})=>{
+    setTheme(theme);
   }
+
+  return (
+    <App theme={theme} {...params}>
+      <View noMatch={<NoMatch/>}/>
+    </App>
+  )
 }
+
+
 
 render( <MyApp/>, document.getElementById('root') );

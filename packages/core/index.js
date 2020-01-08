@@ -22,6 +22,7 @@ export { default as Modal } from './components/Modal';
 export { default as Portal } from './components/Portal';
 
 // styles
+export { default as createTheme } from './components/createTheme';
 export { default as createUseStyles } from './components/createUseStyles';
 export { default as styled } from './components/styled';
 export { default as withStyles } from './components/withStyles';

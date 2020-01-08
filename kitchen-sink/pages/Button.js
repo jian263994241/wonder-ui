@@ -14,26 +14,26 @@ export default function ButtonExamples(props){
 
   return (
     <Page name="Button" navbar>
-      <ContentBlock header="size">
+      <ContentBlock header="size" strong={false}>
         <ButtonDemo>default</ButtonDemo>
         <ButtonDemo size="small">small</ButtonDemo>
         <ButtonDemo size="medium">medium</ButtonDemo>
         <ButtonDemo size="large">large</ButtonDemo>
       </ContentBlock>
       
-      <ContentBlock header="full">
+      <ContentBlock header="full" strong={false}>
         <ButtonDemo full>full</ButtonDemo>
         <ButtonDemo fullWidth>fullWidth</ButtonDemo>
       </ContentBlock>
       
-      <ContentBlock header="variant">
+      <ContentBlock header="variant" strong={false}>
         <ButtonDemo>default</ButtonDemo>
         <ButtonDemo variant="text">text</ButtonDemo>
         <ButtonDemo variant="outlined">outlined</ButtonDemo>
         <ButtonDemo variant="contained">contained</ButtonDemo>
       </ContentBlock>
 
-      <ContentBlock header="color">
+      <ContentBlock header="color" strong={false}>
         <div>
           <ButtonDemo>default</ButtonDemo>
           <ButtonDemo color="primary">primary</ButtonDemo>
@@ -51,22 +51,9 @@ export default function ButtonExamples(props){
         </div>
       </ContentBlock>
       
-      <ContentBlock header="disabled">
-        <div>
-          <ButtonDemo disabled>default</ButtonDemo>
-          <ButtonDemo disabled color="primary">primary</ButtonDemo>
-          <ButtonDemo disabled color="secondary">secondary</ButtonDemo>
-        </div>
-        <div>
-          <ButtonDemo disabled variant="outlined">default</ButtonDemo>
-          <ButtonDemo disabled color="primary" variant="outlined">primary</ButtonDemo>
-          <ButtonDemo disabled color="secondary" variant="outlined">secondary</ButtonDemo>
-        </div>
-        <div>
-          <ButtonDemo disabled variant="text">default</ButtonDemo>
-          <ButtonDemo disabled color="primary" variant="text">primary</ButtonDemo>
-          <ButtonDemo disabled color="secondary" variant="text">secondary</ButtonDemo>
-        </div>
+      <ContentBlock header="disabled" strong={false}>
+        <ButtonDemo disabled>default</ButtonDemo>
+        <ButtonDemo disabled variant="text">default</ButtonDemo>
       </ContentBlock>
     </Page>
   )

@@ -6,8 +6,9 @@ import AppClass from '../AppClass';
 import AppContext from './AppContext';
 import styles from './styles';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
-import withStyles from '../withStyles';
+import createUseStyles from '../styles/createUseStyles';
 
+const useStyles = createUseStyles(styles, { name: 'AppGlobal'});
 /**
  * 创建一个App环境, 包裹其他组件
  * @visibleName App 顶层组件
@@ -24,6 +25,8 @@ const App = React.forwardRef((props, ref) => {
     type,
     ...rest
   } = props;
+
+  useStyles();
 
   const app = React.useMemo(()=> {
     const appParams = { on };
@@ -44,7 +47,7 @@ const App = React.forwardRef((props, ref) => {
   const handleRouteChange = useEventCallback((mached, location, name)=>{
     app.emit('routeChange', mached, location, name);
   });
-  
+
   return (
     <ThemeProvider theme={themeInput}>
       <AppContext.Provider value={app}>
@@ -144,6 +147,4 @@ App.propTypes = {
   routerStore: PropTypes.instanceOf(RouterStore),
 }
 
-App.displayName = 'App';
-
-export default withStyles(styles)(App);
+export default App;

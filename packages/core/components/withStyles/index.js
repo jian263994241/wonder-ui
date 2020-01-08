@@ -1,1 +1,1 @@
-export { default } from './withStyles';
+export { default } from '../styles/withStyles';

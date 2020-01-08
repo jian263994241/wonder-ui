@@ -2,6 +2,7 @@ import React from 'react';
 import Arrow from '../icons/Arrow';
 import Button from '../Button';
 import withStyles from '../withStyles';
+import { fade } from '../styles/colorManipulator';
 
 function BackButton({classes}) {
   return (
@@ -17,7 +18,7 @@ function BackButton({classes}) {
 }
 
 
-export default withStyles({
+export default withStyles(theme=>({
   root: {
     minWidth: 50
   },
@@ -25,7 +26,7 @@ export default withStyles({
     display: 'block',
     width: 15,
     height: 15,
-    color: '#c7c7c7',
+    color: fade(theme.palette.text.primary, 0.3),
     transform: 'rotate(180deg)'
   }
-})(BackButton);
+}))(BackButton);

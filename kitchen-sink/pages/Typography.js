@@ -28,9 +28,12 @@ export default function TypographyExamples() {
         <Typography type="caption" inline> Type caption inline</Typography>
       </ContentBlock>
       <ContentBlock header="Color">
-        <Typography type="default" primary> Type default primary, </Typography>
-        <Typography type="default" secondary> Type default secondary, </Typography>
-        <Typography type="default" error> Type default error, </Typography>
+        <Typography color="primary"> Color primary, </Typography>
+        <Typography color="secondary"> Color secondary, </Typography>
+        <Typography color="error"> Color error, </Typography>
+        <Typography color="info"> Color info, </Typography>
+        <Typography color="warning"> Color warning, </Typography>
+        <Typography color="success"> Color success, </Typography>
       </ContentBlock>
     </Page>
   )

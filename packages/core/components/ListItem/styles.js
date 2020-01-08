@@ -1,6 +1,9 @@
+import { fade } from '../styles/colorManipulator';
+
 export default theme => ({
   root: {
     ...theme.typography.body1,
+    color: theme.palette.text.primary,
     alignItems: 'center',
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
@@ -49,7 +52,7 @@ export default theme => ({
     width: 15,
     height: 15,
     marginLeft: 8,
-    color: '#c7c7c7'
+    color: fade(theme.palette.text.primary, 0.3),
   },
   line: {
     position: 'relative',

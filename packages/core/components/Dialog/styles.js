@@ -19,7 +19,7 @@ export default theme => ({
     padding: 15,
     borderRadius: '13px 13px 0 0',
     position: 'relative',
-    background: theme.palette.background.modal,
+    background: theme.palette.background.default,
     fontSize: theme.typography.pxToRem(14),
     ...theme.hairline.create('bottom'),
     '&.noButtons': {
@@ -85,7 +85,7 @@ export default theme => ({
     boxSizing: 'border-box',
     flex: 1,
     color: fade(theme.palette.primary.main, 0.8),
-    background: theme.palette.background.modal,
+    background: theme.palette.background.default,
     ...theme.hairline.create('right'),
     '&:active, &.active-state': {
       backgroundColor: fade(theme.palette.background.paper, 0.85)

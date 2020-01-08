@@ -19,6 +19,7 @@ const Button =  React.forwardRef(function Button(props, ref) {
     className,
     color='default',
     full,
+    disabled,
     fullWidth,
     icon,
     iconPosition = 'before',
@@ -45,11 +46,16 @@ const Button =  React.forwardRef(function Button(props, ref) {
     <ButtonBase 
       className={clsx(
         classes.root,
-        classes['variant' + capitalize(variant)],
-        classes['size' + capitalize(size)],
-        { 
+        classes.root,
+        classes[variant],
+        {
+          [classes[`${variant}${capitalize(color)}`]]: color !== 'default' && color !== 'inherit',
+          [classes[`${variant}Size${capitalize(size)}`]]: size !== 'medium',
+          [classes[`size${capitalize(size)}`]]: size !== 'medium',
+          [classes.disabled]: disabled,
           [classes.fullWidth]: fullWidth,
-          [classes.full]: full
+          [classes.full]: full,
+          [classes.colorInherit]: color === 'inherit',
         },
         className
       )}

@@ -42,7 +42,7 @@ export default theme => ({
       left: 1.5,
       top: 1.5,
       borderRadius: 28,
-      background: '#fff',
+      background: theme.palette.background.default,
       transition: 'all .2s',
       transform: 'translateX(0)',
       boxShadow: theme.shadows[1]

@@ -22,7 +22,7 @@ export default createUseStyles(theme => ({
       textAlign: 'center',
       height: 34,
       lineHeight: '34px',
-      color: '#000',
+      color: theme.palette.text.primary,
       whiteSpace: 'nowrap',
       textOverflow: 'ellipsis',
       flex: 1,
@@ -43,7 +43,7 @@ export default createUseStyles(theme => ({
       margin: '0 auto',
       width: '100%',
       zIndex: 3,
-      backgroundImage: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6)), linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6))',
+      backgroundImage: theme.palette.type == 'light' ? 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6)), linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6))' : 'transparent',
       backgroundPosition: 'top, bottom',
       backgroundSize: '100% 204px',
       backgroundRepeat: 'no-repeat',
@@ -56,8 +56,8 @@ export default createUseStyles(theme => ({
       left: 0,
       top: 102,
       zIndex: 3,
-      borderTop: '1px solid #f5f5f5',
-      borderBottom: '1px solid #f5f5f5',
+      borderTop: `1px solid ${theme.palette.divider}`,
+      borderBottom: `1px solid ${theme.palette.divider}`,
     }
   }
 }), { name: 'Cascader' })

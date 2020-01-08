@@ -22,6 +22,18 @@ export default theme =>({
     '&.colorAction': {
       color: theme.palette.action.active,
     },
+    /* Styles applied to the root element if `color="warning"`. */
+    '&.colorWarning': {
+      color: theme.palette.warning.main,
+    },
+    /* Styles applied to the root element if `color="info"`. */
+    '&.colorInfo': {
+      color: theme.palette.info.main,
+    },
+    /* Styles applied to the root element if `color="success"`. */
+    '&.colorSuccess': {
+      color: theme.palette.success.main,
+    },
     /* Styles applied to the root element if `color="error"`. */
     '&.colorError': {
       color: theme.palette.error.main,
