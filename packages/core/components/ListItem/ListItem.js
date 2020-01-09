@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
-import Arrow from '../icons/Arrow';
+import ArrowForwardIosOutlined from '../icons/ArrowForwardIosOutlined';
 import capitalize from '@wonder-ui/utils/capitalize';
 import clsx from 'clsx';
 import IconInfoOutlined from '../icons/InfoOutlined';
@@ -82,7 +82,7 @@ const ListItem = React.forwardRef(function ListItem(props, ref) {
           }
           { !error.message && !!arrow && (
               <div className={classes['arrowAlign' + capitalize(align)]} aria-hidden="true" >
-                <Arrow 
+                <ArrowForwardIosOutlined 
                   className={clsx(
                     classes.arrow,
                     classes['arrow' + capitalize(arrow)]

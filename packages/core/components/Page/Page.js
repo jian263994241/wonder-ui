@@ -25,7 +25,7 @@ const Page = React.forwardRef((props, ref)=>{
     navbar = false,
     navbarProps,
     pageContent = true,
-    showBackButton = true,
+    showBack = true,
     ...rest
   } = props;
   const app = React.useContext(AppContext);
@@ -48,7 +48,7 @@ const Page = React.forwardRef((props, ref)=>{
           navbar && (
             <Navbar 
               title={name} 
-              showBackButton={showBackButton} 
+              showBack={showBack} 
               {...navbarProps}
             />
           )

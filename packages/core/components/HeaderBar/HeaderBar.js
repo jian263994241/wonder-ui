@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ArrowBackIosOutlined from '../icons/ArrowBackIosOutlined';
+import CloseOutlined from '../icons/CloseOutlined';
 import clsx from 'clsx';
 import DisabledTouchMove from '../DisabledTouchMove';
 import styles from './styles';
@@ -12,6 +14,10 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
     bordered = true,
     classes,
     className,
+    onBack,
+    onClose,
+    showBack,
+    showClose,
     title,
     ...rest
   } = props;
@@ -22,7 +28,11 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
         className={clsx(classes.root, { [classes.hairline]: bordered }, className)} 
         {...rest}
       >
-        <div className={classes.left}>{barLeft}</div>
+        <div className={classes.left}>
+          {showBack && <ArrowBackIosOutlined className={classes.defaultIcon} fontSize="small" onClick={onBack}/>}
+          {showClose && <CloseOutlined className={classes.defaultIcon} fontSize="small" onClick={onClose}/>}
+          {barLeft}
+        </div>
         <div className={classes.title}>{title}</div>
         <div  className={classes.right}>{barRight}</div>
       </div>
@@ -31,11 +41,12 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
 });
 
 HeaderBar.propTypes = {
-  classes: PropTypes.object,
   barLeft: PropTypes.node,
   barRight: PropTypes.node,
-  spacing: PropTypes.number,
   bordered: PropTypes.bool,
+  classes: PropTypes.object,
+  onBack: PropTypes.func,
+  spacing: PropTypes.number,
 };
 
 HeaderBar.displayName = 'HeaderBar';

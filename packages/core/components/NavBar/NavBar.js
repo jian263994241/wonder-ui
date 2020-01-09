@@ -1,32 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BackButton from './BackButton';
+import { useRouterContext } from '@wonder-ui/router';
 import HeaderBar from '../HeaderBar';
 
 const styles = {
   root: {
     position: 'fixed'
   }
-}
+};
 
 const Navbar = React.forwardRef(function Navbar(props, ref){
   const {
     barLeft,
     barRight,
-    showBackButton = true,
+    showBack = true,
     style,
     title,
     ...rest
   } = props;
 
+  const { routerStore = {} } = useRouterContext();
+  const handleGoBack = React.useCallback(() => {
+    routerStore.goBack ? routerStore.goBack () : window.history.back()
+  }, []);
+
   return (
     <HeaderBar
-      barLeft={
-        <>
-          {showBackButton && <BackButton/>}
-          {barLeft}
-        </>
-      }
+      showBack={showBack}
+      onBack={handleGoBack}
+      barLeft={barLeft}
       barRight={barRight}
       bordered
       ref={ref}
@@ -42,7 +44,7 @@ Navbar.propTypes = {
   title: PropTypes.node,
   barLeft: PropTypes.node,
   barRight: PropTypes.node,
-  showBackButton: PropTypes.bool
+  showBack: PropTypes.bool
 };
 
 export default Navbar;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { View, App, createTheme } from '@wonder-ui/core';
+import { View, App, NavBar } from '@wonder-ui/core';
 
 import IndexPage from './pages/IndexPage';
 import NoMatch from './pages/NoMatch';

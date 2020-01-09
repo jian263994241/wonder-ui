@@ -16,7 +16,7 @@ export default function IndexPage(props) {
     <Page 
       name="Wonder UI"
       navbar
-      showBackButton={false}
+      showBack={false}
     >
       <Block bottom={10}>
         <List renderHeader={()=> ``}>

@@ -1,3 +1,5 @@
+import { fade } from '../styles/colorManipulator';
+
 export default theme => ({
   root: {
     width: '100%',
@@ -32,5 +34,9 @@ export default theme => ({
     alignSelf: 'center',
     wordBreak: 'keep-all',
     flex: 1,
+  },
+  defaultIcon: {
+    color: fade(theme.palette.text.primary, 0.3),
+    marginLeft: theme.spacing(1)
   }
 })
