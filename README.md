@@ -13,3 +13,7 @@ npx lerna bootstrap
  npm run styleguide
 
 ```
+
+## 预览
+
+![预览](./docs/generate)

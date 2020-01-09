@@ -13,10 +13,9 @@ module.exports = {
   },
   resolve: {
     alias: {
-      '~': __dirname,
-      '@wonder-ui/core': path.resolve(__dirname, './packages/core'),
-      '@wonder-ui/router': path.resolve(__dirname, './packages/router/src'),
-      '@wonder-ui/utils': path.resolve(__dirname, './packages/utils/src'),
+      // '@wonder-ui/core': path.resolve(__dirname, './packages/core'),
+      // '@wonder-ui/router': path.resolve(__dirname, './packages/router/src'),
+      // '@wonder-ui/utils': path.resolve(__dirname, './packages/utils/src'),
     }
   },
   ale: {
