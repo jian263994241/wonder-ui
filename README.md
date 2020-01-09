@@ -16,4 +16,4 @@ npx lerna bootstrap
 
 ## 预览
 
-![预览](./docs/generate)
+![预览](./docs/generate.png)
