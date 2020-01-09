@@ -5,7 +5,7 @@ module.exports = {
   entry : path.resolve(__dirname, './kitchen-sink/app.js'),
   //输出配置
   output: {
-    path: path.resolve(__dirname, 'kitchen-sink'),
+    path: path.resolve(__dirname, './docs/kitchen-sink'),
     filename: 'app.bunld.js',
   },
   devServer: {
@@ -17,7 +17,6 @@ module.exports = {
       '@wonder-ui/core': path.resolve(__dirname, './packages/core'),
       '@wonder-ui/router': path.resolve(__dirname, './packages/router/src'),
       '@wonder-ui/utils': path.resolve(__dirname, './packages/utils/src'),
-      // '@wonder-ui/styles': path.resolve(__dirname, './packages/styles/src'),
     }
   },
   ale: {
