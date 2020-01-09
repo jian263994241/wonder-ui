@@ -9,7 +9,7 @@ export default theme =>({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     marginBottom: -1,
-    height: 44,
+    height: theme.typography.pxToRem(44),
     overflow: 'hidden',
     paddingLeft: 15,
     position: 'relative',

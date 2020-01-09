@@ -11,9 +11,12 @@ export default theme => {
       padding: '6px 16px',
       borderRadius: theme.shape.borderRadius,
       color: theme.palette.text.primary,
-      transition: theme.transitions.create(['background-color', 'box-shadow', 'border'], {
+      transition: theme.transitions.create(['background-color', 'box-shadow', 'border', 'opacity'], {
         duration: theme.transitions.duration.short,
       }),
+      '&.active-state': {
+        opacity: 0.5,
+      },
       '&:hover': {
         textDecoration: 'none',
         backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity),

@@ -20,8 +20,8 @@ export default createUseStyles(theme => ({
     '& .wui-picker-item': {
       touchAction: 'manipulation',
       textAlign: 'center',
-      height: 34,
-      lineHeight: '34px',
+      height: theme.typography.pxToRem(34),
+      lineHeight: theme.typography.pxToRem(34),
       color: theme.palette.text.primary,
       whiteSpace: 'nowrap',
       textOverflow: 'ellipsis',
@@ -51,7 +51,7 @@ export default createUseStyles(theme => ({
     '& .wui-picker-indicator': {
       boxSizing: 'border-box',
       width: '100%',
-      height: 34,
+      height: theme.typography.pxToRem(34),
       position: 'absolute',
       left: 0,
       top: 102,

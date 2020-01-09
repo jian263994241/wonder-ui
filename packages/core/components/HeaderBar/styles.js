@@ -3,7 +3,7 @@ import { fade } from '../styles/colorManipulator';
 export default theme => ({
   root: {
     width: '100%',
-    height: 44,
+    height: theme.typography.pxToRem(44),
     display: 'flex',
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.background.paper,
@@ -37,6 +37,7 @@ export default theme => ({
   },
   defaultIcon: {
     color: fade(theme.palette.text.primary, 0.3),
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1),
+    lineHeight: 1
   }
 })
