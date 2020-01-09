@@ -1,8 +1,12 @@
 export default theme => ({
   root: {
     ...theme.typography.body1,
+  },
+  body: {
     position: 'relative',
     backgroundColor: 'transparent',
+    ...theme.hairline.create('top'),
+    ...theme.hairline.create('bottom'),
   },
   header: {
     width: '100%',

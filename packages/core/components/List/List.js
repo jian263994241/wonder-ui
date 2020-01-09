@@ -21,7 +21,7 @@ const List = React.forwardRef(function List(props, ref) {
   return (
     <div className={clsx(classes.root, className)} ref={ref} {...rest}>
       { renderHeader && <div className={classes.header}> {getRendered(renderHeader)} </div> }
-      {children}
+      <div className={classes.body}>{children}</div>
       { renderFooter && <div className={classes.footer}> {getRendered(renderFooter)} </div> }
     </div>
   )
