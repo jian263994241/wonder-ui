@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RmcPullToRefresh from 'rmc-pull-to-refresh';
+import PullToRefreshFix from './PullToRefreshFix';
 import styles from './styles';
 import withStyles from '../withStyles';
 
@@ -17,7 +17,7 @@ const PullToRefresh = React.forwardRef((props, ref)=>{
   } = props;
   
   return (
-    <RmcPullToRefresh 
+    <PullToRefreshFix 
       ref={ref}
       prefixCls={classes.root}
       onRefresh={onRefresh}
@@ -29,7 +29,7 @@ const PullToRefresh = React.forwardRef((props, ref)=>{
 PullToRefresh.displayName = 'PullToRefresh';
 
 PullToRefresh.defaultProps = {
-  damping: 100,
+  damping: 800,
   direction: 'down',
   distanceToRefresh: 50,
   prefixCls: 'pull-to-refresh',

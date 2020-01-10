@@ -79,6 +79,12 @@ const ListView = React.forwardRef(function ListView(props, ref) {
     renderActivityIndicator 
   };
 
+  const [scrollDirection, setscrollDirection] = React.useState();
+
+  const handleScroll = (scrollDirection)=>{
+    setscrollDirection(scrollDirection);
+  }
+
   const renderInfiniteList = ({width, height})=> (
     <InfiniteLoader
       isItemLoaded={isItemLoaded}
@@ -92,17 +98,18 @@ const ListView = React.forwardRef(function ListView(props, ref) {
         ({onItemsRendered, ref})=>{
           return (
             <List
-              ref={ref}
-              useIsScrolling={useIsScrolling}
               height={height}
-              itemCount={itemCount}
-              itemSize={itemSize}
-              width={width}
               initialScrollOffset={initialScrollOffset}
-              onItemsRendered={onItemsRendered}
+              itemCount={itemCount}
               itemData={passProps}
               itemKey={itemKey}
+              itemSize={itemSize}
               layout={layout}
+              onItemsRendered={onItemsRendered} 
+              onScroll={handleScroll}
+              ref={ref}
+              useIsScrolling={useIsScrolling}
+              width={width}
             >
               {ListViewRow}
             </List>
@@ -111,6 +118,7 @@ const ListView = React.forwardRef(function ListView(props, ref) {
       }
     </InfiniteLoader>
   );
+
   if(allowPullToRefresh){
     return (
       <AutoSizer>
@@ -121,7 +129,8 @@ const ListView = React.forwardRef(function ListView(props, ref) {
               {...PullToRefreshProps}
               onRefresh={onRefresh} 
               refreshing={refreshing}
-            >
+              data-scroll-direction={scrollDirection}
+            > 
               {renderInfiniteList({width, height})}
             </PullToRefresh>
           )
@@ -145,6 +154,7 @@ ListView.propTypes = {
   itemSize: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func,
   minimumBatchSize: PropTypes.number,
+  hasNextPage: PropTypes.bool,
   /**
    * 刷新callback
    */
