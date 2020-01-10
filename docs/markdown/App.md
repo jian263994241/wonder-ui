@@ -1,43 +1,113 @@
 
-```js 
-import { App, Page, View, Link, Button, List, ListItem } from '@wonder-ui/core';
+创建一个入口文件`app.js` : 
 
-const LinkComponents = ({href, children})=>(
-  <ListItem onClick={()=>location.assign('./#' + href)} arrow="horizontal">{children}</ListItem>
-)
+```js static
+import React from 'react';
+import {render} from 'react-dom';
+import { View, App } from '@wonder-ui/core';
 
-const Index = (props)=>(
-  <Page>
-    <List>
-      <ListItem 
-        onClick={()=>props.history.push('/sub')} 
-        arrow="horizontal"
-      >关于</ListItem>
-    </List>
-    <List renderHeader="组件">
-      <LinkComponents href="/组件/布局/Flex">Flex</LinkComponents>
-      <LinkComponents href="/组件/布局/Block">Block</LinkComponents>
-      <LinkComponents href="/组件/布局/Toolbar">Toolbar</LinkComponents>
-      <LinkComponents href="/组件/数据录入/Button">Button</LinkComponents>
-      <LinkComponents href="/组件/数据录入/ToggleButtonGroup">ToggleButtonGroup</LinkComponents>
-      <LinkComponents href="/组件/数据录入/Checkbox">Checkbox</LinkComponents>
-      <LinkComponents href="/组件/数据展示/List">List</LinkComponents>
-    </List>
-  </Page>
-)
+import IndexPage from '~/kitchen-sink/pages/IndexPage';
+import NoMatch from '~/kitchen-sink/pages/NoMatch';
 
-const About = (props)=>(
-  <Page>
-    <Button onClick={()=> props.history.goBack()}>返回</Button>
-  </Page>
-)
 
 const params = {
+  //events bus
+  on: {
+    routeChange(props){
+      //Change document.title
+      // console.log('Route change', props);
+    }
+  },
+  type: 'memory',
   routes: [
-    { path: '/', exact: true, component: Index },
-    { path: '/sub', component: About }
+    {
+      path: '/',
+      component: IndexPage,
+      children: [
+        { path: 'about', component: require('~/kitchen-sink/pages/About'), name: 'about' },
+        { path: 'button', component: require('~/kitchen-sink/pages/Button'), name: 'button' },
+        ...
+      ]
+    },
   ]
-};
+}
+;
+<App {...params}>
+  <View noMatch={<NoMatch/>}/>
+</App>
+```
 
-<App type="memory" routes={params.routes}> <View/> </App>
+创建首页`index.js` : 
+
+```js static
+import React from 'react';
+import { Page, List, Block, ListItem, useRouterContext } from '@wonder-ui/core';
+
+const LinkDetail = (props)=> {
+  const { to, ...rest } = props;
+  const { routerStore } = useRouterContext();
+  const handleClick = React.useCallback(()=>{
+    to && routerStore.push(to);
+  }, [to]);
+  return <ListItem onClick={handleClick} arrow="horizontal" {...rest}/>;
+}
+
+export default function IndexPage(props) {
+
+  return (
+    <Page 
+      name="Wonder UI"
+      navbar
+      showBack={false}
+    >
+      <Block bottom={10}>
+        <List renderHeader={()=> ``}>
+          <LinkDetail to="/about">关于 Wonder UI</LinkDetail>
+        </List>
+        <List renderHeader={()=> `组件`}>
+          <LinkDetail to="/button">Button 按钮 </LinkDetail>
+          <LinkDetail to="/checkable-group">CheckableGroup 选项</LinkDetail>
+          <LinkDetail to="/date-picker">DatePicker 选择器</LinkDetail>
+          <LinkDetail to="/dialog">Dialog 提示</LinkDetail>
+          <LinkDetail to="/drawer">Drawer 抽屉</LinkDetail>
+          <LinkDetail to="/form">Form 表单</LinkDetail>
+          <LinkDetail to="/list-view">ListView 长列表</LinkDetail>
+          <LinkDetail to="/list">List 列表</LinkDetail>
+          <LinkDetail to="/picker">Picker 选择器</LinkDetail>
+          <LinkDetail to="/preloader">Indicator 指示器</LinkDetail>
+          <LinkDetail to="/searchbar">SearchBar 搜索</LinkDetail>
+          <LinkDetail to="/tag">Tag 标签</LinkDetail>
+          <LinkDetail to="/toolbar">Toolbar 工具栏</LinkDetail>
+          <LinkDetail to="/typography">Typography 文字</LinkDetail>
+        </List>
+        <List renderHeader={()=> `主题`}>
+          <LinkDetail to="/theme">Theme 主题</LinkDetail>
+        </List>
+        <List renderHeader={()=> `Router`}>
+          <LinkDetail to="/route-transition">RouteTransition 页面过渡</LinkDetail>
+        </List>
+      </Block>
+    </Page>
+  )
+}
+```
+
+创建内页`about.js` :
+
+```js static
+import React from 'react';
+import { Page, ContentBlock } from '@wonder-ui/core';
+
+export default function About(props) {
+
+  return (
+    <Page name="关于" navbar >
+      <ContentBlock>
+        <p>
+          基于React Hook(react@16.8)写的移动H5框架, 适用于微信, App内嵌页面, web浏览器
+        </p>
+      </ContentBlock>
+    </Page>
+  )
+}
 ```

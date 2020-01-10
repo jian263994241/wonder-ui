@@ -8,8 +8,8 @@ import useEventCallback from '@wonder-ui/utils/useEventCallback';
 
 
 /**
- * 创建一个App环境, 包裹其他组件
- * @visibleName App 顶层组件
+ * 创建一个App上下文.
+ * @visibleName App 
  */
 const App = React.forwardRef((props, ref) => {
   const {

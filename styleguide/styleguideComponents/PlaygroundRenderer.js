@@ -18,15 +18,15 @@ export default function PlaygroundRenderer(props){
   
   return (
     <Flex align="start" data-testid={`${name}-example-${exampleIndex}`} style={{height: 667, marginBottom: 20}}>
-      <FlexItem style={{marginRight: 20}}>
+      <div style={{marginRight: 20, width: '99%'}}>
         <Flex align="start">
-          <FlexItem>
+          <div>
             <MarkdownHeading level={4}>代码演示</MarkdownHeading>
-          </FlexItem>
+          </div>
           <div>{toolbar}</div>
         </Flex>
         <div className="code-wrapper">{tabBody}</div>
-			</FlexItem>
+			</div>
 			<div {...previewProps} data-preview={name} data-testid="preview-wrapper">
 				{preview}
 			</div>

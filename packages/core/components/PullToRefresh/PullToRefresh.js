@@ -12,6 +12,7 @@ const PullToRefresh = React.forwardRef((props, ref)=>{
   const { 
     classes,
     prefixCls,
+    onRefresh = ()=>{},
     ...rest
   } = props;
   
@@ -19,6 +20,7 @@ const PullToRefresh = React.forwardRef((props, ref)=>{
     <RmcPullToRefresh 
       ref={ref}
       prefixCls={classes.root}
+      onRefresh={onRefresh}
       {...rest}
     />
   )

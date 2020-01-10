@@ -17,11 +17,11 @@ export default theme =>({
     textAlign: 'left',
     overflow: 'hidden',
     display: props => props.inline ? 'inline-flex': 'flex',
-    justify: props => alias[props.justify],
-    align: props => alias[props.align],
     alignContent: props => alias[props.alignContent],
-    wrap: props => alias[props.wrap],
-    direction: props => alias[props.direction],
+    alignItems: props => alias[props.align],
+    flexDirection: props => alias[props.direction],
+    flexWrap: props => alias[props.wrap],
+    justifyContent: props => alias[props.justify],
     '& > *': {
       marginLeft: props => theme.spacing(props.gutter) || 0,
       '&:first-child':{

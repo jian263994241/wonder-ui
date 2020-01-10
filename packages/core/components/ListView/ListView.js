@@ -4,11 +4,30 @@ import { FixedSizeList as List, areEqual } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import InfiniteLoader from 'react-window-infinite-loader';
 import PullToRefresh from '../PullToRefresh';
+import ActivityIndicator from '../ActivityIndicator';
+import Flex from '../Flex';
 
 const ListViewRow = React.memo(function ListViewRow(props){
-  const { data: passProps, index,  ...rest} = props;
-  const { renderRow, dataSource } = passProps;
-  return React.createElement(renderRow, { data: dataSource[index], index, ...rest})
+  const { data: passProps, index, style, isScrolling} = props;
+  const { renderItem, dataSource, isItemLoaded, renderActivityIndicator } = passProps;
+  if(!isItemLoaded(index)){
+    return (
+      <div key={index} style={style}>
+        { renderActivityIndicator ? renderActivityIndicator() : (
+          <Flex 
+            style={{height: '100%', width: '100%' }}
+            alignContent="center"
+            justify="center"
+          >
+            <ActivityIndicator text="加载中..."/>
+          </Flex>
+        )}
+      </div>
+    )
+  }
+
+  return React.createElement(renderItem, { data: dataSource[index], index, style, isScrolling });
+  
 }, areEqual);
 ListViewRow.displayName = 'ListViewRow';
 ListViewRow.propTypes =  {
@@ -24,28 +43,50 @@ ListViewRow.propTypes =  {
  */
 const ListView = React.forwardRef(function ListView(props, ref) {
   const {
+    renderActivityIndicator,
     data = [],
+    hasNextPage,
     initialScrollOffset = 0,
-    isItemLoaded = index => true ,
     itemKey,
-    itemSize = 44,
+    itemSize,
     layout = 'vertical',
-    loadMoreItems,
+    loadMoreItems: loadMoreItemsInput,
+    minimumBatchSize = 10,
+    onRefresh,
     PullToRefresh: allowPullToRefresh = false,
     PullToRefreshProps = {},
-    renderRow,
+    refreshing: refreshingInput = false,
+    renderItem,
+    threshold = 0,
     useIsScrolling = false,
   } = props;
 
-  const itemCount = data.length;
-  const passProps = { dataSource: data, renderRow };
+  const itemCount = hasNextPage ? data.length + 1 : data.length;
+  const refreshing = PullToRefreshProps.refreshing || refreshingInput;
+
+  const isItemLoaded = index => !hasNextPage || index < data.length;
+
+  const loadMoreItems = (startIndex, stopIndex)=>{
+    if(!refreshing && loadMoreItemsInput){
+      return loadMoreItemsInput(startIndex, stopIndex);
+    }
+  };
+
+  const passProps = { 
+    dataSource: data, 
+    renderItem, 
+    isItemLoaded, 
+    renderActivityIndicator 
+  };
 
   const renderInfiniteList = ({width, height})=> (
     <InfiniteLoader
-      ref={ref}
       isItemLoaded={isItemLoaded}
       itemCount={itemCount}
       loadMoreItems={loadMoreItems}
+      minimumBatchSize={minimumBatchSize}
+      ref={ref}
+      threshold={threshold}
     >
       {
         ({onItemsRendered, ref})=>{
@@ -75,7 +116,12 @@ const ListView = React.forwardRef(function ListView(props, ref) {
       <AutoSizer>
         {
           ({width, height})=>(
-            <PullToRefresh style={{height, width}} {...PullToRefreshProps}>
+            <PullToRefresh 
+              style={{height, width}} 
+              {...PullToRefreshProps}
+              onRefresh={onRefresh} 
+              refreshing={refreshing}
+            >
               {renderInfiniteList({width, height})}
             </PullToRefresh>
           )
@@ -93,15 +139,40 @@ const ListView = React.forwardRef(function ListView(props, ref) {
 });
 
 ListView.propTypes = {
+  renderActivityIndicator: PropTypes.func,
   data: PropTypes.array,
-  isItemLoaded: PropTypes.func,
   itemKey: PropTypes.func,
-  itemSize: PropTypes.number,
+  itemSize: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func,
-  renderRow: PropTypes.func,
-  useIsScrolling: PropTypes.bool,
+  minimumBatchSize: PropTypes.number,
+  /**
+   * 刷新callback
+   */
+  onRefresh: PropTypes.func,
+  /**
+   * 是否开启下拉刷新
+   */
   PullToRefresh: PropTypes.bool,
+  /**
+   * @ignore
+   */
   PullToRefreshProps: PropTypes.object,
+  /**
+   * 是否正在刷新
+   */
+  refreshing: PropTypes.bool,
+  /**
+   * 渲染每个节点
+   */
+  renderItem: PropTypes.func,
+  /**
+   * 预加载数据, 默认15条
+   */
+  threshold: PropTypes.number,
+  /**
+   * 是否检测滚动状态
+   */
+  useIsScrolling: PropTypes.bool,
 };
 
 ListView.displayName = 'ListView';
