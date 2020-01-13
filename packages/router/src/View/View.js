@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Route from '../RouteTransition';
-import resolve from '@wonder-ui/utils/resolvePath';
 import { matchPath } from 'react-router-dom';
-import useRouterContext from '../useRouterContext';
-import flatMap from '@wonder-ui/utils/flatMap';
-import { withStyles } from 'react-jss';
 import clsx from 'clsx';
+import flatMap from '@wonder-ui/utils/flatMap';
+import resolve from '@wonder-ui/utils/resolvePath';
+import Route from '../RouteTransition';
 import styles from './styles';
+import useRouterContext from '../useRouterContext';
+import withStyles from '@wonder-ui/styles/withStyles';
 
 function View(props) {
   const {

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { styles, duration } from './styles';
-import { withStyles } from 'react-jss';
 import clsx from 'clsx';
 import Transition from './Transition';
 import UIRouteContext from '../UIRouteContext';
@@ -10,6 +9,7 @@ import useComponent from './useComponent';
 import useEnhancedEffect from '@wonder-ui/utils/useEnhancedEffect';
 import usePageInit from '../usePageInit';
 import useRouterContext from '../useRouterContext';
+import withStyles from '@wonder-ui/styles/withStyles';
 
 const RouteComponent = React.memo(function RouteComponent(props) {
   const {

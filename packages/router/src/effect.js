@@ -1,6 +1,5 @@
 import React from 'react';
 import UIRouteContext from './UIRouteContext';
-import * as ReactIs from "react-is";
 import useEnhancedEffect from '@wonder-ui/utils/useEnhancedEffect';
 
 export default function effect(options = {}){
@@ -20,7 +19,7 @@ export default function effect(options = {}){
       }, [delay]);
   
       if(!visible) {
-        return (Skeleton && ReactIs.isValidElementType(Skeleton)) ? 
+        return (Skeleton && typeof Skeleton === 'function') ? 
         ( <Skeleton {...props}/> ): null;
       }
   

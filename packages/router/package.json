@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/router",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "UI Router base on react@16.8 & react-router-dom",
   "main": "index.js",
   "keywords": [
@@ -25,13 +25,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.6.3",
+    "@babel/runtime": "^7.8.0",
     "@loadable/component": "^5.11.0",
-    "@wonder-ui/utils": "^0.1.0",
+    "@wonder-ui/styles": "^1.0.2",
+    "@wonder-ui/utils": "^1.0.0",
     "clsx": "^1.0.4",
     "prop-types": "^15.7.2",
-    "react-is": "^16.11.0",
-    "react-jss": "^10.0.2",
     "react-router-dom": "^5.1.2",
     "react-transition-group": "^4.3.0"
   },
