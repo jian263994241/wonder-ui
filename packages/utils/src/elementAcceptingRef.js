@@ -40,7 +40,6 @@ function acceptingRef(props, propName, componentName, location, propFullName) {
       [
         `Invalid ${location} \`${safePropName}\` supplied to \`${componentName}\`. `,
         `Expected an element that can hold a ref. ${warningHint} `,
-        'For more information see https://material-ui.com/r/caveat-with-refs-guide'
       ].join('\n')
     )
     return null;
