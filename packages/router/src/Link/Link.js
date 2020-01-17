@@ -1,5 +1,5 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import useRouterContext from '../useRouterContext';
 
 const Link = React.forwardRef(function Link(props, ref) {
@@ -41,17 +41,17 @@ const Link = React.forwardRef(function Link(props, ref) {
 });
 
 Link.propTypes = {
-  replace: propTypes.bool,
-  component: propTypes.element,
-  to: propTypes.oneOfType([
-    propTypes.string,
-    propTypes.func,
-    propTypes.shape({
-      pathname: propTypes.string,
-      search: propTypes.string,
-      hash: propTypes.string,
-      state: propTypes.object,
-      query: propTypes.object
+  replace: PropTypes.bool,
+  component: PropTypes.element,
+  to: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+    PropTypes.shape({
+      pathname: PropTypes.string,
+      search: PropTypes.string,
+      hash: PropTypes.string,
+      state: PropTypes.object,
+      query: PropTypes.object
     })
   ])
 };
