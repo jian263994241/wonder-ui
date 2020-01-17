@@ -11,6 +11,8 @@ export function Provider(props){
   const {children} = props;
   const StyleGuideContext = React.useContext(Context);
   const styleguide = React.useMemo(()=> require('!!react-styleguidist/lib/loaders/styleguide-loader!./index.js'), []);
+  console.log(StyleGuideContext);
+  
   const merge = React.useMemo(()=>{
     return {
       ...StyleGuideContext,

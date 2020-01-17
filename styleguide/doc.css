@@ -106,13 +106,11 @@ pre {
 .hljs-attribute {
   color: #e6550d;
 }
-#rsg-root{
-  height: 100%;
-}
+
 .wonder-doc {
   width: 100%;
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
 }
 .wonder-doc-header{
   width: 100%;
@@ -217,6 +215,10 @@ pre {
   border-radius: 6px;
   box-shadow: 0 8px 12px #ebedf0;
 }
+
+.wonder-doc-content .card pre {
+  padding: 10px 0;
+}
 .wonder-doc-content p {
   color: #34495e;
   font-size: 14px;
@@ -254,21 +256,12 @@ pre {
 }
 
 .simulator-wrapper{
-  width: 414px; 
+  width: 375px; 
   height: 667px;
   box-sizing: border-box;
   background: #eee;
   padding: 5px;
   border-radius: 5px;
-  flex-shrink: 0;
-}
-
-.simulator-wrapper.fixed {
-  position: fixed;
-  right: 0;
-  top: 62px;
-  bottom: 0;
-  height: auto;
 }
 
 .simulator-wrapper .simulator {
@@ -278,7 +271,6 @@ pre {
   position: relative;
   z-index: 1;
   background: #fafafa;
-  border: 0;
 }
 
 .code-wrapper {

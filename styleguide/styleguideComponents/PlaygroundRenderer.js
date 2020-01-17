@@ -2,8 +2,6 @@ import React from 'react';
 import MarkdownHeading from 'rsg-components/Markdown/MarkdownHeading';
 import { Flex } from '@wonder-ui/core';
 
-const FlexItem = Flex.Item;
-
 export default function PlaygroundRenderer(props){
   const {
     exampleIndex,
@@ -15,7 +13,7 @@ export default function PlaygroundRenderer(props){
     tabBody,
     toolbar,
   } = props;
-  
+
   return (
     <Flex align="start" data-testid={`${name}-example-${exampleIndex}`} style={{height: 667, marginBottom: 20}}>
       <div style={{marginRight: 20, width: '99%'}}>
@@ -23,7 +21,7 @@ export default function PlaygroundRenderer(props){
           <div>
             <MarkdownHeading level={4}>代码演示</MarkdownHeading>
           </div>
-          <div>{toolbar}</div>
+          {/* <div>{toolbar}</div> */}
         </Flex>
         <div className="code-wrapper">{tabBody}</div>
 			</div>

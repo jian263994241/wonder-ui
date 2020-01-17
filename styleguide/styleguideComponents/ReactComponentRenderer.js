@@ -58,7 +58,6 @@ export function ReactComponentRenderer({
 					{docs}
 				</div>
 			)}
-      {examples}
       
 			{tabButtons && (
 				<div className="card">
@@ -70,7 +69,7 @@ export function ReactComponentRenderer({
 					<div className={classes.tabBody}>{tabBody}</div>
 				</div>
 			)}
-			
+			{examples}
 		</div>
 	);
 }

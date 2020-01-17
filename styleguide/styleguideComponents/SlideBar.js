@@ -10,20 +10,15 @@ export default function SlideBar(props){
 
   const [scrollTop, setScrollTop] = React.useState(0);
 
-  const scrollBody = React.useMemo(()=>{
-    return document.querySelector('.wonder-doc');
-  }, [])
-
   const handleScroll = React.useCallback((e)=>{
-    const _scrollTop = e.target.scrollTop ;
+    const _scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
     setScrollTop(_scrollTop);
   }, []);
 
   React.useEffect(()=>{
-    const scrollBody = document.querySelector('.wonder-doc');
-    scrollBody.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return ()=>{
-      scrollBody.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     }
   }, [scrollTop]);
 

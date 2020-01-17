@@ -11,4 +11,6 @@ module.exports = {
   PlaygroundRenderer: resolve('./PlaygroundRenderer'),
   ReactComponentRenderer: resolve('./ReactComponentRenderer'),
   ComponentsListRenderer: resolve('./ComponentsListRenderer'),
+  ComponentsRenderer: resolve('./ComponentsRenderer'),
+  ExamplesRenderer: resolve('./ExamplesRenderer'),
 }

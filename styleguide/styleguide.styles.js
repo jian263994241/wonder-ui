@@ -89,7 +89,7 @@ exports.styles = {
       border: '1px solid #e9e9e9',
       padding: '8px 16px',
       textAlign: 'left',
-    }
+    },
   },
   Code: {
     code: {
@@ -102,6 +102,13 @@ exports.styles = {
       background: '#f7f7f7',
       fontFamily: theme.fontFamily.base,
       display: 'inline-block',
+      whiteSpace: 'nowrap',
+      lineHeight: 1.4
+    }
+  },
+  Name: {
+    name: {
+      display: 'inline-block'
     }
   }
 }
