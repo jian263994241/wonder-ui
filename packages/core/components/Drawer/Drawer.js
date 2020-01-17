@@ -7,8 +7,8 @@ import Slide from '../Slide';
 import styles from './styles';
 import withStyles from '../withStyles';
 /**
- * @visibleName Drawer 抽屉
  * 一个半屏幕的浮层
+ * @visibleName Drawer 抽屉
  */
 const Drawer = React.forwardRef((props, ref)=>{
   const { 

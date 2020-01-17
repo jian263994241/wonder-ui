@@ -36,9 +36,8 @@ function formatFn(props, value) {
 }
 
 /**
- * @visibleName DatePicker 时间选择器
- * 
  * 时间选择器
+ * @visibleName DatePicker 时间选择器
  */
 const DatePicker = React.forwardRef(function DatePicker(props, ref){
   const {

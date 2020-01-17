@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Fade from '../Fade';
+import styles from './styles';
 import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 import withStyles from '../withStyles';
 /**
- * 遮层
+ * Modal, Drawer, Dialog等浮层的背板
  * @visibleName Backdrop - 背板
  */
 const Backdrop = React.forwardRef(function Backdrop(props, ref) {
@@ -43,19 +44,4 @@ Backdrop.propTypes = {
 
 Backdrop.displayName = 'Backdrop';
 
-export default withStyles({
-  root: {
-    boxSizing: 'border-box',
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: 999,
-    willChange: 'opacity',
-    contain: 'strict',
-    touchAction: 'none',
-    WebkitTapHighlightColor: 'transparent'
-  }
-})(Backdrop);
+export default withStyles(styles)(Backdrop);

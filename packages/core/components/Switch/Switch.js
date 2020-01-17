@@ -31,8 +31,17 @@ const Switch = React.forwardRef(function Switch(props, ref) {
 Switch.displayName = 'Switch';
 
 Switch.propTypes = {
+  /**
+   * 颜色
+   */
   color: PropTypes.string,
+  /**
+   * 事件回调
+   */
   onChange: PropTypes.func,
+  /**
+   * 是否选中 
+   */
   checked: PropTypes.bool,
   /**
    * @ignore

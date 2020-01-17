@@ -1,4 +1,4 @@
-import { fade } from "../styles/colorManipulator";
+import { fade } from "@wonder-ui/styles/colorManipulator";
 
 export function createColor(color = ''){
   if(color.charAt(0) != '#') return null;

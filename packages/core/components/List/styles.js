@@ -5,6 +5,8 @@ export default theme => ({
   body: {
     position: 'relative',
     backgroundColor: 'transparent',
+    marginBottom: -1,
+    overflow: 'hidden',
     ...theme.hairline.create('top'),
     ...theme.hairline.create('bottom'),
   },

@@ -28,17 +28,23 @@ const List = React.forwardRef(function List(props, ref) {
 });
 
 List.propTypes = {
-  /** 列表头部 */
+  /** 
+   * 渲染列表头部
+   */
   renderHeader: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.node
   ]),
-  /** 脚步 */
+  /** 
+   * 渲染列表尾部
+   */
   renderFooter: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.node
   ]),
-  /** 子元素 */
+  /** 
+   * 子元素  `ListItem`,  `InputItem`, `CheckboxItem` 
+   */
   children: PropTypes.any
 };
 

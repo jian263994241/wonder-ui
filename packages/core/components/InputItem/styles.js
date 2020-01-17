@@ -21,9 +21,9 @@ export default theme =>({
       cursor: 'default',
       color: theme.palette.action.disabled,
     },
-    '&:last-child $line': {
-      ...theme.hairline.remove('bottom'),
-    },
+    // '&:last-child $line': {
+    //   ...theme.hairline.remove('bottom'),
+    // },
   },
   multiline: {
     height: 'auto',

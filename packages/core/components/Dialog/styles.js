@@ -1,12 +1,12 @@
-import { fade } from '../styles/colorManipulator';
+import { fade } from '@wonder-ui/styles/colorManipulator';
 
 export default theme => ({
   root: {
     boxSizing: 'border-box',
-    position: 'absolute',
+    position: 'fixed',
     contain: 'content',
     width: 270,
-    zIndex: 13500,
+    zIndex: theme.zIndex.modal,
     borderRadius: 13,
     color: '#000',
     textAlign: 'center',
@@ -14,6 +14,17 @@ export default theme => ({
     willChange: 'transform,opacity',
     outline: 'none',
     fontFamily: theme.typography.fontFamily,
+    '&.toast': {
+      zIndex: theme.zIndex.snackbar,
+    },
+    '&.toast $body': {
+      display: 'inline-block',
+      borderRadius: 5,
+      background: 'rgba(0,0,0,0.7)',
+      '& $text': {
+        color: theme.palette.getContrastText('rgba(0,0,0,0.7)')
+      }
+    }
   },
   body: {
     padding: 15,
@@ -26,14 +37,6 @@ export default theme => ({
       borderRadius: 13,
       ...theme.hairline.remove('bottom')
     },
-    '&.toast': {
-      display: 'inline-block',
-      borderRadius: 5,
-      background: 'rgba(0,0,0,0.7)',
-      '& $text': {
-        color: theme.palette.getContrastText('rgba(0,0,0,0.7)')
-      }
-    }
   },
   title: {
     fontSize: theme.typography.pxToRem(18),

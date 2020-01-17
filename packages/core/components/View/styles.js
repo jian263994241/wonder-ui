@@ -8,8 +8,5 @@ export default theme => ({
     fontSmoothing: 'antialiased',
     WebkitTouchCallout: 'none',
     tapHighlightColor: 'transparent',
-  },
-  routeRoot: {
-    background: theme.palette.background.default,
   }
 })

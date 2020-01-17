@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Router, RouterStore } from '@wonder-ui/router';
-import { ThemeProvider } from '../styles/theming';
+import { ThemeProvider } from '@wonder-ui/styles';
 import AppClass from '../AppClass';
 import AppContext from './AppContext';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
@@ -9,7 +9,7 @@ import useEventCallback from '@wonder-ui/utils/useEventCallback';
 
 /**
  * 创建一个App上下文.
- * @visibleName App 
+ * @visibleName App 入口
  */
 const App = React.forwardRef((props, ref) => {
   const {

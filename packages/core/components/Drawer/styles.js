@@ -1,6 +1,6 @@
 export default theme => ({
   root: {
-    position: 'absolute',
+    position: 'fixed',
     overflow: 'hidden',
     outline: 0,
     backgroundColor: theme.palette.background.default,

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { View as RouteView } from '@wonder-ui/router';
 import AppContext from '../AppContext';
 import styles from './styles';
-import withStyles from '../styles/withStyles';
+import withStyles from '@wonder-ui/styles/withStyles';
 
 /**
- * 用来包裹所有Page
+ * 一个包装Pages的容器
  * @visibleName View 视图
  */
 function View (props) {
@@ -16,7 +16,6 @@ function View (props) {
   return (
     <RouteView 
       dataSource={app.routes} 
-      classes={{root: classes.root}} 
       routeProps={{classes: {root: classes.routeRoot}}} 
       {...rest}  
     />
@@ -33,7 +32,7 @@ View.propTypes = {
    */
   animationDisabled: PropTypes.bool,
   /**
-   * 404
+   * React Element
    */
   noMatch: PropTypes.node
 }

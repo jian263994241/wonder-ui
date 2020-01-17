@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import DisabledTouchMove from '../DisabledTouchMove';
 import Flex from '../Flex';
-import isWuiComponent from '@wonder-ui/utils/isWuiComponent';
 import Slot from '../Slot';
+import styles from './styles';
 import withStyles from '../withStyles';
-
 /**
  * 提供一个44像素的通栏, 子元素Flex布局
  * Slot位置 `pageContentAfter`
@@ -23,19 +22,6 @@ const ToolBar = React.forwardRef(function ToolBar(props, ref) {
     safeAreaBottom = false,
     ...rest
   } = props;
-
-
-  React.useEffect(()=>{
-    React.Children.toArray(children).forEach((child)=>{
-    
-      if(isWuiComponent('button', child)){
-        React.cloneElement(child, { full: true })
-      }
-      
-    });
-  
-  }, [children]);
-
   
   const bar = (
     <DisabledTouchMove ref={ref}>
@@ -51,14 +37,7 @@ const ToolBar = React.forwardRef(function ToolBar(props, ref) {
         role="toolbar"
         {...rest}
       >
-        {
-          React.Children.toArray(children).map((child)=>{
-            if(isWuiComponent('Button', child) && buttonFull){
-              return React.cloneElement(child, { full: true })
-            }
-            return child;
-          })
-        }
+        {children}
       </Flex>
     </DisabledTouchMove>
   );
@@ -82,22 +61,13 @@ ToolBar.propTypes = {
    * 子元素间距
    */
   gutter: PropTypes.number,
-
+  /**
+   * ios 底部安全距离
+   */
   safeAreaBottom: PropTypes.bool,
-
-  buttonFull: PropTypes.bool,
 };
 
 ToolBar.displayName = 'ToolBar';
 
 
-export default withStyles({
-  root: {
-    width: '100%',
-    height: 44,
-    flexShrink: 0
-  },
-  safeAreaBottom: {
-    paddingBottom: 'env(safe-area-inset-bottom)',
-  }
-})(ToolBar);
+export default withStyles(styles)(ToolBar);

@@ -48,12 +48,17 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     rowsMin,
     startAdornment,
     type = 'text',
-    value: valueProp = '',
+    value: valueProp,
     ...rest
   } = props;
 
-  const value = inputPropsProp.value != null ? inputPropsProp.value : valueProp;
-  const { current: isControlled } = React.useRef(value != null);
+  let value = inputPropsProp.value != null ? inputPropsProp.value : valueProp;
+  const { current: isControlled } = React.useRef(!!onChange || !!value);
+
+  if(isControlled){
+    value = value || '';
+  }
+
   const inputRef = React.useRef();
   const handleInputRefProp = useForkRef(inputRefProp, inputPropsProp.ref);
   const handleInputRef = useForkRef(inputRef, handleInputRefProp);
@@ -102,12 +107,16 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
   }, [value, checkDirty, isControlled]);
 
   const showClearButton = (element) => {
-    element = element || inputRef.current;
-    if(!readOnly && element.value && element.value.length> 0){
+    if(readOnly) return ;
+
+    const _value = isControlled ? value : element.value;
+    
+    if(_value && _value.length > 0){
       setClearButtonVisibled(true);
     }else{
       setClearButtonVisibled(false);
     }
+
   };
 
   const hideClearButtonTimeOut = React.useRef();
@@ -120,7 +129,7 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     }else{
       hideClearButtonTimeOut.current = setTimeout(() => {
         setClearButtonVisibled(false);
-      }, 0);
+      }, 132);
     }
   }, [focused]);
 
@@ -161,13 +170,11 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     }
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event, ...args) => {
     const element = event.target || inputRef.current;
-
     if (!isControlled) {
-      
       if (element == null) {
-        throw new TypeError( 'InputBase: Expected valid input target. ' );
+        throw new TypeError( 'Expected valid input target. ');
       }
 
       checkDirty({
@@ -175,7 +182,6 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
       });
     }
 
-    
     if (inputPropsProp.onChange) {
       inputPropsProp.onChange(element.value);
     }
@@ -252,26 +258,27 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     const element = inputRef.current;
  
     if(!isControlled){
+
       element.value = '';
 
       checkDirty({ value: '' });
     }
-    
+
     element.focus();
 
     if (inputPropsProp.onChange) {
-      inputPropsProp.onChange();
+      inputPropsProp.onChange('');
     }
 
     if (onChange) {
-      onChange();
+      onChange('');
     }
 
     if (onClear) {
       onClear(event);
     }
   }
-
+  
   React.useEffect(() => {
     if (muiFormControl) {
       muiFormControl.setAdornedStart(Boolean(startAdornment));

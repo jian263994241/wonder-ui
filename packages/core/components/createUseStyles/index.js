@@ -1,1 +1,1 @@
-export { default } from '../styles/createUseStyles';
+export { default } from '@wonder-ui/styles/createUseStyles';

@@ -56,13 +56,18 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
           transform: 'translate3d(-50%, -50%, 0) scale(1.185)'
         }}
       >
-        <div className={clsx(classes.root, className)} ref={ref}>
+        <div className={clsx(
+            classes.root, 
+            {toast: toast} ,
+            className
+          )} 
+          ref={ref}
+        >
           <div 
             className={clsx(
               classes.body,
               {
                 noButtons: noButtons,
-                toast: toast
               }
             )}
           >

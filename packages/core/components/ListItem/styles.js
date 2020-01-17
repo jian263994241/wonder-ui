@@ -1,4 +1,4 @@
-import { fade } from '../styles/colorManipulator';
+import { fade } from '@wonder-ui/styles/colorManipulator';
 
 export default theme => ({
   root: {
@@ -20,9 +20,9 @@ export default theme => ({
       cursor: 'default',
       color: theme.palette.action.disabled,
     },
-    '&:last-child $line': {
-      ...theme.hairline.remove('bottom'),
-    }
+    // '&:last-child $line': {
+    //   ...theme.hairline.remove('bottom'),
+    // }
   },
   activeState: {
     '&:active, &.active-state': {

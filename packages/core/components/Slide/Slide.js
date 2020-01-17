@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { easing, duration } from '../styles/transitions';
+import { easing, duration } from '@wonder-ui/styles/transitions';
 import css from 'dom-helpers/css';
 import Transition from '../Transition';
 

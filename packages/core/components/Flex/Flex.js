@@ -46,7 +46,7 @@ Flex.propTypes = {
   wrap: PropTypes.oneOf(['nowrap','wrap','wrap-reverse']),
   /** 项目定位方向 */
   direction: PropTypes.oneOf(['row','row-reverse','column','column-reverse']),
-  /** 子元素间距 */
+  /** 子元素间距 8px */
   gutter: PropTypes.number,
   /**
    * cidlren flex: 1

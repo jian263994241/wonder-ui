@@ -72,12 +72,26 @@ const Page = React.forwardRef((props, ref)=>{
 });
 
 Page.propTypes = {
-  navbarProps: PropTypes.object,
-  /** 
-   * 页面的名字
-   * 可以配合pageInit来设置页面标题
+  /**
+   * navbar为`true`时, 显示为 title
    */
   name: PropTypes.string,
+  /**
+   * 是否显示导航栏
+   */
+  navbar: PropTypes.bool,
+  /**
+   * navbar props
+   */
+  navbarProps: PropTypes.object,
+  /**
+   * 是否启用滚动部分, ListView等自定义页面滚动时, 设置pageContent:false.
+   */
+  pageContent: PropTypes.bool,
+  /**
+   * navbar为`true`时, 是否显示返回按钮
+   */
+  showBack: PropTypes.bool,
 };
 
 Page.displayName = 'Page';

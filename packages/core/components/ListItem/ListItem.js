@@ -9,12 +9,7 @@ import styles from './styles';
 import TouchFeedback from '../TouchFeedback';
 import withStyles from '../withStyles';
 /**
- * 列表项
- * 
- * @see [List组件](/#/组件?id=list)的子元素
- * 
- * `ListItem` 下提供了辅助组件 `ListItem.Brief` 用做辅助说明
- * 
+ * List, ListView 列表下的子组件.
  * @visibleName ListItem 列表项
  */
 const ListItem = React.forwardRef(function ListItem(props, ref) {
@@ -109,25 +104,39 @@ ListItem.defaultProps = {
 };
 
 ListItem.propTypes = {
-  /** 箭头方向(右,上,下) */
-  arrow: PropTypes.oneOf(['horizontal', 'vertical', 'vertical-up']),
-  /** 子元素垂直对齐 */
-  align: PropTypes.oneOf(['top', 'center']),
-  /** 内容 */
-  children: PropTypes.any,
-  /** 禁用 */
-  disabled: PropTypes.bool,
-  /** 右边内容 */
-  extra: PropTypes.any,
-  /** 缩略图 */
-  thumb: PropTypes.any,
-  /** 是否换行，默认情况下，文字超长会被隐藏 */
-  wrap: PropTypes.bool,
   /**
    * 点击反馈
    * arrow 存在是强制为 true
    */
   activeState: PropTypes.bool,
+  /** 
+   * 子元素垂直对齐
+   */
+  align: PropTypes.oneOf(['top', 'center']),
+  /** 
+   * 箭头方向(水平方向, 垂直方向) 
+   */
+  arrow: PropTypes.oneOf(['horizontal', 'vertical', 'vertical-up']),
+  /**
+   * 列表内容
+   */
+  children: PropTypes.any,
+  /**
+   * 禁用组件
+   */
+  disabled: PropTypes.bool,
+  /**
+   * 最右边额外的内容展示
+   */
+  extra: PropTypes.any,
+  /**
+   * 最左边内容, 一般用作小图展示
+   */
+  thumb: PropTypes.any,
+  /**
+   * 是否换行，默认情况下，文字超长会被隐藏
+   */
+  wrap: PropTypes.bool,
 };
 
 ListItem.displayName = 'ListItem';

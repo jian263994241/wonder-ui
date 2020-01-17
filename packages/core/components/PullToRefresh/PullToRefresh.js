@@ -8,7 +8,7 @@ import withStyles from '../withStyles';
  * 配合ListView 实现长列表下拉刷新
  * @visibleName PullToRefresh 下拉刷新
  */
-const PullToRefresh = React.forwardRef((props, ref)=>{
+const PullToRefresh = React.forwardRef(function PullToRefresh(props, ref) {
   const { 
     classes,
     prefixCls,

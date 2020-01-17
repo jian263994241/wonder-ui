@@ -5,7 +5,7 @@ import styles from './styles';
 import withStyles from '../withStyles';
 
 /**
- * checkbox, radio的UI包装
+ * 可选项
  * @visibleName Checkbox 选择项
  */
 const Checkbox = React.forwardRef(function Checkbox(props, ref) {
@@ -38,7 +38,13 @@ const Checkbox = React.forwardRef(function Checkbox(props, ref) {
 })
 
 Checkbox.propTypes = {
+  /**
+   * 事件回调
+   */
   onChange: PropTypes.func,
+  /**
+   * 是否选中 
+   */
   checked: PropTypes.bool,
   /**
    * @ignore

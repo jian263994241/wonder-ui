@@ -8,12 +8,6 @@ import withStyles from '../withStyles';
 /**
  * 用于加载/处理数据时候的等待状态
  * 
- * 组件提供了两个静态方法调用
- * 
- * `Preloader.show` - 显示`Preloader`
- * 
- * `Preloader.hide` - 隐藏`Preloader`
- * 
  * @visibleName Preloader 指示器浮层
  */
 const Preloader = React.forwardRef(function Preloader(props, ref) {

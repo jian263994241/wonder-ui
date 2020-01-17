@@ -25,6 +25,9 @@ const styles = {
   },
 };
 
+/**
+ * @visibleName TextareaAutosize 文本区域
+ */
 const TextareaAutosize = React.forwardRef(function TextareaAutosize(props, ref) {
   const { 
     onChange, 
@@ -167,12 +170,6 @@ TextareaAutosize.propTypes = {
    * @ignore
    */
   placeholder: PropTypes.string,
-  /**
-   * Use `rowsMin` instead. The prop will be removed in v5.
-   *
-   * @deprecated
-   */
-  rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /**
    * Maximum number of rows to display.
    */

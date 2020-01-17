@@ -1,1 +1,1 @@
-export { RouterStore as default } from '@wonder-ui/router';
+export { default } from '@wonder-ui/router/RouterStore';

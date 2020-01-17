@@ -1,35 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FixedSizeList as List, areEqual } from 'react-window';
+import { VariableSizeList as List, areEqual } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
+import Flex from '../Flex';
 import InfiniteLoader from 'react-window-infinite-loader';
 import PullToRefresh from '../PullToRefresh';
-import ActivityIndicator from '../ActivityIndicator';
-import Flex from '../Flex';
+import useForkRef from '@wonder-ui/utils/useForkRef';
+import offset from 'dom-helpers/offset';
 
-const ListViewRow = React.memo(function ListViewRow(props){
+const defaultRenderIndicator = (props)=>(
+  <Flex 
+    alignContent="center"
+    justify="center"
+    style={{height: '100%'}}
+    {...props}
+  >
+    <div>loading ...</div>
+  </Flex>
+);
+
+const ListViewRow = React.memo(React.forwardRef(function ListViewRow(props, ref){
   const { data: passProps, index, style, isScrolling} = props;
-  const { renderItem, dataSource, isItemLoaded, renderActivityIndicator } = passProps;
-  if(!isItemLoaded(index)){
-    return (
-      <div key={index} style={style}>
-        { renderActivityIndicator ? renderActivityIndicator() : (
-          <Flex 
-            style={{height: '100%', width: '100%' }}
-            alignContent="center"
-            justify="center"
-          >
-            <ActivityIndicator text="加载中..."/>
-          </Flex>
-        )}
-      </div>
-    )
+  const { renderItem, dataSource, isItemLoaded, indicator, listFooter, listRef, itemHeights } = passProps;
+
+  const rootRef = React.useRef();
+  const handleRef = useForkRef(rootRef, ref);
+  const list = listRef.current;
+  const rootElement = rootRef.current;
+  
+  const dataItem = dataSource[index];
+  let content = null;
+
+  React.useEffect(()=>{
+ 
+    if(list && rootElement){
+
+      itemHeights.current[index] = rootElement.scrollHeight;
+
+      list.resetAfterIndex(index);
+      
+    }
+  }, [list, rootElement, dataSource]);
+  
+  if(dataItem){
+    const row = renderItem({ data: dataItem, index, isScrolling, ref });
+
+    if(!row){
+      console.error(
+        `ListView: renderItem must return a single element.`
+      );
+    }
+
+    content = row;
+  }else if(!isItemLoaded(index)){
+    content = indicator
+  }else if(listFooter){
+    content = listFooter
   }
 
-  return React.createElement(renderItem, { data: dataSource[index], index, style, isScrolling });
+  return (
+    <div key={index} style={style} ref={handleRef}>{content}</div>
+  )
   
-}, areEqual);
-ListViewRow.displayName = 'ListViewRow';
+}, areEqual));
+
 ListViewRow.propTypes =  {
   data: PropTypes.shape({
     renderRow: PropTypes.func,
@@ -38,37 +72,48 @@ ListViewRow.propTypes =  {
 };
 
 /**
- * 
+ * 一个无限长的虚拟列表, 支持下拉刷新.
  * @visibleName ListView 长列表
  */
 const ListView = React.forwardRef(function ListView(props, ref) {
   const {
-    renderActivityIndicator,
     data = [],
     hasNextPage,
     initialScrollOffset = 0,
     itemKey,
     itemSize,
     layout = 'vertical',
-    loadMoreItems: loadMoreItemsInput,
-    minimumBatchSize = 10,
+    loadMoreItems: loadMoreItemsCallback,
     onRefresh,
-    PullToRefresh: allowPullToRefresh = false,
-    PullToRefreshProps = {},
+    pageSize = 10,
+    pullToRefresh: allowPullToRefresh = false,
+    pullToRefreshProps = {},
     refreshing: refreshingInput = false,
+    renderIndicator = defaultRenderIndicator,
+    renderFooter,
     renderItem,
     threshold = 0,
     useIsScrolling = false,
   } = props;
 
-  const itemCount = hasNextPage ? data.length + 1 : data.length;
-  const refreshing = PullToRefreshProps.refreshing || refreshingInput;
+  const listFooter = renderFooter && renderFooter();
+  const indicator = renderIndicator && renderIndicator();
 
+  const itemCount = (hasNextPage || listFooter) ? data.length + 1 : data.length;
+  const refreshing = pullToRefreshProps.refreshing || refreshingInput;
+
+  const itemHeights = React.useRef([]);
+  const listRef = React.useRef();
+  const handleRef = useForkRef(listRef, ref);
+  
   const isItemLoaded = index => !hasNextPage || index < data.length;
+  const getItemSize = index => {
+    return itemHeights.current[index] || itemSize;
+  };
 
   const loadMoreItems = (startIndex, stopIndex)=>{
-    if(!refreshing && loadMoreItemsInput){
-      return loadMoreItemsInput(startIndex, stopIndex);
+    if(!refreshing && loadMoreItemsCallback){ 
+      return loadMoreItemsCallback(startIndex, stopIndex);
     }
   };
 
@@ -76,7 +121,10 @@ const ListView = React.forwardRef(function ListView(props, ref) {
     dataSource: data, 
     renderItem, 
     isItemLoaded, 
-    renderActivityIndicator 
+    indicator,
+    listFooter,
+    listRef,
+    itemHeights,
   };
 
   const [scrollDirection, setscrollDirection] = React.useState();
@@ -90,12 +138,12 @@ const ListView = React.forwardRef(function ListView(props, ref) {
       isItemLoaded={isItemLoaded}
       itemCount={itemCount}
       loadMoreItems={loadMoreItems}
-      minimumBatchSize={minimumBatchSize}
-      ref={ref}
+      minimumBatchSize={pageSize}
       threshold={threshold}
     >
       {
         ({onItemsRendered, ref})=>{
+          ref(listRef);
           return (
             <List
               height={height}
@@ -103,11 +151,11 @@ const ListView = React.forwardRef(function ListView(props, ref) {
               itemCount={itemCount}
               itemData={passProps}
               itemKey={itemKey}
-              itemSize={itemSize}
+              itemSize={getItemSize}
               layout={layout}
               onItemsRendered={onItemsRendered} 
               onScroll={handleScroll}
-              ref={ref}
+              ref={handleRef}
               useIsScrolling={useIsScrolling}
               width={width}
             >
@@ -126,7 +174,7 @@ const ListView = React.forwardRef(function ListView(props, ref) {
           ({width, height})=>(
             <PullToRefresh 
               style={{height, width}} 
-              {...PullToRefreshProps}
+              {...pullToRefreshProps}
               onRefresh={onRefresh} 
               refreshing={refreshing}
               data-scroll-direction={scrollDirection}
@@ -147,13 +195,46 @@ const ListView = React.forwardRef(function ListView(props, ref) {
   
 });
 
+ListView.defaultProps = {
+  itemSize: 44,
+}
+
 ListView.propTypes = {
-  renderActivityIndicator: PropTypes.func,
+  /**
+   * 自定义加载指示器
+   */
+  renderIndicator: PropTypes.func,
+  /**
+   * 自定义脚部
+   */
+  renderFooter: PropTypes.func,
+  /**
+   * 渲染每个节点
+   */
+  renderItem: PropTypes.func,
+  /**
+   * 列表数据 []
+   */
   data: PropTypes.array,
+  /**
+   * 自定义子项的key, 默认index
+   */
   itemKey: PropTypes.func,
+  /**
+   * 默认item容器高度, 实际会根据内容计算内容高度
+   */
   itemSize: PropTypes.number.isRequired,
+  /**
+   * 加载更多内容
+   */
   loadMoreItems: PropTypes.func,
-  minimumBatchSize: PropTypes.number,
+  /**
+   * 每次加载的长度
+   */
+  pageSize: PropTypes.number.isRequired,
+  /**
+   * 是否有更多内容
+   */
   hasNextPage: PropTypes.bool,
   /**
    * 刷新callback
@@ -162,19 +243,15 @@ ListView.propTypes = {
   /**
    * 是否开启下拉刷新
    */
-  PullToRefresh: PropTypes.bool,
+  pullToRefresh: PropTypes.bool,
   /**
-   * @ignore
+   * @see 查看[PullToRefresh](./#/组件/数据展示/PullToRefresh)组件
    */
-  PullToRefreshProps: PropTypes.object,
+  pullToRefreshProps: PropTypes.object,
   /**
    * 是否正在刷新
    */
   refreshing: PropTypes.bool,
-  /**
-   * 渲染每个节点
-   */
-  renderItem: PropTypes.func,
   /**
    * 预加载数据, 默认15条
    */

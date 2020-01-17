@@ -1,9 +1,9 @@
-import { fade } from '../styles/colorManipulator';
+import { fade } from '@wonder-ui/styles/colorManipulator';
 
 export default theme => ({
   root: {
     width: '100%',
-    height: theme.typography.pxToRem(44),
+    height: theme.shape.barHeight,
     display: 'flex',
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.background.paper,

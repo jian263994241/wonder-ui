@@ -4,8 +4,8 @@ import Tag from '../Tag';
 import TouchFeedback from '../TouchFeedback';
 
 /**
- * @visibleName CheckableTag
  * 受控组件
+ * @visibleName CheckableTag 可选标签 
  */
 const CheckableTag = React.forwardRef(function CheckableTag(props, ref) {
   const { 
@@ -35,7 +35,13 @@ const CheckableTag = React.forwardRef(function CheckableTag(props, ref) {
 }); 
 
 CheckableTag.propTypes = {
+  /**
+   * 事件回调
+   */
   onChange: PropTypes.func,
+  /**
+   * 是否选中 
+   */
   checked: PropTypes.bool,
   /**
    * @ignore

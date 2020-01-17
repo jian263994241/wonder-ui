@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as transitions from '../styles/transitions';
+import * as transitions from '@wonder-ui/styles/transitions';
 import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
 import RtgTransition from 'react-transition-group/Transition';
 import useForkRef from '@wonder-ui/utils/useForkRef';

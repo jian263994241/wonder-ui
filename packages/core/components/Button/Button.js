@@ -8,7 +8,7 @@ import styles from './styles';
 import withStyles from '../withStyles';
 
 /**
- * 允许用户轻按一下即可做出选择.
+ * 按钮, 用做用户点击操作.
  * @visibleName Button 按钮
  */
 const Button =  React.forwardRef(function Button(props, ref) {
@@ -45,7 +45,6 @@ const Button =  React.forwardRef(function Button(props, ref) {
   return (
     <ButtonBase 
       className={clsx(
-        classes.root,
         classes.root,
         classes[variant],
         {

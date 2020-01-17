@@ -10,9 +10,8 @@ const defaultFormat = (values = [])=>{
 };
 
 /**
- * @visibleName Picker 选择器
- * 
  * 级联选择器
+ * @visibleName Picker 选择器
  */
 const Picker = React.forwardRef(function Picker(props, ref) {
   const {

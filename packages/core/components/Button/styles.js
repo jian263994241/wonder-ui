@@ -1,4 +1,4 @@
-import { fade } from '../styles/colorManipulator';
+import { fade } from '@wonder-ui/styles/colorManipulator';
 
 export default theme => {
 
@@ -30,6 +30,7 @@ export default theme => {
       },
       '&$disabled': {
         color: theme.palette.action.disabled,
+        opacity: 0.4
       },
     },
     /* Styles applied to the span element that wraps the children. */
@@ -220,6 +221,11 @@ export default theme => {
     fullWidth: {
       width: '100%',
     },
+    full: {
+      width: '100%',
+      height: '100%',
+      borderRadius: 0
+    },
     /* Styles applied to the startIcon element if supplied. */
     startIcon: {
       display: 'inherit',
@@ -256,11 +262,6 @@ export default theme => {
         fontSize: 22,
       },
     },
-    full: {
-      width: '100%',
-      height: '100%',
-      borderRadius: 0
-    }
   }
 }
 

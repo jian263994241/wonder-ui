@@ -9,6 +9,10 @@ const defaultRenderItem = ({label, checked, onChange, ...props})=>(
   </label>
 );
 
+/**
+ * 单选, 多选. 类似radio, checkbox逻辑
+ * @visibleName CheckableGroup 可选项
+ */
 const CheckableGroup = React.forwardRef(function CheckableGroup(props, ref) {
   const { 
     data = [], 
@@ -69,13 +73,31 @@ const CheckableGroup = React.forwardRef(function CheckableGroup(props, ref) {
 CheckableGroup.displayName = 'CheckableGroup';
 
 CheckableGroup.propTypes = {
+  /**
+   * 数据
+   */
   data: PropTypes.arrayOf( 
     PropTypes.shape({ label: PropTypes.node, value: PropTypes.any, }) 
   ),
+  /**
+   * 是否单选
+   */
   exclusive: PropTypes.bool,
+  /**
+   * 子元素props
+   */
   itemProps: PropTypes.object,
+  /**
+   * change 回调
+   */
   onChange: PropTypes.func,
+  /**
+   * 自定义渲染
+   */
   renderItem: PropTypes.func,
+  /**
+   * 值
+   */
   value: PropTypes.any,
 };
 

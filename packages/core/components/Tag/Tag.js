@@ -5,9 +5,10 @@ import styles, { createColor } from './styles';
 import withStyles from '../withStyles';
 
 /**
+ * 进行标记和分类的小标签，用于标记事物的属性和维度，以及进行分类.
  * @visibleName Tag 标签
  */
-const Tag = React.forwardRef((props, ref)=>{
+const Tag = React.forwardRef(function Tag(props, ref) {
   const {
     checked,
     children,

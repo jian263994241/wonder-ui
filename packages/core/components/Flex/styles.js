@@ -23,9 +23,9 @@ export default theme =>({
     flexWrap: props => alias[props.wrap],
     justifyContent: props => alias[props.justify],
     '& > *': {
-      marginLeft: props => theme.spacing(props.gutter) || 0,
-      '&:first-child':{
-        marginLeft: 0
+      marginRight: props => theme.spacing(props.gutter) || 0,
+      '&:last-child':{
+        marginRight: 0
       }
     }
   },
