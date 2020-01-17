@@ -1,5 +1,5 @@
 
-export default function createHairline(position, color = '#999'){
+function create(position, color = '#999'){
   let styles;
   const base = {
     content: '""',
@@ -91,7 +91,7 @@ export default function createHairline(position, color = '#999'){
 }
 
 
-export function removeHairline(position){
+function remove(position){
   let result = {};
   switch (position) {
     case 'left':
@@ -112,4 +112,13 @@ export function removeHairline(position){
       break;
   }
   return result;
+}
+
+
+export default function createHairline(palette) {
+  
+  return {
+    create: (position)=> create(position, palette.divider),
+    remove,
+  }
 }

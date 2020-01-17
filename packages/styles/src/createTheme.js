@@ -1,11 +1,11 @@
 import * as svg from './svg';
 import * as transitions from './transitions';
-import createHairline, {removeHairline} from './createHairline';
+import createHairline from './createHairline';
 import createPalette from './createPalette';
 import createSpacing from './createSpacing';
 import createTypography from './createTypography';
 import shadows from './shadows';
-import shape from './shape';
+import createShape from './createShape';
 import zIndex from './zIndex';
 
 export default function createTheme(options={}){
@@ -15,24 +15,22 @@ export default function createTheme(options={}){
     shadows: shadowsInput,
     spacing: spacingInput = 8,
     typography: typographyInput = {},
+    shape: shapeInput = {},
     ...rest
   } = options;
 
   const palette = createPalette(paletteInput);
 
   const theme = {
-    shadows: shadowsInput || shadows,
-    spacing: createSpacing(spacingInput),
-    typography: createTypography(palette, typographyInput),
+    hairline: createHairline(palette),
     palette,
-    hairline: {
-      create: (position)=> createHairline(position, palette.divider),
-      remove: removeHairline
-    },
-    transitions,
-    shape,
-    zIndex,
+    shadows: shadowsInput || shadows,
+    shape: createShape(shapeInput),
+    spacing: createSpacing(spacingInput),
     svg,
+    transitions,
+    typography: createTypography(palette, typographyInput),
+    zIndex,
     ...rest
   }
   
