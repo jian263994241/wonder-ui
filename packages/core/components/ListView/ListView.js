@@ -6,7 +6,6 @@ import Flex from '../Flex';
 import InfiniteLoader from 'react-window-infinite-loader';
 import PullToRefresh from '../PullToRefresh';
 import useForkRef from '@wonder-ui/utils/useForkRef';
-import offset from 'dom-helpers/offset';
 
 const defaultRenderIndicator = (props)=>(
   <Flex 

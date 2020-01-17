@@ -6,7 +6,7 @@
 
 #### 扫码演示
 
-![预览](./docs/generate.png)
+![预览](https://raw.githubusercontent.com/jian263994241/wonder-ui/master/docs/generate.png)
 
                                                                                                                                                                                                                                                                                          
 
