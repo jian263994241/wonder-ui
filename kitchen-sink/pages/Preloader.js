@@ -21,7 +21,6 @@ export default function PreloaderExamples() {
         <ActivityIndicator text="default text"/>
         <ActivityIndicator vertical text="Vertical ActivityIndicator"/>
       </ContentBlock>
-      
     </Page>
   )
 }

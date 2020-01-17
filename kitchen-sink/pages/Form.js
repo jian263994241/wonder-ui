@@ -100,7 +100,7 @@ export default Form.create()(function FormExamples(props) {
         {
           getFieldDecorator('field_4', {
             rules: [{
-              required: true,
+              required: false,
               message: `请填写[数字]字段`
             }]
           })(

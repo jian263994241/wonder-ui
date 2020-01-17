@@ -1,73 +1,117 @@
 
-#### 基础用法
 
 ```jsx
-import { ListView, ListItem } from '@wonder-ui/core';
+import React from 'react';
+import { Page, ListItem, ListView, Flex, ActivityIndicator, Typography, Brief } from '@wonder-ui/core';
 
-class ListViewExample extends React.Component {
-
-  constructor(props){
-    super(props);
-    this.state = {
-      dataSource: new ListView.DataSource({ 
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      }),
-      data: []
-    };
-    this.demoData = [
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-      { label: 'title' },
-    ];
-    this.pageSize = this.demoData.length;
-  }
-
-  componentDidMount(){
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this.demoData) ,
-      data: this.demoData
-    })
-  }
-
-  render(){
-    //拉到底更新数据
-    const onEndReached = ()=>{
-      const data = this.state.data.concat(this.demoData);
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(data),
-        data
-      })
+function createData(n = 15){
+  return new Array(n)
+  .fill(true)
+  .map(() => {
+    return {
+      label: 'item',
+      value: 25 + Math.round(Math.random() * 50)
     }
-    //自定义行数据展示
-    const row = (rowData, sectionID, rowID) => (
-      <ListItem>{rowData.label} {rowID}</ListItem>
-    );
-    return (
-      <ListView
-        dataSource={this.state.dataSource}
-        pageSize={this.pageSize}
-        initialListSize={this.pageSize}
-        renderHeader={(Header)=> <Header>列表头</Header>}
-        renderFooter={(Footer)=> <Footer>列表底部</Footer>}
-        renderRow={row}
-        onEndReached={onEndReached}
-        style={{width:'100%', height: '100%', boxSizing: ' border-box'}}
-      />
-    )
+  });
+}
+
+function fillString(n, str, s = ''){
+  return new Array(n)
+  .fill(true)
+  .map(() => {
+    return str
+  }).join(s);
+}
+
+function ListViewExamples(props) {
+  const pageSize = 20;
+  const total = pageSize * 6;
+  const [data, setDate] = React.useState(createData(pageSize));
+  const [refreshing, setrefreshing] = React.useState(false);
+  
+  const hasNextPage = data.length < total;
+
+  const loadMoreItems = ()=>{
+
+    setTimeout(() => {
+      
+      if( data.length >= total ){
+        return ;
+      }
+
+      console.log('loadMore');
+      const newData = data.concat(createData(pageSize));
+      setDate(newData);
+      console.log(newData.length);
+    }, 600);
   }
+
+  const handleRefresh = ()=>{
+    
+    setrefreshing(true);
+
+    setTimeout(() => {
+      setrefreshing(false);
+
+      setDate(createData(pageSize));
+
+    }, 600);
+  }
+
+  const row = (props) => {
+    const { data, index } = props;
+    return (
+      <ListItem wrap>
+        {index}: {data.label} {data.value}
+        <Brief>
+        {fillString(index % 10, '默认itemSize, 实际会根据内容计算内容高度,')}
+        </Brief>
+      </ListItem>
+    )
+  };
+
+  const renderFooter = ()=>{
+    return (
+      <Flex
+        alignContent="center"
+        justify="center"
+        style={{height: '100%'}}
+      >
+        <Typography type="caption">
+          已经没有了
+        </Typography>
+      </Flex>
+    );
+  }
+
+  const renderIndicator = ()=>(
+    <Flex
+      alignContent="center"
+      justify="center"
+      style={{height: '100%'}}
+    >
+      <ActivityIndicator text="加载中..."/>
+    </Flex>
+  );
+
+  return (
+    <Page name="ListView" navbar pageContent={false}>
+      <ListView
+        data={data}
+        renderItem={row}
+        loadMoreItems={loadMoreItems}
+        hasNextPage={hasNextPage}
+        pullToRefresh={true}
+        refreshing={refreshing}
+        onRefresh={handleRefresh}
+        itemSize={44}
+        pageSize={pageSize}
+        renderIndicator={renderIndicator}
+        renderFooter={renderFooter}
+      />
+    </Page>
+  )
 };
-<ListViewExample/>
+
+<ListViewExamples/>
 ```

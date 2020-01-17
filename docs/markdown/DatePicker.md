@@ -1,8 +1,6 @@
-
 ```js
 import React from 'react';
-import { Page, Button, Picker, ContentBlock, Form } from '@wonder-ui/core';
-import lcnForm from 'lcn/lcn-form';
+import { Page, Button, DatePicker, ContentBlock, Form } from '@wonder-ui/core';
 
 const ExtraButton = React.forwardRef((props, ref) => {
   const {extra='请选择', ...rest} = props;
@@ -12,22 +10,17 @@ const ExtraButton = React.forwardRef((props, ref) => {
   )
 })
 
-const LcnPicker = React.forwardRef(function LcnPicker(props, ref) {
-  return (
-    <Picker ref={ref} data={lcnForm} cols={3} {...props}/>
-  )
-});
-
 const PickerExamples = Form.create()(function (props) {
   const { form } = props;
+  
   return (
-    <Page name="Picker" navbar>
-      <ContentBlock header={<span>LcnPicker & Button</span>}>
+    <Page name="DatePicker" navbar>
+      <ContentBlock header={<span>DatePickerPicker & Button</span>}>
         {
           form.getFieldDecorator('group', {
 
           })(
-            <LcnPicker><ExtraButton/></LcnPicker>
+            <DatePicker><ExtraButton/></DatePicker>
           )
         }
       </ContentBlock>
@@ -36,4 +29,3 @@ const PickerExamples = Form.create()(function (props) {
 });
 <PickerExamples/>
 ```
-

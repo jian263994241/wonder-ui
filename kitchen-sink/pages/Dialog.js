@@ -35,26 +35,29 @@ export default function DialogExamples(props){
           <div>
             <Button fullWidth onClick={ ()=> Dialog.toast('toast!') } >toast</Button>
           </div>
-          <div>
-            <Button 
-              fullWidth
-              onClick={
-                ()=> Dialog.custom({
-                  title: 'Custom Title',
-                  text: 'Custom Text', 
-                  textAfter: <div>TextAfter string or node</div>,
-                  actions: [
-                    { text: 'First button', primary: true, onClick: () => Dialog.alert({text: 'First'}) },
-                    { text: 'Second button', onClick: () => Dialog.alert({text: 'Second'}) },
-                    { text: 'Third button', onClick: () => Dialog.alert({text: 'Third'}) },
-                    { text: 'Cancel' }
-                  ]
-                })
-              }
-            >custom</Button>
-          </div>
+          
         </Flex>
+        
+        <br/>
+        <div>
+          <Button 
+            fullWidth
+            onClick={
+              ()=> Dialog.custom({
+                title: 'Custom Title',
+                text: 'Custom Text', 
+                textAfter: <div>TextAfter string or node</div>,
+                actions: [
+                  { text: 'First button', primary: true, onClick: () => Dialog.alert({text: 'First'}) },
+                  { text: 'Second button', onClick: () => Dialog.alert({text: 'Second'}) },
+                  { text: 'Third button', onClick: () => Dialog.alert({text: 'Third'}) },
+                  { text: 'Cancel' }
+                ]
+              })
+            }
+          >custom</Button>
+        </div>
       </ContentBlock>
     </Page>
   )
-}
+};

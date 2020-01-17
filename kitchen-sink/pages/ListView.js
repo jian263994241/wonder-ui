@@ -1,7 +1,7 @@
 import React from 'react';
-import { Page, ListItem, ListView } from '@wonder-ui/core';
+import { Page, ListItem, ListView, Flex, ActivityIndicator, Typography, Brief } from '@wonder-ui/core';
 
-function createData(n = 20){
+function createData(n = 15){
   return new Array(n)
   .fill(true)
   .map(() => {
@@ -12,20 +12,34 @@ function createData(n = 20){
   });
 }
 
+function fillString(n, str, s = ''){
+  return new Array(n)
+  .fill(true)
+  .map(() => {
+    return str
+  }).join(s);
+}
 
 export default function ListViewExamples(props) {
-
-  const [data, setDate] = React.useState(createData());
+  const pageSize = 20;
+  const total = pageSize * 6;
+  const [data, setDate] = React.useState(createData(pageSize));
   const [refreshing, setrefreshing] = React.useState(false);
+  
+  const hasNextPage = data.length < total;
 
   const loadMoreItems = ()=>{
-    
-    console.log('loadMore');
+
     setTimeout(() => {
       
-      const newData = data.concat(createData());
-      setDate(newData);
+      if( data.length >= total ){
+        return ;
+      }
 
+      console.log('loadMore');
+      const newData = data.concat(createData(pageSize));
+      setDate(newData);
+      console.log(newData.length);
     }, 600);
   }
 
@@ -36,18 +50,46 @@ export default function ListViewExamples(props) {
     setTimeout(() => {
       setrefreshing(false);
 
-      setDate(createData());
+      setDate(createData(pageSize));
 
     }, 600);
   }
 
   const row = (props) => {
-    const { index, style, data } = props;
-
+    const { data, index } = props;
     return (
-      <ListItem key={index} style={style}>{data.label} {data.value}</ListItem>
+      <ListItem wrap>
+        {index}: {data.label} {data.value}
+        <Brief>
+        {fillString(index % 10, '默认itemSize, 实际会根据内容计算内容高度,')}
+        </Brief>
+      </ListItem>
     )
   };
+
+  const renderFooter = ()=>{
+    return (
+      <Flex
+        alignContent="center"
+        justify="center"
+        style={{height: '100%'}}
+      >
+        <Typography type="caption">
+          已经没有了
+        </Typography>
+      </Flex>
+    );
+  }
+
+  const renderIndicator = ()=>(
+    <Flex
+      alignContent="center"
+      justify="center"
+      style={{height: '100%'}}
+    >
+      <ActivityIndicator text="加载中..."/>
+    </Flex>
+  );
 
   return (
     <Page name="ListView" navbar pageContent={false}>
@@ -55,12 +97,14 @@ export default function ListViewExamples(props) {
         data={data}
         renderItem={row}
         loadMoreItems={loadMoreItems}
-        hasNextPage={true}
-        PullToRefresh={true}
+        hasNextPage={hasNextPage}
+        pullToRefresh={true}
         refreshing={refreshing}
         onRefresh={handleRefresh}
         itemSize={44}
-        minimumBatchSize={15}
+        pageSize={pageSize}
+        renderIndicator={renderIndicator}
+        renderFooter={renderFooter}
       />
     </Page>
   )

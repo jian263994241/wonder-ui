@@ -1,156 +1,60 @@
 
 
-### Contained Buttons (实心按钮)
-
 ```js 
-import { Button, Flex } from '@wonder-ui/core';
+import React from 'react';
+import { Page, Button, ContentBlock, styled } from '@wonder-ui/core';
 
-const FlexItem = Flex.Item;
+const ButtonDemo = styled(Button)(props=> ({
+  marginLeft: (props.fullWidth || props.full) ? 0: 10,
+  marginBottom: 10,
+  '&:first-child': {
+    marginLeft: 0
+  }
+}));
 
-<Flex>
-  <FlexItem>
-    <Button variant="contained">
-      默认按钮
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button variant="contained" color="primary">
-      主要按钮
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button variant="contained" color="secondary">
-      次要按钮
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button variant="contained" color="secondary" disabled>
-      禁用
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button variant="contained" href="#section-button-按钮">
-      Link
-    </Button>
-  </FlexItem>
-</Flex>
+
+<Page name="Button" navbar>
+  <ContentBlock header="size" strong={false}>
+    <ButtonDemo>default</ButtonDemo>
+    <ButtonDemo size="small">small</ButtonDemo>
+    <ButtonDemo size="medium">medium</ButtonDemo>
+    <ButtonDemo size="large">large</ButtonDemo>
+  </ContentBlock>
+
+  <ContentBlock header="full" strong={false}>
+    <ButtonDemo full>full</ButtonDemo>
+    <ButtonDemo fullWidth>fullWidth</ButtonDemo>
+  </ContentBlock>
+
+  <ContentBlock header="variant" strong={false}>
+    <ButtonDemo>default</ButtonDemo>
+    <ButtonDemo variant="text">text</ButtonDemo>
+    <ButtonDemo variant="outlined">outlined</ButtonDemo>
+    <ButtonDemo variant="contained">contained</ButtonDemo>
+  </ContentBlock>
+
+  <ContentBlock header="color" strong={false}>
+    <div>
+      <ButtonDemo>default</ButtonDemo>
+      <ButtonDemo color="primary">primary</ButtonDemo>
+      <ButtonDemo color="secondary">secondary</ButtonDemo>
+    </div>
+    <div>
+      <ButtonDemo variant="outlined">default</ButtonDemo>
+      <ButtonDemo color="primary" variant="outlined">primary</ButtonDemo>
+      <ButtonDemo color="secondary" variant="outlined">secondary</ButtonDemo>
+    </div>
+    <div>
+      <ButtonDemo variant="text">default</ButtonDemo>
+      <ButtonDemo color="primary" variant="text">primary</ButtonDemo>
+      <ButtonDemo color="secondary" variant="text">secondary</ButtonDemo>
+    </div>
+  </ContentBlock>
+
+  <ContentBlock header="disabled" strong={false}>
+    <ButtonDemo disabled>default</ButtonDemo>
+    <ButtonDemo disabled variant="text">default</ButtonDemo>
+  </ContentBlock>
+</Page>
 ```
 
-### Outlined Buttons (空心按钮)
-
-```js
-import { Button, Flex } from '@wonder-ui/core';
-
-const FlexItem = Flex.Item;
-
-<Flex>
-  <FlexItem>
-    <Button variant="outlined">
-      默认按钮
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button variant="outlined" color="primary">
-      主要按钮
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button variant="outlined" color="secondary">
-      次要按钮
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button variant="outlined" color="secondary" disabled>
-      禁用
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button variant="outlined" href="#section-button-按钮">
-      Link
-    </Button>
-  </FlexItem>
-</Flex>
-```
-### Text Buttons（文本按钮）
-
-```js
-import { Button, Flex } from '@wonder-ui/core';
-
-const FlexItem = Flex.Item;
-
-<Flex>
-  <FlexItem>
-    <Button variant="text">
-      默认按钮
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button  variant="text" color="primary">
-      主要按钮
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button  variant="text" color="secondary">
-      次要按钮
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button  variant="text" color="secondary" disabled>
-      禁用
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button  variant="text" href="#section-button-按钮">
-      Link
-    </Button>
-  </FlexItem>
-</Flex>
-```
-
-### Block Buttons（块按钮）
-
-```js
-import { Button, Flex } from '@wonder-ui/core';
-
-const FlexItem = Flex.Item;
-
-<Flex style={{height: 60}}>
-  <FlexItem>
-    <Button variant="contained" color="primary" fullWidth>
-      100%宽度
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button variant="contained" color="primary" full>
-      100%宽度, 100%高度
-    </Button>
-  </FlexItem>
-</Flex>
-
-```
-
-### 尺寸
-
-```js
-import { Button, Flex } from '@wonder-ui/core';
-
-const FlexItem = Flex.Item;
-
-<Flex style={{height: 60}}>
-  <FlexItem>
-    <Button variant="contained" color="primary" size="small">
-      small
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button variant="contained" color="primary" size="medium">
-      medium
-    </Button>
-  </FlexItem>
-  <FlexItem>
-    <Button variant="contained" color="primary" size="large">
-      large
-    </Button>
-  </FlexItem>
-</Flex>
-```

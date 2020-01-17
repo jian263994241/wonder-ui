@@ -1,8 +1,14 @@
 
 ```js
-import { ActivityIndicator } from '@wonder-ui/core';
+import { ActivityIndicator, ContentBlock, Page } from '@wonder-ui/core';
 
 
-<ActivityIndicator text="请稍等..."/>
+<Page name="ActivityIndicator" navbar>
+  <ContentBlock header="活动指示器">
+    <ActivityIndicator text="default text"/>
+    <br/>
+    <ActivityIndicator vertical text="Vertical ActivityIndicator"/>
+  </ContentBlock>
+</Page>
 
 ```

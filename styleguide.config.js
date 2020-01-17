@@ -10,7 +10,7 @@ function resolve(...paths) {
 }
 
 module.exports = {
-  title: 'Wonder-UI',
+  title: 'Wonder UI',
   usageMode: 'expand',
   exampleMode: 'expand',
   pagePerSection: true,
@@ -36,40 +36,54 @@ module.exports = {
         {
           name: '布局',
           components: ()=> [
-            './packages/core/components/Flex/Flex.js',
             './packages/core/components/Block/Block.js',
-            './packages/core/components/Toolbar/Toolbar.js'
+            './packages/core/components/Drawer/Drawer.js',
+            './packages/core/components/Flex/Flex.js',
+            './packages/core/components/HeaderBar/HeaderBar.js',
+            './packages/core/components/Toolbar/Toolbar.js',
           ],
         },
         {
           name: '数据录入',
           components: ()=> [
             './packages/core/components/Button/Button.js',
-            './packages/core/components/ToggleButtonGroup/ToggleButtonGroup.js',
+            './packages/core/components/CheckableGroup/CheckableGroup.js',
+            './packages/core/components/CheckableTag/CheckableTag.js',
+            './packages/core/components/CheckableTagGroup/CheckableTagGroup.js',
             './packages/core/components/Checkbox/Checkbox.js',
+            './packages/core/components/CheckboxItem/CheckboxItem.js',
+            './packages/core/components/DatePicker/DatePicker.js',
+            './packages/core/components/InputItem/InputItem.js',
+            './packages/core/components/Picker/Picker.js',
+            './packages/core/components/SearchBar/SearchBar.js',
+            './packages/core/components/Switch/Switch.js',
+            './packages/core/components/TextareaAutosize/TextareaAutosize.js',
           ],
         },
         {
           name: '数据展示',
           components: ()=> [
+            './packages/core/components/Empty/Empty.js',
             './packages/core/components/List/List.js',
             './packages/core/components/ListItem/ListItem.js',
-            './packages/core/components/CheckboxItem/CheckboxItem.js',
             './packages/core/components/ListView/ListView.js',
+            './packages/core/components/PullToRefresh/PullToRefresh.js', 
             './packages/core/components/Tag/Tag.js',
-            './packages/core/components/Empty/Empty.js',
+            './packages/core/components/Typography/Typography.js',
           ],
         },
         {
           name: '用户反馈',
           components: ()=> [
-            './packages/core/components/Modal/Modal.js',
-            './packages/core/components/Dialog/Dialog.js',
-            './packages/core/components/toast/toast.js',
-            './packages/core/components/Preloader/Preloader.js',
             './packages/core/components/ActivityIndicator/ActivityIndicator.js',
+            './packages/core/components/Backdrop/Backdrop.js',
+            './packages/core/components/Dialog/Dialog.js',
+            './packages/core/components/Modal/Modal.js',
+            './packages/core/components/Preloader/Preloader.js',
+            './packages/core/components/toast/toast.js',
           ],
         },
+        
       ]
     }
     
@@ -90,12 +104,28 @@ module.exports = {
   styleguideComponents,
   theme,
   styles,
+  compilerConfig: {
+    // Don't include an Object.assign ponyfill, we have our own
+    objectAssign: 'Object.assign',
+    // Transpile only features needed for IE11
+    target: { ie: 11 },
+    transforms: {
+      // Don't throw on ESM imports, we transpile them ourselves
+      modules: false,
+      // Enable tagged template literals for styled-components
+      dangerousTaggedTemplateString: true,
+      // to make async/await work by default (no transformation)
+      asyncAwait: false,
+      dangerousTaggedTemplateString: true,
+      moduleImport: false
+    },
+  },
   webpackConfig: {
     resolve: {
       alias: {
-        '~': __dirname,
         '@wonder-ui/core': path.resolve(__dirname, './packages/core'),
         '@wonder-ui/router': path.resolve(__dirname, './packages/router/src'),
+        '@wonder-ui/styles': path.resolve(__dirname, './packages/styles/src'),
         '@wonder-ui/utils': path.resolve(__dirname, './packages/utils/src'),
       }
     },
@@ -137,11 +167,5 @@ module.exports = {
     }
   },
   version,
-  styleguideDir: './docs/styleguide', 
-  compilerConfig: {
-    transforms: {
-      dangerousTaggedTemplateString: true,
-      moduleImport: false
-    },
-  }
+  styleguideDir: './docs/styleguide_v1', 
 };

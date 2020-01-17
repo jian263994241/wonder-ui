@@ -8,8 +8,6 @@
 
 ![预览](./docs/generate.png)
 
-<div class="simulator-wrapper fixed">
-  <iframe src="https://jian263994241.github.io/wonder-ui/kitchen-sink" class="simulator"></iframe>  
-</div>
+                                                                                                                                                                                                                                                                                         
 
 

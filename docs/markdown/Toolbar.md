@@ -1,36 +1,41 @@
 
-### 两按钮工具栏
-
 ```jsx
-import { Toolbar, Button } from '@wonder-ui/core';
+import React from 'react';
+import { Page, Button, ToolBar, ContentBlock } from '@wonder-ui/core';
 
-<div className="mobile-preview auto">
-  <Toolbar>
-    <Button full>取消</Button>
-    <Button full color="primary">确认</Button>
-  </Toolbar>
-</div>
-```
+function ToolBarExamples() {
+  
+  return (
+    <Page name="ToolBar" navbar>
+      <ContentBlock header="button full">
+        <ToolBar>
+          <Button full>button 1</Button>
+          <Button full>button 2</Button>
+        </ToolBar>
+      </ContentBlock>
+      
+      <ContentBlock header="button 3">
+        <ToolBar>
+          <Button>button 1</Button>
+          <Button>button 2</Button>
+          <Button>button 3</Button>
+        </ToolBar>
+      </ContentBlock>
 
-### 三按钮工具栏
 
-```jsx
-import { Toolbar, Button, Flex, Page } from '@wonder-ui/core';
+      <ContentBlock header="gutter">
+        <ToolBar gutter={1}>
+          <Button>button 1</Button>
+          <Button>button 2</Button>
+        </ToolBar>
+      </ContentBlock>
 
-const FlexItem = Flex.Item;
+      <ToolBar bottomFixed>
+        <Button full>button fixed</Button>
+      </ToolBar>
+    </Page>
+  )
+};
 
-<Page>
-  <Toolbar gutter={1}>
-    <FlexItem>
-      <Button full color="primary">操作一</Button>
-    </FlexItem>
-    <FlexItem>
-      <Button full color="primary">操作二</Button>
-    </FlexItem>
-    <FlexItem>
-      <Button full color="primary">操作二</Button>
-    </FlexItem>
-  </Toolbar>
-</Page>
-
+<ToolBarExamples/>
 ```
