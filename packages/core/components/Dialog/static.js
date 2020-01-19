@@ -2,20 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Dialog from './Dialog';
 import DialogManager from './DialogManager';
+import isPromise from '@wonder-ui/utils/isPromise';
 import toggleVisible from './toggleVisible';
 
 const dialogManager = new DialogManager();
 const toastManager = new DialogManager();
 
 const noop = ()=>{};
-
-function isPromise(object){
-  if(Promise && Promise.resolve){
-    return Promise.resolve(object) == object;
-  }else{
-    throw "Promise not supported in your environment"
-  }
-}
 
 const wrapCallback = (func = noop, bindCall) => {
   return (...args) => {

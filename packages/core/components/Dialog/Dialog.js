@@ -21,12 +21,11 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
     container,
     content,
     text,
-    textAfter,
     title,
     toast,
     visible,
   } = props;
-  const contentrRef = React.useRef();
+  const contentRef = React.useRef();
   const transtionStyles = {
     entering: {
       opacity: 1,
@@ -78,7 +77,7 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
               >
                 {title && <div className={classes.title}>{title}</div>}
                 {text && <div className={classes.text}>{text}</div>}
-                {getRendered(content, {ref: contentrRef})}
+                {getRendered(content, {ref: contentRef})}
               </div>
             )
           }
@@ -102,7 +101,7 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
                       )}
                       onClick={e => {
                         if(action.onClick){
-                          action.onClick(e, { contentrRef })
+                          action.onClick(e, { contentRef })
                         }
                       }} 
                       key={i}

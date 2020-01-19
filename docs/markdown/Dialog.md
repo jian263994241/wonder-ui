@@ -99,8 +99,8 @@ function DialogExamples(props){
                   { 
                     text: 'Agree', 
                     primary: true,
-                    onClick: (e, {textAfterRef}) => new Promise(resolve=>{
-                      if(textAfterRef.current.checked){
+                    onClick: (e, {contentRef}) => new Promise(resolve=>{
+                      if(contentRef.current.checked){
                         resolve()
                       }else{
                         Dialog.toast('Please check the checkbox.')
