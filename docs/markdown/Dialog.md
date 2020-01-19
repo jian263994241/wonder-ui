@@ -47,8 +47,7 @@ function DialogExamples(props){
               ()=> Dialog.custom({
                 title: 'Custom Title',
                 text: 'Custom Text', 
-                textBefore: <div>TextBefore node</div>,
-                textAfter: <div>TextAfter node</div>,
+                content: <div>TextAfter node</div>,
                 actions: [
                   { text: 'First button', primary: true, onClick: () => Dialog.alert({text: 'First'}) },
                   { text: 'Second button', onClick: () => Dialog.alert({text: 'Second'}) },
@@ -83,7 +82,7 @@ function DialogExamples(props){
                     text, text, text, text, text,text, text, text, text, text,text, text, text, text, text,
                   </p>
                 ),
-                textAfter: ({ ref })=>{
+                content: ({ ref })=>{
                   return (
                     <p>
                       <label>

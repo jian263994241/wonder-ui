@@ -19,14 +19,14 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
     classes,
     className,
     container,
+    content,
     text,
     textAfter,
-    textBefore,
     title,
     toast,
     visible,
   } = props;
-  
+  const contentrRef = React.useRef();
   const transtionStyles = {
     entering: {
       opacity: 1,
@@ -40,9 +40,6 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
 
   const noButtons = actions.length <= 0 ;
   const vertical = actions.length >= 3 ;
-
-  const textBeforeRef = React.useRef();
-  const textAfterRef = React.useRef();
 
   return (
     <Modal
@@ -70,7 +67,7 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
           ref={ref}
         >
           {
-            (title || textBefore || text || textAfter) && (
+            (title || content || text ) && (
               <div 
                 className={clsx(
                   classes.body,
@@ -80,9 +77,8 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
                 )}
               >
                 {title && <div className={classes.title}>{title}</div>}
-                {getRendered(textBefore, {ref: textBeforeRef})}
                 {text && <div className={classes.text}>{text}</div>}
-                {getRendered(textAfter, {ref: textAfterRef})}
+                {getRendered(content, {ref: contentrRef})}
               </div>
             )
           }
@@ -106,7 +102,7 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
                       )}
                       onClick={e => {
                         if(action.onClick){
-                          action.onClick(e, { textBeforeRef, textAfterRef })
+                          action.onClick(e, { contentrRef })
                         }
                       }} 
                       key={i}
@@ -137,12 +133,7 @@ Dialog.propTypes = {
   /** 弹框内容 */
   text: PropTypes.node,
   /** 弹框内容后面的自定义内容 */
-  textAfter: PropTypes.oneOfType([
-    PropTypes.node, 
-    PropTypes.func
-  ]),
-  /** 弹框内容前面的自定义内容 */
-  textBefore: PropTypes.oneOfType([
+  content: PropTypes.oneOfType([
     PropTypes.node, 
     PropTypes.func
   ]),
