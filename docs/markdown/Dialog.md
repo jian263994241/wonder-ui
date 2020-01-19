@@ -77,8 +77,6 @@ Dialog.alert({title, text, onOk, okText})
 
 Dialog.confirm({title, text, onOk, okText, onCancel, cancelText})
 
-Dialog.toast(text)
-
 Dialog.custom({
   title: 'Custom Title',
   text: 'Custom Text', 

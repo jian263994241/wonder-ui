@@ -33,7 +33,7 @@ export default function DialogExamples(props){
             
           </div>
           <div>
-            <Button fullWidth onClick={ ()=> Dialog.toast('toast!') } >toast</Button>
+            {/* <Button fullWidth onClick={ ()=> Dialog.toast('toast!') } >toast</Button> */}
           </div>
           
         </Flex>
