@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Buttonbase from '../ButtonBase';
 import clsx from 'clsx';
 import Fade from '../Fade';
+import getRendered from '@wonder-ui/utils/getRendered';
 import Modal from '../Modal';
 import styles from './styles';
 import withStyles from '../withStyles';
-
 /**
  * 系统信息提示, 并请求用户进行下一步操作
  * @visibleName Dialog 对话框
@@ -21,6 +21,7 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
     container,
     text,
     textAfter,
+    textBefore,
     title,
     toast,
     visible,
@@ -40,6 +41,9 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
   const noButtons = actions.length <= 0 ;
   const vertical = actions.length >= 3 ;
 
+  const textBeforeRef = React.useRef();
+  const textAfterRef = React.useRef();
+
   return (
     <Modal
       visible={visible}
@@ -58,24 +62,30 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
       >
         <div className={clsx(
             classes.root, 
-            {toast: toast} ,
+            { 
+              toast: toast
+            },
             className
           )} 
           ref={ref}
         >
-          <div 
-            className={clsx(
-              classes.body,
-              {
-                noButtons: noButtons,
-              }
-            )}
-          >
-            {title && <div className={classes.title}>{title}</div>}
-            {text && <div className={classes.text}>{text}</div>}
-            {textAfter}
-          </div>
-
+          {
+            (title || textBefore || text || textAfter) && (
+              <div 
+                className={clsx(
+                  classes.body,
+                  {
+                    noButtons: noButtons,
+                  }
+                )}
+              >
+                {title && <div className={classes.title}>{title}</div>}
+                {getRendered(textBefore, {ref: textBeforeRef})}
+                {text && <div className={classes.text}>{text}</div>}
+                {getRendered(textAfter, {ref: textAfterRef})}
+              </div>
+            )
+          }
           {
             !noButtons && (
               <div className={clsx(
@@ -94,7 +104,11 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
                           primary: action.primary
                         }
                       )}
-                      onClick={action.onClick} 
+                      onClick={e => {
+                        if(action.onClick){
+                          action.onClick(e, { textBeforeRef, textAfterRef })
+                        }
+                      }} 
                       key={i}
                     >{action.text}</Buttonbase>
                   ))
@@ -119,11 +133,19 @@ Dialog.propTypes = {
   /** 是否为toast样式 */
   toast: PropTypes.bool,
   /** 弹框标题 */
-  title: PropTypes.string,
+  title: PropTypes.node,
   /** 弹框内容 */
-  text: PropTypes.string,
+  text: PropTypes.node,
   /** 弹框内容后面的自定义内容 */
-  textAfter: PropTypes.element,
+  textAfter: PropTypes.oneOfType([
+    PropTypes.node, 
+    PropTypes.func
+  ]),
+  /** 弹框内容前面的自定义内容 */
+  textBefore: PropTypes.oneOfType([
+    PropTypes.node, 
+    PropTypes.func
+  ]),
   /** 定义操作按钮 */
   actions: PropTypes.arrayOf(
     PropTypes.shape({
@@ -131,7 +153,9 @@ Dialog.propTypes = {
       text: PropTypes.string,
       /** 是否主要按钮 */
       primary: PropTypes.bool,
-      /** 点击操作 */
+      /** 
+       * 点击操作, 如果return 一个 promise, 则resolve后关闭对话框
+       */
       onClick: PropTypes.func
     })
   ),

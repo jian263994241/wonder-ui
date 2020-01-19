@@ -2,19 +2,46 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Dialog from './Dialog';
 import DialogManager from './DialogManager';
-import createChainedFunction from  '@wonder-ui/utils/createChainedFunction';
 import toggleVisible from './toggleVisible';
 
 const dialogManager = new DialogManager();
+const toastManager = new DialogManager();
+
 const noop = ()=>{};
+
+function isPromise(object){
+  if(Promise && Promise.resolve){
+    return Promise.resolve(object) == object;
+  }else{
+    throw "Promise not supported in your environment"
+  }
+}
+
+const wrapCallback = (func = noop, bindCall) => {
+  return (...args) => {
+    const triggered = func(...args);
+    if(isPromise(triggered)){
+      triggered.then(() => bindCall(...args));
+    }else{
+      bindCall(...args);
+    }
+  }
+}
 /**
  * Dialog.alert
  */
-Dialog.alert = function DialogAlert ({ title, text, onOk, okText = '确定' }) {
+Dialog.alert = function DialogAlert ({ 
+  title, 
+  text, 
+  onOk, 
+  okText = '确定',
+  ...rest
+}) {
   const container = document.createElement('div');
   const toggleAlert = toggleVisible((visible, clearQueue)=> {
     ReactDOM.render(
       <Dialog 
+        {...rest}
         visible={visible}
         title={title}
         text={text}
@@ -23,7 +50,7 @@ Dialog.alert = function DialogAlert ({ title, text, onOk, okText = '确定' }) {
           {
             text: okText,
             primary: true,
-            onClick: createChainedFunction(toggleAlert, onOk)
+            onClick: wrapCallback(onOk, toggleAlert)
           }
         ]}
       />,
@@ -38,11 +65,20 @@ Dialog.alert = function DialogAlert ({ title, text, onOk, okText = '确定' }) {
 /**
  * Dialog.confirm
  */
-Dialog.confirm = function DialogConfirm({ title, text, onOk, okText = '确定', onCancel, cancelText = "取消" }) {
+Dialog.confirm = function DialogConfirm({ 
+  title, 
+  text, 
+  onOk, 
+  okText = '确定', 
+  onCancel, 
+  cancelText = "取消",
+  ...rest
+}) {
   const container = document.createElement('div');
   const toggleConfirm = toggleVisible((visible, clearQueue)=> {
     ReactDOM.render(
       <Dialog 
+        {...rest}
         visible={visible}
         title={title}
         text={text}
@@ -50,12 +86,12 @@ Dialog.confirm = function DialogConfirm({ title, text, onOk, okText = '确定', 
         actions={[
           {
             text: cancelText,
-            onClick: createChainedFunction(toggleConfirm, onCancel)
+            onClick: wrapCallback(onCancel, toggleConfirm)
           },
           {
             text: okText,
             primary: true,
-            onClick: createChainedFunction(toggleConfirm, onOk)
+            onClick: wrapCallback(onOk, toggleConfirm)
           }
         ]}
       />,
@@ -85,7 +121,7 @@ Dialog.toast = function DialogToast(text, callback) {
     )
   });
 
-  dialogManager.run(
+  toastManager.run(
     (clearQueue)=> {
       toggleToast(clearQueue);
 
@@ -112,7 +148,7 @@ Dialog.custom = function DialogCustom (props){
           const { onClick, ...otherOpts} = action;
           return {
             ...otherOpts,
-            onClick: createChainedFunction(toggleConfirm, onClick)
+            onClick: wrapCallback(onClick, toggleConfirm)
           }
         })}
       />,

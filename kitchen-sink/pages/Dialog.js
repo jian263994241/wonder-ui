@@ -5,48 +5,48 @@ export default function DialogExamples(props){
   
   return (
     <Page name="Dialog" navbar>
-      <ContentBlock>
-        <Flex flex>
-          <div>
-            <Button
-              fullWidth 
+      <ContentBlock header="Default">
+        <Flex>
+          <Button
               onClick={
                 ()=> {
-                  Dialog.alert({ text: 'Alert 1', title: 'Dialog Menager', });
-                  Dialog.alert({ text: 'Alert 2', title: 'Dialog Menager', });
+                  Dialog.alert({ text: 'Queue.1', title: 'Title', });
+                  Dialog.alert({ text: 'Queue.2', title: 'Title', });
                 }
               }
             >alert</Button>
-          </div>
-          <div>
             <Button 
-              fullWidth
               onClick={
                 ()=> Dialog.confirm({ 
                   text: 'Confirm Text', 
-                  title: 'Confirm Title',
-                  onOk: ()=> Dialog.alert({text: 'ok'}),
-                  onCancel: ()=> Dialog.alert({text: 'cancel'}),
+                  title: 'Title',
+                  onOk: ()=> Dialog.alert({text: 'ok', title: 'Callback'}),
+                  onCancel: ()=> Dialog.alert({text: 'cancel', title: 'Callback'}),
                 })
               }
             >confirm</Button>
-            
-          </div>
-          <div>
-            {/* <Button fullWidth onClick={ ()=> Dialog.toast('toast!') } >toast</Button> */}
-          </div>
-          
-        </Flex>
-        
-        <br/>
-        <div>
+            <Button 
+              onClick={
+                ()=> Dialog.confirm({ 
+                  text: 'Tap hold', 
+                  title: 'Title',
+                  onOk: ()=> new Promise(resolve => {
+                    Dialog.toast('Tap hold')
+                  }),
+                })
+              }
+            >Tap hold</Button>
+          </Flex>
+      </ContentBlock>
+      <ContentBlock header="Custom">
+        <Flex>
           <Button 
-            fullWidth
             onClick={
               ()=> Dialog.custom({
                 title: 'Custom Title',
                 text: 'Custom Text', 
-                textAfter: <div>TextAfter string or node</div>,
+                textBefore: <div>TextBefore node</div>,
+                textAfter: <div>TextAfter node</div>,
                 actions: [
                   { text: 'First button', primary: true, onClick: () => Dialog.alert({text: 'First'}) },
                   { text: 'Second button', onClick: () => Dialog.alert({text: 'Second'}) },
@@ -55,8 +55,62 @@ export default function DialogExamples(props){
                 ]
               })
             }
-          >custom</Button>
-        </div>
+          >multi-button</Button>
+
+          <Button 
+            onClick={
+              ()=> Dialog.custom({
+                actions: [
+                  { text: 'First button', primary: true, onClick: () => Dialog.alert({text: 'First'}) },
+                  { text: 'Second button', onClick: () => Dialog.alert({text: 'Second'}) },
+                  { text: 'Third button', onClick: () => Dialog.alert({text: 'Third'}) },
+                  { text: 'Cancel' }
+                ]
+              })
+            }
+          >actions</Button>
+
+          <Button 
+            onClick={
+              ()=> Dialog.custom({
+                title: 'Agreement',
+                text: (
+                  <p style={{textAlign: 'left'}}>
+                    text, text, text, text, text, text, text, text, text, text, text, 
+                    text, text, text, text, text,text, text, text, text, text,text, text, text, text, text,
+                    text, text, text, text, text,text, text, text, text, text,text, text, text, text, text,
+                  </p>
+                ),
+                textAfter: ({ ref })=>{
+                  return (
+                    <p>
+                      <label>
+                        <input type="checkbox" ref={ref}/>
+                        I agree to this agreement 
+                      </label>
+                    </p>
+                  )
+                },
+                actions: [
+                  { 
+                    text: 'Cancel',
+                  },
+                  { 
+                    text: 'Agree', 
+                    primary: true,
+                    onClick: (e, {textAfterRef}) => new Promise(resolve=>{
+                      if(textAfterRef.current.checked){
+                        resolve()
+                      }else{
+                        Dialog.toast('Please check the checkbox.')
+                      }
+                    })
+                  },
+                ]
+              })
+            }
+          >content</Button>
+        </Flex>
       </ContentBlock>
     </Page>
   )

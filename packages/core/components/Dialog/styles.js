@@ -5,17 +5,18 @@ export default theme => ({
     boxSizing: 'border-box',
     position: 'fixed',
     contain: 'content',
-    width: 270,
+    width: 285,
+    maxWidth: '100%',
     zIndex: theme.zIndex.modal,
     borderRadius: 13,
-    color: '#000',
-    textAlign: 'center',
+    color: theme.palette.text.primary,
     overflow: 'hidden',
     willChange: 'transform,opacity',
     outline: 'none',
     fontFamily: theme.typography.fontFamily,
     '&.toast': {
       zIndex: theme.zIndex.snackbar,
+      textAlign: 'center',
     },
     '&.toast $body': {
       display: 'inline-block',
@@ -42,7 +43,6 @@ export default theme => ({
     fontSize: theme.typography.pxToRem(18),
     textAlign: 'center',
     fontWeight: 500,
-    color: theme.palette.text.primary,
     '& + $text': {
       marginTop: 5
     }
@@ -50,6 +50,7 @@ export default theme => ({
   text: {
     wordWrap: 'break-word',
     wordBreak:'break-all',
+    textAlign: 'center',
     minWidth: 80,
     color: theme.palette.text.secondary
   },
