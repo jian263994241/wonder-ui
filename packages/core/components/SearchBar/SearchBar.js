@@ -91,6 +91,7 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
         },
         className
       )}
+      onSubmit={handleSearch}
     >
       <div className={classes.body}>
         <div className={classes.inputWrap}>
@@ -119,50 +120,7 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
         extra  && <div className={classes.extra}>{extra}</div>
       }
     </form>
-  )
-  
-  return (
-    <div 
-      className={clsx(
-        classes.root,
-        bordered && classes.bordered, 
-        className
-      )} 
-      ref={rootRef}
-    >   
-      <form className={clsx(
-        classes.body,
-        {
-          [classes.inputStart]: showCancel
-        }
-      )} onSubmit={handleSearch}>
-        <div className={classes.input}>
-          {showSearchIcon && <i className={classes.iconSearch}/>}
-          <InputBase
-            fullWidth
-            clearButton
-            type="search"
-            autoComplete="off"
-            name="searchField"
-            ref={handleRef} 
-            value={innerValue} 
-            onChange={changeValue} 
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onClear={handleClear}
-            {...rest}
-          />
-        </div>
-        <span 
-          className={classes.cancelText} 
-          onClick={handleCancel}
-        >{cancelText}</span>
-      </form>
-      {
-        extra  && <div className={classes.extra}>{extra}</div>
-      }
-    </div>
-  )
+  );
 });
 
 SearchBar.propTypes={

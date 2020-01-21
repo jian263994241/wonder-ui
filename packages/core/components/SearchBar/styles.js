@@ -72,14 +72,4 @@ export default theme => ({
     alignSelf: 'center',
     marginLeft: -10
   },
-  hidden: {
-    visibility: 'hidden',
-    opacity: 0
-  },
-  hide: {
-    display: 'none'
-  },
-  end: {
-    paddingLeft: 10
-  }
 })
