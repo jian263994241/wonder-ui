@@ -10,6 +10,7 @@ export default theme => ({
     justifyContent: 'space-between',
     position: 'relative',
     boxSizing: 'border-box',
+    userSelect: 'none',
   },
   hairline: {
     ...theme.hairline.create('bottom')
@@ -21,19 +22,22 @@ export default theme => ({
     alignSelf: 'center',
     wordBreak: 'keep-all',
     fontSize: theme.typography.pxToRem(17),
-    flex: 2,
   },
   left: {
     textAlign: 'left',
-    alignSelf: 'center',
+    display: 'flex',
+    alignItems: 'center',
     wordBreak: 'keep-all',
     flex: 1,
+    flexShrink: 0,
   },
   right: {
     textAlign: 'right',
-    alignSelf: 'center',
+    display: 'flex',
+    alignItems: 'center',
     wordBreak: 'keep-all',
     flex: 1,
+    flexShrink: 0,
   },
   defaultIcon: {
     color: fade(theme.palette.text.primary, 0.3),

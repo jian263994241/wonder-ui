@@ -1,3 +1,4 @@
+import device from '@wonder-ui/utils/device';
 
 function create(position, color = '#999'){
   let styles;
@@ -9,21 +10,11 @@ function create(position, color = '#999'){
     zIndex: 15,
   };
   const scaleY = {
-    'html.device-pixel-ratio-2 &': {
-      transform: 'scaleY(0.5)'
-    },
-    'html.device-pixel-ratio-3 &': {
-      transform: 'scaleY(0.33)'
-    },
+    transform: `scaleY(${1/device.pixelRatio})`
   };
 
   const scaleX = {
-    'html.device-pixel-ratio-2 &': {
-      transform: 'scaleX(0.5)'
-    },
-    'html.device-pixel-ratio-3 &': {
-      transform: 'scaleX(0.33)'
-    },
+    transform: `scaleX(${1/device.pixelRatio})`
   };
 
 
@@ -39,6 +30,7 @@ function create(position, color = '#999'){
             right: 'auto',
             height: 1,
             width: '100%',
+            transformOrigin: '50% 100%',
           }
         }
       break;
@@ -52,7 +44,8 @@ function create(position, color = '#999'){
           bottom: 'auto',
           right: 'auto',
           width: 1,
-          height: '100%'
+          height: '100%',
+          transformOrigin: '100% 50%',
         }
       }
       break;
@@ -66,7 +59,8 @@ function create(position, color = '#999'){
           right: 'auto',
           top: 'auto',
           height: 1,
-          width: '100%'
+          width: '100%',
+          transformOrigin: '50% 0%',
         }
       }
       break;
@@ -80,7 +74,8 @@ function create(position, color = '#999'){
           left: 'auto',
           bottom: 'auto',
           width: 1,
-          height: '100%'
+          height: '100%',
+          transformOrigin: '0% 50%',
         }
       }
       break;

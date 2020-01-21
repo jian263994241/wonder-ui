@@ -1,5 +1,5 @@
 import EventsClass from '@wonder-ui/utils/Events';
-import device, { init as deviceInit } from '@wonder-ui/utils/device';
+import device from '@wonder-ui/utils/device';
 
 export default class AppClass extends EventsClass {
   constructor(params = {}, parents = []) {
@@ -14,7 +14,5 @@ export default class AppClass extends EventsClass {
     }
 
     self.device = device;
-
-    deviceInit();
   }
 }

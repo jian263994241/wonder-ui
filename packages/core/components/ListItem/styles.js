@@ -15,6 +15,7 @@ export default theme => ({
     transition: 'background-color 200ms',
     verticalAlign: 'middle',
     boxSizing: 'border-box',
+    userSelect: 'none',
     '&[disabled], &[disabled] $extra, &[disabled] [role=brief]': {
       pointerEvents: 'none',
       cursor: 'default',

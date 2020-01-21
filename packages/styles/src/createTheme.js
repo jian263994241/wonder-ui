@@ -2,10 +2,11 @@ import * as svg from './svg';
 import * as transitions from './transitions';
 import createHairline from './createHairline';
 import createPalette from './createPalette';
+import createShape from './createShape';
 import createSpacing from './createSpacing';
 import createTypography from './createTypography';
+import device from '@wonder-ui/utils/device';
 import shadows from './shadows';
-import createShape from './createShape';
 import zIndex from './zIndex';
 
 export default function createTheme(options={}){
@@ -31,6 +32,7 @@ export default function createTheme(options={}){
     transitions,
     typography: createTypography(palette, typographyInput),
     zIndex,
+    device,
     ...rest
   }
   

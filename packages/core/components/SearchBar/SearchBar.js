@@ -8,6 +8,10 @@ import useForkRef from '@wonder-ui/utils/useForkRef';
 import withStyles from '../withStyles';
 import InputBase from '../InputBase';
 
+/**
+ * 
+ * @visibleName SearchBar 搜索
+ */
 const SearchBar = React.forwardRef(function SearchBar(props, ref){
   const {
     bordered = true,
@@ -66,7 +70,6 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
   });
 
   const handleCancel = useEventCallback((e)=>{
-    setFocus(false);
     changeValue('');
     onCancel && onCancel(e);
   });
@@ -77,6 +80,46 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
     inputRef.current.blur();
     onSearch && onSearch(val);
   });
+
+  return (
+    <form
+      className={clsx(
+        classes.root,
+        {
+          [classes.bordered]: bordered,
+          [classes.inputStart]: showCancel,
+        },
+        className
+      )}
+    >
+      <div className={classes.body}>
+        <div className={classes.inputWrap}>
+          <InputBase
+            clearButton
+            className={classes.input}
+            type="search"
+            autoComplete="off"
+            name="searchField"
+            ref={handleRef} 
+            value={innerValue} 
+            onChange={changeValue} 
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onClear={handleClear}
+            {...rest}
+          />
+          <i className={classes.iconSearch}/>
+        </div>
+        <span 
+          className={classes.cancelText} 
+          onClick={handleCancel}
+        >{cancelText}</span>
+      </div>
+      {
+        extra  && <div className={classes.extra}>{extra}</div>
+      }
+    </form>
+  )
   
   return (
     <div 
@@ -87,8 +130,13 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
       )} 
       ref={rootRef}
     >   
-      <form className={classes.body} onSubmit={handleSearch}>
-        <div className={clsx(classes.input, showCancel && classes.inputStart)}>
+      <form className={clsx(
+        classes.body,
+        {
+          [classes.inputStart]: showCancel
+        }
+      )} onSubmit={handleSearch}>
+        <div className={classes.input}>
           {showSearchIcon && <i className={classes.iconSearch}/>}
           <InputBase
             fullWidth
@@ -106,19 +154,12 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
           />
         </div>
         <span 
-          className={clsx(
-            classes.cancelText,
-            !showCancel&& classes.hidden
-          )} 
+          className={classes.cancelText} 
           onClick={handleCancel}
         >{cancelText}</span>
       </form>
       {
-        extra ? (
-          <div className={classes.extra}>{extra}</div>
-        ): (
-          <div className={classes.end}/>
-        )
+        extra  && <div className={classes.extra}>{extra}</div>
       }
     </div>
   )

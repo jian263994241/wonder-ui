@@ -56,16 +56,17 @@ export const styles = theme => {
       to: { opacity: 0 }
     },
     root : {
-      width: '100%',
-      height: '100%',
       background: theme.palette.background.default,
-      position: 'absolute',
+      height: '100%',
       left: 0,
-      top:0,
-      zIndex: 1,
       overflow: 'hidden auto',
+      position: 'absolute',
+      top:0,
       touchAction: 'pan-x pan-y',
+      transform: 'translate3d(0,0,0)',
+      width: '100%',
       willChange: 'auto',
+      zIndex: 1,
       //fade
       '&.fade-enter': {
         display: 'block',
