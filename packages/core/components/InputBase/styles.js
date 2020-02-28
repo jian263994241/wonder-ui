@@ -25,7 +25,7 @@ export default theme => {
       boxSizing: 'border-box', // Prevent padding issue with fullWidth.
       position: 'relative',
       cursor: 'text',
-      display: 'block',
+      display: 'flex',
       alignItems: 'center',
       '&$disabled': {
         color: theme.palette.text.disabled,
@@ -144,10 +144,8 @@ export default theme => {
     iconClear: {
       width: 15,
       height: 15,
-      right: 8,
-      top: '50%',
-      marginTop: -8,
-      position: 'absolute',
+      flexShrink: 0,
+      marginLeft: 3,
       borderRadius: '50%',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
