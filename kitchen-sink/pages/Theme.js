@@ -53,7 +53,7 @@ export default function ThemeExamples(props) {
 
   return (
     <Page name="Theme" navbar >
-      <List>
+      <List renderHeader={()=>`Mod`}>
         <ListItem extra={<Switch checked={dark} onChange={changeDark}/>}>深色模式</ListItem>
       </List>
       <List renderHeader={()=>`颜色`}>

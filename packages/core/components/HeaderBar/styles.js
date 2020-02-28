@@ -11,6 +11,7 @@ export default theme => ({
     position: 'relative',
     boxSizing: 'border-box',
     userSelect: 'none',
+    zIndex: theme.zIndex.appBar,
   },
   hairline: {
     ...theme.hairline.create('bottom')
@@ -27,14 +28,15 @@ export default theme => ({
     textAlign: 'left',
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'flex-start',
     wordBreak: 'keep-all',
     flex: 1,
     flexShrink: 0,
   },
   right: {
-    textAlign: 'right',
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'flex-end',
     wordBreak: 'keep-all',
     flex: 1,
     flexShrink: 0,

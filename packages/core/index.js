@@ -16,6 +16,7 @@ export { default as Slide } from './components/Slide';
 export { default as hooks } from './components/hooks';
 
 //utils
+export { default as ClickAwayListener } from './components/ClickAwayListener';
 export { default as DisabledTouchMove } from './components/DisabledTouchMove';
 export { default as effect } from './components/effect';
 export { default as Modal } from './components/Modal';
@@ -31,6 +32,7 @@ export { default as withTheme } from './components/withTheme';
 
 //feedback
 export { default as ActivityIndicator } from './components/ActivityIndicator';
+export { default as CircularProgress } from './components/CircularProgress';
 export { default as Dialog } from './components/Dialog';
 export { default as Preloader} from './components/Preloader';
 export { default as toast} from './components/toast';

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Indicator from './Indicator';
+import Indicator from '../icons/Indicator';
 import styles from './styles';
 import withStyles from '../withStyles';
 
@@ -12,9 +12,9 @@ import withStyles from '../withStyles';
 const ActivityIndicator = React.forwardRef(function ActivityIndicator(props, ref) {
   const { classes, className, text, vertical, ...rest } = props;
   return (
-    <div className={clsx(classes.root, className)} ref={ref}>
-      <Indicator {...rest}/>
-      { text && ( <div className={clsx(classes.text, {[classes.vertical]: vertical})}>{text}</div>) }
+    <div className={clsx(classes.root, {[classes.vertical]: vertical}, className)} ref={ref}>
+      <Indicator spin {...rest}/>
+      { text && ( <div className={classes.text}>{text}</div>) }
     </div>
   )
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Indicator from '../ActivityIndicator';
+import Indicator from '../icons/Indicator';
 import Modal from '../Modal';
 import withStyles from '../withStyles';
 
@@ -14,7 +14,7 @@ const Preloader = React.forwardRef(function Preloader(props, ref) {
   const {
     classes,
     className,
-    indicator = <Indicator size="medium" color="#fff"/>,
+    indicator = <Indicator size="large" spin/>,
     navbarHeight,
     visible,
     ...rest

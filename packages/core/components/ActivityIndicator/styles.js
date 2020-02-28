@@ -1,15 +1,22 @@
-export default {
+export default theme => ({
   root: {
     textAlign: 'center',
-    lineHeight: 1
+    lineHeight: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   text: {
-    color: 'rgba(0,0,0,0.38)',
-    marginLeft: 5,
-    display: 'inline-block'
+    color: theme.palette.text.secondary,
+    fontSize: theme.typography.pxToRem(13),
+    marginLeft: theme.spacing(1),
+    alignSelf: 'center'
   },
   vertical: {
-    display: 'block',
-    marginLeft: 0
-  }
-}
+    flexDirection: 'column',
+    '& $text': {
+      marginLeft: 0,
+      marginTop: theme.spacing(1),
+    }
+  },
+})

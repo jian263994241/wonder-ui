@@ -1,7 +1,5 @@
 import { darken } from '@wonder-ui/styles/colorManipulator'
 
-console.log(darken);
-
 export default theme => ({
   root: {
     backgroundColor: 'transparent',
@@ -47,7 +45,8 @@ export default theme => ({
     transform: 'translate3d(0,0,0)',
     transition: theme.transitions.create('all'),
     opacity: 0,
-    marginRight: -50,
+    marginRight: -80,
+    fontSize: theme.typography.pxToRem(14)
   },
   inputStart: {
     '& $cancelText': {

@@ -25,7 +25,7 @@ export default theme => {
       boxSizing: 'border-box', // Prevent padding issue with fullWidth.
       position: 'relative',
       cursor: 'text',
-      display: 'inline-flex',
+      display: 'block',
       alignItems: 'center',
       '&$disabled': {
         color: theme.palette.text.disabled,

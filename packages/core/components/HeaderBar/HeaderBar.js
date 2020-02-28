@@ -29,7 +29,12 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
   return (
     <DisabledTouchMove ref={ref}>
       <div
-        className={clsx(classes.root, { [classes.hairline]: bordered }, className)} 
+        className={clsx(
+          classes.root, { 
+            [classes.hairline]: bordered 
+          }, 
+          className
+        )} 
         {...rest}
       >
         <div className={classes.left}>
@@ -38,7 +43,7 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
           {barLeft}
         </div>
         <div className={classes.title}>{title}</div>
-        <div  className={classes.right}>{barRight}</div>
+        <div className={classes.right}>{barRight}</div>
       </div>
     </DisabledTouchMove>
   )

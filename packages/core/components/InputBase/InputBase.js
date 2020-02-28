@@ -108,15 +108,12 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
 
   const showClearButton = (element) => {
     if(readOnly) return ;
-
-    const _value = isControlled ? value : element.value;
-    
+    const _value = element.value;
     if(_value && _value.length > 0){
       setClearButtonVisibled(true);
     }else{
       setClearButtonVisibled(false);
     }
-
   };
 
   const hideClearButtonTimeOut = React.useRef();

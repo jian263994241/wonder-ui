@@ -3,24 +3,31 @@ import { Redirect } from 'react-router-dom';
 import loadable from "@loadable/component";
 
 
-export default function useComponent({ async, fallback, component, redirect }) {
-  return React.useMemo(()=>{
-    if(typeof async === 'function') {
-      return loadable(()=> timeout(async, 0), {fallback});
-    }else if(typeof redirect === 'string') {
-      return function RedirectTo() {
-        return <Redirect to={redirect}/>;
-      }
-    }else if(component) {
-      return loadable(()=>timeout(() => Promise.resolve(component.default || component), 0));
-    };
-  }, []);
+export default function useComponent(data) {
+  return React.useMemo(()=> createAsyncComponent(data), []);
+}
+
+
+function createAsyncComponent({ async, component, redirect }){
+  if(typeof redirect === 'string') {
+    return () => <Redirect to={redirect}/>
+  }
+
+  if(component){
+    return component.default || component;
+  }
+
+  if(typeof async === 'function'){
+    return loadable(timeout(async, 30));
+  }
 }
 
 function timeout(callback, time = 0){
-  return new Promise((resolve, reject)=>{
+  return () => new Promise(resolve =>{
     setTimeout(() => {
       resolve(callback());
     }, time);
   })
 }
+
+

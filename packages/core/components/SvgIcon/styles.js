@@ -1,15 +1,25 @@
 export default theme =>({
+  '@keyframes spin': {
+    '100%': {
+      transform: 'rotate(360deg)'
+    }
+  },
   root: {
     userSelect: 'none',
     width: '1em',
     height: '1em',
     display: 'inline-block',
     fill: 'currentColor',
+    stroke: 'currentColor',
     flexShrink: 0,
     fontSize: theme.typography.pxToRem(24),
+    verticalAlign: 'middle',
     transition: theme.transitions.create('fill', {
       duration: theme.transitions.duration.shorter,
     }),
+    '&.spin' : {
+      animation: '$spin 1s steps(12, end) infinite',
+    },
     /* Styles applied to the root element if `color="primary"`. */
     '&.colorPrimary': {
       color: theme.palette.primary.main,

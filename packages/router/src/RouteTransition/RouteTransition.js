@@ -14,7 +14,7 @@ import withStyles from '@wonder-ui/styles/withStyles';
 const RouteComponent = React.memo(function RouteComponent(props) {
   const {
     async,
-    fallback = null,
+    fallback = <div>Loading...</div>,
     redirect,
     component,
     current,
@@ -23,7 +23,7 @@ const RouteComponent = React.memo(function RouteComponent(props) {
   } = props;
   const { onRouteChange, routerStore } = useRouterContext();
 
-  const Component = useComponent({ async, fallback, component, redirect });
+  const Component = useComponent({ async, component, redirect });
 
   usePageInit(()=>{
     if(onRouteChange){
@@ -34,7 +34,7 @@ const RouteComponent = React.memo(function RouteComponent(props) {
   })
 
   return (
-    <Component {...routeProps} routerStore={routerStore} />
+    <Component {...routeProps} routerStore={routerStore} fallback={fallback}/>
   );
 }, function shouldUpdate(prevProps, nextProps) {
   if(prevProps.current && prevProps.current != nextProps.current){
@@ -55,7 +55,7 @@ const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
     className,
     style,
     async,
-    fallback = null,
+    fallback,
     redirect,
     disabled,
     name,
@@ -73,14 +73,13 @@ const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
   if(disabled){
     return null;
   }
-
+  
   return (
     <UIRouteContext.Provider value={{animationType, timeout}}>
       <Route {...rest}>
         {(routeProps)=>{
           const { match, history } = routeProps;
           const visible = !!match && match.isExact;
-
           return (
             <Transition
               in={visible}

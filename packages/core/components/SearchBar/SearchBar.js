@@ -64,13 +64,9 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
     onFocus && onFocus(e);
   });
 
-  const handleBlur = useEventCallback((e)=>{
-    setFocus(false);
-    onBlur && onBlur(e);
-  });
-
   const handleCancel = useEventCallback((e)=>{
     changeValue('');
+    setFocus(false);
     onCancel && onCancel(e);
   });
 
@@ -78,6 +74,7 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
     e.preventDefault();
     const val = e.target.searchField ? e.target.searchField.value: null;
     inputRef.current.blur();
+    setFocus(false);
     onSearch && onSearch(val);
   });
 
@@ -101,11 +98,10 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
             type="search"
             autoComplete="off"
             name="searchField"
-            ref={handleRef} 
+            inputRef={handleRef} 
             value={innerValue} 
             onChange={changeValue} 
             onFocus={handleFocus}
-            onBlur={handleBlur}
             onClear={handleClear}
             {...rest}
           />

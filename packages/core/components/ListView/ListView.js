@@ -3,18 +3,14 @@ import PropTypes from 'prop-types';
 import { VariableSizeList as List, areEqual } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import Flex from '../Flex';
+import Indicator from '../icons/Indicator';
 import InfiniteLoader from 'react-window-infinite-loader';
 import PullToRefresh from '../PullToRefresh';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 
-const defaultRenderIndicator = (props)=>(
-  <Flex 
-    alignContent="center"
-    justify="center"
-    style={{height: '100%'}}
-    {...props}
-  >
-    <div>loading ...</div>
+const defaultRenderIndicator = props => (
+  <Flex justify="center" style={{height: '100%'}} {...props} >
+    <Indicator spin/>
   </Flex>
 );
 

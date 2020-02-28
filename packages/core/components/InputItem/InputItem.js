@@ -115,7 +115,7 @@ InputItem.propTypes = {
   /**
    * 是否多行, multiline: true时, Input 替换成 TextareaAutosize
    */
-  multiline: PropTypes.func,
+  multiline: PropTypes.bool,
   /**
    * extra部分的点击操作
    */

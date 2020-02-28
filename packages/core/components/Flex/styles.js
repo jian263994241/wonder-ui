@@ -22,7 +22,7 @@ export default theme =>({
     flexDirection: props => alias[props.direction],
     flexWrap: props => alias[props.wrap],
     justifyContent: props => alias[props.justify],
-    '& > *': {
+    '&& > *': {
       marginRight: props => theme.spacing(props.gutter) || 0,
       '&:last-child':{
         marginRight: 0
