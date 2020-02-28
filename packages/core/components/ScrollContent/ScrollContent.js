@@ -104,8 +104,5 @@ export default withStyles({
   body: {
     width: '100%',
     minHeight: '100%',
-    '.device-ios &': {
-      minHeight: '100.3%',
-    }
   }
 })(ScrollContent);

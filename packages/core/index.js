@@ -52,6 +52,7 @@ export { default as CheckableTagGroup } from './components/CheckableTagGroup';
 export { default as Checkbox } from './components/Checkbox';
 export { default as CheckboxItem } from './components/CheckboxItem';
 export { default as ContentBlock } from './components/ContentBlock';
+export { default as CountdownButton } from './components/CountdownButton';
 export { default as DatePicker } from './components/DatePicker';
 export { default as Drawer } from './components/Drawer';
 export { default as Empty } from './components/Empty';

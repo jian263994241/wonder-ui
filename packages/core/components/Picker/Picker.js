@@ -34,7 +34,7 @@ const Picker = React.forwardRef(function Picker(props, ref) {
   } = props;
 
   const getExtra = ()=>{
-    return placeholder|| extraProp || children.props.extra;
+    return placeholder|| extraProp || (children && children.props.extra);
   };
 
   const [visible, setVisible] = React.useState(visible);
@@ -83,11 +83,10 @@ const Picker = React.forwardRef(function Picker(props, ref) {
   return (
     <React.Fragment>
       { 
-        (
-          children && 
-          typeof children !== 'string' &&
-          React.isValidElement(children)
-        ) ? React.cloneElement(children, { 
+        children && 
+        typeof children !== 'string' &&
+        React.isValidElement(children) && 
+        React.cloneElement(children, { 
           [FIELD_DATA_PROP]: fieldData,
           [FIELD_META_PROP]: fieldMeta,
           [labelProp]: extra, 
@@ -95,9 +94,7 @@ const Picker = React.forwardRef(function Picker(props, ref) {
           disabled,
           readOnly: true,
           ref,
-        }) : (
-          <a disabled={disabled} onClick={handleClick} ref={ref}>{_extra}</a>
-        )
+        })
       }
       <Cascader 
         visible={visible}
