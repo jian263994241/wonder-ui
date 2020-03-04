@@ -9,6 +9,7 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
     children,
     classes,
     className,
+    scrolling = false,
     ...rest
   } = props;
 
@@ -73,7 +74,13 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
 
   return (
     <div
-      className={clsx(classes.root, className)}
+      className={clsx(
+        classes.root, 
+        { 
+          [classes.iosTouch]: !scrolling 
+        },
+        className
+      )}
       {...rest}
       {...handleEvents}
       ref={handleRef}
@@ -84,7 +91,9 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
 });
 
 ScrollContent.componentClass = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  scrolling: PropTypes.bool,
+  children: PropTypes.any,
 };
 
 
@@ -99,10 +108,12 @@ export default withStyles({
     willChange: 'scroll-position',
     touchAction: 'pan-x pan-y',
     position: 'relative',
-    WebkitOverflowScrolling: 'touch'
   },
   body: {
     width: '100%',
-    // minHeight: '100%',
+    minHeight: '100%',
+  },
+  iosTouch: {
+    WebkitOverflowScrolling: 'touch'
   }
 })(ScrollContent);
