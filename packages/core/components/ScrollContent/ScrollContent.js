@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 import withStyles from '../withStyles';
+import device from '@wonder-ui/utils/device';
 
 const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
   const { 
     children,
     classes,
     className,
-    scrolling = false,
+    disableIosTouch = false,
     ...rest
   } = props;
 
@@ -24,7 +25,7 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
         scroll = el.scrollHeight;
 
     // If at top, bump down 1px
-    if(curPos <= 0) { el.scrollTop = 1; }
+    if(curPos <= 0) { el.scrollTop = 0; }
 
     // If at bottom, bump up 1px
     if(curPos + height >= scroll) {
@@ -77,7 +78,7 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
       className={clsx(
         classes.root, 
         { 
-          [classes.iosTouch]: !scrolling 
+          [classes.iosTouch]: !disableIosTouch && device.ios
         },
         className
       )}
@@ -92,7 +93,7 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
 
 ScrollContent.componentClass = {
   className: PropTypes.string,
-  scrolling: PropTypes.bool,
+  disableIosTouch: PropTypes.bool,
   children: PropTypes.any,
 };
 
@@ -112,8 +113,12 @@ export default withStyles({
   body: {
     width: '100%',
     minHeight: '100%',
+    overflow: 'hidden',
   },
   iosTouch: {
-    WebkitOverflowScrolling: 'touch'
+    WebkitOverflowScrolling: 'touch',
+    '& $body': {
+      minHeight: 'calc(100% + 1px)'
+    }
   }
 })(ScrollContent);
