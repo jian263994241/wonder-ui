@@ -99,10 +99,10 @@ export default withStyles({
     willChange: 'scroll-position',
     touchAction: 'pan-x pan-y',
     position: 'relative',
-    zIndex: 1,
+    WebkitOverflowScrolling: 'touch'
   },
   body: {
     width: '100%',
-    minHeight: '100%',
+    // minHeight: '100%',
   }
 })(ScrollContent);
