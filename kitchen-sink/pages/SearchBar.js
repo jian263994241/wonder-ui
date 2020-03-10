@@ -10,7 +10,10 @@ export default function SearchBarExamples(props) {
       navbar
     >
       
-      <SearchBar placeholder="Default" onSearch={value=> setReslut(value)}/>
+      <SearchBar 
+        placeholder="Default" 
+        onSearch={value=> setReslut(value)}
+      />
 
       <br/>
 

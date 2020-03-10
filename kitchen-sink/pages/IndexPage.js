@@ -1,8 +1,6 @@
 import React from 'react';
 import { Page, List, Block, ListItem, useRouterContext } from '@wonder-ui/core';
 
-console.log(Page);
-
 const LinkDetail = (props)=> {
   const { to, ...rest } = props;
   const { routerStore } = useRouterContext();

@@ -52,12 +52,12 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
   const changeValue = React.useCallback((value)=>{
     setInnerValue(value);
     onChange && onChange(value);
+    if(!value || value === ''){
+      if(onClear){
+        onClear();
+      }
+    }
   }, []);
-
-  const handleClear = useEventCallback(()=>{ 
-    changeValue(''); 
-    onClear && onClear();
-  });
 
   const handleFocus = useEventCallback((e)=>{
     setFocus(true);
@@ -102,7 +102,6 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
             value={innerValue} 
             onChange={changeValue} 
             onFocus={handleFocus}
-            onClear={handleClear}
             {...rest}
           />
           <i className={classes.iconSearch}/>

@@ -34,7 +34,7 @@ export default theme => ({
     height: '100%',
     borderRadius: 8,
     backgroundColor: darken(theme.palette.background.default, 0.07),
-    paddingRight: 28,
+    paddingRight: 12,
     paddingLeft: 28, 
   },
   cancelText: {

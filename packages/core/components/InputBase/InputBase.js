@@ -35,7 +35,6 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     name,
     onBlur,
     onChange,
-    onClear,
     onClick,
     onFocus,
     onKeyDown,
@@ -253,7 +252,7 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
 
   const handleClear = event => {
     const element = inputRef.current;
- 
+    
     if(!isControlled){
 
       element.value = '';
@@ -269,10 +268,6 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
 
     if (onChange) {
       onChange('');
-    }
-
-    if (onClear) {
-      onClear(event);
     }
   }
   
