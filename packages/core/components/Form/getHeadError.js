@@ -1,3 +1,5 @@
+import isArray from 'lodash/isArray';
+import objValues from 'lodash/values';
 
 const getDefinedError = (errorArray)=>{
   let error; 
@@ -11,7 +13,7 @@ const getDefinedError = (errorArray)=>{
 }
 
 export const flatError = (error)=>{
-  if(Array.isArray(error)){
+  if(isArray(error)){
     error = getDefinedError(error);
   }
   
@@ -19,7 +21,7 @@ export const flatError = (error)=>{
     if(error.errors){
       return flatError(error.errors);
     }else if(!error.field){  
-      return flatError(Object.values(error));
+      return flatError(objValues(error));
     }
   }
 

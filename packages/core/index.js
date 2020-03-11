@@ -40,6 +40,7 @@ export { default as TouchFeedback } from './components/TouchFeedback';
 
 //form
 export { default as Form } from './components/Form';
+export { default as FormItem } from './components/FormItem';
 
 //components
 export { default as Block } from './components/Block';

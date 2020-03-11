@@ -56,7 +56,6 @@ const InputItem = React.forwardRef(function InputItem(props, ref) {
           renderInput ? renderInput(props, ref) : (
             <InputBase
               ref={ref}
-              fullWidth
               multiline={multiline}
               clearButton={clearButton && !multiline}
               alignRight={alignRight}

@@ -6,6 +6,7 @@ import {
   Dialog, 
   Flex, 
   Form, 
+  FormItem,
   InputItem, 
   List, 
   ListItem, 
@@ -19,103 +20,91 @@ const fruit = [
   { label: '香蕉', value: '2' },
 ];
 
-export default Form.create({
-  onValuesChange(){
-    
-  }
-})(function FormExamples(props) {
-  const { form } = props;
-  const { getFieldDecorator, validateFields, resetFields } = form;
-  
-  const handleSubmit = React.useCallback(()=>{
-    validateFields((errors, _values)=>{
-      if(errors){
-        let err = Form.getHeadError(errors);
-        return Dialog.toast(err.message);
-      }
+export default function FormExamples(props) {
+  const formRef = React.useRef();
 
-      console.log(_values);
-    })
-  }, []);
-  console.log(form.getForm);
+  const handleError = (values, headError)=>{
+    Dialog.toast(headError.message);
+  }
+
+  const submit = (values)=>{
+    console.log(values);
+  }
+
   
   const reset = React.useCallback(()=>{
-    resetFields()
+    formRef.current.resetFields();
   }, []);
 
   return (
     <Page name="Form" navbar >
       <Form 
-        form={form}
+        ref={formRef} 
+        onFinishFailed={handleError}
+        onFinish={submit}
       >
         <List renderHeader={()=>'基本'}>
-          {
-            getFieldDecorator('field_1', {
-              rules: [{
-                required: true,
-                message: `请填写[基本]字段`
-              }]
-            })(
-              <InputItem placeholder="请输入">基本</InputItem>
-            )
-          }
-          {
-            getFieldDecorator('field_2', {
-              rules: [{
-                required: true,
-                message: `请填写[多行]字段`
-              }]
-            })(
-              <InputItem placeholder="请输入" multiline>多行</InputItem>
-            )
-          }
-          {
-            form.getFieldDecorator('group2', {
-              initialValue: '0',
-              rules: [{
-                required: true,
-                message: `请选择[性质]字段`
-              }]
-            })(
-              <InputItem
-                renderInput={({onChange, value}, ref)=>(
-                  <CheckableTagGroup 
-                    ref={ref}
-                    exclusive
-                    data={[
-                      {label: '公司', value: '0'},
-                      {label: '个人', value: '1'},
-                    ]}
-                    onChange={onChange}
-                    value={value}
-                  />
-                )}
-              > 企业性质 </InputItem>
-            )
-          }
-          {
-            getFieldDecorator('field_3', {
-              rules: [{
-                required: true,
-                message: `请选择[选择]字段`
-              }]
-            })(
-              <Picker extra="请选择" data={fruit} cols={1}>
-                <ListItem arrow="horizontal">选择</ListItem>
-              </Picker>
-            )
-          }
-          {
-            getFieldDecorator('field_4', {
-              rules: [{
-                required: false,
-                message: `请填写[数字]字段`
-              }]
-            })(
-              <InputItem extra="元" placeholder="请输入" alignRight type="number">数字</InputItem>
-            )
-          }
-          
+          <FormItem
+            name="field_1"
+            rules={[{
+              required: true,
+              message: `请填写[基本]字段`
+            }]}
+          >
+            <InputItem placeholder="请输入">基本</InputItem>
+          </FormItem>
+          <FormItem
+            name="field_2"
+            rules={[{
+              required: true,
+              message: `请填写[多行]字段`
+            }]}
+          >
+            <InputItem placeholder="请输入" multiline>多行</InputItem>
+          </FormItem>
+          <FormItem
+            name="group2"
+            initialValue="0"
+            rules={[{
+              required: true,
+              message: `请选择[性质]字段`
+            }]}
+          >
+            <InputItem
+              renderInput={({onChange, value}, ref)=>(
+                <CheckableTagGroup 
+                  ref={ref}
+                  exclusive
+                  data={[
+                    {label: '公司', value: '0'},
+                    {label: '个人', value: '1'},
+                  ]}
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+            > 企业性质 </InputItem>
+          </FormItem>
+          <FormItem
+            name="field_3"
+            rules={[{
+              required: true,
+              message: `请选择[选择]字段`
+            }]}
+          >
+            <Picker extra="请选择" data={fruit} cols={1}>
+              <ListItem arrow="horizontal">选择</ListItem>
+            </Picker>
+          </FormItem>
+          <FormItem
+            name="field_4"
+            rules={[{
+              required: false,
+              message: `请填写[数字]字段`
+            }]}
+          >
+            <InputItem extra="元" placeholder="请输入" alignRight type="number">数字</InputItem>
+          </FormItem>
         </List>
 
         <List renderHeader={()=>`禁用字段`}>
@@ -125,11 +114,10 @@ export default Form.create({
         <Block top={5} blank={1}>
           <Flex>
             <Button fullWidth size="large" onClick={reset}>重置</Button>
-            <Button fullWidth size="large" color="primary" onClick={handleSubmit}>提交</Button>
+            <Button fullWidth size="large" color="primary" type="submit">提交</Button>
           </Flex>
-          
         </Block>
       </Form>
     </Page>
   )
-})
+}

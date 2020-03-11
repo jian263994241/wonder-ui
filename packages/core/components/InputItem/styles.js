@@ -51,6 +51,9 @@ export default theme =>({
     overflow: 'hidden',
     padding: '4px 0',
     flexShrink: 0,
+    '& + *': {
+      width: '100%',
+    },
     '&.label-size-2': {
       width: 2 * fontSize,
     },
