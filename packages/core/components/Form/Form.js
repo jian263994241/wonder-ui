@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FIELD_META_PROP, FIELD_DATA_PROP } from './constants';
-import createDOMForm from 'rc-form/lib/createDOMForm';
 import getHeadError from './getHeadError';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
+import craeteForm from './createForm';
 
 const Form = React.forwardRef((props, ref)=>{
   const {
@@ -16,7 +15,7 @@ const Form = React.forwardRef((props, ref)=>{
   const handleSubmit = useEventCallback((e)=>{
     e.preventDefault();
     onSubmit && onSubmit(e);
-  });
+  });  
 
   return (
     <form 
@@ -34,12 +33,7 @@ Form.propTypes = {
   onSubmit: PropTypes.func
 };
 
-Form.create = options => createDOMForm({
-  fieldNameProp: 'id',
-  ...options,
-  fieldMetaProp: FIELD_META_PROP,
-  fieldDataProp: FIELD_DATA_PROP
-});
+Form.create = craeteForm;
 
 Form.getHeadError = getHeadError;
 

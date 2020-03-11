@@ -48,8 +48,8 @@ const CheckableGroup = React.forwardRef(function CheckableGroup(props, ref) {
     if (!onChange) {
       return;
     }
-
-    onChange(itemValue);
+    
+    onChange(value === itemValue ? null : itemValue);
   };
 
   return (
