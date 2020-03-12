@@ -41,6 +41,7 @@ const InternalForm = React.forwardRef(function InternalForm(props, ref) {
         {...rest}
         onSubmit={handleSubmit}
       >
+        <Demo/>
         {children}
       </form>
     </FormContext.Provider>
