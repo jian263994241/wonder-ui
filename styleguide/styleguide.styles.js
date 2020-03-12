@@ -62,7 +62,7 @@ exports.styles = {
   },
   TableOfContents: {
     search: {
-      display: 'none'
+      // display: 'none'
     }
   },
   Table: {

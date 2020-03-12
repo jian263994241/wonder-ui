@@ -5,12 +5,13 @@ const resolve = require.resolve;
  * styleguideComponents
  */
 module.exports = {
-  Wrapper: resolve('./Wrapper.js'),
-  StyleGuideRenderer: resolve('./StyleGuideRenderer'),
-  SectionRenderer: resolve('./SectionRenderer'),
-  PlaygroundRenderer: resolve('./PlaygroundRenderer'),
-  ReactComponentRenderer: resolve('./ReactComponentRenderer'),
   ComponentsListRenderer: resolve('./ComponentsListRenderer'),
   ComponentsRenderer: resolve('./ComponentsRenderer'),
   ExamplesRenderer: resolve('./ExamplesRenderer'),
+  PlaygroundRenderer: resolve('./PlaygroundRenderer'),
+  ReactComponentRenderer: resolve('./ReactComponentRenderer'),
+  SectionRenderer: resolve('./SectionRenderer'),
+  StyleGuideRenderer: resolve('./StyleGuideRenderer'),
+  TableOfContentsRenderer: resolve('./TableOfContentsRenderer'),
+  Wrapper: resolve('./Wrapper.js'),
 }

@@ -30,7 +30,7 @@ export default function StyleGuideRenderer(props){
             <a href="#/" className="wonder-doc-header__logo">
               <span>{title}</span>
             </a>
-            <Search placeholder="Filter by name"/>
+            {/* <Search placeholder="Filter by name"/> */}
             <ul className="wonder-doc-header__top-nav">
               <li className="wonder-doc-header__top-nav-item">
                 <a href={ribbon.url} target="_blank" className="wonder-doc-header__logo-link">
