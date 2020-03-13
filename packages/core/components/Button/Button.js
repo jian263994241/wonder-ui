@@ -22,7 +22,8 @@ const Button =  React.forwardRef(function Button(props, ref) {
     disabled,
     fullWidth,
     icon,
-    iconPosition = 'before',
+    iconPosition = 'left',
+    hexColor,
     onClick,
     replace,
     size = 'medium',
@@ -48,7 +49,7 @@ const Button =  React.forwardRef(function Button(props, ref) {
         classes.root,
         classes[variant],
         {
-          [classes[`${variant}${capitalize(color)}`]]: color !== 'default' && color !== 'inherit',
+          [classes[`${variant}${capitalize(color)}`]]: color !== 'default' && color !== 'inherit' && color !== 'hex',
           [classes[`${variant}Size${capitalize(size)}`]]: size !== 'medium',
           [classes[`size${capitalize(size)}`]]: size !== 'medium',
           [classes.disabled]: disabled,
@@ -62,20 +63,24 @@ const Button =  React.forwardRef(function Button(props, ref) {
       onClick={handleClick}
       {...rest}
     >
-      { iconPosition === 'before' && icon }
+      { iconPosition === 'left' && icon }
       <span className={classes.body}>{children}</span>
-      { iconPosition === 'after' && icon }
+      { iconPosition === 'right' && icon }
     </ButtonBase>
   );
 });
 
 Button.propTypes = {
+  /** 样式类名 */
+  className: PropTypes.string,
   /**
    * @ignore 
    */
   children: PropTypes.node.isRequired,
-  /** 样式类名 */
-  className: PropTypes.string,
+  /** 
+   * 按钮颜色
+   */
+  color: PropTypes.oneOf(['default', 'inherit', 'primary', 'secondary']),
   /**
    * @ignore
    */
@@ -88,10 +93,16 @@ Button.propTypes = {
   full: PropTypes.bool,
   /** 超链接 */
   href: PropTypes.string,
+  /**
+   * icon
+   */
+  icon: PropTypes.node,
+  /**
+   * icon的位置
+   */
+  iconPosition: PropTypes.oneOf(['left', 'right']),
   /** 按钮尺寸 */
   size: PropTypes.oneOf(['small', 'medium', 'large']),
-  /** 按钮颜色 */
-  color: PropTypes.oneOf(['default', 'inherit', 'primary', 'secondary']),
   /** 按钮类型 */
   variant: PropTypes.oneOf(['text', 'outlined', 'contained']),
   /** Link 组件的 props.to */
@@ -104,9 +115,10 @@ Button.propTypes = {
 Button.defaultProps = {
   variant: 'contained',
   size: 'medium',
-  color: 'default'
+  color: 'default',
+  icon: null,
+  iconPosition: 'left',
+
 };
 
-Button.displayName = 'Button';
-
-export default withStyles(styles)(Button);
+export default withStyles(styles, { name: 'Button' })(Button);

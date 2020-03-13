@@ -48,6 +48,10 @@ const InternalForm = React.forwardRef(function InternalForm(props, ref) {
 });
 
 
+/**
+ * 带验证的表单组件
+ * @visibleName Form 表单
+ */
 const Form = React.forwardRef(function Form (props, ref) {
   const { 
     validateMessages,
@@ -72,13 +76,50 @@ const Form = React.forwardRef(function Form (props, ref) {
 })
 
 Form.propTypes = {
+  /**
+   * Where to store the name argument of getFieldProps.
+   */
+  fieldNameProp: PropTypes.func,
+  /**
+   * @ignore
+   */
+  form: formShape,
+  /**
+   * Get new props transferred to WrappedComponent.
+   */
+  mapProps: PropTypes.func,
+  /**
+   * Convert value from props to fields. Used for read fields from redux store.
+   */
+  mapPropsToFields: PropTypes.func,
+  /**
+   * Called when field changed, you can dispatch fields to redux store.
+   */
+  onFieldsChange: PropTypes.func,
+  /**
+   * 
+   */
+  onFinish: PropTypes.func,
+  /**
+   * 
+   */
+  onFinishFailed: PropTypes.func,
+  /**
+   * 
+   */
   onSubmit: PropTypes.func,
-  form: formShape
+  /**
+   * Called when value changed.
+   */
+  onValuesChange: PropTypes.func,
+  /**
+   * Preseted messages of [async-validator](https://github.com/yiminghe/async-validator)
+   */
+  validateMessages: PropTypes.func,
 };
 
 Form.create = craeteForm;
 Form.useForm = useForm;
 Form.getHeadError = getHeadError;
-Form.displayName = 'displayName';
 
 export default Form;

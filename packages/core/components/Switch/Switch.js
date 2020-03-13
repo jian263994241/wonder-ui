@@ -4,7 +4,10 @@ import clsx from 'clsx';
 import styles, {creatColor} from './styles';
 import withStyles from '../withStyles';
 
-
+/**
+ * 切换开关
+ * @visibleName Switch 开关
+ */
 const Switch = React.forwardRef(function Switch(props, ref) {
   const { classes, className, color, style, checked, onChange, onClick, ...rest } = props;
   const triggerFn = onChange || onClick;

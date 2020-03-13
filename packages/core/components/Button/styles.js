@@ -1,4 +1,4 @@
-import { fade } from '@wonder-ui/styles/colorManipulator';
+import { fade, darken } from '@wonder-ui/styles/colorManipulator';
 
 export default theme => {
 
@@ -15,11 +15,10 @@ export default theme => {
         duration: theme.transitions.duration.short,
       }),
       '&.active-state': {
-        opacity: 0.5,
+        opacity: 0.8,
       },
       '&:hover': {
         textDecoration: 'none',
-        backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent',
@@ -43,6 +42,13 @@ export default theme => {
     /* Styles applied to the root element if `variant="text"`. */
     text: {
       padding: '6px 8px',
+      '&:hover': {
+        // backgroundColor: fade(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: 'transparent',
+        },
+      },
     },
     /* Styles applied to the root element if `variant="text"` and `color="primary"`. */
     textPrimary: {

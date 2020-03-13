@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * 活动注册等短信验证码场景, 发送短信按钮
+ * @visibleName CountdownButton 短信倒计时
+ */
 export default function CountdownButton(props){
   const {
     defaultText,
@@ -106,7 +110,7 @@ CountdownButton.propTypes = {
    */
   runOnMount: PropTypes.bool,
   /**
-   * 改变喧嚷的 node
+   * 改变渲染的 node
    */
   render: PropTypes.func
 };
