@@ -13,8 +13,6 @@ export const ExamplesRenderer = ({
 	children,
 }) => {
 
-  
-  
 	return (
 		<article className={classes.root} data-testid={`${name}-examples`}>
 			{

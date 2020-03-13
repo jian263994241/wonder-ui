@@ -177,7 +177,7 @@ pre {
   z-index: 1;
   min-width: 245px;
   max-width: 245px;
-  padding: 25px 0 75px;
+  padding: 0 0 75px;
   overflow-y: scroll;
   background-color: #fff;
   border-right: 1px solid #f1f4f8;
