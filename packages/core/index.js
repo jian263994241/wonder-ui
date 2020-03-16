@@ -43,6 +43,8 @@ export { default as Form } from './components/Form';
 export { default as FormItem } from './components/FormItem';
 
 //components
+export { default as Accordion } from './components/Accordion';
+export { default as AccordionPanel } from './components/AccordionPanel';
 export { default as Block } from './components/Block';
 export { default as Brief } from './components/Brief';
 export { default as Button } from './components/Button';

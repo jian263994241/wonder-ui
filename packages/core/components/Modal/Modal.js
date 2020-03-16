@@ -60,6 +60,8 @@ const Modal = React.forwardRef((props, ref) => {
       const zIndex = css(childrenRef.current, 'zIndex');
       if(zIndex){
         return Number(zIndex);
+      }else {
+        return 1000;
       }
     }
     return null;
@@ -200,6 +202,10 @@ const Modal = React.forwardRef((props, ref) => {
 
 Modal.propTypes = {
   /**
+   * 关闭后回调
+   */
+  afterClose: PropTypes.func,
+  /**
    * 是否需要`backdrop`
    */
   hideBackdrop: PropTypes.bool,
@@ -211,6 +217,14 @@ Modal.propTypes = {
    * 内容
    */
   children: elementAcceptingRef,
+  /**
+   * 挂载的节点
+   */
+  container: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.instanceOf(React.Component),
+    PropTypes.instanceOf(typeof Element === 'undefined' ? Object : Element),
+  ]),
   /**
    * @ignore
    */
@@ -231,6 +245,14 @@ Modal.propTypes = {
    * 点击背景关闭浮层
    */
   onCancel: PropTypes.func,
+  /**
+   * 渲染后回调
+   */
+  onRendered: PropTypes.func,
+  /**
+   * 是否显示
+   */
+  visible: PropTypes.bool,
 }
 
 

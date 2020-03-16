@@ -25,51 +25,58 @@ export default function FormItem(props) {
 
 FormItem.propTypes = {
   /**
-   * Specify how to get value from event.
+   * 设置如何将 event 的值转换成字段值
    */
   getValueFromEvent: PropTypes.func,
   /**
    * Get the component props according to field value.
+   * @ignore
    */
   getValueProps: PropTypes.func,
   /**
-   * Ignore current field while validating or gettting fields
+   * 验证或获取字段时忽略当前字段
    */
   hidden: PropTypes.bool,
   /**
-   * Initial value of current component.
+   * 子节点的初始值，类型、可选值均由子节点决定
    */
   initialValue: PropTypes.any,
   /**
-   * Return normalized value.
+   * 转换默认的 value 给控件
+   * function(value, prevValue, allValues): any
    */
   normalize: PropTypes.func,
   /**
-   * Whether to preserve the value. That will remain the value when the field be unmounted and be mounted again
+   * 字段名
+   */
+  name: PropTypes.string,
+  /**
+   * 即便字段不再使用，也保留该字段的值
    */
   preserve: PropTypes.bool,
   /**
-   * Validator rules. see: [async-validator](https://github.com/yiminghe/async-validator)
+   * 校验规则，参考下方文档: [async-validator](https://github.com/yiminghe/async-validator)
    */
   rules: PropTypes.array,
   /**
-   * Event which is listened to collect form data.
+   * 收集子节点的值的时机
+   * `onChange`
    */
   trigger: PropTypes.string,
   /**
-   * 
+   * @ignore
    */
   validate: PropTypes.array,
   /**
-   * Whether stop validate on first rule of error for this field.
+   * 当某一规则校验不通过时，是否停止剩下的规则的校验
    */
   validateFirst: PropTypes.bool,
   /**
-   * Event which is listened to validate. Set to falsy to only validate when call props.validateFields.
+   * 校验子节点值的时机
    */
   validateTrigger: PropTypes.string,
   /**
-   * Prop name of component's value field, eg: checkbox should be set to checked
+   * 子节点的值的属性，如 Switch 的是 `checked`
    */
   valuePropName: PropTypes.string,
 };

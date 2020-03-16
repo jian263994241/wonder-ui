@@ -44,6 +44,7 @@ const ListItem = React.forwardRef(function ListItem(props, ref) {
         ref={ref} 
         className={clsx(
           classes.root,
+          className,
           {
             [classes.activeState]: !!arrow || activeState
           },

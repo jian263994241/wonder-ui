@@ -19,6 +19,7 @@ const params = {
       component: IndexPage,
       children: [
         { path: 'about', async: ()=> import('./pages/About') },
+        { path: 'accordion', async: ()=> import('./pages/Accordion') },
         { path: 'block', async: ()=> import('./pages/Block') },
         { path: 'button', async: ()=> import('./pages/Button') },
         { path: 'checkable-group', async: ()=> import('./pages/CheckableGroup') },
@@ -38,7 +39,6 @@ const params = {
         { path: 'theme', async: ()=> import('./pages/Theme') },
         { path: 'toolbar', async: ()=> import('./pages/ToolBar') },
         { path: 'typography', async: ()=> import('./pages/Typography') },
-        
       ]
     },
   ]

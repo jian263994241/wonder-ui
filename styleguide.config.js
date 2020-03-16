@@ -67,6 +67,8 @@ module.exports = {
         {
           name: '数据展示',
           components: ()=> [
+            './packages/core/components/Accordion/Accordion.js',
+            './packages/core/components/AccordionPanel/AccordionPanel.js',
             './packages/core/components/Empty/Empty.js',
             './packages/core/components/List/List.js',
             './packages/core/components/ListItem/ListItem.js',

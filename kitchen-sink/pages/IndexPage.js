@@ -23,6 +23,7 @@ export default function IndexPage(props) {
           <LinkDetail to="/about">关于 Wonder UI</LinkDetail>
         </List>
         <List renderHeader={()=> `组件`}>
+          <LinkDetail to="/Accordion">Accordion 手风琴</LinkDetail>         
           <LinkDetail to="/block">Block 块 </LinkDetail>
           <LinkDetail to="/button">Button 按钮 </LinkDetail>
           <LinkDetail to="/checkable-group">CheckableGroup 选项</LinkDetail>
@@ -39,7 +40,7 @@ export default function IndexPage(props) {
           <LinkDetail to="/searchbar">SearchBar 搜索</LinkDetail>
           <LinkDetail to="/tag">Tag 标签</LinkDetail>
           <LinkDetail to="/toolbar">Toolbar 工具栏</LinkDetail>
-          <LinkDetail to="/typography">Typography 文字</LinkDetail>     
+          <LinkDetail to="/typography">Typography 文字</LinkDetail> 
         </List>
         <List renderHeader={()=> `主题`}>
           <LinkDetail to="/theme">Theme 主题</LinkDetail>

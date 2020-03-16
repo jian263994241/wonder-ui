@@ -1,9 +1,7 @@
-
-```js
 import React from 'react';
 import { Page, Accordion, AccordionPanel, List, ListItem, ContentBlock } from '@wonder-ui/core';
 
-function AccordionExamples(props) {
+export default function AccordionExamples(props) {
 
   return (
     <Page name="Accordion" navbar >
@@ -16,7 +14,6 @@ function AccordionExamples(props) {
           </AccordionPanel>
         </Accordion>
       </ContentBlock>
-      
       <List renderHeader="AccordionList">
         <Accordion accordion defaultActiveKey="key1">
           <AccordionPanel
@@ -43,7 +40,4 @@ function AccordionExamples(props) {
       </List>
     </Page>
   )
-};
-
-<AccordionExamples/>
-```
+}

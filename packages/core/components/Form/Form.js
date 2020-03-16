@@ -78,6 +78,7 @@ const Form = React.forwardRef(function Form (props, ref) {
 Form.propTypes = {
   /**
    * Where to store the name argument of getFieldProps.
+   * @ignore
    */
   fieldNameProp: PropTypes.func,
   /**
@@ -86,34 +87,37 @@ Form.propTypes = {
   form: formShape,
   /**
    * Get new props transferred to WrappedComponent.
+   * 
    */
   mapProps: PropTypes.func,
   /**
    * Convert value from props to fields. Used for read fields from redux store.
+   * 
    */
   mapPropsToFields: PropTypes.func,
   /**
-   * Called when field changed, you can dispatch fields to redux store.
+   * 字段更新时触发回调事件
    */
   onFieldsChange: PropTypes.func,
   /**
-   * 
+   * 提交表单且数据验证成功后回调事件
    */
   onFinish: PropTypes.func,
   /**
-   * 
+   * 提交表单且数据验证失败后回调事件
    */
   onFinishFailed: PropTypes.func,
   /**
-   * 
+   * @ignore
    */
   onSubmit: PropTypes.func,
   /**
-   * Called when value changed.
+   * 值更改时调用
    */
   onValuesChange: PropTypes.func,
   /**
    * Preseted messages of [async-validator](https://github.com/yiminghe/async-validator)
+   * @ignore
    */
   validateMessages: PropTypes.func,
 };
