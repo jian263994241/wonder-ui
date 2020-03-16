@@ -15,7 +15,7 @@ export default function AccordionExamples(props) {
         </Accordion>
       </ContentBlock>
       <List renderHeader="AccordionList">
-        <Accordion accordion defaultActiveKey="key1">
+        <Accordion accordion>
           <AccordionPanel
             itemKey="key1"
             header={
