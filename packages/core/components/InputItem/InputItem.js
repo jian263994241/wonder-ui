@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
 import clsx from 'clsx';
 import Dialog from '../Dialog';
-import IconInfoOutlined from '../icons/InfoOutlined';
+import IconInfoOutlined from '@wonder-ui/icons/InfoCircleOutlined';
 import InputBase from '../InputBase';
 import styles from './styles';
 import withStyles from '../withStyles';

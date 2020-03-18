@@ -10,9 +10,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:core": "gulp build:core",
+    "build:icons": "gulp build:icons",
     "build:router": "gulp build:router",
-    "build:utils": "gulp build:utils",
     "build:styles": "gulp build:styles",
+    "build:utils": "gulp build:utils",
     "kitchen-sink:dev": "ale dev",
     "kitchen-sink:build": "ale build",
     "watch": "gulp",

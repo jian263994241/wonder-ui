@@ -43,7 +43,7 @@ Dialog.alert = function DialogAlert ({
           {
             text: okText,
             primary: true,
-            onClick: wrapCallback(onOk, toggleAlert)
+            onClick: wrapCallback(onOk, () => toggleAlert())
           }
         ]}
       />,
@@ -79,12 +79,12 @@ Dialog.confirm = function DialogConfirm({
         actions={[
           {
             text: cancelText,
-            onClick: wrapCallback(onCancel, toggleConfirm)
+            onClick: wrapCallback(onCancel, () => toggleAlert())
           },
           {
             text: okText,
             primary: true,
-            onClick: wrapCallback(onOk, toggleConfirm)
+            onClick: wrapCallback(onOk, () => toggleAlert())
           }
         ]}
       />,
@@ -141,7 +141,7 @@ Dialog.custom = function DialogCustom (props){
           const { onClick, ...otherOpts} = action;
           return {
             ...otherOpts,
-            onClick: wrapCallback(onClick, toggleConfirm)
+            onClick: wrapCallback(onClick, () => toggleAlert())
           }
         })}
       />,

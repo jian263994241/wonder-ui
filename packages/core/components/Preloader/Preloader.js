@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Indicator from '../icons/Indicator';
+import Indicator from '../Indicator';
 import Modal from '../Modal';
 import withStyles from '../withStyles';
 

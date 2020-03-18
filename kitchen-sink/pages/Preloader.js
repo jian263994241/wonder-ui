@@ -1,6 +1,5 @@
 import React from 'react';
-import { Page, Button, Preloader, ActivityIndicator, ContentBlock, CircularProgress } from '@wonder-ui/core';
-import Indicator from '@wonder-ui/core/components/icons/Indicator';
+import { Page, Button, Preloader, ActivityIndicator, ContentBlock, CircularProgress, Indicator } from '@wonder-ui/core';
 
 export default function PreloaderExamples() {
 

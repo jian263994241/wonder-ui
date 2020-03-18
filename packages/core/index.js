@@ -34,6 +34,7 @@ export { default as withTheme } from './components/withTheme';
 export { default as ActivityIndicator } from './components/ActivityIndicator';
 export { default as CircularProgress } from './components/CircularProgress';
 export { default as Dialog } from './components/Dialog';
+export { default as Indicator } from './components/Indicator';
 export { default as Preloader} from './components/Preloader';
 export { default as toast} from './components/toast';
 export { default as TouchFeedback } from './components/TouchFeedback';

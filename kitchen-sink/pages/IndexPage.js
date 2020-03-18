@@ -23,7 +23,8 @@ export default function IndexPage(props) {
           <LinkDetail to="/about">关于 Wonder UI</LinkDetail>
         </List>
         <List renderHeader={()=> `组件`}>
-          <LinkDetail to="/Accordion">Accordion 手风琴</LinkDetail>         
+          <LinkDetail to="/accordion">Accordion 手风琴</LinkDetail>      
+          <LinkDetail to="/icons">Icons 图标</LinkDetail>       
           <LinkDetail to="/block">Block 块 </LinkDetail>
           <LinkDetail to="/button">Button 按钮 </LinkDetail>
           <LinkDetail to="/checkable-group">CheckableGroup 选项</LinkDetail>

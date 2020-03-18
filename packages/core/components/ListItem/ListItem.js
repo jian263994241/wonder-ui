@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
-import ArrowForwardIosOutlined from '../icons/ArrowForwardIosOutlined';
+import ArrowForwardIosOutlined from '@wonder-ui/icons/ArrowForwardIosOutlined';
 import capitalize from '@wonder-ui/utils/capitalize';
 import clsx from 'clsx';
-import IconInfoOutlined from '../icons/InfoOutlined';
+import IconInfoOutlined from '@wonder-ui/icons/InfoCircleOutlined';
 import styles from './styles';
 import TouchFeedback from '../TouchFeedback';
 import withStyles from '../withStyles';

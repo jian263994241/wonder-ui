@@ -13,6 +13,14 @@ var paths = {
         'packages/core/README.md'
       ]
     },
+    icons: {
+      src: ['packages/icons/src/**/*.js', '!**/node_modules/**'],
+      dest: 'npm-packages/wonder-ui-icons',
+      copylist: [
+        'packages/icons/package.json',
+        'packages/icons/README.md'
+      ]
+    },
     router: {
       src: ['packages/router/src/**/*.js', '!**/node_modules/**'],
       dest: 'npm-packages/wonder-ui-router',
@@ -76,6 +84,7 @@ function cpoyInfo(target = 'core'){
 
 
 gulp.task('build:core', gulp.series(()=>cpoyInfo('core'), ()=>scripts('core')));
+gulp.task('build:icons', gulp.series(()=>cpoyInfo('icons'), ()=>scripts('icons')));
 gulp.task('build:router', gulp.series(()=>cpoyInfo('router'), ()=>scripts('router')));
 gulp.task('build:utils', gulp.series(()=>cpoyInfo('utils'), ()=>scripts('utils')));
 gulp.task('build:styles', gulp.series(()=>cpoyInfo('styles'), ()=>scripts('styles')));

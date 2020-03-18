@@ -14,6 +14,7 @@ module.exports = {
   resolve: {
     alias: {
       '@wonder-ui/core': path.resolve(__dirname, './packages/core'),
+      '@wonder-ui/icons': path.resolve(__dirname, './packages/icons/src'),
       '@wonder-ui/router': path.resolve(__dirname, './packages/router/src'),
       '@wonder-ui/styles': path.resolve(__dirname, './packages/styles/src'),
       '@wonder-ui/utils': path.resolve(__dirname, './packages/utils/src'),

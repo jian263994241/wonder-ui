@@ -34,6 +34,14 @@ module.exports = {
           ]
         },
         {
+          name: '通用',
+          components: ()=> [
+            './packages/core/components/Button/Button.js',
+            './packages/core/components/ButtonBase/ButtonBase.js',
+            './packages/core/components/Typography/Typography.js',
+          ]
+        },
+        {
           name: '布局',
           components: ()=> [
             './packages/core/components/Block/Block.js',
@@ -46,8 +54,6 @@ module.exports = {
         {
           name: '数据录入',
           components: ()=> [
-            './packages/core/components/Button/Button.js',
-            './packages/core/components/ButtonBase/ButtonBase.js',
             './packages/core/components/CheckableGroup/CheckableGroup.js',
             './packages/core/components/CheckableTag/CheckableTag.js',
             './packages/core/components/CheckableTagGroup/CheckableTagGroup.js',
@@ -75,7 +81,6 @@ module.exports = {
             './packages/core/components/ListView/ListView.js',
             './packages/core/components/PullToRefresh/PullToRefresh.js', 
             './packages/core/components/Tag/Tag.js',
-            './packages/core/components/Typography/Typography.js',
           ],
         },
         {
@@ -91,8 +96,11 @@ module.exports = {
         },
         
       ]
-    }
-    
+    },
+    {
+      name: 'Icon 图标',
+      content:  './docs/markdown/icons.md',
+    },
   ],
   getExampleFilename(componentPath){
     const name = path.basename(componentPath, '.js');
@@ -130,6 +138,7 @@ module.exports = {
     resolve: {
       alias: {
         '@wonder-ui/core': path.resolve(__dirname, './packages/core'),
+        '@wonder-ui/icons': path.resolve(__dirname, './packages/icons/src'),
         '@wonder-ui/router': path.resolve(__dirname, './packages/router/src'),
         '@wonder-ui/styles': path.resolve(__dirname, './packages/styles/src'),
         '@wonder-ui/utils': path.resolve(__dirname, './packages/utils/src'),
