@@ -79,12 +79,12 @@ Dialog.confirm = function DialogConfirm({
         actions={[
           {
             text: cancelText,
-            onClick: wrapCallback(onCancel, () => toggleAlert())
+            onClick: wrapCallback(onCancel, () => toggleConfirm())
           },
           {
             text: okText,
             primary: true,
-            onClick: wrapCallback(onOk, () => toggleAlert())
+            onClick: wrapCallback(onOk, () => toggleConfirm())
           }
         ]}
       />,
@@ -131,7 +131,7 @@ Dialog.toast = function DialogToast(text, callback) {
 Dialog.custom = function DialogCustom (props){
   const {actions = [], ...rest } = props;
   const container = document.createElement('div');
-  const toggleConfirm = toggleVisible((visible, clearQueue)=> {
+  const toggleCustom = toggleVisible((visible, clearQueue)=> {
     ReactDOM.render(
       <Dialog 
         {...rest}
@@ -141,7 +141,7 @@ Dialog.custom = function DialogCustom (props){
           const { onClick, ...otherOpts} = action;
           return {
             ...otherOpts,
-            onClick: wrapCallback(onClick, () => toggleAlert())
+            onClick: wrapCallback(onClick, () => toggleCustom())
           }
         })}
       />,
@@ -150,6 +150,6 @@ Dialog.custom = function DialogCustom (props){
   });
 
   dialogManager.run(
-    (clearQueue)=> toggleConfirm(clearQueue)
+    (clearQueue)=> toggleCustom(clearQueue)
   );
 }

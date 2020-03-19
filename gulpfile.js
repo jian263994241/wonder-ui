@@ -2,6 +2,7 @@ var preset = require('babel-preset');
 var del = require('del');
 var gulp = require('gulp');
 var babel = require('gulp-babel');
+var path = require('path');
 
 var paths = {
   scripts: {
@@ -58,35 +59,32 @@ function watch() {
   gulp.watch(paths.scripts.core.src, scripts);
 }
 
-function scripts(target = 'core') {
-  return gulp.src(paths.scripts[target].src, { sourcemaps: false })
-    .pipe(babel({ 
-      presets: [
-        [preset, {
-          targets: [
-            'ie >= 9',
-            'edge >= 14',
-            'firefox >= 52',
-            'chrome >= 49',
-            'safari >= 10',
-            'node 8.0',
-          ]
-        }]
-      ]
-    }))
-    .pipe(gulp.dest(paths.scripts[target].dest));
+
+function createTask(target){
+  return gulp.series(
+    function cpoyInfo(){
+      return gulp.src(paths.scripts[target].copylist)
+        .pipe(gulp.dest(paths.scripts[target].dest));
+    },
+    function cpoySrc(){
+      return gulp.src(paths.scripts[target].src)
+        .pipe(gulp.dest(
+          path.join(paths.scripts[target].dest, 'src')
+        ));
+    },
+    function scripts() {
+      return gulp.src(paths.scripts[target].src, { sourcemaps: false })
+      .pipe(babel({ 
+        presets: [preset]
+      }))
+      .pipe(gulp.dest(paths.scripts[target].dest));
+    }
+  )
 }
 
-function cpoyInfo(target = 'core'){
-  return gulp.src(paths.scripts[target].copylist)
-    .pipe(gulp.dest(paths.scripts[target].dest));
-}
 
-
-gulp.task('build:core', gulp.series(()=>cpoyInfo('core'), ()=>scripts('core')));
-gulp.task('build:icons', gulp.series(()=>cpoyInfo('icons'), ()=>scripts('icons')));
-gulp.task('build:router', gulp.series(()=>cpoyInfo('router'), ()=>scripts('router')));
-gulp.task('build:utils', gulp.series(()=>cpoyInfo('utils'), ()=>scripts('utils')));
-gulp.task('build:styles', gulp.series(()=>cpoyInfo('styles'), ()=>scripts('styles')));
-
-gulp.task('default', gulp.series(cpoyInfo, scripts, watch));
+gulp.task('build:core', createTask('core') );
+gulp.task('build:icons', createTask('icons') );
+gulp.task('build:router',createTask('router') );
+gulp.task('build:utils', createTask('utils') );
+gulp.task('build:styles', createTask('styles') );
