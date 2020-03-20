@@ -1,0 +1,106 @@
+{
+  "description": "浮层, 对`Dialog`等组件提供基础支持;\n@visibleName Modal 浮层",
+  "displayName": "Modal",
+  "methods": [],
+  "props": {
+    "afterClose": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "关闭后回调"
+    },
+    "hideBackdrop": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否需要`backdrop`"
+    },
+    "BackdropProps": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "Backdrop props"
+    },
+    "children": {
+      "type": {
+        "name": "custom",
+        "raw": "elementAcceptingRef"
+      },
+      "required": false,
+      "description": "内容"
+    },
+    "container": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "func"
+          },
+          {
+            "name": "instanceOf",
+            "value": "React.Component"
+          },
+          {
+            "name": "instanceOf",
+            "value": "typeof Element === 'undefined' ? Object : Element"
+          }
+        ]
+      },
+      "required": false,
+      "description": "挂载的节点"
+    },
+    "manager": {
+      "type": {
+        "name": "instanceOf",
+        "value": "ModalManager"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "hasTransition": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否过渡"
+    },
+    "closeAfterTransition": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "过渡后关闭"
+    },
+    "keepMounted": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "保持节点"
+    },
+    "onCancel": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "点击背景关闭浮层"
+    },
+    "onRendered": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "渲染后回调"
+    },
+    "visible": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否显示"
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "description": "一个半屏幕的浮层\n@visibleName Drawer 抽屉",
+  "displayName": "Drawer",
+  "methods": [],
+  "props": {
+    "visible": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否显示浮层"
+    },
+    "variant": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'permanent'",
+            "computed": false
+          },
+          {
+            "value": "'persistent'",
+            "computed": false
+          },
+          {
+            "value": "'temporary'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "渲染方式"
+    },
+    "modalProps": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "Modal props"
+    },
+    "onCancel": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "点击背景触发关闭事件"
+    },
+    "anchor": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'left'",
+            "computed": false
+          },
+          {
+            "value": "'right'",
+            "computed": false
+          },
+          {
+            "value": "'top'",
+            "computed": false
+          },
+          {
+            "value": "'bottom'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "出现的位置"
+    },
+    "className": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "root element classnames"
+    },
+    "style": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "root element style"
+    }
+  }
+}

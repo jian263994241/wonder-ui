@@ -1,0 +1,114 @@
+{
+  "description": "",
+  "displayName": "Transition",
+  "methods": [],
+  "props": {
+    "mountOnEnter": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "If you want to \"lazy mount\" the component on the first in={true} you can set mountOnEnter.\n@see http://reactcommunity.org/react-transition-group/transition#Transition-prop-mountOnEnter",
+      "defaultValue": {
+        "value": "true",
+        "computed": false
+      }
+    },
+    "unmountOnExit": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "@see http://reactcommunity.org/react-transition-group/transition#Transition-prop-unmountOnExit"
+    },
+    "children": {
+      "type": {
+        "name": "custom",
+        "raw": "elementAcceptingRef"
+      },
+      "required": false,
+      "description": "A single child content element."
+    },
+    "in": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "If `true`, the component will transition in."
+    },
+    "onEnter": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "onExit": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "style": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "propertys": {
+      "type": {
+        "name": "array"
+      },
+      "required": false,
+      "description": "transition-propertys"
+    },
+    "styles": {
+      "type": {
+        "name": "shape",
+        "value": {
+          "entering": {
+            "name": "object",
+            "required": false
+          },
+          "entered": {
+            "name": "object",
+            "required": false
+          }
+        }
+      },
+      "required": false,
+      "description": "overwrite state style"
+    },
+    "timeout": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "number"
+          },
+          {
+            "name": "shape",
+            "value": {
+              "enter": {
+                "name": "number",
+                "required": false
+              },
+              "exit": {
+                "name": "number",
+                "required": false
+              }
+            }
+          }
+        ]
+      },
+      "required": false,
+      "description": "The duration for the transition, in milliseconds.\nYou may specify a single timeout for all transitions, or individually with an object.",
+      "defaultValue": {
+        "value": "{ \n  enter: transitions.duration.enteringScreen, \n  exit: transitions.duration.leavingScreen \n}",
+        "computed": false
+      }
+    }
+  }
+}

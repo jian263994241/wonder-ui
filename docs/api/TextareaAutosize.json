@@ -1,0 +1,72 @@
+{
+  "description": "@visibleName TextareaAutosize 文本区域",
+  "displayName": "TextareaAutosize",
+  "methods": [],
+  "props": {
+    "className": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "onChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "placeholder": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "rowsMax": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "string"
+          },
+          {
+            "name": "number"
+          }
+        ]
+      },
+      "required": false,
+      "description": "Maximum number of rows to display."
+    },
+    "rowsMin": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "string"
+          },
+          {
+            "name": "number"
+          }
+        ]
+      },
+      "required": false,
+      "description": "Minimum number of rows to display."
+    },
+    "style": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "value": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "@ignore"
+    }
+  }
+}

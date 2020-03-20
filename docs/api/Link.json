@@ -1,0 +1,61 @@
+{
+  "description": "UI Wrap react-router Link\n@visibleName Link 链接",
+  "displayName": "Link",
+  "methods": [],
+  "props": {
+    "replace": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "replace"
+    },
+    "component": {
+      "type": {
+        "name": "element"
+      },
+      "required": false,
+      "description": "default 'a'"
+    },
+    "to": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "string"
+          },
+          {
+            "name": "func"
+          },
+          {
+            "name": "shape",
+            "value": {
+              "pathname": {
+                "name": "string",
+                "required": false
+              },
+              "search": {
+                "name": "string",
+                "required": false
+              },
+              "hash": {
+                "name": "string",
+                "required": false
+              },
+              "state": {
+                "name": "object",
+                "required": false
+              },
+              "query": {
+                "name": "object",
+                "required": false
+              }
+            }
+          }
+        ]
+      },
+      "required": false,
+      "description": "react-router Link to"
+    }
+  }
+}

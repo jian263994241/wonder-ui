@@ -1,0 +1,151 @@
+{
+  "description": "",
+  "displayName": "SvgIcon",
+  "methods": [],
+  "props": {
+    "children": {
+      "type": {
+        "name": "node"
+      },
+      "required": true,
+      "description": "Node passed into the SVG element."
+    },
+    "className": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "color": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'inherit'",
+            "computed": false
+          },
+          {
+            "value": "'primary'",
+            "computed": false
+          },
+          {
+            "value": "'secondary'",
+            "computed": false
+          },
+          {
+            "value": "'action'",
+            "computed": false
+          },
+          {
+            "value": "'warning'",
+            "computed": false
+          },
+          {
+            "value": "'info'",
+            "computed": false
+          },
+          {
+            "value": "'success'",
+            "computed": false
+          },
+          {
+            "value": "'error'",
+            "computed": false
+          },
+          {
+            "value": "'disabled'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "The color of the component. It supports those theme colors that make sense for this component.\nYou can use the `htmlColor` prop to apply a color attribute to the SVG element."
+    },
+    "component": {
+      "type": {
+        "name": "elementType"
+      },
+      "required": false,
+      "description": "The component used for the root node.\nEither a string to use a DOM element or a component."
+    },
+    "fontSize": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'inherit'",
+            "computed": false
+          },
+          {
+            "value": "'default'",
+            "computed": false
+          },
+          {
+            "value": "'small'",
+            "computed": false
+          },
+          {
+            "value": "'large'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size."
+    },
+    "size": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'inherit'",
+            "computed": false
+          },
+          {
+            "value": "'default'",
+            "computed": false
+          },
+          {
+            "value": "'small'",
+            "computed": false
+          },
+          {
+            "value": "'large'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size."
+    },
+    "htmlColor": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "Applies a color attribute to the SVG element."
+    },
+    "shapeRendering": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "The shape-rendering attribute. The behavior of the different options is described on the\n[MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering).\nIf you are having issues with blurry icons you should investigate this property."
+    },
+    "titleAccess": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "Provides a human-readable title for the element that contains it.\nhttps://www.w3.org/TR/SVG-access/#Equivalent"
+    },
+    "viewBox": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "Allows you to redefine what the coordinates without units mean inside an SVG element.\nFor example, if the SVG element is 500 (width) by 200 (height),\nand you pass viewBox=\"0 0 50 20\",\nthis means that the coordinates inside the SVG will go from the top left corner (0,0)\nto bottom right (50,20) and each unit will be worth 10px."
+    }
+  }
+}

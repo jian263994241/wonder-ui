@@ -1,0 +1,107 @@
+{
+  "description": "@visibleName CircularProgress",
+  "displayName": "CircularProgress",
+  "methods": [],
+  "props": {
+    "classes": {
+      "type": {
+        "name": "object"
+      },
+      "required": true,
+      "description": "Override or extend the styles applied to the component.\nSee [CSS API](#css) below for more details."
+    },
+    "className": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "color": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'primary'",
+            "computed": false
+          },
+          {
+            "value": "'secondary'",
+            "computed": false
+          },
+          {
+            "value": "'inherit'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "The color of the component. It supports those theme colors that make sense for this component."
+    },
+    "disableShrink": {
+      "type": {
+        "name": "custom",
+        "raw": "chainPropTypes(PropTypes.bool, props => {\n  if (props.disableShrink && props.variant && props.variant !== 'indeterminate') {\n    return new Error(\n      'Material-UI: you have provided the `disableShrink` prop ' +\n        'with a variant other than `indeterminate`. This will have no effect.',\n    );\n  }\n\n  return null;\n})"
+      },
+      "required": false,
+      "description": "If `true`, the shrink animation is disabled.\nThis only works if variant is `indeterminate`."
+    },
+    "size": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "number"
+          },
+          {
+            "name": "string"
+          }
+        ]
+      },
+      "required": false,
+      "description": "The size of the circle.\nIf using a number, the pixel unit is assumed.\nIf using a string, you need to provide the CSS unit, e.g '3rem'."
+    },
+    "style": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "thickness": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "The thickness of the circle."
+    },
+    "value": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "The value of the progress indicator for the determinate and static variants.\nValue between 0 and 100."
+    },
+    "variant": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'determinate'",
+            "computed": false
+          },
+          {
+            "value": "'indeterminate'",
+            "computed": false
+          },
+          {
+            "value": "'static'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "The variant to use.\nUse indeterminate when there is no progress value."
+    }
+  }
+}

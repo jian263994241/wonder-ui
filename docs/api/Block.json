@@ -1,0 +1,86 @@
+{
+  "description": "内容块用来设置统一的边距, 边距大小为 `theme.spacing` 8px 的倍数\n\n`blank` 左右留白的边距, `space` 上下留白的边距\n\n`top`, `right`, `bottom`, `left` 单独设置四周的边距, 优先级高于 `blank`, `space`\n\n@visibleName Block 内容块",
+  "displayName": "Block",
+  "methods": [],
+  "props": {
+    "blank": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "左右留白的边距",
+      "defaultValue": {
+        "value": "0",
+        "computed": false
+      }
+    },
+    "space": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "上下留白的边距",
+      "defaultValue": {
+        "value": "0",
+        "computed": false
+      }
+    },
+    "left": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "左边的距离"
+    },
+    "right": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "右边的距离"
+    },
+    "top": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "上边的距离"
+    },
+    "bottom": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "下边的距离"
+    },
+    "strong": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "white background"
+    },
+    "inset": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "set border radius"
+    },
+    "header": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "func"
+          },
+          {
+            "name": "node"
+          }
+        ]
+      },
+      "required": false,
+      "description": "列表头部"
+    }
+  }
+}

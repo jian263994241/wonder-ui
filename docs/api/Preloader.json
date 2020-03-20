@@ -1,0 +1,32 @@
+{
+  "description": "用于加载/处理数据时候的等待状态\n\n@visibleName Preloader 指示器浮层",
+  "displayName": "Preloader",
+  "methods": [],
+  "props": {
+    "visible": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否显示指示器",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    },
+    "indicator": {
+      "type": {
+        "name": "element"
+      },
+      "required": false,
+      "description": "中间的旋转部分"
+    },
+    "navbarHeight": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "@ignore"
+    }
+  }
+}

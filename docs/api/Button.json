@@ -1,0 +1,182 @@
+{
+  "description": "按钮, 用做用户点击操作.\n@visibleName Button 按钮",
+  "displayName": "Button",
+  "methods": [],
+  "props": {
+    "className": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "样式类名"
+    },
+    "children": {
+      "type": {
+        "name": "node"
+      },
+      "required": true,
+      "description": "@ignore"
+    },
+    "color": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'default'",
+            "computed": false
+          },
+          {
+            "value": "'inherit'",
+            "computed": false
+          },
+          {
+            "value": "'primary'",
+            "computed": false
+          },
+          {
+            "value": "'secondary'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "按钮颜色",
+      "defaultValue": {
+        "value": "'default'",
+        "computed": false
+      }
+    },
+    "style": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "disabled": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "禁用按钮"
+    },
+    "fullWidth": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "100%宽度"
+    },
+    "full": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "100%宽度, 100%高度"
+    },
+    "href": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "超链接"
+    },
+    "icon": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": "icon",
+      "defaultValue": {
+        "value": "null",
+        "computed": false
+      }
+    },
+    "iconPosition": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'left'",
+            "computed": false
+          },
+          {
+            "value": "'right'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "icon的位置",
+      "defaultValue": {
+        "value": "'left'",
+        "computed": false
+      }
+    },
+    "size": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'small'",
+            "computed": false
+          },
+          {
+            "value": "'medium'",
+            "computed": false
+          },
+          {
+            "value": "'large'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "按钮尺寸",
+      "defaultValue": {
+        "value": "'medium'",
+        "computed": false
+      }
+    },
+    "variant": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'text'",
+            "computed": false
+          },
+          {
+            "value": "'outlined'",
+            "computed": false
+          },
+          {
+            "value": "'contained'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "按钮类型",
+      "defaultValue": {
+        "value": "'contained'",
+        "computed": false
+      }
+    },
+    "to": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "string"
+          },
+          {
+            "name": "object"
+          }
+        ]
+      },
+      "required": false,
+      "description": "Link 组件的 props.to"
+    }
+  }
+}

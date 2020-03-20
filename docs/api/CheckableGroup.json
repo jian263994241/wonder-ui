@@ -1,0 +1,62 @@
+{
+  "description": "单选, 多选. 类似radio, checkbox逻辑\n@visibleName CheckableGroup 可选项",
+  "displayName": "CheckableGroup",
+  "methods": [],
+  "props": {
+    "data": {
+      "type": {
+        "name": "arrayOf",
+        "value": {
+          "name": "shape",
+          "value": {
+            "label": {
+              "name": "node",
+              "required": false
+            },
+            "value": {
+              "name": "any",
+              "required": false
+            }
+          }
+        }
+      },
+      "required": false,
+      "description": "数据"
+    },
+    "exclusive": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否单选"
+    },
+    "itemProps": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "子元素props"
+    },
+    "onChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "change 回调"
+    },
+    "renderItem": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "自定义渲染"
+    },
+    "value": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "值"
+    }
+  }
+}

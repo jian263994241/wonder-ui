@@ -1,0 +1,32 @@
+{
+  "description": "提供一个44像素的通栏, 子元素Flex布局\nSlot位置 `pageContentAfter`\n@see 基于[Flex组件](#/组件?id=flex)扩展, props相同 \n@visibleName Toolbar 工具栏",
+  "displayName": "ToolBar",
+  "methods": [],
+  "props": {
+    "bottomFixed": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "固定底部"
+    },
+    "gutter": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "子元素间距",
+      "defaultValue": {
+        "value": "0.25",
+        "computed": false
+      }
+    },
+    "safeAreaBottom": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "ios 底部安全距离"
+    }
+  }
+}

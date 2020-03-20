@@ -1,0 +1,28 @@
+{
+  "description": "受控组件\n@visibleName CheckableTag 可选标签",
+  "displayName": "CheckableTag",
+  "methods": [],
+  "props": {
+    "onChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "事件回调"
+    },
+    "checked": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否选中"
+    },
+    "classes": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "@ignore"
+    }
+  }
+}

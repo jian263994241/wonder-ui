@@ -1,0 +1,60 @@
+{
+  "description": "基于List.Item对Checkbox进行封装\nList.Item的`thumb|extra`属性固定传入Checkbox,其他属性和List.Item一致。\n@visibleName CheckboxItem 复选框",
+  "displayName": "CheckboxItem",
+  "methods": [],
+  "props": {
+    "visible": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否显示checkbox",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    },
+    "disabled": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "禁用checkbox"
+    },
+    "onChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "change 事件触发的回调函数"
+    },
+    "checked": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "指定当前是否选中"
+    },
+    "position": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'left'",
+            "computed": false
+          },
+          {
+            "value": "'right'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "checkbox显示的位置",
+      "defaultValue": {
+        "value": "'left'",
+        "computed": false
+      }
+    }
+  }
+}

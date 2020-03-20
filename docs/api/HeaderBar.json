@@ -1,0 +1,63 @@
+{
+  "description": "提供一个左中右的通栏\n@visibleName HeaderBar 首栏",
+  "displayName": "HeaderBar",
+  "methods": [],
+  "props": {
+    "barLeft": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": "左边"
+    },
+    "barRight": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": "右边"
+    },
+    "bordered": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否显示border bottom"
+    },
+    "classes": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "onBack": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "点击回调, showBack下有效"
+    },
+    "onClose": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "点击回调, showClose下有效"
+    },
+    "showBack": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "显示返回icon"
+    },
+    "showClose": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "显示关闭icon"
+    }
+  }
+}

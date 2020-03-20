@@ -1,8 +1,10 @@
-var preset = require('babel-preset');
-var del = require('del');
-var gulp = require('gulp');
-var babel = require('gulp-babel');
-var path = require('path');
+const preset = require('babel-preset');
+const del = require('del');
+const gulp = require('gulp');
+const babel = require('gulp-babel');
+const reactDocs = require('react-docgen');
+const through2 = require('through2');
+const fs = require('fs');
 
 var paths = {
   scripts: {
@@ -66,11 +68,27 @@ function createTask(target){
       return gulp.src(paths.scripts[target].copylist)
         .pipe(gulp.dest(paths.scripts[target].dest));
     },
-    function cpoySrc(){
-      return gulp.src(paths.scripts[target].src)
-        .pipe(gulp.dest(
-          path.join(paths.scripts[target].dest, 'src')
-        ));
+    function docgen() {
+      return gulp.src(paths.scripts[target].src, { sourcemaps: false })
+      .pipe(through2.obj(function(file, _, cb) {
+      
+        if (file.isBuffer()) {
+          try {
+            const doc = reactDocs.parse(file.contents.toString())
+            fs.writeFileSync(
+              'docs/api/' + doc.displayName + '.json', 
+              JSON.stringify(doc, null, 2)
+            );
+            
+          } catch (error) {
+            
+          }
+        }
+        cb(null, file);
+        
+      }))
+
+
     },
     function scripts() {
       return gulp.src(paths.scripts[target].src, { sourcemaps: false })
@@ -84,7 +102,7 @@ function createTask(target){
 
 
 gulp.task('build:core', createTask('core') );
-gulp.task('build:icons', createTask('icons') );
+gulp.task('build:icons', createTask('icons', false) );
 gulp.task('build:router',createTask('router') );
 gulp.task('build:utils', createTask('utils') );
 gulp.task('build:styles', createTask('styles') );

@@ -1,0 +1,44 @@
+{
+  "description": "单个连续模块垂直排列，显示当前的内容、状态和可进行的操作\n@visibleName List 列表",
+  "displayName": "List",
+  "methods": [],
+  "props": {
+    "renderHeader": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "func"
+          },
+          {
+            "name": "node"
+          }
+        ]
+      },
+      "required": false,
+      "description": "渲染列表头部"
+    },
+    "renderFooter": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "func"
+          },
+          {
+            "name": "node"
+          }
+        ]
+      },
+      "required": false,
+      "description": "渲染列表尾部"
+    },
+    "children": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "子元素  `ListItem`,  `InputItem`, `CheckboxItem`"
+    }
+  }
+}

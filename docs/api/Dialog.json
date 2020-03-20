@@ -1,0 +1,97 @@
+{
+  "description": "系统信息提示, 并请求用户进行下一步操作\n@visibleName Dialog 对话框",
+  "displayName": "Dialog",
+  "methods": [],
+  "props": {
+    "container": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "func"
+          },
+          {
+            "name": "instanceOf",
+            "value": "React.Component"
+          },
+          {
+            "name": "instanceOf",
+            "value": "typeof Element === 'undefined' ? Object : Element"
+          }
+        ]
+      },
+      "required": false,
+      "description": ""
+    },
+    "visible": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否显示对话框"
+    },
+    "toast": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否为toast样式"
+    },
+    "title": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": "弹框标题"
+    },
+    "text": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": "弹框内容"
+    },
+    "content": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "node"
+          },
+          {
+            "name": "func"
+          }
+        ]
+      },
+      "required": false,
+      "description": "弹框内容后面的自定义内容"
+    },
+    "actions": {
+      "type": {
+        "name": "arrayOf",
+        "value": {
+          "name": "shape",
+          "value": {
+            "text": {
+              "name": "string",
+              "description": "按钮文字",
+              "required": false
+            },
+            "primary": {
+              "name": "bool",
+              "description": "是否主要按钮",
+              "required": false
+            },
+            "onClick": {
+              "name": "func",
+              "description": "点击操作, 如果return 一个 promise, 则resolve后关闭对话框",
+              "required": false
+            }
+          }
+        }
+      },
+      "required": false,
+      "description": "定义操作按钮"
+    }
+  }
+}

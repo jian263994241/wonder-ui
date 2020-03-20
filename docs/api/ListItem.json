@@ -1,0 +1,119 @@
+{
+  "description": "List, ListView 列表下的子组件.\n@visibleName ListItem 列表项",
+  "displayName": "ListItem",
+  "methods": [],
+  "props": {
+    "activeState": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "点击反馈\narrow 存在是强制为 true",
+      "defaultValue": {
+        "value": "undefined",
+        "computed": true
+      }
+    },
+    "align": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'top'",
+            "computed": false
+          },
+          {
+            "value": "'center'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "子元素垂直对齐",
+      "defaultValue": {
+        "value": "'center'",
+        "computed": false
+      }
+    },
+    "arrow": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'horizontal'",
+            "computed": false
+          },
+          {
+            "value": "'vertical'",
+            "computed": false
+          },
+          {
+            "value": "'vertical-up'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "箭头方向(水平方向, 垂直方向)",
+      "defaultValue": {
+        "value": "undefined",
+        "computed": true
+      }
+    },
+    "children": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "列表内容",
+      "defaultValue": {
+        "value": "undefined",
+        "computed": true
+      }
+    },
+    "disabled": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "禁用组件",
+      "defaultValue": {
+        "value": "undefined",
+        "computed": true
+      }
+    },
+    "extra": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "最右边额外的内容展示",
+      "defaultValue": {
+        "value": "undefined",
+        "computed": true
+      }
+    },
+    "thumb": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "最左边内容, 一般用作小图展示",
+      "defaultValue": {
+        "value": "undefined",
+        "computed": true
+      }
+    },
+    "wrap": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否换行，默认情况下，文字超长会被隐藏",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    }
+  }
+}

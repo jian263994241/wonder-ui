@@ -1,0 +1,29 @@
+{
+  "description": "手风琴面板\n@visibleName AccordionPanel 手风琴面板",
+  "displayName": "AccordionPanel",
+  "methods": [],
+  "props": {
+    "children": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "header": {
+      "type": {
+        "name": "custom",
+        "raw": "elementAcceptingRef.isRequired"
+      },
+      "required": false,
+      "description": "面板头内容"
+    },
+    "itemKey": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "对应 activeKey"
+    }
+  }
+}

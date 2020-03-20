@@ -1,0 +1,116 @@
+{
+  "description": "一个无限长的虚拟列表, 支持下拉刷新.\n@visibleName ListView 长列表",
+  "displayName": "ListView",
+  "methods": [],
+  "props": {
+    "renderIndicator": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "自定义加载指示器"
+    },
+    "renderFooter": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "自定义脚部"
+    },
+    "renderItem": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "渲染每个节点"
+    },
+    "data": {
+      "type": {
+        "name": "array"
+      },
+      "required": false,
+      "description": "列表数据 []"
+    },
+    "itemKey": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "自定义子项的key, 默认index"
+    },
+    "itemSize": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "默认item容器高度, 实际会根据内容计算内容高度",
+      "defaultValue": {
+        "value": "44",
+        "computed": false
+      }
+    },
+    "loadMoreItems": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "加载更多内容"
+    },
+    "pageSize": {
+      "type": {
+        "name": "number"
+      },
+      "required": true,
+      "description": "每次加载的长度"
+    },
+    "hasNextPage": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否有更多内容"
+    },
+    "onRefresh": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "刷新callback"
+    },
+    "pullToRefresh": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否开启下拉刷新"
+    },
+    "pullToRefreshProps": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "@see 查看[PullToRefresh](./#/组件/数据展示/PullToRefresh)组件"
+    },
+    "refreshing": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否正在刷新"
+    },
+    "threshold": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "预加载数据, 默认15条"
+    },
+    "useIsScrolling": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否检测滚动状态"
+    }
+  }
+}

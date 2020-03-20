@@ -1,0 +1,40 @@
+{
+  "description": "",
+  "displayName": "TouchFeedback",
+  "methods": [],
+  "props": {
+    "disabled": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": ""
+    },
+    "activeClassName": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "",
+      "defaultValue": {
+        "value": "'active-state'",
+        "computed": false
+      }
+    },
+    "activeStyle": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": ""
+    },
+    "children": {
+      "type": {
+        "name": "custom",
+        "raw": "elementAcceptingRef"
+      },
+      "required": false,
+      "description": ""
+    }
+  }
+}

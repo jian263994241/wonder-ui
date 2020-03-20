@@ -1,0 +1,145 @@
+{
+  "description": "创建一个App上下文.\n@visibleName App 入口",
+  "displayName": "App",
+  "methods": [],
+  "props": {
+    "app": {
+      "type": {
+        "name": "instanceOf",
+        "value": "AppClass"
+      },
+      "required": false,
+      "description": "全局的App对象"
+    },
+    "on": {
+      "type": {
+        "name": "shape",
+        "value": {
+          "pageInit": {
+            "name": "func",
+            "description": "`Page组件`挂载的时候触发",
+            "required": false
+          },
+          "routeChange": {
+            "name": "func",
+            "description": "路由改变时回调 {matched, location, name}",
+            "required": false
+          }
+        }
+      },
+      "required": false,
+      "description": "app events",
+      "defaultValue": {
+        "value": "{}",
+        "computed": false
+      }
+    },
+    "routes": {
+      "type": {
+        "name": "arrayOf",
+        "value": {
+          "name": "shape",
+          "value": {
+            "path": {
+              "name": "string",
+              "description": "路径",
+              "required": false
+            },
+            "exact": {
+              "name": "bool",
+              "description": "是否准确匹配",
+              "required": false
+            },
+            "component": {
+              "name": "union",
+              "value": [
+                {
+                  "name": "object"
+                },
+                {
+                  "name": "func"
+                }
+              ],
+              "description": "页面组件\nrequire('~/pages/some/index'),",
+              "required": false
+            },
+            "async": {
+              "name": "func",
+              "description": "异步加载, 需要配合webpack import 使用\n()=>import('~/pages/some/index')",
+              "required": false
+            },
+            "children": {
+              "name": "array",
+              "description": "嵌套路由",
+              "required": false
+            },
+            "redirect": {
+              "name": "string",
+              "description": "入口重定向",
+              "required": false
+            },
+            "name": {
+              "name": "union",
+              "value": [
+                {
+                  "name": "string"
+                },
+                {
+                  "name": "func"
+                }
+              ],
+              "description": "route name",
+              "required": false
+            }
+          }
+        }
+      },
+      "required": false,
+      "description": "路由列表",
+      "defaultValue": {
+        "value": "[]",
+        "computed": false
+      }
+    },
+    "type": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'browser'",
+            "computed": false
+          },
+          {
+            "value": "'memory'",
+            "computed": false
+          },
+          {
+            "value": "'hash'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "路由类型\n@see [路由配置](https://github.com/ReactTraining/history/blob/master/README.md)",
+      "defaultValue": {
+        "value": "'hash'",
+        "computed": false
+      }
+    },
+    "theme": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "主题\n@param {object} theme 默认主题\n@returns {object}"
+    },
+    "routerStore": {
+      "type": {
+        "name": "instanceOf",
+        "value": "RouterStore"
+      },
+      "required": false,
+      "description": "routerStore 全局的路由对象"
+    }
+  }
+}

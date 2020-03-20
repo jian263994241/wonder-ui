@@ -1,0 +1,36 @@
+{
+  "description": "@visibleName Empty 空状态",
+  "displayName": "Empty",
+  "methods": [],
+  "props": {
+    "description": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "string"
+          },
+          {
+            "name": "node"
+          }
+        ]
+      },
+      "required": false,
+      "description": "自定义描述内容"
+    },
+    "image": {
+      "type": {
+        "name": "element"
+      },
+      "required": false,
+      "description": ""
+    },
+    "imageStyle": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": ""
+    }
+  }
+}

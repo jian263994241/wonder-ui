@@ -1,0 +1,42 @@
+{
+  "description": "创建一个页面(长宽100%的容器)\n@visibleName Page 页面",
+  "displayName": "Page",
+  "methods": [],
+  "props": {
+    "name": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "navbar为`true`时, 显示为 title"
+    },
+    "navbar": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否显示导航栏"
+    },
+    "navbarProps": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "navbar props"
+    },
+    "pageContent": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否启用滚动部分, ListView等自定义页面滚动时, 设置pageContent:false."
+    },
+    "showBack": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "navbar为`true`时, 是否显示返回按钮"
+    }
+  }
+}

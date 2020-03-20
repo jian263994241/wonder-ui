@@ -1,0 +1,121 @@
+{
+  "description": "`List`组件下的子组件, 提供一个可输入的子项. 主要用于`Form`下提交数据用. \n@visibleName InputItem 输入项",
+  "displayName": "InputItem",
+  "methods": [],
+  "props": {
+    "alignRight": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "输入文字向右对齐, 默认向左"
+    },
+    "children": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "label展示文字"
+    },
+    "classes": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "class API 覆盖组件原有样式."
+    },
+    "className": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "Root node className"
+    },
+    "clearButton": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "显示情况输入的按钮"
+    },
+    "extra": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "最右边额外的内容展示"
+    },
+    "labelNumber": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "1",
+            "computed": false
+          },
+          {
+            "value": "2",
+            "computed": false
+          },
+          {
+            "value": "3",
+            "computed": false
+          },
+          {
+            "value": "4",
+            "computed": false
+          },
+          {
+            "value": "5",
+            "computed": false
+          },
+          {
+            "value": "6",
+            "computed": false
+          },
+          {
+            "value": "7",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "label的字数限制, 默认5"
+    },
+    "onChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "onChange"
+    },
+    "multiline": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否多行, multiline: true时, Input 替换成 TextareaAutosize"
+    },
+    "onExtraClick": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "extra部分的点击操作"
+    },
+    "renderInput": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "替换默认输入框"
+    },
+    "value": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "value"
+    }
+  }
+}

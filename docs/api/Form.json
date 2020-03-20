@@ -1,0 +1,78 @@
+{
+  "description": "带验证的表单组件\n@visibleName Form 表单",
+  "displayName": "Form",
+  "methods": [],
+  "props": {
+    "fieldNameProp": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "Where to store the name argument of getFieldProps.\n@ignore"
+    },
+    "form": {
+      "type": {
+        "name": "custom",
+        "raw": "formShape"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "mapProps": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "Get new props transferred to WrappedComponent."
+    },
+    "mapPropsToFields": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "Convert value from props to fields. Used for read fields from redux store."
+    },
+    "onFieldsChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "字段更新时触发回调事件"
+    },
+    "onFinish": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "提交表单且数据验证成功后回调事件"
+    },
+    "onFinishFailed": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "提交表单且数据验证失败后回调事件"
+    },
+    "onSubmit": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "onValuesChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "值更改时调用"
+    },
+    "validateMessages": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "Preseted messages of [async-validator](https://github.com/yiminghe/async-validator)\n@ignore"
+    }
+  }
+}

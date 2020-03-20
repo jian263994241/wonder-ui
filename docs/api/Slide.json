@@ -1,0 +1,35 @@
+{
+  "description": "",
+  "displayName": "Slide",
+  "methods": [],
+  "props": {
+    "direction": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'left'",
+            "computed": false
+          },
+          {
+            "value": "'right'",
+            "computed": false
+          },
+          {
+            "value": "'up'",
+            "computed": false
+          },
+          {
+            "value": "'down'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": ""
+    }
+  },
+  "composes": [
+    "../Transition"
+  ]
+}

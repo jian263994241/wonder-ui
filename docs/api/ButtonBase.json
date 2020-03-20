@@ -1,0 +1,28 @@
+{
+  "description": "带样式 reset 的 `button`, `Button` 的底层组件\n@visibleName ButtonBase 基础按钮",
+  "displayName": "ButtonBase",
+  "methods": [],
+  "props": {
+    "className": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "classname"
+    },
+    "type": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "type"
+    },
+    "style": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "style object"
+    }
+  }
+}

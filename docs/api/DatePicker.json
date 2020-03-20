@@ -1,0 +1,216 @@
+{
+  "description": "时间选择器\n@visibleName DatePicker 时间选择器",
+  "displayName": "DatePicker",
+  "methods": [],
+  "props": {
+    "children": {
+      "type": {
+        "name": "element"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "placeholder": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "占位提示"
+    },
+    "extra": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "same as placeholder"
+    },
+    "value": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "instanceOf",
+            "value": "Date"
+          },
+          {
+            "name": "string"
+          }
+        ]
+      },
+      "required": false,
+      "description": "selected value"
+    },
+    "onOk": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "click ok callback"
+    },
+    "onCancel": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "click cancel callback"
+    },
+    "onChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "rc-from callback"
+    },
+    "okText": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "button text"
+    },
+    "cancelText": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "button text"
+    },
+    "title": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "title"
+    },
+    "locale": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "the locale of area"
+    },
+    "mode": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'date'",
+            "computed": false
+          },
+          {
+            "value": "'time'",
+            "computed": false
+          },
+          {
+            "value": "'datetime'",
+            "computed": false
+          },
+          {
+            "value": "'year'",
+            "computed": false
+          },
+          {
+            "value": "'month'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "The date picker mode."
+    },
+    "minDate": {
+      "type": {
+        "name": "instanceOf",
+        "value": "Date"
+      },
+      "required": false,
+      "description": "min date"
+    },
+    "maxDate": {
+      "type": {
+        "name": "instanceOf",
+        "value": "Date"
+      },
+      "required": false,
+      "description": "max date"
+    },
+    "minHour": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "min Hour [0, 23]"
+    },
+    "maxHour": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "max Hour [0, 23]"
+    },
+    "minMinute": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "min Minute [0, 59]"
+    },
+    "maxMinute": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "max Minute [0, 59]"
+    },
+    "use12Hours": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "12 hours display mode"
+    },
+    "minuteStep": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "he amount of time, in minutes, between each minute item."
+    },
+    "format": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "string"
+          },
+          {
+            "name": "func"
+          }
+        ]
+      },
+      "required": false,
+      "description": "Customize display value of months"
+    },
+    "onDateChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "每列 picker 改变时的回调"
+    },
+    "triggerType": {
+      "defaultValue": {
+        "value": "'onClick'",
+        "computed": false
+      },
+      "required": false
+    },
+    "labelProp": {
+      "defaultValue": {
+        "value": "'extra'",
+        "computed": false
+      },
+      "required": false
+    }
+  }
+}

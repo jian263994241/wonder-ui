@@ -1,0 +1,115 @@
+{
+  "description": "配合ListView 实现长列表下拉刷新\n@visibleName PullToRefresh 下拉刷新",
+  "displayName": "PullToRefresh",
+  "methods": [],
+  "props": {
+    "direction": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'up'",
+            "computed": false
+          },
+          {
+            "value": "'down'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "pull direction, can be up or down",
+      "defaultValue": {
+        "value": "'down'",
+        "computed": false
+      }
+    },
+    "distanceToRefresh": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "distance to pull to refresh",
+      "defaultValue": {
+        "value": "50",
+        "computed": false
+      }
+    },
+    "refreshing": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "Whether the view should be indicating an active refresh",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    },
+    "onRefresh": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "Called when the view starts refreshing."
+    },
+    "indicator": {
+      "type": {
+        "name": "shape",
+        "value": {
+          "activate": {
+            "name": "any",
+            "required": false
+          },
+          "deactivate": {
+            "name": "any",
+            "required": false
+          },
+          "release": {
+            "name": "any",
+            "required": false
+          },
+          "finish": {
+            "name": "any",
+            "required": false
+          }
+        }
+      },
+      "required": false,
+      "description": "indicator config",
+      "defaultValue": {
+        "value": "{\n  activate: '释放即可刷新',\n  deactivate: '下拉即可刷新',\n  finish: '加载完成',\n  release: '正在刷新数据中...'\n}",
+        "computed": false
+      }
+    },
+    "className": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "additional css class of root dom node"
+    },
+    "prefixCls": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "prefix class",
+      "defaultValue": {
+        "value": "'pull-to-refresh'",
+        "computed": false
+      }
+    },
+    "damping": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "pull damping, suggest less than 200",
+      "defaultValue": {
+        "value": "800",
+        "computed": false
+      }
+    }
+  }
+}

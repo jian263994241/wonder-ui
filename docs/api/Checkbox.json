@@ -1,0 +1,28 @@
+{
+  "description": "可选项\n@visibleName Checkbox 选择项",
+  "displayName": "Checkbox",
+  "methods": [],
+  "props": {
+    "onChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "事件回调"
+    },
+    "checked": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否选中"
+    },
+    "classes": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "@ignore"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "description": "",
+  "displayName": "DisabledTouchMove",
+  "methods": [],
+  "props": {
+    "children": {
+      "type": {
+        "name": "custom",
+        "raw": "elementAcceptingRef"
+      },
+      "required": false,
+      "description": ""
+    }
+  }
+}

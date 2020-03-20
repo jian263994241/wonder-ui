@@ -1,0 +1,122 @@
+{
+  "description": "带验证的表单内字段 对`rc-form`的`getFieldDecorator`封装\n@visibleName FormItem 表单字段",
+  "displayName": "FormItem",
+  "methods": [],
+  "props": {
+    "getValueFromEvent": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "设置如何将 event 的值转换成字段值"
+    },
+    "getValueProps": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "Get the component props according to field value.\n@ignore",
+      "defaultValue": {
+        "value": "(value) => ({ value })",
+        "computed": false
+      }
+    },
+    "hidden": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "验证或获取字段时忽略当前字段",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    },
+    "initialValue": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "子节点的初始值，类型、可选值均由子节点决定"
+    },
+    "normalize": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "转换默认的 value 给控件\nfunction(value, prevValue, allValues): any"
+    },
+    "name": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "字段名"
+    },
+    "preserve": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "即便字段不再使用，也保留该字段的值",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    },
+    "rules": {
+      "type": {
+        "name": "array"
+      },
+      "required": false,
+      "description": "校验规则，参考下方文档: [async-validator](https://github.com/yiminghe/async-validator)"
+    },
+    "trigger": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "收集子节点的值的时机\n`onChange`",
+      "defaultValue": {
+        "value": "'onChange'",
+        "computed": false
+      }
+    },
+    "validate": {
+      "type": {
+        "name": "array"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "validateFirst": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "当某一规则校验不通过时，是否停止剩下的规则的校验",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    },
+    "validateTrigger": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "校验子节点值的时机"
+    },
+    "valuePropName": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "子节点的值的属性，如 Switch 的是 `checked`",
+      "defaultValue": {
+        "value": "'value'",
+        "computed": false
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "description": "",
+  "displayName": "Placeholder",
+  "methods": [],
+  "props": {
+    "holder": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": ""
+    },
+    "children": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": ""
+    }
+  }
+}

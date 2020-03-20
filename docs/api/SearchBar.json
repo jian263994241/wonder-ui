@@ -1,0 +1,105 @@
+{
+  "description": "@visibleName SearchBar 搜索",
+  "displayName": "SearchBar",
+  "methods": [],
+  "props": {
+    "classes": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": ""
+    },
+    "cancelText": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": ""
+    },
+    "defaultValue": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": ""
+    },
+    "value": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": ""
+    },
+    "onChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": ""
+    },
+    "onFocus": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": ""
+    },
+    "onBlur": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": ""
+    },
+    "onSearch": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": ""
+    },
+    "onCancel": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": ""
+    },
+    "onClear": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": ""
+    },
+    "showCancelButton": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": ""
+    },
+    "showSearchIcon": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": ""
+    },
+    "extra": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": ""
+    },
+    "bordered": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": ""
+    }
+  }
+}

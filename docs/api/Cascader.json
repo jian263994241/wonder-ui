@@ -1,0 +1,21 @@
+{
+  "description": "",
+  "displayName": "Cascader",
+  "methods": [],
+  "props": {
+    "title": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": ""
+    },
+    "visible": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": ""
+    }
+  }
+}

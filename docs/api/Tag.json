@@ -1,0 +1,21 @@
+{
+  "description": "进行标记和分类的小标签，用于标记事物的属性和维度，以及进行分类.\n@visibleName Tag 标签",
+  "displayName": "Tag",
+  "methods": [],
+  "props": {
+    "color": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "标签颜色 `primary`, `secondary`, 或者 自定颜色'#ccc'"
+    },
+    "clickable": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "@ignore"
+    }
+  }
+}

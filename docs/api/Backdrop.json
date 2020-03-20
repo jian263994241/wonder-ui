@@ -1,0 +1,14 @@
+{
+  "description": "Modal, Drawer, Dialog等浮层的背板\n@visibleName Backdrop - 背板",
+  "displayName": "Backdrop",
+  "methods": [],
+  "props": {
+    "onClick": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "click event"
+    }
+  }
+}

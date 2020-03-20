@@ -1,0 +1,42 @@
+{
+  "description": "",
+  "displayName": "Navbar",
+  "methods": [],
+  "props": {
+    "classes": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": ""
+    },
+    "title": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": ""
+    },
+    "barLeft": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": ""
+    },
+    "barRight": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": ""
+    },
+    "showBack": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": ""
+    }
+  }
+}

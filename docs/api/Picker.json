@@ -1,0 +1,126 @@
+{
+  "description": "级联选择器\n@visibleName Picker 选择器",
+  "displayName": "Picker",
+  "methods": [],
+  "props": {
+    "children": {
+      "type": {
+        "name": "element"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "placeholder": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "占位提示"
+    },
+    "extra": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "same as placeholder"
+    },
+    "data": {
+      "type": {
+        "name": "array"
+      },
+      "required": false,
+      "description": "The data of picker"
+    },
+    "value": {
+      "type": {
+        "name": "array"
+      },
+      "required": false,
+      "description": "selected value"
+    },
+    "onOk": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "click ok callback"
+    },
+    "onCancel": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "click cancel callback"
+    },
+    "onChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "rc-from callback"
+    },
+    "okText": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "button text"
+    },
+    "cancelText": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "button text"
+    },
+    "title": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "title"
+    },
+    "format": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "format"
+    },
+    "onPickerChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "每列数据选择变化后的回调函数"
+    },
+    "disabled": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否禁用"
+    },
+    "showError": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": ""
+    },
+    "triggerType": {
+      "defaultValue": {
+        "value": "'onClick'",
+        "computed": false
+      },
+      "required": false
+    },
+    "labelProp": {
+      "defaultValue": {
+        "value": "'extra'",
+        "computed": false
+      },
+      "required": false
+    }
+  }
+}

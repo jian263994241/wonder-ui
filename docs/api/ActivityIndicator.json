@@ -1,0 +1,35 @@
+{
+  "description": "长列表加载活动指示器\n@visibleName ActivityIndicator 活动指示器",
+  "displayName": "ActivityIndicator",
+  "methods": [],
+  "props": {
+    "size": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'small'",
+            "computed": false
+          },
+          {
+            "value": "'medium'",
+            "computed": false
+          },
+          {
+            "value": "'large'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "指示器大小"
+    },
+    "text": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "提示文字"
+    }
+  }
+}

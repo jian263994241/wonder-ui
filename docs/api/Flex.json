@@ -1,0 +1,186 @@
+{
+  "description": "flex box 样式\n@visibleName Flex 布局",
+  "displayName": "Flex",
+  "methods": [],
+  "props": {
+    "align": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'start'",
+            "computed": false
+          },
+          {
+            "value": "'center'",
+            "computed": false
+          },
+          {
+            "value": "'end'",
+            "computed": false
+          },
+          {
+            "value": "'baseline'",
+            "computed": false
+          },
+          {
+            "value": "'stretch'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "子元素在交叉轴上的对齐方式",
+      "defaultValue": {
+        "value": "'center'",
+        "computed": false
+      }
+    },
+    "alignContent": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'start'",
+            "computed": false
+          },
+          {
+            "value": "'end'",
+            "computed": false
+          },
+          {
+            "value": "'center'",
+            "computed": false
+          },
+          {
+            "value": "'between'",
+            "computed": false
+          },
+          {
+            "value": "'around'",
+            "computed": false
+          },
+          {
+            "value": "'stretch'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "有多根轴线时的对齐方式",
+      "defaultValue": {
+        "value": "'stretch'",
+        "computed": false
+      }
+    },
+    "justify": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'start'",
+            "computed": false
+          },
+          {
+            "value": "'end'",
+            "computed": false
+          },
+          {
+            "value": "'center'",
+            "computed": false
+          },
+          {
+            "value": "'between'",
+            "computed": false
+          },
+          {
+            "value": "'around'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "子元素在主轴上的对齐方式",
+      "defaultValue": {
+        "value": "'start'",
+        "computed": false
+      }
+    },
+    "wrap": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'nowrap'",
+            "computed": false
+          },
+          {
+            "value": "'wrap'",
+            "computed": false
+          },
+          {
+            "value": "'wrap-reverse'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "子元素的换行方式",
+      "defaultValue": {
+        "value": "'nowrap'",
+        "computed": false
+      }
+    },
+    "direction": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'row'",
+            "computed": false
+          },
+          {
+            "value": "'row-reverse'",
+            "computed": false
+          },
+          {
+            "value": "'column'",
+            "computed": false
+          },
+          {
+            "value": "'column-reverse'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "项目定位方向",
+      "defaultValue": {
+        "value": "'row'",
+        "computed": false
+      }
+    },
+    "gutter": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "子元素间距 8px",
+      "defaultValue": {
+        "value": "1",
+        "computed": false
+      }
+    },
+    "flex": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "cidlren flex: 1",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    }
+  }
+}

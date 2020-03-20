@@ -1,0 +1,122 @@
+{
+  "description": "使用活版印刷可以尽可能清晰、高效地呈现您的设计和内容\n@visibleName Typography 文字排版",
+  "displayName": "Typography",
+  "methods": [],
+  "props": {
+    "component": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "",
+      "defaultValue": {
+        "value": "'span'",
+        "computed": false
+      }
+    },
+    "classes": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "type": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'h1'",
+            "computed": false
+          },
+          {
+            "value": "'h2'",
+            "computed": false
+          },
+          {
+            "value": "'h3'",
+            "computed": false
+          },
+          {
+            "value": "'h4'",
+            "computed": false
+          },
+          {
+            "value": "'h5'",
+            "computed": false
+          },
+          {
+            "value": "'h6'",
+            "computed": false
+          },
+          {
+            "value": "'subtitle1'",
+            "computed": false
+          },
+          {
+            "value": "'subtitle2'",
+            "computed": false
+          },
+          {
+            "value": "'caption'",
+            "computed": false
+          },
+          {
+            "value": "'default'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "样式类型",
+      "defaultValue": {
+        "value": "'default'",
+        "computed": false
+      }
+    },
+    "inline": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否为行内元素 display: inline-block"
+    },
+    "color": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'inherit'",
+            "computed": false
+          },
+          {
+            "value": "'primary'",
+            "computed": false
+          },
+          {
+            "value": "'secondary'",
+            "computed": false
+          },
+          {
+            "value": "'warning'",
+            "computed": false
+          },
+          {
+            "value": "'info'",
+            "computed": false
+          },
+          {
+            "value": "'success'",
+            "computed": false
+          },
+          {
+            "value": "'error'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "颜色"
+    }
+  }
+}

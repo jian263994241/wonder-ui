@@ -1,0 +1,48 @@
+{
+  "description": "受控组件\n@visibleName CheckableTagGroup 可选标签组",
+  "displayName": "CheckableTagGroup",
+  "methods": [],
+  "props": {
+    "data": {
+      "type": {
+        "name": "arrayOf",
+        "value": {
+          "name": "shape",
+          "value": {
+            "label": {
+              "name": "string",
+              "required": false
+            },
+            "value": {
+              "name": "any",
+              "required": false
+            }
+          }
+        }
+      },
+      "required": false,
+      "description": "数据源"
+    },
+    "exclusive": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否单选"
+    },
+    "onChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "事件回调"
+    },
+    "value": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "选中的值, 多选的时候为`array`"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "description": "切换开关\n@visibleName Switch 开关",
+  "displayName": "Switch",
+  "methods": [],
+  "props": {
+    "color": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "颜色"
+    },
+    "onChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "事件回调"
+    },
+    "checked": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否选中"
+    },
+    "classes": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": "@ignore"
+    }
+  }
+}

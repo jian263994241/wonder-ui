@@ -1,0 +1,42 @@
+{
+  "description": "一个包装Pages的容器\n@visibleName View 视图",
+  "displayName": "View",
+  "methods": [],
+  "props": {
+    "animation": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'slide'",
+            "computed": false
+          },
+          {
+            "value": "'fade'",
+            "computed": false
+          },
+          {
+            "value": "'scale'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "Animation type"
+    },
+    "animationDisabled": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "Disable animation"
+    },
+    "noMatch": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": "React Element"
+    }
+  }
+}

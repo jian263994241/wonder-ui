@@ -1,0 +1,57 @@
+{
+  "description": "可以折叠/展开的内容区域。\n@visibleName Accordion 手风琴",
+  "displayName": "Accordion",
+  "methods": [],
+  "props": {
+    "accordion": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "手风琴模式",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    },
+    "activeKey": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "当前激活面板的 key"
+    },
+    "children": {
+      "type": {
+        "name": "any"
+      },
+      "required": false,
+      "description": "@ignore"
+    },
+    "defaultActiveKey": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "初始化选中面板的 key"
+    },
+    "disableTranstion": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "禁止动画",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    },
+    "onChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "切换面板的回调"
+    }
+  }
+}
