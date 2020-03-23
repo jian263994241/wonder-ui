@@ -81,6 +81,7 @@ module.exports = {
             './packages/core/components/ListView/ListView.js',
             './packages/core/components/PullToRefresh/PullToRefresh.js', 
             './packages/core/components/Tag/Tag.js',
+            './packages/core/components/Tabs/Tabs.js',
           ],
         },
         {
