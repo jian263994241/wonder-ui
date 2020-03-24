@@ -64,6 +64,15 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
+/** @license React v16.13.1
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 /*!
  * regjsgen 0.5.0
  * Copyright 2014-2018 Benjamin Tan <https://bnjmnt4n.now.sh/>

@@ -145,6 +145,19 @@ module.exports = {
         '@wonder-ui/utils': path.resolve(__dirname, './packages/utils/src'),
       }
     },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /node_modules/,
+            chunks: "all",
+            name: "vendor",
+            priority: 10,
+            enforce: true
+          }
+        }
+      }
+    },
     module: {
       rules: [
         {

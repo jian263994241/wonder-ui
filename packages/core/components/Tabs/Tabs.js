@@ -5,7 +5,8 @@ import { withStyles } from '@wonder-ui/styles';
 import styles from './styles';
 
 /**
- * 用于让用户在不同的视图中进行切换。
+ * 用于让用户在不同的视图中进行切换。 
+ * @see [更多样例](https://mobile.ant.design/kitchen-sink/components/tabs?lang=zh-CN#tabs-demo-0)
  * @visibleName Tabs 标签页
  */
 function Tabs(props) {
@@ -31,60 +32,72 @@ function Tabs(props) {
 }
 
 Tabs.propTypes = {
-  /** tabs data */
+  /** 
+   * tab数据	
+   */
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.node,
       key: PropTypes.string,
     })
   ),
-  /** TabBar's position | default: top */
+  /** 
+   * TabBar位置	 | default: top 
+   * */
   tabBarPosition: PropTypes.oneOf(['top' , 'bottom' , 'left' , 'right']), 
   /**
-   *  render for TabBar
+   *  替换TabBar
    * ((props: TabBarPropsType) => React.ReactNode) | false;
    */
   renderTabBar: PropTypes.func,
-  /** initial Tab, index or key */
+  /** 
+   * 初始化Tab, index or key
+   */
   initialPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  /** current tab, index or key */
+  /** 
+   * 当前Tab, index or key
+   */
   page: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  /** whether to switch tabs with swipe gestrue in the content | default: true */
+  /** 
+   * 是否可以滑动内容切换 | default: true 
+   * */
   swipeable: PropTypes.bool,
-  /** use scroll follow pan | default: true */
+  /** 
+   * 使用跟手滚动 | default: true 
+   * */
   useOnPan: PropTypes.bool,
-  /** pre-render nearby # sibling, Infinity: render all the siblings, 0: render current page | default: 1 */
+  /** 预加载两侧Tab数量 | default: 1 */
   prerenderingSiblingsNumber: PropTypes.number,
-  /** whether to change tabs with animation | default: true */
+  /** 是否开启切换动画 | default: true */
   animated: PropTypes.bool,
   /** 
-   * callback when tab is switched
+   * tab切换时触发
    * (tab: Models.TabData, index: number) => void;
    */
   onChange: PropTypes.func,
   /** 
-   * on tab click 
+   * tab 被点击的回调
    * (tab: Models.TabData, index: number) => void;
    * */
   onTabClick: PropTypes.func,
-  /** destroy inactive tab | default: false */
+  /** 销毁超出范围Tab | default: false */
   destroyInactiveTab: PropTypes.bool,
-  /** distance to change tab, width ratio | default: 0.3 */
+  /** 滑动切换阈值(宽度比例) | default: 0.3 */
   distanceToChangeTab: PropTypes.number,
-  /** use paged | default: true */
+  /** 是否启用分页模式 | default: true */
   usePaged: PropTypes.bool,
-  /** tab paging direction | default: horizontal */
+  /** Tab方向 | default: horizontal */
   tabDirection: PropTypes.oneOf(['horizontal', 'vertical']),
   // TabBar shortcut settings.
-  /** tabBar underline style */
+  /** tabBar下划线样式 */
   tabBarUnderlineStyle: PropTypes.object,
-  /** tabBar background color */
+  /** tabBar背景色 */
   tabBarBackgroundColor: PropTypes.string,
-  /** tabBar active text color */
+  /** tabBar激活Tab文字颜色 */
   tabBarActiveTextColor: PropTypes.string,
-  /** tabBar inactive text color */
+  /** tabBar非激活Tab文字颜色 */
   tabBarInactiveTextColor: PropTypes.string,
-  /** tabBar text style */
+  /** tabBar文字样式 */
   tabBarTextStyle: PropTypes.object,
   /** can't render content | default: false */
   noRenderContent: PropTypes.bool,
