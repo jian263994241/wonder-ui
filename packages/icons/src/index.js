@@ -9,4 +9,5 @@ export { default as CloseOutlined } from './CloseOutlined';
 export { default as EditOutlined } from './EditOutlined';
 export { default as ExpandLessOutlined } from './ExpandLessOutlined';
 export { default as ExpandMoreOutlined } from './ExpandMoreOutlined';
+export { default as Info } from './Info';
 export { default as InfoCircleOutlined } from './InfoCircleOutlined';
