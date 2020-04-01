@@ -37,6 +37,13 @@
       },
       "required": false,
       "description": "navbar为`true`时, 是否显示返回按钮"
+    },
+    "white": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "白色背景"
     }
   }
 }

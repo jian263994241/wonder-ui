@@ -142,18 +142,21 @@ export default theme => {
     /* Styles applied to the `input` element if `hiddenLabel={true}`. */
     inputHiddenLabel: {},
     iconClear: {
-      width: 15,
-      height: 15,
+      width: 25,
+      height: 25,
       flexShrink: 0,
       marginLeft: 3,
       borderRadius: '50%',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
+      backgroundSize: '15px 15px',
       backgroundImage: theme.svg.create(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28"><circle cx="14" cy="14" r="14" fill="#7D7D7D"/><path stroke="#fff" stroke-width="2" stroke-miterlimit="10" d="M8 8l12 12"/><path fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="10" d="M20 8L8 20"/></svg>`),
     },
     textAlignRight: {
       textAlign: 'right',
     },
+    hidden: {
+      display: 'none',
+    }
   };
 };

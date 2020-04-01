@@ -59,6 +59,7 @@ export { default as ContentBlock } from './components/ContentBlock';
 export { default as CountdownButton } from './components/CountdownButton';
 export { default as DatePicker } from './components/DatePicker';
 export { default as Drawer } from './components/Drawer';
+export { default as DropdownMenu } from './components/DropdownMenu';
 export { default as Empty } from './components/Empty';
 export { default as Flex } from './components/Flex';
 export { default as HeaderBar } from './components/HeaderBar';
@@ -77,9 +78,9 @@ export { default as SearchBar } from './components/SearchBar';
 export { default as Slot } from './components/Slot';
 export { default as SvgIcon } from './components/SvgIcon';
 export { default as Switch } from './components/Switch';
+export { default as Tabs } from './components/Tabs';
 export { default as Tag } from './components/Tag';
 export { default as ToolBar } from './components/ToolBar';
 export { default as Typography } from './components/Typography';
-export { default as Tabs } from './components/Tabs';
 
 

@@ -1,0 +1,57 @@
+{
+  "description": "",
+  "displayName": "DropdownMenuItem",
+  "methods": [],
+  "props": {
+    "children": {
+      "type": {
+        "name": "union",
+        "value": [
+          {
+            "name": "node"
+          },
+          {
+            "name": "func"
+          }
+        ]
+      },
+      "required": false,
+      "description": ""
+    },
+    "classes": {
+      "type": {
+        "name": "object"
+      },
+      "required": false,
+      "description": ""
+    },
+    "className": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": ""
+    },
+    "onClick": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": ""
+    },
+    "title": {
+      "type": {
+        "name": "node"
+      },
+      "required": false,
+      "description": ""
+    },
+    "visible": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": ""
+    }
+  }
+}

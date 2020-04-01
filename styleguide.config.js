@@ -177,6 +177,9 @@ module.exports = {
                     'node 8.0',
                   ]
                 }]
+              ],
+              plugins: [
+                ['import', { libraryName: 'antd', style: true }, 'antd'],
               ]
             }
           }]

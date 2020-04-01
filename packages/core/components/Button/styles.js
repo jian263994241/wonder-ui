@@ -14,9 +14,6 @@ export default theme => {
       transition: theme.transitions.create(['background-color', 'box-shadow', 'border', 'opacity'], {
         duration: theme.transitions.duration.short,
       }),
-      '&.active-state': {
-        opacity: 0.8,
-      },
       '&:hover': {
         textDecoration: 'none',
         // Reset on touch devices, it doesn't add specificity

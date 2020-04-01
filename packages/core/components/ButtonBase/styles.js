@@ -22,6 +22,9 @@ export default theme => ({
     fontSize: 'inherit',
     // So we take precedent over the style of a native <a /> element.
     color: 'inherit',
+    '&.active-state': {
+      opacity: 0.8,
+    },
     '&::-moz-focus-inner': {
       borderStyle: 'none', // Remove Firefox dotted outline.
     },

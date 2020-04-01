@@ -125,7 +125,7 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     }else{
       hideClearButtonTimeOut.current = setTimeout(() => {
         setClearButtonVisibled(false);
-      }, 132);
+      }, 800);
     }
   }, [focused]);
 
@@ -252,7 +252,7 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
 
   const handleClear = event => {
     const element = inputRef.current;
-    
+
     if(!isControlled){
 
       element.value = '';
@@ -336,7 +336,12 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
         onChange={handleChange}
         onFocus={handleFocus}
       />
-      {clearButton && clearButtonVisible && <i className={classes.iconClear} onClick={handleClear}></i>}
+      <i 
+        className={clsx(classes.iconClear, {
+          [classes.hidden]: !(clearButton && clearButtonVisible)
+        })} 
+        onClick={handleClear}
+      />
       {endAdornment}
       {renderSuffix
         ? renderSuffix({

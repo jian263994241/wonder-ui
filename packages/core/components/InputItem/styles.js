@@ -37,6 +37,7 @@ export default theme =>({
     alignItems: 'center',
     paddingRight: 15,
     overflow: 'hidden',
+    WebkitTapHighlightColor: 'transparent',
     paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(0.5),
     ...theme.hairline.create('bottom')

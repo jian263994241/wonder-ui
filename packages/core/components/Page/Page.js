@@ -26,6 +26,7 @@ const Page = React.forwardRef((props, ref)=>{
     navbarProps,
     pageContent = true,
     showBack = true,
+    white,
     ...rest
   } = props;
   const app = React.useContext(AppContext);
@@ -41,7 +42,7 @@ const Page = React.forwardRef((props, ref)=>{
     <SlotGroup>
       <div 
         ref={ref}
-        className={clsx(classes.root, className)}
+        className={clsx(classes.root, { white } ,className)}
         {...rest}
       >
         {
@@ -92,6 +93,10 @@ Page.propTypes = {
    * navbar为`true`时, 是否显示返回按钮
    */
   showBack: PropTypes.bool,
+  /**
+   * 白色背景
+   */
+  white: PropTypes.bool,
 };
 
 Page.displayName = 'Page';

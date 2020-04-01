@@ -7,6 +7,6 @@ export default theme => ({
     textSizeAdjust: '100%',
     fontSmoothing: 'antialiased',
     WebkitTouchCallout: 'none',
-    tapHighlightColor: 'transparent',
+    WebkitTapHighlightColor: 'transparent',
   }
 })

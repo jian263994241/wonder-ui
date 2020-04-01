@@ -9,7 +9,10 @@ export default theme => ({
     zIndex: 10,
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    '&.white': {
+      background: theme.palette.background.paper
+    }
   },
   body: {
     flexShrink: 1,
