@@ -6,6 +6,7 @@ export default theme =>({
   },
   root: {
     userSelect: 'none',
+    WebkitTapHighlightColor: 'transparent',
     width: '1em',
     height: '1em',
     display: 'inline-block',

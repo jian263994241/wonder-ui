@@ -26,7 +26,20 @@
     },
     "data": {
       "type": {
-        "name": "array"
+        "name": "arrayOf",
+        "value": {
+          "name": "shape",
+          "value": {
+            "label": {
+              "name": "string",
+              "required": false
+            },
+            "value": {
+              "name": "any",
+              "required": false
+            }
+          }
+        }
       },
       "required": false,
       "description": "The data of picker"

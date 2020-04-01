@@ -1,6 +1,7 @@
 export default theme => ({
   root: {
     ...theme.typography.body1,
+    userSelect: 'none',
   },
   body: {
     position: 'relative',

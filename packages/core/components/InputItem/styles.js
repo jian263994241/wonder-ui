@@ -9,7 +9,7 @@ export default theme =>({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     marginBottom: -1,
-    height: theme.typography.pxToRem(44),
+    height: theme.shape.listItemHeight,
     overflow: 'hidden',
     paddingLeft: 15,
     position: 'relative',
@@ -27,7 +27,7 @@ export default theme =>({
   },
   multiline: {
     height: 'auto',
-    minHeight: 44,
+    minHeight: theme.shape.listItemHeight,
   },
   line: {
     position: 'relative',
@@ -52,6 +52,7 @@ export default theme =>({
     overflow: 'hidden',
     padding: '4px 0',
     flexShrink: 0,
+    userSelect: 'none',
     '& + *': {
       width: '100%',
     },

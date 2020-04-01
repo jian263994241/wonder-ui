@@ -8,6 +8,7 @@ export default createUseStyles(theme => ({
     height: 238,
     ...theme.typography.body2,
     backgroundColor: theme.palette.background.default,
+    userSelect: 'none',
     '& .wui-picker': {
       display: 'block',
       position: 'relative',

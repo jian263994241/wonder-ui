@@ -11,6 +11,7 @@ export default {
     willChange: 'opacity',
     contain: 'strict',
     touchAction: 'none',
-    WebkitTapHighlightColor: 'transparent'
+    WebkitTapHighlightColor: 'transparent',
+    userSelect: 'none',
   }
 }

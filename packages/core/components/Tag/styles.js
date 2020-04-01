@@ -23,7 +23,7 @@ export default theme =>({
     color: theme.palette.text.primary,
     transition: theme.transitions.create('all'),
     userSelect: 'none',
-    
+    WebkitTapHighlightColor: 'transparent',
     '& + &': {
       marginLeft: theme.spacing(1),
     }

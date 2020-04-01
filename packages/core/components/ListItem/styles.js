@@ -8,7 +8,7 @@ export default theme => ({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     marginBottom: -1,
-    minHeight: 44,
+    minHeight: theme.shape.listItemHeight,
     overflow: 'hidden',
     paddingLeft: 15,
     position: 'relative',
@@ -16,14 +16,15 @@ export default theme => ({
     verticalAlign: 'middle',
     boxSizing: 'border-box',
     userSelect: 'none',
+    WebkitTapHighlightColor: 'transparent',
     '&[disabled], &[disabled] $extra, &[disabled] [role=brief]': {
       pointerEvents: 'none',
       cursor: 'default',
       color: theme.palette.action.disabled,
     },
-    // '&:last-child $line': {
-    //   ...theme.hairline.remove('bottom'),
-    // }
+    '&:last-child $line': {
+      ...theme.hairline.remove('bottom'),
+    }
   },
   activeState: {
     '&:active, &.active-state': {

@@ -129,7 +129,12 @@ Picker.propTypes = {
   /**
    * The data of picker
    */
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.any
+    })
+  ),
   /**
    * selected value
    */

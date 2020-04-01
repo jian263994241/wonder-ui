@@ -16,6 +16,7 @@ const styles = theme =>({
   content: {
     position: 'absolute',
     width: '100%',
+    overflow: 'hidden',
     top: theme.shape.barHeight,
     left: 0,
     zIndex: 889,
@@ -65,22 +66,22 @@ function DropdownMenu(props) {
         React.Children.toArray(children).map((child, index)=>{
           const isVisible = currentIndex === index;
           const isOtherVisible = !isVisible && currentIndex !== '';
-          
+          const passProps = {visible: isVisible, onCancel: handleCancel};
           return (
-            <Slide 
-              key={index} 
-              in={isVisible}
-              direction="down"
-            >
-              <div 
-                className={classes.content}
-                style={{display: isOtherVisible ? 'none': 'block'}}
-              >{
-                typeof child.props.children === 'function' ? 
-                  child.props.children({visible: isVisible, onCancel: handleCancel}) : 
-                  child.props.children
-              }</div>
-            </Slide>
+            <div className={classes.content} key={index}>
+              <Slide 
+                in={isVisible}
+                direction="down"
+              >
+                <div style={{display: isOtherVisible ? 'none': 'block'}} >
+                  {
+                    typeof child.props.children === 'function' ? 
+                      child.props.children(passProps) : 
+                      React.cloneElement(child.props.children, passProps)
+                  }
+                </div>
+              </Slide>
+            </div>
           )
         })
       }

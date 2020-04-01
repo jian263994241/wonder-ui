@@ -39,14 +39,14 @@ const ListItem = React.forwardRef(function ListItem(props, ref) {
   
 
   return (
-    <TouchFeedback>
+  
       <div 
         ref={ref} 
         className={clsx(
           classes.root,
           className,
           {
-            [classes.activeState]: !!arrow || activeState
+            [classes.activeState]: activeState || !!arrow
           },
         )}
         disabled={disabled} 
@@ -89,7 +89,7 @@ const ListItem = React.forwardRef(function ListItem(props, ref) {
           }
         </div>
       </div>
-    </TouchFeedback>
+  
   )
 })
 
