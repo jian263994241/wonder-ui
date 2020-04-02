@@ -14,6 +14,7 @@
     "build:router": "gulp build:router",
     "build:styles": "gulp build:styles",
     "build:utils": "gulp build:utils",
+    "clean": "gulp clean",
     "kitchen-sink:dev": "ale dev",
     "kitchen-sink:build": "ale build",
     "watch": "gulp",

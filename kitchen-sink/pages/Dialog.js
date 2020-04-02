@@ -31,7 +31,7 @@ export default function DialogExamples(props){
                   text: 'Tap hold', 
                   title: 'Title',
                   onOk: ()=> new Promise(resolve => {
-                    Dialog.toast('Tap hold')
+                    Dialog.toast('Tap hold', 2000)
                   }),
                 })
               }

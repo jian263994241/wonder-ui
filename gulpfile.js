@@ -100,7 +100,7 @@ function createTask(target){
   )
 }
 
-
+gulp.task('clean', clean);
 gulp.task('build:core', createTask('core') );
 gulp.task('build:icons', createTask('icons', false) );
 gulp.task('build:router',createTask('router') );

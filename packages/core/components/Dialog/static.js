@@ -99,7 +99,16 @@ Dialog.confirm = function DialogConfirm({
 /**
  * 
  */
-Dialog.toast = function DialogToast(text, callback) {
+Dialog.toast = function DialogToast(text, timeout, callback) {
+  const defaultTimeout = 1200;
+  if(timeout === undefined){
+    timeout = defaultTimeout;
+  }
+  if(typeof timeout === 'function'){
+    callback = timeout;
+    timeout = defaultTimeout;
+  }
+
   const container = document.createElement('div');
   callback = typeof callback === 'function' ? callback : noop;
   const toggleToast = toggleVisible((visible, clearQueue)=> {
@@ -121,7 +130,7 @@ Dialog.toast = function DialogToast(text, callback) {
       setTimeout(()=>{
         toggleToast(clearQueue);
         callback();
-      }, 1000);
+      }, timeout);
     }
   );
 }
