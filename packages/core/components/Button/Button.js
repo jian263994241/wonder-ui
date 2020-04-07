@@ -18,6 +18,7 @@ const Button =  React.forwardRef(function Button(props, ref) {
     classes,
     className,
     color='default',
+    endIcon,
     full,
     disabled,
     fullWidth,
@@ -27,6 +28,7 @@ const Button =  React.forwardRef(function Button(props, ref) {
     onClick,
     replace,
     size = 'medium',
+    startIcon,
     to,
     variant='contained',
     ...rest
@@ -62,9 +64,33 @@ const Button =  React.forwardRef(function Button(props, ref) {
       ref={ref} 
       onClick={handleClick}
       {...rest}
-    >
+    > 
       { iconPosition === 'left' && icon }
-      <span className={classes.body}>{children}</span>
+      {
+        startIcon && (
+          <span 
+            className={clsx({
+              [classes.startIcon]: true, 
+              [classes.iconSizeSmall]: size === 'small',
+              [classes.iconSizeMedium]: size === 'medium',
+              [classes.iconSizeLarge]: size === 'large',
+            })}
+          >{startIcon}</span>
+        )
+      }
+      <span className={classes.body}> {children} </span>
+      {
+        endIcon && (
+          <span 
+            className={clsx({
+              [classes.endIcon]: true, 
+              [classes.iconSizeSmall]: size === 'small',
+              [classes.iconSizeMedium]: size === 'medium',
+              [classes.iconSizeLarge]: size === 'large',
+            })}
+          >{endIcon}</span>
+        )
+      }
       { iconPosition === 'right' && icon }
     </ButtonBase>
   );
@@ -82,9 +108,17 @@ Button.propTypes = {
    */
   color: PropTypes.oneOf(['default', 'inherit', 'primary', 'secondary']),
   /**
+   * icon
+   */
+  endIcon: PropTypes.node,
+  /**
    * @ignore
    */
   style: PropTypes.object,
+  /**
+   * icon
+   */
+  startIcon: PropTypes.node,
   /** 禁用按钮 */
   disabled: PropTypes.bool,
   /** 100%宽度 */
@@ -95,10 +129,12 @@ Button.propTypes = {
   href: PropTypes.string,
   /**
    * icon
+   * @ignore 
    */
   icon: PropTypes.node,
   /**
    * icon的位置
+   * @ignore 
    */
   iconPosition: PropTypes.oneOf(['left', 'right']),
   /** 按钮尺寸 */
@@ -116,9 +152,6 @@ Button.defaultProps = {
   variant: 'contained',
   size: 'medium',
   color: 'default',
-  icon: null,
-  iconPosition: 'left',
-
 };
 
 export default withStyles(styles, { name: 'Button' })(Button);

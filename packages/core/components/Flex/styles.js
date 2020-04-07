@@ -14,8 +14,6 @@ const alias = {
 
 export default theme =>({
   root: {
-    textAlign: 'left',
-    overflow: 'hidden',
     display: props => props.inline ? 'inline-flex': 'flex',
     alignContent: props => alias[props.alignContent],
     alignItems: props => alias[props.align],

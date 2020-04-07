@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getValueProps } from './utils';
 import Button from '../Button';
 import Drawer from '../Drawer';
 import HeaderBar from '../HeaderBar';
 import RmcCascader from 'rmc-cascader/lib/Cascader';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import useStyles from './styles';
+
 
 function getHeadData(data){
   const result = [];
@@ -38,6 +40,7 @@ const Cascader = React.forwardRef(function Cascader(props, ref) {
   } = props;
   const classes = useStyles();
   const [value, setValue] = React.useState(inValue);
+  const [, forceUpdate ] = React.useState();
 
   React.useEffect(()=>{ 
     setValue(inValue || defaultValue);
@@ -45,7 +48,7 @@ const Cascader = React.forwardRef(function Cascader(props, ref) {
 
   const handleChange = useEventCallback((val)=>{
     setValue(val);
-    onPickerChange && onPickerChange(val);
+    onPickerChange && onPickerChange(val, getValueProps(val, data));
   });
 
   const handleOk = useEventCallback(()=>{

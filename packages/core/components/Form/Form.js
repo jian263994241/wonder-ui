@@ -41,7 +41,7 @@ const InternalForm = React.forwardRef(function InternalForm(props, ref) {
         {...rest}
         onSubmit={handleSubmit}
       >
-        {children}
+        {typeof children === 'function' ? children({ form }): children }
       </form>
     </FormContext.Provider>
   )
@@ -63,14 +63,17 @@ const Form = React.forwardRef(function Form (props, ref) {
     ...rest
   } = props;
 
-  const WrapForm =  craeteForm({
+  const formOpts = {
     validateMessages,
     onFieldsChange,
     onValuesChange,
     mapProps,
     mapPropsToFields,
     fieldNameProp,
-  })(InternalForm);
+  };
+
+  const WrapForm =  React.useMemo(
+    () => craeteForm(formOpts)(InternalForm), Object.values(formOpts));
 
   return <WrapForm {...rest} ref={ref}/>
 })

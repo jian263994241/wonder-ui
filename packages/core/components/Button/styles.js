@@ -223,10 +223,12 @@ export default theme => {
     /* Styles applied to the root element if `fullWidth={true}`. */
     fullWidth: {
       width: '100%',
+      // display: 'block',
     },
     full: {
       width: '100%',
       height: '100%',
+      // display: 'block',
       borderRadius: 0
     },
     /* Styles applied to the startIcon element if supplied. */

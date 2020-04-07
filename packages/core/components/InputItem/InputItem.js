@@ -37,6 +37,10 @@ const InputItem = React.forwardRef(function InputItem(props, ref) {
     return {};
   }, [fieldData.errors]);
 
+  const toastError = (error)=>{
+    Dialog.toast(error.message);
+  };
+
   return (
     <div 
       ref={rootRef}
@@ -68,7 +72,7 @@ const InputItem = React.forwardRef(function InputItem(props, ref) {
           <div className={classes.extra} onClick={onExtraClick} > {extra} </div> 
         )}
         {
-          error.message && <IconInfoOutlined color="error" onClick={Dialog.toast.bind(null, error.message)}/>
+          error.message && <IconInfoOutlined color="error" onClick={toastError.bind(null, error)}/>
         }
       </label>
     </div>

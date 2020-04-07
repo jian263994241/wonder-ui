@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
+import { getValueProps } from './utils';
 import Cascader from './Cascader';
-import treeFilter from 'array-tree-filter';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
 
 const defaultFormat = (values = [])=>{
@@ -39,20 +39,10 @@ const Picker = React.forwardRef(function Picker(props, ref) {
 
   const [visible, setVisible] = React.useState(visible);
   const [extra, setExtra] = React.useState('');
-  
-  const getValueProps = (value)=>{
-    if(value){
-      const result = treeFilter(data, (item, level)=>{
-        return item.value === value[level];
-      });
-      return result;
-    }
-    return [];
-  };
 
   React.useEffect(()=>{
     if(value){
-      setExtra(format(getValueProps(value)));
+      setExtra(format(getValueProps(value, data)));
     }else{
       setExtra( getExtra() )
     }
@@ -75,7 +65,7 @@ const Picker = React.forwardRef(function Picker(props, ref) {
 
   const handleOk = useEventCallback((value)=>{
     setVisible(false);
-    const valueProps = getValueProps(value);
+    const valueProps = getValueProps(value, data);
     onChange && onChange(value, valueProps);
     onOk && onOk(value, valueProps);
   });
