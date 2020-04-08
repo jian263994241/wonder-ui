@@ -11,7 +11,7 @@ export default function SearchBarExamples(props) {
     >
       
       <SearchBar 
-        placeholder="Default" 
+        placeholder="请输入名字" 
         onSearch={value=> setReslut(value)}
       />
 

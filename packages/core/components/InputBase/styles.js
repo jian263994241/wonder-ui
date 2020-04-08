@@ -21,7 +21,6 @@ export default theme => {
       fontFamily: theme.typography.fontFamily,
       color: theme.palette.text.primary,
       fontSize: theme.typography.pxToRem(16),
-      lineHeight: '1.1875em', // Reset (19px), match the native input line-height
       boxSizing: 'border-box', // Prevent padding issue with fullWidth.
       position: 'relative',
       cursor: 'text',
@@ -147,6 +146,7 @@ export default theme => {
       flexShrink: 0,
       marginLeft: 3,
       borderRadius: '50%',
+      WebkitTapHighlightColor: 'transparent',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       backgroundSize: '15px 15px',
