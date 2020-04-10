@@ -12,6 +12,7 @@ export default theme => ({
     boxSizing: 'border-box',
     userSelect: 'none',
     zIndex: theme.zIndex.appBar,
+    flexShrink: 0,
   },
   hairline: {
     ...theme.hairline.create('bottom')
