@@ -36,6 +36,20 @@ export default function ButtonExamples(props){
         <ButtonDemo variant="contained">contained</ButtonDemo>
       </ContentBlock>
 
+      <ContentBlock header="round" strong={false}>
+        <div>
+          <ButtonDemo variant="outlined" size="small" rounded>outlined</ButtonDemo>
+          <ButtonDemo variant="outlined" rounded>outlined</ButtonDemo>
+          <ButtonDemo variant="outlined" size="large"  rounded>outlined</ButtonDemo>
+        </div>
+        <div>
+          <ButtonDemo variant="contained" size="small" rounded>contained</ButtonDemo>
+          <ButtonDemo variant="contained" rounded>contained</ButtonDemo>
+          <ButtonDemo variant="contained" size="large" rounded>contained</ButtonDemo>
+        </div>
+        
+      </ContentBlock>
+
       <ContentBlock header="color" strong={false}>
         <div>
           <ButtonDemo>default</ButtonDemo>

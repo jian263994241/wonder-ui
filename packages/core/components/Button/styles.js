@@ -231,6 +231,9 @@ export default theme => {
       // display: 'block',
       borderRadius: 0
     },
+    rounded: {
+      borderRadius: theme.shape.buttonBorderRadius,
+    },
     /* Styles applied to the startIcon element if supplied. */
     startIcon: {
       display: 'inherit',

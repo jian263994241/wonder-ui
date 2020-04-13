@@ -27,6 +27,7 @@ const Button =  React.forwardRef(function Button(props, ref) {
     hexColor,
     onClick,
     replace,
+    rounded,
     size = 'medium',
     startIcon,
     to,
@@ -57,6 +58,7 @@ const Button =  React.forwardRef(function Button(props, ref) {
           [classes.disabled]: disabled,
           [classes.fullWidth]: fullWidth,
           [classes.full]: full,
+          [classes.rounded]: rounded,
           [classes.colorInherit]: color === 'inherit',
         },
         className
@@ -145,7 +147,11 @@ Button.propTypes = {
   to: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object
-  ])
+  ]),
+  /**
+   * 设置圆形按钮
+   */
+  rounded: PropTypes.bool,
 };
 
 Button.defaultProps = {
