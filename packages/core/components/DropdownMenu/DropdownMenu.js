@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Backdrop from '../Backdrop';
-import Slide from '../Slide';
+import { Slide, Backdrop } from '@wonder-ui/core';
 import { withStyles } from '@wonder-ui/styles';
 import clsx from 'clsx';
 
@@ -10,16 +9,20 @@ const styles = theme =>({
     width: '100%',
     height: theme.shape.barHeight,
     display: 'flex',
-    ...theme.hairline.create('top'),
     position: 'relative',
+    flexShrink: 0,
+    ...theme.hairline.create('top'),
   },
-  content: {
+  contentWrap: {
     position: 'absolute',
     width: '100%',
     overflow: 'hidden',
     top: theme.shape.barHeight,
     left: 0,
     zIndex: 889,
+  },
+  content: {
+    backgroundColor: '#fff',
   },
   backdrop: {
     zIndex: 888,
@@ -68,12 +71,13 @@ function DropdownMenu(props) {
           const isOtherVisible = !isVisible && currentIndex !== '';
           const passProps = {visible: isVisible, onCancel: handleCancel};
           return (
-            <div className={classes.content} key={index}>
+            <div className={classes.contentWrap} key={index}>
               <Slide 
                 in={isVisible}
                 direction="down"
               >
-                <div style={{display: isOtherVisible ? 'none': 'block'}} >
+                <div className={classes.content} style={{
+                  display: (isOtherVisible || !isVisible) ? 'none': 'block'}} >
                   {
                     typeof child.props.children === 'function' ? 
                       child.props.children(passProps) : 

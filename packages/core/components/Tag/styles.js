@@ -14,6 +14,7 @@ export function createColor(color = ''){
 export default theme =>({
   root: {
     ...theme.typography.body2,
+    fontSize: theme.typography.pxToRem(13),
     display: 'inline-block',
     padding: '2px 8px',
     cursor: 'default',
@@ -51,9 +52,17 @@ export default theme =>({
   colorSecondary: {
     ...createColor(theme.palette.secondary.main),
   },
+  sizeSmall: {
+    fontSize: theme.typography.pxToRem(10),
+    padding: '2px 4px',
+  },
+  sizeLarge: {
+    fontSize: theme.typography.pxToRem(16),
+    padding: '2px 12px',
+  },
   clickable: {
     backgroundColor: darken(theme.palette.background.default, 0.08),
-    borderColor: 'transparent',
+    border: '1px solid transparent',
     '&:after': {
       display: 'none'
     },

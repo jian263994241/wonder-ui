@@ -1,6 +1,6 @@
 export default theme => ({
   root: {
-    ...theme.typography.body1,
+    ...theme.typography.body2,
     userSelect: 'none',
   },
   body: {

@@ -83,6 +83,7 @@ export default theme => {
       overflow: 'visible',
       zIndex: 1,
       '&-tab': {
+        WebkitTapHighlightColor: 'transparent',
         position: 'relative',
         display: 'flex',
         flexShrink: 0,

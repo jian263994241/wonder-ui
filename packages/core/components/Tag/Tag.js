@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import capitalize from '@wonder-ui/utils/capitalize';
 import styles, { createColor } from './styles';
 import withStyles from '../withStyles';
 
@@ -17,6 +18,7 @@ const Tag = React.forwardRef(function Tag(props, ref) {
     clickable,
     color,
     style,
+    size = 'medium',
     ...rest
   } = props;
 
@@ -29,7 +31,8 @@ const Tag = React.forwardRef(function Tag(props, ref) {
           [classes.colorPrimary]: color === 'primary',
           [classes.colorSecondary]: color === 'secondary',
           [classes.clickable]: clickable,
-          [classes.checked]: checked && clickable
+          [classes.checked]: checked && clickable,
+          [classes[`size${capitalize(size)}`]]: size !== 'medium',
         },
         className
       )} 
@@ -49,6 +52,10 @@ Tag.propTypes = {
    * @ignore
    */
   clickable: PropTypes.bool,
+  /**
+   * Tag size
+   */
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
 }
 
 Tag.displayName = 'Tag';

@@ -2,7 +2,7 @@ import { fade } from '@wonder-ui/styles/colorManipulator';
 
 export default theme => ({
   root: {
-    ...theme.typography.body1,
+    ...theme.typography.body2,
     color: theme.palette.text.primary,
     alignItems: 'center',
     backgroundColor: theme.palette.background.paper,
