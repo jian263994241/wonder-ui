@@ -5,15 +5,16 @@ export default theme =>({
     }
   },
   root: {
-    userSelect: 'none',
-    WebkitTapHighlightColor: 'transparent',
-    width: '1em',
-    height: '1em',
     display: 'inline-block',
     fill: 'currentColor',
     flexShrink: 0,
     fontSize: theme.typography.pxToRem(24),
+    height: '1em',
+    position: 'relative',
+    userSelect: 'none',
     verticalAlign: 'middle',
+    WebkitTapHighlightColor: 'transparent',
+    width: '1em',
     transition: theme.transitions.create('fill', {
       duration: theme.transitions.duration.shorter,
     }),
