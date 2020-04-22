@@ -58,7 +58,7 @@ const Button =  React.forwardRef(function Button(props, ref) {
           [classes.disabled]: disabled,
           [classes.fullWidth]: fullWidth,
           [classes.full]: full,
-          [classes.rounded]: rounded,
+          [classes.borderRounded]: rounded,
           [classes.colorInherit]: color === 'inherit',
         },
         className

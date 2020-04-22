@@ -5,6 +5,7 @@ export function createColor(color = ''){
   return {
     color: color,
     backgroundColor: fade(color, 0.1),
+    borderColor: fade(color, 0.6),
     '&:after': {
       borderColor: fade(color, 0.6),
     }
@@ -13,14 +14,14 @@ export function createColor(color = ''){
 
 export default theme =>({
   root: {
-    ...theme.typography.body2,
-    fontSize: theme.typography.pxToRem(13),
+    fontFamily: theme.typography.fontFamily,
+    fontSize: theme.typography.pxToRem(12),
     display: 'inline-block',
-    padding: '2px 8px',
+    padding: '4px 8px',
     cursor: 'default',
     verticalAlign: 'middle',
     opacity: 1,
-    border: 0,
+    border: '1px solid currentColor',
     borderRadius: theme.shape.borderRadius,
     color: theme.palette.text.primary,
     transition: theme.transitions.create(['background', 'color']),
@@ -28,9 +29,13 @@ export default theme =>({
     WebkitTapHighlightColor: 'transparent',
     position: 'relative',
     boxSizing: 'border-box',
+    verticalAlign: 'middle',
     '& + &': {
       marginLeft: theme.spacing(1),
     },
+  },
+  hairline: {
+    border: 0,
     '&:after': {
       content: '""',
       position: 'absolute',
@@ -57,8 +62,8 @@ export default theme =>({
     padding: '2px 4px',
   },
   sizeLarge: {
-    fontSize: theme.typography.pxToRem(16),
-    padding: '2px 12px',
+    fontSize: theme.typography.pxToRem(14),
+    padding: '6px 12px',
   },
   clickable: {
     backgroundColor: darken(theme.palette.background.default, 0.08),

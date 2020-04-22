@@ -17,6 +17,7 @@ const Tag = React.forwardRef(function Tag(props, ref) {
     className,
     clickable,
     color,
+    hairline,
     style,
     size = 'medium',
     ...rest
@@ -33,6 +34,7 @@ const Tag = React.forwardRef(function Tag(props, ref) {
           [classes.clickable]: clickable,
           [classes.checked]: checked && clickable,
           [classes[`size${capitalize(size)}`]]: size !== 'medium',
+          [classes.hairline]: hairline,
         },
         className
       )} 
@@ -56,6 +58,10 @@ Tag.propTypes = {
    * Tag size
    */
   size: PropTypes.oneOf(['small', 'medium', 'large']),
+  /**
+   * 细边框
+   */
+  hairline: PropTypes.bool,
 }
 
 Tag.displayName = 'Tag';

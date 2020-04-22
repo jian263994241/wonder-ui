@@ -18,6 +18,16 @@ export default Form.create()(function TagExamples(props) {
         <Tag color="#3981DA">#3981DA</Tag>
       </ContentBlock>
 
+      <ContentBlock header="Size">
+        <Tag color="#FE9E20" size="small">#5576F0</Tag>
+        <Tag color="#FD561F">#FD561F</Tag>
+        <Tag color="#3981DA" size="large">#3981DA</Tag>
+      </ContentBlock>
+
+      <ContentBlock header="细边框">
+        <Tag color="#FD561F" hairline>#FD561F</Tag>
+      </ContentBlock>
+
       <ContentBlock header="CheckableTag disabled">  
         <CheckableTag checked disabled>checked disabled</CheckableTag>
         <CheckableTag disabled>disabled</CheckableTag>

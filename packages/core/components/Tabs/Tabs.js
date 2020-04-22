@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { DefaultTabBar, Tabs as RMCTabs } from 'rmc-tabs';
 import { withStyles } from '@wonder-ui/styles';
 import styles from './styles';
+// import {DefaultTabBar} from './DefaultTabBar';
 
 /**
  * 用于让用户在不同的视图中进行切换。 

@@ -16,7 +16,7 @@ export default theme => {
       boxSizing: 'border-box',
       display: 'flex',
       flex: 1,
-      position: 'relative',
+      position: 'sticky',
       overflow: 'hidden',
       height: '100%',
       width: '100%',
@@ -25,6 +25,8 @@ export default theme => {
         flex: 1,
         width: '100%',
         height: '100%',
+        position: 'relative',
+        zIndex: 2,
         minHeight: 0,
         '&-animated': {
           transition: theme.transitions.create(['transform', 'left', 'top']),

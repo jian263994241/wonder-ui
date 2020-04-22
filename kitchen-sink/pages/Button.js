@@ -14,14 +14,14 @@ export default function ButtonExamples(props){
 
   return (
     <Page name="Button" navbar>
-      <ContentBlock header="size" strong={false}>
+      <ContentBlock header="size">
         <ButtonDemo>default</ButtonDemo>
         <ButtonDemo size="small">small</ButtonDemo>
         <ButtonDemo size="medium">medium</ButtonDemo>
         <ButtonDemo size="large">large</ButtonDemo>
       </ContentBlock>
       
-      <ContentBlock header="full" strong={false}>
+      <ContentBlock header="full">
         <ButtonDemo full 
         startIcon={<ArrowBackIosOutlined/>}
         endIcon={<CloseOutlined/>}
@@ -29,14 +29,14 @@ export default function ButtonExamples(props){
         <ButtonDemo fullWidth>fullWidth</ButtonDemo>
       </ContentBlock>
       
-      <ContentBlock header="variant" strong={false}>
+      <ContentBlock header="variant">
         <ButtonDemo>default</ButtonDemo>
         <ButtonDemo variant="text">text</ButtonDemo>
         <ButtonDemo variant="outlined">outlined</ButtonDemo>
         <ButtonDemo variant="contained">contained</ButtonDemo>
       </ContentBlock>
 
-      <ContentBlock header="round" strong={false}>
+      <ContentBlock header="round">
         <div>
           <ButtonDemo variant="outlined" size="small" rounded>outlined</ButtonDemo>
           <ButtonDemo variant="outlined" rounded>outlined</ButtonDemo>
@@ -50,7 +50,7 @@ export default function ButtonExamples(props){
         
       </ContentBlock>
 
-      <ContentBlock header="color" strong={false}>
+      <ContentBlock header="color">
         <div>
           <ButtonDemo>default</ButtonDemo>
           <ButtonDemo color="primary">primary</ButtonDemo>
@@ -68,7 +68,7 @@ export default function ButtonExamples(props){
         </div>
       </ContentBlock>
       
-      <ContentBlock header="disabled" strong={false}>
+      <ContentBlock header="disabled">
         <ButtonDemo disabled>default</ButtonDemo>
         <ButtonDemo disabled variant="text">default</ButtonDemo>
       </ContentBlock>

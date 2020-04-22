@@ -1,10 +1,10 @@
+import 'core-js';
 import React from 'react';
 import {render} from 'react-dom';
 import { View, App } from '@wonder-ui/core';
 
 import IndexPage from './pages/IndexPage';
 import NoMatch from './pages/NoMatch';
-
 
 const params = {
   //events bus
@@ -68,6 +68,5 @@ function MyApp() {
   )
 }
 
-
-
 render( <MyApp/>, document.getElementById('root') );
+

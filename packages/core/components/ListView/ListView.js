@@ -86,7 +86,7 @@ const ListView = React.forwardRef(function ListView(props, ref) {
     refreshing: refreshingInput = false,
     renderIndicator = defaultRenderIndicator,
     renderFooter,
-    renderItem,
+    renderItem = ()=> null,
     threshold = 0,
     useIsScrolling = false,
   } = props;
@@ -167,15 +167,17 @@ const ListView = React.forwardRef(function ListView(props, ref) {
       <AutoSizer>
         {
           ({width, height})=>(
-            <PullToRefresh 
-              style={{height, width}} 
-              {...pullToRefreshProps}
-              onRefresh={onRefresh} 
-              refreshing={refreshing}
-              data-scroll-direction={scrollDirection}
-            > 
-              {renderInfiniteList({width, height})}
-            </PullToRefresh>
+            <div style={{overflow: 'hidden', height, width}}>
+              <PullToRefresh 
+                style={{height, width}} 
+                {...pullToRefreshProps}
+                onRefresh={onRefresh} 
+                refreshing={refreshing}
+                data-scroll-direction={scrollDirection}
+              > 
+                {renderInfiniteList({width, height})}
+              </PullToRefresh>
+            </div>
           )
         }
       </AutoSizer>

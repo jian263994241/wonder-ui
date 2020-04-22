@@ -16,6 +16,34 @@
       },
       "required": false,
       "description": "@ignore"
+    },
+    "size": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'small'",
+            "computed": false
+          },
+          {
+            "value": "'medium'",
+            "computed": false
+          },
+          {
+            "value": "'large'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "Tag size"
+    },
+    "hairline": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "细边框"
     }
   }
 }

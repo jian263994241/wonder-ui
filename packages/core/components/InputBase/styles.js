@@ -67,8 +67,10 @@ export default theme => {
       boxSizing: 'content-box',
       background: 'none',
       height: theme.typography.pxToRem(19), // Reset (19px), match the native input line-height
+      lineHeight: 'normal',
       margin: 0, // Reset for Safari
       WebkitTapHighlightColor: 'transparent',
+      WebkitAppearance: 'none',
       display: 'block',
       // Make the flex item shrink with Firefox
       minWidth: 0,

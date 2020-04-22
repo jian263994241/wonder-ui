@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import getRendered from '@wonder-ui/utils/getRendered';
 import styles from './styles';
 import withStyles from '../withStyles';
 /**
@@ -14,19 +13,11 @@ import withStyles from '../withStyles';
  * @visibleName Block 内容块
  */
 const Block = React.forwardRef(function Block (props, ref) {
-  const { classes, className, space, blank, top, left, right, bottom, header, strong, inset, children, ...rest } = props;
+  const { classes, className, space, blank, top, left, right, bottom, children, ...rest } = props;
+
   return (
-    <div className={clsx( classes.root, className )} ref={ref} {...rest}>
-      {header && <div className={classes.header}>{getRendered(header)}</div>}
-      <div className={clsx(
-        classes.body,
-        {
-          [classes.bodyStrong]: strong,
-          [classes.bodyInset]: inset
-        },
-      )}>{children}</div>
-    </div>
-  )
+    <div className={clsx( classes.root, className )} {...rest}>{children}</div>
+  );
 });
 
 Block.defaultProps = {

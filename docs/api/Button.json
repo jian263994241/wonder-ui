@@ -183,6 +183,13 @@
       },
       "required": false,
       "description": "Link 组件的 props.to"
+    },
+    "rounded": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "设置圆形按钮"
     }
   }
 }

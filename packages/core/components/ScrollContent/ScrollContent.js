@@ -11,6 +11,8 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
     classes,
     className,
     disableIosTouch = false,
+    onScrollEnd,
+    onScroll,
     ...rest
   } = props;
 
@@ -64,13 +66,27 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
 
   const onTouchEnd = (e) => {
     blockTouchMove.current = false;
+  };
+
+  const handleScroll = (e)=>{
+    if(onScroll){
+      onScroll(e);
+    }
+    const isBottom = e.target.scrollHeight <= (
+      e.target.scrollTop + e.target.offsetHeight
+    );
+
+    if(isBottom && onScrollEnd){
+      onScrollEnd(e);
+    }
   }
 
   const handleEvents = { 
     onTouchStart, 
     onTouchMove, 
     onTouchEnd, 
-    onTouchCancel: onTouchEnd 
+    onTouchCancel: onTouchEnd ,
+    onScroll: handleScroll,
   };
 
   return (
@@ -86,7 +102,7 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
       {...handleEvents}
       ref={handleRef}
     >
-      <div className={classes.body}>{children}</div>
+      {children}
     </div>
   )
 });
@@ -95,6 +111,7 @@ ScrollContent.componentClass = {
   className: PropTypes.string,
   disableIosTouch: PropTypes.bool,
   children: PropTypes.any,
+  onScrollEnd: PropTypes.func,
 };
 
 
@@ -110,15 +127,7 @@ export default withStyles({
     touchAction: 'pan-x pan-y',
     position: 'relative',
   },
-  body: {
-    width: '100%',
-    minHeight: '100%',
-    overflow: 'hidden',
-  },
   iosTouch: {
-    WebkitOverflowScrolling: 'touch',
-    '& $body': {
-      minHeight: 'calc(100% + 1px)'
-    }
+    WebkitOverflowScrolling: 'touch'
   }
 })(ScrollContent);

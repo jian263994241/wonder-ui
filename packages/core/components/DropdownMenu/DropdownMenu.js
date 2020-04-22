@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Slide, Backdrop } from '@wonder-ui/core';
+import Backdrop from '../Backdrop';
+import Slide from '../Slide';
 import { withStyles } from '@wonder-ui/styles';
 import clsx from 'clsx';
 

@@ -9,7 +9,7 @@ module.exports = {
     filename: 'app.bunld.js',
   },
   devServer: {
-    port: 3001,
+    port: 9000,
   },
   resolve: {
     alias: {
@@ -24,13 +24,10 @@ module.exports = {
     html: {
       title: 'Wonder UI',
       appMountId: 'root',
-      mobile: true
-    },
-    babel(options) {
-      options.plugins = [
-        // ['styled-components', { displayName: true, fileName: false }]
-      ];
-      return options;
+      mobile: true,
+      scripts: [
+        // 'https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.14/es5-shim.min.js'
+      ]
     }
   }
 }
