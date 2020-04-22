@@ -40,6 +40,7 @@ export default function CountdownButton(props){
 
     if(!isProcess && onStart){
       onStart(()=>{
+        secondsResidue.current = totail;
         interval.current = setInterval(tick, 1000);
         setProcess(true);
         setInitialled(true);

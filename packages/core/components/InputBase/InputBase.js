@@ -125,7 +125,7 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     }else{
       hideClearButtonTimeOut.current = setTimeout(() => {
         setClearButtonVisibled(false);
-      }, 800);
+      }, 100);
     }
   }, [focused]);
 

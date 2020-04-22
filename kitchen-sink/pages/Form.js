@@ -57,6 +57,15 @@ export default function FormExamples(props) {
             name="field_2"
             rules={[{
               required: true,
+              message: `请填写[基本]字段`
+            }]}
+          >
+            <InputItem placeholder="请输入">基本2</InputItem>
+          </FormItem>
+          <FormItem
+            name="field_3"
+            rules={[{
+              required: true,
               message: `请填写[多行]字段`
             }]}
           >
