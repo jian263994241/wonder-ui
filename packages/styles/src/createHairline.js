@@ -1,6 +1,6 @@
 import device from '@wonder-ui/utils/device';
 
-function create(position, color = '#999'){
+function create(position, color = '#999', coverStyles = {}){
   let styles;
   const base = {
     content: '""',
@@ -9,14 +9,16 @@ function create(position, color = '#999'){
     display: 'block',
     zIndex: 15,
   };
+
+  const pixelRatio = device.desktop ? 2 : device.pixelRatio;
+  
   const scaleY = {
-    transform: `scaleY(${1/device.pixelRatio})`
+    transform: `scaleY(${1/pixelRatio})`
   };
 
   const scaleX = {
-    transform: `scaleX(${1/device.pixelRatio})`
+    transform: `scaleX(${1/pixelRatio})`
   };
-
 
   switch (position) {
     case 'top':
@@ -30,7 +32,8 @@ function create(position, color = '#999'){
             right: 'auto',
             height: 1,
             width: '100%',
-            transformOrigin: '50% 100%',
+            transformOrigin: '50% 0%',
+            ...coverStyles
           }
         }
       break;
@@ -46,6 +49,7 @@ function create(position, color = '#999'){
           width: 1,
           height: '100%',
           transformOrigin: '100% 50%',
+          ...coverStyles
         }
       }
       break;
@@ -60,7 +64,8 @@ function create(position, color = '#999'){
           top: 'auto',
           height: 1,
           width: '100%',
-          transformOrigin: '50% 0%',
+          transformOrigin: '50% 100%',
+          ...coverStyles
         }
       }
       break;
@@ -76,6 +81,7 @@ function create(position, color = '#999'){
           width: 1,
           height: '100%',
           transformOrigin: '0% 50%',
+          ...coverStyles
         }
       }
       break;
@@ -111,9 +117,8 @@ function remove(position){
 
 
 export default function createHairline(palette) {
-  
   return {
-    create: (position)=> create(position, palette.divider),
+    create: (position, coverStyles)=> create(position, palette.divider, coverStyles),
     remove,
   }
 }

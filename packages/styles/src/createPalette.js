@@ -21,7 +21,7 @@ export const light = {
     hint: 'rgba(0, 0, 0, 0.38)',
   },
   // The color used to divide different elements.
-  divider: 'rgba(0, 0, 0, 0.12)',
+  divider: '#E0E0E0',
   // The background colors used to style the surfaces.
   // Consistency between these values is important.
   background: {
