@@ -1,7 +1,7 @@
 import React from 'react';
 import createSvgIcon from './utils/createSvgIcon';
-
+//移除
 export default createSvgIcon(
-  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>,
-  'CloseOutlined'
+  <path fill="#000" d="M7.05 6.343l4.95 4.95 4.95-4.95a.5.5 0 11.707.707L12.707 12l4.95 4.95a.5.5 0 11-.707.707L12 12.707l-4.95 4.95a.5.5 0 11-.707-.707l4.95-4.95-4.95-4.95a.5.5 0 11.707-.707z"/>
+  ,'CloseOutlined'
 )

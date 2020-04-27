@@ -10,6 +10,7 @@ export { default as Cancel } from './Cancel';
 export { default as CheckCircle } from './CheckCircle';
 export { default as CheckMore } from './CheckMore';
 export { default as CheckOutlined } from './CheckOutlined';
+export { default as Close } from './Close';
 export { default as CloseOutlined } from './CloseOutlined';
 export { default as CustomerService } from './CustomerService';
 export { default as EditOutlined } from './EditOutlined';
