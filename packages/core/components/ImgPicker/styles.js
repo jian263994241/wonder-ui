@@ -70,9 +70,9 @@ export default () => ({
       right: '-10px',
       zIndex: 20,
       '& .delete': {
-        display: 'block',
-        width: '100%',
-        height: '100%'
+        color: 'red',
+        transform: 'rotate(45deg)',
+        fontSize: '20px'
       }
     },
     '& .border-i': {

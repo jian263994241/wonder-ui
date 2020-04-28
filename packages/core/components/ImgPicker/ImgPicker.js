@@ -102,7 +102,7 @@ const ImgPicker = forwardRef(function ImgPicker({classes, ...resProps}, ref) {
       {urlSmall && (
         <div className="delete-box" onClick={() => onFileChange()}>
           {/* <img alt="" src={iconDelete} className="delete" /> */}
-          <AddCircleOutline />
+          <AddCircleOutline className="delete" />
         </div>
       )}
       <input
