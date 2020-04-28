@@ -1,20 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { easing, duration } from '@wonder-ui/styles/transitions';
 import css from 'dom-helpers/css';
 import Transition from '../Transition';
-
-const defaultTimeout = {
-  enter: duration.enteringScreen,
-  exit: duration.leavingScreen,
-};
 
 const Slide = React.forwardRef((props, ref)=>{
   const {
     direction,
     onEnter,
     onExited,
-    timeout = defaultTimeout,
     ...rest
   } = props;
 
@@ -72,8 +65,6 @@ const Slide = React.forwardRef((props, ref)=>{
       style={style}
       styles = {targetStyles}
       propertys={['transform']}
-      easing={easing.sharp}
-      timeout={timeout}
       onEnter={handleEnter}
       onExited={handleExited}
       {...rest}

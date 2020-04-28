@@ -2,7 +2,10 @@ const path = require('path');
 
 module.exports = {
   //app 入口
-  entry : path.resolve(__dirname, './kitchen-sink/app.js'),
+  entry : [
+    require.resolve('core-js'), 
+    path.resolve(__dirname, './kitchen-sink/app.js')
+  ],
   //输出配置
   output: {
     path: path.resolve(__dirname, './docs/kitchen-sink'),

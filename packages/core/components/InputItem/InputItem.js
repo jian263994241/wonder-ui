@@ -50,7 +50,7 @@ const InputItem = React.forwardRef(function InputItem(props, ref) {
         className
       )}
     >
-      <label className={classes.line}>
+      <div className={classes.line}>
         {children && 
           <div className={clsx( classes.label, `label-size-${labelNumber}` )} >
             {children}
@@ -74,7 +74,7 @@ const InputItem = React.forwardRef(function InputItem(props, ref) {
         {
           error.message && <IconInfoOutlined color="error" onClick={toastError.bind(null, error)}/>
         }
-      </label>
+      </div>
     </div>
   )
 });

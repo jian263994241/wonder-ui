@@ -55,7 +55,7 @@ Flex.propTypes = {
 };
 
 Flex.defaultProps = {
-  align: 'center',
+  align: 'start',
   justify: 'start',
   wrap: 'nowrap',
   direction: 'row',

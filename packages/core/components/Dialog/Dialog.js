@@ -24,6 +24,7 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
     title,
     toast,
     visible,
+    ...rest
   } = props;
   const contentRef = React.useRef();
   const transtionStyles = {
@@ -47,6 +48,7 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
       afterClose={afterClose}
       hasTransition
       closeAfterTransition
+      {...rest}
     >
       <Fade
         propertys={['opacity', 'transform']}

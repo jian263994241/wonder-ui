@@ -7,7 +7,7 @@ export default theme => ({
     alignItems: 'center',
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
-    marginBottom: -1,
+    // marginBottom: -1,
     minHeight: theme.shape.listItemHeight,
     overflow: 'hidden',
     paddingLeft: 15,

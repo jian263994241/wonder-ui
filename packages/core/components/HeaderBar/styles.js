@@ -43,7 +43,7 @@ export default theme => ({
     flexShrink: 0,
   },
   defaultIcon: {
-    color: fade(theme.palette.text.primary, 0.3),
+    color: fade(theme.palette.text.primary, 0.6),
     marginLeft: theme.spacing(1),
     lineHeight: 1
   }

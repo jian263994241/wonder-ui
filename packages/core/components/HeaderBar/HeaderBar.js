@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ArrowBackIosOutlined from '@wonder-ui/icons/ArrowBackIosOutlined';
-import CloseOutlined from '@wonder-ui/icons/CloseOutlined';
+import Close from '@wonder-ui/icons/Close';
 import clsx from 'clsx';
 import DisabledTouchMove from '../DisabledTouchMove';
 import styles from './styles';
@@ -39,7 +39,7 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
       >
         <div className={classes.left}>
           {showBack && <ArrowBackIosOutlined className={classes.defaultIcon} fontSize="small" onClick={onBack}/>}
-          {showClose && <CloseOutlined className={classes.defaultIcon} fontSize="small" onClick={onClose}/>}
+          {showClose && <Close className={classes.defaultIcon} fontSize="small" onClick={onClose}/>}
           {barLeft}
         </div>
         <div className={classes.title}>{title}</div>

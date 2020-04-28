@@ -1,6 +1,6 @@
 import React from 'react';
 import { Page, Button, ContentBlock, styled } from '@wonder-ui/core';
-import {ArrowBackIosOutlined, CloseOutlined } from '@wonder-ui/icons';
+import {ArrowBackIosOutlined, Close} from '@wonder-ui/icons';
 
 const ButtonDemo = styled(Button)(props=> ({
   marginLeft: (props.fullWidth || props.full) ? 0: 10,
@@ -24,7 +24,7 @@ export default function ButtonExamples(props){
       <ContentBlock header="full">
         <ButtonDemo full 
         startIcon={<ArrowBackIosOutlined/>}
-        endIcon={<CloseOutlined/>}
+        endIcon={<Close/>}
         >full</ButtonDemo>
         <ButtonDemo fullWidth>fullWidth</ButtonDemo>
       </ContentBlock>

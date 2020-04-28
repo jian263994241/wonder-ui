@@ -32,7 +32,7 @@
       "required": false,
       "description": "子元素在交叉轴上的对齐方式",
       "defaultValue": {
-        "value": "'center'",
+        "value": "'start'",
         "computed": false
       }
     },

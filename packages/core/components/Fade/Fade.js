@@ -1,19 +1,11 @@
 import React from 'react';
-import { easing, duration } from '@wonder-ui/styles/transitions';
 import css from 'dom-helpers/css';
 import Transition from '../Transition';
 
-const defaultTimeout = {
-  enter: duration.enteringScreen,
-  exit: duration.leavingScreen,
-};
-
 const Fade = React.forwardRef((props, ref)=>{
   const {
-    easing: easingInput = easing.sharp,
     onEnter,
     onExited,
-    timeout = defaultTimeout,
     ...rest
   } = props;
 
@@ -48,8 +40,6 @@ const Fade = React.forwardRef((props, ref)=>{
       style={styles}
       styles = {targetStyles}
       propertys={['opacity']}
-      timeout={timeout}
-      easing={easingInput}
       onEnter={handleEnter}
       onExited={handleExited}
       {...rest}

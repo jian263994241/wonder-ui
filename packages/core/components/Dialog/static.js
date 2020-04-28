@@ -115,6 +115,7 @@ Dialog.toast = function DialogToast(text, timeout, callback) {
     ReactDOM.render(
       <Dialog   
         toast
+        hideBackdrop
         text={text}
         visible={visible}
         afterClose={clearQueue}
