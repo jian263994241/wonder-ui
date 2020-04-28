@@ -82,5 +82,6 @@ export { default as Tabs } from './components/Tabs';
 export { default as Tag } from './components/Tag';
 export { default as ToolBar } from './components/ToolBar';
 export { default as Typography } from './components/Typography';
+export { default as ImgPicker } from './components/ImgPicker';
 
 

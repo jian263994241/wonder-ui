@@ -40,6 +40,7 @@
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.5",
     "react-window-infinite-loader": "^1.0.5",
+    "react-wx-images-viewer": "^1.0.6",
     "rmc-cascader": "~5.0.3",
     "rmc-date-picker": "^6.0.10",
     "rmc-pull-to-refresh": "^1.0.11",
