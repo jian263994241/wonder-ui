@@ -35,7 +35,7 @@ function ImpPickerExample(props) {
   }, []);
 
   return (
-    <Page name="图片上传">
+    <Page name="图片上传" navbar>
       <div className={classes.box}>
         <h3 className={classes.title}>带虚线边框</h3>
         <ImgPicker

@@ -14,9 +14,9 @@ import { AddCircleOutline } from '@wonder-ui/icons';
  * 图片上传组件
  * @visibleName ImgPicker 上传
  */
-const ImgPicker = forwardRef(function ImgPicker({classes, ...resProps}, ref) {
+const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
 
-  const noon = useCallback(() => {}, []);
+  const noon = useCallback(() => { }, []);
 
   const childrenEle = (
     <div className={classes.childrenEle} />
@@ -42,14 +42,11 @@ const ImgPicker = forwardRef(function ImgPicker({classes, ...resProps}, ref) {
 
   // 打开图片预览
   const onOpen = useCallback(async () => {
-    if (!urlSmall) {
+    if (!urlSmall || !preview) {
       return;
     }
     if (urlMiddle) {
       setOpen(true);
-      return;
-    }
-    if (!preview) {
       return;
     }
     try {
@@ -79,7 +76,7 @@ const ImgPicker = forwardRef(function ImgPicker({classes, ...resProps}, ref) {
     }
     const reader = new FileReader();
     reader.readAsDataURL(files[0]);
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       onFileChange(files[0], e.target.result);
     }
   }, [size]);
@@ -92,43 +89,42 @@ const ImgPicker = forwardRef(function ImgPicker({classes, ...resProps}, ref) {
     },
     []
   );
-
+  console.log('classes', classes);
   return (
     <div className={clsx(
-      classes.container,
-      autoFill ? 'auto-fill' : null,
-      !urlSmall && showBg ? classes.containerBg : '',
-      urlSmall ? classes.containerBorder : '')}>
+      classes.root,
+      { [classes.autoFill]: autoFill },
+      { [classes.containerBg]: !urlSmall && showBg },
+      { [classes.containerBorder]: urlSmall })}>
       {urlSmall && (
-        <div className="delete-box" onClick={() => onFileChange()}>
-          {/* <img alt="" src={iconDelete} className="delete" /> */}
-          <AddCircleOutline className="delete" />
+        <div className={classes.deleteBox} onClick={() => onFileChange()}>
+          <AddCircleOutline className={classes.deleteIcon} />
         </div>
       )}
       <input
         ref={ref}
         type="file"
-        className={urlSmall ? "hide" : ""}
+        className={clsx(classes.input, { [classes.hide]: urlSmall })}
         accept="image/*"
         onChange={onChange}
         onClick={e => onHandle(e)}
       />
       {urlSmall ? (
-        <div className="picker-img-box" onClick={onOpen}>
-          <img alt="" className="picker-img" src={urlSmall} />
+        <div className={classes.pickerImgBox} onClick={onOpen}>
+          <img alt="" className={classes.pickerImg} src={urlSmall} />
         </div>
       ) : (
           children
         )}
       {showBorderAround && !urlSmall && (
         <>
-          <i className="border-i border-left-top" />
-          <i className="border-i border-right-top" />
-          <i className="border-i border-left-bottom" />
-          <i className="border-i border-right-bottom" />
+          <i className={clsx(classes.borderLine, 'left-top')} />
+          <i className={clsx(classes.borderLine, 'right-top')} />
+          <i className={clsx(classes.borderLine, 'left-bottom')} />
+          <i className={clsx(classes.borderLine, 'right-bottom')} />
         </>
       )}
-      {(urlSmall || showDashed) && <div className="img-dashed" />}
+      {(urlSmall || showDashed) && <div className={classes.imgDashed} />}
       {isOpen && <WxImageViewer onClose={onClose} urls={[urlMiddle]} />}
     </div>
   );
