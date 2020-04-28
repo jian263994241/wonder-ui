@@ -32,7 +32,7 @@ const ImgPicker = forwardRef(function ImgPicker({classes, ...resProps}, ref) {
     showBg,
     showDashed,
     showBorderAround,
-    filedownload = noon,
+    fileDownLoad = noon,
     onFileChange = noon,
     onFileHandle = noon,
     autoFill = false
@@ -53,7 +53,7 @@ const ImgPicker = forwardRef(function ImgPicker({classes, ...resProps}, ref) {
       return;
     }
     try {
-      await filedownload();
+      await fileDownLoad();
       setOpen(true);
     } catch (e) {
       console.log('打开图片预览失败', e);
@@ -157,6 +157,8 @@ ImgPicker.propTypes = {
   showBorderAround: PropTypes.bool,
   /** 是否填充父元素 */
   autoFill: PropTypes.bool,
+  /** 下载图片方法, 返回一个Promise方法 */
+  fileDownLoad: PropTypes.func,
 };
 
 ImgPicker.defaultProps = {
