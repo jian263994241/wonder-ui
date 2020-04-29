@@ -21,11 +21,9 @@ function ImpPickerListExample(props) {
     setFiles(arr);
   }, []);
 
+  // 下载中图逻辑，将图片base64传给files[index]里面的urlMiddle属性
   const fileDownLoad = useCallback((index) => {
-    console.log('fileDownLoad', index);
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
+    return new Promise(resolve => resolve());
   }, []);
 
   return (

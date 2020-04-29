@@ -24,6 +24,7 @@ function ImpPickerExample(props) {
   const [urlSmall, setUrlSmall] = useState('');
   const [urlMiddle, setUrlMiddle] = useState('');
 
+  // input图片改变
   const onFileChange = useCallback((file, buffer) => {
     if (!file) { // 删除图片
       setUrlSmall();

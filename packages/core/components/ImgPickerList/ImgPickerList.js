@@ -23,6 +23,7 @@ const ImgPickerList = function ImgPickerList(props) {
     ...resProps
   } = props;
 
+  // input图片改变
   const onFileChange = useCallback((file, url) => {
     const arr = files.slice();
     arr.push({ file, url, urlMiddle: url });
@@ -38,10 +39,18 @@ const ImgPickerList = function ImgPickerList(props) {
 
   // 查看中图
   const fileDownLoadFun = useCallback((index) => {
-    fileDownLoad(index);
+    return new Promise(async (resolve, reject) => {
+      try {
+        await fileDownLoad(index);
+        resolve();
+      } catch(e) {
+        reject(e);
+      }
+    })
   }, [fileDownLoad]);
 
-  const imgItemList = files.map((item, index, value) => {
+  // 图片列表
+  const imgItemList = files.map((item, index) => {
     return (
       <div
         className={classes.imgBox}
@@ -58,6 +67,7 @@ const ImgPickerList = function ImgPickerList(props) {
     )
   });
 
+  // 添加图片DOM
   const selectEl = (
     <div
       key={files.length}
