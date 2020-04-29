@@ -7,7 +7,7 @@ import { createUseStyles } from '@wonder-ui/styles';
 
 const useStyles = createUseStyles({
   box: {
-    padding: "20px"
+    padding: "10px"
   },
   title: {
     margin: "10px 0"

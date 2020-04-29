@@ -7,35 +7,34 @@ import WxImageViewer from 'react-wx-images-viewer';
 import styles from './styles';
 import withStyles from '../withStyles';
 
-// import { iconDelete } from '../Icon';
 import { AddCircleOutline } from '@wonder-ui/icons';
+
+const noon = () => {};
 
 /**
  * 图片上传组件
- * @visibleName ImgPicker 上传
+ * @visibleName ImgPicker 图片上传
  */
 const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
-
-  const noon = useCallback(() => { }, []);
 
   const childrenEle = (
     <div className={classes.childrenEle} />
   );
 
   const {
-    showAdd = true,
+    showAdd,
     children = showAdd ? childrenEle : null,
     urlSmall,
     urlMiddle,
-    preview = true,
-    size = 10,
+    preview,
+    size,
     showBg,
     showDashed,
     showBorderAround,
-    fileDownLoad = noon,
-    onFileChange = noon,
-    onFileHandle = noon,
-    autoFill = false
+    fileDownLoad,
+    onFileChange,
+    onFileHandle,
+    autoFill
   } = resProps;
 
   const [isOpen, setOpen] = useState(false);
@@ -79,7 +78,7 @@ const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
     reader.onload = function (e) {
       onFileChange(files[0], e.target.result);
     }
-  }, [size]);
+  }, [size, onFileChange]);
 
   // 点击input
   const onHandle = useCallback(
@@ -87,9 +86,9 @@ const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
       e.target.value = null; // 清空input值，防止两次文件一致时不触发onChange事件
       onFileHandle(e);
     },
-    []
+    [onFileHandle]
   );
-  console.log('classes', classes);
+  
   return (
     <div className={clsx(
       classes.root,
@@ -97,7 +96,10 @@ const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
       { [classes.containerBg]: !urlSmall && showBg },
       { [classes.containerBorder]: urlSmall })}>
       {urlSmall && (
-        <div className={classes.deleteBox} onClick={() => onFileChange()}>
+        <div className={classes.deleteBox} onClick={() => {
+          console.log('deleteBox')
+          onFileChange()
+        }}>
           <AddCircleOutline className={classes.deleteIcon} />
         </div>
       )}
@@ -165,6 +167,9 @@ ImgPicker.defaultProps = {
   showDashed: false,
   showBorderAround: false,
   autoFill: false,
+  onFileChange: noon,
+  onFileHandle: noon,
+  fileDownLoad: noon
 }
 
 ImgPicker.displayName = 'ImgPicker';
