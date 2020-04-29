@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import ImgPicker from '../ImgPicker';
@@ -64,7 +64,7 @@ const ImgPickerList = function ImgPickerList(props) {
     </div>
   );
 
-  let allEl = selectable ? imgItemList.concat([selectEl]) : imgItemList;
+  const allEl = selectable ? imgItemList.concat([selectEl]) : imgItemList;
 
   return (
     <div className={clsx(classes.root)}>

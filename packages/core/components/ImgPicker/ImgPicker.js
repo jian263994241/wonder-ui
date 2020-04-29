@@ -9,7 +9,7 @@ import withStyles from '../withStyles';
 
 import { AddCircleOutline } from '@wonder-ui/icons';
 
-const noon = () => {};
+const noon = () => { };
 
 /**
  * 图片上传组件
@@ -88,7 +88,7 @@ const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
     },
     [onFileHandle]
   );
-  
+
   return (
     <div className={clsx(
       classes.root,
