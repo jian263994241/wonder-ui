@@ -63,6 +63,8 @@ export { default as DropdownMenu } from './components/DropdownMenu';
 export { default as Empty } from './components/Empty';
 export { default as Flex } from './components/Flex';
 export { default as HeaderBar } from './components/HeaderBar';
+export { default as ImgPicker } from './components/ImgPicker';
+export { default as ImgPickerList } from './components/ImgPickerList';
 export { default as InputBase } from './components/InputBase';
 export { default as InputItem } from './components/InputItem';
 export { default as List } from './components/List';
@@ -82,7 +84,5 @@ export { default as Tabs } from './components/Tabs';
 export { default as Tag } from './components/Tag';
 export { default as ToolBar } from './components/ToolBar';
 export { default as Typography } from './components/Typography';
-export { default as ImgPicker } from './components/ImgPicker';
-export { default as ImgPickerList } from './components/ImgPickerList';
 
 

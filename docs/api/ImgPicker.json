@@ -1,0 +1,131 @@
+{
+  "description": "图片上传组件\n@visibleName ImgPicker 图片上传",
+  "displayName": "ImgPicker",
+  "methods": [],
+  "props": {
+    "showAdd": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否显示默认子元素",
+      "defaultValue": {
+        "value": "true",
+        "computed": false
+      }
+    },
+    "size": {
+      "type": {
+        "name": "number"
+      },
+      "required": false,
+      "description": "文件大小限制，单位：M",
+      "defaultValue": {
+        "value": "10",
+        "computed": false
+      }
+    },
+    "urlSmall": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "小图url，base64类型"
+    },
+    "urlMiddle": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "中图url，base64类型"
+    },
+    "onFileChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "input改变",
+      "defaultValue": {
+        "value": "() => { }",
+        "computed": false
+      }
+    },
+    "onFileHandle": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "点击input",
+      "defaultValue": {
+        "value": "() => { }",
+        "computed": false
+      }
+    },
+    "preview": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否可以查看大图",
+      "defaultValue": {
+        "value": "true",
+        "computed": false
+      }
+    },
+    "showBg": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否展示背景色",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    },
+    "showDashed": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否展示虚线边框",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    },
+    "showBorderAround": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否展示四角边框",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    },
+    "autoFill": {
+      "type": {
+        "name": "bool"
+      },
+      "required": false,
+      "description": "是否填充父元素",
+      "defaultValue": {
+        "value": "false",
+        "computed": false
+      }
+    },
+    "fileDownLoad": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "下载图片方法, 返回一个Promise方法",
+      "defaultValue": {
+        "value": "() => { }",
+        "computed": false
+      }
+    }
+  }
+}
