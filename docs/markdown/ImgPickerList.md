@@ -21,6 +21,13 @@ function ImpPickerListExample(props) {
     setFiles(arr);
   }, []);
 
+  const fileDownLoad = useCallback((index) => {
+    console.log('fileDownLoad', index);
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }, []);
+
   return (
     <Page name="图片上传列表" navbar>
       <div className={classes.box}>
@@ -30,6 +37,7 @@ function ImpPickerListExample(props) {
           autoFill
           showDashed
           selectable={files.length < 6}
+          fileDownLoad={fileDownLoad}
         />
       </div>
     </Page>
