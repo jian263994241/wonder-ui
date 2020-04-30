@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import Toast from '../toast';
+import ActivityIndicator from '../ActivityIndicator';
 import WxImageViewer from 'react-wx-images-viewer';
 import styles from './styles';
 import withStyles from '../withStyles';
@@ -34,10 +35,12 @@ const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
     fileDownLoad,
     onFileChange,
     onFileHandle,
-    autoFill
+    autoFill,
+    fileUpLoad
   } = resProps;
 
   const [isOpen, setOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   // 打开图片预览
   const onOpen = useCallback(async () => {
@@ -62,23 +65,32 @@ const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
   }, []);
 
   // input改变
-  const onChange = useCallback(e => {
+  const onChange = useCallback(async e => {
     const fileSelectorEl = e.target;
     const { files } = fileSelectorEl;
     if (!files || !files.length) {
       return;
     }
-    if (files[0].size > size * 1024 * 1024) {
+    const file = files[0];
+    if (file.size > size * 1024 * 1024) {
       e.target.value = null; // 清空input值
       Toast(`图片大小不能超过${size}M`, 2000);
       return;
     }
-    const reader = new FileReader();
-    reader.readAsDataURL(files[0]);
-    reader.onload = function (e) {
-      onFileChange(files[0], e.target.result);
+    setLoading(true);
+    try {
+      await fileUpLoad(file);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function (e) {
+        onFileChange(file, e.target.result);
+      }
+    } catch (e) {
+      console.log('upLoad报错', e);
+    } finally {
+      setLoading(false);
     }
-  }, [size, onFileChange]);
+  }, [size, onFileChange, fileUpLoad]);
 
   // 点击input
   const onHandle = useCallback(
@@ -96,10 +108,7 @@ const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
       { [classes.containerBg]: !urlSmall && showBg },
       { [classes.containerBorder]: urlSmall })}>
       {urlSmall && (
-        <div className={classes.deleteBox} onClick={() => {
-          console.log('deleteBox')
-          onFileChange()
-        }}>
+        <div className={classes.deleteBox} onClick={() => onFileChange()}>
           <AddCircleOutline className={classes.deleteIcon} />
         </div>
       )}
@@ -115,9 +124,9 @@ const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
         <div className={classes.pickerImgBox} onClick={onOpen}>
           <img alt="" className={classes.pickerImg} src={urlSmall} />
         </div>
-      ) : (
-          children
-        )}
+      ) : isLoading ? <ActivityIndicator /> : (
+        children
+      )}
       {showBorderAround && !urlSmall && (
         <>
           <i className={clsx(classes.borderLine, 'left-top')} />
@@ -157,6 +166,8 @@ ImgPicker.propTypes = {
   autoFill: PropTypes.bool,
   /** 下载图片方法, 返回一个Promise方法 */
   fileDownLoad: PropTypes.func,
+  /** 上传图片方法, 返回一个Promise方法 */
+  fileUpLoad: PropTypes.func
 };
 
 ImgPicker.defaultProps = {
@@ -169,7 +180,8 @@ ImgPicker.defaultProps = {
   autoFill: false,
   onFileChange: noon,
   onFileHandle: noon,
-  fileDownLoad: noon
+  fileDownLoad: noon,
+  fileUpLoad: noon
 }
 
 ImgPicker.displayName = 'ImgPicker';

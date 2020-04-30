@@ -20,6 +20,7 @@ const ImgPickerList = function ImgPickerList(props) {
     onChange,
     selectable,
     fileDownLoad,
+    fileUpLoad,
     ...resProps
   } = props;
 
@@ -43,11 +44,23 @@ const ImgPickerList = function ImgPickerList(props) {
       try {
         await fileDownLoad(index);
         resolve();
-      } catch(e) {
+      } catch (e) {
         reject(e);
       }
     })
   }, [fileDownLoad]);
+
+  // 上传图片方
+  const upLoadFun = useCallback(file => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await fileUpLoad(file);
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }, [fileUpLoad]);
 
   // 图片列表
   const imgItemList = files.map((item, index) => {
@@ -76,6 +89,7 @@ const ImgPickerList = function ImgPickerList(props) {
       <ImgPicker
         showDashed
         onFileChange={onFileChange}
+        fileUpLoad={upLoadFun}
         {...resProps}
       />
     </div>
@@ -91,19 +105,22 @@ const ImgPickerList = function ImgPickerList(props) {
 };
 
 ImgPickerList.propTypes = {
-  /** 下载图片方法, 返回一个Promise方法 */
-  fileDownLoad: PropTypes.func,
   /** files 值发生变化触发的回调函数 */
   onChange: PropTypes.func,
   /** 图片列表 */
   files: PropTypes.array,
   /** 是否显示添加按钮 */
-  selectable: PropTypes.bool
+  selectable: PropTypes.bool,
+  /** 下载图片方法, 返回一个Promise方法 */
+  fileDownLoad: PropTypes.func,
+  /** 上传图片方法, 返回一个Promise方法 */
+  fileUpLoad: PropTypes.func,
 };
 
 ImgPickerList.defaultProps = {
   onChange: noon,
   fileDownLoad: noon,
+  fileUpLoad: noon,
   selectable: true
 }
 

@@ -22,8 +22,15 @@ function ImpPickerListExample(props) {
   }, []);
 
   // 下载中图逻辑，将图片base64传给files[index]里面的urlMiddle属性
-  const fileDownLoad = useCallback((index) => {
+  const fileDownLoad = useCallback(index => {
+    console.log('fileDownLoad', index);
     return new Promise(resolve => resolve());
+  }, []);
+
+  // 上传图片方法
+  const fileUpLoad = useCallback(file => {
+    console.log('fileUpLoad', file);
+    return new Promise(resolve => setTimeout(() => { resolve() }, 1000));
   }, []);
 
   return (
@@ -36,6 +43,7 @@ function ImpPickerListExample(props) {
           showDashed
           selectable={files.length < 6}
           fileDownLoad={fileDownLoad}
+          fileUpLoad={fileUpLoad}
         />
       </div>
     </Page>

@@ -35,6 +35,18 @@ function ImpPickerExample(props) {
     setUrlMiddle(buffer);
   }, []);
 
+  // 下载中图逻辑
+  const fileDownLoad = useCallback(() => {
+    console.log('fileDownLoad');
+    return new Promise(resolve => resolve());
+  }, []);
+
+  // 上传图片方法
+  const fileUpLoad = useCallback(file => {
+    console.log('fileUpLoad', file);
+    return new Promise(resolve => setTimeout(() => { resolve() }, 1000));
+  }, []);
+
   return (
     <Page name="图片上传" navbar>
       <div className={classes.box}>
@@ -45,6 +57,7 @@ function ImpPickerExample(props) {
           urlMiddle={urlMiddle}
           onFileChange={onFileChange}
           showDashed
+          fileUpLoad={fileUpLoad}
         />
       </div>
       <div className={classes.box}>
@@ -55,6 +68,7 @@ function ImpPickerExample(props) {
           urlMiddle={urlMiddle}
           onFileChange={onFileChange}
           showBorderAround
+          fileUpLoad={fileUpLoad}
         />
       </div>
       <div className={classes.box}>
@@ -65,6 +79,7 @@ function ImpPickerExample(props) {
           urlMiddle={urlMiddle}
           onFileChange={onFileChange}
           showBg
+          fileUpLoad={fileUpLoad}
         />
       </div>
       <div className={classes.box}>
@@ -77,6 +92,7 @@ function ImpPickerExample(props) {
             onFileChange={onFileChange}
             autoFill
             showDashed
+            fileUpLoad={fileUpLoad}
           />
         </div>
       </div>
