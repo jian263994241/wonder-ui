@@ -84,5 +84,6 @@ export { default as ToolBar } from './components/ToolBar';
 export { default as Typography } from './components/Typography';
 export { default as ImgPicker } from './components/ImgPicker';
 export { default as ImgPickerList } from './components/ImgPickerList';
+export { default as DateSelect } from './components/DateSelect';
 
 

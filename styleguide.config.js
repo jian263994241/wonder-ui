@@ -70,6 +70,7 @@ module.exports = {
             './packages/core/components/TextareaAutosize/TextareaAutosize.js',
             './packages/core/components/ImgPicker/ImgPicker.js',
             './packages/core/components/ImgPickerList/ImgPickerList.js',
+            './packages/core/components/DateSelect/DateSelect.js',
           ],
         },
         {
