@@ -21,7 +21,7 @@ function DateSelectExample(props) {
   const [endDate, setEndDate] = useState('');
 
   return (
-    <Page name="图片上传" navbar>
+    <Page name="日期范围选择器" navbar>
       <div className={classes.box}>
         <DateSelect
           startDate={startDate}
