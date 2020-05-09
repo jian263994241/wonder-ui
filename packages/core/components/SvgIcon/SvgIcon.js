@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import capitalize from '@wonder-ui/utils/capitalize';
 import useTheme from '../styles/useTheme';
 
-const SvgIcon = React.forwardRef((props, ref)=>{
+const SvgIcon = React.forwardRef(function SvgIcon(props, ref){
   const {
     children,
     component = 'svg',
@@ -18,12 +18,10 @@ const SvgIcon = React.forwardRef((props, ref)=>{
     ...rest
   } = props;
   const theme = useTheme();
-  const Component = React.useMemo(()=>{
-    return WUI_svg_icon.withComponent(component);
-  }, [component]);
 
   return (
-    <Component
+    <WUI_svg_icon
+      as={component}
       className={
         clsx(
           color !== 'inherit' && `color${capitalize(color)}`,
@@ -42,7 +40,7 @@ const SvgIcon = React.forwardRef((props, ref)=>{
     >
       {children}
       {titleAccess ? <title>{titleAccess}</title> : null}
-    </Component>
+    </WUI_svg_icon>
   )
 })
 
