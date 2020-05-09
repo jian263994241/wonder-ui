@@ -25,6 +25,7 @@ const Page = React.forwardRef((props, ref)=>{
     navbar = false,
     navbarProps,
     pageContent = true,
+    ScrollContentProps,
     showBack = true,
     white,
     ...rest
@@ -59,7 +60,7 @@ const Page = React.forwardRef((props, ref)=>{
         <div className={classes.body}>
         {
           pageContent ? (
-            <ScrollContent>
+            <ScrollContent {...ScrollContentProps}>
              {children}
             </ScrollContent>
           ): children

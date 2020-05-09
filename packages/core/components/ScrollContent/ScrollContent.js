@@ -11,8 +11,9 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
     classes,
     className,
     disableIosTouch = false,
-    onScrollEnd,
+    innerBody = true,
     onScroll,
+    onScrollEnd,
     ...rest
   } = props;
 
@@ -102,7 +103,9 @@ const ScrollContent = React.forwardRef(function ScrollContent(props, ref){
       {...handleEvents}
       ref={handleRef}
     >
-      {children}
+      {
+        innerBody ? ( <div className={classes.body}>{children}</div> ): children
+      }
     </div>
   )
 });
@@ -124,8 +127,11 @@ export default withStyles({
     overflow: 'auto',
     boxSizing: 'border-box',
     willChange: 'scroll-position',
-    touchAction: 'pan-x pan-y',
+    touchAction: 'pan-y',
     position: 'relative',
+  },
+  body: {
+    minHeight: 'calc(100% + 1px)',
   },
   iosTouch: {
     WebkitOverflowScrolling: 'touch'
