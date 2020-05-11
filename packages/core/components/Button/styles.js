@@ -40,7 +40,7 @@ export default theme => {
     text: {
       padding: '6px 8px',
       '&:hover': {
-        // backgroundColor: fade(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+        color: fade(theme.palette.text.primary, 0.65),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent',
@@ -51,10 +51,10 @@ export default theme => {
     textPrimary: {
       color: theme.palette.primary.main,
       '&:hover': {
-        backgroundColor: fade(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+        color: fade(theme.palette.primary.main, 0.65),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
-          backgroundColor: 'transparent',
+          color: 'transparent',
         },
       },
     },
@@ -62,7 +62,7 @@ export default theme => {
     textSecondary: {
       color: theme.palette.secondary.main,
       '&:hover': {
-        backgroundColor: fade(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
+        color: fade(theme.palette.secondary.main, 0.65),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent',
