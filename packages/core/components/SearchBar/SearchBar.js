@@ -7,6 +7,7 @@ import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 import withStyles from '../withStyles';
 import InputBase from '../InputBase';
+import Button from '../Button';
 
 /**
  * 
@@ -20,14 +21,14 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
     className,
     defaultValue = '',
     extra,
-    onBlur,
     onCancel,
     onChange,
     onClear,
     onFocus,
     onSearch,
     showCancelButton = true,
-    showSearchIcon = true,
+    showSearchButton = false,
+    searchButtonText = '搜索',
     value,
     ...rest
   } = props;
@@ -106,14 +107,27 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
           />
           <i className={classes.iconSearch}/>
         </div>
-        <span 
-          className={classes.cancelText} 
-          onClick={handleCancel}
-        >{cancelText}</span>
+        {
+          showSearchButton && (
+            <div>
+              <Button variant="text" color="primary" type="submit">{searchButtonText}</Button>
+            </div>
+          )
+        }
+        {
+          extra && (
+            <div className={classes.extra}>{extra}</div>
+          )
+        }
+
+        {
+          (!showSearchButton && !extra) && (
+            <span className={classes.cancelText} onClick={handleCancel} >
+            {cancelText}
+            </span>
+          )
+        }
       </div>
-      {
-        extra  && <div className={classes.extra}>{extra}</div>
-      }
     </form>
   );
 });
@@ -130,7 +144,7 @@ SearchBar.propTypes={
   onCancel: PropTypes.func,
   onClear: PropTypes.func,
   showCancelButton: PropTypes.bool,
-  showSearchIcon: PropTypes.bool,
+  showSearchButton: PropTypes.bool,
   extra: PropTypes.node,
   bordered: PropTypes.bool
 }; 

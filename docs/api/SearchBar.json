@@ -80,7 +80,7 @@
       "required": false,
       "description": ""
     },
-    "showSearchIcon": {
+    "showSearchButton": {
       "type": {
         "name": "bool"
       },

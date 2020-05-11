@@ -15,11 +15,17 @@ export default function SearchBarExamples(props) {
         onSearch={value=> setReslut(value)}
       />
 
+      <SearchBar 
+        placeholder="请输入名字" 
+        onSearch={value=> setReslut(value)}
+        showSearchButton
+      />
+
       <br/>
 
       <SearchBar 
         placeholder="Custom extra button" 
-        extra={<Button variant="text" color="primary" size="small">筛选</Button>}
+        extra={<Button variant="text" color="primary">筛选</Button>}
         onSearch={value=> setReslut(value)}
       />
 

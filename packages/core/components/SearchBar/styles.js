@@ -69,6 +69,5 @@ export default theme => ({
   },
   extra: {
     alignSelf: 'center',
-    marginLeft: -10
   },
 })
