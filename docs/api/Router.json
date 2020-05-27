@@ -1,8 +1,47 @@
 {
-  "description": "",
-  "displayName": "View",
+  "description": "Wrap ReactRouter",
+  "displayName": "Router",
   "methods": [],
   "props": {
+    "type": {
+      "type": {
+        "name": "enum",
+        "value": [
+          {
+            "value": "'browser'",
+            "computed": false
+          },
+          {
+            "value": "'memory'",
+            "computed": false
+          },
+          {
+            "value": "'hash'",
+            "computed": false
+          }
+        ]
+      },
+      "required": false,
+      "description": "路由类型",
+      "defaultValue": {
+        "value": "'hash'",
+        "computed": false
+      }
+    },
+    "onRouteChange": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "路由改变时候出发回调"
+    },
+    "animationDisalbed": {
+      "type": {
+        "name": "func"
+      },
+      "required": false,
+      "description": "禁用动画"
+    },
     "animation": {
       "type": {
         "name": "enum",
@@ -22,16 +61,13 @@
         ]
       },
       "required": false,
-      "description": "Animation type"
+      "description": "Animation type",
+      "defaultValue": {
+        "value": "'slide'",
+        "computed": false
+      }
     },
-    "animationDisabled": {
-      "type": {
-        "name": "bool"
-      },
-      "required": false,
-      "description": "Disable animation"
-    },
-    "dataSource": {
+    "routes": {
       "type": {
         "name": "arrayOf",
         "value": {
@@ -91,15 +127,12 @@
           }
         }
       },
-      "required": true,
-      "description": "路由"
-    },
-    "noMatch": {
-      "type": {
-        "name": "node"
-      },
       "required": false,
-      "description": "404"
+      "description": "路由",
+      "defaultValue": {
+        "value": "[]",
+        "computed": false
+      }
     }
   }
 }
