@@ -8,62 +8,82 @@ import InfiniteLoader from 'react-window-infinite-loader';
 import PullToRefresh from '../PullToRefresh';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 
-const defaultRenderIndicator = props => (
-  <Flex justify="center" style={{height: '100%'}} {...props} >
-    <Indicator spin/>
+const defaultRenderIndicator = () => (
+  <Flex justify="center" style={{ height: 44 }}>
+    <Indicator spin />
   </Flex>
 );
 
-const ListViewRow = React.memo(React.forwardRef(function ListViewRow(props, ref){
-  const { data: passProps, index, style, isScrolling} = props;
-  const { renderItem, dataSource, isItemLoaded, indicator, listFooter, listRef, itemHeights } = passProps;
+const getScrollHeight = (ele) => {
+  const originHeight = ele.style.height;
+  ele.style.height = 0;
+  const height = ele.scrollHeight;
+  ele.style.height = originHeight;
+  return height;
+};
 
-  const rootRef = React.useRef();
-  const handleRef = useForkRef(rootRef, ref);
-  const list = listRef.current;
-  const rootElement = rootRef.current;
-  
-  const dataItem = dataSource[index];
-  let content = null;
+const ListViewRow = React.memo(
+  React.forwardRef(function ListViewRow(props, ref) {
+    const { data: passProps, index, style, isScrolling } = props;
+    const {
+      renderItem,
+      dataSource,
+      isItemLoaded,
+      indicator,
+      listFooter,
+      listRef,
+      itemHeights,
+    } = passProps;
 
-  React.useEffect(()=>{
- 
-    if(list && rootElement){
+    const rootRef = React.useRef();
+    const handleRef = useForkRef(rootRef, ref);
+    const list = listRef.current;
+    const rootElement = rootRef.current;
+    const [heightFix, setHeight] = React.useState();
 
-      itemHeights.current[index] = rootElement.scrollHeight;
+    const dataItem = dataSource[index];
 
-      list.resetAfterIndex(index);
-      
+    let content = null;
+
+    React.useEffect(
+      () => {
+        if (rootElement) {
+          const height = getScrollHeight(rootElement);
+          itemHeights.current[index] = height;
+          setHeight(height);
+          list.resetAfterIndex(index);
+        }
+      },
+      [rootElement, dataSource],
+    );
+
+    if (dataItem) {
+      const row = renderItem({ data: dataItem, index, isScrolling, ref });
+
+      if (!row) {
+        console.error(`ListView: renderItem must return a single element.`);
+      }
+
+      content = row;
+    } else if (!isItemLoaded(index)) {
+      content = indicator;
+    } else if (listFooter) {
+      content = listFooter;
     }
-  }, [list, rootElement, dataSource]);
-  
-  if(dataItem){
-    const row = renderItem({ data: dataItem, index, isScrolling, ref });
 
-    if(!row){
-      console.error(
-        `ListView: renderItem must return a single element.`
-      );
-    }
+    return (
+      <div key={index} style={{ ...style, height: heightFix }} ref={handleRef}>
+        {content}
+      </div>
+    );
+  }, areEqual),
+);
 
-    content = row;
-  }else if(!isItemLoaded(index)){
-    content = indicator
-  }else if(listFooter){
-    content = listFooter
-  }
-
-  return (
-    <div key={index} style={style} ref={handleRef}>{content}</div>
-  )
-  
-}, areEqual));
-
-ListViewRow.propTypes =  {
+ListViewRow.propTypes = {
   data: PropTypes.shape({
     renderRow: PropTypes.func,
-    dataSource: PropTypes.array
-  })
+    dataSource: PropTypes.array,
+  }),
 };
 
 /**
@@ -86,49 +106,50 @@ const ListView = React.forwardRef(function ListView(props, ref) {
     refreshing: refreshingInput = false,
     renderIndicator = defaultRenderIndicator,
     renderFooter,
-    renderItem = ()=> null,
+    renderItem = () => null,
     threshold = 0,
     useIsScrolling = false,
+    ...rest
   } = props;
 
   const listFooter = renderFooter && renderFooter();
   const indicator = renderIndicator && renderIndicator();
 
-  const itemCount = (hasNextPage || listFooter) ? data.length + 1 : data.length;
+  const itemCount = hasNextPage || listFooter ? data.length + 1 : data.length;
   const refreshing = pullToRefreshProps.refreshing || refreshingInput;
 
   const itemHeights = React.useRef([]);
   const listRef = React.useRef();
   const handleRef = useForkRef(listRef, ref);
-  
-  const isItemLoaded = index => !hasNextPage || index < data.length;
-  const getItemSize = index => {
+
+  const [scrollDirection, setscrollDirection] = React.useState();
+
+  const handleScroll = (scrollDirection) => {
+    setscrollDirection(scrollDirection);
+  };
+
+  const isItemLoaded = (index) => !hasNextPage || index < data.length;
+  const getItemSize = (index) => {
     return itemHeights.current[index] || itemSize;
   };
 
-  const loadMoreItems = (startIndex, stopIndex)=>{
-    if(!refreshing && loadMoreItemsCallback){ 
+  const loadMoreItems = (startIndex, stopIndex) => {
+    if (!refreshing && loadMoreItemsCallback) {
       return loadMoreItemsCallback(startIndex, stopIndex);
     }
   };
 
-  const passProps = { 
-    dataSource: data, 
-    renderItem, 
-    isItemLoaded, 
+  const passProps = {
+    dataSource: data,
+    renderItem,
+    isItemLoaded,
     indicator,
     listFooter,
     listRef,
     itemHeights,
   };
 
-  const [scrollDirection, setscrollDirection] = React.useState();
-
-  const handleScroll = (scrollDirection)=>{
-    setscrollDirection(scrollDirection);
-  }
-
-  const renderInfiniteList = ({width, height})=> (
+  const renderInfiniteList = ({ width, height }) => (
     <InfiniteLoader
       isItemLoaded={isItemLoaded}
       itemCount={itemCount}
@@ -136,65 +157,60 @@ const ListView = React.forwardRef(function ListView(props, ref) {
       minimumBatchSize={pageSize}
       threshold={threshold}
     >
-      {
-        ({onItemsRendered, ref})=>{
-          ref(listRef);
-          return (
-            <List
-              height={height}
-              initialScrollOffset={initialScrollOffset}
-              itemCount={itemCount}
-              itemData={passProps}
-              itemKey={itemKey}
-              itemSize={getItemSize}
-              layout={layout}
-              onItemsRendered={onItemsRendered} 
-              onScroll={handleScroll}
-              ref={handleRef}
-              useIsScrolling={useIsScrolling}
-              width={width}
-            >
-              {ListViewRow}
-            </List>
-          )
-        }
-      }
+      {({ onItemsRendered, ref }) => {
+        ref(listRef);
+        return (
+          <List
+            height={height}
+            initialScrollOffset={initialScrollOffset}
+            itemCount={itemCount}
+            itemData={passProps}
+            itemKey={itemKey}
+            itemSize={getItemSize}
+            layout={layout}
+            onItemsRendered={onItemsRendered}
+            onScroll={handleScroll}
+            ref={handleRef}
+            useIsScrolling={useIsScrolling}
+            width={width}
+          >
+            {ListViewRow}
+          </List>
+        );
+      }}
     </InfiniteLoader>
   );
 
-  if(allowPullToRefresh){
+  if (allowPullToRefresh) {
     return (
       <AutoSizer>
-        {
-          ({width, height})=>(
-            <div style={{overflow: 'hidden', height, width}}>
-              <PullToRefresh 
-                style={{height, width}} 
-                {...pullToRefreshProps}
-                onRefresh={onRefresh} 
-                refreshing={refreshing}
-                data-scroll-direction={scrollDirection}
-              > 
-                {renderInfiniteList({width, height})}
-              </PullToRefresh>
-            </div>
-          )
-        }
+        {({ width, height }) => (
+          <div style={{ overflow: 'hidden', height, width }}>
+            <PullToRefresh
+              style={{ height, width }}
+              {...pullToRefreshProps}
+              onRefresh={onRefresh}
+              refreshing={refreshing}
+              data-scroll-direction={scrollDirection}
+            >
+              {renderInfiniteList({ width, height })}
+            </PullToRefresh>
+          </div>
+        )}
       </AutoSizer>
     );
   }
 
   return (
     <AutoSizer>
-      { ({width, height})=> renderInfiniteList({width, height}) }
+      {({ width, height }) => renderInfiniteList({ width, height })}
     </AutoSizer>
-  ); 
-  
+  );
 });
 
 ListView.defaultProps = {
   itemSize: 44,
-}
+};
 
 ListView.propTypes = {
   /**

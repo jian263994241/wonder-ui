@@ -1,5 +1,5 @@
 {
-  "description": "",
+  "description": "UI Wrap react-router Link\n@visibleName Link 链接",
   "displayName": "Link",
   "methods": [],
   "props": {
@@ -8,14 +8,14 @@
         "name": "bool"
       },
       "required": false,
-      "description": ""
+      "description": "replace"
     },
     "component": {
       "type": {
         "name": "element"
       },
       "required": false,
-      "description": ""
+      "description": "default 'a'"
     },
     "to": {
       "type": {
@@ -55,7 +55,7 @@
         ]
       },
       "required": false,
-      "description": ""
+      "description": "react-router Link to"
     }
   }
 }
