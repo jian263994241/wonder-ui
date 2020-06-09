@@ -7,13 +7,14 @@ import IconInfoOutlined from '@wonder-ui/icons/InfoCircleOutlined';
 import InputBase from '../InputBase';
 import styles from './styles';
 import withStyles from '../withStyles';
+import ExtraInfo from './ExtraInfo';
 
 /**
- * `List`组件下的子组件, 提供一个可输入的子项. 主要用于`Form`下提交数据用. 
+ * `List`组件下的子组件, 提供一个可输入的子项. 主要用于`Form`下提交数据用.
  * @visibleName InputItem 输入项
  */
 const InputItem = React.forwardRef(function InputItem(props, ref) {
-  const { 
+  const {
     [FIELD_DATA_PROP]: fieldData = {},
     [FIELD_META_PROP]: fieldMeta,
     alignRight,
@@ -22,6 +23,7 @@ const InputItem = React.forwardRef(function InputItem(props, ref) {
     className,
     clearButton = true,
     extra,
+    errorMessage,
     labelNumber = 5,
     multiline,
     onExtraClick,
@@ -30,55 +32,51 @@ const InputItem = React.forwardRef(function InputItem(props, ref) {
     ...rest
   } = props;
 
-  const error = React.useMemo(()=>{
-    if(fieldData.errors){
-      return fieldData.errors[0];
-    }
-    return {};
-  }, [fieldData.errors]);
-
-  const toastError = (error)=>{
-    Dialog.toast(error.message);
-  };
+  const errorMsg = React.useMemo(
+    () => {
+      if (errorMessage) {
+        return errorMessage;
+      }
+      if (fieldData.errors && fieldData.errors[0]) {
+        return fieldData.errors[0].message;
+      }
+    },
+    [fieldData.errors, errorMessage],
+  );
 
   return (
-    <div 
+    <div
       ref={rootRef}
-      className={clsx(
-        classes.root, 
-        multiline && classes.multiline,
-        className
-      )}
+      className={clsx(classes.root, multiline && classes.multiline, className)}
     >
       <div className={classes.line}>
-        {children && 
-          <div className={clsx( classes.label, `label-size-${labelNumber}` )} >
+        {children && (
+          <div className={clsx(classes.label, `label-size-${labelNumber}`)}>
             {children}
           </div>
-        }
-        {
-          renderInput ? renderInput(props, ref) : (
-            <InputBase
-              ref={ref}
-              multiline={multiline}
-              clearButton={clearButton && !multiline}
-              alignRight={alignRight}
-              classes={{root: classes.input}}
-              {...rest}
-            />
-          )
-        }
-        {extra && ( 
-          <div className={classes.extra} onClick={onExtraClick} > {extra} </div> 
         )}
-        {
-          error.message && <IconInfoOutlined color="error" onClick={toastError.bind(null, error)}/>
-        }
+        {renderInput ? (
+          renderInput(props, ref)
+        ) : (
+          <InputBase
+            ref={ref}
+            multiline={multiline}
+            clearButton={clearButton && !multiline}
+            alignRight={alignRight}
+            classes={{ root: classes.input }}
+            {...rest}
+          />
+        )}
+        {extra && (
+          <div className={classes.extra} onClick={onExtraClick}>
+            {extra}
+          </div>
+        )}
+        <ExtraInfo message={errorMsg} />
       </div>
     </div>
-  )
+  );
 });
-
 
 InputItem.displayName = 'InputItem';
 
@@ -110,7 +108,7 @@ InputItem.propTypes = {
   /**
    * label的字数限制, 默认5
    */
-  labelNumber: PropTypes.oneOf([1,2,3,4,5,6,7]),
+  labelNumber: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7]),
   /**
    * onChange
    */

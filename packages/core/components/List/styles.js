@@ -1,4 +1,4 @@
-export default theme => ({
+export default (theme) => ({
   root: {
     ...theme.typography.body2,
     userSelect: 'none',
@@ -27,5 +27,5 @@ export default theme => ({
     display: 'flex',
     justifyContent: 'start',
     ...theme.typography.caption,
-  }
-}) 
+  },
+});

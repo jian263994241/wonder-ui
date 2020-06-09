@@ -1,10 +1,8 @@
-const fontSize = 17;
+const fontSize = 14;
 
-export default theme =>({
+export default (theme) => ({
   root: {
-    fontFamily: theme.typography.fontFamily,
-    fontSize: theme.typography.pxToRem(fontSize),
-    lineHeight: theme.typography.pxToRem(fontSize),
+    ...theme.typography.body2,
     alignItems: 'center',
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
@@ -40,7 +38,7 @@ export default theme =>({
     WebkitTapHighlightColor: 'transparent',
     paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(0.5),
-    ...theme.hairline.create('bottom')
+    ...theme.hairline.create('bottom'),
   },
   label: {
     color: theme.palette.text.primary,
@@ -85,5 +83,5 @@ export default theme =>({
     textAlign: 'right',
     paddingLeft: theme.spacing(0.5),
     alignSelf: 'center',
-  }
-})
+  },
+});
