@@ -1,10 +1,10 @@
-const path = require('path');
+import path from 'path';
 
-module.exports = {
+export default {
   //app 入口
-  entry : [
-    require.resolve('core-js'), 
-    path.resolve(__dirname, './kitchen-sink/app.js')
+  entry: [
+    require.resolve('core-js'),
+    path.resolve(__dirname, './kitchen-sink/app.js'),
   ],
   //输出配置
   output: {
@@ -21,16 +21,13 @@ module.exports = {
       '@wonder-ui/router': path.resolve(__dirname, './packages/router/src'),
       '@wonder-ui/styles': path.resolve(__dirname, './packages/styles/src'),
       '@wonder-ui/utils': path.resolve(__dirname, './packages/utils/src'),
-    }
+    },
   },
   ale: {
     html: {
       title: 'Wonder UI',
       appMountId: 'root',
       mobile: true,
-      scripts: [
-        // 'https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.14/es5-shim.min.js'
-      ]
-    }
-  }
-}
+    },
+  },
+};
