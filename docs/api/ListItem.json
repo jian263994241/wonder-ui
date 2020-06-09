@@ -82,6 +82,13 @@
         "computed": true
       }
     },
+    "errorMessage": {
+      "type": {
+        "name": "string"
+      },
+      "required": false,
+      "description": "错误信息"
+    },
     "extra": {
       "type": {
         "name": "any"

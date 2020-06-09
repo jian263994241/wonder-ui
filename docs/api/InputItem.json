@@ -1,5 +1,5 @@
 {
-  "description": "`List`组件下的子组件, 提供一个可输入的子项. 主要用于`Form`下提交数据用. \n@visibleName InputItem 输入项",
+  "description": "`List`组件下的子组件, 提供一个可输入的子项. 主要用于`Form`下提交数据用.\n@visibleName InputItem 输入项",
   "displayName": "InputItem",
   "methods": [],
   "props": {
