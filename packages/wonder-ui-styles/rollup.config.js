@@ -33,7 +33,12 @@ const cjs = [
   },
   {
     input: 'src/index.js',
-    output: { file: `cjs/${name}.min.js`, sourcemap: true, format: 'cjs' },
+    output: {
+      file: `cjs/${name}.min.js`,
+      sourcemap: true,
+      format: 'cjs',
+      esModule: false,
+    },
     plugins: [
       babel({
         babelHelpers: 'bundled',
