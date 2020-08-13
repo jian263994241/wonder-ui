@@ -1,12 +1,7 @@
 {
   "name": "wonder-ui",
-  "version": "0.6.0",
   "description": "Mobile UI base on react@16.8",
-  "main": "index.js",
-  "keywords": [
-    "react ui",
-    "react framework"
-  ],
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:core": "gulp build:core",
@@ -18,12 +13,9 @@
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build"
   },
-  "author": "jian.li",
-  "homepage": "https://github.com/jian263994241/wonderjs",
-  "bugs": {
-    "url": "https://github.com/jian263994241/wonderjs/issues"
-  },
-  "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "ale-cli": "^0.3.2",
     "babel-loader": "^8.0.6",
