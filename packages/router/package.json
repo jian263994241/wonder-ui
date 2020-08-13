@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/router",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "UI Router base on react@16.8 & react-router-dom",
   "main": "index.js",
   "keywords": [
@@ -30,7 +30,7 @@
     "@wonder-ui/utils": "^0.1.0",
     "prop-types": "^15.7.2",
     "react-is": "^16.11.0",
-    "react-router-dom": "^5.1.2",
+    "react-router-dom": "^5.2.0",
     "react-transition-group": "^4.3.0"
   },
   "peerDependencies": {

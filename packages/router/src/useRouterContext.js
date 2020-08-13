@@ -1,13 +1,25 @@
 import React from 'react';
 import RouterContext from './Context';
-import {__RouterContext} from 'react-router-dom';
+import {
+  useHistory,
+  useLocation,
+  useParams,
+  useRouteMatch,
+} from 'react-router-dom';
 
-export default function useRouterContext(){
-  const originContext = React.useContext(__RouterContext) || {};
-  const routerContext = React.useContext(RouterContext) || {};
+export default function useRouterContext() {
+  const contextOverwrite = React.useContext(RouterContext) || {};
+
+  const history = useHistory();
+  const location = useLocation();
+  const match = useRouteMatch();
+  const parmas = useParams();
 
   return {
-    ...originContext,
-    ...routerContext
+    history,
+    location,
+    match,
+    parmas,
+    ...contextOverwrite,
   };
 }
