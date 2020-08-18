@@ -1,6 +1,6 @@
 import { fade } from '@wonder-ui/styles/colorManipulator';
 
-export default theme => ({
+export default (theme) => ({
   root: {
     ...theme.typography.body2,
     color: theme.palette.text.primary,
@@ -27,17 +27,17 @@ export default theme => ({
     // }
   },
   activeState: {
-    '&:active, &.active-state': {
-      backgroundColor : theme.palette.action.hover
-    }
+    '&.active-state': {
+      backgroundColor: theme.palette.action.hover,
+    },
   },
   media: {
     '&:first-child': { marginRight: 15 },
-    '&:last-child': { marginLeft: 10 }
+    '&:last-child': { marginLeft: 10 },
   },
   arrowVertical: { transform: 'rotate(90deg)' },
   arrowHorizontal: { transform: 'rotate(0deg)' },
-  'arrowVertical-up' : { transform: 'rotate(270deg)' },
+  'arrowVertical-up': { transform: 'rotate(270deg)' },
   arrowAlignTop: {
     alignSelf: 'baseline',
     position: 'relative',
@@ -66,7 +66,7 @@ export default theme => ({
     overflow: 'hidden',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
-    ...theme.hairline.create('bottom')
+    ...theme.hairline.create('bottom'),
   },
   content: {
     flex: 1,
@@ -79,11 +79,11 @@ export default theme => ({
     alignSelf: 'center',
   },
   ellipsis: {
-    ...theme.typography.ellipsis
+    ...theme.typography.ellipsis,
   },
   extra: {
     color: theme.palette.text.secondary,
     textAlign: 'right',
     paddingLeft: theme.spacing(0.5),
-  }
-})
+  },
+});
