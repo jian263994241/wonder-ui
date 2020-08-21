@@ -5,17 +5,16 @@ import styled from './styled';
 import theme from './theming';
 import withStyles from './withStyles';
 
-const { context: ThemeContext, withTheme, useTheme, ThemeProvider } = theme;
+const { withTheme, useTheme, ThemeProvider } = theme;
 
-export default createUseStyles;
+export default withStyles;
 export {
   createTheme,
   createUseStyles,
   defaultTheme,
   styled,
-  ThemeContext,
   ThemeProvider,
   useTheme,
   withStyles,
   withTheme,
-}
+};
