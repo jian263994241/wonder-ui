@@ -1,12 +1,6 @@
 {
   "name": "wonder-ui",
-  "version": "2.0.0",
-  "description": "Mobile UI base on react@16.8",
-  "main": "index.js",
-  "keywords": [
-    "react ui",
-    "react framework"
-  ],
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:core": "gulp build:core",
@@ -24,12 +18,7 @@
     "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint ./src --fix --ext .js,.jsx,.ts,.tsx"
   },
-  "author": "jian.li",
-  "homepage": "https://github.com/jian263994241/wonderjs",
-  "bugs": {
-    "url": "https://github.com/jian263994241/wonderjs/issues"
-  },
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
@@ -61,6 +50,9 @@
     "lcn": "^1.0.3",
     "react-styleguidist": "^11.0.5"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged --pattern \"**/*.*(js|jsx)\"",

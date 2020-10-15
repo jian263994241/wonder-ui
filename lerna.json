@@ -1,5 +1,8 @@
 {
-  "packages": [ "packages/*", "kitchen-sink" ],
-  "npmClient": "npm",
+  "packages": [
+    "packages/*"
+  ],
+  "npmClient": "lerna",
+  "useWorkspaces": true,
   "version": "independent"
 }

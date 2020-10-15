@@ -1,7 +1,6 @@
 import { fade, darken } from '@wonder-ui/styles/colorManipulator';
 
-export default theme => {
-
+export default (theme) => {
   return {
     /* Styles applied to the root element. */
     root: {
@@ -11,9 +10,12 @@ export default theme => {
       padding: '6px 16px',
       borderRadius: theme.shape.borderRadius,
       color: theme.palette.text.primary,
-      transition: theme.transitions.create(['background-color', 'box-shadow', 'border', 'opacity'], {
-        duration: theme.transitions.duration.short,
-      }),
+      transition: theme.transitions.create(
+        ['background-color', 'box-shadow', 'border', 'opacity'],
+        {
+          duration: theme.transitions.duration.short,
+        },
+      ),
       '&:hover': {
         textDecoration: 'none',
         // Reset on touch devices, it doesn't add specificity
@@ -26,7 +28,7 @@ export default theme => {
       },
       '&$disabled': {
         color: theme.palette.action.disabled,
-        opacity: 0.4
+        opacity: 0.4,
       },
     },
     /* Styles applied to the span element that wraps the children. */
@@ -54,7 +56,7 @@ export default theme => {
         color: fade(theme.palette.primary.main, 0.65),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
-          color: 'transparent',
+          backgroundColor: 'transparent',
         },
       },
     },
@@ -73,7 +75,9 @@ export default theme => {
     outlined: {
       padding: '5px 15px',
       border: `1px solid ${
-        theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'
+        theme.palette.type === 'light'
+          ? 'rgba(0, 0, 0, 0.23)'
+          : 'rgba(255, 255, 255, 0.23)'
       }`,
       '&$disabled': {
         border: `1px solid ${theme.palette.action.disabled}`,
@@ -85,7 +89,10 @@ export default theme => {
       border: `1px solid ${fade(theme.palette.primary.main, 0.5)}`,
       '&:hover': {
         border: `1px solid ${theme.palette.primary.main}`,
-        backgroundColor: fade(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+        backgroundColor: fade(
+          theme.palette.primary.main,
+          theme.palette.action.hoverOpacity,
+        ),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent',
@@ -98,7 +105,10 @@ export default theme => {
       border: `1px solid ${fade(theme.palette.secondary.main, 0.5)}`,
       '&:hover': {
         border: `1px solid ${theme.palette.secondary.main}`,
-        backgroundColor: fade(theme.palette.secondary.main, theme.palette.action.hoverOpacity),
+        backgroundColor: fade(
+          theme.palette.secondary.main,
+          theme.palette.action.hoverOpacity,
+        ),
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           backgroundColor: 'transparent',
@@ -229,7 +239,7 @@ export default theme => {
       width: '100%',
       height: '100%',
       // display: 'block',
-      borderRadius: 0
+      borderRadius: 0,
     },
     borderRounded: {
       borderRadius: theme.shape.buttonBorderRadius,
@@ -270,6 +280,5 @@ export default theme => {
         fontSize: 22,
       },
     },
-  }
-}
-
+  };
+};
