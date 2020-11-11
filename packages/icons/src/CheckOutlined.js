@@ -2,6 +2,6 @@ import React from 'react';
 import createSvgIcon from './utils/createSvgIcon';
 
 export default createSvgIcon(
-  <path d="M19.716 5.661a.5.5 0 01.79.606l-.055.072L9.552 18.154a.5.5 0 01-.636.083l-.071-.055-5.182-4.812a.5.5 0 01.61-.788l.07.055 4.815 4.47L19.716 5.661z"/>
-  ,'CheckOutlined'
-)
+  <path d="M19.348 5.322a1 1 0 011.55 1.259l-.08.097L9.92 18.493a1 1 0 01-1.318.135l-.098-.08-5.18-4.812a1 1 0 011.263-1.545l.097.08 4.446 4.128L19.348 5.322z" />,
+  'CheckOutlined',
+);

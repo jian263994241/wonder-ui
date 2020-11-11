@@ -2,6 +2,6 @@ import React from 'react';
 import createSvgIcon from './utils/createSvgIcon';
 
 export default createSvgIcon(
-  <path d="M15.42 2.646a.5.5 0 01.765.638l-.058.07-8.42 8.419 8.42 8.42a.5.5 0 01.058.638l-.058.07a.5.5 0 01-.638.057l-.07-.058-8.773-8.773a.5.5 0 01-.057-.638l.057-.07 8.774-8.773z"/>
-  ,'ArrowBackIosOutlined'
-)
+  <path d="M16.107 2.808a1 1 0 01.077 1.327l-.077.087L8.328 12l7.779 7.778a1 1 0 01.077 1.327l-.077.087a1 1 0 01-1.327.078l-.088-.078-8.485-8.485a1 1 0 01-.078-1.327l.078-.087 8.485-8.485a1 1 0 011.415 0z" />,
+  'ArrowBackOutlined',
+);
