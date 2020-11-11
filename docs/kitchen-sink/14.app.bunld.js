@@ -1,1 +1,68 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[14],{1046:function(e,o,n){"use strict";n.r(o),n.d(o,"default",(function(){return f}));var r=n(3),a=n.n(r),t=n(0),i=n.n(t),c=n(44),s=n(60),l=n(252),d=n(947),b=n.n(d),u=Object(s.b)((function(e){var o;return{root:{display:"flex",flexWrap:"wrap"},iconBox:{flexShrink:0,color:"rgba(0, 0, 0, 0.54)",width:"25%",overflow:"hidden",fontSize:12,textAlign:"center",textOverflow:"ellipsis"},icon:(o={color:"rgba(0, 0, 0, 0.87)",cursor:"pointer",margin:"4px 0px",padding:18,fontSize:36,boxSizing:"content-box",transition:"background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",borderRadius:4},a()(o,"transition",e.transitions.create("backgroundColor")),a()(o,"backgroundColor","#FAFAFA"),a()(o,"&:hover",{backgroundColor:"#fff",boxShadow:e.shadows[2]}),o),text:{marginBottom:12,padding:"0 5px",overflow:"hidden",overflowWrap:"break-word"}}}));function f(e){var o=u();return i.a.createElement(c.A,{name:"Icons",navbar:!0},i.a.createElement("div",{className:o.root},b()(l,(function(e,n){return i.a.createElement("div",{className:o.iconBox,key:n},i.a.createElement(e,{className:o.icon}),i.a.createElement("p",{className:o.text},n))}))))}}}]);
+(window.webpackJsonp = window.webpackJsonp || []).push([
+  [14],
+  {
+    755: function (e, n, o) {
+      'use strict';
+      o.r(n),
+        o.d(n, 'default', function () {
+          return p;
+        });
+      var r = o(0),
+        t = o.n(r),
+        a = o(30),
+        i = o(48),
+        c = o(219),
+        l = o(697),
+        d = o.n(l),
+        s = Object(i.b)(function (e) {
+          return {
+            root: { display: 'flex', flexWrap: 'wrap' },
+            iconBox: {
+              flexShrink: 0,
+              color: 'rgba(0, 0, 0, 0.54)',
+              width: '25%',
+              overflow: 'hidden',
+              fontSize: 12,
+              textAlign: 'center',
+              textOverflow: 'ellipsis',
+            },
+            icon: {
+              color: 'grey',
+              cursor: 'pointer',
+              margin: '4px 0px',
+              padding: 18,
+              fontSize: 36,
+              boxSizing: 'content-box',
+              borderRadius: 4,
+              backgroundColor: '#FAFAFA',
+            },
+            text: {
+              marginBottom: 12,
+              padding: '0 5px',
+              overflow: 'hidden',
+              overflowWrap: 'break-word',
+            },
+          };
+        });
+      function p(e) {
+        var n = s();
+        return t.a.createElement(
+          a.A,
+          { name: 'Icons', navbar: !0 },
+          t.a.createElement(
+            'div',
+            { className: n.root },
+            d()(c, function (e, o) {
+              return t.a.createElement(
+                'div',
+                { className: n.iconBox, key: o },
+                t.a.createElement(e, { className: n.icon }),
+                t.a.createElement('p', { className: n.text }, o),
+              );
+            }),
+          ),
+        );
+      }
+    },
+  },
+]);
