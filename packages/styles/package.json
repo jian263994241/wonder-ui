@@ -11,9 +11,6 @@
     "react-jss",
     "react"
   ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "jian.li",
   "homepage": "https://github.com/jian263994241/wonder-ui/tree/master/packages",
   "bugs": {

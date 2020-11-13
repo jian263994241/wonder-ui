@@ -10,14 +10,6 @@
     "react framework",
     "react router"
   ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "gulp build",
-    "watch": "gulp",
-    "dev": "ale dev",
-    "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build"
-  },
   "author": "jian.li",
   "homepage": "https://github.com/jian263994241/wonder-ui",
   "bugs": {
