@@ -13,7 +13,12 @@
   ],
   "scripts": {
     "start": "tsdx watch --entry src/index.ts",
-    "build": "tsdx build --entry src/index.ts"
+    "build": "tsdx build --entry src/index.ts",
+    "lint": "tsdx lint src",
+    "lint:fix": "tsdx lint src --fix",
+    "test": "tsdx test",
+    "test:watch": "tsdx test --watch",
+    "test:coverage": "tsdx test --coverage"
   },
   "keywords": [
     "wonder ui",
@@ -44,10 +49,12 @@
     "url": "git+https://github.com/jian263994241/wonder-ui.git"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/react-hooks": "^3.5.0",
     "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react-test-renderer": "^17.0.1",
     "tsdx": "^0.14.1"
   }
 }
