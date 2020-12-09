@@ -28,8 +28,6 @@ function ComponentWithHook(props){
 ```js
 import { withStyles } from '@wonder-ui/styles';
 
-const useStyles = createUseStyles()
-
 class Component extends React.Component {
   render(){
     const { classes } = this.props;
