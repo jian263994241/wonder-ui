@@ -1,3 +1,4 @@
+import { CSSProperties } from '../types';
 export interface Typography {
   fontFamily: string;
   fontSize: number;
@@ -9,12 +10,12 @@ export interface Typography {
 }
 
 export interface BuildVariant {
-  fontFamily: string;
-  fontWeight: number;
-  fontSize: string;
-  lineHeight: number;
-  letterSpacing?: string;
-  textTransform?: string;
+  fontFamily: CSSProperties['fontFamily'];
+  fontWeight: CSSProperties['fontWeight'];
+  fontSize: CSSProperties['fontSize'];
+  lineHeight: CSSProperties['lineHeight'];
+  letterSpacing?: CSSProperties['letterSpacing'];
+  textTransform?: CSSProperties['textTransform'];
 }
 
 function round(value: number) {

@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/styles",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "wonder-ui styles",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -19,7 +19,7 @@
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
     "test:coverage": "tsdx test --coverage",
-    "publish:next": "npm publish --access=public --tag=next"
+    "publish:next": "npm version prerelease & npm publish --access=public --tag=next"
   },
   "keywords": [
     "wonder ui",
