@@ -84,6 +84,7 @@ export interface HookOptions<Theme = DefaultTheme>
   name?: string;
   defaultTheme?: Theme;
   themeContext?: React.Context<Theme>;
+  withTheme?: boolean;
 }
 
 export interface DynamicRules {

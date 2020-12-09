@@ -1,9 +1,7 @@
 import '@testing-library/jest-dom';
 import * as React from 'react';
-import { render } from '@testing-library/react';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { createUseStyles, SheetsRegistry, JssProvider } from '../src';
-import ReactTestRenderer from 'react-test-renderer';
+import { createUseStyles } from '../src';
 
 describe('createUseStyles', () => {
   it('styles', () => {

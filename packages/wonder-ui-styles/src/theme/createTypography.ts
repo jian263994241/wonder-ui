@@ -8,6 +8,15 @@ export interface Typography {
   htmlFontSize: number;
 }
 
+export interface BuildVariant {
+  fontFamily: string;
+  fontWeight: number;
+  fontSize: string;
+  lineHeight: number;
+  letterSpacing?: string;
+  textTransform?: string;
+}
+
 function round(value: number) {
   return Math.round(value * 1e5) / 1e5;
 }
@@ -16,8 +25,7 @@ const caseAllCaps = {
   textTransform: 'uppercase'
 };
 
-const defaultFontFamily =
-  'PingFang SC ,PingHei, DroidSansFallback, Hiragino Sans GB, STHeiti, Roboto, Noto, Helvetica Neue, Helvetica, Arial, SimSun, sans-serif';
+const defaultFontFamily = `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif`;
 
 export default function createTypography(typography: Partial<Typography> = {}) {
   const {
@@ -38,25 +46,27 @@ export default function createTypography(typography: Partial<Typography> = {}) {
   const coef = fontSize / 14;
   const pxToRem = (size: number) => `${(size / htmlFontSize) * coef}rem`;
 
-  const buildVariant = (
+  function buildVariant(
     fontWeight: number,
-    size: number,
+    fontSize: number,
     lineHeight: number,
     letterSpacing: number,
-    ...allVariants: any
-  ) => ({
-    fontFamily,
-    fontWeight,
-    fontSize: pxToRem(size),
-    // Unitless following https://meyerweb.com/eric/thoughts/2006/02/08/unitless-line-heights/
-    lineHeight,
-    // The letter spacing was designed for the Roboto font-family. Using the same letter-spacing
-    // across font-families can cause issues with the kerning.
-    ...(fontFamily === defaultFontFamily
-      ? { letterSpacing: `${round(letterSpacing / size)}em` }
-      : {}),
-    ...allVariants
-  });
+    allVariants?: object
+  ): BuildVariant {
+    return {
+      fontFamily,
+      fontWeight,
+      fontSize: pxToRem(fontSize),
+      // Unitless following https://meyerweb.com/eric/thoughts/2006/02/08/unitless-line-heights/
+      lineHeight,
+      // The letter spacing was designed for the Roboto font-family. Using the same letter-spacing
+      // across font-families can cause issues with the kerning.
+      ...(fontFamily === defaultFontFamily
+        ? { letterSpacing: `${round(letterSpacing / fontSize)}em` }
+        : {}),
+      ...allVariants
+    };
+  }
 
   const variants = {
     h1: buildVariant(fontWeightLight, 40, 1, -1.5),

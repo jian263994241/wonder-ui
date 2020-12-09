@@ -38,7 +38,7 @@ export default function withStyles<
       }
     }
 
-    const { defaultTheme, themeContext, name, ...createUseStylesOptions } =
+    const { defaultTheme, themeContext, name, withTheme, ...createUseStylesOptions } =
       options || {};
 
     const displayName = getDisplayName(Component);
@@ -70,16 +70,19 @@ export default function withStyles<
       }
       const newProps: any = { classes, ref };
 
-      newProps.theme = {
-        ...defaultTheme,
-        ...(theme
-          ? theme
-          : themeContext
-          ? // eslint-disable-next-line react-hooks/rules-of-hooks
-            React.useContext(themeContext)
-          : // eslint-disable-next-line react-hooks/rules-of-hooks
-            useTheme())
-      };
+      if(withTheme){
+        newProps.theme = {
+          ...defaultTheme,
+          ...(theme
+            ? theme
+            : themeContext
+            ? // eslint-disable-next-line react-hooks/rules-of-hooks
+              React.useContext(themeContext)
+            : // eslint-disable-next-line react-hooks/rules-of-hooks
+              useTheme())
+        };
+      }
+
 
       return React.createElement(Component, { children, ...rest, ...newProps });
     });

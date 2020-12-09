@@ -24,7 +24,7 @@ export default function createUseStyles<
   ClassKey extends string = string
 >(
   styles: Styles<Theme, keyof Props extends never ? any : Props, ClassKey>,
-  options?: HookOptions<Theme>
+  options?: Omit<HookOptions<Theme>, 'withTheme'>
 ) {
   return function useStyles(
     props?: keyof Props extends never ? any : Props,
