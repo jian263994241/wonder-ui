@@ -18,7 +18,7 @@ function getDynamicStyles(styles: StyleRules<any, any>) {
 }
 
 function getSheetOptions(
-  options: any,
+  options: SheetOptions<any>,
   link: boolean
 ): JSS.StyleSheetFactoryOptions {
   const {
@@ -48,6 +48,8 @@ function getSheetOptions(
 
   return { ...rest, index, meta, classNamePrefix, link, generateId };
 }
+
+let _theme: any;
 
 export function createStyleSheet(
   options: SheetOptions<any>

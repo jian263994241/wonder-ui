@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as JSS from 'jss';
 import * as CSS from 'csstype';
-import { DefaultTheme } from './defaultTheme';
+import { DefaultTheme } from './theme/defaultTheme';
 
 type JSSFontface = CSS.AtRule.FontFace & { fallbacks?: CSS.AtRule.FontFace[] };
 

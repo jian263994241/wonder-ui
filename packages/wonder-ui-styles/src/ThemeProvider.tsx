@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ThemeContext from './ThemeContext';
-import { DefaultTheme } from './defaultTheme';
+import { DefaultTheme } from './theme/defaultTheme';
 import useTheme from './useTheme';
 
 export interface ThemeProviderProps<Theme = DefaultTheme> {

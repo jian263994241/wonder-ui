@@ -2,6 +2,6 @@ import createTheme, { Theme } from './createTheme';
 
 export interface DefaultTheme extends Theme {}
 
-const defaultTheme = createTheme();
+const theme: DefaultTheme = createTheme();
 
-export default defaultTheme;
+export default theme;

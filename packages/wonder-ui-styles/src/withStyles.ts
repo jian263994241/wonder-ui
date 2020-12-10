@@ -4,7 +4,7 @@ import useTheme from './useTheme';
 import createUseStyles from './createUseStyles';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import getDisplayName from './utils/getDisplayName';
-import { DefaultTheme } from './defaultTheme';
+import defautlTheme_, { DefaultTheme } from './theme/defaultTheme';
 
 export interface StyledComponentProps<ClassKey extends string = string> {
   classes: Partial<ClassNameMap<ClassKey>>;
@@ -13,12 +13,17 @@ export interface StyledComponentProps<ClassKey extends string = string> {
 
 export default function withStyles<
   Theme = DefaultTheme,
-  Props extends object = object,
+  Props extends object = {},
   ClassKey extends string = string
->(
-  styles: Styles<Theme, keyof Props extends never ? any : Props, ClassKey>,
-  options?: HookOptions<Theme>
-) {
+>(styles: Styles<Theme, Props, ClassKey>, options?: HookOptions<Theme>) {
+  const {
+    defaultTheme = defautlTheme_,
+    themeContext,
+    name,
+    withTheme,
+    ...createUseStylesOptions
+  } = { ...options };
+
   return function ComponentWithStyles(
     Component: React.ComponentType<Props & StyledComponentProps<ClassKey>>
   ): PropInjector<
@@ -38,12 +43,9 @@ export default function withStyles<
       }
     }
 
-    const { defaultTheme, themeContext, name, withTheme, ...createUseStylesOptions } =
-      options || {};
-
     const displayName = getDisplayName(Component);
 
-    const useStyles = createUseStyles(styles, {
+    const useStyles = createUseStyles<any, any>(styles, {
       ...createUseStylesOptions,
       themeContext,
       defaultTheme,
@@ -52,10 +54,7 @@ export default function withStyles<
 
     const WithStyles = React.forwardRef<
       React.ComponentType<Props>,
-      Props &
-        Partial<StyledComponentProps<any>> & {
-          theme?: Theme & typeof defaultTheme;
-        }
+      Props & Partial<StyledComponentProps<any>> & { theme?: Theme }
     >(function WithStyles(props, ref) {
       const { classes: classesInput = {}, children, theme, ...rest } = props;
 
@@ -70,19 +69,13 @@ export default function withStyles<
       }
       const newProps: any = { classes, ref };
 
-      if(withTheme){
-        newProps.theme = {
-          ...defaultTheme,
-          ...(theme
+      if (withTheme) {
+        newProps.theme =
+          (theme
             ? theme
-            : themeContext
-            ? // eslint-disable-next-line react-hooks/rules-of-hooks
-              React.useContext(themeContext)
             : // eslint-disable-next-line react-hooks/rules-of-hooks
-              useTheme())
-        };
+              useTheme(themeContext)) || defaultTheme;
       }
-
 
       return React.createElement(Component, { children, ...rest, ...newProps });
     });

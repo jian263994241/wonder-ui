@@ -1,7 +1,7 @@
 import * as React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import getDisplayName from './utils/getDisplayName';
-import { DefaultTheme } from './defaultTheme';
+import defautlTheme_, { DefaultTheme } from './theme/defaultTheme';
 import useTheme from './useTheme';
 import { PropInjector } from './types';
 
@@ -30,13 +30,13 @@ export default function withTheme<
       );
     }
   }
-  const { defaultTheme = {} } = options;
+  const { defaultTheme = defautlTheme_ } = options;
 
   const WithTheme = React.forwardRef<
     React.ComponentType<Props & Partial<ThemedComponentProps<Theme>>>,
     Props & Partial<ThemedComponentProps<Theme>>
   >(function WithTheme(props, ref) {
-    const theme = useTheme<Theme>() || defaultTheme;
+    const theme = useTheme() || defaultTheme;
     return React.createElement(Component, {
       theme,
       ref,

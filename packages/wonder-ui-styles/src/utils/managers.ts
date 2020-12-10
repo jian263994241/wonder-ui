@@ -23,6 +23,7 @@ export const getManager = (
     }
     return context.managers[managerId];
   }
+
   let manager = defaultManagers.get(managerId);
 
   if (!manager) {
@@ -34,26 +35,25 @@ export const getManager = (
 };
 
 export const manageSheet = <Theme>(options: Options<Theme>) => {
-  const { sheet, context, index, theme } = options;
-  if (!sheet) {
+  if (!options.sheet) {
     return;
   }
 
-  const manager = getManager(context, index);
-  manager.manage(theme);
+  const manager = getManager(options.context, options.index);
 
-  if (context.registry) {
-    context.registry.add(sheet);
+  manager.manage(options.theme);
+
+  if (options.context.registry) {
+    options.context.registry.add(options.sheet);
   }
 };
 
 export const unmanageSheet = <Theme>(options: Options<Theme>) => {
-  const { sheet, context, index, theme } = options;
-  if (!sheet) {
+  if (!options.sheet) {
     return;
   }
 
-  const manager = getManager(context, index);
+  const manager = getManager(options.context, options.index);
 
-  manager.unmanage(theme);
+  manager.unmanage(options.theme);
 };

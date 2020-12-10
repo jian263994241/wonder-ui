@@ -1,5 +1,5 @@
 export * from './types';
-export * from './defaultTheme';
+export * from './theme/defaultTheme';
 export * from './withTheme';
 
 export { default as JssContext } from './JssContext';
@@ -11,7 +11,7 @@ export { default as createUseStyles } from './createUseStyles';
 export { default as withStyles } from './withStyles';
 export { default as useTheme } from './useTheme';
 export { default as withTheme } from './withTheme';
-export { default as createTheme } from './createTheme';
+export { default as createTheme } from './theme/createTheme';
+export { default as defaultTheme } from './theme/defaultTheme';
 
-export * as JSS from 'jss';
 export { SheetsRegistry, createGenerateId } from 'jss';
