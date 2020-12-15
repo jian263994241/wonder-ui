@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/styles",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.5",
   "description": "wonder-ui styles",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -40,7 +40,8 @@
     "csstype": "^3.0.5",
     "hoist-non-react-statics": "^3.3.2",
     "jss": "^10.5.0",
-    "jss-preset-default": "^10.5.0"
+    "jss-preset-default": "^10.5.0",
+    "theming": "^3.3.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0"

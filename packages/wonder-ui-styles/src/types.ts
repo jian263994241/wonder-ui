@@ -1,7 +1,7 @@
-import * as React from 'react';
 import * as JSS from 'jss';
 import * as CSS from 'csstype';
 import { DefaultTheme } from './theme/defaultTheme';
+import { Theming } from 'theming';
 
 type JSSFontface = CSS.AtRule.FontFace & { fallbacks?: CSS.AtRule.FontFace[] };
 
@@ -54,6 +54,36 @@ export type Styles<
   ClassKey extends string = string
 > = StyleRules<Props, ClassKey> | StyleRulesCallback<Theme, Props, ClassKey>;
 
+export type ClassKeyOfStyles<StylesOrClassKey> = StylesOrClassKey extends string
+  ? StylesOrClassKey
+  : StylesOrClassKey extends StyleRulesCallback<any, any, infer ClassKey>
+  ? ClassKey
+  : StylesOrClassKey extends StyleRules<any, infer ClassKey>
+  ? ClassKey
+  : never;
+
+/**
+ * infers the type of the props used in the styles
+ */
+export type PropsOfStyles<StylesType> = StylesType extends Styles<
+  any,
+  infer Props
+>
+  ? Props
+  : {};
+
+/**
+ * infers the type of the theme used in the styles
+ */
+export type ThemeOfStyles<StylesType> = StylesType extends Styles<
+  infer Theme,
+  any
+>
+  ? Theme
+  : {};
+
+export type AnyProps<Props> = keyof Props extends never ? any : Props;
+
 export interface Managers {
   [key: string]: JSS.SheetsManager;
 }
@@ -83,9 +113,10 @@ export interface HookOptions<Theme = DefaultTheme>
   index?: number;
   name?: string;
   defaultTheme?: Theme;
-  themeContext?: React.Context<Theme>;
-  withTheme?: boolean;
+  theming?: Theming<Theme>;
 }
+
+export interface HOCOptions<Theme = DefaultTheme> extends HookOptions<Theme> {}
 
 export interface DynamicRules {
   [key: string]: JSS.Rule;
@@ -97,12 +128,35 @@ export type ClassNameMap<ClassKey extends string = string> = Record<
 >;
 
 /**
+ * `T extends ConsistentWith<T, U>` means that where `T` has overlapping properties with
+ * `U`, their value types do not conflict.
+ *
+ * @internal
+ */
+export type ConsistentWith<DecorationTargetProps, InjectedProps> = {
+  [P in keyof DecorationTargetProps]: P extends keyof InjectedProps
+    ? InjectedProps[P] extends DecorationTargetProps[P]
+      ? DecorationTargetProps[P]
+      : InjectedProps[P]
+    : DecorationTargetProps[P];
+};
+
+/**
  * a function that takes {component} and returns a component that passes along
  * all the props to {component} except the {InjectedProps} and will accept
  * additional {AdditionalProps}
  */
-export type PropInjector<InjectedProps, AdditionalProps = {}> =
-  | React.ForwardRefExoticComponent<
-      React.PropsWithoutRef<InjectedProps> & AdditionalProps
-    >
-  | React.ComponentType<React.PropsWithoutRef<InjectedProps> & AdditionalProps>;
+export type PropInjector<InjectedProps, AdditionalProps = {}> = <
+  C extends React.ComponentType<
+    ConsistentWith<React.ComponentProps<C>, InjectedProps>
+  >
+>(
+  component: C
+) => React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<
+    JSX.LibraryManagedAttributes<C, React.ComponentProps<C>> &
+      InjectedProps &
+      AdditionalProps
+  > &
+    React.RefAttributes<C>
+>;

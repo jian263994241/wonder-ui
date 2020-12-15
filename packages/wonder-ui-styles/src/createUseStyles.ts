@@ -1,10 +1,9 @@
 import * as React from 'react';
-import type { HookOptions, Styles, ClassNameMap } from './types';
+import type { HookOptions, Styles, ClassNameMap, AnyProps } from './types';
 import { isBrowser } from './utils/isBrowser';
 import JssContext from './JssContext';
+import { ThemeContext as DefaultThemeContext } from 'theming';
 import defaultTheme_, { DefaultTheme } from './theme/defaultTheme';
-import useTheme from './useTheme';
-
 import {
   createStyleSheet,
   addDynamicRules,
@@ -24,24 +23,29 @@ export default function createUseStyles<
   Props extends object = {},
   ClassKey extends string = string
 >(
-  styles: Styles<Theme, Props, ClassKey>,
-  options?: Omit<HookOptions<Theme>, 'withTheme'>
+  styles: Styles<Theme, AnyProps<Props>, ClassKey>,
+  options: HookOptions<Theme> = {}
 ) {
   const {
     defaultTheme = defaultTheme_,
     index = getSheetIndex(),
     name,
-    themeContext,
+    theming,
     ...sheetOptions
-  } = { ...options };
+  } = options;
+
+  const ThemeContext = (theming && theming.context) || DefaultThemeContext;
+  const useTheme =
+    typeof styles === 'function'
+      ? () => React.useContext<any>(ThemeContext) || defaultTheme
+      : () => defaultTheme;
 
   return function useStyles(
-    props: Partial<Props> = {},
-    overwrite?: HookOptions<Theme>
+    props: Partial<Props> = {}
   ): ClassNameMap<ClassKey> {
     const isFirstMount = React.useRef(true);
     const context = React.useContext(JssContext);
-    const theme = useTheme(themeContext) || defaultTheme;
+    const theme = useTheme();
 
     const [sheet, dynamicRules] = React.useMemo(() => {
       const newSheet = createStyleSheet({

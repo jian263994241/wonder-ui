@@ -3,7 +3,7 @@
 Jss style rules
 
 ## createUseStyles
-```js
+```jsx
 import { createUseStyles } from '@wonder-ui/styles';
 
 const useStyles = createUseStyles({
@@ -20,12 +20,12 @@ function ComponentWithHook(props){
   )
 }
 
-
 ```
 
 ## withStyles
 
-```js
+
+```jsx
 import { withStyles } from '@wonder-ui/styles';
 
 class Component extends React.Component {
@@ -42,7 +42,5 @@ withStyles({
     width: 100,
     height: 100
   }
-})(Component)
-
-
+})(Component);
 ```
