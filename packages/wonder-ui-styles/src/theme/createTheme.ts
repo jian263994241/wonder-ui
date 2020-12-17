@@ -1,9 +1,10 @@
 import * as colors from './colors';
+import * as colorManipulator from './colorManipulator';
+import * as transitions from './transitions';
 import createPalette, { Palette } from './createPalette';
 import createTypography, { Typography } from './createTypography';
 import createSpacing from './createSpacing';
 import shadows from './shadows';
-import * as transitions from './transitions';
 
 type ThemeOptions = {
   palette?: Partial<Palette>;
@@ -18,6 +19,7 @@ export interface Theme {
   transitions: typeof transitions;
   typography: ReturnType<typeof createTypography>;
   spacing: ReturnType<typeof createSpacing>;
+  colorManipulator: typeof colorManipulator;
 }
 
 export default function createTheme(options: ThemeOptions = {}): Theme {
@@ -29,6 +31,7 @@ export default function createTheme(options: ThemeOptions = {}): Theme {
     spacing: createSpacing(spacing),
     transitions,
     shadows,
-    colors
+    colors,
+    colorManipulator
   };
 }

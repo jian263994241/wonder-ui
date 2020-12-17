@@ -8,6 +8,7 @@ export { default as JssProvider } from './JssProvider';
 
 export { default as createUseStyles } from './createUseStyles';
 export { default as withStyles } from './withStyles';
+export { default as createStyles } from './createUseStyles';
 export { default as createTheme } from './theme/createTheme';
 export { default as defaultTheme } from './theme/defaultTheme';
 
