@@ -1,8 +1,9 @@
 {
   "name": "@wonder-ui/core",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Mobile UI base on react@16",
   "main": "index.js",
+  "types": "index.d.ts",
   "keywords": [
     "react",
     "react ui",
@@ -44,6 +45,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jian263994241/wonder-ui.git"
+    "url": "git+https://github.com/jian263994241/wonder-ui.git",
+    "directory": "packages/core"
   }
 }

@@ -11,7 +11,11 @@ var paths = {
     core: {
       src: ['packages/core/**/*.js', '!**/node_modules/**'],
       dest: 'npm-packages/wonder-ui-core',
-      copylist: ['packages/core/package.json', 'packages/core/README.md'],
+      copylist: [
+        'packages/core/package.json',
+        'packages/core/README.md',
+        'packages/core/**/*.d.ts',
+      ],
     },
     icons: {
       src: ['packages/icons/src/**/*.js', '!**/node_modules/**'],
