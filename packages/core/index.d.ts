@@ -55,6 +55,9 @@ export * from './components/Drawer';
 export { default as DropdownMenu } from './components/DropdownMenu';
 export * from './components/DropdownMenu';
 
+export { default as Empty } from './components/Empty';
+export * from './components/Empty';
+
 export { default as Flex } from './components/Flex';
 export * from './components/Flex';
 

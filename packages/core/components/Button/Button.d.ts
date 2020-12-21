@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { ButtonBaseProps } from '../ButtonBase';
 
-interface ButtonProps {
+interface ButtonProps extends ButtonBaseProps {
   className?: string;
   color?: 'default' | 'inherit' | 'primary' | 'secondary';
   disabled?: boolean;

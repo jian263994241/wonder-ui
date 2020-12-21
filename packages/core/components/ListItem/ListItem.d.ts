@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface ListItemProps {
+export interface ListItemProps extends React.DOMAttributes<HTMLDivElement> {
   activeState?: boolean;
   align?: 'top' | 'center';
   arrow?: 'horizontal' | 'vertical' | 'vertical-up';
