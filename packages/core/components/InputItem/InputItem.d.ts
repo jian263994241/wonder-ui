@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { InputBaseProps } from '../InputBase';
 
-export interface InputItemProps {
+export interface InputItemProps extends InputBaseProps {
   /**
    * 输入文字向右对齐, 默认向左
    */
