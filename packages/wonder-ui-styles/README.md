@@ -13,7 +13,7 @@ const useStyles = createUseStyles({
   }
 })
 
-function ComponentWithHook(props){
+export default function ComponentWithHook(props){
   const classes = useStyles(props);
   return (
     <div className={classes.root}>...</div>
@@ -26,7 +26,7 @@ function ComponentWithHook(props){
 
 
 ```jsx
-import { withStyles } from '@wonder-ui/styles';
+import { withStyles, createStyles } from '@wonder-ui/styles';
 
 class Component extends React.Component {
   render(){
@@ -37,10 +37,12 @@ class Component extends React.Component {
   }
 }
 
-withStyles({
+const styles = createStyles({
   root: {
     width: 100,
     height: 100
   }
-})(Component);
+})
+
+export default withStyles(styles)(Component);
 ```
