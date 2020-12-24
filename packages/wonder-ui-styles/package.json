@@ -48,7 +48,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jian263994241/wonder-ui.git"
+    "url": "git+https://github.com/jian263994241/wonder-ui.git",
+    "directory": "packages/wonder-ui-styles"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.6",
@@ -56,6 +57,7 @@
     "@testing-library/react-hooks": "^3.5.0",
     "@types/react": "^17.0.0",
     "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-test-renderer": "^17.0.1",
     "tsdx": "^0.14.1"
   }

@@ -1,0 +1,10 @@
+{
+  "name": "example-styles",
+  "version": "1.0.0",
+  "main": "src/index.tsx",
+  "scripts": {
+    "start": "ale start"
+  },
+  "dependencies": {},
+  "license": "MIT"
+}

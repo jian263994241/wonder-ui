@@ -5,3 +5,4 @@ npm-packages
 lerna-debug.log
 yarn-error.log
 dist
+build
