@@ -5,6 +5,8 @@
   "scripts": {
     "start": "ale start"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@wonder-ui/styles": "^2.0.0-beta.6"
+  },
   "license": "MIT"
 }

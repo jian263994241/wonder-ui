@@ -1,0 +1,39 @@
+{
+  "name": "@wonder-ui/router",
+  "version": "2.0.0-0",
+  "description": "Wonder-UI router",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "src",
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "react",
+    "wonder ui",
+    "react router"
+  ],
+  "author": "jian.li",
+  "homepage": "https://github.com/jian263994241/wonder-ui",
+  "bugs": {
+    "url": "https://github.com/jian263994241/wonder-ui/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@wonder-ui/styles": "^2.0.0-beta.6",
+    "clsx": "^1.1.0",
+    "react-router": "^6.0.0-beta.0",
+    "react-transition-group": "^4.4.1"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.6",
+    "react-dom": ">=16.8.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jian263994241/wonder-ui.git"
+  }
+}

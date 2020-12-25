@@ -3758,6 +3758,20 @@
     "@webassemblyjs/wast-parser" "1.9.1"
     "@xtuc/long" "4.2.2"
 
+"@wonder-ui/router@^1.0.1":
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@wonder-ui/router/-/router-1.0.2.tgz#7090ea8d41c078b407133988c0c257620b88b85c"
+  integrity sha512-UTpv21cR1wtGKsP6qUtMSSWDENXGJweSfW3TduYA86NZ5Rp3RJfANyl5cUBFstGYO2wBqJQa3zefodCWd9Q5BQ==
+  dependencies:
+    "@babel/runtime" "^7.8.0"
+    "@loadable/component" "^5.11.0"
+    "@wonder-ui/styles" "^1.0.2"
+    "@wonder-ui/utils" "^1.0.3"
+    clsx "^1.1.0"
+    prop-types "^15.7.2"
+    react-router-dom "5.1.2"
+    react-transition-group "^4.3.0"
+
 "@wonder-ui/styles@^1.0.2", "@wonder-ui/styles@^1.0.6", "@wonder-ui/styles@^1.0.9":
   version "1.1.2"
   resolved "https://registry.npmjs.org/@wonder-ui/styles/-/styles-1.1.2.tgz#76befb3ed8eb950f2fe040c5e62a311afde901bd"

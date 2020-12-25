@@ -1,5 +1,5 @@
 {
-  "name": "@wonder-ui/router",
+  "name": "@wonder-ui/router-old",
   "version": "1.0.2",
   "description": "UI Router base on react@16.8 & react-router-dom",
   "main": "index.js",
