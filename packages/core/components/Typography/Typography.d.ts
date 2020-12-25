@@ -1,4 +1,4 @@
-export interface TypographyProps {
+export interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
   component?: string;
   /**
    * @ignore

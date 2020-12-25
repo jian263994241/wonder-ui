@@ -13,7 +13,7 @@ export interface AccordionPanelProps {
   /**
    * 面板头内容
    */
-  header: Element;
+  header: React.ReactNode;
   /**
    * 对应 activeKey
    */

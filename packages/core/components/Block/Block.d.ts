@@ -1,5 +1,5 @@
 import * as React from 'react';
-export interface BlockProps extends React.DOMAttributes<HTMLDivElement> {
+export interface BlockProps extends React.HTMLAttributes<HTMLDivElement> {
   blank?: number;
   space?: number;
   bottom?: number;

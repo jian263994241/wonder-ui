@@ -28,7 +28,7 @@ export interface ListViewProps {
   /**
    * 加载更多内容
    */
-  loadMoreItems?: () => React.ReactNode;
+  loadMoreItems?: () => any;
   /**
    * 每次加载的长度
    */

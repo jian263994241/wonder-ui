@@ -1,5 +1,5 @@
 import * as React from 'react';
-export interface ListProps extends React.DOMAttributes<HTMLDivElement> {
+export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {
   renderFooter?: () => React.ReactNode;
   renderHeader?: () => React.ReactNode;
   children?: any;

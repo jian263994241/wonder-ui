@@ -12,28 +12,27 @@ const alias = {
   'column-reverse': 'column-reverse',
 };
 
-export default theme =>({
+export default (theme) => ({
   root: {
-    display: props => props.inline ? 'inline-flex': 'flex',
-    alignContent: props => alias[props.alignContent],
-    alignItems: props => alias[props.align],
-    flexDirection: props => alias[props.direction],
-    flexWrap: props => alias[props.wrap],
-    justifyContent: props => alias[props.justify],
+    display: (props) => (props.inline ? 'inline-flex' : 'flex'),
+    alignContent: (props) => alias[props.alignContent],
+    alignItems: (props) => alias[props.align],
+    flexDirection: (props) => alias[props.direction],
+    flexWrap: (props) => alias[props.wrap],
+    justifyContent: (props) => alias[props.justify],
     textAlgin: 'left',
     '&& > *': {
-      marginRight: props => theme.spacing(props.gutter) || 0,
-      '&:last-child':{
-        marginRight: 0
-      }
-    }
+      marginRight: (props) => theme.spacing(props.gutter) || 0,
+      '&:last-child': {
+        marginRight: 0,
+      },
+    },
   },
   flex: {
     '& > *': {
       boxSizing: 'border-box',
       flex: 1,
-      height: '100%',
       width: '100%',
-    }
-  }
-})
+    },
+  },
+});
