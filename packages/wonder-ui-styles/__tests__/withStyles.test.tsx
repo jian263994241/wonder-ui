@@ -16,11 +16,13 @@ type Props = {
 
 describe('withStyles', () => {
   it('default', () => {
-    const Example = withStyles(styles)(function (props: Props) {
+    function Example_(props: Props) {
       const { classes } = props;
 
       return <div className={classes.root}>Example</div>;
-    });
+    }
+
+    const Example = withStyles(styles)(Example_);
 
     const renderer = ReactTestRenderer.create(<Example />);
 
