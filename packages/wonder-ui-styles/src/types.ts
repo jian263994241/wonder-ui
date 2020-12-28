@@ -62,6 +62,11 @@ export type ClassKeyOfStyles<StylesOrClassKey> = StylesOrClassKey extends string
   ? ClassKey
   : never;
 
+export type ClassKeysOfStyles<StylesOrClassKey> = Record<
+  ClassKeyOfStyles<StylesOrClassKey>,
+  string
+>;
+
 /**
  * infers the type of the props used in the styles
  */
