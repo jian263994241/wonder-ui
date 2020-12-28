@@ -8,4 +8,11 @@ export interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   onValuesChange?: (values: any) => void;
 }
 
-export default function Form(props: FormProps): JSX.Element;
+declare function Form(props: FormProps): JSX.Element;
+
+declare namespace Form {
+  export function craeteForm(): any;
+  export function useForm(): any;
+}
+
+export default Form;
