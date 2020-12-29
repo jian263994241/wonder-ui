@@ -50,6 +50,8 @@ export interface InputItemProps extends InputBaseProps {
    * value
    */
   value?: any;
+
+  errorMessage?: string;
 }
 
 export default function InputItem(props: InputItemProps): JSX.Element;
