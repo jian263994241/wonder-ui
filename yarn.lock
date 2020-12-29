@@ -3212,10 +3212,10 @@
     lodash "^4.17.15"
     redent "^3.0.0"
 
-"@testing-library/react-hooks@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.npmjs.org/@testing-library/react-hooks/-/react-hooks-3.5.0.tgz#8d728f2d56d615935116385f3ff9335e3402e46b"
-  integrity sha512-PpztMzQ+h8hXwd9TtSx6H+D5sKv7sW0sRr0dOW3x9O5yNOHlg5Yi4uCMhYBuGYAHM7XJyceb+u4D3CgT8LotKg==
+"@testing-library/react-hooks@^3.7.0":
+  version "3.7.0"
+  resolved "https://registry.npmjs.org/@testing-library/react-hooks/-/react-hooks-3.7.0.tgz#6d75c5255ef49bce39b6465bf6b49e2dac84919e"
+  integrity sha512-TwfbY6BWtWIHitjT05sbllyLIProcysC0dF0q1bbDa7OHLC6A6rJOYJwZ13hzfz3O4RtOuInmprBozJRyyo7/g==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@types/testing-library__react-hooks" "^3.4.0"
@@ -3952,10 +3952,10 @@ ajv@^6.10.2, ajv@^6.12.3:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ale-cli@^4.0.0-1:
-  version "4.0.0-1"
-  resolved "https://registry.npmjs.org/ale-cli/-/ale-cli-4.0.0-1.tgz#8e5e6bdb6294fd2806bf3cda9ba7a066a97113cd"
-  integrity sha512-RVV8EZSlD6Bcqmkx2vFJg0CWeghlLIouPT8lcYdLkST/wSt+gLk5spu0A5x1IYIkZzDja/oKd72ULwR8bPvtFw==
+ale-cli@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/ale-cli/-/ale-cli-4.0.0.tgz#aef7f6e890d2464f3358fd473d9da42beb39952e"
+  integrity sha512-H2kHrXNU+ejCqtzmdsJGsKmwCZtNrwPSVL/Z6Vut53JWS3uD8GeSn73QvxvZHGTBUE7GhfjHDaCfXEYfTqpkZA==
   dependencies:
     ale-webpack "^4.0.0-0"
     commander "^6.2.1"
@@ -13345,6 +13345,13 @@ react-router@5.1.2:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-router@^6.0.0-beta.0:
+  version "6.0.0-beta.0"
+  resolved "https://registry.npmjs.org/react-router/-/react-router-6.0.0-beta.0.tgz#3e11f39b6ded4412c2fed9e4f989dd4c8156724d"
+  integrity sha512-VgMdfpVcmFQki/LZuLh8E/MNACekDetz4xqft+a6fBZvvJnVqKbLqebF7hyoawGrV1HcO5tVaUang2Og4W2j1Q==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-shallow-renderer@^16.13.1:
   version "16.14.1"
   resolved "https://registry.npmjs.org/react-shallow-renderer/-/react-shallow-renderer-16.14.1.tgz#bf0d02df8a519a558fd9b8215442efa5c840e124"
@@ -13363,7 +13370,7 @@ react-test-renderer@^17.0.1:
     react-shallow-renderer "^16.13.1"
     scheduler "^0.20.1"
 
-react-transition-group@^4.2.1, react-transition-group@^4.3.0:
+react-transition-group@^4.2.1, react-transition-group@^4.3.0, react-transition-group@^4.4.1:
   version "4.4.1"
   resolved "https://registry.npm.taobao.org/react-transition-group/download/react-transition-group-4.4.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-transition-group%2Fdownload%2Freact-transition-group-4.4.1.tgz#63868f9325a38ea5ee9535d828327f85773345c9"
   integrity sha1-Y4aPkyWjjqXulTXYKDJ/hXczRck=

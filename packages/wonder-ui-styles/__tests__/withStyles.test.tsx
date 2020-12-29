@@ -6,25 +6,28 @@ import { withStyles, createStyles, ClassKeysOfStyles } from '../src';
 const styles = createStyles({
   root: {
     color: 'red'
-  }
+  },
+  body: {}
 });
 
 type Props = {
   options?: string;
-  classes?: ClassKeysOfStyles<typeof styles>;
+  classes?: Partial<ClassKeysOfStyles<typeof styles>>;
 };
 
 describe('withStyles', () => {
   it('default', () => {
     function Example_(props: Props) {
-      const { classes } = props;
+      const { classes = {} } = props;
 
       return <div className={classes.root}>Example</div>;
     }
 
     const Example = withStyles(styles)(Example_);
 
-    const renderer = ReactTestRenderer.create(<Example />);
+    const renderer = ReactTestRenderer.create(
+      <Example classes={{ root: 'ddd' }} />
+    );
 
     console.log(renderer.toJSON());
   });

@@ -31,9 +31,7 @@ export type WithStylesType<StylesType extends Styles<any, any>> = {
 export default function createWithStyles<StylesType extends Styles<any, any>>(
   styles: StylesType,
   options: HOCOptions<ThemeOfStyles<StylesType>> = {}
-): PropInjector<
-  WithStylesType<StylesType>
-> {
+): PropInjector<WithStylesType<StylesType>> {
   const { theming, name, ...stylesOptions } = options;
   const ThemeContext = (theming && theming.context) || DefaultThemeContext;
 
@@ -60,10 +58,11 @@ export default function createWithStyles<StylesType extends Styles<any, any>>(
       ...stylesOptions
     });
 
-    const WithStyles = React.forwardRef<C, JSX.LibraryManagedAttributes<C, React.ComponentProps<C>> & WithStylesType<StylesType>>(function WithStyles(
-      props,
-      ref
-    ) {
+    const WithStyles = React.forwardRef<
+      C,
+      JSX.LibraryManagedAttributes<C, React.ComponentProps<C>> &
+        WithStylesType<StylesType>
+    >(function WithStyles(props, ref) {
       const { classes: classesInput = {}, children, ...rest } = props;
 
       const classes = useStyles({
