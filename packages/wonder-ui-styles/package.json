@@ -19,6 +19,7 @@
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
     "test:coverage": "tsdx test --coverage",
+    "example": "cd ./example && ale start",
     "publish:next": "npm version prerelease & npm publish ./ --access=public --tag=next"
   },
   "keywords": [

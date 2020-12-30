@@ -16,6 +16,17 @@
     "wonder ui",
     "react router"
   ],
+  "scripts": {
+    "start": "tsdx watch --entry src/index.ts",
+    "build": "tsdx build --entry src/index.ts",
+    "lint": "tsdx lint src",
+    "lint:fix": "tsdx lint src --fix",
+    "test": "tsdx test",
+    "test:watch": "tsdx test --watch",
+    "test:coverage": "tsdx test --coverage",
+    "example": "cd ./example && ale start",
+    "publish:next": "npm version prerelease & npm publish ./ --access=public --tag=next"
+  },
   "author": "jian.li",
   "homepage": "https://github.com/jian263994241/wonder-ui",
   "bugs": {
@@ -23,8 +34,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@wonder-ui/styles": "^2.0.0-beta.6",
+    "@wonder-ui/styles": "^2.0.0-beta.9",
     "clsx": "^1.1.0",
+    "querystringify": "^2.2.0",
     "react-router": "^6.0.0-beta.0",
     "react-transition-group": "^4.4.1"
   },
