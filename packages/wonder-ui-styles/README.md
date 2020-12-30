@@ -2,7 +2,15 @@
 
 Jss style rules
 
+
+style:  jssRules | (theme) => jssRules
+
 ## createUseStyles
+
+
+createUseStyles(styles)
+
+
 ```jsx
 import { createUseStyles } from '@wonder-ui/styles';
 
@@ -13,8 +21,8 @@ const useStyles = createUseStyles({
   }
 })
 
-export default function ComponentWithHook(props){
-  const classes = useStyles(props);
+export default function ComponentWithHook(){
+  const classes = useStyles();
   return (
     <div className={classes.root}>...</div>
   )
@@ -24,6 +32,7 @@ export default function ComponentWithHook(props){
 
 ## withStyles
 
+withStyles(styles)(Component)
 
 ```jsx
 import { withStyles, createStyles } from '@wonder-ui/styles';
@@ -45,4 +54,39 @@ const styles = createStyles({
 })
 
 export default withStyles(styles)(Component);
+```
+
+
+
+##  TS 写法
+
+
+`createUseStyles` 在ts和js下写法差不多
+
+`withStyles` 例子:
+
+
+```tsx
+import { withStyles, createStyles, ClassKeysOfStyles } from '@wonder-ui/styles';
+
+type Props = {
+  options?: string;
+  classes?: Partial<ClassKeysOfStyles<typeof styles>>;
+};
+
+const styles = createStyles({
+  root: {
+    color: 'red'
+  },
+  body: {}
+});
+
+function Example_Origin(props: Props) {
+  const { classes = {} } = props;
+
+  return <div className={classes.root}>Example</div>;
+}
+
+withStyles(styles)(Example_Origin)
+
 ```
