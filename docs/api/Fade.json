@@ -1,8 +1,0 @@
-{
-  "description": "",
-  "displayName": "Fade",
-  "methods": [],
-  "composes": [
-    "../Transition"
-  ]
-}

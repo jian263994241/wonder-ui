@@ -1,0 +1,47 @@
+{
+  "name": "@wonder-ui/components",
+  "version": "0.0.1",
+  "description": "Wonder-UI components",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "src",
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "react",
+    "wonder ui",
+    "react router"
+  ],
+  "scripts": {
+    "start": "tsdx watch --entry src/index.ts",
+    "build": "tsdx build --entry src/index.ts",
+    "lint": "tsdx lint src",
+    "lint:fix": "tsdx lint src --fix",
+    "test": "tsdx test",
+    "test:watch": "tsdx test --watch",
+    "test:coverage": "tsdx test --coverage",
+    "example": "cd ./example && ale start",
+    "publish:next": "npm version prerelease & npm publish ./ --access=public --tag=next"
+  },
+  "author": "jian.li",
+  "homepage": "https://github.com/jian263994241/wonder-ui",
+  "bugs": {
+    "url": "https://github.com/jian263994241/wonder-ui/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@wonder-ui/styles": "^2.0.0-beta.9"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.6",
+    "react-dom": ">=16.8.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jian263994241/wonder-ui.git"
+  }
+}
