@@ -69,11 +69,6 @@ export default withStyles(styles)(Component);
 ```tsx
 import { withStyles, createStyles, ClassKeysOfStyles } from '@wonder-ui/styles';
 
-type Props = {
-  options?: string;
-  classes?: Partial<ClassKeysOfStyles<typeof styles>>;
-};
-
 const styles = createStyles({
   root: {
     color: 'red'
@@ -81,8 +76,13 @@ const styles = createStyles({
   body: {}
 });
 
+type Props = {
+  options?: object;
+  classes?: Partial<ClassKeysOfStyles<typeof styles>>;
+};
+
 function Example_Origin(props: Props) {
-  const { classes = {} } = props;
+  const { classes = {}, object } = props;
 
   return <div className={classes.root}>Example</div>;
 }
