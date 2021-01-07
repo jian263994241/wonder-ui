@@ -100,6 +100,9 @@ export * from './components/Page';
 export { default as Picker } from './components/Picker';
 export * from './components/Picker';
 
+export { default as Preloader } from './components/Preloader';
+export * from './components/Preloader';
+
 export { default as SearchBar } from './components/SearchBar';
 export * from './components/SearchBar';
 
@@ -116,3 +119,6 @@ export { default as Typography } from './components/Typography';
 export * from './components/Typography';
 
 export { default as View } from './components/View';
+
+export * from '@wonder-ui/styles';
+export * from '@wonder-ui/router';

@@ -20,7 +20,7 @@ export interface DialogProps {
 declare function Dialog(props: DialogProps): JSX.Element;
 
 declare namespace Dialog {
-  export function toast(m: string): void;
+  export function toast(m: string, time?: number, callback?: () => void): void;
   export function alert(data: {
     title?: string;
     text?: string;
