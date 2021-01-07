@@ -12,3 +12,5 @@ declare namespace Preloader {
   export function show(): void;
   export function hide(): void;
 }
+
+export default Preloader;

@@ -1,5 +1,5 @@
 {
-  "description": "提供一个44像素的通栏, 子元素Flex布局\nSlot位置 `pageContentAfter`\n@see 基于[Flex组件](#/组件?id=flex)扩展, props相同 \n@visibleName Toolbar 工具栏",
+  "description": "提供一个44像素的通栏, 子元素Flex布局\nSlot位置 `pageContentAfter`\n@see 基于[Flex组件](#/组件?id=flex)扩展, props相同\n@visibleName Toolbar 工具栏",
   "displayName": "ToolBar",
   "methods": [],
   "props": {
