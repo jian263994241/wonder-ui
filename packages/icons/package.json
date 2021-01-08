@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/icons",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "wonder-ui icons",
   "main": "index.js",
   "keywords": [
@@ -17,15 +17,10 @@
     "url": "https://github.com/jian263994241/wonder-ui/issues"
   },
   "license": "MIT",
-  "dependencies": {
-    "@babel/runtime": "^7.8.0",
-    "@wonder-ui/styles": "^1.0.6",
-    "@wonder-ui/utils": "^1.0.3",
-    "clsx": "^1.1.0",
-    "prop-types": "^15.7.2"
-  },
+  "dependencies": {},
   "peerDependencies": {
-    "react": ">=16.8.6"
+    "react": ">=16.8.6",
+    "@wonder-ui/core": "*"
   },
   "repository": {
     "type": "git",
