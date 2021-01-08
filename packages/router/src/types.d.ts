@@ -5,7 +5,7 @@ export interface PartialRouteObject {
   exact?: boolean;
   element?: React.ReactNode;
   component?: React.ComponentType;
-  async?: () => Promise<React.ComponentType>;
+  async?: () => Promise<any>;
   children?: PartialRouteObject[];
 }
 
@@ -16,9 +16,9 @@ export interface routeProps {
 }
 
 export interface Location {
-  hash?: string;
-  query?: object;
-  search?: string;
+  hash: string;
+  query: object;
+  search: string;
   pathname: string;
-  state?: any;
+  state: any;
 }

@@ -19,8 +19,13 @@ export {
   NavLink,
 } from 'react-router-dom';
 
-export * from './hooks';
-export * from './utils';
-export * from './Routes';
-
 export { default as Routes } from './Routes';
+
+export {
+  useLocation,
+  useLocationExact,
+  usePageEffect,
+  useNavigation,
+} from './hooks';
+
+export { createRoutesFromArray } from './utils';

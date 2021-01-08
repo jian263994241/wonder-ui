@@ -25,7 +25,7 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
     visible,
     ...rest
   } = props;
-  const contentRef = React.useRef();
+  const contentRef = React.useRef(null);
   const transtionStyles = {
     entering: {
       opacity: 1,
@@ -42,6 +42,7 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
 
   return (
     <Modal
+      ref={ref}
       visible={visible}
       container={container}
       afterClose={afterClose}
@@ -59,38 +60,19 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
           transform: 'translate3d(-50%, -50%, 0) scale(1.185)',
         }}
       >
-        <div
-          className={clsx(
-            classes.root,
-            {
-              toast: toast,
-            },
-            className,
-          )}
-          ref={ref}
-        >
+        <div className={clsx(classes.root, { toast: toast }, className)}>
           {(title || content || text) && (
-            <div
-              className={clsx(classes.body, {
-                noButtons: noButtons,
-              })}
-            >
+            <div className={clsx(classes.body, { noButtons: noButtons })}>
               {title && <div className={classes.title}>{title}</div>}
               {text && <div className={classes.text}>{text}</div>}
               {getRendered(content, { ref: contentRef })}
             </div>
           )}
           {!noButtons && (
-            <div
-              className={clsx(classes.buttonGroup, {
-                vertical: vertical,
-              })}
-            >
+            <div className={clsx(classes.buttonGroup, { vertical: vertical })}>
               {actions.map((action, i) => (
                 <Buttonbase
-                  className={clsx(classes.button, {
-                    primary: action.primary,
-                  })}
+                  className={clsx(classes.button, { primary: action.primary })}
                   onClick={(e) => {
                     if (action.onClick) {
                       action.onClick(e, { contentRef });
