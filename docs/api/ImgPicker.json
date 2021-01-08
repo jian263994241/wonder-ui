@@ -46,7 +46,7 @@
       "required": false,
       "description": "input改变",
       "defaultValue": {
-        "value": "() => { }",
+        "value": "() => {}",
         "computed": false
       }
     },
@@ -57,7 +57,7 @@
       "required": false,
       "description": "点击input",
       "defaultValue": {
-        "value": "() => { }",
+        "value": "() => {}",
         "computed": false
       }
     },
@@ -123,7 +123,7 @@
       "required": false,
       "description": "下载图片方法, 返回一个Promise方法",
       "defaultValue": {
-        "value": "() => { }",
+        "value": "() => {}",
         "computed": false
       }
     }

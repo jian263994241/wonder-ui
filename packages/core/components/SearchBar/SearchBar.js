@@ -5,15 +5,15 @@ import styles from './styles';
 import useDisabledRefTouchMove from '@wonder-ui/utils/useDisabledRefTouchMove';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import useForkRef from '@wonder-ui/utils/useForkRef';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 import InputBase from '../InputBase';
 import Button from '../Button';
 
 /**
- * 
+ *
  * @visibleName SearchBar 搜索
  */
-const SearchBar = React.forwardRef(function SearchBar(props, ref){
+const SearchBar = React.forwardRef(function SearchBar(props, ref) {
   const {
     bordered = true,
     cancelText = '取消',
@@ -35,8 +35,8 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
   const rootRef = React.useRef(null);
   const inputRef = React.useRef();
   const handleRef = useForkRef(inputRef, ref);
-  const _value = value != undefined ?  value : defaultValue;
-  
+  const _value = value != undefined ? value : defaultValue;
+
   const [innerValue, setInnerValue] = React.useState('');
   const [inFocus, setFocus] = React.useState(false);
 
@@ -44,36 +44,36 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
 
   useDisabledRefTouchMove(rootRef);
 
-  React.useEffect(()=>{
-    if(_value != innerValue){
+  React.useEffect(() => {
+    if (_value != innerValue) {
       setInnerValue(_value);
     }
   }, [_value]);
 
-  const changeValue = React.useCallback((value)=>{
+  const changeValue = React.useCallback((value) => {
     setInnerValue(value);
     onChange && onChange(value);
-    if(!value || value === ''){
-      if(onClear){
+    if (!value || value === '') {
+      if (onClear) {
         onClear();
       }
     }
   }, []);
 
-  const handleFocus = useEventCallback((e)=>{
+  const handleFocus = useEventCallback((e) => {
     setFocus(true);
     onFocus && onFocus(e);
   });
 
-  const handleCancel = useEventCallback((e)=>{
+  const handleCancel = useEventCallback((e) => {
     changeValue('');
     setFocus(false);
     onCancel && onCancel(e);
   });
 
-  const handleSearch = useEventCallback((e)=>{
+  const handleSearch = useEventCallback((e) => {
     e.preventDefault();
-    const val = e.target.searchField ? e.target.searchField.value: null;
+    const val = e.target.searchField ? e.target.searchField.value : null;
     inputRef.current.blur();
     setFocus(false);
     onSearch && onSearch(val);
@@ -87,7 +87,7 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
           [classes.bordered]: bordered,
           [classes.inputStart]: showCancel,
         },
-        className
+        className,
       )}
       onSubmit={handleSearch}
     >
@@ -99,40 +99,34 @@ const SearchBar = React.forwardRef(function SearchBar(props, ref){
             type="search"
             autoComplete="off"
             name="searchField"
-            inputRef={handleRef} 
-            value={innerValue} 
-            onChange={changeValue} 
+            inputRef={handleRef}
+            value={innerValue}
+            onChange={changeValue}
             onFocus={handleFocus}
             {...rest}
           />
-          <i className={classes.iconSearch}/>
+          <i className={classes.iconSearch} />
         </div>
-        {
-          showSearchButton && (
-            <div>
-              <Button variant="text" color="primary" type="submit">{searchButtonText}</Button>
-            </div>
-          )
-        }
-        {
-          extra && (
-            <div className={classes.extra}>{extra}</div>
-          )
-        }
+        {showSearchButton && (
+          <div>
+            <Button variant="text" color="primary" type="submit">
+              {searchButtonText}
+            </Button>
+          </div>
+        )}
+        {extra && <div className={classes.extra}>{extra}</div>}
 
-        {
-          (!showSearchButton && !extra) && (
-            <span className={classes.cancelText} onClick={handleCancel} >
+        {!showSearchButton && !extra && (
+          <span className={classes.cancelText} onClick={handleCancel}>
             {cancelText}
-            </span>
-          )
-        }
+          </span>
+        )}
       </div>
     </form>
   );
 });
 
-SearchBar.propTypes={
+SearchBar.propTypes = {
   classes: PropTypes.object,
   cancelText: PropTypes.node,
   defaultValue: PropTypes.any,
@@ -146,8 +140,8 @@ SearchBar.propTypes={
   showCancelButton: PropTypes.bool,
   showSearchButton: PropTypes.bool,
   extra: PropTypes.node,
-  bordered: PropTypes.bool
-}; 
+  bordered: PropTypes.bool,
+};
 
 SearchBar.displayName = 'SearchBar';
 

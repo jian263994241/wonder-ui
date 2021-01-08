@@ -1,28 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useRouterContext } from '@wonder-ui/router';
+import { useNavigation } from '@wonder-ui/router';
 import HeaderBar from '../HeaderBar';
 
 const styles = {
   root: {
-    position: 'fixed'
-  }
+    position: 'fixed',
+  },
 };
 
-const Navbar = React.forwardRef(function Navbar(props, ref){
-  const {
-    barLeft,
-    barRight,
-    showBack = true,
-    style,
-    title,
-    ...rest
-  } = props;
+const Navbar = React.forwardRef(function Navbar(props, ref) {
+  const { barLeft, barRight, showBack = true, style, title, ...rest } = props;
 
-  const { routerStore = {} } = useRouterContext();
-  const handleGoBack = React.useCallback(() => {
-    routerStore.goBack ? routerStore.goBack () : window.history.back()
-  }, []);
+  const nav = useNavigation();
+  const handleGoBack = () => {
+    nav.goBack();
+  };
 
   return (
     <HeaderBar
@@ -32,11 +25,11 @@ const Navbar = React.forwardRef(function Navbar(props, ref){
       barRight={barRight}
       bordered
       ref={ref}
-      style={{...styles, ...style}}
+      style={{ ...styles, ...style }}
       title={title}
       {...rest}
     />
-  )
+  );
 });
 
 Navbar.propTypes = {
@@ -44,7 +37,7 @@ Navbar.propTypes = {
   title: PropTypes.node,
   barLeft: PropTypes.node,
   barRight: PropTypes.node,
-  showBack: PropTypes.bool
+  showBack: PropTypes.bool,
 };
 
 export default Navbar;

@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
 import clsx from 'clsx';
-import Dialog from '../Dialog';
-import IconInfoOutlined from '@wonder-ui/icons/InfoCircleOutlined';
 import InputBase from '../InputBase';
 import styles from './styles';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 import ExtraInfo from './ExtraInfo';
 
 /**
@@ -15,8 +12,6 @@ import ExtraInfo from './ExtraInfo';
  */
 const InputItem = React.forwardRef(function InputItem(props, ref) {
   const {
-    [FIELD_DATA_PROP]: fieldData = {},
-    [FIELD_META_PROP]: fieldMeta,
     alignRight,
     children,
     classes,
@@ -29,20 +24,16 @@ const InputItem = React.forwardRef(function InputItem(props, ref) {
     onExtraClick,
     renderInput,
     rootRef,
+    meta = {},
     ...rest
   } = props;
 
-  const errorMsg = React.useMemo(
-    () => {
-      if (errorMessage) {
-        return errorMessage;
-      }
-      if (fieldData.errors && fieldData.errors[0]) {
-        return fieldData.errors[0].message;
-      }
-    },
-    [fieldData.errors, errorMessage],
-  );
+  const errorMsg = React.useMemo(() => {
+    if (errorMessage) {
+      return errorMessage;
+    }
+    return meta.errors ? meta.errors.join() : null;
+  }, [meta.errors, errorMessage]);
 
   return (
     <div

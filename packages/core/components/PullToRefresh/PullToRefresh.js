@@ -2,29 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PullToRefreshFix from './PullToRefreshFix';
 import styles from './styles';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 
 /**
  * 配合ListView 实现长列表下拉刷新
  * @visibleName PullToRefresh 下拉刷新
  */
 const PullToRefresh = React.forwardRef(function PullToRefresh(props, ref) {
-  const { 
-    classes,
-    prefixCls,
-    onRefresh = ()=>{},
-    ...rest
-  } = props;
-  
+  const { classes, prefixCls, onRefresh = () => {}, ...rest } = props;
+
   return (
-    <PullToRefreshFix 
+    <PullToRefreshFix
       ref={ref}
       prefixCls={classes.root}
       onRefresh={onRefresh}
       {...rest}
     />
-  )
-})
+  );
+});
 
 PullToRefresh.displayName = 'PullToRefresh';
 
@@ -38,9 +33,9 @@ PullToRefresh.defaultProps = {
     activate: '释放即可刷新',
     deactivate: '下拉即可刷新',
     finish: '加载完成',
-    release: '正在刷新数据中...'
-  }
-}
+    release: '正在刷新数据中...',
+  },
+};
 
 PullToRefresh.propTypes = {
   /**
@@ -66,7 +61,7 @@ PullToRefresh.propTypes = {
     activate: PropTypes.any,
     deactivate: PropTypes.any,
     release: PropTypes.any,
-    finish: PropTypes.any
+    finish: PropTypes.any,
   }),
   /**
    * additional css class of root dom node
@@ -79,7 +74,7 @@ PullToRefresh.propTypes = {
   /**
    * pull damping, suggest less than 200
    */
-  damping: PropTypes.number
-}
+  damping: PropTypes.number,
+};
 
 export default withStyles(styles)(PullToRefresh);

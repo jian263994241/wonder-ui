@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import capitalize from '@wonder-ui/utils/capitalize';
 import styles, { createColor } from './styles';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 
 /**
  * 进行标记和分类的小标签，用于标记事物的属性和维度，以及进行分类.
@@ -23,11 +23,12 @@ const Tag = React.forwardRef(function Tag(props, ref) {
     ...rest
   } = props;
 
-  const customColor = React.useMemo(()=> createColor(color), [color]);
-  
+  const customColor = React.useMemo(() => createColor(color), [color]);
+
   return (
-    <span className={clsx(
-        classes.root, 
+    <span
+      className={clsx(
+        classes.root,
         {
           [classes.colorPrimary]: color === 'primary',
           [classes.colorSecondary]: color === 'secondary',
@@ -36,16 +37,16 @@ const Tag = React.forwardRef(function Tag(props, ref) {
           [classes[`size${capitalize(size)}`]]: size !== 'medium',
           [classes.hairline]: hairline,
         },
-        className
-      )} 
-      style={{...customColor, ...style}}
-      ref={ref} 
+        className,
+      )}
+      style={{ ...customColor, ...style }}
+      ref={ref}
       {...rest}
     >
       {children}
     </span>
-  )
-})
+  );
+});
 
 Tag.propTypes = {
   /** 标签颜色 `primary`, `secondary`, 或者 自定颜色'#ccc' */
@@ -62,7 +63,7 @@ Tag.propTypes = {
    * 细边框
    */
   hairline: PropTypes.bool,
-}
+};
 
 Tag.displayName = 'Tag';
 

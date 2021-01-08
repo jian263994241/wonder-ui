@@ -1,19 +1,18 @@
 import React from 'react';
-import { 
-  CheckableGroup, 
-  CheckboxItem, 
-  createTheme, 
-  List, 
-  ListItem, 
-  Page, 
-  Switch, 
-  useTheme,
+import {
+  CheckableGroup,
+  CheckboxItem,
+  List,
+  ListItem,
+  Page,
+  Switch,
 } from '@wonder-ui/core';
+import { createTheme, useTheme } from '@wonder-ui/styles';
 
 const colors = [
-  {label: '4791db', value: '#4791db'},
-  {label: 'ffb74d', value: '#ffb74d'},
-  {label: '4caf50', value: '#4caf50'},
+  { label: '4791db', value: '#4791db' },
+  { label: 'ffb74d', value: '#ffb74d' },
+  { label: '4caf50', value: '#4caf50' },
 ];
 
 const darkTheme = createTheme({
@@ -26,47 +25,53 @@ export default function ThemeExamples(props) {
   const theme = useTheme();
   const setTheme = window.setTheme;
   const [dark, setDark] = React.useState(theme.palette.type === 'dark');
-  const [currentColor, setCurrentColor] = React.useState(theme.palette.primary.main);
-  
-  const changeDark = (checked)=>{
-    if(checked){
-      setTheme(darkTheme)
-    }else{
-      setTheme()
+  const [currentColor, setCurrentColor] = React.useState(
+    theme.palette.primary.main,
+  );
+
+  const changeDark = (checked) => {
+    if (checked) {
+      setTheme(darkTheme);
+    } else {
+      setTheme();
     }
     setDark(checked);
   };
-  
-  const handleChange= (value)=>{
+
+  const handleChange = (value) => {
     setTheme(
       createTheme({
         palette: {
-          type: dark ? 'dark': 'light',
+          type: dark ? 'dark' : 'light',
           primary: {
             main: value,
           },
         },
-      })
-    )
+      }),
+    );
     setCurrentColor(value);
-  }
+  };
 
   return (
-    <Page name="Theme" navbar >
-      <List renderHeader={()=>`Mod`}>
-        <ListItem extra={<Switch checked={dark} onChange={changeDark}/>}>深色模式</ListItem>
+    <Page name="Theme" navbar>
+      <List renderHeader={() => `Mod`}>
+        <ListItem extra={<Switch checked={dark} onChange={changeDark} />}>
+          深色模式
+        </ListItem>
       </List>
-      <List renderHeader={()=>`颜色`}>
-        <CheckableGroup 
+      <List renderHeader={() => `颜色`}>
+        <CheckableGroup
           exclusive
           value={currentColor}
           data={colors}
           onChange={handleChange}
-          renderItem={({label, ...props})=>(
-            <CheckboxItem visible {...props}>{label}</CheckboxItem>
+          renderItem={({ label, ...props }) => (
+            <CheckboxItem visible {...props}>
+              {label}
+            </CheckboxItem>
           )}
         />
       </List>
     </Page>
-  )
+  );
 }

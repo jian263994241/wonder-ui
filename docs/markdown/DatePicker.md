@@ -1,6 +1,7 @@
+
 ```js
 import React from 'react';
-import { Page, Button, DatePicker, ContentBlock, Form } from '@wonder-ui/core';
+import { Page, Button, DatePicker, ContentBlock, Form, FormItem } from '@wonder-ui/core';
 
 const ExtraButton = React.forwardRef((props, ref) => {
   const {extra='请选择', ...rest} = props;
@@ -10,22 +11,22 @@ const ExtraButton = React.forwardRef((props, ref) => {
   )
 })
 
-const PickerExamples = Form.create()(function (props) {
-  const { form } = props;
-  
+const PickerExamples = function (props) {
+
   return (
     <Page name="DatePicker" navbar>
-      <ContentBlock header={<span>DatePickerPicker & Button</span>}>
-        {
-          form.getFieldDecorator('group', {
-
-          })(
-            <DatePicker><ExtraButton/></DatePicker>
-          )
-        }
-      </ContentBlock>
+      <Form>
+        <ContentBlock header={<span>DatePickerPicker & Button</span>}>
+          <FormItem name="group">
+            <DatePicker>
+              <ExtraButton />
+            </DatePicker>
+          </FormItem>
+        </ContentBlock>
+      </Form>
     </Page>
   )
-});
+};
+
 <PickerExamples/>
 ```

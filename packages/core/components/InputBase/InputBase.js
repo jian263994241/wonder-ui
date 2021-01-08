@@ -6,7 +6,7 @@ import refType from '@wonder-ui/utils/refType';
 import styles from './styles';
 import TextareaAutosize from '../TextareaAutosize';
 import useForkRef from '@wonder-ui/utils/useForkRef';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 import formControlState from './formControlState';
 import useEnhancedEffect from '@wonder-ui/utils/useEnhancedEffect';
 import { isFilled } from './utils';
@@ -54,7 +54,7 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
   let value = inputPropsProp.value != null ? inputPropsProp.value : valueProp;
   const { current: isControlled } = React.useRef(!!onChange || !!value);
 
-  if(isControlled){
+  if (isControlled) {
     value = value || '';
   }
 
@@ -65,11 +65,19 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
   const [clearButtonVisible, setClearButtonVisibled] = React.useState(false);
 
   const muiFormControl = null;
-  
+
   const fcs = formControlState({
     props,
     muiFormControl,
-    states: ['color', 'disabled', 'error', 'hiddenLabel', 'margin', 'required', 'filled'],
+    states: [
+      'color',
+      'disabled',
+      'error',
+      'hiddenLabel',
+      'margin',
+      'required',
+      'filled',
+    ],
   });
 
   // The blur won't fire when the disabled state is set on a focused input.
@@ -82,12 +90,12 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
       }
     }
   }, [muiFormControl, disabled, focused, onBlur]);
-  
+
   const onFilled = muiFormControl && muiFormControl.onFilled;
   const onEmpty = muiFormControl && muiFormControl.onEmpty;
 
   const checkDirty = React.useCallback(
-    obj => {
+    (obj) => {
       if (isFilled(obj)) {
         if (onFilled) {
           onFilled();
@@ -101,35 +109,35 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
 
   useEnhancedEffect(() => {
     if (isControlled) {
-      checkDirty({ value }); 
+      checkDirty({ value });
     }
   }, [value, checkDirty, isControlled]);
 
   const showClearButton = (element) => {
-    if(readOnly) return ;
+    if (readOnly) return;
     const _value = element.value;
-    if(_value && _value.length > 0){
+    if (_value && _value.length > 0) {
       setClearButtonVisibled(true);
-    }else{
+    } else {
       setClearButtonVisibled(false);
     }
   };
 
   const hideClearButtonTimeOut = React.useRef();
 
-  useEnhancedEffect(()=>{
+  useEnhancedEffect(() => {
     const element = inputRef.current;
-    if(focused){
+    if (focused) {
       clearTimeout(hideClearButtonTimeOut.current);
       showClearButton(element);
-    }else{
+    } else {
       hideClearButtonTimeOut.current = setTimeout(() => {
         setClearButtonVisibled(false);
       }, 100);
     }
   }, [focused]);
 
-  const handleFocus = event => {
+  const handleFocus = (event) => {
     // Fix a bug with IE 11 where the focus/blur events are triggered
     // while the input is disabled.
     if (fcs.disabled) {
@@ -151,7 +159,7 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     }
   };
 
-  const handleBlur = event => {
+  const handleBlur = (event) => {
     if (onBlur) {
       onBlur(event);
     }
@@ -170,7 +178,7 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     const element = event.target || inputRef.current;
     if (!isControlled) {
       if (element == null) {
-        throw new TypeError( 'Expected valid input target. ');
+        throw new TypeError('Expected valid input target. ');
       }
 
       checkDirty({
@@ -196,11 +204,11 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     checkDirty(inputRef.current);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     if (
-      inputRef.current 
+      inputRef.current &&
       // && event.currentTarget === event.target
-      && event.currentTarget.contains(event.target)
+      event.currentTarget.contains(event.target)
     ) {
       inputRef.current.focus();
     }
@@ -243,18 +251,19 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     };
   }
 
-  const handleAutoFill = event => {
+  const handleAutoFill = (event) => {
     // Provide a fake value as Chrome might not let you access it for security reasons.
     checkDirty(
-      event.animationName.indexOf('auto-fill-cancel') !== -1 ? inputRef.current : { value: 'x' },
+      event.animationName.indexOf('auto-fill-cancel') !== -1
+        ? inputRef.current
+        : { value: 'x' },
     );
   };
 
-  const handleClear = event => {
+  const handleClear = (event) => {
     const element = inputRef.current;
 
-    if(!isControlled){
-
+    if (!isControlled) {
       element.value = '';
 
       checkDirty({ value: '' });
@@ -269,8 +278,8 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
     if (onChange) {
       onChange('');
     }
-  }
-  
+  };
+
   React.useEffect(() => {
     if (muiFormControl) {
       muiFormControl.setAdornedStart(Boolean(startAdornment));
@@ -328,7 +337,7 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
             [classes.inputHiddenLabel]: fcs.hiddenLabel,
             [classes.inputAdornedStart]: startAdornment,
             [classes.inputAdornedEnd]: endAdornment,
-            [classes.textAlignRight]: alignRight
+            [classes.textAlignRight]: alignRight,
           },
           inputPropsProp.className,
         )}
@@ -336,10 +345,10 @@ const InputBase = React.forwardRef(function InputBase(props, ref) {
         onChange={handleChange}
         onFocus={handleFocus}
       />
-      <i 
+      <i
         className={clsx(classes.iconClear, {
-          [classes.hidden]: !(clearButton && clearButtonVisible)
-        })} 
+          [classes.hidden]: !(clearButton && clearButtonVisible),
+        })}
         onClick={handleClear}
       />
       {endAdornment}
@@ -505,6 +514,5 @@ InputBase.propTypes = {
 };
 
 InputBase.displayName = 'InputBase';
-
 
 export default withStyles(styles)(InputBase);

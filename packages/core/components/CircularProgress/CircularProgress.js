@@ -4,7 +4,7 @@ import capitalize from '@wonder-ui/utils/capitalize';
 import chainPropTypes from '@wonder-ui/utils/chainPropTypes';
 import clsx from 'clsx';
 import styles from './styles';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 
 const SIZE = 44;
 
@@ -24,10 +24,13 @@ function easeIn(t) {
 }
 
 /**
- * 
+ *
  * @visibleName CircularProgress
  */
-const CircularProgress = React.forwardRef(function CircularProgress(props, ref) {
+const CircularProgress = React.forwardRef(function CircularProgress(
+  props,
+  ref,
+) {
   const {
     classes,
     className,
@@ -51,13 +54,18 @@ const CircularProgress = React.forwardRef(function CircularProgress(props, ref) 
     rootProps['aria-valuenow'] = Math.round(value);
 
     if (variant === 'static') {
-      circleStyle.strokeDashoffset = `${(((100 - value) / 100) * circumference).toFixed(3)}px`;
+      circleStyle.strokeDashoffset = `${(
+        ((100 - value) / 100) *
+        circumference
+      ).toFixed(3)}px`;
       rootStyle.transform = 'rotate(-90deg)';
     } else {
-      circleStyle.strokeDashoffset = `${(easeIn((100 - value) / 100) * circumference).toFixed(
+      circleStyle.strokeDashoffset = `${(
+        easeIn((100 - value) / 100) * circumference
+      ).toFixed(3)}px`;
+      rootStyle.transform = `rotate(${(easeOut(value / 70) * 270).toFixed(
         3,
-      )}px`;
-      rootStyle.transform = `rotate(${(easeOut(value / 70) * 270).toFixed(3)}deg)`;
+      )}deg)`;
     }
   }
 
@@ -78,7 +86,10 @@ const CircularProgress = React.forwardRef(function CircularProgress(props, ref) 
       {...rootProps}
       {...other}
     >
-      <svg className={classes.svg} viewBox={`${SIZE / 2} ${SIZE / 2} ${SIZE} ${SIZE}`}>
+      <svg
+        className={classes.svg}
+        viewBox={`${SIZE / 2} ${SIZE / 2} ${SIZE} ${SIZE}`}
+      >
         <circle
           className={clsx(classes.circle, {
             [classes.circleIndeterminate]: variant === 'indeterminate',
@@ -117,8 +128,12 @@ CircularProgress.propTypes = {
    * If `true`, the shrink animation is disabled.
    * This only works if variant is `indeterminate`.
    */
-  disableShrink: chainPropTypes(PropTypes.bool, props => {
-    if (props.disableShrink && props.variant && props.variant !== 'indeterminate') {
+  disableShrink: chainPropTypes(PropTypes.bool, (props) => {
+    if (
+      props.disableShrink &&
+      props.variant &&
+      props.variant !== 'indeterminate'
+    ) {
       return new Error(
         'Material-UI: you have provided the `disableShrink` prop ' +
           'with a variant other than `indeterminate`. This will have no effect.',

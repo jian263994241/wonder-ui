@@ -3,6 +3,13 @@
   "displayName": "RouteTransition",
   "methods": [],
   "props": {
+    "element": {
+      "type": {
+        "name": "elementType"
+      },
+      "required": false,
+      "description": "一个 React 元素类型"
+    },
     "animation": {
       "type": {
         "name": "enum",
@@ -23,13 +30,6 @@
       },
       "required": false,
       "description": "Animation type"
-    },
-    "redirect": {
-      "type": {
-        "name": "string"
-      },
-      "required": false,
-      "description": "Redirect url"
     },
     "async": {
       "type": {
@@ -66,23 +66,12 @@
       "required": false,
       "description": "Disable animation"
     },
-    "disabled": {
-      "type": {
-        "name": "bool"
-      },
-      "required": false,
-      "description": "Disable route"
-    },
     "component": {
       "type": {
-        "name": "custom",
-        "raw": "(props, propName)=>{\n  const propsCopy = Object.assign({}, props);\n  if(props[propName]){\n    if(props[propName].default){\n      propsCopy[propName] = props[propName].default\n    }\n    return Route.propTypes.component(propsCopy, propName);\n  }\n}"
+        "name": "func"
       },
       "required": false,
       "description": "component"
     }
-  },
-  "composes": [
-    "react-router-dom"
-  ]
+  }
 }

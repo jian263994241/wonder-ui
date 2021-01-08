@@ -5,15 +5,15 @@ import DisabledTouchMove from '../DisabledTouchMove';
 import Flex from '../Flex';
 import Slot from '../Slot';
 import styles from './styles';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 /**
  * 提供一个44像素的通栏, 子元素Flex布局
  * Slot位置 `pageContentAfter`
- * @see 基于[Flex组件](#/组件?id=flex)扩展, props相同 
+ * @see 基于[Flex组件](#/组件?id=flex)扩展, props相同
  * @visibleName Toolbar 工具栏
  */
 const ToolBar = React.forwardRef(function ToolBar(props, ref) {
-  const { 
+  const {
     bottomFixed,
     buttonFull = true,
     children,
@@ -22,16 +22,16 @@ const ToolBar = React.forwardRef(function ToolBar(props, ref) {
     safeAreaBottom = false,
     ...rest
   } = props;
-  
+
   const bar = (
     <DisabledTouchMove ref={ref}>
-      <Flex 
+      <Flex
         className={clsx(
           classes.root,
           {
-            [classes.safeAreaBottom]: bottomFixed || safeAreaBottom
+            [classes.safeAreaBottom]: bottomFixed || safeAreaBottom,
           },
-          className
+          className,
         )}
         flex
         role="toolbar"
@@ -41,16 +41,16 @@ const ToolBar = React.forwardRef(function ToolBar(props, ref) {
       </Flex>
     </DisabledTouchMove>
   );
-  
-  if(bottomFixed){
-    return ( <Slot name="pageToolbar"> {bar} </Slot> )
+
+  if (bottomFixed) {
+    return <Slot name="pageToolbar"> {bar} </Slot>;
   }
   return bar;
 });
 
 ToolBar.defaultProps = {
   gutter: 0.25,
-}
+};
 
 ToolBar.propTypes = {
   /**
@@ -68,6 +68,5 @@ ToolBar.propTypes = {
 };
 
 ToolBar.displayName = 'ToolBar';
-
 
 export default withStyles(styles)(ToolBar);

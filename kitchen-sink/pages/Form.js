@@ -23,8 +23,8 @@ const fruit = [
 export default function FormExamples(props) {
   const formRef = React.useRef();
 
-  const handleError = (values, headError) => {
-    Dialog.toast(headError.message);
+  const handleError = ({ errorFields }) => {
+    Dialog.toast(errorFields[0].errors.join());
   };
 
   const submit = (values) => {

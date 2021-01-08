@@ -106,7 +106,7 @@
       "required": false,
       "description": "The duration for the transition, in milliseconds.\nYou may specify a single timeout for all transitions, or individually with an object.",
       "defaultValue": {
-        "value": "{ \n  enter: transitions.duration.enteringScreen, \n  exit: transitions.duration.leavingScreen \n}",
+        "value": "{\n  enter: transitions.duration.enteringScreen,\n  exit: transitions.duration.leavingScreen,\n}",
         "computed": false
       }
     }

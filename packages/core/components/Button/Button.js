@@ -1,23 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useRouterContext } from '@wonder-ui/router';
 import ButtonBase from '../ButtonBase';
 import capitalize from '@wonder-ui/utils/capitalize';
 import clsx from 'clsx';
 import styles from './styles';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 
 /**
  * 按钮, 用做用户点击操作.
  * @visibleName Button 按钮
  */
-const Button =  React.forwardRef(function Button(props, ref) {
+const Button = React.forwardRef(function Button(props, ref) {
   const {
     back,
     children,
     classes,
     className,
-    color='default',
+    color = 'default',
     endIcon,
     full,
     disabled,
@@ -25,34 +24,23 @@ const Button =  React.forwardRef(function Button(props, ref) {
     icon,
     iconPosition = 'left',
     hexColor,
-    onClick,
     replace,
     rounded,
     size = 'medium',
     startIcon,
     to,
-    variant='contained',
+    variant = 'contained',
     ...rest
   } = props;
-  const { routerStore } = useRouterContext();
-  const handleClick = React.useCallback((e)=>{
-    if(routerStore){
-      if(to){
-        routerStore[replace ? 'replace': 'push'](to);
-      }else if(back){
-        routerStore.goBack();
-      }
-    }
-    onClick && onClick(e);
-  }, [to, back, onClick, replace]);
 
   return (
-    <ButtonBase 
+    <ButtonBase
       className={clsx(
         classes.root,
         classes[variant],
         {
-          [classes[`${variant}${capitalize(color)}`]]: color !== 'default' && color !== 'inherit' && color !== 'hex',
+          [classes[`${variant}${capitalize(color)}`]]:
+            color !== 'default' && color !== 'inherit' && color !== 'hex',
           [classes[`${variant}Size${capitalize(size)}`]]: size !== 'medium',
           [classes[`size${capitalize(size)}`]]: size !== 'medium',
           [classes.disabled]: disabled,
@@ -61,39 +49,38 @@ const Button =  React.forwardRef(function Button(props, ref) {
           [classes.borderRounded]: rounded,
           [classes.colorInherit]: color === 'inherit',
         },
-        className
+        className,
       )}
-      ref={ref} 
-      onClick={handleClick}
+      ref={ref}
       {...rest}
-    > 
-      { iconPosition === 'left' && icon }
-      {
-        startIcon && (
-          <span 
-            className={clsx({
-              [classes.startIcon]: true, 
-              [classes.iconSizeSmall]: size === 'small',
-              [classes.iconSizeMedium]: size === 'medium',
-              [classes.iconSizeLarge]: size === 'large',
-            })}
-          >{startIcon}</span>
-        )
-      }
+    >
+      {iconPosition === 'left' && icon}
+      {startIcon && (
+        <span
+          className={clsx({
+            [classes.startIcon]: true,
+            [classes.iconSizeSmall]: size === 'small',
+            [classes.iconSizeMedium]: size === 'medium',
+            [classes.iconSizeLarge]: size === 'large',
+          })}
+        >
+          {startIcon}
+        </span>
+      )}
       <span className={classes.body}> {children} </span>
-      {
-        endIcon && (
-          <span 
-            className={clsx({
-              [classes.endIcon]: true, 
-              [classes.iconSizeSmall]: size === 'small',
-              [classes.iconSizeMedium]: size === 'medium',
-              [classes.iconSizeLarge]: size === 'large',
-            })}
-          >{endIcon}</span>
-        )
-      }
-      { iconPosition === 'right' && icon }
+      {endIcon && (
+        <span
+          className={clsx({
+            [classes.endIcon]: true,
+            [classes.iconSizeSmall]: size === 'small',
+            [classes.iconSizeMedium]: size === 'medium',
+            [classes.iconSizeLarge]: size === 'large',
+          })}
+        >
+          {endIcon}
+        </span>
+      )}
+      {iconPosition === 'right' && icon}
     </ButtonBase>
   );
 });
@@ -102,10 +89,10 @@ Button.propTypes = {
   /** 样式类名 */
   className: PropTypes.string,
   /**
-   * @ignore 
+   * @ignore
    */
   children: PropTypes.node.isRequired,
-  /** 
+  /**
    * 按钮颜色
    */
   color: PropTypes.oneOf(['default', 'inherit', 'primary', 'secondary']),
@@ -131,12 +118,12 @@ Button.propTypes = {
   href: PropTypes.string,
   /**
    * icon
-   * @ignore 
+   * @ignore
    */
   icon: PropTypes.node,
   /**
    * icon的位置
-   * @ignore 
+   * @ignore
    */
   iconPosition: PropTypes.oneOf(['left', 'right']),
   /** 按钮尺寸 */
@@ -144,10 +131,7 @@ Button.propTypes = {
   /** 按钮类型 */
   variant: PropTypes.oneOf(['text', 'outlined', 'contained']),
   /** Link 组件的 props.to */
-  to: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object
-  ]),
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   /**
    * 设置圆形按钮
    */

@@ -78,7 +78,7 @@
       "required": false,
       "description": "indicator config",
       "defaultValue": {
-        "value": "{\n  activate: '释放即可刷新',\n  deactivate: '下拉即可刷新',\n  finish: '加载完成',\n  release: '正在刷新数据中...'\n}",
+        "value": "{\n  activate: '释放即可刷新',\n  deactivate: '下拉即可刷新',\n  finish: '加载完成',\n  release: '正在刷新数据中...',\n}",
         "computed": false
       }
     },

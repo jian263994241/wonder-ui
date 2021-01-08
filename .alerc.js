@@ -1,6 +1,6 @@
-import path from 'path';
+const path = require('path');
 
-export default {
+module.exports = {
   //app 入口
   entry: [
     require.resolve('core-js'),

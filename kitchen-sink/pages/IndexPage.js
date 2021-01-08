@@ -1,30 +1,36 @@
 import React from 'react';
-import { Page, List, Block, ListItem, useRouterContext } from '@wonder-ui/core';
+import {
+  Page,
+  List,
+  Block,
+  ListItem,
+  useNavigation,
+  useLocationExact,
+} from '@wonder-ui/core';
 
-const LinkDetail = (props)=> {
+const LinkDetail = (props) => {
   const { to, ...rest } = props;
-  const { routerStore } = useRouterContext();
-  const handleClick = React.useCallback(()=>{
-    to && routerStore.push(to);
+  const { push } = useNavigation();
+  const handleClick = React.useCallback(() => {
+    to && push(to);
   }, [to]);
-  return <ListItem onClick={handleClick} arrow="horizontal" {...rest}/>;
-}
+  return <ListItem onClick={handleClick} arrow="horizontal" {...rest} />;
+};
 
-export default function IndexPage(props) {
+export default function IndexPage() {
+  const loc = useLocationExact();
+
+  // console.log(loc);
 
   return (
-    <Page 
-      name="Wonder UI"
-      navbar
-      showBack={false}
-    >
+    <Page name="Wonder UI" navbar showBack={false}>
       <Block bottom={10}>
-        <List renderHeader={()=> ``}>
+        <List renderHeader={() => ``}>
           <LinkDetail to="/about">关于 Wonder UI</LinkDetail>
         </List>
-        <List renderHeader={()=> `组件`}>
-          <LinkDetail to="/accordion">Accordion 手风琴</LinkDetail>      
-          <LinkDetail to="/icons">Icons 图标</LinkDetail>       
+        <List renderHeader={() => `组件`}>
+          <LinkDetail to="/accordion">Accordion 手风琴</LinkDetail>
+          <LinkDetail to="/icons">Icons 图标</LinkDetail>
           <LinkDetail to="/block">Block 块 </LinkDetail>
           <LinkDetail to="/button">Button 按钮 </LinkDetail>
           <LinkDetail to="/checkable-group">CheckableGroup 选项</LinkDetail>
@@ -41,15 +47,17 @@ export default function IndexPage(props) {
           <LinkDetail to="/searchbar">SearchBar 搜索</LinkDetail>
           <LinkDetail to="/tag">Tag 标签</LinkDetail>
           <LinkDetail to="/toolbar">Toolbar 工具栏</LinkDetail>
-          <LinkDetail to="/typography">Typography 文字</LinkDetail> 
+          <LinkDetail to="/typography">Typography 文字</LinkDetail>
         </List>
-        <List renderHeader={()=> `主题`}>
+        <List renderHeader={() => `主题`}>
           <LinkDetail to="/theme">Theme 主题</LinkDetail>
         </List>
-        <List renderHeader={()=> `Router`}>
-          <LinkDetail to="/route-transition">RouteTransition 页面过渡</LinkDetail>
+        <List renderHeader={() => `Router`}>
+          <LinkDetail to="/route-transition">
+            RouteTransition 页面过渡
+          </LinkDetail>
         </List>
       </Block>
     </Page>
-  )
+  );
 }

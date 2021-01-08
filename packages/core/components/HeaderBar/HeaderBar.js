@@ -5,13 +5,13 @@ import Close from '@wonder-ui/icons/Close';
 import clsx from 'clsx';
 import DisabledTouchMove from '../DisabledTouchMove';
 import styles from './styles';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 
 /**
  * 提供一个左中右的通栏
  * @visibleName HeaderBar 首栏
  */
-const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
+const HeaderBar = React.forwardRef(function HeaderBar(props, ref) {
   const {
     barLeft,
     barRight,
@@ -30,23 +30,36 @@ const HeaderBar = React.forwardRef(function HeaderBar(props, ref){
     <DisabledTouchMove ref={ref}>
       <div
         className={clsx(
-          classes.root, { 
-            [classes.hairline]: bordered 
-          }, 
-          className
-        )} 
+          classes.root,
+          {
+            [classes.hairline]: bordered,
+          },
+          className,
+        )}
         {...rest}
       >
         <div className={classes.left}>
-          {showBack && <ArrowBackIosOutlined className={classes.defaultIcon} fontSize="small" onClick={onBack}/>}
-          {showClose && <Close className={classes.defaultIcon} fontSize="small" onClick={onClose}/>}
+          {showBack && (
+            <ArrowBackIosOutlined
+              className={classes.defaultIcon}
+              fontSize="small"
+              onClick={onBack}
+            />
+          )}
+          {showClose && (
+            <Close
+              className={classes.defaultIcon}
+              fontSize="small"
+              onClick={onClose}
+            />
+          )}
           {barLeft}
         </div>
         <div className={classes.title}>{title}</div>
         <div className={classes.right}>{barRight}</div>
       </div>
     </DisabledTouchMove>
-  )
+  );
 });
 
 HeaderBar.propTypes = {

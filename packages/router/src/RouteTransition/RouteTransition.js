@@ -2,128 +2,66 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { styles, duration } from './styles';
-import clsx from 'clsx';
+import { withStyles } from '@wonder-ui/styles';
 import Transition from './Transition';
-import UIRouteContext from '../UIRouteContext';
-import useComponent from './useComponent';
-import useEnhancedEffect from '@wonder-ui/utils/useEnhancedEffect';
-import usePageInit from '../usePageInit';
-import useRouterContext from '../useRouterContext';
-import withStyles from '@wonder-ui/styles/withStyles';
-
-const RouteComponent = React.memo(function RouteComponent(props) {
-  const {
-    async,
-    fallback = <div>Loading...</div>,
-    redirect,
-    component,
-    current,
-    name,
-    ...routeProps
-  } = props;
-  const { onRouteChange, routerStore } = useRouterContext();
-
-  const Component = useComponent({ async, component, redirect });
-
-  usePageInit(()=>{
-    if(onRouteChange){
-      const _name = typeof name === 'function' 
-        ? name(routeProps.match, routerStore.location) : name;
-      onRouteChange(routeProps.match, routerStore.location, _name);
-    }
-  })
-
-  return (
-    <Component {...routeProps} routerStore={routerStore} fallback={fallback}/>
-  );
-}, function shouldUpdate(prevProps, nextProps) {
-  if(prevProps.current && prevProps.current != nextProps.current){
-    return true;
-  }
-});
 
 /**
- * 
+ *
  * @visibleName AnimatedRoute
  */
 const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
   const {
-    component,
     classes,
+    element,
     animation = 'slide',
     animationDisabled,
     className,
     style,
-    async,
     fallback,
-    redirect,
-    disabled,
-    name,
     ...rest
   } = props;
 
-  const { routerStore: routing } = useRouterContext();
   const [animationType, setAnimation] = React.useState('none');
   const timeout = duration[animationType] || 0;
 
-  useEnhancedEffect(()=>{
-    setTimeout(() => setAnimation(animationDisabled ? 'none': animation), 0);
+  React.useLayoutEffect(() => {
+    setTimeout(() => setAnimation(animationDisabled ? 'none' : animation), 0);
   }, [animation]);
 
-  if(disabled){
-    return null;
-  }
-  
   return (
-    <UIRouteContext.Provider value={{animationType, timeout}}>
-      <Route {...rest}>
-        {(routeProps)=>{
-          const { match, history } = routeProps;
-          const visible = !!match && match.isExact;
-          return (
-            <Transition
-              in={visible}
-              classNames={animationType}
-              className={classes.root}
-              timeout={timeout}
-              unmountOnExit={!match}
-              action={history.action}
-            >
-              <div
-                className={clsx(classes.root, className)} 
-                style={style}
-                ref={ref}
-                data-url={match && match.url}
-              >
-                <RouteComponent
-                  component={component}
-                  fallback={fallback}
-                  redirect={redirect}
-                  async={async}
-                  query={routing.location.query}
-                  current={visible}
-                  name={name}
-                  {...routeProps}
-                />
-              </div>
-            </Transition>
-          )
-        }}
-      </Route>
-    </UIRouteContext.Provider>
+    <Route {...rest}>
+      {(routeProps) => {
+        const { match, history } = routeProps;
+        const visible = !!match && match.isExact;
+
+        return (
+          <Transition
+            in={visible}
+            classNames={animationType}
+            className={classes.root}
+            style={style}
+            timeout={timeout}
+            unmountOnExit={!match}
+            action={history.action}
+          >
+            {React.createElement(element, { fallback, ref })}
+          </Transition>
+        );
+      }}
+    </Route>
   );
 });
 
 RouteTransition.propTypes = {
-  ...Route.propTypes,
+  /**
+   * 一个 React 元素类型
+   */
+  element: PropTypes.elementType,
   /**
    * Animation type
    */
   animation: PropTypes.oneOf(['slide', 'fade', 'scale']),
-  /**
-   * Redirect url
-   */
-  redirect: PropTypes.string,
+
   /**
    * Async load component
    */
@@ -146,23 +84,12 @@ RouteTransition.propTypes = {
    * Disable animation
    */
   animationDisabled: PropTypes.bool,
-  /**
-   * Disable route
-   */
-  disabled: PropTypes.bool,
+
   /**
    * component
    */
-  component: (props, propName)=>{
-    const propsCopy = Object.assign({}, props);
-    if(props[propName]){
-      if(props[propName].default){
-        propsCopy[propName] = props[propName].default
-      }
-      return Route.propTypes.component(propsCopy, propName);
-    }
-  }
-}
+  component: PropTypes.func,
+};
 
 RouteTransition.displayName = 'RouteTransition';
 

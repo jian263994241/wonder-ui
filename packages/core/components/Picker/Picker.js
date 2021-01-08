@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
 import { getValueProps } from './utils';
 import Cascader from './Cascader';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
 
-const defaultFormat = (values = [])=>{
-  return values.map(item=>item.label).join(',');
+export const FIELD_META_PROP = 'data-__meta';
+export const FIELD_DATA_PROP = 'data-__field';
+
+const defaultFormat = (values = []) => {
+  return values.map((item) => item.label).join(',');
 };
 
 /**
@@ -15,8 +17,7 @@ const defaultFormat = (values = [])=>{
  */
 const Picker = React.forwardRef(function Picker(props, ref) {
   const {
-    [FIELD_DATA_PROP]: fieldData,
-    [FIELD_META_PROP]: fieldMeta,
+    meta,
     children,
     data = [],
     disabled,
@@ -33,37 +34,37 @@ const Picker = React.forwardRef(function Picker(props, ref) {
     ...cascaderProps
   } = props;
 
-  const getExtra = ()=>{
-    return placeholder|| extraProp || (children && children.props.extra);
+  const getExtra = () => {
+    return placeholder || extraProp || (children && children.props.extra);
   };
 
   const [visible, setVisible] = React.useState(visible);
   const [extra, setExtra] = React.useState('');
 
-  React.useEffect(()=>{
-    if(value){
+  React.useEffect(() => {
+    if (value) {
       setExtra(format(getValueProps(value, data)));
-    }else{
-      setExtra( getExtra() )
+    } else {
+      setExtra(getExtra());
     }
   }, [data, value]);
 
-  const handleClick = useEventCallback((e)=>{
-    if(disabled) {
+  const handleClick = useEventCallback((e) => {
+    if (disabled) {
       return false;
     }
     setVisible(true);
-    if(children.props.onClick){
+    if (children.props.onClick) {
       children.props.onClick(e);
     }
   });
 
-  const handleCancel = useEventCallback(()=>{
+  const handleCancel = useEventCallback(() => {
     setVisible(false);
     onCancel && onCancel();
   });
 
-  const handleOk = useEventCallback((value)=>{
+  const handleOk = useEventCallback((value) => {
     setVisible(false);
     const valueProps = getValueProps(value, data);
     onChange && onChange(value, valueProps);
@@ -72,21 +73,18 @@ const Picker = React.forwardRef(function Picker(props, ref) {
 
   return (
     <React.Fragment>
-      { 
-        children && 
+      {children &&
         typeof children !== 'string' &&
-        React.isValidElement(children) && 
-        React.cloneElement(children, { 
-          [FIELD_DATA_PROP]: fieldData,
-          [FIELD_META_PROP]: fieldMeta,
-          [labelProp]: extra, 
+        React.isValidElement(children) &&
+        React.cloneElement(children, {
+          meta,
+          [labelProp]: extra,
           [triggerType]: handleClick,
           disabled,
           readOnly: true,
           ref,
-        })
-      }
-      <Cascader 
+        })}
+      <Cascader
         visible={visible}
         value={value}
         onCancel={handleCancel}
@@ -99,8 +97,8 @@ const Picker = React.forwardRef(function Picker(props, ref) {
 });
 
 Picker.defaultProps = {
-  triggerType:  'onClick',
-  labelProp:  'extra'
+  triggerType: 'onClick',
+  labelProp: 'extra',
 };
 
 Picker.propTypes = {
@@ -122,8 +120,8 @@ Picker.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
-      value: PropTypes.any
-    })
+      value: PropTypes.any,
+    }),
   ),
   /**
    * selected value
@@ -166,7 +164,7 @@ Picker.propTypes = {
    */
   disabled: PropTypes.bool,
   /**
-   * 
+   *
    */
   showError: PropTypes.bool,
 };

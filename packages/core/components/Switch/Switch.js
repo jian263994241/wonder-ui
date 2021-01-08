@@ -1,34 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import styles, {creatColor} from './styles';
-import withStyles from '../withStyles';
+import styles, { creatColor } from './styles';
+import { withStyles } from '@wonder-ui/styles';
 
 /**
  * 切换开关
  * @visibleName Switch 开关
  */
 const Switch = React.forwardRef(function Switch(props, ref) {
-  const { classes, className, color, style, checked, onChange, onClick, ...rest } = props;
+  const {
+    classes,
+    className,
+    color,
+    style,
+    checked,
+    onChange,
+    onClick,
+    ...rest
+  } = props;
   const triggerFn = onChange || onClick;
-  const handleClick = React.useCallback((e)=>{
-    if (triggerFn) {
-      triggerFn(!checked, e);
-    }
-  }, [checked, triggerFn]);
+  const handleClick = React.useCallback(
+    (e) => {
+      if (triggerFn) {
+        triggerFn(!checked, e);
+      }
+    },
+    [checked, triggerFn],
+  );
 
   return (
-    <span 
-      className={clsx(
-        classes.root, 
-        checked && classes.checked,
-        className
-      )} 
+    <span
+      className={clsx(classes.root, checked && classes.checked, className)}
       onClick={handleClick}
-      style={{...creatColor(color), style}}
+      style={{ ...creatColor(color), style }}
       {...rest}
     />
-  )
+  );
 });
 
 Switch.displayName = 'Switch';
@@ -43,13 +51,13 @@ Switch.propTypes = {
    */
   onChange: PropTypes.func,
   /**
-   * 是否选中 
+   * 是否选中
    */
   checked: PropTypes.bool,
   /**
    * @ignore
    */
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };
 
 export default withStyles(styles)(Switch);

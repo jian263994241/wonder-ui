@@ -1,12 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@wonder-ui/styles';
+import clsx from 'clsx';
+
+const styles = (theme) => ({
+  root: {
+    whiteSpace: 'nowrap',
+    marginLeft: 5,
+    borderLeft: `1px solid ${theme.palette.divider}`,
+    paddingLeft: 15,
+    color: theme.palette.primary.main,
+  },
+});
 
 /**
  * 活动注册等短信验证码场景, 发送短信按钮
  * @visibleName CountdownButton 短信倒计时
  */
-export default function CountdownButton(props){
+function CountdownButton(props) {
   const {
+    classes,
     defaultText,
     defaultTextRe,
     onStart,
@@ -15,16 +28,18 @@ export default function CountdownButton(props){
     text,
     runOnMount,
     render,
+    className,
     ...rest
   } = props;
+
   const [isProcess, setProcess] = React.useState(false);
   const [initialled, setInitialled] = React.useState(false);
   const secondsResidue = React.useRef(totail);
   const [, forceUpdate] = React.useState();
   const interval = React.useRef(null);
 
-  const tick = ()=>{
-    if(secondsResidue.current <= 0){
+  const tick = () => {
+    if (secondsResidue.current <= 0) {
       clearInterval(interval.current);
       setProcess(false);
     } else {
@@ -32,14 +47,14 @@ export default function CountdownButton(props){
       forceUpdate(Date.now());
     }
   };
-  
-  const clickHandler = (e)=>{
-    if(onClick){
+
+  const clickHandler = (e) => {
+    if (onClick) {
       onClick(e);
     }
 
-    if(!isProcess && onStart){
-      onStart(()=>{
+    if (!isProcess && onStart) {
+      onStart(() => {
         secondsResidue.current = totail;
         interval.current = setInterval(tick, 1000);
         setProcess(true);
@@ -47,40 +62,43 @@ export default function CountdownButton(props){
       });
     }
   };
-  
-  React.useEffect(()=>{
-    if(runOnMount){
+
+  React.useEffect(() => {
+    if (runOnMount) {
       clickHandler();
     }
-    return ()=>{
+    return () => {
       clearInterval(interval.current);
-    }
+    };
   }, []);
 
-  const content = React.useMemo(()=>{
-    if(isProcess){
+  const content = React.useMemo(() => {
+    if (isProcess) {
       return text.replace(/%s/, secondsResidue.current);
     }
     return initialled ? defaultTextRe : defaultText;
   }, [isProcess, initialled, secondsResidue.current]);
 
-  const Comp = render ? render: ({content, ...props})=> <a {...props}>{content}</a>
+  const Comp = render
+    ? render
+    : ({ content, ...props }) => <a {...props}>{content}</a>;
 
   return (
-    <Comp 
-      {...rest} 
-      onClick={clickHandler} 
-      disabled={isProcess} 
+    <Comp
+      {...rest}
+      className={clsx(classes.root, className)}
+      onClick={clickHandler}
+      disabled={isProcess}
       content={content}
     />
-  )
+  );
 }
 
 CountdownButton.defaultProps = {
   totail: 60,
   defaultText: '获取验证码',
   defaultTextRe: '重新发送',
-  text: '%ss'
+  text: '%ss',
 };
 
 CountdownButton.displayName = 'CountdownButton';
@@ -113,5 +131,7 @@ CountdownButton.propTypes = {
   /**
    * 改变渲染的 node
    */
-  render: PropTypes.func
+  render: PropTypes.func,
 };
+
+export default withStyles(styles)(CountdownButton);

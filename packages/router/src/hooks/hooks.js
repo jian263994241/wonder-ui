@@ -1,0 +1,70 @@
+import * as React from 'react';
+import {
+  useHistory,
+  useRouteMatch,
+  useLocation as useLocation_,
+} from 'react-router';
+import { addQuery, stripQuery } from '../utils';
+
+export const useLocation = () => {
+  const location = useLocation_();
+
+  addQuery(location);
+  return location;
+};
+
+export const useLocationExact = () => {
+  const matched = useRouteMatch() || {};
+  const location = useLocation();
+  const locRef = React.useRef(location);
+
+  return React.useMemo(() => {
+    if (matched.isExact) {
+      locRef.current = location;
+    }
+
+    return locRef.current;
+  }, [matched, location]);
+};
+
+export const usePageEffect = (callback, vars = []) => {
+  try {
+    const matched = useRouteMatch() || {};
+
+    React.useEffect(() => {
+      if (matched.isExact) {
+        return callback();
+      }
+    }, [matched.isExact, ...vars]);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+//Will remove
+export const usePageInit = usePageEffect;
+
+export const useNavigation = () => {
+  const history = useHistory();
+
+  const push = (loc, state) => {
+    history.push(stripQuery(loc), state);
+  };
+  const replace = (loc, state) => {
+    history.replace(stripQuery(loc), state);
+  };
+
+  const goBack = () => {
+    history.goBack();
+  };
+
+  const goForward = () => {
+    history.goForward();
+  };
+  return {
+    push,
+    replace,
+    goBack,
+    goForward,
+  };
+};

@@ -5,13 +5,13 @@ import clsx from 'clsx';
 import Modal from '../Modal';
 import Slide from '../Slide';
 import styles from './styles';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 /**
  * 一个半屏幕的浮层
  * @visibleName Drawer 抽屉
  */
-const Drawer = React.forwardRef((props, ref)=>{
-  const { 
+const Drawer = React.forwardRef((props, ref) => {
+  const {
     anchor = 'right',
     children,
     classes,
@@ -20,19 +20,24 @@ const Drawer = React.forwardRef((props, ref)=>{
     onCancel,
     safeAreaBottom = false,
     style,
-    variant='temporary',
+    variant = 'temporary',
     visible,
   } = props;
-  const oppositeDirection = { left: 'right', right: 'left', top: 'down', bottom: 'up' };
- 
+  const oppositeDirection = {
+    left: 'right',
+    right: 'left',
+    top: 'down',
+    bottom: 'up',
+  };
+
   const drawer = (
-    <div 
+    <div
       className={clsx(
-        classes.root, 
+        classes.root,
         classes['anchor' + capitalize(anchor)],
         safeAreaBottom && anchor === 'bottom' && classes.safeAreaBottom,
-        className
-      )} 
+        className,
+      )}
       style={style}
       ref={ref}
     >
@@ -40,11 +45,11 @@ const Drawer = React.forwardRef((props, ref)=>{
     </div>
   );
 
-  if(variant=== 'permanent'){
+  if (variant === 'permanent') {
     return drawer;
   }
 
-  const slidingDrawer=(
+  const slidingDrawer = (
     <Slide in={visible} direction={oppositeDirection[anchor]}>
       {drawer}
     </Slide>
@@ -60,7 +65,7 @@ const Drawer = React.forwardRef((props, ref)=>{
     >
       {slidingDrawer}
     </Modal>
-  )
+  );
 });
 
 Drawer.propTypes = {
@@ -83,7 +88,7 @@ Drawer.propTypes = {
   /**
    * 出现的位置
    */
-  anchor: PropTypes.oneOf(['left' ,'right', 'top', 'bottom']),
+  anchor: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
   /**
    * root element classnames
    */

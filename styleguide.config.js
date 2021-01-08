@@ -27,10 +27,7 @@ module.exports = {
           name: '路由',
           components: () => [
             './packages/core/components/App/App.js',
-            './packages/core/components/View/View.js',
             './packages/core/components/Page/Page.js',
-            './packages/core/components/Link/Link.js',
-            './packages/core/components/RouterStore/RouterStore.js',
           ],
         },
         {

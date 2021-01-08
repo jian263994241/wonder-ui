@@ -8,32 +8,32 @@ import toggleVisible from './toggleVisible';
 const dialogManager = new DialogManager();
 const toastManager = new DialogManager();
 
-const noop = ()=>{};
+const noop = () => {};
 
 const wrapCallback = (func = noop, bindCall) => {
   return (...args) => {
     const triggered = func(...args);
-    if(isPromise(triggered)){
+    if (isPromise(triggered)) {
       triggered.then(() => bindCall(...args));
-    }else{
+    } else {
       bindCall(...args);
     }
-  }
-}
+  };
+};
 /**
  * Dialog.alert
  */
-Dialog.alert = function DialogAlert ({ 
-  title, 
-  text, 
-  onOk, 
+Dialog.alert = function DialogAlert({
+  title,
+  text,
+  onOk,
   okText = '确定',
   ...rest
 }) {
   const container = document.createElement('div');
-  const toggleAlert = toggleVisible((visible, clearQueue)=> {
+  const toggleAlert = toggleVisible((visible, clearQueue) => {
     ReactDOM.render(
-      <Dialog 
+      <Dialog
         {...rest}
         visible={visible}
         title={title}
@@ -43,34 +43,32 @@ Dialog.alert = function DialogAlert ({
           {
             text: okText,
             primary: true,
-            onClick: wrapCallback(onOk, () => toggleAlert())
-          }
+            onClick: wrapCallback(onOk, () => toggleAlert()),
+          },
         ]}
       />,
-      container
-    )
+      container,
+    );
   });
-  
-  dialogManager.run(
-    (clearQueue)=> toggleAlert(clearQueue)
-  );
-}
+
+  dialogManager.run((clearQueue) => toggleAlert(clearQueue));
+};
 /**
  * Dialog.confirm
  */
-Dialog.confirm = function DialogConfirm({ 
-  title, 
-  text, 
-  onOk, 
-  okText = '确定', 
-  onCancel, 
-  cancelText = "取消",
+Dialog.confirm = function DialogConfirm({
+  title,
+  text,
+  onOk,
+  okText = '确定',
+  onCancel,
+  cancelText = '取消',
   ...rest
 }) {
   const container = document.createElement('div');
-  const toggleConfirm = toggleVisible((visible, clearQueue)=> {
+  const toggleConfirm = toggleVisible((visible, clearQueue) => {
     ReactDOM.render(
-      <Dialog 
+      <Dialog
         {...rest}
         visible={visible}
         title={title}
@@ -79,87 +77,81 @@ Dialog.confirm = function DialogConfirm({
         actions={[
           {
             text: cancelText,
-            onClick: wrapCallback(onCancel, () => toggleConfirm())
+            onClick: wrapCallback(onCancel, () => toggleConfirm()),
           },
           {
             text: okText,
             primary: true,
-            onClick: wrapCallback(onOk, () => toggleConfirm())
-          }
+            onClick: wrapCallback(onOk, () => toggleConfirm()),
+          },
         ]}
       />,
-      container
-    )
+      container,
+    );
   });
 
-  dialogManager.run(
-    (clearQueue)=> toggleConfirm(clearQueue)
-  );
-}
+  dialogManager.run((clearQueue) => toggleConfirm(clearQueue));
+};
 /**
- * 
+ *
  */
 Dialog.toast = function DialogToast(text, timeout, callback) {
-  const defaultTimeout = 1200;
-  if(timeout === undefined){
+  const defaultTimeout = 1800;
+  if (timeout === undefined) {
     timeout = defaultTimeout;
   }
-  if(typeof timeout === 'function'){
+  if (typeof timeout === 'function') {
     callback = timeout;
     timeout = defaultTimeout;
   }
 
   const container = document.createElement('div');
   callback = typeof callback === 'function' ? callback : noop;
-  const toggleToast = toggleVisible((visible, clearQueue)=> {
+  const toggleToast = toggleVisible((visible, clearQueue) => {
     ReactDOM.render(
-      <Dialog   
+      <Dialog
         toast
         hideBackdrop
         text={text}
         visible={visible}
         afterClose={clearQueue}
       />,
-      container
-    )
+      container,
+    );
   });
 
-  toastManager.run(
-    (clearQueue)=> {
-      toggleToast(clearQueue);
+  toastManager.run((clearQueue) => {
+    toggleToast(clearQueue);
 
-      setTimeout(()=>{
-        toggleToast(clearQueue);
-        callback();
-      }, timeout);
-    }
-  );
-}
+    setTimeout(() => {
+      toggleToast(clearQueue);
+      callback();
+    }, timeout);
+  });
+};
 /**
  * Custom Dialog
  */
-Dialog.custom = function DialogCustom (props){
-  const {actions = [], ...rest } = props;
+Dialog.custom = function DialogCustom(props) {
+  const { actions = [], ...rest } = props;
   const container = document.createElement('div');
-  const toggleCustom = toggleVisible((visible, clearQueue)=> {
+  const toggleCustom = toggleVisible((visible, clearQueue) => {
     ReactDOM.render(
-      <Dialog 
+      <Dialog
         {...rest}
         visible={visible}
         afterClose={clearQueue}
-        actions={actions.map((action)=>{
-          const { onClick, ...otherOpts} = action;
+        actions={actions.map((action) => {
+          const { onClick, ...otherOpts } = action;
           return {
             ...otherOpts,
-            onClick: wrapCallback(onClick, () => toggleCustom())
-          }
+            onClick: wrapCallback(onClick, () => toggleCustom()),
+          };
         })}
       />,
-      container
-    )
+      container,
+    );
   });
 
-  dialogManager.run(
-    (clearQueue)=> toggleCustom(clearQueue)
-  );
-}
+  dialogManager.run((clearQueue) => toggleCustom(clearQueue));
+};

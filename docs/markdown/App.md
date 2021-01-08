@@ -1,53 +1,47 @@
 
-创建一个入口文件`app.js` : 
+创建一个入口文件`app.js` :
 
 ```js static
 import React from 'react';
-import {render} from 'react-dom';
-import { View, App } from '@wonder-ui/core';
+import { render } from 'react-dom';
+import { App, HashRouter, Routes } from '@wonder-ui/core';
 
 import IndexPage from '~/kitchen-sink/pages/IndexPage';
 import NoMatch from '~/kitchen-sink/pages/NoMatch';
 
 
-const params = {
-  //events bus
-  on: {
-    routeChange(props){
-      //Change document.title
-      // console.log('Route change', props);
-    }
+const routes = [
+  {
+    path: '/',
+    component: IndexPage,
+    children: [
+      { path: 'about', component: require('~/kitchen-sink/pages/About')},
+      { path: 'button', component: require('~/kitchen-sink/pages/Button')},
+      ...
+    ]
   },
-  type: 'memory',
-  routes: [
-    {
-      path: '/',
-      component: IndexPage,
-      children: [
-        { path: 'about', component: require('~/kitchen-sink/pages/About'), name: 'about' },
-        { path: 'button', component: require('~/kitchen-sink/pages/Button'), name: 'button' },
-        ...
-      ]
-    },
-  ]
-}
+]
+
 ;
-<App {...params}>
-  <View noMatch={<NoMatch/>}/>
-</App>
+<HashRouter>
+  <App onPageInit={({ name })=>{}}>
+    <View noMatch={<NoMatch/>} onRouteChange={(location, action)=>{}}/>
+  </App>
+</HashRouter>
 ```
 
-创建首页`index.js` : 
+创建首页`index.js` :
 
 ```js static
 import React from 'react';
-import { Page, List, Block, ListItem, useRouterContext } from '@wonder-ui/core';
+import { Page, List, Block, ListItem } from '@wonder-ui/core';
+import { useNavigation } from '@wonder-ui/router';
 
 const LinkDetail = (props)=> {
   const { to, ...rest } = props;
-  const { routerStore } = useRouterContext();
+  const { push } = useNavigation();
   const handleClick = React.useCallback(()=>{
-    to && routerStore.push(to);
+    to && push(to);
   }, [to]);
   return <ListItem onClick={handleClick} arrow="horizontal" {...rest}/>;
 }
@@ -55,7 +49,7 @@ const LinkDetail = (props)=> {
 export default function IndexPage(props) {
 
   return (
-    <Page 
+    <Page
       name="Wonder UI"
       navbar
       showBack={false}

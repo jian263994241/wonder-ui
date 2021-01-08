@@ -6,13 +6,12 @@ import Fade from '../Fade';
 import getRendered from '@wonder-ui/utils/getRendered';
 import Modal from '../Modal';
 import styles from './styles';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 /**
  * 系统信息提示, 并请求用户进行下一步操作
  * @visibleName Dialog 对话框
  */
 const Dialog = React.forwardRef(function Dialog(props, ref) {
-
   const {
     actions = [],
     afterClose,
@@ -30,16 +29,16 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
   const transtionStyles = {
     entering: {
       opacity: 1,
-      transform: 'translate3d(-50%, -50%, 0) scale(1)'
-    }, 
+      transform: 'translate3d(-50%, -50%, 0) scale(1)',
+    },
     entered: {
       opacity: 1,
-      transform: 'translate3d(-50%, -50%, 0) scale(1)'
-    }
+      transform: 'translate3d(-50%, -50%, 0) scale(1)',
+    },
   };
 
-  const noButtons = actions.length <= 0 ;
-  const vertical = actions.length >= 3 ;
+  const noButtons = actions.length <= 0;
+  const vertical = actions.length >= 3;
 
   return (
     <Modal
@@ -54,70 +53,61 @@ const Dialog = React.forwardRef(function Dialog(props, ref) {
         propertys={['opacity', 'transform']}
         styles={transtionStyles}
         style={{
-          top: '50%', left: '50%', opacity: 0,
-          transform: 'translate3d(-50%, -50%, 0) scale(1.185)'
+          top: '50%',
+          left: '50%',
+          opacity: 0,
+          transform: 'translate3d(-50%, -50%, 0) scale(1.185)',
         }}
       >
-        <div className={clsx(
-            classes.root, 
-            { 
-              toast: toast
+        <div
+          className={clsx(
+            classes.root,
+            {
+              toast: toast,
             },
-            className
-          )} 
+            className,
+          )}
           ref={ref}
         >
-          {
-            (title || content || text ) && (
-              <div 
-                className={clsx(
-                  classes.body,
-                  {
-                    noButtons: noButtons,
-                  }
-                )}
-              >
-                {title && <div className={classes.title}>{title}</div>}
-                {text && <div className={classes.text}>{text}</div>}
-                {getRendered(content, {ref: contentRef})}
-              </div>
-            )
-          }
-          {
-            !noButtons && (
-              <div className={clsx(
-                  classes.buttonGroup,
-                  {
-                    vertical: vertical
-                  }
-                )}
-              >
-                {
-                  actions.map((action, i)=>(
-                    <Buttonbase 
-                      className={clsx(
-                        classes.button,
-                        {
-                          primary: action.primary
-                        }
-                      )}
-                      onClick={e => {
-                        if(action.onClick){
-                          action.onClick(e, { contentRef })
-                        }
-                      }} 
-                      key={i}
-                    >{action.text}</Buttonbase>
-                  ))
-                }
-              </div>
-            )
-          }
+          {(title || content || text) && (
+            <div
+              className={clsx(classes.body, {
+                noButtons: noButtons,
+              })}
+            >
+              {title && <div className={classes.title}>{title}</div>}
+              {text && <div className={classes.text}>{text}</div>}
+              {getRendered(content, { ref: contentRef })}
+            </div>
+          )}
+          {!noButtons && (
+            <div
+              className={clsx(classes.buttonGroup, {
+                vertical: vertical,
+              })}
+            >
+              {actions.map((action, i) => (
+                <Buttonbase
+                  className={clsx(classes.button, {
+                    primary: action.primary,
+                  })}
+                  onClick={(e) => {
+                    if (action.onClick) {
+                      action.onClick(e, { contentRef });
+                    }
+                  }}
+                  key={i}
+                >
+                  {action.text}
+                </Buttonbase>
+              ))}
+            </div>
+          )}
         </div>
       </Fade>
     </Modal>
-  )
-})
+  );
+});
 
 Dialog.propTypes = {
   container: PropTypes.oneOfType([
@@ -134,10 +124,7 @@ Dialog.propTypes = {
   /** 弹框内容 */
   text: PropTypes.node,
   /** 弹框内容后面的自定义内容 */
-  content: PropTypes.oneOfType([
-    PropTypes.node, 
-    PropTypes.func
-  ]),
+  content: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   /** 定义操作按钮 */
   actions: PropTypes.arrayOf(
     PropTypes.shape({
@@ -145,17 +132,16 @@ Dialog.propTypes = {
       text: PropTypes.string,
       /** 是否主要按钮 */
       primary: PropTypes.bool,
-      /** 
+      /**
        * 点击操作, 如果return 一个 promise, 则resolve后关闭对话框
        */
-      onClick: PropTypes.func
-    })
+      onClick: PropTypes.func,
+    }),
   ),
 };
 
 Dialog.defaultProps = {};
 
 Dialog.displayName = 'Dialog';
-
 
 export default withStyles(styles)(Dialog);

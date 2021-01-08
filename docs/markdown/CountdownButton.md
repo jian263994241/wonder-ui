@@ -1,3 +1,5 @@
+##
+
 ```js
 import React from 'react';
 import { withStyles, InputBase, CountdownButton } from '@wonder-ui/core';
@@ -24,22 +26,16 @@ const Input = withStyles({
 
 
 <div style={{padding: 10}}>
-  <Input 
+  <Input
     clearButton
     placeholder="请输入验证码"
     type='number'
     endAdornment={
-      <CountdownButton 
+      <CountdownButton
         onStart={(done) => done()}
-        style={{
-          whiteSpace: 'nowrap',
-          marginLeft: 5,
-          borderLeft: '1px solid #EAEAEA',
-          paddingLeft: 15,
-          color: '#0F75F7'
-        }}
       />
     }
   />
 </div>
+
 ```

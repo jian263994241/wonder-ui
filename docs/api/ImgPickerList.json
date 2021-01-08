@@ -10,7 +10,7 @@
       "required": false,
       "description": "下载图片方法, 返回一个Promise方法",
       "defaultValue": {
-        "value": "() => { }",
+        "value": "() => {}",
         "computed": false
       }
     },
@@ -21,7 +21,7 @@
       "required": false,
       "description": "files 值发生变化触发的回调函数",
       "defaultValue": {
-        "value": "() => { }",
+        "value": "() => {}",
         "computed": false
       }
     },

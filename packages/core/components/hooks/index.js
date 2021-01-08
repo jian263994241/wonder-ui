@@ -1,14 +1,9 @@
-import usePageInit from './usePageInit';
+import { usePageEffect } from '@wonder-ui/router';
 import useForceUpdate from './useFroceUpdate';
-import useApp from './useApp';
-import useRouterStore from './useRouterStore';
 
 const hooks = {
-  usePageInit,
+  usePageInit: usePageEffect,
   useForceUpdate,
-  useApp,
-  useRouterStore
 };
-
 
 export default hooks;

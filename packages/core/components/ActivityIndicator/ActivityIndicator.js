@@ -3,20 +3,30 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Indicator from '../Indicator';
 import styles from './styles';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 
 /**
  * 长列表加载活动指示器
  * @visibleName ActivityIndicator 活动指示器
  */
-const ActivityIndicator = React.forwardRef(function ActivityIndicator(props, ref) {
+const ActivityIndicator = React.forwardRef(function ActivityIndicator(
+  props,
+  ref,
+) {
   const { classes, className, text, vertical, ...rest } = props;
   return (
-    <div className={clsx(classes.root, {[classes.vertical]: vertical}, className)} ref={ref}>
-      <Indicator spin {...rest}/>
-      { text && ( <div className={classes.text}>{text}</div>) }
+    <div
+      className={clsx(
+        classes.root,
+        { [classes.vertical]: vertical },
+        className,
+      )}
+      ref={ref}
+    >
+      <Indicator spin {...rest} />
+      {text && <div className={classes.text}>{text}</div>}
     </div>
-  )
+  );
 });
 
 ActivityIndicator.propTypes = {

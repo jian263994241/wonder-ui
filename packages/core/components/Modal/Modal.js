@@ -5,7 +5,7 @@ import Backdrop from '../Backdrop';
 import createChainedFunction from '@wonder-ui/utils/createChainedFunction';
 import css from 'dom-helpers/css';
 import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
-import ModalManager, { ariaHidden }  from './ModalManager';
+import ModalManager, { ariaHidden } from './ModalManager';
 import ownerDocument from '@wonder-ui/utils/ownerDocument';
 import Portal from '../Portal';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
@@ -15,7 +15,7 @@ const defaultManager = new ModalManager();
 
 function getContainer(container) {
   container = typeof container === 'function' ? container() : container;
-  return ReactDOM.findDOMNode(container);
+  return container;
 }
 
 /**
@@ -55,64 +55,64 @@ const Modal = React.forwardRef((props, ref) => {
     return modal.current;
   };
 
-  const originZIndex = React.useMemo(()=>{
-    if(childrenRef.current){
+  const originZIndex = React.useMemo(() => {
+    if (childrenRef.current) {
       const zIndex = css(childrenRef.current, 'zIndex');
-      if(zIndex){
+      if (zIndex) {
         return Number(zIndex);
-      }else {
+      } else {
         return 1000;
       }
     }
     return null;
   }, [childrenRef.current]);
 
-  const setZIndex = (zindex)=>{
-    if(!originZIndex) return null;
+  const setZIndex = (zindex) => {
+    if (!originZIndex) return null;
 
-    if(childrenRef.current){
+    if (childrenRef.current) {
       childrenRef.current.style.zIndex = originZIndex + zindex + 1;
     }
-    if(backdropRef.current){
+    if (backdropRef.current) {
       backdropRef.current.style.zIndex = originZIndex + zindex;
     }
   };
 
-  const isTopModal = React.useCallback(() => manager.isTopModal(getModal()), [manager]);
+  const isTopModal = React.useCallback(() => manager.isTopModal(getModal()), [
+    manager,
+  ]);
 
-  React.useEffect(()=>{
-    if(isTopModal()){
+  React.useEffect(() => {
+    if (isTopModal()) {
       setZIndex(manager.modals.length);
-    }else{
+    } else {
       setZIndex(-1);
     }
   }, [visible, originZIndex, childrenRef, backdropRef, manager.modals.length]);
-  
 
-  const handleMounted = ()=>{
+  const handleMounted = () => {
     manager.mount(getModal(), { disableScrollLock });
 
     // Fix a bug on Chrome where the scroll isn't initially 0.
     modalRef.current.scrollTop = 0;
-  }
+  };
 
-  const handlePortalRef = useEventCallback( node =>{
+  const handlePortalRef = useEventCallback((node) => {
     if (!node) {
       return;
     }
 
     mountNodeRef.current = node;
-    
+
     if (visible && isTopModal()) {
       handleMounted();
     } else {
       ariaHidden(modalRef.current, true);
     }
 
-    if(onRendered){
+    if (onRendered) {
       onRendered();
     }
-
   });
 
   const handleOpen = useEventCallback(() => {
@@ -128,8 +128,8 @@ const Modal = React.forwardRef((props, ref) => {
 
   const handleClose = React.useCallback(() => {
     manager.remove(getModal());
-    
-    if(afterClose){
+
+    if (afterClose) {
       afterClose();
     }
   }, [manager]);
@@ -152,17 +152,17 @@ const Modal = React.forwardRef((props, ref) => {
     return null;
   }
 
-  const handleEnter = ()=>{
+  const handleEnter = () => {
     setExited(false);
-  }
+  };
 
-  const handleExited = ()=>{
+  const handleExited = () => {
     setExited(true);
 
-    if(closeAfterTransition){
+    if (closeAfterTransition) {
       handleClose();
     }
-  }
+  };
 
   const childProps = {};
 
@@ -174,31 +174,39 @@ const Modal = React.forwardRef((props, ref) => {
   if (children.tabIndex === undefined) {
     childProps.tabIndex = children.tabIndex || '-1';
   }
-  
-  if(hasTransition){
+
+  if (hasTransition) {
     childProps.in = visible;
-    childProps.onEnter = createChainedFunction(handleEnter, children.props.onEnter);
-    childProps.onExited = createChainedFunction(handleExited, children.props.onExited);
+    childProps.onEnter = createChainedFunction(
+      handleEnter,
+      children.props.onEnter,
+    );
+    childProps.onExited = createChainedFunction(
+      handleExited,
+      children.props.onExited,
+    );
   }
-  
+
   return (
-    <Portal 
-      ref={handlePortalRef} 
-      container={container} 
+    <Portal
+      ref={handlePortalRef}
+      container={container}
       disablePortal={disablePortal}
     >
-      <div 
-        role="presentation"
-        ref={handleRef}
-        {...rest}
-      >
-        {hideBackdrop ? null : <Backdrop ref={backdropRef} visible={visible} onClick={onCancel} {...BackdropProps}/>}
+      <div role="presentation" ref={handleRef} {...rest}>
+        {hideBackdrop ? null : (
+          <Backdrop
+            ref={backdropRef}
+            visible={visible}
+            onClick={onCancel}
+            {...BackdropProps}
+          />
+        )}
         {React.cloneElement(children, childProps)}
       </div>
     </Portal>
-  )
+  );
 });
-
 
 Modal.propTypes = {
   /**
@@ -222,7 +230,6 @@ Modal.propTypes = {
    */
   container: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.instanceOf(React.Component),
     PropTypes.instanceOf(typeof Element === 'undefined' ? Object : Element),
   ]),
   /**
@@ -253,7 +260,6 @@ Modal.propTypes = {
    * 是否显示
    */
   visible: PropTypes.bool,
-}
-
+};
 
 export default Modal;

@@ -2,26 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import styles from './styles';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 import TouchFeedback from '../TouchFeedback';
 
 /**
  * 带样式 reset 的 `button`, `Button` 的底层组件
  * @visibleName ButtonBase 基础按钮
  */
-const ButtonBase = React.forwardRef(function ButtonBase(props, ref){
+const ButtonBase = React.forwardRef(function ButtonBase(props, ref) {
   const { classes, className, ...rest } = props;
   return (
     <TouchFeedback>
-      <button 
-        className={clsx(classes.root, className)} 
-        role="button" 
-        type="button" 
-        ref={ref} 
+      <button
+        className={clsx(classes.root, className)}
+        role="button"
+        type="button"
+        ref={ref}
         {...rest}
       />
     </TouchFeedback>
-  )
+  );
 });
 
 ButtonBase.propTypes = {
@@ -37,6 +37,6 @@ ButtonBase.propTypes = {
    * style object
    */
   style: PropTypes.object,
-}
+};
 
 export default withStyles(styles, { name: 'ButtonBase' })(ButtonBase);

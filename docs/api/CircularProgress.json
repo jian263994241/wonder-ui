@@ -41,7 +41,7 @@
     "disableShrink": {
       "type": {
         "name": "custom",
-        "raw": "chainPropTypes(PropTypes.bool, props => {\n  if (props.disableShrink && props.variant && props.variant !== 'indeterminate') {\n    return new Error(\n      'Material-UI: you have provided the `disableShrink` prop ' +\n        'with a variant other than `indeterminate`. This will have no effect.',\n    );\n  }\n\n  return null;\n})"
+        "raw": "chainPropTypes(PropTypes.bool, (props) => {\n  if (\n    props.disableShrink &&\n    props.variant &&\n    props.variant !== 'indeterminate'\n  ) {\n    return new Error(\n      'Material-UI: you have provided the `disableShrink` prop ' +\n        'with a variant other than `indeterminate`. This will have no effect.',\n    );\n  }\n\n  return null;\n})"
       },
       "required": false,
       "description": "If `true`, the shrink animation is disabled.\nThis only works if variant is `indeterminate`."

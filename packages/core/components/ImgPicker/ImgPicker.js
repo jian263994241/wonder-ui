@@ -1,25 +1,22 @@
 import React, { useState, useCallback, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-
-import Toast from '../toast';
+import Dialog from '../Dialog';
 import WxImageViewer from 'react-wx-images-viewer';
 import styles from './styles';
-import withStyles from '../withStyles';
-
+import { withStyles } from '@wonder-ui/styles';
 import { AddCircleOutline } from '@wonder-ui/icons';
 
-const noon = () => { };
+const Toast = Dialog.toast;
+
+const noon = () => {};
 
 /**
  * 图片上传组件
  * @visibleName ImgPicker 图片上传
  */
 const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
-
-  const childrenEle = (
-    <div className={classes.childrenEle} />
-  );
+  const childrenEle = <div className={classes.childrenEle} />;
 
   const {
     showAdd,
@@ -34,7 +31,7 @@ const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
     fileDownLoad,
     onFileChange,
     onFileHandle,
-    autoFill
+    autoFill,
   } = resProps;
 
   const [isOpen, setOpen] = useState(false);
@@ -62,44 +59,53 @@ const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
   }, []);
 
   // input改变
-  const onChange = useCallback(e => {
-    const fileSelectorEl = e.target;
-    const { files } = fileSelectorEl;
-    if (!files || !files.length) {
-      return;
-    }
-    if (files[0].size > size * 1024 * 1024) {
-      e.target.value = null; // 清空input值
-      Toast(`图片大小不能超过${size}M`, 2000);
-      return;
-    }
-    const reader = new FileReader();
-    reader.readAsDataURL(files[0]);
-    reader.onload = function (e) {
-      onFileChange(files[0], e.target.result);
-    }
-  }, [size, onFileChange]);
+  const onChange = useCallback(
+    (e) => {
+      const fileSelectorEl = e.target;
+      const { files } = fileSelectorEl;
+      if (!files || !files.length) {
+        return;
+      }
+      if (files[0].size > size * 1024 * 1024) {
+        e.target.value = null; // 清空input值
+        Toast(`图片大小不能超过${size}M`, 2000);
+        return;
+      }
+      const reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onload = function (e) {
+        onFileChange(files[0], e.target.result);
+      };
+    },
+    [size, onFileChange],
+  );
 
   // 点击input
   const onHandle = useCallback(
-    e => {
+    (e) => {
       e.target.value = null; // 清空input值，防止两次文件一致时不触发onChange事件
       onFileHandle(e);
     },
-    [onFileHandle]
+    [onFileHandle],
   );
 
   return (
-    <div className={clsx(
-      classes.root,
-      { [classes.autoFill]: autoFill },
-      { [classes.containerBg]: !urlSmall && showBg },
-      { [classes.containerBorder]: urlSmall })}>
+    <div
+      className={clsx(
+        classes.root,
+        { [classes.autoFill]: autoFill },
+        { [classes.containerBg]: !urlSmall && showBg },
+        { [classes.containerBorder]: urlSmall },
+      )}
+    >
       {urlSmall && (
-        <div className={classes.deleteBox} onClick={() => {
-          console.log('deleteBox')
-          onFileChange()
-        }}>
+        <div
+          className={classes.deleteBox}
+          onClick={() => {
+            console.log('deleteBox');
+            onFileChange();
+          }}
+        >
           <AddCircleOutline className={classes.deleteIcon} />
         </div>
       )}
@@ -109,15 +115,15 @@ const ImgPicker = forwardRef(function ImgPicker({ classes, ...resProps }, ref) {
         className={clsx(classes.input, { [classes.hide]: urlSmall })}
         accept="image/*"
         onChange={onChange}
-        onClick={e => onHandle(e)}
+        onClick={(e) => onHandle(e)}
       />
       {urlSmall ? (
         <div className={classes.pickerImgBox} onClick={onOpen}>
           <img alt="" className={classes.pickerImg} src={urlSmall} />
         </div>
       ) : (
-          children
-        )}
+        children
+      )}
       {showBorderAround && !urlSmall && (
         <>
           <i className={clsx(classes.borderLine, 'left-top')} />
@@ -169,8 +175,8 @@ ImgPicker.defaultProps = {
   autoFill: false,
   onFileChange: noon,
   onFileHandle: noon,
-  fileDownLoad: noon
-}
+  fileDownLoad: noon,
+};
 
 ImgPicker.displayName = 'ImgPicker';
 

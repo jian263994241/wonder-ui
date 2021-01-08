@@ -41,10 +41,6 @@
           },
           {
             "name": "instanceOf",
-            "value": "React.Component"
-          },
-          {
-            "name": "instanceOf",
             "value": "typeof Element === 'undefined' ? Object : Element"
           }
         ]

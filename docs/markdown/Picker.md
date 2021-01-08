@@ -1,7 +1,7 @@
 
 ```js
 import React from 'react';
-import { Page, Button, Picker, ContentBlock, Form } from '@wonder-ui/core';
+import { Page, Button, Picker, ContentBlock, Form, FormItem } from '@wonder-ui/core';
 import lcnForm from 'lcn/lcn-form';
 
 const ExtraButton = React.forwardRef((props, ref) => {
@@ -18,22 +18,21 @@ const LcnPicker = React.forwardRef(function LcnPicker(props, ref) {
   )
 });
 
-const PickerExamples = Form.create()(function (props) {
-  const { form } = props;
+const PickerExamples = function (props) {
+
   return (
     <Page name="Picker" navbar>
-      <ContentBlock header={<span>LcnPicker & Button</span>}>
-        {
-          form.getFieldDecorator('group', {
-
-          })(
-            <LcnPicker><ExtraButton/></LcnPicker>
-          )
-        }
-      </ContentBlock>
+      <Form>
+        <ContentBlock header={<span>LcnPicker & Button</span>}>
+          <FormItem name="picker">
+              <LcnPicker><ExtraButton/></LcnPicker>
+          </FormItem>
+        </ContentBlock>
+      </Form>
     </Page>
   )
-});
+};
+
 <PickerExamples/>
 ```
 

@@ -1,31 +1,23 @@
 import * as React from 'react';
-
-type RouteItem = {
-  path: string;
-  exact?: boolean;
-  async: () => any;
-  children?: RouteItem[];
-  redirect?: string;
-  name?: string;
-};
+import { PartialRouteObject } from '@wonder-ui/router';
 
 export interface AppProps {
   app?: any;
 
   children?: NonNullable<React.ReactNode>;
 
-  type?: 'browser' | 'memory' | 'hash';
+  router?: any;
+
+  routerProps?: object;
 
   on?: {
-    pageInit?: (data: any) => void;
+    pageInit?: (data: { name?: string; [k: string]: any }) => void;
     routeChange?: (data: any) => void;
   };
 
-  routes: RouteItem[];
+  routes: PartialRouteObject[];
 
   theme?: object;
-
-  routerStore?: any;
 }
 
 export default function App(props: AppProps): JSX.Element;

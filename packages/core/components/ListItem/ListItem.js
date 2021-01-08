@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FIELD_META_PROP, FIELD_DATA_PROP } from '../Form/constants';
 import ArrowForwardIosOutlined from '@wonder-ui/icons/ArrowForwardIosOutlined';
 import capitalize from '@wonder-ui/utils/capitalize';
 import clsx from 'clsx';
 import styles from './styles';
-import withStyles from '../withStyles';
+import { withStyles } from '@wonder-ui/styles';
 import ExtraInfo from '../InputItem/ExtraInfo';
 /**
  * List, ListView 列表下的子组件.
@@ -13,8 +12,6 @@ import ExtraInfo from '../InputItem/ExtraInfo';
  */
 const ListItem = React.forwardRef(function ListItem(props, ref) {
   const {
-    [FIELD_DATA_PROP]: fieldData = {},
-    [FIELD_META_PROP]: fieldMeta,
     activeState,
     align = 'center',
     arrow,
@@ -27,20 +24,16 @@ const ListItem = React.forwardRef(function ListItem(props, ref) {
     multipleLine,
     thumb,
     wrap,
+    meta = {},
     ...rest
   } = props;
 
-  const errorMsg = React.useMemo(
-    () => {
-      if (errorMessage) {
-        return errorMessage;
-      }
-      if (fieldData.errors && fieldData.errors[0]) {
-        return fieldData.errors[0].message;
-      }
-    },
-    [fieldData.errors, errorMessage],
-  );
+  const errorMsg = React.useMemo(() => {
+    if (errorMessage) {
+      return errorMessage;
+    }
+    return meta.errors ? meta.errors.join() : null;
+  }, [meta.errors, errorMessage]);
 
   return (
     <div
