@@ -51,7 +51,11 @@ export default function createWithStyles<StylesType extends Styles<any, any>>(
       }
     }
 
-    const displayName = getDisplayName(Component);
+    let displayName = getDisplayName(Component);
+
+    if (displayName) {
+      displayName = `WithStyles(${displayName})`;
+    }
 
     const useStyles = createUseStyles(styles, {
       name: name || displayName,
@@ -86,7 +90,7 @@ export default function createWithStyles<StylesType extends Styles<any, any>>(
     });
 
     if (process.env.NODE_ENV !== 'production') {
-      WithStyles.displayName = `WithStyles(${displayName})`;
+      WithStyles.displayName = displayName;
     }
 
     hoistNonReactStatics(WithStyles, Component);

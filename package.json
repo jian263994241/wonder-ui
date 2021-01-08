@@ -2,7 +2,8 @@
   "name": "wonder-ui",
   "private": true,
   "scripts": {
-    "commit": "cz"
+    "commit": "cz",
+    "build:styles": "yarn workspace @wonder-ui/styles build"
   },
   "license": "MIT",
   "devDependencies": {
@@ -11,7 +12,6 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/react-hooks": "^3.7.0",
-    "ale-cli": "^4.0.0",
     "babel-jest": "^26.6.3",
     "husky": "^4.2.5",
     "lerna": "^3.20.2",
@@ -24,6 +24,7 @@
   "dependencies": {
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "ale-cli": "^4.0.0",
     "commitizen": "^4.2.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"

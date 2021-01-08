@@ -29,18 +29,18 @@ export interface CreateCSSProperties<Props extends object = {}>
     | CreateCSSProperties<Props>;
 }
 
-export type StyleRules<
-  Props extends object = {},
-  ClassKey extends string = string
-> = Record<
-  ClassKey,
+export type StyleProperties<Props extends object = {}> =
   // JSS property bag
   | CSSProperties
   // JSS property bag where values are based on props
   | CreateCSSProperties<Props>
   // JSS property bag based on props
-  | PropsFunc<Props, CreateCSSProperties<Props>>
->;
+  | PropsFunc<Props, CreateCSSProperties<Props>>;
+
+export type StyleRules<
+  Props extends object = {},
+  ClassKey extends string = string
+> = Record<ClassKey, StyleProperties<Props>>;
 
 export type StyleRulesCallback<
   Theme = DefaultTheme,

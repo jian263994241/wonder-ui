@@ -1,1 +1,0 @@
-export { useTheme as default } from '@wonder-ui/styles';
