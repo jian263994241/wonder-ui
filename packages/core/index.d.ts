@@ -106,6 +106,9 @@ export * from './components/Preloader';
 export { default as SearchBar } from './components/SearchBar';
 export * from './components/SearchBar';
 
+export { default as SvgIcon } from './components/SvgIcon';
+export * from './components/SvgIcon';
+
 export { default as Switch } from './components/Switch';
 export * from './components/Switch';
 
