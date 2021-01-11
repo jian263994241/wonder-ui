@@ -21,6 +21,7 @@ export {
 
 export { default as Routes } from './Routes';
 export * from './Routes';
+export { default as createRoutes } from './createRoutes';
 
 export {
   useLocation,
