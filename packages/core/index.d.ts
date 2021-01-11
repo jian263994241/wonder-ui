@@ -118,6 +118,9 @@ export * from './components/Tabs';
 export { default as Tag } from './components/Tag';
 export * from './components/Tag';
 
+export { default as TouchFeedback } from './components/TouchFeedback';
+export * from './components/TouchFeedback';
+
 export { default as Typography } from './components/Typography';
 export * from './components/Typography';
 

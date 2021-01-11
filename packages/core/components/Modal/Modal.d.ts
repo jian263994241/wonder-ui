@@ -1,3 +1,5 @@
+import { BackdropProps } from '../Backdrop';
+
 export interface ModalProps {
   /**
    * 关闭后回调
@@ -10,7 +12,7 @@ export interface ModalProps {
   /**
    * Backdrop props
    */
-  BackdropProps?: object;
+  BackdropProps?: Partial<BackdropProps>;
   /**
    * 内容
    */

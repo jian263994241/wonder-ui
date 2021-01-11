@@ -18,7 +18,7 @@ const Drawer = React.forwardRef((props, ref) => {
     className,
     modalProps,
     onCancel,
-    safeAreaBottom = false,
+    safeAreaBottom,
     style,
     variant = 'temporary',
     visible,
