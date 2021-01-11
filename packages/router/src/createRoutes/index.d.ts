@@ -1,1 +1,1 @@
-export { default as createRoutes } from './createRoutes';
+export { default } from './createRoutes';

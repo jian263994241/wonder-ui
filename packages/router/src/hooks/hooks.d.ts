@@ -1,6 +1,6 @@
 import { Location } from '../types';
 
-export function useLocation(): Location;
+export function useLocation({ inPage }: { inPage: boolean }): Location;
 
 export function useLocationExact(): Location;
 

@@ -1,13 +1,19 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { App, ThemeProvider, HashRouter, Routes } from '@wonder-ui/core';
+import {
+  App,
+  ThemeProvider,
+  HashRouter,
+  Routes,
+  createRoutes,
+} from '@wonder-ui/core';
 
 import IndexPage from './pages/IndexPage';
 import NoMatch from './pages/NoMatch';
 
-const routes = [
+const routes = createRoutes([
   {
-    path: '/',
+    path: '/:add?',
     component: IndexPage,
     children: [
       { path: 'about', async: () => import('./pages/About') },
@@ -40,7 +46,7 @@ const routes = [
       { path: 'typography', async: () => import('./pages/Typography') },
     ],
   },
-];
+]);
 
 function MyApp() {
   const [theme, setTheme] = React.useState({});
@@ -61,7 +67,7 @@ function MyApp() {
       <HashRouter>
         <App
           onPageInit={(data) => {
-            console.log('Page init', data.name);
+            // console.log('Page init', data.name);
           }}
         >
           <Routes
@@ -69,7 +75,7 @@ function MyApp() {
             noMatch={<NoMatch />}
             animation={animation}
             onRouteChange={(location, action) => {
-              console.log(location, action);
+              // console.log(location, action);
             }}
           />
         </App>

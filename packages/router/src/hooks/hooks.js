@@ -6,25 +6,25 @@ import {
 } from 'react-router';
 import { addQuery, stripQuery } from '../utils';
 
-export const useLocation = () => {
+export const useLocation = ({ inPage } = {}) => {
+  const matched = useRouteMatch() || {};
   const location = useLocation_();
+  const locRef = React.useRef(location);
 
   addQuery(location);
+
+  if (inPage) {
+    return React.useMemo(() => {
+      matched.isExact && (locRef.current = location);
+      return locRef.current;
+    }, [matched, location]);
+  }
+
   return location;
 };
 
 export const useLocationExact = () => {
-  const matched = useRouteMatch() || {};
-  const location = useLocation();
-  const locRef = React.useRef(location);
-
-  return React.useMemo(() => {
-    if (matched.isExact) {
-      locRef.current = location;
-    }
-
-    return locRef.current;
-  }, [matched, location]);
+  return useLocation({ inPage: true });
 };
 
 export const usePageEffect = (callback, vars = []) => {

@@ -6,6 +6,7 @@ import {
   ListItem,
   useNavigation,
   useLocationExact,
+  useLocation,
 } from '@wonder-ui/core';
 
 const LinkDetail = (props) => {
@@ -18,9 +19,9 @@ const LinkDetail = (props) => {
 };
 
 export default function IndexPage() {
-  const loc = useLocationExact();
+  const loc = useLocation({ inPage: true });
 
-  // console.log(loc);
+  console.log(loc);
 
   return (
     <Page name="Wonder UI" navbar showBack={false}>
