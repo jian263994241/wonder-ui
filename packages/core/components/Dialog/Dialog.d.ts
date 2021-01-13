@@ -45,8 +45,8 @@ declare namespace Dialog {
     actions?: {
       text: string;
       primary?: boolean;
-      onClick?: (e: any, data: { ref: React.Ref<any> }) => void;
-    };
+      onClick?: (e: any, data: { contentRef: React.RefObject<any> }) => void;
+    }[];
   }): void;
 }
 

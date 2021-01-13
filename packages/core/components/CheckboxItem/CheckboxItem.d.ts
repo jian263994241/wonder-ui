@@ -7,6 +7,7 @@ export interface CheckboxItemProps extends ListItemProps {
   onChange?: (val: any) => void;
   checked?: boolean;
   position?: 'left' | 'right';
+  children?: React.ReactNode;
 }
 
 export default function CheckboxItem(props: CheckboxItemProps): JSX.Element;

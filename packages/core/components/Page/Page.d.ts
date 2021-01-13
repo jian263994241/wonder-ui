@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export interface PageProps {
-  name?: string;
+  name: string;
   pageContent?: boolean;
   children?: React.ReactNode;
 }

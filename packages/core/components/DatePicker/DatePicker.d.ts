@@ -2,6 +2,7 @@ import * as React from 'react';
 
 export interface DatePickerProps {
   placeholder?: string;
+  children?: React.ReactNode;
   extra?: React.ReactNode;
   value?: string | Date;
   onOk?: () => void;
