@@ -4,6 +4,7 @@ import Dialog from './Dialog';
 import DialogManager from './DialogManager';
 import isPromise from '@wonder-ui/utils/isPromise';
 import toggleVisible from './toggleVisible';
+import { defaultTheme, ThemeProvider } from '../styles';
 
 const dialogManager = new DialogManager();
 const toastManager = new DialogManager();
@@ -28,25 +29,28 @@ Dialog.alert = function DialogAlert({
   text,
   onOk,
   okText = '确定',
+  theme = null,
   ...rest
 }) {
   const container = document.createElement('div');
   const toggleAlert = toggleVisible((visible, clearQueue) => {
     ReactDOM.render(
-      <Dialog
-        {...rest}
-        visible={visible}
-        title={title}
-        text={text}
-        afterClose={clearQueue}
-        actions={[
-          {
-            text: okText,
-            primary: true,
-            onClick: wrapCallback(onOk, () => toggleAlert()),
-          },
-        ]}
-      />,
+      <ThemeProvider theme={window.wonder_ui_theme || defaultTheme}>
+        <Dialog
+          {...rest}
+          visible={visible}
+          title={title}
+          text={text}
+          afterClose={clearQueue}
+          actions={[
+            {
+              text: okText,
+              primary: true,
+              onClick: wrapCallback(onOk, () => toggleAlert()),
+            },
+          ]}
+        />
+      </ThemeProvider>,
       container,
     );
   });
@@ -68,24 +72,26 @@ Dialog.confirm = function DialogConfirm({
   const container = document.createElement('div');
   const toggleConfirm = toggleVisible((visible, clearQueue) => {
     ReactDOM.render(
-      <Dialog
-        {...rest}
-        visible={visible}
-        title={title}
-        text={text}
-        afterClose={clearQueue}
-        actions={[
-          {
-            text: cancelText,
-            onClick: wrapCallback(onCancel, () => toggleConfirm()),
-          },
-          {
-            text: okText,
-            primary: true,
-            onClick: wrapCallback(onOk, () => toggleConfirm()),
-          },
-        ]}
-      />,
+      <ThemeProvider theme={window.wonder_ui_theme || defaultTheme}>
+        <Dialog
+          {...rest}
+          visible={visible}
+          title={title}
+          text={text}
+          afterClose={clearQueue}
+          actions={[
+            {
+              text: cancelText,
+              onClick: wrapCallback(onCancel, () => toggleConfirm()),
+            },
+            {
+              text: okText,
+              primary: true,
+              onClick: wrapCallback(onOk, () => toggleConfirm()),
+            },
+          ]}
+        />
+      </ThemeProvider>,
       container,
     );
   });
@@ -137,18 +143,20 @@ Dialog.custom = function DialogCustom(props) {
   const container = document.createElement('div');
   const toggleCustom = toggleVisible((visible, clearQueue) => {
     ReactDOM.render(
-      <Dialog
-        {...rest}
-        visible={visible}
-        afterClose={clearQueue}
-        actions={actions.map((action) => {
-          const { onClick, ...otherOpts } = action;
-          return {
-            ...otherOpts,
-            onClick: wrapCallback(onClick, () => toggleCustom()),
-          };
-        })}
-      />,
+      <ThemeProvider theme={window.wonder_ui_theme || defaultTheme}>
+        <Dialog
+          {...rest}
+          visible={visible}
+          afterClose={clearQueue}
+          actions={actions.map((action) => {
+            const { onClick, ...otherOpts } = action;
+            return {
+              ...otherOpts,
+              onClick: wrapCallback(onClick, () => toggleCustom()),
+            };
+          })}
+        />
+      </ThemeProvider>,
       container,
     );
   });

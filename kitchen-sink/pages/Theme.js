@@ -6,13 +6,16 @@ import {
   ListItem,
   Page,
   Switch,
+  Dialog,
+  Button,
+  useTheme,
+  createTheme,
 } from '@wonder-ui/core';
-import { createTheme, useTheme } from '@wonder-ui/styles';
 
 const colors = [
   { label: '4791db', value: '#4791db' },
   { label: 'ffb74d', value: '#ffb74d' },
-  { label: '4caf50', value: '#4caf50' },
+  { label: '00C694', value: '#00C694' },
 ];
 
 const darkTheme = createTheme({
@@ -20,6 +23,8 @@ const darkTheme = createTheme({
     type: 'dark',
   },
 });
+
+window.wonder_ui_theme = darkTheme;
 
 export default function ThemeExamples(props) {
   const theme = useTheme();
@@ -72,6 +77,17 @@ export default function ThemeExamples(props) {
           )}
         />
       </List>
+
+      <Button
+        color="primary"
+        onClick={() => {
+          Dialog.alert({
+            text: 'primary',
+          });
+        }}
+      >
+        样式按钮
+      </Button>
     </Page>
   );
 }

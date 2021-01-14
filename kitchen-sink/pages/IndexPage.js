@@ -5,7 +5,6 @@ import {
   Block,
   ListItem,
   useNavigation,
-  useLocationExact,
   useLocation,
 } from '@wonder-ui/core';
 

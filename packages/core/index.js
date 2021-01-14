@@ -4,11 +4,10 @@ export { default as __AppContext } from './components/App/AppContext';
 export { default as Page } from './components/Page';
 
 // styles
-export * from '@wonder-ui/styles';
+export * from './components/styles';
 
 //router
-
-export * from '@wonder-ui/router';
+export * from './components/router';
 
 //transition
 export { default as Transition } from './components/Transition';

@@ -124,5 +124,8 @@ export * from './components/TouchFeedback';
 export { default as Typography } from './components/Typography';
 export * from './components/Typography';
 
-export * from '@wonder-ui/styles';
-export * from '@wonder-ui/router';
+// styles
+export * from './components/styles';
+
+//router
+export * from './components/router';

@@ -79,7 +79,6 @@ function addLightOrDark(intent, direction, shade, tonalOffset) {
   }
 }
 
-
 export default function createPalette(palette) {
   const {
     primary = {
@@ -149,7 +148,12 @@ export default function createPalette(palette) {
     return contrastText;
   }
 
-  function augmentColor(color, mainShade = 500, lightShade = 300, darkShade = 700) {
+  function augmentColor(
+    color,
+    mainShade = 500,
+    lightShade = 300,
+    darkShade = 700,
+  ) {
     color = { ...color };
     if (!color.main && color[mainShade]) {
       color.main = color[mainShade];
@@ -179,7 +183,9 @@ export default function createPalette(palette) {
 
   if (process.env.NODE_ENV !== 'production') {
     if (!types[type]) {
-      console.error(`Material-UI: the palette type \`${type}\` is not supported.`);
+      console.error(
+        `Material-UI: the palette type \`${type}\` is not supported.`,
+      );
     }
   }
 

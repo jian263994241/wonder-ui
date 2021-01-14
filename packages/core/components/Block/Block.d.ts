@@ -5,6 +5,7 @@ export interface BlockProps extends React.HTMLAttributes<HTMLDivElement> {
   bottom?: number;
   left?: number;
   right?: number;
+  top?: number;
 }
 
 export default function Block(props: BlockProps): JSX.Element;

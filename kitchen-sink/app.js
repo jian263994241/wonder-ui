@@ -13,7 +13,7 @@ import NoMatch from './pages/NoMatch';
 
 const routes = createRoutes([
   {
-    path: '/:add?',
+    path: '/',
     component: IndexPage,
     children: [
       { path: 'about', async: () => import('./pages/About') },
