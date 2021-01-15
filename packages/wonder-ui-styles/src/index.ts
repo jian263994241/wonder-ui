@@ -1,4 +1,4 @@
-export * from 'theming';
+export * from './theming';
 export * from './types';
 export * from './theme/defaultTheme';
 export * from './theme/createTheme';

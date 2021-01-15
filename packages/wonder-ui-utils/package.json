@@ -1,11 +1,10 @@
 {
-  "name": "@wonder-ui/styles",
-  "version": "2.0.0-beta.9",
-  "description": "Wonder-UI styles",
+  "name": "@wonder-ui/utils",
+  "version": "2.0.0",
+  "description": "Wonder-UI utils",
   "source": "src/index.ts",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "typings": "dist/index.d.ts",
   "files": [
     "src",
     "dist",
@@ -25,11 +24,7 @@
   },
   "keywords": [
     "wonder ui",
-    "css in js",
-    "jss",
-    "react ui",
-    "react-jss",
-    "react"
+    "react-utils"
   ],
   "author": "jian.li",
   "homepage": "https://github.com/jian263994241/wonder-ui/tree/master/packages",
@@ -38,12 +33,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@types/hoist-non-react-statics": "^3.3.1",
-    "csstype": "^3.0.5",
-    "hoist-non-react-statics": "^3.3.2",
-    "jss": "^10.5.0",
-    "jss-preset-default": "^10.5.0",
-    "theming": "^3.3.0"
+    "clsx": "^1.1.1",
+    "ssr-window": "^3.0.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
