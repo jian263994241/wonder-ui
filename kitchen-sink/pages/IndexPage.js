@@ -18,9 +18,9 @@ const LinkDetail = (props) => {
 };
 
 export default function IndexPage() {
-  const loc = useLocation({ inPage: true });
+  // const loc = useLocation({ inPage: true });
 
-  console.log(loc);
+  // console.log(loc);
 
   return (
     <Page name="Wonder UI" navbar showBack={false}>

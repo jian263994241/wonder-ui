@@ -8,17 +8,16 @@ import RmcCascader from 'rmc-cascader/lib/Cascader';
 import useEventCallback from '@wonder-ui/utils/useEventCallback';
 import useStyles from './styles';
 
-
-function getHeadData(data){
+function getHeadData(data) {
   const result = [];
-  const _getHeadData = (data)=>{
+  const _getHeadData = (data) => {
     const head = data[0];
-    if(!head) return ;
+    if (!head) return;
     result.push(head.value);
-    if(head.children && head.children.length > 0){
+    if (head.children && head.children.length > 0) {
       return _getHeadData(head.children);
     }
-  }
+  };
   _getHeadData(data);
   return result;
 }
@@ -32,7 +31,7 @@ const Cascader = React.forwardRef(function Cascader(props, ref) {
     okText = '确定',
     onCancel,
     onChange,
-    onOk, 
+    onOk,
     onPickerChange,
     title,
     value: inValue,
@@ -40,23 +39,22 @@ const Cascader = React.forwardRef(function Cascader(props, ref) {
   } = props;
   const classes = useStyles();
   const [value, setValue] = React.useState(inValue);
-  const [, forceUpdate ] = React.useState();
 
-  React.useEffect(()=>{ 
+  React.useEffect(() => {
     setValue(inValue || defaultValue);
   }, [inValue]);
 
-  const handleChange = useEventCallback((val)=>{
+  const handleChange = useEventCallback((val) => {
     setValue(val);
     onPickerChange && onPickerChange(val, getValueProps(val, data));
   });
 
-  const handleOk = useEventCallback(()=>{
+  const handleOk = useEventCallback(() => {
     const _value = value || getHeadData(data);
     onChange && onChange(_value);
     onOk && onOk(_value);
   });
-  
+
   const cascader = (
     <RmcCascader
       prefixCls={classes.root}
@@ -73,14 +71,21 @@ const Cascader = React.forwardRef(function Cascader(props, ref) {
     <Drawer visible={visible} anchor="bottom" iosSafe onCancel={onCancel}>
       <HeaderBar
         title={title}
-        barLeft={<Button variant="text" color="primary" onClick={onCancel}>{cancelText}</Button>}
-        barRight={<Button variant="text" color="primary" onClick={handleOk}>{okText}</Button>}
+        barLeft={
+          <Button variant="text" color="primary" onClick={onCancel}>
+            {cancelText}
+          </Button>
+        }
+        barRight={
+          <Button variant="text" color="primary" onClick={handleOk}>
+            {okText}
+          </Button>
+        }
       />
       {cascader}
     </Drawer>
-  )
+  );
 });
-
 
 Cascader.propTypes = {
   title: PropTypes.string,

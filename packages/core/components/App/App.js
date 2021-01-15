@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 import clsx from 'clsx';
+import Events from '@wonder-ui/utils/Events';
+import useForkRef from '@wonder-ui/utils/useForkRef';
+import decamelize from 'decamelize';
+
+const defaultEvents = new Events();
 
 /**
  * 创建一个App上下文.
@@ -9,12 +14,28 @@ import clsx from 'clsx';
  */
 const App = React.forwardRef((props, ref) => {
   const { children, on, onPageInit, className, ...rest } = props;
+  const rootRef = React.useRef(null);
+  const handleRef = useForkRef(rootRef, ref);
+  const appRef = React.useRef(null);
 
-  const events = { onPageInit };
+  if (!appRef.current) {
+    const app = (appRef.current = {
+      rootRef: rootRef,
+      events: defaultEvents,
+    });
+
+    const events = { onPageInit };
+
+    Object.keys(events).forEach((key) => {
+      const eventKey = decamelize(key.replace('on', ''), '-');
+
+      app.events.on(eventKey, events[key]);
+    });
+  }
 
   return (
-    <AppContext.Provider value={{ events }}>
-      <div ref={ref} className={clsx('app-root', className)} {...rest}>
+    <AppContext.Provider value={appRef.current}>
+      <div ref={handleRef} className={clsx('app-root', className)} {...rest}>
         {children}
       </div>
     </AppContext.Provider>

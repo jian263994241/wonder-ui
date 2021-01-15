@@ -55,6 +55,11 @@ export default function PickerExamples(props) {
             value: 'bb',
             level: item.level + 1,
           },
+          {
+            label: 'b.c2',
+            value: 'bb2',
+            level: item.level + 1,
+          },
         ];
 
         if (item.level === 1) {
@@ -83,7 +88,7 @@ export default function PickerExamples(props) {
               </LcnPicker>
             </FormItem>
 
-            <FormItem name="LcnPicker">
+            <FormItem name="LcnPicker2">
               <Picker cols={3} data={data} onPickerChange={handleChange}>
                 <ExtraButton />
               </Picker>

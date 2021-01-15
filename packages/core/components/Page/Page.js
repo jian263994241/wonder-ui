@@ -37,11 +37,7 @@ const Page = React.forwardRef((props, ref) => {
   const app = React.useContext(AppContext);
 
   usePageEffect(() => {
-    triggerEvents(app, 'onPageInit', { name });
-
-    return () => {
-      triggerEvents(app, 'onPageRemove', { name });
-    };
+    app.events.emit('page-init', { name });
   }, [name]);
 
   return (

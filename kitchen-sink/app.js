@@ -67,7 +67,7 @@ function MyApp() {
       <HashRouter>
         <App
           onPageInit={(data) => {
-            // console.log('Page init', data.name);
+            console.log('Page init', data.name);
           }}
         >
           <Routes

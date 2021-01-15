@@ -24,6 +24,7 @@
     "@wonder-ui/utils": "^1.0.3",
     "array-tree-filter": "^2.1.0",
     "clsx": "^1.1.0",
+    "decamelize": "^5.0.0",
     "dom-helpers": "^5.1.0",
     "prop-types": "^15.7.2",
     "rc-field-form": "^1.17.3",

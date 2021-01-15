@@ -65,6 +65,7 @@ const Picker = React.forwardRef(function Picker(props, ref) {
   });
 
   const handleOk = useEventCallback((value) => {
+    console.log(value);
     setVisible(false);
     const valueProps = getValueProps(value, data);
     onChange && onChange(value, valueProps);
