@@ -20,6 +20,8 @@ export interface PickerProps {
     label: string;
     value: any;
   }[];
+
+  cols?: number;
   /**
    * selected value
    */
@@ -27,7 +29,7 @@ export interface PickerProps {
   /**
    * click ok callback
    */
-  onOk?: () => void;
+  onOk?: (value: any, prop: any) => void;
   /**
    * click cancel callback
    */
