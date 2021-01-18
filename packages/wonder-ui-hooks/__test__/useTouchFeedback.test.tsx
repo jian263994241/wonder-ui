@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { useTouchFeedback } from '../src';
 
 function Link(props: any) {
@@ -14,13 +14,13 @@ function Link(props: any) {
 }
 
 test('Link changes the class when touched', () => {
-  render(
+  const { getByText } = render(
     <Link className="link" page="http://www.facebook.com">
       Facebook
     </Link>
   );
 
-  const link = screen.getByText('Facebook');
+  const link = getByText('Facebook');
 
   fireEvent.touchStart(link);
 

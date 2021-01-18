@@ -3,26 +3,17 @@ import useHandleValue from './useHandleValue';
 
 export interface DataItem {
   label: string;
-  value?: any;
-  key?: string | number;
+  value: any;
 }
 
-interface ToggleOptions {
+interface ToggleOptions<Value = any | any[]> {
   data: DataItem[];
   exclusive?: boolean;
-  value?: any;
-  defaultValue?: any;
-  onChange? : (value: any) => void
+  value?: Value;
+  defaultValue?: Value;
+  onChange?: (value?: Value) => void;
+  ref?: React.Ref<Value>;
 }
-
-
-interface PropsMap extends DataItem {
-  actived: boolean;
-  onChange: (value: any) => void;
-}
-
-
-
 
 function isValueSelected(value: any, candidate: any) {
   if (candidate === undefined || value === undefined) {
@@ -36,45 +27,61 @@ function isValueSelected(value: any, candidate: any) {
   return value === candidate;
 }
 
-export default function useToggle(options: ToggleOptions): [value: any, props: PropsMap[]] {
-  const { data, exclusive, defaultValue, value: valueInput, onChange } = options;
+export default function useToggle(options: ToggleOptions) {
+  const {
+    data,
+    exclusive,
+    defaultValue,
+    value: valueInput,
+    onChange,
+    ref
+  } = options;
+
   const [value, setValue] = useHandleValue({
     value: valueInput,
     defaultValue,
     onChange
   });
 
+  React.useImperativeHandle(ref, () => ({ value }));
+
   const handleChange = (itemValue: any) => {
-
-    const index = value && value.indexOf(itemValue);
-
     let newValue;
 
-    if (value && index >= 0) {
-      newValue = [...value];
-      newValue.splice(index, 1);
+    if (value && Array.isArray(value)) {
+      const index = value.indexOf(itemValue);
+      if (index >= 0) {
+        newValue = [...value];
+        newValue.splice(index, 1);
+      } else {
+        newValue = [...value, itemValue];
+      }
     } else {
-      newValue = value ? [...value, itemValue] : [itemValue];
+      newValue = [itemValue];
     }
 
     setValue(newValue);
   };
 
   const handleExclusiveChange = (itemValue: any) => {
-    setValue(value === itemValue ? null : itemValue);
+    if (value != itemValue) {
+      setValue(itemValue);
+    } else {
+      setValue();
+    }
   };
 
   const props = data.map((item, index) => {
     return {
+      key: index,
       label: item.label,
       value: item.value,
-      key: item.key || index,
-      actived: isValueSelected(item.value, value),
+      checked: isValueSelected(item.value, value),
       onChange: exclusive
         ? handleExclusiveChange.bind(null, item.value)
         : handleChange.bind(null, item.value)
     };
   });
 
-  return [value, props];
+  return [props];
 }

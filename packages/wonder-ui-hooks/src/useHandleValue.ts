@@ -1,12 +1,14 @@
 import * as React from 'react';
 
-interface InputValueOptions {
-  defaultValue?: any;
-  value?: any;
-  onChange?: (value: any) => void;
+interface InputValueOptions<T = any> {
+  defaultValue?: T;
+  value?: T;
+  onChange?: (value: T) => void;
 }
 
-export default function useHandleValue(options: InputValueOptions = {}) {
+export default function useHandleValue<T = any>(
+  options: InputValueOptions<T> = {}
+) {
   const { defaultValue, value: valueInput, onChange } = options;
 
   const [_value, _setValue] = React.useState(defaultValue);
