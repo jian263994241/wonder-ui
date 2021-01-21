@@ -4,16 +4,17 @@ import removeEventListener from 'dom-helpers/removeEventListener';
 import addClass from 'dom-helpers/addClass';
 import removeClass from 'dom-helpers/removeClass';
 
-interface TouchFeedbackOptions {
+export interface TouchFeedbackOptions {
   disabled?: boolean;
   activeClassName?: string;
 }
 
-export default function useTouchFeedback(
+export function useTouchFeedback<T extends HTMLElement>(
   options: TouchFeedbackOptions = {}
-): React.MutableRefObject<HTMLAnchorElement | null> {
+) {
   const { disabled, activeClassName = 'active' } = options;
-  const ElementRef = React.useRef<HTMLAnchorElement | null>(null);
+
+  const nodeRef = React.useRef<T>(null);
 
   const events = <const>[
     'touchstart',
@@ -26,7 +27,7 @@ export default function useTouchFeedback(
   ];
 
   React.useEffect(() => {
-    const node = ElementRef.current;
+    const node = nodeRef.current;
 
     if (node && !disabled) {
       const activeTrue = () => {
@@ -54,7 +55,7 @@ export default function useTouchFeedback(
         });
       };
     }
-  }, [ElementRef, disabled]);
+  }, [nodeRef, disabled]);
 
-  return ElementRef;
+  return nodeRef;
 }

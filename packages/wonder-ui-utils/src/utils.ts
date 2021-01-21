@@ -72,27 +72,6 @@ export function createChainedFunction(...funcs: any[]) {
   );
 }
 
-// Corresponds to 10 frames at 60 Hz.
-// A few bytes payload overhead when lodash/debounce is ~3 kB and debounce ~300 B.
-export default function debounce(func: any, wait = 166) {
-  let timeout: any;
-  function debounced(this: any, ...args: any[]) {
-    // eslint-disable-next-line consistent-this
-    const that = this;
-    const later = () => {
-      func.apply(that, args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  }
-
-  debounced.clear = () => {
-    clearTimeout(timeout);
-  };
-
-  return debounced;
-}
-
 // A change of the browser zoom change the scrollbar size.
 // Credit https://github.com/twbs/bootstrap/blob/3ffe3a5d82f6f561b82ff78d82b32a7d14aed558/js/src/modal.js#L512-L519
 export function getScrollbarSize() {

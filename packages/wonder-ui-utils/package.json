@@ -33,7 +33,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "clsx": "^1.1.1",
     "ssr-window": "^3.0.0"
   },
   "peerDependencies": {

@@ -1,18 +1,15 @@
 import * as React from 'react';
-import useHandleValue from './useHandleValue';
-
+import { useHandleValue, HandleValueOptions } from './useHandleValue';
+import { useEventCallback } from './useEventCallback';
 export interface DataItem {
   label: string;
   value: any;
 }
 
-interface ToggleOptions<Value = any | any[]> {
+export interface ToggleOptions<Value = any | any[]>
+  extends HandleValueOptions<Value> {
   data: DataItem[];
   exclusive?: boolean;
-  value?: Value;
-  defaultValue?: Value;
-  onChange?: (value?: Value) => void;
-  ref?: React.Ref<Value>;
 }
 
 function isValueSelected(value: any, candidate: any) {
@@ -27,7 +24,7 @@ function isValueSelected(value: any, candidate: any) {
   return value === candidate;
 }
 
-export default function useToggle(options: ToggleOptions) {
+export function useToggle(options: ToggleOptions) {
   const {
     data,
     exclusive,
@@ -40,12 +37,11 @@ export default function useToggle(options: ToggleOptions) {
   const [value, setValue] = useHandleValue({
     value: valueInput,
     defaultValue,
-    onChange
+    onChange,
+    ref
   });
 
-  React.useImperativeHandle(ref, () => ({ value }));
-
-  const handleChange = (itemValue: any) => {
+  const handleChange = useEventCallback((itemValue: any) => {
     let newValue;
 
     if (value && Array.isArray(value)) {
@@ -61,15 +57,15 @@ export default function useToggle(options: ToggleOptions) {
     }
 
     setValue(newValue);
-  };
+  });
 
-  const handleExclusiveChange = (itemValue: any) => {
+  const handleExclusiveChange = useEventCallback((itemValue: any) => {
     if (value != itemValue) {
       setValue(itemValue);
     } else {
       setValue();
     }
-  };
+  });
 
   const props = data.map((item, index) => {
     return {

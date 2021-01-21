@@ -9,17 +9,6 @@ interface Supoort {
 
 let support: Supoort;
 
-declare global {
-  interface Window {
-    DocumentTouch: any;
-    PointerEvent: any;
-    cordova: any;
-    phonegap: any;
-    Capacitor: any;
-    nw: any;
-  }
-}
-
 function calcSupport() {
   const window = getWindow();
   const document = getDocument();
@@ -27,11 +16,12 @@ function calcSupport() {
   return {
     touch: !!(
       'ontouchstart' in window ||
-      (window.DocumentTouch && document instanceof window.DocumentTouch)
+      ((window as any).DocumentTouch &&
+        document instanceof (window as any).DocumentTouch)
     ),
 
     pointerEvents:
-      !!window.PointerEvent &&
+      !!(window as any).PointerEvent &&
       'maxTouchPoints' in window.navigator &&
       window.navigator.maxTouchPoints >= 0,
 

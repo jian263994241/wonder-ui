@@ -1,15 +1,14 @@
 import * as React from 'react';
 
-interface InputValueOptions<T = any> {
+export interface HandleValueOptions<T = any> {
   defaultValue?: T;
   value?: T;
-  onChange?: (value: T) => void;
+  onChange?: (value?: T) => void;
+  ref?: React.Ref<any>;
 }
 
-export default function useHandleValue<T = any>(
-  options: InputValueOptions<T> = {}
-) {
-  const { defaultValue, value: valueInput, onChange } = options;
+export function useHandleValue<T = any>(options: HandleValueOptions<T> = {}) {
+  const { defaultValue, value: valueInput, onChange, ref } = options;
 
   const [_value, _setValue] = React.useState(defaultValue);
 
@@ -20,6 +19,8 @@ export default function useHandleValue<T = any>(
   const value = valueInput || _value;
 
   const setValue = onChange || _setValue;
+
+  React.useImperativeHandle(ref, () => ({ value }));
 
   return [value, setValue];
 }

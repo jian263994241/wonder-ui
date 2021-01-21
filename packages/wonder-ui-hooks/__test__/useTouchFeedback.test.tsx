@@ -4,7 +4,7 @@ import { useTouchFeedback } from '../src';
 
 function Link(props: any) {
   const { children, className, page, ...rest } = props;
-  const domRef = useTouchFeedback();
+  const domRef = useTouchFeedback<HTMLAnchorElement>();
 
   return (
     <a ref={domRef} className={className} href={page} {...rest}>
