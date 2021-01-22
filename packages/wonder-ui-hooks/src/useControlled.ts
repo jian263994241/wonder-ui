@@ -5,14 +5,19 @@ export interface ControlledOptions<T> {
   defaultValue?: T;
   value?: T;
   state?: string;
-  name: string
+  name: string;
 }
 
-export function useControlled <V> (options: ControlledOptions<V>) : [
-  value: V | undefined, setValueIfUncontrolled: React.Dispatch<React.SetStateAction<V | undefined>>
-] {
-  const { defaultValue: defaultProp, value: controlled, state ='value' , name} = options;
-  const { current: isControlled } = React.useRef<boolean>(controlled !== undefined);
+export function useControlled<V>(options: ControlledOptions<V>) {
+  const {
+    defaultValue: defaultProp,
+    value: controlled,
+    state = 'value',
+    name
+  } = options;
+  const { current: isControlled } = React.useRef<boolean>(
+    controlled !== undefined
+  );
   const [valueState, setValue] = React.useState<V | undefined>(defaultProp);
   const value = isControlled ? controlled : valueState;
 
@@ -23,13 +28,15 @@ export function useControlled <V> (options: ControlledOptions<V>) : [
           [
             `A component is changing the ${
               isControlled ? '' : 'un'
-            }controlled ${state} state of ${name} to be ${isControlled ? 'un' : ''}controlled.`,
+            }controlled ${state} state of ${name} to be ${
+              isControlled ? 'un' : ''
+            }controlled.`,
             'Elements should not switch from uncontrolled to controlled (or vice versa).',
             `Decide between using a controlled or uncontrolled ${name} ` +
               'element for the lifetime of the component.',
             "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.",
-            'More info: https://fb.me/react-controlled-components',
-          ].join('\n'),
+            'More info: https://fb.me/react-controlled-components'
+          ].join('\n')
         );
       }
     }, [state, name, controlled]);
@@ -54,7 +61,7 @@ export function useControlled <V> (options: ControlledOptions<V>) : [
     }
   });
 
-  return [value, setValueIfUncontrolled];
+  return [value, setValueIfUncontrolled] as const;
 }
 
 export default useControlled;

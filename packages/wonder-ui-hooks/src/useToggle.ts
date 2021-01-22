@@ -1,83 +1,54 @@
 import * as React from 'react';
-import { useHandleValue, HandleValueOptions } from './useHandleValue';
-import { useEventCallback } from './useEventCallback';
-export interface DataItem {
-  label: string;
-  value: any;
+
+type IState = string | number | boolean | undefined;
+
+export interface Actions<T = IState> {
+  setLeft: () => void;
+  setRight: () => void;
+  toggle: (value?: T) => void;
 }
 
-export interface ToggleOptions<Value = any | any[]>
-  extends HandleValueOptions<Value> {
-  data: DataItem[];
-  exclusive?: boolean;
-}
+export function useToggle<T = boolean | undefined>(): [boolean, Actions<T>];
 
-function isValueSelected(value: any, candidate: any) {
-  if (candidate === undefined || value === undefined) {
-    return false;
-  }
+export function useToggle<T = IState>(defaultValue: T): [T, Actions<T>];
 
-  if (Array.isArray(candidate)) {
-    return candidate.indexOf(value) >= 0;
-  }
+export function useToggle<T = IState, U = IState>(
+  defaultValue: T,
+  reverseValue: U
+): [T | U, Actions<T | U>];
 
-  return value === candidate;
-}
+export function useToggle<D extends IState = IState, R extends IState = IState>(
+  defaultValue: D = false as D,
+  reverseValue?: R
+) {
+  const [state, setState] = React.useState<D | R>(defaultValue);
 
-export function useToggle(options: ToggleOptions) {
-  const {
-    data,
-    exclusive,
-    defaultValue,
-    value: valueInput,
-    onChange,
-    ref
-  } = options;
+  const actions = React.useMemo(() => {
+    const reverseValueOrigin = (reverseValue === undefined
+      ? !defaultValue
+      : reverseValue) as D | R;
 
-  const [value, setValue] = useHandleValue({
-    value: valueInput,
-    defaultValue,
-    onChange,
-    ref
-  });
-
-  const handleChange = useEventCallback((itemValue: any) => {
-    let newValue;
-
-    if (value && Array.isArray(value)) {
-      const index = value.indexOf(itemValue);
-      if (index >= 0) {
-        newValue = [...value];
-        newValue.splice(index, 1);
-      } else {
-        newValue = [...value, itemValue];
+    // 切换返回值
+    const toggle = (value?: D | R) => {
+      // 强制返回状态值，适用于点击操作
+      if (value !== undefined) {
+        setState(value);
+        return;
       }
-    } else {
-      newValue = [itemValue];
-    }
-
-    setValue(newValue);
-  });
-
-  const handleExclusiveChange = useEventCallback((itemValue: any) => {
-    if (value != itemValue) {
-      setValue(itemValue);
-    } else {
-      setValue();
-    }
-  });
-
-  const props = data.map((item, index) => {
-    return {
-      key: index,
-      label: item.label,
-      value: item.value,
-      checked: isValueSelected(item.value, value),
-      onChange: exclusive
-        ? handleExclusiveChange.bind(null, item.value)
-        : handleChange.bind(null, item.value)
+      setState((s) => (s === defaultValue ? reverseValueOrigin : defaultValue));
     };
-  });
+    // 设置默认值
+    const setLeft = () => setState(defaultValue);
+    // 设置取反值
+    const setRight = () => setState(reverseValueOrigin);
+    return {
+      toggle,
+      setLeft,
+      setRight
+    };
+  }, [defaultValue, reverseValue]);
 
-  return [props];
+  return [state, actions];
 }
+
+export default useToggle;

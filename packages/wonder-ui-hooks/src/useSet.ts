@@ -33,7 +33,7 @@ function useSet<K>(initialValue?: Iterable<K>) {
   );
 
   const utils = {
-    has: useEventCallback((key: K) => set.has(key), [set]),
+    has: useEventCallback((key: K) => set.has(key)),
     ...stableActions
   };
 
