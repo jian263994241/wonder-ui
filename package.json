@@ -2,8 +2,7 @@
   "name": "wonder-ui",
   "private": true,
   "scripts": {
-    "commit": "cz",
-    "build:styles": "yarn workspace @wonder-ui/styles build"
+    "commit": "cz"
   },
   "license": "MIT",
   "devDependencies": {
