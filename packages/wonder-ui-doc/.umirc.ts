@@ -7,7 +7,11 @@ export default defineConfig({
   // more config: https://d.umijs.org/config
   navs: {
     'zh-CN': [
-      null, // null 值代表保留约定式生成的导航，只做增量配置
+      // null, // null 值代表保留约定式生成的导航，只做增量配置
+      {
+        title: '快速上手',
+        path: '/getting-started',
+      },
       {
         title: '组件',
         path: '/components',
