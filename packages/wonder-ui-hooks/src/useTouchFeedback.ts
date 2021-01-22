@@ -1,15 +1,11 @@
 import * as React from 'react';
-import addEventListener from 'dom-helpers/addEventListener';
-import removeEventListener from 'dom-helpers/removeEventListener';
-import addClass from 'dom-helpers/addClass';
-import removeClass from 'dom-helpers/removeClass';
 
 export interface TouchFeedbackOptions {
   disabled?: boolean;
   activeClassName?: string;
 }
 
-export function useTouchFeedback<T extends HTMLElement>(
+export function useTouchFeedback<T extends HTMLElement = HTMLElement>(
   options: TouchFeedbackOptions = {}
 ) {
   const { disabled, activeClassName = 'active' } = options;
@@ -31,26 +27,27 @@ export function useTouchFeedback<T extends HTMLElement>(
 
     if (node && !disabled) {
       const activeTrue = () => {
-        addClass(node, activeClassName);
+        node.classList.add(activeClassName);
       };
 
       const activeFalse = () => {
-        removeClass(node, activeClassName);
+        node.classList.remove(activeClassName);
       };
+
       events.forEach((eventName: typeof events[number]) => {
         if (eventName === 'touchstart' || eventName === 'mousedown') {
-          addEventListener(node, eventName, activeTrue);
+          node.addEventListener(eventName, activeTrue);
         } else {
-          addEventListener(node, eventName, activeFalse);
+          node.addEventListener(eventName, activeFalse);
         }
       });
 
       return () => {
         events.forEach((eventName: typeof events[number]) => {
           if (eventName === 'touchstart' || eventName === 'mousedown') {
-            removeEventListener(node, eventName, activeTrue);
+            node.removeEventListener(eventName, activeTrue);
           } else {
-            removeEventListener(node, eventName, activeFalse);
+            node.removeEventListener(eventName, activeFalse);
           }
         });
       };

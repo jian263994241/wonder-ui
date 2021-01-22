@@ -36,10 +36,8 @@
   "dependencies": {
     "clsx": "^1.1.1",
     "dayjs": "^1.10.3",
-    "dom-helpers": "^5.2.0",
     "intersection-observer": "^0.12.0",
-    "resize-observer-polyfill": "^1.5.1",
-    "ssr-window": "^3.0.0"
+    "resize-observer-polyfill": "^1.5.1"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
