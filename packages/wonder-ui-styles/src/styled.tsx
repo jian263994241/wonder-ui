@@ -4,14 +4,20 @@ import createUseStyles from './createUseStyles';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import getDisplayName from './utils/getDisplayName';
 
-export default function styled<C extends React.ComponentType<any>>(
+export function styled<C extends keyof React.ReactHTML>(
   Component: C
-) {
+): (style: StyleProperties) => React.ComponentType<any>;
+
+export function styled<C extends React.ComponentType<any>>(
+  Component: C
+): (style: StyleProperties) => React.ComponentType<any>;
+
+export function styled<C extends React.ComponentType<any>>(Component: C) {
   if (process.env.NODE_ENV !== 'production') {
     if (Component === undefined) {
       throw new Error(
         [
-          'You are calling withTheme(Component) with an undefined component.',
+          'You are calling styled(Component) with an undefined component.',
           'You may have forgotten to import it.'
         ].join('\n')
       );
@@ -33,7 +39,7 @@ export default function styled<C extends React.ComponentType<any>>(
     >(function StyledComponent(props, ref) {
       const { className, children, ...rest } = props;
 
-      const classes = useStyles({ ...Component.defaultProps, ...rest });
+      const classes = useStyles(rest);
 
       const newProps: any = {
         className: className ? `${className} ${classes.root}` : classes.root,
@@ -42,6 +48,10 @@ export default function styled<C extends React.ComponentType<any>>(
 
       return <Component children={children} {...newProps} {...rest} />;
     });
+
+    if ('defaultProps' in Component) {
+      StyledComponent.defaultProps = Component.defaultProps;
+    }
 
     if (process.env.NODE_ENV !== 'production') {
       StyledComponent.displayName = displayName;
@@ -52,3 +62,5 @@ export default function styled<C extends React.ComponentType<any>>(
     return StyledComponent;
   };
 }
+
+export default styled;

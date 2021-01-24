@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "commit": "cz",
-    "build": "yarn workspaces run build"
+    "build": "lerna run --ignore doc build"
   },
   "license": "MIT",
   "devDependencies": {

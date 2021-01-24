@@ -1,6 +1,6 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { createUseStyles } from '../styles';
+import { createUseStyles, styled } from '../styles';
 import { useTouchFeedback, useForkRef } from '../hooks';
 
 const useStyles = createUseStyles(
