@@ -6,7 +6,7 @@ import getDisplayName from './utils/getDisplayName';
 
 export function styled<C extends keyof React.ReactHTML>(
   Component: C
-): (style: StyleProperties) => React.ComponentType<any>;
+): (style: StyleProperties) => React.ReactHTML[C];
 
 export function styled<C extends React.ComponentType<any>>(
   Component: C
@@ -42,14 +42,14 @@ export function styled<C extends React.ComponentType<any>>(Component: C) {
       const classes = useStyles(rest);
 
       const newProps: any = {
-        className: className ? `${className} ${classes.root}` : classes.root,
+        className: className ? `${classes.root} ${className}` : classes.root,
         ref
       };
 
       return <Component children={children} {...newProps} {...rest} />;
     });
 
-    if ('defaultProps' in Component) {
+    if (typeof Component != 'string') {
       StyledComponent.defaultProps = Component.defaultProps;
     }
 
