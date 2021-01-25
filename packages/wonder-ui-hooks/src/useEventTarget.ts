@@ -17,8 +17,8 @@ const defaultGetValueFromEvent = (e: EventTarget) => e.target.value;
 
 export function useEventTarget<T>(options?: Options<T>) {
   const {
-    initialValue,
-    transformer,
+    initialValue = undefined,
+    transformer = (a: any) => a,
     getValueFromEvent = defaultGetValueFromEvent
   } = options || {};
   const [value, setValue] = React.useState<T | undefined>(initialValue);

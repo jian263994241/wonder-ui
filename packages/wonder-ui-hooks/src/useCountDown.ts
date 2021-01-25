@@ -41,15 +41,14 @@ const parseMs = (milliseconds: number): FormattedRes => {
 };
 
 export function useCountDown(options?: CountDownOptions) {
-  const { targetDate, interval = 1000, onEnd } = options || {};
+  const { targetDate = Date.now(), interval = 1000, onEnd = () => 0 } =
+    options || {};
 
   const [target, setTargetDate] = React.useState<TDate>(targetDate);
   const [timeLeft, setTimeLeft] = React.useState(() => calcLeft(target));
 
   const onEndPersistFn = useEventCallback(() => {
-    if (onEnd) {
-      onEnd();
-    }
+    onEnd();
   });
 
   React.useEffect(() => {
