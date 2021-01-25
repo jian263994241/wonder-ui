@@ -5,6 +5,7 @@ export interface ListItemProps extends React.HTMLAttributes<HTMLDivElement> {
   align?: 'top' | 'center';
   arrow?: 'horizontal' | 'vertical' | 'vertical-up';
   children?: NonNullable<React.ReactNode>;
+  classes?: any;
   disabled?: boolean;
   errorMessage?: string;
   extra?: React.ReactNode;
