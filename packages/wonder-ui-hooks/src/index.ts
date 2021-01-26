@@ -15,6 +15,7 @@ export * from './useEventTarget';
 export * from './useForceUpdate';
 export * from './useForkRef';
 export * from './useHistoryTravel';
+export * from './useId';
 export * from './useInterval';
 export * from './useInViewport';
 export * from './useKeyPress';

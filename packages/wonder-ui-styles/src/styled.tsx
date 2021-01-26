@@ -4,15 +4,24 @@ import createUseStyles from './createUseStyles';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import getDisplayName from './utils/getDisplayName';
 
+type Options = {
+  name?: string;
+};
+
 export function styled<C extends keyof React.ReactHTML>(
-  Component: C
+  Component: C,
+  options?: Options
 ): (style: StyleProperties) => React.ReactHTML[C];
 
 export function styled<C extends React.ComponentType<any>>(
-  Component: C
+  Component: C,
+  options?: Options
 ): (style: StyleProperties) => React.ComponentType<any>;
 
-export function styled<C extends React.ComponentType<any>>(Component: C) {
+export function styled<C extends React.ComponentType<any>>(
+  Component: C,
+  options?: Options
+) {
   if (process.env.NODE_ENV !== 'production') {
     if (Component === undefined) {
       throw new Error(
@@ -31,7 +40,10 @@ export function styled<C extends React.ComponentType<any>>(Component: C) {
   }
 
   return function (style: StyleProperties) {
-    const useStyles = createUseStyles({ root: style }, { name: displayName });
+    const useStyles = createUseStyles(
+      { root: style },
+      { name: options?.name || displayName }
+    );
 
     const StyledComponent = React.forwardRef<
       C,

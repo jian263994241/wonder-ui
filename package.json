@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "commit": "cz",
-    "build": "lerna run --ignore doc build"
+    "build": "lerna run --ignore doc build",
+    "doc": "lerna run start --scope=doc"
   },
   "license": "MIT",
   "devDependencies": {

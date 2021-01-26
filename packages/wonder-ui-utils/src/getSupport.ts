@@ -47,7 +47,7 @@ function calcSupport() {
   };
 }
 
-export function getSupport() {
+export default function getSupport() {
   if (!support) {
     support = calcSupport();
   }

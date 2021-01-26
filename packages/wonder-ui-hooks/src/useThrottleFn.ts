@@ -1,6 +1,6 @@
 import * as React from 'react';
 import useEventCallback from './useEventCallback';
-import throttle from './utils/throttle';
+import { throttle } from '@wonder-ui/utils';
 
 export function useThrottleFn(fn: Function, wait: number = 166) {
   const _fn = useEventCallback((...args) => fn(...args));

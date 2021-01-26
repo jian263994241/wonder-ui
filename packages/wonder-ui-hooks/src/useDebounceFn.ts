@@ -1,5 +1,5 @@
 import * as React from 'react';
-import debounce from './utils/debounce';
+import { debounce } from '@wonder-ui/utils';
 import useEventCallback from './useEventCallback';
 
 export function useDebounceFn(

@@ -25,5 +25,9 @@
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
     "yorkie": "^2.0.0"
+  },
+  "dependencies": {
+    "@wonder-ui/core": "^2.0.0-0",
+    "react": "^17.0.1"
   }
 }

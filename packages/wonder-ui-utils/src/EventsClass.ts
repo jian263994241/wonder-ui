@@ -1,18 +1,60 @@
-type Handler = (...arg: any[]) => void;
+import * as React from 'react';
 
+type Handler = (...arg: any[]) => any;
+
+/**
+ * 自定义事件管理
+ *
+ * const menager = new EventsClass();
+ *
+ * menager.on('event', (a, b) => {})
+ * menager.emit('event', a, b)
+ *
+ */
 export default class EventsClass {
-  eventsParents: any[];
+  eventsParents?: any[];
 
-  eventsListeners: {
-    [key: string]: Handler[];
-  };
+  eventsListeners: Partial<Record<string, Handler[]>>;
 
-  constructor(parents: any[] = []) {
+  constructor(parents?: any[]) {
     this.eventsParents = parents;
     this.eventsListeners = {};
   }
 
-  on(events: string, handler: Handler, priority: boolean) {
+  useSubscription(
+    events: string,
+    handler: Handler,
+    options: {
+      priority?: boolean;
+      once?: boolean;
+    } = {}
+  ) {
+    const callbackRef = React.useRef(handler);
+
+    React.useEffect(() => {
+      callbackRef.current = handler;
+    });
+
+    React.useEffect(() => {
+      const _handler = (...arg: any[]) => {
+        if (callbackRef.current) {
+          callbackRef.current(...arg);
+        }
+      };
+
+      if (options.once) {
+        this.once(events, _handler, options.priority);
+      } else {
+        this.on(events, _handler, options.priority);
+      }
+
+      return () => {
+        this.off(events, _handler);
+      };
+    }, [events]);
+  }
+
+  on(events: string, handler: Handler, priority?: boolean) {
     const self = this;
     if (typeof handler !== 'function') {
       return self;
@@ -21,15 +63,16 @@ export default class EventsClass {
     const method = priority ? 'unshift' : 'push';
 
     events.split(' ').forEach((event) => {
-      if (!self.eventsListeners[event]) {
-        self.eventsListeners[event] = [];
-      }
-      self.eventsListeners[event][method](handler);
+      const { event: _event = [] } = self.eventsListeners;
+
+      _event[method](handler);
+
+      self.eventsListeners[event] = _event;
     });
     return self;
   }
 
-  once(events: string, handler: Handler, priority: boolean) {
+  once(events: string, handler: Handler, priority?: boolean) {
     const self = this;
     if (typeof handler !== 'function') return self;
     function onceHandler(...args: any[]) {
@@ -45,10 +88,14 @@ export default class EventsClass {
     events.split(' ').forEach((event) => {
       if (typeof handler === 'undefined') {
         self.eventsListeners[event] = [];
-      } else if (self.eventsListeners[event]) {
-        self.eventsListeners[event].forEach((eventHandler, index) => {
+      } else {
+        const { [event]: _event = [] } = self.eventsListeners;
+
+        _event.forEach((eventHandler, index) => {
           if (eventHandler === handler) {
-            self.eventsListeners[event].splice(index, 1);
+            _event.splice(index, 1);
+
+            self.eventsListeners[event] = _event;
           }
         });
       }
@@ -96,7 +143,8 @@ export default class EventsClass {
     localEvents.forEach((event: string) => {
       if (self.eventsListeners && self.eventsListeners[event]) {
         const handlers: Handler[] = [];
-        self.eventsListeners[event].forEach((eventHandler) => {
+        const { [event]: _event = [] } = self.eventsListeners;
+        _event.forEach((eventHandler) => {
           handlers.push(eventHandler);
         });
         handlers.forEach((eventHandler) => {
