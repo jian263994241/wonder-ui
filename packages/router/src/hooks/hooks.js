@@ -41,6 +41,18 @@ export const usePageEffect = (callback, vars = []) => {
   }
 };
 
+export const useTitle = (title) => {
+  usePageEffect(() => {
+    if (window.setPageTitle) {
+      window.setPageTitle(title);
+    } else if (window.KQB && window.KQB.Env.iOS && window.KQB.Env.Android) {
+      window.KQB.native('setPageTitle', { title });
+    } else {
+      document.title = title;
+    }
+  }, [title]);
+};
+
 //Will remove
 export const usePageInit = usePageEffect;
 

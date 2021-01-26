@@ -4,7 +4,6 @@ import AppContext from './AppContext';
 import clsx from 'clsx';
 import Events from '@wonder-ui/utils/Events';
 import useForkRef from '@wonder-ui/utils/useForkRef';
-import decamelize from 'decamelize';
 
 const defaultEvents = new Events();
 
@@ -27,7 +26,10 @@ const App = React.forwardRef((props, ref) => {
     const events = { onPageInit };
 
     Object.keys(events).forEach((key) => {
-      const eventKey = decamelize(key.replace('on', ''), '-');
+      const eventKey = key
+        .replace('on', '')
+        .replace(/([A-Z]{1}[a-z\d]+)/, '$1-')
+        .toLocaleLowerCase();
 
       app.events.on(eventKey, events[key]);
     });

@@ -9,6 +9,8 @@ export function usePageEffect(
   vars: any[]
 ): void;
 
+export function useTitle(title: string): void;
+
 export function useNavigation(): {
   goBack: () => void;
   goForward: () => void;

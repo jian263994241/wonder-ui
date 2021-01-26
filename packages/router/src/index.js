@@ -27,6 +27,7 @@ export {
   useLocationExact,
   usePageEffect,
   useNavigation,
+  useTitle,
 } from './hooks';
 
 export { createRoutesFromArray } from './utils';

@@ -7,14 +7,10 @@ import ScrollContent from '../ScrollContent';
 import Slot from '../Slot';
 import styles from './styles';
 import withStyles from '@wonder-ui/styles';
-import { usePageEffect } from '@wonder-ui/router';
+import { usePageEffect, useTitle } from '@wonder-ui/router';
 
 const SlotGroup = Slot.Group;
 const SlotContent = Slot.Content;
-
-const triggerEvents = (app, funcionName, parmas) => {
-  return app && app.events[funcionName] && app.events[funcionName](parmas);
-};
 
 /**
  * 创建一个页面(长宽100%的容器)
@@ -26,6 +22,7 @@ const Page = React.forwardRef((props, ref) => {
     classes,
     className,
     name,
+    title,
     navbar = false,
     navbarProps,
     pageContent = true,
@@ -36,8 +33,12 @@ const Page = React.forwardRef((props, ref) => {
   } = props;
   const app = React.useContext(AppContext);
 
+  useTitle(title);
+
   usePageEffect(() => {
-    app.events.emit('page-init', { name });
+    if (app.events) {
+      app.events.emit('page-init', { name });
+    }
   }, [name]);
 
   return (
@@ -47,7 +48,9 @@ const Page = React.forwardRef((props, ref) => {
         className={clsx(classes.root, { white }, className)}
         {...rest}
       >
-        {navbar && <Navbar title={name} showBack={showBack} {...navbarProps} />}
+        {navbar && (
+          <Navbar title={title || name} showBack={showBack} {...navbarProps} />
+        )}
         <SlotContent name="pageSearchbar" />
         <SlotContent name="pageContentBefore" />
         <div className={classes.body}>
