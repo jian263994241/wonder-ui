@@ -21,6 +21,14 @@ const wrapCallback = (func = noop, bindCall) => {
     }
   };
 };
+
+const config = {
+  theme: defaultTheme,
+};
+
+Dialog.setup = ({ theme }) => {
+  config.theme = theme;
+};
 /**
  * Dialog.alert
  */
@@ -35,7 +43,7 @@ Dialog.alert = function DialogAlert({
   const container = document.createElement('div');
   const toggleAlert = toggleVisible((visible, clearQueue) => {
     ReactDOM.render(
-      <ThemeProvider theme={window.wonder_ui_theme || defaultTheme}>
+      <ThemeProvider theme={config.theme}>
         <Dialog
           {...rest}
           visible={visible}
@@ -72,7 +80,7 @@ Dialog.confirm = function DialogConfirm({
   const container = document.createElement('div');
   const toggleConfirm = toggleVisible((visible, clearQueue) => {
     ReactDOM.render(
-      <ThemeProvider theme={window.wonder_ui_theme || defaultTheme}>
+      <ThemeProvider theme={config.theme}>
         <Dialog
           {...rest}
           visible={visible}
@@ -143,7 +151,7 @@ Dialog.custom = function DialogCustom(props) {
   const container = document.createElement('div');
   const toggleCustom = toggleVisible((visible, clearQueue) => {
     ReactDOM.render(
-      <ThemeProvider theme={window.wonder_ui_theme || defaultTheme}>
+      <ThemeProvider theme={config.theme}>
         <Dialog
           {...rest}
           visible={visible}

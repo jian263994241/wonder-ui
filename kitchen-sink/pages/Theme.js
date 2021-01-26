@@ -24,8 +24,6 @@ const darkTheme = createTheme({
   },
 });
 
-window.wonder_ui_theme = darkTheme;
-
 export default function ThemeExamples(props) {
   const theme = useTheme();
   const setTheme = window.setTheme;

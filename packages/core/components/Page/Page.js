@@ -6,7 +6,8 @@ import Navbar from '../NavBar';
 import ScrollContent from '../ScrollContent';
 import Slot from '../Slot';
 import styles from './styles';
-import withStyles from '@wonder-ui/styles';
+import Dialog from '../Dialog';
+import withStyles, { useTheme } from '@wonder-ui/styles';
 import { usePageEffect, useTitle } from '@wonder-ui/router';
 
 const SlotGroup = Slot.Group;
@@ -32,6 +33,11 @@ const Page = React.forwardRef((props, ref) => {
     ...rest
   } = props;
   const app = React.useContext(AppContext);
+  const theme = useTheme();
+
+  React.useEffect(() => {
+    Dialog.setup({ theme });
+  }, [theme]);
 
   useTitle(title);
 
