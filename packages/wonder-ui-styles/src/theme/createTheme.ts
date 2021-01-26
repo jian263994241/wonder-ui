@@ -1,6 +1,7 @@
 import * as colors from './colors';
 import * as colorManipulator from './colorManipulator';
 import * as transitions from './transitions';
+import createHairline from './createHairline';
 import createPalette, { Palette } from './createPalette';
 import createTypography, { Typography } from './createTypography';
 import createSpacing from './createSpacing';
@@ -20,15 +21,19 @@ export interface Theme {
   typography: ReturnType<typeof createTypography>;
   spacing: ReturnType<typeof createSpacing>;
   colorManipulator: typeof colorManipulator;
+  hairline: ReturnType<typeof createHairline>;
 }
 
 export default function createTheme(options: ThemeOptions = {}): Theme {
-  const { palette, spacing = 8, typography } = options;
+  const { palette: paletteInput, spacing = 8, typography } = options;
+
+  const palette = createPalette(paletteInput);
 
   return {
-    palette: createPalette(palette),
+    palette,
     typography: createTypography(typography),
     spacing: createSpacing(spacing),
+    hairline: createHairline(palette),
     transitions,
     shadows,
     colors,
