@@ -1,0 +1,23 @@
+export declare type ColorKeys = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | 'A100' | 'A200' | 'A400' | 'A700';
+export declare type ColorType = {
+    [K in ColorKeys]: string;
+};
+export declare const amber: ColorType;
+export declare const blue: ColorType;
+export declare const blueGrey: ColorType;
+export declare const brown: ColorType;
+export declare const cyan: ColorType;
+export declare const deepOrange: ColorType;
+export declare const deepPurple: ColorType;
+export declare const green: ColorType;
+export declare const grey: ColorType;
+export declare const indigo: ColorType;
+export declare const lightBlue: ColorType;
+export declare const lightGreen: ColorType;
+export declare const lime: ColorType;
+export declare const orange: ColorType;
+export declare const pink: ColorType;
+export declare const purple: ColorType;
+export declare const red: ColorType;
+export declare const teal: ColorType;
+export declare const yellow: ColorType;

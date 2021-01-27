@@ -1,0 +1,54 @@
+{
+  "name": "@wonder-ui/styles",
+  "version": "2.0.2",
+  "description": "Wonder-UI styles",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/styles.esm.js",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "src",
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "tsdx watch --entry src/index.ts",
+    "build": "tsdx build --entry src/index.ts",
+    "lint": "tsdx lint src",
+    "lint:fix": "tsdx lint src --fix",
+    "test": "tsdx test",
+    "test:watch": "tsdx test --watch",
+    "test:coverage": "tsdx test --coverage",
+    "example": "cd ./example && ale start",
+    "publish:next": "npm version prerelease & npm publish ./ --access=public --tag=next"
+  },
+  "keywords": [
+    "wonder ui",
+    "css in js",
+    "jss",
+    "react ui",
+    "react-jss",
+    "react"
+  ],
+  "author": "jian.li",
+  "homepage": "https://github.com/jian263994241/wonder-ui/tree/master/packages",
+  "bugs": {
+    "url": "https://github.com/jian263994241/wonder-ui/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "csstype": "^3.0.5",
+    "jss": "^10.5.1",
+    "react-jss": "^10.5.1"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jian263994241/wonder-ui.git",
+    "directory": "packages/wonder-ui-styles"
+  }
+}
