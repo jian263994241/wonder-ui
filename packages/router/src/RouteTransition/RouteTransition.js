@@ -9,41 +9,50 @@ import useComponent from './useComponent';
 import useEnhancedEffect from '@wonder-ui/utils/useEnhancedEffect';
 import usePageInit from '../usePageInit';
 import useRouterContext from '../useRouterContext';
-import withStyles from '@wonder-ui/styles/withStyles';
+import { withStyles } from '@wonder-ui/styles';
 
-const RouteComponent = React.memo(function RouteComponent(props) {
-  const {
-    async,
-    fallback = <div>Loading...</div>,
-    redirect,
-    component,
-    current,
-    name,
-    ...routeProps
-  } = props;
-  const { onRouteChange, routerStore } = useRouterContext();
+const RouteComponent = React.memo(
+  function RouteComponent(props) {
+    const {
+      async,
+      fallback = <div>Loading...</div>,
+      redirect,
+      component,
+      current,
+      name,
+      ...routeProps
+    } = props;
+    const { onRouteChange, routerStore } = useRouterContext();
 
-  const Component = useComponent({ async, component, redirect });
+    const Component = useComponent({ async, component, redirect });
 
-  usePageInit(()=>{
-    if(onRouteChange){
-      const _name = typeof name === 'function' 
-        ? name(routeProps.match, routerStore.location) : name;
-      onRouteChange(routeProps.match, routerStore.location, _name);
+    usePageInit(() => {
+      if (onRouteChange) {
+        const _name =
+          typeof name === 'function'
+            ? name(routeProps.match, routerStore.location)
+            : name;
+        onRouteChange(routeProps.match, routerStore.location, _name);
+      }
+    });
+
+    return (
+      <Component
+        {...routeProps}
+        routerStore={routerStore}
+        fallback={fallback}
+      />
+    );
+  },
+  function shouldUpdate(prevProps, nextProps) {
+    if (prevProps.current && prevProps.current != nextProps.current) {
+      return true;
     }
-  })
-
-  return (
-    <Component {...routeProps} routerStore={routerStore} fallback={fallback}/>
-  );
-}, function shouldUpdate(prevProps, nextProps) {
-  if(prevProps.current && prevProps.current != nextProps.current){
-    return true;
-  }
-});
+  },
+);
 
 /**
- * 
+ *
  * @visibleName AnimatedRoute
  */
 const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
@@ -66,18 +75,18 @@ const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
   const [animationType, setAnimation] = React.useState('none');
   const timeout = duration[animationType] || 0;
 
-  useEnhancedEffect(()=>{
-    setTimeout(() => setAnimation(animationDisabled ? 'none': animation), 0);
+  useEnhancedEffect(() => {
+    setTimeout(() => setAnimation(animationDisabled ? 'none' : animation), 0);
   }, [animation]);
 
-  if(disabled){
+  if (disabled) {
     return null;
   }
-  
+
   return (
-    <UIRouteContext.Provider value={{animationType, timeout}}>
+    <UIRouteContext.Provider value={{ animationType, timeout }}>
       <Route {...rest}>
-        {(routeProps)=>{
+        {(routeProps) => {
           const { match, history } = routeProps;
           const visible = !!match && match.isExact;
           return (
@@ -90,7 +99,7 @@ const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
               action={history.action}
             >
               <div
-                className={clsx(classes.root, className)} 
+                className={clsx(classes.root, className)}
                 style={style}
                 ref={ref}
                 data-url={match && match.url}
@@ -107,7 +116,7 @@ const RouteTransition = React.forwardRef(function RouteTransition(props, ref) {
                 />
               </div>
             </Transition>
-          )
+          );
         }}
       </Route>
     </UIRouteContext.Provider>
@@ -153,16 +162,16 @@ RouteTransition.propTypes = {
   /**
    * component
    */
-  component: (props, propName)=>{
+  component: (props, propName) => {
     const propsCopy = Object.assign({}, props);
-    if(props[propName]){
-      if(props[propName].default){
-        propsCopy[propName] = props[propName].default
+    if (props[propName]) {
+      if (props[propName].default) {
+        propsCopy[propName] = props[propName].default;
       }
       return Route.propTypes.component(propsCopy, propName);
     }
-  }
-}
+  },
+};
 
 RouteTransition.displayName = 'RouteTransition';
 

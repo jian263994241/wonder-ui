@@ -7,7 +7,7 @@ import resolve from '@wonder-ui/utils/resolvePath';
 import Route from '../RouteTransition';
 import styles from './styles';
 import useRouterContext from '../useRouterContext';
-import withStyles from '@wonder-ui/styles/withStyles';
+import { withStyles } from '@wonder-ui/styles';
 
 function View(props) {
   const {
@@ -22,69 +22,66 @@ function View(props) {
     routeProps,
     ...rest
   } = props;
-  
+
   const context = useRouterContext();
   const location = context.location;
 
-  const renderRoutes = (routes)=>{  
-    return flatMap(routes, (route, index)=>{
+  const renderRoutes = (routes) => {
+    return flatMap(routes, (route, index) => {
       const { children, ...routeConf } = route;
-      if(children){
-        children.forEach((child)=>{
-          if(routeConf.path && child.path){ 
+      if (children) {
+        children.forEach((child) => {
+          if (routeConf.path && child.path) {
             child.path = resolve(routeConf.path, child.path);
           }
-        })
+        });
         return renderRoutes([routeConf, ...children]);
       }
       return routeConf;
-    })
+    });
   };
-  
-  const routeList = React.useMemo(()=>{
-    if(dataSource){
+
+  const routeList = React.useMemo(() => {
+    if (dataSource) {
       return renderRoutes(dataSource);
     }
     return [];
   }, [dataSource]);
 
-  const matched = React.useMemo(()=>{
+  const matched = React.useMemo(() => {
     let match;
-    routeList.forEach((child)=>{
+    routeList.forEach((child) => {
       const path = child.path || child.from;
 
       const _match = path
-          ? matchPath(location.pathname, { ...child, path })
-          : context.match;
-     
-      if(_match && _match.isExact) {
+        ? matchPath(location.pathname, { ...child, path })
+        : context.match;
+
+      if (_match && _match.isExact) {
         match = _match;
       }
     });
     return match;
   }, [routeList, location]);
-  
+
   return (
     <div className={clsx(classes.root, className)} {...rest}>
-      {
-        routeList.map((routeConf, index)=> (
-          <Route 
-            key={index} 
-            animation={animation} 
-            animationDisabled={animationDisabled} 
-            fallback={fallback}
-            className={className}
-            style={style}
-            {...routeProps}
-            {...routeConf}  
-          />
-        ))
-      }
-      { !matched && noMatch }
+      {routeList.map((routeConf, index) => (
+        <Route
+          key={index}
+          animation={animation}
+          animationDisabled={animationDisabled}
+          fallback={fallback}
+          className={className}
+          style={style}
+          {...routeProps}
+          {...routeConf}
+        />
+      ))}
+      {!matched && noMatch}
     </div>
-  )
+  );
 }
-
 
 View.propTypes = {
   /**
@@ -112,11 +109,8 @@ View.propTypes = {
        * 页面组件
        * require('~/pages/some/index'),
        */
-      component: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.func
-      ]),
-      /** 
+      component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      /**
        * 异步加载, 需要配合webpack import 使用
        * ()=>import('~/pages/some/index')
        */
@@ -130,17 +124,14 @@ View.propTypes = {
       /**
        * route name
        */
-      name: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.func
-      ])
-    })
+      name: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    }),
   ).isRequired,
   /**
    * 404
    */
-  noMatch: PropTypes.node
-}
+  noMatch: PropTypes.node,
+};
 
 View.displayName = 'View';
 
