@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/styled",
-  "version": "1.0.0-0",
+  "version": "1.0.0",
   "description": "Wonder-UI styles",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -47,6 +47,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jian263994241/wonder-ui.git",
-    "directory": "packages/wonder-ui-styles"
+    "directory": "packages/wonder-ui-styled"
   }
 }

@@ -47,6 +47,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jian263994241/wonder-ui.git",
-    "directory": "packages/wonder-ui-styles"
+    "directory": "packages/wonder-ui-hooks"
   }
 }
