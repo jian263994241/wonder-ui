@@ -1,11 +1,11 @@
+import device from '@wonder-ui/utils/device';
 
-
-export default theme => {
-  const iOS10 = (theme.device.ios && theme.device.osVersion.split('.')[0] === '10');
+export default (theme) => {
+  const iOS10 = device.ios && device.osVersion.split('.')[0] === '10';
   return {
     root: {
       ...theme.typography.button,
-      display: iOS10 ? 'inline-block': 'inline-flex',
+      display: iOS10 ? 'inline-block' : 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',
       position: 'relative',
@@ -36,7 +36,7 @@ export default theme => {
       '&[disabled]': {
         pointerEvents: 'none', // Disable link interactions
         cursor: 'not-allowed',
-      }
-    }
-  }
-}
+      },
+    },
+  };
+};

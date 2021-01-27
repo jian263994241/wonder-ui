@@ -6,7 +6,6 @@
     "build:core": "gulp build:core",
     "build:icons": "gulp build:icons",
     "build:router": "gulp build:router",
-    "build:styles": "gulp build:styles",
     "build:utils": "gulp build:utils",
     "clean": "gulp clean",
     "kitchen-sink:dev": "ale dev",
@@ -22,6 +21,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
+    "ale-cli": "^3.0.5",
     "babel-loader": "^8.0.6",
     "babel-preset": "^1.1.6",
     "css-loader": "^3.2.0",
@@ -43,6 +43,7 @@
     "webpack": "^4.41.2"
   },
   "dependencies": {
+    "@babel/core": "^7.12.10",
     "antd": "^4.1.0",
     "babel-plugin-import": "^1.13.0",
     "lcn": "^1.0.3",

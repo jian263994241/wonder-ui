@@ -76,7 +76,7 @@
     "component": {
       "type": {
         "name": "custom",
-        "raw": "(props, propName)=>{\n  const propsCopy = Object.assign({}, props);\n  if(props[propName]){\n    if(props[propName].default){\n      propsCopy[propName] = props[propName].default\n    }\n    return Route.propTypes.component(propsCopy, propName);\n  }\n}"
+        "raw": "(props, propName) => {\n  const propsCopy = Object.assign({}, props);\n  if (props[propName]) {\n    if (props[propName].default) {\n      propsCopy[propName] = props[propName].default;\n    }\n    return Route.propTypes.component(propsCopy, propName);\n  }\n}"
       },
       "required": false,
       "description": "component"

@@ -1,23 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as transitions from '@wonder-ui/styles/transitions';
+import { transitions } from '@wonder-ui/styles';
 import elementAcceptingRef from '@wonder-ui/utils/elementAcceptingRef';
 import RtgTransition from 'react-transition-group/Transition';
 import useForkRef from '@wonder-ui/utils/useForkRef';
 
-const reflow = node => node.scrollTop;
+const reflow = (node) => node.scrollTop;
 
 const getTransitionProps = (props, options) => {
   const { timeout, style = {} } = props;
-  const _timeout = typeof timeout === 'number' ? timeout : timeout[options.mode];
+  const _timeout =
+    typeof timeout === 'number' ? timeout : timeout[options.mode];
   return {
     duration: style.transitionDuration || _timeout,
     delay: style.transitionDelay,
   };
-}
+};
 
-const Transition = React.forwardRef((props, ref)=>{
-  const { 
+const Transition = React.forwardRef((props, ref) => {
+  const {
     children,
     easing,
     in: inProp,
@@ -37,18 +38,30 @@ const Transition = React.forwardRef((props, ref)=>{
   } = props;
   const handleRef = useForkRef(children.ref, ref);
 
-  const handleEnter = node => {
+  const handleEnter = (node) => {
     reflow(node); // So the animation always start from the start.
 
-    const transitionProps = getTransitionProps({ style, timeout }, { mode: 'enter', easing });
-    node.style.webkitTransition = transitions.create(propertys, transitionProps);
+    const transitionProps = getTransitionProps(
+      { style, timeout },
+      { mode: 'enter', easing },
+    );
+    node.style.webkitTransition = transitions.create(
+      propertys,
+      transitionProps,
+    );
     node.style.transition = transitions.create(propertys, transitionProps);
     onEnter && onEnter(node);
   };
 
-  const handleExit = node => {
-    const transitionProps = getTransitionProps({ style, timeout }, { mode: 'exit', easing });
-    node.style.webkitTransition = transitions.create(propertys, transitionProps);
+  const handleExit = (node) => {
+    const transitionProps = getTransitionProps(
+      { style, timeout },
+      { mode: 'exit', easing },
+    );
+    node.style.webkitTransition = transitions.create(
+      propertys,
+      transitionProps,
+    );
     node.style.transition = transitions.create(propertys, transitionProps);
     onExit && onExit(node);
   };
@@ -73,11 +86,11 @@ const Transition = React.forwardRef((props, ref)=>{
             ...style,
             visibility: state === 'exited' && !inProp ? 'hidden' : undefined,
             ...styles[state],
-            ...children.props.style
+            ...children.props.style,
           },
           ref: handleRef,
           ...childProps,
-          ...rest
+          ...rest,
         });
       }}
     </RtgTransition>
@@ -86,11 +99,11 @@ const Transition = React.forwardRef((props, ref)=>{
 
 Transition.defaultProps = {
   mountOnEnter: true,
-  timeout: { 
-    enter: transitions.duration.enteringScreen, 
-    exit: transitions.duration.leavingScreen 
+  timeout: {
+    enter: transitions.duration.enteringScreen,
+    exit: transitions.duration.leavingScreen,
   },
-}
+};
 
 Transition.propTypes = {
   /**
@@ -122,14 +135,17 @@ Transition.propTypes = {
    * @ignore
    */
   style: PropTypes.object,
-  /** 
+  /**
    * transition-propertys
    */
   propertys: PropTypes.array,
   /**
    * overwrite state style
    */
-  styles: PropTypes.shape({ entering: PropTypes.object, entered: PropTypes.object }),
+  styles: PropTypes.shape({
+    entering: PropTypes.object,
+    entered: PropTypes.object,
+  }),
   /**
    * The duration for the transition, in milliseconds.
    * You may specify a single timeout for all transitions, or individually with an object.

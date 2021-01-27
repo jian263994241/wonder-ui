@@ -1,4 +1,6 @@
-import { fade } from '@wonder-ui/styles/colorManipulator';
+import { colorManipulator } from '@wonder-ui/styles';
+
+const { fade, darken } = colorManipulator;
 
 export default (theme) => ({
   root: {

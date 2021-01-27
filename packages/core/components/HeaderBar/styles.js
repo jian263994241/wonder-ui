@@ -1,6 +1,8 @@
-import { fade } from '@wonder-ui/styles/colorManipulator';
+import { colorManipulator } from '@wonder-ui/styles';
 
-export default theme => ({
+const { fade, darken } = colorManipulator;
+
+export default (theme) => ({
   root: {
     width: '100%',
     height: theme.shape.barHeight,
@@ -15,7 +17,7 @@ export default theme => ({
     flexShrink: 0,
   },
   hairline: {
-    ...theme.hairline.create('bottom')
+    ...theme.hairline.create('bottom'),
   },
   title: {
     overflow: 'hidden',
@@ -45,6 +47,6 @@ export default theme => ({
   defaultIcon: {
     color: fade(theme.palette.text.primary, 0.6),
     marginLeft: theme.spacing(1),
-    lineHeight: 1
-  }
-})
+    lineHeight: 1,
+  },
+});

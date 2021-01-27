@@ -25,7 +25,6 @@ export { default as Portal } from './components/Portal';
 // styles
 export { default as createTheme } from './components/createTheme';
 export { default as createUseStyles } from './components/createUseStyles';
-export { default as styled } from './components/styled';
 export { default as useTheme } from './components/useTheme';
 export { default as withStyles } from './components/withStyles';
 export { default as withTheme } from './components/withTheme';
@@ -70,7 +69,6 @@ export { default as InputItem } from './components/InputItem';
 export { default as List } from './components/List';
 export { default as ListItem } from './components/ListItem';
 export { default as ListView } from './components/ListView';
-export { default as MoneyKeyboard } from './components/MoneyKeyboard';
 export { default as NavBar } from './components/NavBar';
 export { default as Picker } from './components/Picker';
 export { default as Placeholder } from './components/Placeholder';
