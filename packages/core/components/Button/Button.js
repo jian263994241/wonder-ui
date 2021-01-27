@@ -144,4 +144,4 @@ Button.defaultProps = {
   color: 'default',
 };
 
-export default withStyles(styles, { name: 'Button' })(Button);
+export default withStyles(styles)(Button);

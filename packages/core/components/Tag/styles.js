@@ -1,18 +1,20 @@
-import { fade, darken } from "@wonder-ui/styles/colorManipulator";
+import { colorManipulator } from '@wonder-ui/styles';
 
-export function createColor(color = ''){
-  if(color.charAt(0) != '#') return null;
+const { fade, darken } = colorManipulator;
+
+export function createColor(color = '') {
+  if (color.charAt(0) != '#') return null;
   return {
     color: color,
     backgroundColor: fade(color, 0.1),
     borderColor: fade(color, 0.6),
     '&:after': {
       borderColor: fade(color, 0.6),
-    }
-  }
+    },
+  };
 }
 
-export default theme =>({
+export default (theme) => ({
   root: {
     fontFamily: theme.typography.fontFamily,
     fontSize: theme.typography.pxToRem(12),
@@ -45,11 +47,11 @@ export default theme =>({
       opacity: 0.6,
       left: 0,
       top: '-50%',
-      right:  '-100%',
+      right: '-100%',
       bottom: '-50%',
       transform: 'scale(0.5)',
       transformOrigin: 'left',
-    }
+    },
   },
   colorPrimary: {
     ...createColor(theme.palette.primary.main),
@@ -69,14 +71,14 @@ export default theme =>({
     backgroundColor: darken(theme.palette.background.default, 0.08),
     border: '1px solid transparent',
     '&:after': {
-      display: 'none'
+      display: 'none',
     },
     '&[disabled]': {
       pointerEvents: 'none', // Disable link interactions
       cursor: 'not-allowed',
       color: theme.palette.action.disabled,
       background: theme.palette.action.disabledBackground,
-    }
+    },
   },
   checked: {
     color: theme.palette.primary.contrastText,
@@ -85,6 +87,6 @@ export default theme =>({
     '&[disabled]': {
       color: theme.palette.primary.contrastText,
       background: fade(theme.palette.primary.main, 0.5),
-    }
-  }
-})
+    },
+  },
+});

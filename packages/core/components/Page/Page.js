@@ -7,7 +7,7 @@ import ScrollContent from '../ScrollContent';
 import Slot from '../Slot';
 import styles from './styles';
 import Dialog from '../Dialog';
-import withStyles, { useTheme } from '@wonder-ui/styles';
+import { withStyles, useTheme } from '@wonder-ui/styles';
 import { usePageEffect, useTitle } from '@wonder-ui/router';
 
 const SlotGroup = Slot.Group;

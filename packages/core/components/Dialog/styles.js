@@ -1,6 +1,8 @@
-import { fade } from '@wonder-ui/styles/colorManipulator';
+import { colorManipulator } from '@wonder-ui/styles';
 
-export default theme => ({
+const { fade, darken } = colorManipulator;
+
+export default (theme) => ({
   root: {
     boxSizing: 'border-box',
     position: 'fixed',
@@ -23,9 +25,9 @@ export default theme => ({
       borderRadius: 5,
       background: 'rgba(0,0,0,0.7)',
       '& $text': {
-        color: theme.palette.getContrastText('rgba(0,0,0,0.7)')
-      }
-    }
+        color: theme.palette.getContrastText('rgba(0,0,0,0.7)'),
+      },
+    },
   },
   body: {
     padding: 15,
@@ -36,7 +38,7 @@ export default theme => ({
     ...theme.hairline.create('bottom'),
     '&.noButtons': {
       borderRadius: 13,
-      ...theme.hairline.remove('bottom')
+      ...theme.hairline.remove('bottom'),
     },
   },
   title: {
@@ -44,15 +46,15 @@ export default theme => ({
     textAlign: 'center',
     fontWeight: 500,
     '& + $text': {
-      marginTop: 5
-    }
+      marginTop: 5,
+    },
   },
   text: {
     wordWrap: 'break-word',
-    wordBreak:'break-all',
+    wordBreak: 'break-all',
     textAlign: 'center',
     minWidth: 80,
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   buttonGroup: {
     position: 'relative',
@@ -68,10 +70,10 @@ export default theme => ({
         ...theme.hairline.create('bottom'),
         '&:last-child': {
           borderRadius: '0 0 13px 13px',
-          ...theme.hairline.remove('bottom')
-        }
-      }
-    }
+          ...theme.hairline.remove('bottom'),
+        },
+      },
+    },
   },
   button: {
     width: '100%',
@@ -92,21 +94,19 @@ export default theme => ({
     background: theme.palette.background.default,
     ...theme.hairline.create('right'),
     '&:active, &.active-state': {
-      backgroundColor: fade(theme.palette.background.paper, 0.85)
+      backgroundColor: fade(theme.palette.background.paper, 0.85),
     },
     '&:first-child': {
-        borderRadius: '0 0 0 13px',
+      borderRadius: '0 0 0 13px',
     },
     '&:last-child': {
-        borderRadius: '0 0 13px 0',
+      borderRadius: '0 0 13px 0',
     },
     '&:first-child:last-child': {
-        borderRadius: '0 0 13px 13px'
+      borderRadius: '0 0 13px 13px',
     },
     '&.primary': {
       fontWeight: 500,
-    }
-  }
-})
-
-
+    },
+  },
+});

@@ -19,7 +19,7 @@ export const duration = {
   null: 0,
 };
 
-export const styles = (theme) => {
+export const styles = () => {
   const fakeShadow = {
     position: 'absolute',
     top: 0,
@@ -54,7 +54,7 @@ export const styles = (theme) => {
       to: { opacity: 0 },
     },
     root: {
-      background: theme.palette.background.default,
+      background: '#ddd',
       height: '100%',
       left: 0,
       overflow: 'hidden auto',

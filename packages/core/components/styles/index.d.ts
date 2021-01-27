@@ -1,9 +1,13 @@
 export {
+  ThemeContext,
+  ThemeProvider,
+  colorManipulator,
+  createStyles,
   createTheme,
   createUseStyles,
   defaultTheme,
-  styled,
-  ThemeProvider,
+  theming,
+  transitions,
   useTheme,
   withStyles,
   withTheme
