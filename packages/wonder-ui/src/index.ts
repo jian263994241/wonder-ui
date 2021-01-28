@@ -3,4 +3,6 @@ export * from './ButtonBase';
 
 export * from './hooks';
 export * from './utils';
-export * from './styles';
+
+export { default as styled } from './styled';
+export * from './styled';
