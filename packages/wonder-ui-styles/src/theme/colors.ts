@@ -1,5 +1,3 @@
-export {};
-
 export type ColorKeys =
   | '50'
   | '100'

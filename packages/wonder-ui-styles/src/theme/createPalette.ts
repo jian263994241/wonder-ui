@@ -1,4 +1,9 @@
-import { darken, getContrastRatio, lighten, fade } from './colorManipulator';
+import {
+  darken,
+  getContrastRatio,
+  lighten,
+  fade
+} from '../utils/colorManipulator';
 import {
   blue,
   green,
@@ -9,6 +14,7 @@ import {
   ColorKeys,
   ColorType
 } from './colors';
+import * as colors from './colors';
 
 export interface ThemeColor {
   text: {
@@ -236,6 +242,7 @@ export default function createPalette(palette: Partial<Palette> = {}) {
     // two indexes within its tonal palette.
     // E.g., shift from Red 500 to Red 300 or Red 700.
     tonalOffset,
-    ...types[type]
+    ...types[type],
+    ...colors
   };
 }

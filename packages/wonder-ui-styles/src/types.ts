@@ -3,13 +3,9 @@ import * as CSS from 'csstype';
 import { DefaultTheme } from './theme/defaultTheme';
 import { Theming } from 'theming';
 
-type JSSFontface = CSS.AtRule.FontFace & { fallbacks?: CSS.AtRule.FontFace[] };
-
 export type PropsFunc<Props extends object, T> = (props: Props) => T;
 
-export interface BaseCSSProperties extends CSS.Properties<number | string> {
-  '@font-face'?: JSSFontface | JSSFontface[];
-}
+export interface BaseCSSProperties extends CSS.Properties<number | string> {}
 
 export interface CSSProperties extends BaseCSSProperties {
   [k: string]: unknown | CSSProperties;
@@ -121,6 +117,23 @@ export interface HookOptions<Theme = DefaultTheme>
 }
 
 export interface HOCOptions<Theme = DefaultTheme> extends HookOptions<Theme> {}
+
+interface BaseOptions<Theme = DefaultTheme>
+  extends JSS.StyleSheetFactoryOptions {
+  index?: number;
+  theming?: Theming<Theme>;
+}
+
+export interface WithStylesOptions<Theme = DefaultTheme>
+  extends BaseOptions<Theme> {
+  injectTheme?: boolean;
+  jss?: JSS.Jss;
+}
+
+export interface CreateUseStylesOptions<Theme = DefaultTheme>
+  extends BaseOptions<Theme> {
+  name?: string;
+}
 
 export interface DynamicRules {
   [key: string]: JSS.Rule;

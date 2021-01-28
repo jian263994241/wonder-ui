@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/styles",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Wonder-UI styles",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -40,13 +40,8 @@
   "license": "MIT",
   "dependencies": {
     "csstype": "^3.0.5",
-    "hoist-non-react-statics": "^3.3.2",
-    "jss": "^10.5.0",
-    "jss-preset-default": "^10.5.0",
-    "theming": "^3.3.0"
-  },
-  "devDependencies": {
-    "@types/hoist-non-react-statics": "^3.3.1"
+    "jss": "^10.5.1",
+    "react-jss": "^10.5.1"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
