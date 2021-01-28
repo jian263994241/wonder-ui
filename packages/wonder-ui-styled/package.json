@@ -4,7 +4,7 @@
   "description": "Wonder-UI styles",
   "source": "src/index.ts",
   "main": "dist/index.js",
-  "module": "dist/styles.esm.js",
+  "module": "dist/styled.esm.js",
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
   "files": [
