@@ -4,7 +4,8 @@ export * from './theme/defaultTheme';
 export * from './theme/createTheme';
 
 export { default as createUseStyles } from './createUseStyles';
-export { default, default as withStyles } from './withStyles';
+export { default as withStyles } from './withStyles';
+export * from './withStyles';
 
 export { default as createStyles } from './createStyles';
 export { default as createTheme } from './theme/createTheme';

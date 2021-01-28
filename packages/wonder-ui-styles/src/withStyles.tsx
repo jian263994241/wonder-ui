@@ -8,7 +8,7 @@ import type {
 import rjWithStyles from 'react-jss';
 import { theming as defaultTheming } from './theming';
 
-interface WithStylesProps<S extends Styles | ((theme: any) => Styles)> {
+export interface WithStylesProps<S extends Styles | ((theme: any) => Styles)> {
   classes: Partial<
     ClassNameMap<
       S extends (theme: any) => Styles ? keyof ReturnType<S> : keyof S
