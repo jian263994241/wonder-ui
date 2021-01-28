@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { styled } from '../styles';
+import styled from '../styles';
 import { useTouchFeedback, useForkRef } from '../hooks';
 
-const ButtonRoot = styled('button', { name: 'ButtonBase' })({
+const ButtonRoot = styled.button({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -40,13 +40,14 @@ const ButtonRoot = styled('button', { name: 'ButtonBase' })({
 export interface ButtonBaseProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export const ButtonBase = React.forwardRef<HTMLButtonElement>(
-  function ButtonBase(props: ButtonBaseProps, ref) {
-    const elementRef = useTouchFeedback();
-    const handleRef = useForkRef(elementRef, ref);
+export const ButtonBase = React.forwardRef(function ButtonBase(
+  props: ButtonBaseProps,
+  ref
+) {
+  const elementRef = useTouchFeedback();
+  const handleRef = useForkRef(elementRef, ref);
 
-    return <ButtonRoot {...props} ref={handleRef} />;
-  }
-);
+  return <ButtonRoot {...props} ref={handleRef} />;
+});
 
 export default ButtonBase;
