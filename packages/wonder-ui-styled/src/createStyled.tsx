@@ -21,7 +21,7 @@ export default function createStyled(options: CreateStyledOptions = {}) {
       const Target = React.forwardRef<
         typeof SourceComponent,
         React.ComponentProps<typeof SourceComponent>
-      >(function DefaultThemeInjector(props, ref) {
+      >((props, ref) => {
         const { theme: themeInput, ...rest } = props;
         const outerTheme = useTheme();
 
@@ -30,10 +30,9 @@ export default function createStyled(options: CreateStyledOptions = {}) {
         return <SourceComponent ref={ref} theme={theme} {...rest} />;
       });
 
-      hoist(Target, SourceComponent);
-      console.log(hoist);
+      Target.displayName = SourceComponent.displayName;
 
-      console.log(Target.displayName, SourceComponent.displayName);
+      hoist(Target, SourceComponent);
 
       return Target as any;
     };
