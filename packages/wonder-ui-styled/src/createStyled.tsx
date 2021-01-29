@@ -1,4 +1,5 @@
 import * as React from 'react';
+import hoist from 'hoist-non-react-statics';
 import styledDefault, { CreateStyled } from '@emotion/styled';
 import { CreateStyled as CreateStyledBase } from '@emotion/styled/types/base';
 import { useTheme } from '@emotion/react';
@@ -14,20 +15,27 @@ export default function createStyled(options: CreateStyledOptions = {}) {
   const styled: CreateStyledBase = (C: any, options: any) => {
     const styledFunc = styledDefault(C, options);
 
-    return function StyledComponent(...styles: any[]) {
-      const Target = styledFunc(...styles);
+    return (...styles: any[]) => {
+      const SourceComponent = styledFunc(...styles);
 
-      return React.forwardRef<
-        typeof Target,
-        React.ComponentProps<typeof Target>
+      const Target = React.forwardRef<
+        typeof SourceComponent,
+        React.ComponentProps<typeof SourceComponent>
       >(function DefaultThemeInjector(props, ref) {
         const { theme: themeInput, ...rest } = props;
         const outerTheme = useTheme();
 
         const theme = themeInput || { ...defaultTheme, ...outerTheme };
 
-        return <Target ref={ref} theme={theme} {...rest} />;
-      }) as any;
+        return <SourceComponent ref={ref} theme={theme} {...rest} />;
+      });
+
+      hoist(Target, SourceComponent);
+      console.log(hoist);
+
+      console.log(Target.displayName, SourceComponent.displayName);
+
+      return Target as any;
     };
   };
 
