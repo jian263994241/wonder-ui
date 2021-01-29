@@ -9,7 +9,7 @@ interface StyledProvider {
 
 export const cache = createCache({ key: 'css', prepend: true });
 
-export default function StyledProvider(props: StyledProvider) {
+export default function StyledEngineProvider(props: StyledProvider) {
   const { injectFirst, children } = props;
   return injectFirst ? (
     <CacheProvider value={cache}>{children}</CacheProvider>
