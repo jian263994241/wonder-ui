@@ -5,7 +5,7 @@ export interface TouchFeedbackOptions {
   activeClassName?: string;
 }
 
-export function useTouchFeedback<T extends HTMLElement = HTMLElement>(
+export function useTouchFeedback<T extends HTMLElement>(
   options: TouchFeedbackOptions = {}
 ) {
   const { disabled, activeClassName = 'active' } = options;

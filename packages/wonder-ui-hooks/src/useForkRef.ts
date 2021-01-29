@@ -1,4 +1,5 @@
 import * as React from 'react';
+import useEventCallback from './useEventCallback';
 
 type Ref<T> = React.MutableRefObject<T> | React.RefCallback<T> | null;
 
@@ -16,25 +17,11 @@ export function useForkRef<R extends any[]>(...refs: R) {
    * This means react will call the old forkRef with `null` and the new forkRef
    * with the ref. Cleanup naturally emerges from this behavior
    */
-  return React.useMemo(() => {
-    let isNull;
-
+  return useEventCallback((refValue: any) => {
     refs.forEach((ref) => {
-      if (ref === null) {
-        isNull = true;
-      } else {
-        isNull = false;
-      }
+      setRef(ref, refValue);
     });
-
-    if (isNull) return null;
-
-    return (refValue: any) => {
-      refs.forEach((ref) => {
-        setRef(ref, refValue);
-      });
-    };
-  }, refs);
+  });
 }
 
 export default useForkRef;

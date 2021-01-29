@@ -4,7 +4,8 @@
   "scripts": {
     "commit": "cz",
     "build": "lerna run --ignore doc build",
-    "doc": "lerna run start --scope=doc"
+    "build:styles": "yarn workspace @wonder-ui/styles build",
+    "doc": "yarn workspace doc start"
   },
   "license": "MIT",
   "devDependencies": {
