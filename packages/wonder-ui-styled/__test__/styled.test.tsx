@@ -99,4 +99,13 @@ describe('styled', () => {
 
     expect(getByText('styledButton')).toHaveStyleRule('color', 'pink');
   });
+
+  test('styled.tags', () => {
+    const Button = styled.button<any>`
+      color: ${(props) => props.theme.color};
+    `;
+    const { getByText } = render(<Button>styledButton</Button>);
+
+    expect(getByText('styledButton')).toHaveStyleRule('color', 'red');
+  });
 });

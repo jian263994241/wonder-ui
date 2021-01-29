@@ -1,7 +1,8 @@
 import * as React from 'react';
-import styledDefault from '@emotion/styled';
-import { CreateStyled } from '@emotion/styled/types/base';
+import styledDefault, { CreateStyled } from '@emotion/styled';
+import { CreateStyled as CreateStyledBase } from '@emotion/styled/types/base';
 import { useTheme } from '@emotion/react';
+import { tags } from './tags';
 
 export interface CreateStyledOptions<Theme extends object = any> {
   defaultTheme?: Theme;
@@ -10,11 +11,11 @@ export interface CreateStyledOptions<Theme extends object = any> {
 export default function createStyled(options: CreateStyledOptions = {}) {
   const { defaultTheme = {} } = options;
 
-  const styled: CreateStyled = (C: any, options: any) => {
+  const styled: CreateStyledBase = (C: any, options: any) => {
     const styledFunc = styledDefault(C, options);
 
-    return function StyledComponent(...arg: any[]) {
-      const Target = styledFunc(...arg);
+    return function StyledComponent(...styles: any[]) {
+      const Target = styledFunc(...styles);
 
       return React.forwardRef<
         typeof Target,
@@ -30,5 +31,11 @@ export default function createStyled(options: CreateStyledOptions = {}) {
     };
   };
 
-  return styled;
+  const newStyled: any = styled.bind(undefined);
+
+  tags.forEach(function (tagName) {
+    newStyled[tagName] = newStyled(tagName);
+  });
+
+  return newStyled as CreateStyled;
 }
