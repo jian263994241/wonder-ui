@@ -50,9 +50,7 @@ export const formatMs = (milliseconds: number) =>
   `${Math.round(milliseconds)}ms`;
 
 export const create = (
-  props:
-    | CSS.Property.TransitionProperty
-    | (keyof CSS.StandardLonghandProperties)[] = 'all',
+  props: CSS.Property.TransitionProperty | string[] = 'all',
   options: {
     duration?: keyof DurationType | number;
     easing?: keyof easingType;
