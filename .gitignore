@@ -1,5 +1,8 @@
 .Ds_Store
 .eslintcache
+.yarn
+.vscode
+.idea
 
 node_modules
 package-lock.json
@@ -8,3 +11,11 @@ lerna-debug.log
 yarn-error.log
 dist
 build
+
+__snapshots__
+
+# umi
+.umi
+.umi-production
+.env.local
+

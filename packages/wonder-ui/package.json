@@ -34,8 +34,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@wonder-ui/hooks": "^0.0.2",
-    "@wonder-ui/styled": "^1.0.0",
+    "@wonder-ui/hooks": "^0.0.3",
+    "@wonder-ui/styles": "^2.0.5",
     "@wonder-ui/utils": "^2.0.0",
     "clsx": "^1.1.1"
   },
