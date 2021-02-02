@@ -58,8 +58,9 @@ export type ClassKeyOfStyles<StylesOrClassKey> = StylesOrClassKey extends string
   ? ClassKey
   : never;
 
-export type ClassKeysOfStyles<StylesOrClassKey> = Partial<
-  Record<ClassKeyOfStyles<StylesOrClassKey>, string>
+export type ClassKeysOfStyles<StylesOrClassKey> = Record<
+  ClassKeyOfStyles<StylesOrClassKey>,
+  string
 >;
 
 /**
