@@ -35,3 +35,5 @@ export * from './useToggle';
 export * from './useTouchFeedback';
 export * from './useUpdateEffect';
 export * from './useVirtualList';
+
+export { default as EventsClass } from './utils/EventsClass';

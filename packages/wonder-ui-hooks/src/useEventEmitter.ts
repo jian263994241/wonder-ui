@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { EventsClass } from '@wonder-ui/utils';
+import EventsClass from './utils/EventsClass';
 
 export function useEventEmitter() {
   const ref = React.useRef<InstanceType<typeof EventsClass>>();

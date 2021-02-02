@@ -1,5 +1,14 @@
 import * as React from 'react';
-import { createId } from '@wonder-ui/utils';
+
+/**
+ * 生成id
+ * @param {*} mask
+ * @param {*} map
+ */
+export function createId(mask = 'xxxxxxxxxx', map = '0123456789abcdef') {
+  const length = map.length;
+  return mask.replace(/x/g, () => map[Math.floor(Math.random() * length)]);
+}
 
 /**
  * 生成随机ID

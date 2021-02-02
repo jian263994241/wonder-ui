@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { BasicTarget, getTargetElement } from './utils/dom';
-import { ownerDocument } from '@wonder-ui/utils';
+
+function ownerDocument(node: Node | undefined): Document {
+  return (node && node.ownerDocument) || document;
+}
 
 type EventType = MouseEvent | TouchEvent;
 
