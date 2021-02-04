@@ -1,7 +1,7 @@
 {
   "name": "@wonder-ui/styled",
-  "version": "1.0.3",
-  "description": "Wonder-UI styles",
+  "version": "1.0.4",
+  "description": "Wonder-UI styled",
   "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/styled.esm.js",
