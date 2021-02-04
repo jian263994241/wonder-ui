@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import ButtonBase from './ButtonBase';
-import { withStyles } from '../styles';
+import ButtonBase from '../ButtonBase';
+import styled from '../../styles/styled';
 
 describe('ButtonBase', () => {
   test('click ative state', () => {
@@ -23,11 +23,9 @@ describe('ButtonBase', () => {
   });
 
   test('custom button', () => {
-    const Button = withStyles({
-      root: {
-        color: 'red'
-      }
-    })(ButtonBase);
+    const Button = styled(ButtonBase)({
+      color: 'red'
+    });
 
     const { getByText } = render(<Button>button</Button>);
 

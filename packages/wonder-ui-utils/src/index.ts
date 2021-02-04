@@ -1,12 +1,9 @@
 export { default as capitalize } from './capitalize';
 export { default as createChainedFunction } from './createChainedFunction';
 export { default as createId } from './createId';
-export { default as debounce } from './debounce';
 export { default as deepmerge } from './deepmerge';
-export { default as EventsClass } from './EventsClass';
 export { default as getSupport } from './getSupport';
 export { default as isObject } from './isObject';
 export { default as ownerDocument } from './ownerDocument';
 export { default as ownerWindow } from './ownerWindow';
-export { default as throttle } from './throttle';
 export { default as uniqueNumber } from './uniqueNumber';

@@ -1,11 +1,12 @@
 {
-  "name": "@wonder-ui/core",
-  "version": "2.0.0-0",
-  "description": "Wonder-UI react components",
+  "name": "@wonder-ui/icons",
+  "version": "2.0.0",
+  "description": "Wonder-UI styles",
   "source": "src/index.ts",
   "main": "dist/index.js",
-  "module": "dist/core.esm.js",
+  "module": "dist/icons.esm.js",
   "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
   "files": [
     "src",
     "dist",
@@ -24,8 +25,12 @@
     "publish:next": "npm version prerelease & npm publish ./ --access=public --tag=next"
   },
   "keywords": [
-    "react",
-    "react component"
+    "wonder ui",
+    "css in js",
+    "jss",
+    "react ui",
+    "react-jss",
+    "react"
   ],
   "author": "jian.li",
   "homepage": "https://github.com/jian263994241/wonder-ui/tree/master/packages",
@@ -33,18 +38,13 @@
     "url": "https://github.com/jian263994241/wonder-ui/issues"
   },
   "license": "MIT",
-  "dependencies": {
-    "@wonder-ui/hooks": "^0.0.3",
-    "@wonder-ui/icons": "^2.0.0",
-    "@wonder-ui/styled": "^1.0.5",
-    "@wonder-ui/utils": "^2.0.0"
-  },
   "peerDependencies": {
-    "react": ">=16.8.0"
+    "react": ">=16.8.0",
+    "@wonder-ui/core": "^2.0.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jian263994241/wonder-ui.git",
-    "directory": "packages/wonder-ui"
+    "directory": "packages/wonder-ui-styles"
   }
 }

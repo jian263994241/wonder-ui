@@ -1,0 +1,20 @@
+/**
+ * title: 扩展SVG图标
+ * desc: 用`SvgIcon`扩展, 只需要在子节点添加路径即可
+ */
+
+/** @jsx jsx */
+import { SvgIcon, jsx, useTheme } from '@wonder-ui/core';
+
+export default function Example() {
+  const theme = useTheme();
+  return (
+    <SvgIcon
+      size="large"
+      titleAccess="store"
+      css={{ color: theme.palette.blue.A200 }}
+    >
+      <path d="M19 4a2 2 0 012 2v4a2 2 0 01-.999 1.732L20 19h1a1 1 0 010 2H3a1 1 0 010-2h1v-7.268A2 2 0 013 10V6a2 2 0 012-2h14zm-1 8H6v7h2.5v-4a1 1 0 011-1h5a1 1 0 011 1v4H18v-7zm-4.5 4h-3v3h3v-3zM19 6H5v4h14V6z" />
+    </SvgIcon>
+  );
+}

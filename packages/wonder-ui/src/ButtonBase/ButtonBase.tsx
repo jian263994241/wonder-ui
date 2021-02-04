@@ -1,64 +1,56 @@
 import * as React from 'react';
-import { createStyles, withStyles, ClassKeysOfStyles } from '../styles';
 import { useTouchFeedback, useForkRef } from '@wonder-ui/hooks';
-import clsx from 'clsx';
+import useThemeProps from '../styles/useThemeProps';
+import styled, { StyledComponentProps } from '../styles/styled';
 
-const styles = createStyles((theme) => ({
-  root: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-    textAlign: 'center',
-    // Remove grey highlight
-    WebkitTapHighlightColor: 'transparent',
-    backgroundColor: 'transparent', // Reset default value
-    // We disable the focus ring for mouse, touch and keyboard users.
-    outline: 'none',
-    border: 0,
-    margin: 0, // Remove the margin in Safari
-    borderRadius: 0,
-    padding: 0, // Remove the padding in Firefox
-    cursor: 'pointer',
-    userSelect: 'none',
-    verticalAlign: 'middle',
-    appearance: 'none', // Reset
-    textDecoration: 'none',
-    fontSize: 'inherit',
-    // So we take precedent over the style of a native <a /> element.
-    color: 'inherit',
-    transition: theme.transitions.create([
-      'background-color',
-      'color',
-      'opacity'
-    ]),
-    '&::-moz-focus-inner': {
-      borderStyle: 'none' // Remove Firefox dotted outline.
-    },
-    '&[disabled]': {
-      pointerEvents: 'none', // Disable link interactions
-      cursor: 'not-allowed'
-    }
+const ButtonRoot = styled.button({
+  display: 'inline-block',
+  position: 'relative',
+  textAlign: 'center',
+  // Remove grey highlight
+  WebkitTapHighlightColor: 'transparent',
+  backgroundColor: 'transparent', // Reset default value
+  // We disable the focus ring for mouse, touch and keyboard users.
+  outline: 'none',
+  border: '1px solid transparent',
+  margin: 0, // Remove the margin in Safari
+  borderRadius: 0,
+  padding: 0, // Remove the padding in Firefox
+  cursor: 'pointer',
+  userSelect: 'none',
+  verticalAlign: 'middle',
+  appearance: 'none', // Reset
+  textDecoration: 'none',
+  fontSize: 'inherit',
+  // So we take precedent over the style of a native <a /> element.
+  color: 'inherit',
+  '&::-moz-focus-inner': {
+    borderStyle: 'none' // Remove Firefox dotted outline.
+  },
+  '&[disabled]': {
+    pointerEvents: 'none', // Disable link interactions
+    cursor: 'not-allowed'
   }
-}));
+});
 
 export interface ButtonBaseProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /**
-   * css api
-   */
-  classes: ClassKeysOfStyles<typeof styles>;
+  extends StyledComponentProps<typeof ButtonRoot> {
+  href?: string;
+  target?: string;
 }
 
 export const ButtonBase = React.forwardRef(
-  (props: ButtonBaseProps, ref: any) => {
-    const { classes, className, ...rest } = props;
-    const elementRef = useTouchFeedback();
+  (inProps: ButtonBaseProps, ref: any) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiButtonBase' });
+    const { component = 'button', href, ...rest } = props;
+
+    const elementRef = useTouchFeedback({ activeClassName: 'touch-active' });
     const handleRef = useForkRef(elementRef, ref);
 
     return (
-      <button
-        className={clsx(classes.root, className)}
+      <ButtonRoot
+        as={href ? 'a' : component}
+        href={href}
         ref={handleRef}
         {...rest}
       />
@@ -66,6 +58,6 @@ export const ButtonBase = React.forwardRef(
   }
 );
 
-ButtonBase.displayName = 'ButtonBase';
+ButtonBase.displayName = 'WuiButtonBase';
 
-export default withStyles(styles)(ButtonBase);
+export default ButtonBase;
