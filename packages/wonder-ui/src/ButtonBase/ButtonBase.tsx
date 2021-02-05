@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useTouchFeedback, useForkRef } from '@wonder-ui/hooks';
 import useThemeProps from '../styles/useThemeProps';
-import styled, { StyledComponentProps } from '../styles/styled';
+import styled from '../styles/styled';
 
 const ButtonRoot = styled.button({
   display: 'inline-block',
@@ -33,31 +33,64 @@ const ButtonRoot = styled.button({
   }
 });
 
-export interface ButtonBaseProps
-  extends StyledComponentProps<typeof ButtonRoot> {
+export interface ButtonBaseProps {
+  /**
+   * @description 点击时的状态样式名
+   * @default state-active
+   */
+  activeClassName?: string;
+  /**
+   * 子节点
+   */
+  children?: React.ReactNode;
+  /**
+   * 样式名
+   */
+  className?: string;
+  /**
+   * 样式
+   */
+  style?: React.CSSProperties;
+  /**
+   * 相当于 a 链接的 href 属性，component = a 存在时生效
+   */
   href?: string;
+  /**
+   * 相当于 a 链接的 target 属性，href 存在时生效
+   */
   target?: string;
+  /**
+   * 获取element
+   */
+  ref?: React.Ref<any>;
+  /**
+   * @description 渲染的节点类型
+   * @default button
+   */
+  component?: string;
+  /**
+   * 点击按钮时的回调
+   */
+  onClick?: (event: React.SyntheticEvent) => void;
 }
 
-export const ButtonBase = React.forwardRef(
-  (inProps: ButtonBaseProps, ref: any) => {
+const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
+  (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiButtonBase' });
-    const { component = 'button', href, ...rest } = props;
+    const {
+      component = 'button',
+      activeClassName = 'state-active',
+      href,
+      ...rest
+    } = props;
 
-    const elementRef = useTouchFeedback({ activeClassName: 'touch-active' });
+    const elementRef = useTouchFeedback({ activeClassName });
     const handleRef = useForkRef(elementRef, ref);
 
-    return (
-      <ButtonRoot
-        as={href ? 'a' : component}
-        href={href}
-        ref={handleRef}
-        {...rest}
-      />
-    );
+    return <ButtonRoot as={component} href={href} ref={handleRef} {...rest} />;
   }
 );
 
-ButtonBase.displayName = 'WuiButtonBase';
+ButtonBase.displayName = 'ButtonBase';
 
 export default ButtonBase;

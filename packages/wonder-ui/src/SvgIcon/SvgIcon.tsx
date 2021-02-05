@@ -1,6 +1,6 @@
 import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
-import styled, { StyledComponentProps } from '../styles/styled';
+import styled, { StyledPropsType } from '../styles/styled';
 
 interface SvgIconStyleProps {
   size: 'inherit' | 'large' | 'medium' | 'small';
@@ -26,32 +26,31 @@ const SvgIconRoot = styled.svg<SvgIconStyleProps>(
   })
 );
 
-export interface SvgIconProps extends StyledComponentProps<typeof SvgIconRoot> {
+export interface SvgIconProps extends StyledPropsType<typeof SvgIconRoot> {
   titleAccess?: string;
+  ref?: React.Ref<any>;
 }
 
-const SvgIcon = React.forwardRef(
-  (inProps: SvgIconProps, ref: React.Ref<any>) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiSvgIcon' });
-    const { titleAccess, children, component = 'svg', ...rest } = props;
+const SvgIcon: React.FC<SvgIconProps> = React.forwardRef((inProps, ref) => {
+  const props = useThemeProps({ props: inProps, name: 'WuiSvgIcon' });
+  const { titleAccess, children, component = 'svg', ...rest } = props;
 
-    return (
-      <SvgIconRoot
-        as={component}
-        size="inherit"
-        focusable="false"
-        viewBox="0 0 24 24"
-        aria-hidden={titleAccess ? undefined : true}
-        role={titleAccess ? 'img' : undefined}
-        ref={ref}
-        {...rest}
-      >
-        {children}
-        {titleAccess ? <title>{titleAccess}</title> : null}
-      </SvgIconRoot>
-    );
-  }
-);
+  return (
+    <SvgIconRoot
+      as={component}
+      size="inherit"
+      focusable="false"
+      viewBox="0 0 24 24"
+      aria-hidden={titleAccess ? undefined : true}
+      role={titleAccess ? 'img' : undefined}
+      ref={ref}
+      {...rest}
+    >
+      {children}
+      {titleAccess ? <title>{titleAccess}</title> : null}
+    </SvgIconRoot>
+  );
+});
 
 SvgIcon.displayName = 'WuiSvgIcon';
 

@@ -23,5 +23,4 @@ npm install @wonder-ui/icons
 | --- | --- | --- | ---
 | size | 尺寸 | `inherit` , `large` , `medium` , `small` | `inherit`
 | titleAccess | 标题 | string | -
-| viewBox | - | string | `0 0 24 24`
 

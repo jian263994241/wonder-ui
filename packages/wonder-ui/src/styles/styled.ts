@@ -1,15 +1,18 @@
-import styled, { jsx } from '@wonder-ui/styled';
-import { DefaultTheme } from './theme/defaultTheme';
-
+import type { DefaultTheme } from './theme/defaultTheme';
 declare module '@wonder-ui/styled' {
   export interface Theme extends DefaultTheme {}
 }
 
-export default styled;
-export * from '@wonder-ui/styled';
-
-export type StyledComponentProps<
+export type StyledPropsType<
   T extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>
-> = Omit<Partial<React.ComponentProps<T>>, 'as'> & {
-  component?: keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>;
-};
+> = Omit<Partial<React.ComponentProps<T>>, 'as'>;
+
+export {
+  default,
+  ThemeContext,
+  keyframes,
+  css,
+  jsx,
+  StyledEngineProvider
+} from '@wonder-ui/styled';
+export type { Theme } from '@wonder-ui/styled';

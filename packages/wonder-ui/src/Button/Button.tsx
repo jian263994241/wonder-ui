@@ -1,35 +1,35 @@
 import * as React from 'react';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
-import styled, { StyledComponentProps } from '../styles/styled';
+import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
 export interface ButtonStyleProps {
   variant: 'text' | 'outlined' | 'contained';
   size: 'small' | 'medium' | 'large';
-  color: 'default' | 'inherit' | 'primary' | 'secondary';
-}
-
-const ButtonRoot = styled(ButtonBase)<ButtonStyleProps>(
-  ({ theme, ...styleProps }) => ({
-    color: styleProps.color
-  })
-);
-
-export interface ButtonProps extends StyledComponentProps<typeof ButtonRoot> {
-  disabled?: boolean;
-  endIcon?: React.ReactNode;
+  color: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
   full?: boolean;
   fullWidth?: boolean;
   rounded?: boolean;
+  disabled?: boolean;
+}
+
+const ButtonRoot = styled(ButtonBase)<ButtonStyleProps>(
+  ({ theme, ...styleProps }) => ({})
+);
+
+export interface ButtonProps
+  extends ButtonBaseProps,
+    Partial<ButtonStyleProps> {
+  endIcon?: React.ReactNode;
   startIcon?: React.ReactNode;
 }
 
-const Button = React.forwardRef(function Button(inProps: ButtonProps, ref) {
+const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiButton' });
   const {
     children,
     className,
-    color = 'default',
+    color = 'primary',
     endIcon,
     full,
     disabled,
@@ -49,6 +49,7 @@ const Button = React.forwardRef(function Button(inProps: ButtonProps, ref) {
       ref={ref}
       {...rest}
     >
+      {children}
       {/* {startIcon && (
         <span
           className={clsx({
@@ -78,6 +79,6 @@ const Button = React.forwardRef(function Button(inProps: ButtonProps, ref) {
   );
 });
 
-Button.displayName = 'button';
+Button.displayName = 'Button';
 
 export default Button;

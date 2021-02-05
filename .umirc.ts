@@ -20,21 +20,34 @@ export default defineConfig({
         path: '/components'
       },
       {
+        title: 'API',
+        path: '/apis'
+      },
+      {
         title: 'GitHub',
         path: 'https://github.com/jian263994241/wonder-ui'
       }
     ]
+  },
+  menus: {
+    '/components': [
+      {
+        title: '通用',
+        children: [
+          'components/button.md',
+          'components/icon.md',
+          'components/typography.md'
+        ]
+      }
+    ],
+    '/apis': [
+      {
+        children: [
+          'apis/ButtonBase.md',
+          'apis/ButtonBase.md',
+          'apis/ButtonBase.md'
+        ]
+      }
+    ]
   }
-  // menus: {
-  //   '/components': [
-  //     {
-  //       title: '通用',
-  //       children: [
-  //         'components/button.md',
-  //         'components/icon.md',
-  //         'components/typography.md'
-  //       ]
-  //     }
-  //   ]
-  // }
 });
