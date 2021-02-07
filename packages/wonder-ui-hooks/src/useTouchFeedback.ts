@@ -36,9 +36,9 @@ export function useTouchFeedback<T extends HTMLElement>(
 
       events.forEach((eventName: typeof events[number]) => {
         if (eventName === 'touchstart' || eventName === 'mousedown') {
-          node.addEventListener(eventName, activeTrue);
+          node.addEventListener(eventName, activeTrue, { passive: true });
         } else {
-          node.addEventListener(eventName, activeFalse);
+          node.addEventListener(eventName, activeFalse, { passive: true });
         }
       });
 
