@@ -1,10 +1,10 @@
-import * as transitions from './transitions';
-import createPalette, { Palette } from './createPalette';
-import createTypography, { Typography } from './createTypography';
-import createSpacing from './createSpacing';
-import createShape from './createShape';
-import shadows from './shadows';
-import zIndex from './zIndex';
+import * as transitions from './theme/transitions';
+import createPalette, { Palette } from './theme/createPalette';
+import createTypography, { Typography } from './theme/createTypography';
+import createSpacing from './theme/createSpacing';
+import createShape from './theme/createShape';
+import shadows from './theme/shadows';
+import zIndex from './theme/zIndex';
 
 interface ThemeComponent {
   components?: {

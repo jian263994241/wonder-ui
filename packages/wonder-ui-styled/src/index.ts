@@ -1,5 +1,5 @@
 export { default } from '@emotion/styled';
-export { ThemeContext, keyframes, css, jsx } from '@emotion/react';
+export { ThemeProvider, ThemeContext, keyframes, jsx } from '@emotion/react';
 export { default as StyledEngineProvider } from './StyledEngineProvider';
 export { default as GlobalStyles } from './GlobalStyles';
 

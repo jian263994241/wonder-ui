@@ -1,15 +1,25 @@
 /**
- * title: 按钮类型
+ * title: 按钮颜色
  * desc: 按钮分下面几种类型 `primary` | `secondary` | `success` | `danger` | `warning` | `info`
  */
-
-import * as React from 'react';
-import { Button } from '@wonder-ui/core';
+/** @jsx jsx */
+import { Button, jsx } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <div>
-      <Button>Primary</Button>
+    <div
+      css={{
+        button: {
+          margin: '.25rem .125rem'
+        }
+      }}
+    >
+      <Button color="primary">Primary</Button>
+      <Button color="secondary">Secondary</Button>
+      <Button color="success">Success</Button>
+      <Button color="danger">Danger</Button>
+      <Button color="warning">Warning</Button>
+      <Button color="info">Info</Button>
     </div>
   );
 }

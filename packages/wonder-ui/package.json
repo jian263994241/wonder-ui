@@ -13,8 +13,8 @@
     "README.md"
   ],
   "scripts": {
-    "start": "tsdx watch --entry src/index.ts",
-    "build": "tsdx build --entry src/index.ts",
+    "start": "tsdx watch --entry src/index.tsx",
+    "build": "tsdx build --entry src/index.tsx",
     "lint": "tsdx lint src",
     "lint:fix": "tsdx lint src --fix",
     "test": "tsdx test",

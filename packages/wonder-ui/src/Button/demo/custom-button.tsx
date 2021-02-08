@@ -13,7 +13,7 @@ const Button = styled(ButtonBase)({
   fontSize: 14,
   padding: '.375rem .75rem',
   borderRadius: '.25rem',
-  '&.touch-active': {
+  '&.state-active': {
     opacity: 0.8
   }
 });

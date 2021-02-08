@@ -26,7 +26,7 @@ const caseAllCaps = {
   textTransform: 'uppercase'
 };
 
-const defaultFontFamily = `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif`;
+const defaultFontFamily = `system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"`;
 
 export default function createTypography(typography: Partial<Typography> = {}) {
   const {
@@ -80,7 +80,7 @@ export default function createTypography(typography: Partial<Typography> = {}) {
     subtitle2: buildVariant(fontWeightMedium, 14, 1.57, 0.1),
     body1: buildVariant(fontWeightRegular, 16, 1.5, 0.15),
     body2: buildVariant(fontWeightRegular, 14, 1.43, 0.15),
-    button: buildVariant(fontWeightMedium, 14, 1.75, 0.4),
+    button: buildVariant(fontWeightMedium, 14, 1.5, 0.4),
     caption: buildVariant(fontWeightRegular, 12, 1.66, 0.4),
     overline: buildVariant(fontWeightRegular, 12, 2.66, 1, caseAllCaps)
   };

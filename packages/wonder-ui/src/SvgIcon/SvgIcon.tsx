@@ -1,10 +1,18 @@
 import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
-import styled, { StyledPropsType } from '../styles/styled';
+import styled, { keyframes } from '../styles/styled';
+import type { StyleTypeProps } from '../styles/types';
 
 interface SvgIconStyleProps {
   size: 'inherit' | 'large' | 'medium' | 'small';
+  spin?: boolean;
 }
+
+const spin = keyframes({
+  '100%': {
+    transform: 'rotate(360deg)'
+  }
+});
 
 const SvgIconRoot = styled.svg<SvgIconStyleProps>(
   ({ theme, ...styleProps }) => ({
@@ -14,8 +22,12 @@ const SvgIconRoot = styled.svg<SvgIconStyleProps>(
     display: 'inline-block',
     fill: 'currentColor',
     flexShrink: 0,
+    verticalAlign: theme.typography.pxToRem(-2),
     transition: theme.transitions.create('fill', {
       duration: theme.transitions.duration.shorter
+    }),
+    ...(styleProps.spin && {
+      animation: `${spin} 1s steps(12, end) infinite`
     }),
     fontSize: {
       inherit: 'inherit',
@@ -26,9 +38,8 @@ const SvgIconRoot = styled.svg<SvgIconStyleProps>(
   })
 );
 
-export interface SvgIconProps extends StyledPropsType<typeof SvgIconRoot> {
+export interface SvgIconProps extends StyleTypeProps<typeof SvgIconRoot> {
   titleAccess?: string;
-  ref?: React.Ref<any>;
 }
 
 const SvgIcon: React.FC<SvgIconProps> = React.forwardRef((inProps, ref) => {

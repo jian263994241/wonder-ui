@@ -11,12 +11,24 @@
 
 <code src="../../packages/wonder-ui/src/Button/demo/buttons.tsx"></code>
 
-<code src="../../packages/wonder-ui/src/ButtonBase/demo/custom-button.tsx"></code>
+<code src="../../packages/wonder-ui/src/Button/demo/button-tags.tsx"></code>
 
+<code src="../../packages/wonder-ui/src/Button/demo/outline-buttons.tsx"></code>
 
+<code src="../../packages/wonder-ui/src/Button/demo/text-buttons.tsx"></code>
+
+<code src="../../packages/wonder-ui/src/Button/demo/button-shape.tsx"></code>
+
+<code src="../../packages/wonder-ui/src/Button/demo/button-size.tsx"></code>
+
+<code src="../../packages/wonder-ui/src/Button/demo/button-block.tsx"></code>
+
+<code src="../../packages/wonder-ui/src/Button/demo/button-disabled.tsx"></code>
+
+<code src="../../packages/wonder-ui/src/Button/demo/custom-button.tsx"></code>
 
 ## API
 
-- [Button](/apis/button)
-- [ButtonBase](/apis/button-base)
+<embed src="../../packages/wonder-ui/src/Button/index.md"></embed>
 
+<embed src="../../packages/wonder-ui/src/ButtonBase/index.md"></embed>

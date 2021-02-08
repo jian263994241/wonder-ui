@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { GlobalStyles } from '@wonder-ui/styled';
-import theme from './theme/defaultTheme';
+import theme from './defaultTheme';
 
 const GlobalStylesWithDefault: React.FC<React.ComponentProps<
   typeof GlobalStyles
