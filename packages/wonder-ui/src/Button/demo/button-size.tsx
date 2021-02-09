@@ -4,7 +4,7 @@
  */
 /** @jsx jsx */
 import { Button, jsx } from '@wonder-ui/core';
-import { AddCircleOutline } from '@wonder-ui/icons';
+import { X } from '@wonder-ui/icons';
 
 export default function Example() {
   return (
@@ -21,7 +21,7 @@ export default function Example() {
           Large button
         </Button>
         <Button shape="circle" size="large">
-          <AddCircleOutline />
+          <X />
         </Button>
       </div>
       <div>
@@ -30,7 +30,7 @@ export default function Example() {
           Small button
         </Button>
         <Button shape="circle" size="small">
-          <AddCircleOutline />
+          <X />
         </Button>
       </div>
     </div>

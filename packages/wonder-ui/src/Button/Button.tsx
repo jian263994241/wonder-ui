@@ -47,15 +47,8 @@ export const ButtonRoot = styled(ButtonBase)<ButtonStyleProps>(
       large: theme.typography.pxToRem(20)
     }[styleProps.size];
 
-    const iconFontSize = {
-      small: theme.typography.pxToRem(16),
-      medium: theme.typography.pxToRem(18),
-      large: theme.typography.pxToRem(22)
-    }[styleProps.size];
-
     return {
       ...theme.typography.button,
-      fontSize: buttonfontSize,
 
       ...(styleProps.disabled && {
         opacity: 0.65
@@ -65,24 +58,27 @@ export const ButtonRoot = styled(ButtonBase)<ButtonStyleProps>(
         circle: {
           borderRadius: '50%',
           lineHeight: 1,
-          fontSize: iconFontSize,
           ...{
             small: {
               minWidth: theme.typography.pxToRem(29),
-              height: theme.typography.pxToRem(29)
+              height: theme.typography.pxToRem(29),
+              fontSize: theme.typography.pxToRem(15)
             },
             medium: {
               minWidth: theme.typography.pxToRem(39),
-              height: theme.typography.pxToRem(39)
+              height: theme.typography.pxToRem(39),
+              fontSize: theme.typography.pxToRem(20)
             },
             large: {
               minWidth: theme.typography.pxToRem(49),
-              height: theme.typography.pxToRem(49)
+              height: theme.typography.pxToRem(49),
+              fontSize: theme.typography.pxToRem(25)
             }
           }[styleProps.size]
         },
         round: {
           padding: buttonPadding,
+          fontSize: buttonfontSize,
           borderRadius: {
             small: theme.typography.pxToRem(14),
             medium: theme.typography.pxToRem(16),
@@ -91,6 +87,7 @@ export const ButtonRoot = styled(ButtonBase)<ButtonStyleProps>(
         },
         rect: {
           padding: buttonPadding,
+          fontSize: buttonfontSize,
           ...(!styleProps.disabledBorderRadius && {
             borderRadius: {
               small: theme.typography.pxToRem(3.2),

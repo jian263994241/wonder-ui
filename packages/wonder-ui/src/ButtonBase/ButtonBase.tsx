@@ -36,7 +36,7 @@ export const ButtonBaseRoot = styled.button(({ theme }) => ({
   }
 }));
 
-export interface ButtonBaseProps extends StyleTypeProps<typeof ButtonRoot> {
+export interface ButtonBaseProps extends StyleTypeProps<typeof ButtonBaseRoot> {
   /**
    * @description 点击时的状态样式名
    * @default state-active
@@ -57,9 +57,7 @@ const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
     const elementRef = useTouchFeedback({ activeClassName });
     const handleRef = useForkRef(elementRef, ref);
 
-    return (
-      <ButtonBaseRoot as={component} href={href} ref={handleRef} {...rest} />
-    );
+    return <ButtonBaseRoot as={component} ref={handleRef} {...rest} />;
   }
 );
 

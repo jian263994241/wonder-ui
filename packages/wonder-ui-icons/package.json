@@ -39,8 +39,7 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "@wonder-ui/core": "^2.0.0"
+    "react": ">=16.8.0"
   },
   "repository": {
     "type": "git",

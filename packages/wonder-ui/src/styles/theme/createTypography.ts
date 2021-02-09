@@ -78,8 +78,8 @@ export default function createTypography(typography: Partial<Typography> = {}) {
     h6: buildVariant(fontWeightMedium, 20, 1.6, 0.15),
     subtitle1: buildVariant(fontWeightRegular, 16, 1.75, 0.15),
     subtitle2: buildVariant(fontWeightMedium, 14, 1.57, 0.1),
-    body1: buildVariant(fontWeightRegular, 16, 1.5, 0.15),
-    body2: buildVariant(fontWeightRegular, 14, 1.43, 0.15),
+    body1: buildVariant(fontWeightRegular, 15, 1.5, 0.15),
+    body2: buildVariant(fontWeightRegular, 13, 1.43, 0.15),
     button: buildVariant(fontWeightMedium, 14, 1.5, 0.4),
     caption: buildVariant(fontWeightRegular, 12, 1.66, 0.4),
     overline: buildVariant(fontWeightRegular, 12, 2.66, 1, caseAllCaps)

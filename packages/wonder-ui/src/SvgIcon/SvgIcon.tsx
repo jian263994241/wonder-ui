@@ -51,7 +51,7 @@ const SvgIcon: React.FC<SvgIconProps> = React.forwardRef((inProps, ref) => {
       as={component}
       size="inherit"
       focusable="false"
-      viewBox="0 0 24 24"
+      viewBox="0 0 16 16"
       aria-hidden={titleAccess ? undefined : true}
       role={titleAccess ? 'img' : undefined}
       ref={ref}

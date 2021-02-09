@@ -12,13 +12,13 @@ export default function createSvgIcon(
 ) {
   const Icon = React.forwardRef<
     typeof SvgIcon,
-    Omit<SvgIconProps, 'viewBox' | 'titleAccess'>
+    Omit<SvgIconProps, 'viewBox' | 'titleAccess' | 'component'>
   >((props, ref: any) => {
     return (
       <SvgIcon
         {...props}
         ref={ref}
-        viewBox={options.viewBox}
+        viewBox={options.viewBox || `0 0 16 16`}
         titleAccess={options.title}
         children={paths}
       />

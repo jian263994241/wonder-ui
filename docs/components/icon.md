@@ -6,6 +6,14 @@
 npm install @wonder-ui/icons
 ```
 
+## 使用
+
+``` tsx | pure
+import { Alarm } from '@wonder-ui/icons';
+
+<Alarm size="large"/>
+```
+
 ## 图标列表
 
 <code src="../../packages/wonder-ui/src/SvgIcon/demo/icons.tsx"></code>
