@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "commit": "cz",
-    "build": "build:styles",
+    "build": "build:core & build:styled & build:icons",
     "build:core": "yarn workspace @wonder-ui/core build",
     "build:styles": "yarn workspace @wonder-ui/styles build",
     "build:styled": "yarn workspace @wonder-ui/styled build",

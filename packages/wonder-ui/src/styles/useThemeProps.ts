@@ -1,16 +1,17 @@
 import * as React from 'react';
 import useTheme from './useTheme';
 import getThemeProps from './getThemeProps';
+import { Theme } from './styled';
 
-type UseThemePropsParams = {
-  props: React.ComponentProps<any>;
+type UseThemePropsParams<T> = {
+  props: T;
   name: string;
 };
 
-export default function useThemeProps({
+export default function useThemeProps<P = any>({
   props: inputProps,
   name
-}: UseThemePropsParams) {
+}: UseThemePropsParams<P>): P & { theme: Theme } {
   const props = { ...inputProps };
 
   const contextTheme = useTheme();

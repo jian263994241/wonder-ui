@@ -14,7 +14,7 @@ const spin = keyframes({
   }
 });
 
-const SvgIconRoot = styled.svg<SvgIconStyleProps>(
+export const SvgIconRoot = styled.svg<SvgIconStyleProps>(
   ({ theme, ...styleProps }) => ({
     userSelect: 'none',
     width: '1em',

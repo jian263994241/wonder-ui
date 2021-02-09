@@ -4,7 +4,7 @@ import useThemeProps from '../styles/useThemeProps';
 import styled from '../styles/styled';
 import type { StyleTypeProps } from '../styles/types';
 
-const ButtonRoot = styled.button(({ theme }) => ({
+export const ButtonBaseRoot = styled.button(({ theme }) => ({
   display: 'inline-block',
   position: 'relative',
   textAlign: 'center',
@@ -57,7 +57,9 @@ const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
     const elementRef = useTouchFeedback({ activeClassName });
     const handleRef = useForkRef(elementRef, ref);
 
-    return <ButtonRoot as={component} href={href} ref={handleRef} {...rest} />;
+    return (
+      <ButtonBaseRoot as={component} href={href} ref={handleRef} {...rest} />
+    );
   }
 );
 

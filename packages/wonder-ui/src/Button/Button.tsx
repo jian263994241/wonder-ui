@@ -33,7 +33,7 @@ export interface ButtonStyleProps {
   disabled?: boolean;
 }
 
-const ButtonRoot = styled(ButtonBase)<ButtonStyleProps>(
+export const ButtonRoot = styled(ButtonBase)<ButtonStyleProps>(
   ({ theme, ...styleProps }) => {
     const buttonPadding = {
       small: `${theme.typography.pxToRem(4)} ${theme.typography.pxToRem(8)}`,

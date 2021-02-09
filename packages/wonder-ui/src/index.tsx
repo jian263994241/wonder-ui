@@ -1,9 +1,11 @@
-export { default as Button } from './Button';
-export type { ButtonProps } from './Button';
-export { default as ButtonBase } from './ButtonBase';
 export type { ButtonBaseProps } from './ButtonBase';
-
-export { default as SvgIcon } from './SvgIcon';
+export type { ButtonProps } from './Button';
+export type { SvgIconProps } from './SvgIcon';
+export type { TypographyProps } from './Typography';
+export { default as Button, ButtonRoot } from './Button';
+export { default as ButtonBase, ButtonBaseRoot } from './ButtonBase';
+export { default as SvgIcon, SvgIconRoot } from './SvgIcon';
+export { default as Typography, TypographyRoot } from './Typography';
 
 export {
   default as styled,

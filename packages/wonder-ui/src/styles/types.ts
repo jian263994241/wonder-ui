@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 export type StyleTypeProps<
   T extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>
 > = Omit<Partial<React.ComponentProps<T>>, 'as'> & {

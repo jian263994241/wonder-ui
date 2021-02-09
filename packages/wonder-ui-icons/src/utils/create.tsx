@@ -1,19 +1,31 @@
 import * as React from 'react';
-import { SvgIcon } from '@wonder-ui/core';
+import { SvgIcon, SvgIconProps } from '@wonder-ui/core';
 
-type C = typeof SvgIcon;
+type Options = {
+  title: string;
+  viewBox?: string;
+};
 
-export default function createSvgIcon(paths: React.ReactChild, title: string) {
+export default function createSvgIcon(
+  paths: React.ReactChild,
+  options: Options
+) {
   const Icon = React.forwardRef<
-    C,
-    Omit<React.ComponentProps<C>, 'children' | 'titleAccess'>
-  >((props, ref) => {
+    typeof SvgIcon,
+    Omit<SvgIconProps, 'viewBox' | 'titleAccess'>
+  >((props, ref: any) => {
     return (
-      <SvgIcon {...props} ref={ref} children={paths} titleAccess={title} />
+      <SvgIcon
+        {...props}
+        ref={ref}
+        viewBox={options.viewBox}
+        titleAccess={options.title}
+        children={paths}
+      />
     );
   });
 
-  Icon.displayName = title;
+  Icon.displayName = options.title;
 
   return Icon;
 }

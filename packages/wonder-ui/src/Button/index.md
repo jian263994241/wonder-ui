@@ -1,3 +1,6 @@
+---
+sidemenu: false
+---
 ### Button
 
 除了继承 `ButtonBaseProps` 属性, 还有如下属性：

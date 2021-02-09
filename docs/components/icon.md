@@ -17,10 +17,4 @@ npm install @wonder-ui/icons
 
 ## API
 
-除了 `SVGAttributes` 属性意外定义了以下props:
-
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| size | 尺寸 | `inherit` , `large` , `medium` , `small` | `inherit`
-| titleAccess | 标题 | string | -
-
+<embed src="../../packages/wonder-ui/src/SvgIcon/index.md"></embed>
