@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as CSS from 'csstype';
 import styled from '../styles/styled';
 import { StyleTypeProps } from '../styles/types';
 import useThemeProps from '../styles/useThemeProps';
@@ -24,7 +23,7 @@ interface TypographyStyleProps {
    * @description 对齐
    * @default inherit
    */
-  align: CSS.Properties['textAlign'];
+  align: React.CSSProperties['textAlign'];
   /** 段落 */
   paragraph: boolean;
   /** 增加间距 */

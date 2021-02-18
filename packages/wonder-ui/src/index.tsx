@@ -1,9 +1,12 @@
 export type { ButtonBaseProps } from './ButtonBase';
 export type { ButtonProps } from './Button';
+export type { SpaceProps } from './Space';
 export type { SvgIconProps } from './SvgIcon';
 export type { TypographyProps } from './Typography';
+
 export { default as Button, ButtonRoot } from './Button';
 export { default as ButtonBase, ButtonBaseRoot } from './ButtonBase';
+export { default as Space } from './Space';
 export { default as SvgIcon, SvgIconRoot } from './SvgIcon';
 export { default as Typography, TypographyRoot } from './Typography';
 

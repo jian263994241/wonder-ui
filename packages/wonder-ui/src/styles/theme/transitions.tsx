@@ -1,5 +1,3 @@
-import * as CSS from 'csstype';
-
 export type easingType = {
   easeInOut: string;
   easeOut: string;
@@ -50,7 +48,7 @@ export const formatMs = (milliseconds: number) =>
   `${Math.round(milliseconds)}ms`;
 
 export const create = (
-  props: CSS.Property.TransitionProperty | string[] = 'all',
+  props: string | string[] = 'all',
   options: {
     duration?: keyof DurationType | number;
     easing?: keyof easingType;

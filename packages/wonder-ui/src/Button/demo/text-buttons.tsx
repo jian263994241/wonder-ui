@@ -3,17 +3,11 @@
  * desc: 文本按钮强调的最少。
  */
 /** @jsx jsx */
-import { Button, jsx } from '@wonder-ui/core';
+import { Button, jsx, Space } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <div
-      css={{
-        button: {
-          margin: '.25rem .125rem'
-        }
-      }}
-    >
+    <Space wrap>
       <Button variant="text" color="primary">
         Primary
       </Button>
@@ -32,6 +26,6 @@ export default function Example() {
       <Button variant="text" color="info">
         Info
       </Button>
-    </div>
+    </Space>
   );
 }

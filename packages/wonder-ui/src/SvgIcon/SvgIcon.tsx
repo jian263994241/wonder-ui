@@ -22,6 +22,7 @@ export const SvgIconRoot = styled.svg<SvgIconStyleProps>(
     display: 'inline-block',
     fill: 'currentColor',
     flexShrink: 0,
+    // verticalAlign: 'middle',
     verticalAlign: theme.typography.pxToRem(-2),
     transition: theme.transitions.create('fill', {
       duration: theme.transitions.duration.shorter

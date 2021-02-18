@@ -34,6 +34,10 @@ export default defineConfig({
           'components/icon.md',
           'components/typography.md'
         ]
+      },
+      {
+        title: '布局',
+        children: ['components/space.md']
       }
     ]
   }

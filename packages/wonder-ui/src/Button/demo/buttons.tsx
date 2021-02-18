@@ -3,23 +3,17 @@
  * desc: 按钮分下面几种类型 `primary` | `secondary` | `success` | `danger` | `warning` | `info`
  */
 /** @jsx jsx */
-import { Button, jsx } from '@wonder-ui/core';
+import { Button, jsx, Space } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <div
-      css={{
-        button: {
-          margin: '.25rem .125rem'
-        }
-      }}
-    >
+    <Space wrap>
       <Button color="primary">Primary</Button>
       <Button color="secondary">Secondary</Button>
       <Button color="success">Success</Button>
       <Button color="danger">Danger</Button>
       <Button color="warning">Warning</Button>
       <Button color="info">Info</Button>
-    </div>
+    </Space>
   );
 }

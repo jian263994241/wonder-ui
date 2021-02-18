@@ -24,9 +24,15 @@ export default function Example() {
         '.icon': {
           boxSizing: 'border-box',
           background: '#f8f9fa',
+          color: '#444444',
           borderRadius: '0.25rem',
           padding: '1.5rem 1rem',
-          marginBottom: '0.5rem'
+          marginBottom: '0.5rem',
+          transition: 'all 300ms'
+        },
+        '.icon:hover': {
+          background: '#e3e5e7',
+          color: '#000'
         },
         '.name': {
           color: '#6c757d'
@@ -36,7 +42,7 @@ export default function Example() {
       {(Object.keys(icons) as Array<keyof typeof icons>).map((key, index) => {
         const Icon = icons[key];
         return (
-          <div className="col">
+          <div className="col" key={index}>
             <div className="icon">
               <Icon key={index} size="large" />
             </div>

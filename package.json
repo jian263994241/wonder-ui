@@ -36,6 +36,7 @@
     "@types/react-dom": "^17.0.0",
     "ale-cli": "^4.0.0",
     "commitizen": "^4.2.2",
+    "node-html-parser": "^2.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },

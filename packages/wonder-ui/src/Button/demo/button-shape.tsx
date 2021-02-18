@@ -3,26 +3,20 @@
  * desc: 按钮分下面几种类型 `circle` | `round` | `rect`
  */
 /** @jsx jsx */
-import { Button, jsx } from '@wonder-ui/core';
-import { X } from '@wonder-ui/icons';
+import { Button, jsx, Space } from '@wonder-ui/core';
+import { SuitHeart } from '@wonder-ui/icons';
 
 export default function Example() {
   return (
-    <div
-      css={{
-        button: {
-          margin: '.25rem .125rem'
-        }
-      }}
-    >
+    <Space>
       <Button shape="circle">
-        <X />
+        <SuitHeart />
       </Button>
       <Button shape="round">Round button</Button>
       <Button shape="rect">Rect button</Button>
       <Button shape="rect" disabledBorderRadius>
         Rect button2
       </Button>
-    </div>
+    </Space>
   );
 }

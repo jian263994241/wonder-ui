@@ -3,17 +3,11 @@
  * desc: 和实心按钮相比，描边按钮强调的更少；或者和文本按钮相比，描边按钮强调的更多。
  */
 /** @jsx jsx */
-import { Button, jsx } from '@wonder-ui/core';
+import { Button, jsx, Space } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <div
-      css={{
-        button: {
-          margin: '.25rem .125rem'
-        }
-      }}
-    >
+    <Space wrap>
       <Button variant="outlined" color="primary">
         Primary
       </Button>
@@ -32,6 +26,6 @@ export default function Example() {
       <Button variant="outlined" color="info">
         Info
       </Button>
-    </div>
+    </Space>
   );
 }
