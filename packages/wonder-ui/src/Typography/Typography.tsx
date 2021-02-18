@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import { StyleTypeProps } from '../styles/types';
+import { StyledComponentProps } from '../styles/types';
 import useThemeProps from '../styles/useThemeProps';
 
 const defaultVariantMapping = {
@@ -32,8 +32,8 @@ interface TypographyStyleProps {
   variant: keyof typeof defaultVariantMapping;
 }
 
-export const TypographyRoot = styled.span<TypographyStyleProps>(
-  ({ theme, ...styleProps }) => ({
+export const TypographyRoot = styled.span<{ styleProps: TypographyStyleProps }>(
+  ({ theme, styleProps }) => ({
     margin: 0,
     ...theme.typography[styleProps.variant],
     textAlign: styleProps.align,
@@ -52,7 +52,7 @@ export const TypographyRoot = styled.span<TypographyStyleProps>(
 );
 
 export interface TypographyProps
-  extends StyleTypeProps<typeof TypographyRoot> {}
+  extends StyledComponentProps<typeof TypographyRoot> {}
 
 const Typography: React.FC<TypographyProps> = React.forwardRef(
   (inProps, ref) => {
@@ -71,15 +71,19 @@ const Typography: React.FC<TypographyProps> = React.forwardRef(
     const _component =
       component || paragraph ? 'p' : defaultVariantMapping[variant];
 
+    const styleProps = {
+      align,
+      gutterBottom,
+      noWrap,
+      paragraph,
+      variant
+    };
+
     return (
       <TypographyRoot
-        align={align}
         as={_component}
-        gutterBottom={gutterBottom}
-        noWrap={noWrap}
-        paragraph={paragraph}
+        styleProps={styleProps}
         ref={ref}
-        variant={variant}
         {...rest}
       >
         {children}

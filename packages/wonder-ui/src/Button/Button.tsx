@@ -2,7 +2,7 @@ import * as React from 'react';
 import ButtonBase from '../ButtonBase';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import type { StyleTypeProps } from '../styles/types';
+import type { StyledComponentProps } from '../styles/types';
 import { darken } from '../styles/colorManipulator';
 export interface ButtonStyleProps {
   /**
@@ -33,8 +33,8 @@ export interface ButtonStyleProps {
   disabled?: boolean;
 }
 
-export const ButtonRoot = styled(ButtonBase)<ButtonStyleProps>(
-  ({ theme, ...styleProps }) => {
+export const ButtonRoot = styled(ButtonBase)<{ styleProps: ButtonStyleProps }>(
+  ({ theme, styleProps }) => {
     const buttonPadding = {
       small: `${theme.typography.pxToRem(4)} ${theme.typography.pxToRem(8)}`,
       medium: `${theme.typography.pxToRem(6)} ${theme.typography.pxToRem(12)}`,
@@ -129,21 +129,33 @@ export const ButtonRoot = styled(ButtonBase)<ButtonStyleProps>(
   }
 );
 
-export interface ButtonProps extends StyleTypeProps<typeof ButtonRoot> {}
+export interface ButtonProps extends StyledComponentProps<typeof ButtonRoot> {}
 
 /**
  * Button
  */
 const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiButton' });
-  const { children, disabled, ...rest } = props;
+  const {
+    children,
+    disabled,
+    variant = 'contained',
+    size = 'medium',
+    color = 'primary',
+    shape = 'rect',
+    ...rest
+  } = props;
+
+  const styleProps = {
+    variant,
+    size,
+    color,
+    shape
+  };
 
   return (
     <ButtonRoot
-      variant="contained"
-      size="medium"
-      color="primary"
-      shape="rect"
+      styleProps={styleProps}
       role="button"
       aria-disabled={disabled}
       disabled={disabled}

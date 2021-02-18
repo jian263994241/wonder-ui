@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useTouchFeedback, useForkRef } from '@wonder-ui/hooks';
 import useThemeProps from '../styles/useThemeProps';
 import styled from '../styles/styled';
-import type { StyleTypeProps } from '../styles/types';
+import type { StyledComponentProps } from '../styles/types';
 
 export const ButtonBaseRoot = styled.button(({ theme }) => ({
   display: 'inline-block',
@@ -36,7 +36,8 @@ export const ButtonBaseRoot = styled.button(({ theme }) => ({
   }
 }));
 
-export interface ButtonBaseProps extends StyleTypeProps<typeof ButtonBaseRoot> {
+export interface ButtonBaseProps
+  extends StyledComponentProps<typeof ButtonBaseRoot> {
   /**
    * @description 点击时的状态样式名
    * @default state-active

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import styled from '../styles/styled';
-import type { StyleTypeProps } from '../styles/types';
 
-export type SpaceSize = 'small' | 'medium' | 'large' | number;
+type SpaceSize = 'small' | 'medium' | 'large' | number;
 
 interface SpaceStyleProps {
   direction: 'horizontal' | 'vertical';
@@ -19,14 +18,14 @@ function getNumberSize(theme: any, size: SpaceSize) {
     large: theme.spacing(2)
   };
 
-  return typeof size === 'string' ? sizeConfig[size] : size || 0;
+  return typeof size != 'number' ? sizeConfig[size] : size || 0;
 }
 
 function getSize(
   theme: any,
   options: Pick<SpaceStyleProps, 'size' | 'wrap' | 'direction'>
 ) {
-  let horizontalSize, verticalSize;
+  let horizontalSize: SpaceSize, verticalSize: SpaceSize;
 
   if (Array.isArray(options.size)) {
     horizontalSize = options.size[0];
@@ -44,55 +43,57 @@ function getSize(
   ];
 }
 
-const SpaceRoot = styled.div<SpaceStyleProps>(({ theme, ...styleProps }) => {
-  const [, verticalSize] = getSize(theme, styleProps);
+const SpaceRoot = styled.div<{ styleProps: SpaceStyleProps }>(
+  ({ theme, styleProps }) => {
+    const [, verticalSize] = getSize(theme, styleProps);
 
-  return {
-    display: 'inline-flex',
-    boxSizing: 'border-box',
+    return {
+      display: 'inline-flex',
+      boxSizing: 'border-box',
 
-    ...(styleProps.wrap &&
-      styleProps.direction === 'horizontal' && {
-        flexWrap: 'wrap',
-        marginBottom: -verticalSize
+      ...(styleProps.wrap &&
+        styleProps.direction === 'horizontal' && {
+          flexWrap: 'wrap',
+          marginBottom: -verticalSize
+        }),
+
+      ...(styleProps.direction === 'vertical' && {
+        flexDirection: 'column'
       }),
 
-    ...(styleProps.direction === 'vertical' && {
-      flexDirection: 'column'
-    }),
+      alignItems: {
+        center: 'center',
+        start: 'flex-start',
+        end: 'flex-end',
+        baseline: 'baseline'
+      }[styleProps.align]
+    };
+  }
+);
 
-    alignItems: {
-      center: 'center',
-      start: 'flex-start',
-      end: 'flex-end',
-      baseline: 'baseline'
-    }[styleProps.align]
-  };
-});
+const SpaceItem = styled.div<{ styleProps: SpaceStyleProps }>(
+  ({ theme, styleProps }) => {
+    const [horizontalSize, verticalSize] = getSize(theme, styleProps);
 
-const SpaceItem = styled.div<
-  Pick<SpaceStyleProps, 'size' | 'wrap' | 'direction'>
->(({ theme, ...styleProps }) => {
-  const [horizontalSize, verticalSize] = getSize(theme, styleProps);
+    return {
+      marginRight: styleProps.direction === 'horizontal' ? horizontalSize : 0,
+      marginBottom:
+        styleProps.direction === 'horizontal' ? verticalSize : horizontalSize,
 
-  return {
-    marginRight: styleProps.direction === 'horizontal' ? horizontalSize : 0,
-    marginBottom:
-      styleProps.direction === 'horizontal' ? verticalSize : horizontalSize,
-
-    '&:last-child':
-      styleProps.direction === 'horizontal'
-        ? {
-            marginRight: 0
-          }
-        : {
-            marginBottom: 0
-          },
-    '&:empty': {
-      display: 'none'
-    }
-  };
-});
+      '&:last-child':
+        styleProps.direction === 'horizontal'
+          ? {
+              marginRight: 0
+            }
+          : {
+              marginBottom: 0
+            },
+      '&:empty': {
+        display: 'none'
+      }
+    };
+  }
+);
 
 export interface SpaceProps extends Partial<SpaceStyleProps> {
   children?: any;
@@ -116,36 +117,24 @@ const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
   } = props;
 
   const childrenArray = React.Children.toArray(children);
+  const styleProps = {
+    size,
+    wrap,
+    align,
+    direction
+  };
 
   return (
-    <SpaceRoot
-      ref={ref}
-      size={size}
-      wrap={wrap}
-      theme={theme}
-      align={align}
-      direction={direction}
-      {...rest}
-    >
+    <SpaceRoot ref={ref} theme={theme} styleProps={styleProps} {...rest}>
       {childrenArray.map((child, index) => {
         return (
           <React.Fragment key={index}>
             {index != 0 && split && (
-              <SpaceItem
-                direction={direction}
-                size={size}
-                wrap={wrap}
-                theme={theme}
-              >
+              <SpaceItem styleProps={styleProps} theme={theme}>
                 {split}
               </SpaceItem>
             )}
-            <SpaceItem
-              direction={direction}
-              size={size}
-              wrap={wrap}
-              theme={theme}
-            >
+            <SpaceItem styleProps={styleProps} theme={theme}>
               {child}
             </SpaceItem>
           </React.Fragment>

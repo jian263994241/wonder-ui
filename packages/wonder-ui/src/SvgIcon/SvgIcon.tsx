@@ -1,7 +1,7 @@
 import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import styled, { keyframes } from '../styles/styled';
-import type { StyleTypeProps } from '../styles/types';
+import type { StyledComponentProps } from '../styles/types';
 
 interface SvgIconStyleProps {
   size: 'inherit' | 'large' | 'medium' | 'small';
@@ -14,8 +14,8 @@ const spin = keyframes({
   }
 });
 
-export const SvgIconRoot = styled.svg<SvgIconStyleProps>(
-  ({ theme, ...styleProps }) => ({
+export const SvgIconRoot = styled.svg<{ styleProps: SvgIconStyleProps }>(
+  ({ theme, styleProps }) => ({
     userSelect: 'none',
     width: '1em',
     height: '1em',
@@ -39,18 +39,29 @@ export const SvgIconRoot = styled.svg<SvgIconStyleProps>(
   })
 );
 
-export interface SvgIconProps extends StyleTypeProps<typeof SvgIconRoot> {
+export interface SvgIconProps extends StyledComponentProps<typeof SvgIconRoot> {
   titleAccess?: string;
 }
 
 const SvgIcon: React.FC<SvgIconProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiSvgIcon' });
-  const { titleAccess, children, component = 'svg', ...rest } = props;
+  const {
+    titleAccess,
+    size = 'inherit',
+    spin,
+    children,
+    component = 'svg',
+    ...rest
+  } = props;
+  const styleProps = {
+    size,
+    spin
+  };
 
   return (
     <SvgIconRoot
+      styleProps={styleProps}
       as={component}
-      size="inherit"
       focusable="false"
       viewBox="0 0 16 16"
       aria-hidden={titleAccess ? undefined : true}
