@@ -2,7 +2,7 @@
   "name": "@wonder-ui/icons",
   "version": "2.0.0",
   "description": "Wonder-UI styles",
-  "source": "src/index.ts",
+  "source": "src/index.tsx",
   "main": "dist/index.js",
   "module": "dist/icons.esm.js",
   "types": "dist/index.d.ts",
@@ -14,8 +14,8 @@
     "README.md"
   ],
   "scripts": {
-    "start": "tsdx watch --entry src/index.ts",
-    "build": "tsdx build --entry src/index.ts",
+    "start": "tsdx watch --entry src/index.tsx",
+    "build": "tsdx build --entry src/index.tsx",
     "lint": "tsdx lint src",
     "lint:fix": "tsdx lint src --fix",
     "test": "tsdx test",
