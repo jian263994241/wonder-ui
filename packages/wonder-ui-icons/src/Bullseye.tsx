@@ -8,7 +8,5 @@ export default create(
     <path d="M8 11a3 3 0 110-6 3 3 0 010 6zm0 1a4 4 0 100-8 4 4 0 000 8z"></path>
     <path d="M9.5 8a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path>
   </>,
-  {
-    title: 'Bullseye'
-  }
+  'Bullseye'
 );

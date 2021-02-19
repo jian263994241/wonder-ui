@@ -7,7 +7,5 @@ export default create(
     <path d="M8 1a7 7 0 104.95 11.95l.707.707A8.001 8.001 0 118 0v1z"></path>
     <path d="M7.5 3a.5.5 0 01.5.5v5.21l3.248 1.856a.5.5 0 01-.496.868l-3.5-2A.5.5 0 017 9V3.5a.5.5 0 01.5-.5z"></path>
   </>,
-  {
-    title: 'ClockHistory'
-  }
+  'ClockHistory'
 );

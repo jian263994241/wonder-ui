@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { SvgIcon, SvgIconProps } from '@wonder-ui/core';
 
-type Options = {
-  title: string;
-  viewBox?: string;
-};
-
 export default function createSvgIcon(
   paths: React.ReactChild,
-  options: Options
+  title: string,
+  viewBox: string = '0 0 16 16'
 ) {
   const Icon = React.forwardRef<
     typeof SvgIcon,
@@ -18,14 +14,14 @@ export default function createSvgIcon(
       <SvgIcon
         {...props}
         ref={ref}
-        viewBox={options.viewBox || `0 0 16 16`}
-        titleAccess={options.title}
+        viewBox={viewBox}
+        titleAccess={title}
         children={paths}
       />
     );
   });
 
-  Icon.displayName = options.title;
+  Icon.displayName = title;
 
   return Icon;
 }
