@@ -6,6 +6,7 @@ export type { TypographyProps } from './Typography';
 
 export { default as Button, ButtonRoot } from './Button';
 export { default as ButtonBase, ButtonBaseRoot } from './ButtonBase';
+export { default as Divider } from './Divider';
 export { default as Space } from './Space';
 export { default as SvgIcon, SvgIconRoot } from './SvgIcon';
 export { default as Typography, TypographyRoot } from './Typography';

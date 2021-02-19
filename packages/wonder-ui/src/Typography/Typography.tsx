@@ -32,7 +32,11 @@ interface TypographyStyleProps {
   variant: keyof typeof defaultVariantMapping;
 }
 
-export const TypographyRoot = styled.span<{ styleProps: TypographyStyleProps }>(
+interface StyleProps {
+  styleProps: TypographyStyleProps;
+}
+
+export const TypographyRoot = styled.span<StyleProps>(
   ({ theme, styleProps }) => ({
     margin: 0,
     ...theme.typography[styleProps.variant],

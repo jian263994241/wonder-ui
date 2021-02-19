@@ -1,6 +1,7 @@
 import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import styled from '../styles/styled';
+import type { StyledComponentProps, StyleProps } from '../styles/types';
 
 type SpaceSize = 'small' | 'medium' | 'large' | number;
 
@@ -43,14 +44,14 @@ function getSize(
   ];
 }
 
-const SpaceRoot = styled.div<{ styleProps: SpaceStyleProps }>(
+export const SpaceRoot = styled.div<StyleProps<SpaceStyleProps>>(
   ({ theme, styleProps }) => {
     const [, verticalSize] = getSize(theme, styleProps);
 
     return {
       display: 'inline-flex',
       boxSizing: 'border-box',
-
+      margin: 0,
       ...(styleProps.wrap &&
         styleProps.direction === 'horizontal' && {
           flexWrap: 'wrap',
@@ -71,36 +72,37 @@ const SpaceRoot = styled.div<{ styleProps: SpaceStyleProps }>(
   }
 );
 
-const SpaceItem = styled.div<{ styleProps: SpaceStyleProps }>(
-  ({ theme, styleProps }) => {
-    const [horizontalSize, verticalSize] = getSize(theme, styleProps);
+const SpaceItem = styled.div<
+  StyleProps<SpaceStyleProps> & { splitItem?: boolean }
+>(({ theme, styleProps, splitItem }) => {
+  const [horizontalSize, verticalSize] = getSize(theme, styleProps);
 
-    return {
-      marginRight: styleProps.direction === 'horizontal' ? horizontalSize : 0,
-      marginBottom:
-        styleProps.direction === 'horizontal' ? verticalSize : horizontalSize,
+  return {
+    marginRight: styleProps.direction === 'horizontal' ? horizontalSize : 0,
+    marginBottom:
+      styleProps.direction === 'horizontal' ? verticalSize : horizontalSize,
 
-      '&:last-child':
-        styleProps.direction === 'horizontal'
-          ? {
-              marginRight: 0
-            }
-          : {
-              marginBottom: 0
-            },
-      '&:empty': {
-        display: 'none'
-      }
-    };
-  }
-);
+    ...(splitItem &&
+      styleProps.direction === 'vertical' && {
+        width: '100%'
+      }),
 
-export interface SpaceProps extends Partial<SpaceStyleProps> {
-  children?: any;
-  className?: string;
-  ref?: React.Ref<any>;
+    '&:last-child':
+      styleProps.direction === 'horizontal'
+        ? {
+            marginRight: 0
+          }
+        : {
+            marginBottom: 0
+          },
+    '&:empty': {
+      display: 'none'
+    }
+  };
+});
+
+export interface SpaceProps extends StyledComponentProps<typeof SpaceRoot> {
   split?: React.ReactNode;
-  style?: React.CSSProperties;
 }
 
 const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
@@ -130,7 +132,7 @@ const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
         return (
           <React.Fragment key={index}>
             {index != 0 && split && (
-              <SpaceItem styleProps={styleProps} theme={theme}>
+              <SpaceItem splitItem styleProps={styleProps} theme={theme}>
                 {split}
               </SpaceItem>
             )}

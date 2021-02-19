@@ -6,4 +6,4 @@ export {
   StyledEngineProvider,
   ThemeProvider
 } from '@wonder-ui/styled';
-export type { Theme } from '@wonder-ui/styled';
+export type { Theme, CSSObject } from '@wonder-ui/styled';

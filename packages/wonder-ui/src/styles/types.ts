@@ -1,14 +1,14 @@
 import * as React from 'react';
 
-export type StyledComponentProps<
-  T extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>,
-  StyleProps = React.ComponentProps<T>['styleProps']
-> = Omit<Partial<React.ComponentProps<T>>, 'as' | 'styleProps'> &
-  StyleProps & {
-    /**
-     * @ignore
-     */
-    ref?: React.Ref<any>;
+export interface StyleProps<T = any> {
+  styleProps: T;
+}
+
+export type StyledComponentProps<T extends React.ComponentType<any>> = Omit<
+  React.ComponentProps<T>,
+  'as' | 'styleProps'
+> &
+  Partial<React.ComponentProps<T>['styleProps']> & {
     /**
      * @description 渲染的节点类型
      * @default button
@@ -18,4 +18,6 @@ export type StyledComponentProps<
     href?: string;
     /** 相当于 `a` 链接的 `target` 属性，`href` 存在时生效 */
     target?: string;
+    /** ref */
+    ref?: React.Ref<any>;
   };

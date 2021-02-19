@@ -1,3 +1,5 @@
+import * as React from 'react';
+import type { CSSObject } from './styled';
 import * as transitions from './theme/transitions';
 import createPalette, { Palette } from './theme/createPalette';
 import createTypography, { Typography } from './theme/createTypography';
@@ -9,7 +11,10 @@ import zIndex from './theme/zIndex';
 interface ThemeComponent {
   components?: {
     [name: string]: {
-      defaultProps: Record<string, any>;
+      defaultProps?: React.ComponentProps<any>;
+      styleOverrides?: {
+        [slot: string]: CSSObject;
+      };
     };
   };
 }

@@ -8,6 +8,7 @@ import { SvgIcon, jsx, useTheme } from '@wonder-ui/core';
 
 export default function Example() {
   const theme = useTheme();
+
   return (
     <SvgIcon
       size="large"

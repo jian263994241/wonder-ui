@@ -3,11 +3,11 @@
  * desc: 设置分割符
  */
 /** @jsx jsx */
-import { Space, Typography, jsx } from '@wonder-ui/core';
+import { Divider, Space, Typography, jsx } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <Space split={<span>|</span>}>
+    <Space split={<Divider orientation="vertical" style={{ height: '1em' }} />}>
       <Typography>text</Typography>
       <Typography>text</Typography>
       <Typography>text</Typography>

@@ -14,30 +14,32 @@ const spin = keyframes({
   }
 });
 
-export const SvgIconRoot = styled.svg<{ styleProps: SvgIconStyleProps }>(
-  ({ theme, styleProps }) => ({
-    userSelect: 'none',
-    width: '1em',
-    height: '1em',
-    display: 'inline-block',
-    fill: 'currentColor',
-    flexShrink: 0,
-    // verticalAlign: 'middle',
-    verticalAlign: theme.typography.pxToRem(-2),
-    transition: theme.transitions.create('fill', {
-      duration: theme.transitions.duration.shorter
-    }),
-    ...(styleProps.spin && {
-      animation: `${spin} 1s steps(12, end) infinite`
-    }),
-    fontSize: {
-      inherit: 'inherit',
-      small: theme.typography.pxToRem(20),
-      medium: theme.typography.pxToRem(24),
-      large: theme.typography.pxToRem(35)
-    }[styleProps.size]
-  })
-);
+interface StyleProps {
+  styleProps: SvgIconStyleProps;
+}
+
+export const SvgIconRoot = styled.svg<StyleProps>(({ theme, styleProps }) => ({
+  userSelect: 'none',
+  width: '1em',
+  height: '1em',
+  display: 'inline-block',
+  fill: 'currentColor',
+  flexShrink: 0,
+  // verticalAlign: 'middle',
+  verticalAlign: theme.typography.pxToRem(-2),
+  transition: theme.transitions.create('fill', {
+    duration: theme.transitions.duration.shorter
+  }),
+  ...(styleProps.spin && {
+    animation: `${spin} 1s steps(12, end) infinite`
+  }),
+  fontSize: {
+    inherit: 'inherit',
+    small: theme.typography.pxToRem(20),
+    medium: theme.typography.pxToRem(24),
+    large: theme.typography.pxToRem(35)
+  }[styleProps.size]
+}));
 
 export interface SvgIconProps extends StyledComponentProps<typeof SvgIconRoot> {
   titleAccess?: string;
@@ -46,11 +48,11 @@ export interface SvgIconProps extends StyledComponentProps<typeof SvgIconRoot> {
 const SvgIcon: React.FC<SvgIconProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiSvgIcon' });
   const {
-    titleAccess,
-    size = 'inherit',
-    spin,
     children,
     component = 'svg',
+    size = 'inherit',
+    spin,
+    titleAccess,
     ...rest
   } = props;
   const styleProps = {

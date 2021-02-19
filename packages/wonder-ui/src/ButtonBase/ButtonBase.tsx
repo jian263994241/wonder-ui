@@ -62,6 +62,6 @@ const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
   }
 );
 
-ButtonBase.displayName = 'ButtonBase';
+ButtonBase.displayName = 'WuiButtonBase';
 
 export default ButtonBase;

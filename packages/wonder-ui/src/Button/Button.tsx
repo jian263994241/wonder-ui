@@ -33,7 +33,11 @@ export interface ButtonStyleProps {
   disabled?: boolean;
 }
 
-export const ButtonRoot = styled(ButtonBase)<{ styleProps: ButtonStyleProps }>(
+interface StyleProps {
+  styleProps: ButtonStyleProps;
+}
+
+export const ButtonRoot = styled(ButtonBase)<StyleProps>(
   ({ theme, styleProps }) => {
     const buttonPadding = {
       small: `${theme.typography.pxToRem(4)} ${theme.typography.pxToRem(8)}`,
@@ -167,6 +171,6 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
   );
 });
 
-Button.displayName = 'Button';
+Button.displayName = 'WuiButton';
 
 export default Button;
