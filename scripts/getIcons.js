@@ -53,18 +53,18 @@ function createIconFiles(symbolTag) {
       export default create(
         ${getChildrenString(symbolTag.childNodes)}
       ,
-      {
-        title: '${name}'
-      })
+      '${name}')
     `;
 
     output = prettier.format(output, prettierrc);
 
-    const isExist = fs.existsSync(filename);
+    // const isExist = fs.existsSync(filename);
 
-    if (!isExist) {
-      fs.writeFileSync(filename, output);
-    }
+    // if (isExist) {
+    //   fs.writeFileSync(filename, output);
+    // }
+
+    fs.writeFileSync(filename, output);
   }
 }
 
@@ -75,6 +75,21 @@ function nameCase(nameInput) {
     .join('');
 }
 
+function nameCaseProps(pathNodeString) {
+  return pathNodeString.replace(/\s+([A-Za-z]+-[A-Za-z]+)\s{0,}=/g, (str) => {
+    return str
+      .split('-')
+      .map((str, index) => {
+        if (index != 0) {
+          return str.replace(/(\w{1})/, (a) => a.toLocaleUpperCase());
+        } else {
+          return str;
+        }
+      })
+      .join('');
+  });
+}
+
 function getChildrenString(childNodes) {
   let wrapLeft = '',
     wrapRight = '';
@@ -83,6 +98,8 @@ function getChildrenString(childNodes) {
     wrapRight = '</>';
   }
   return (
-    wrapLeft + childNodes.map((child) => child.toString()).join('') + wrapRight
+    wrapLeft +
+    childNodes.map((child) => nameCaseProps(child.toString())).join('') +
+    wrapRight
   );
 }
