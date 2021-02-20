@@ -21,3 +21,11 @@ export type StyledComponentProps<T extends React.ComponentType<any>> = Omit<
     /** ref */
     ref?: React.Ref<any>;
   };
+
+/**
+ * @desc Utility type for getting props type of React component.
+ * It takes `defaultProps` into an account - making props with defaults optional.
+ */
+export type PropsOf<
+  C extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>
+> = JSX.LibraryManagedAttributes<C, React.ComponentProps<C>>;

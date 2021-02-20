@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { useTouchFeedback, useForkRef } from '@wonder-ui/hooks';
 import useThemeProps from '../styles/useThemeProps';
-import styled from '../styles/styled';
+import styled from '../styles/wuiStyled';
 import type { StyledComponentProps } from '../styles/types';
 
-export const ButtonBaseRoot = styled.button(({ theme }) => ({
+export const ButtonBaseRoot = styled('button', {
+  name: 'WuiButtonBase',
+  slot: 'Root'
+})(({ theme }) => ({
   display: 'inline-block',
   position: 'relative',
   textAlign: 'center',

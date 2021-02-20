@@ -1,6 +1,6 @@
 import * as React from 'react';
-import styled from '../styles/styled';
 import { StyledComponentProps } from '../styles/types';
+import styled from '../styles/wuiStyled';
 import useThemeProps from '../styles/useThemeProps';
 
 const defaultVariantMapping = {
@@ -36,24 +36,25 @@ interface StyleProps {
   styleProps: TypographyStyleProps;
 }
 
-export const TypographyRoot = styled.span<StyleProps>(
-  ({ theme, styleProps }) => ({
-    margin: 0,
-    ...theme.typography[styleProps.variant],
-    textAlign: styleProps.align,
-    ...(styleProps.noWrap && {
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap'
-    }),
-    ...(styleProps.gutterBottom && {
-      marginBottom: '0.35em'
-    }),
-    ...(styleProps.paragraph && {
-      marginBottom: 16
-    })
+export const TypographyRoot = styled('span', {
+  name: 'WuiTypography',
+  slot: 'Root'
+})<StyleProps>(({ theme, styleProps }) => ({
+  margin: 0,
+  ...theme.typography[styleProps.variant],
+  textAlign: styleProps.align,
+  ...(styleProps.noWrap && {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  }),
+  ...(styleProps.gutterBottom && {
+    marginBottom: '0.35em'
+  }),
+  ...(styleProps.paragraph && {
+    marginBottom: 16
   })
-);
+}));
 
 export interface TypographyProps
   extends StyledComponentProps<typeof TypographyRoot> {}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
-import styled from '../styles/styled';
+import styled from '../styles/wuiStyled';
 import type { StyledComponentProps, StyleProps } from '../styles/types';
 
 type SpaceSize = 'small' | 'medium' | 'large' | number;
@@ -44,35 +44,35 @@ function getSize(
   ];
 }
 
-export const SpaceRoot = styled.div<StyleProps<SpaceStyleProps>>(
-  ({ theme, styleProps }) => {
-    const [, verticalSize] = getSize(theme, styleProps);
+export const SpaceRoot = styled('div', { name: 'WuiSpace', slot: 'Root' })<
+  StyleProps<SpaceStyleProps>
+>(({ theme, styleProps }) => {
+  const [, verticalSize] = getSize(theme, styleProps);
 
-    return {
-      display: 'inline-flex',
-      boxSizing: 'border-box',
-      margin: 0,
-      ...(styleProps.wrap &&
-        styleProps.direction === 'horizontal' && {
-          flexWrap: 'wrap',
-          marginBottom: -verticalSize
-        }),
-
-      ...(styleProps.direction === 'vertical' && {
-        flexDirection: 'column'
+  return {
+    display: 'inline-flex',
+    boxSizing: 'border-box',
+    margin: 0,
+    ...(styleProps.wrap &&
+      styleProps.direction === 'horizontal' && {
+        flexWrap: 'wrap',
+        marginBottom: -verticalSize
       }),
 
-      alignItems: {
-        center: 'center',
-        start: 'flex-start',
-        end: 'flex-end',
-        baseline: 'baseline'
-      }[styleProps.align]
-    };
-  }
-);
+    ...(styleProps.direction === 'vertical' && {
+      flexDirection: 'column'
+    }),
 
-const SpaceItem = styled.div<
+    alignItems: {
+      center: 'center',
+      start: 'flex-start',
+      end: 'flex-end',
+      baseline: 'baseline'
+    }[styleProps.align]
+  };
+});
+
+const SpaceItem = styled('div', { name: 'WuiSpace', slot: 'Item' })<
   StyleProps<SpaceStyleProps> & { splitItem?: boolean }
 >(({ theme, styleProps, splitItem }) => {
   const [horizontalSize, verticalSize] = getSize(theme, styleProps);

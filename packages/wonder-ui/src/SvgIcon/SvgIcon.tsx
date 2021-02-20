@@ -1,7 +1,8 @@
 import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
-import styled, { keyframes } from '../styles/styled';
-import type { StyledComponentProps } from '../styles/types';
+import { keyframes } from '../styles/styled';
+import styled from '../styles/wuiStyled';
+import type { StyledComponentProps, StyleProps } from '../styles/types';
 
 interface SvgIconStyleProps {
   size: 'inherit' | 'large' | 'medium' | 'small';
@@ -14,11 +15,9 @@ const spin = keyframes({
   }
 });
 
-interface StyleProps {
-  styleProps: SvgIconStyleProps;
-}
-
-export const SvgIconRoot = styled.svg<StyleProps>(({ theme, styleProps }) => ({
+export const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })<
+  StyleProps<SvgIconStyleProps>
+>(({ theme, styleProps }) => ({
   userSelect: 'none',
   width: '1em',
   height: '1em',

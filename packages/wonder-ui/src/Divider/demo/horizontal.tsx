@@ -13,7 +13,7 @@ export default function Example() {
         merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen,
         quo modo.
       </Typography>
-      <Divider variant="middle" />
+      <Divider style={{ margin: '24px 0' }} />
       <Typography>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne
         merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen,
