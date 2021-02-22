@@ -1,7 +1,8 @@
 import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import { keyframes } from '../styles/styled';
-import styled from '../styles/wuiStyled';
+import styled from '../styles/styled';
+import useClasses from '../styles/useClasses';
 import type { StyledComponentProps, StyleProps } from '../styles/types';
 
 interface SvgIconStyleProps {
@@ -48,19 +49,24 @@ const SvgIcon: React.FC<SvgIconProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiSvgIcon' });
   const {
     children,
+    className,
     component = 'svg',
     size = 'inherit',
     spin,
     titleAccess,
     ...rest
   } = props;
+
   const styleProps = {
     size,
     spin
   };
 
+  const classes = useClasses({ styleProps, className, name: 'WuiSvgIcon' });
+
   return (
     <SvgIconRoot
+      className={classes.root}
       styleProps={styleProps}
       as={component}
       focusable="false"

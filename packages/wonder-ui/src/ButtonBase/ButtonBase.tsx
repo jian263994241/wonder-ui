@@ -1,13 +1,18 @@
 import * as React from 'react';
 import { useTouchFeedback, useForkRef } from '@wonder-ui/hooks';
 import useThemeProps from '../styles/useThemeProps';
-import styled from '../styles/wuiStyled';
-import type { StyledComponentProps } from '../styles/types';
+import useClasses from '../styles/useClasses';
+import styled from '../styles/styled';
+import type { StyledComponentProps, StyleProps } from '../styles/types';
+
+export interface ButtonBaseStyleProps {
+  disabled?: boolean;
+}
 
 export const ButtonBaseRoot = styled('button', {
   name: 'WuiButtonBase',
   slot: 'Root'
-})(({ theme }) => ({
+})<StyleProps<ButtonBaseStyleProps>>(({ theme, styleProps }) => ({
   display: 'inline-block',
   position: 'relative',
   textAlign: 'center',
@@ -33,10 +38,10 @@ export const ButtonBaseRoot = styled('button', {
   '&::-moz-focus-inner': {
     borderStyle: 'none' // Remove Firefox dotted outline.
   },
-  '&[disabled]': {
+  ...(styleProps.disabled && {
     pointerEvents: 'none', // Disable link interactions
     cursor: 'not-allowed'
-  }
+  })
 }));
 
 export interface ButtonBaseProps
@@ -52,16 +57,36 @@ const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiButtonBase' });
     const {
+      className,
       component = 'button',
+      disabled = false,
       activeClassName = 'state-active',
       href,
       ...rest
     } = props;
 
+    const styleProps = {
+      disabled
+    };
+
     const elementRef = useTouchFeedback({ activeClassName });
     const handleRef = useForkRef(elementRef, ref);
 
-    return <ButtonBaseRoot as={component} ref={handleRef} {...rest} />;
+    const classes = useClasses({
+      styleProps,
+      className,
+      name: 'WuiButtonBase'
+    });
+
+    return (
+      <ButtonBaseRoot
+        className={classes.root}
+        as={component}
+        styleProps={styleProps}
+        ref={handleRef}
+        {...rest}
+      />
+    );
   }
 );
 

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
-import styled from '../styles/wuiStyled';
+import useClasses from '../styles/useClasses';
+import styled from '../styles/styled';
 import type { StyledComponentProps, StyleProps } from '../styles/types';
 
 type SpaceSize = 'small' | 'medium' | 'large' | number;
@@ -73,19 +74,14 @@ export const SpaceRoot = styled('div', { name: 'WuiSpace', slot: 'Root' })<
 });
 
 const SpaceItem = styled('div', { name: 'WuiSpace', slot: 'Item' })<
-  StyleProps<SpaceStyleProps> & { splitItem?: boolean }
->(({ theme, styleProps, splitItem }) => {
+  StyleProps<SpaceStyleProps>
+>(({ theme, styleProps }) => {
   const [horizontalSize, verticalSize] = getSize(theme, styleProps);
 
   return {
     marginRight: styleProps.direction === 'horizontal' ? horizontalSize : 0,
     marginBottom:
       styleProps.direction === 'horizontal' ? verticalSize : horizontalSize,
-
-    ...(splitItem &&
-      styleProps.direction === 'vertical' && {
-        width: '100%'
-      }),
 
     '&:last-child':
       styleProps.direction === 'horizontal'
@@ -103,6 +99,7 @@ const SpaceItem = styled('div', { name: 'WuiSpace', slot: 'Item' })<
 
 export interface SpaceProps extends StyledComponentProps<typeof SpaceRoot> {
   split?: React.ReactNode;
+  classes?: Partial<Record<'root' | 'item', string>>;
 }
 
 const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
@@ -110,6 +107,8 @@ const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
   const {
     align = 'center',
     children,
+    classes: classesInput,
+    className,
     direction = 'horizontal',
     size = 'medium',
     split,
@@ -126,17 +125,38 @@ const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
     direction
   };
 
+  const classes = useClasses({
+    styleProps,
+    className,
+    name: 'Space',
+    classes: classesInput
+  });
+
   return (
-    <SpaceRoot ref={ref} theme={theme} styleProps={styleProps} {...rest}>
+    <SpaceRoot
+      className={classes.root}
+      ref={ref}
+      theme={theme}
+      styleProps={styleProps}
+      {...rest}
+    >
       {childrenArray.map((child, index) => {
         return (
           <React.Fragment key={index}>
             {index != 0 && split && (
-              <SpaceItem splitItem styleProps={styleProps} theme={theme}>
+              <SpaceItem
+                className={classes.item}
+                styleProps={styleProps}
+                theme={theme}
+              >
                 {split}
               </SpaceItem>
             )}
-            <SpaceItem styleProps={styleProps} theme={theme}>
+            <SpaceItem
+              className={classes.item}
+              styleProps={styleProps}
+              theme={theme}
+            >
               {child}
             </SpaceItem>
           </React.Fragment>

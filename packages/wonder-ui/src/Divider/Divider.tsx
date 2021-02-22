@@ -4,11 +4,11 @@
 import * as React from 'react';
 import { alpha } from '../styles/colorManipulator';
 import useThemeProps from '../styles/useThemeProps';
+import useClasses from '../styles/useClasses';
 import type { StyledComponentProps, StyleProps } from '../styles/types';
-import styled from '../styles/wuiStyled';
-import useUtilityClasses from '../styles/useUtilityClasses';
+import styled from '../styles/styled';
 
-interface DividerStyleProps {
+export interface DividerStyleProps {
   /**
    * @description 定位方式
    * @default false
@@ -17,7 +17,7 @@ interface DividerStyleProps {
   /**
    * @ignore
    */
-  children?: React.ReactChild;
+  withChildren?: boolean;
   /**
    * @description 更亮
    * @default false
@@ -47,47 +47,50 @@ interface DividerStyleProps {
 
 const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })<
   StyleProps<DividerStyleProps>
->(({ theme, styleProps, children }) => {
-  return {
-    margin: 0, // Reset browser default style.
-    flexShrink: 0,
-    borderWidth: 0,
-    borderStyle: 'solid',
-    borderColor: theme.palette.divider,
-    borderBottomWidth: 'thin',
-    ...(styleProps.absolute && {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      width: '100%'
-    }),
-    /* Styles applied to the root element if `absolute={true}`. */
-    ...(styleProps.light && {
-      borderColor: alpha(theme.palette.divider, 0.08)
-    }),
-    /* Styles applied to the root element if `variant="inset"`. */
-    ...(styleProps.variant === 'inset' && {
-      marginLeft: 72
-    }),
-    /* Styles applied to the root element if `variant="middle"`. */
-    ...(styleProps.variant === 'middle' && {
-      marginLeft: theme.spacing(2),
-      marginRight: theme.spacing(2)
-    }),
-    /* Styles applied to the root element if `orientation="vertical"`. */
-    ...(styleProps.orientation === 'vertical' && {
-      height: '100%',
-      borderBottomWidth: 0,
-      borderRightWidth: 'thin'
-    }),
-    /* Styles applied to the root element if `flexItem={true}`. */
-    ...(styleProps.flexItem && {
-      alignSelf: 'stretch',
-      height: 'auto'
-    }),
-
+>(
+  ({ theme, styleProps }) => {
+    return {
+      margin: 0, // Reset browser default style.
+      flexShrink: 0,
+      borderWidth: 0,
+      borderStyle: 'solid',
+      borderColor: theme.palette.divider,
+      borderBottomWidth: 'thin',
+      ...(styleProps.absolute && {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        width: '100%'
+      }),
+      /* Styles applied to the root element if `absolute={true}`. */
+      ...(styleProps.light && {
+        borderColor: alpha(theme.palette.divider, 0.08)
+      }),
+      /* Styles applied to the root element if `variant="inset"`. */
+      ...(styleProps.variant === 'inset' && {
+        marginLeft: 72
+      }),
+      /* Styles applied to the root element if `variant="middle"`. */
+      ...(styleProps.variant === 'middle' && {
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2)
+      }),
+      /* Styles applied to the root element if `orientation="vertical"`. */
+      ...(styleProps.orientation === 'vertical' && {
+        height: '100%',
+        borderBottomWidth: 0,
+        borderRightWidth: 'thin'
+      }),
+      /* Styles applied to the root element if `flexItem={true}`. */
+      ...(styleProps.flexItem && {
+        alignSelf: 'stretch',
+        height: 'auto'
+      })
+    };
+  },
+  ({ theme, styleProps }) => ({
     /* Styles applied to the root element if divider have text. */
-    ...(styleProps.children && {
+    ...(styleProps.withChildren && {
       display: 'flex',
       whiteSpace: 'nowrap',
       textAlign: 'center',
@@ -100,15 +103,14 @@ const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })<
         content: '""',
         transform: 'translateY(50%)'
       }
-    }),
-
+    })
+  }),
+  ({ theme, styleProps }) => ({
     /* Styles applied to the root element if divider have text and `orientation="vertical"`. */
-    ...(styleProps.children &&
+    ...(styleProps.withChildren &&
       styleProps.orientation === 'vertical' && {
         flexDirection: 'column',
         '&::before, &::after': {
-          position: 'relative',
-          content: '""',
           height: '100%',
           top: '0%',
           left: '50%',
@@ -116,8 +118,9 @@ const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })<
           borderLeft: `thin solid ${theme.palette.divider}`,
           transform: 'translateX(0%)'
         }
-      }),
-
+      })
+  }),
+  ({ styleProps }) => ({
     /* Styles applied to the root element if `textAlign="right" orientation="horizontal"`. */
     ...(styleProps.textAlign === 'right' &&
       styleProps.orientation !== 'vertical' && {
@@ -138,8 +141,8 @@ const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })<
           width: '90%'
         }
       })
-  };
-});
+  })
+);
 
 const DividerWrapper = styled('span', { name: 'WuiDivider', slot: 'Wrapper' })<
   StyleProps<DividerStyleProps>
@@ -155,53 +158,48 @@ const DividerWrapper = styled('span', { name: 'WuiDivider', slot: 'Wrapper' })<
   };
 });
 
-export interface DividerProps
-  extends StyledComponentProps<typeof DividerRoot> {}
-
-const stylePropsKey = [
-  'absolute',
-  'flexItem',
-  'children',
-  'light',
-  'orientation',
-  'textAlign',
-  'variant'
-];
+export interface DividerProps extends StyledComponentProps<typeof DividerRoot> {
+  classes?: Partial<Record<'root' | 'wrapper', string>>;
+}
 
 const Divider: React.FC<DividerProps> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({
-    props: inProps,
-    name: 'WuiDivider',
-    stylePropsKey
-  });
+  const props = useThemeProps({ props: inProps, name: 'WuiDivider' });
 
   const {
-    absolute = false,
+    className,
+    classes: classesInput,
     children,
     component = children ? 'div' : 'hr',
+    theme,
+    absolute = false,
     flexItem = false,
     light = false,
     orientation = 'horizontal',
     textAlign = 'center',
-    theme,
     variant = 'fullWidth',
     ...rest
   } = props;
 
   const styleProps = {
     absolute,
-    children,
     flexItem,
     light,
     orientation,
     textAlign,
-    variant
+    variant,
+    withChildren: !!children
   };
 
-  const classes = useUtilityClasses(styleProps);
+  const classes = useClasses({
+    styleProps,
+    className,
+    name: 'WuiDivider',
+    classes: classesInput
+  });
 
   return (
     <DividerRoot
+      className={classes.root}
       as={component}
       ref={ref}
       theme={theme}
@@ -209,7 +207,11 @@ const Divider: React.FC<DividerProps> = React.forwardRef((inProps, ref) => {
       {...rest}
     >
       {children ? (
-        <DividerWrapper theme={theme} styleProps={styleProps}>
+        <DividerWrapper
+          className={classes.wrapper}
+          theme={theme}
+          styleProps={styleProps}
+        >
           {children}
         </DividerWrapper>
       ) : null}

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import ButtonBase from '../ButtonBase';
-import styled from '../styles/wuiStyled';
+import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
+import useClasses from '../styles/useClasses';
 import type { StyledComponentProps } from '../styles/types';
 import { darken } from '../styles/colorManipulator';
 export interface ButtonStyleProps {
@@ -143,6 +144,7 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiButton' });
   const {
     children,
+    className,
     disabled,
     variant = 'contained',
     size = 'medium',
@@ -157,11 +159,15 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
     size,
     color,
     shape,
-    disabledBorderRadius
+    disabledBorderRadius,
+    disabled
   };
+
+  const classes = useClasses({ styleProps, className, name: 'WuiButton' });
 
   return (
     <ButtonRoot
+      className={classes.root}
       styleProps={styleProps}
       role="button"
       aria-disabled={disabled}

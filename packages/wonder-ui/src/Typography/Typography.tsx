@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { StyledComponentProps } from '../styles/types';
-import styled from '../styles/wuiStyled';
+import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
+import useClasses from '../styles/useClasses';
 
 const defaultVariantMapping = {
   h1: 'h1',
@@ -65,6 +66,7 @@ const Typography: React.FC<TypographyProps> = React.forwardRef(
     const {
       align = 'inherit',
       children,
+      className,
       component,
       gutterBottom = false,
       noWrap = false,
@@ -84,8 +86,15 @@ const Typography: React.FC<TypographyProps> = React.forwardRef(
       variant
     };
 
+    const classes = useClasses({
+      styleProps,
+      className,
+      name: 'WuiTypography'
+    });
+
     return (
       <TypographyRoot
+        className={classes.root}
         as={_component}
         styleProps={styleProps}
         ref={ref}

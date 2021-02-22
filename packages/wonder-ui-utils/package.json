@@ -34,6 +34,10 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@types/lodash.map": "^4.6.13",
+    "@types/lodash.pick": "^4.4.6",
+    "lodash.map": "^4.6.0",
+    "lodash.pick": "^4.4.0",
     "ssr-window": "^3.0.0"
   },
   "peerDependencies": {

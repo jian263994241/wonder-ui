@@ -51,7 +51,7 @@ const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
   const defaultStyledResolver = styled(tag, {
     // shouldForwardProp,
     label: className || componentName || '',
-    // target: className,
+    target: className,
     ...styledOptions
   });
 
@@ -93,3 +93,10 @@ const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
 };
 
 export default wuiStyled;
+
+export {
+  keyframes,
+  jsx,
+  StyledEngineProvider,
+  ThemeProvider
+} from '@wonder-ui/styled';
