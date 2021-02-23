@@ -2,13 +2,17 @@ import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { StyledComponentProps, StyleProps } from '../styles/types';
+import type {
+  StyledComponentProps,
+  StyleProps,
+  ClassNameMap
+} from '../styles/types';
 
 type SpaceSize = 'small' | 'medium' | 'large' | number;
 
-interface SpaceStyleProps {
+export interface SpaceStyleProps {
   direction: 'horizontal' | 'vertical';
-  align: 'start' | 'end' | 'center' | 'baseline';
+  align: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
   size: SpaceSize | [SpaceSize, SpaceSize];
   wrap: boolean;
 }
@@ -68,7 +72,8 @@ export const SpaceRoot = styled('div', { name: 'WuiSpace', slot: 'Root' })<
       center: 'center',
       start: 'flex-start',
       end: 'flex-end',
-      baseline: 'baseline'
+      baseline: 'baseline',
+      stretch: 'stretch'
     }[styleProps.align]
   };
 });
@@ -99,7 +104,7 @@ const SpaceItem = styled('div', { name: 'WuiSpace', slot: 'Item' })<
 
 export interface SpaceProps extends StyledComponentProps<typeof SpaceRoot> {
   split?: React.ReactNode;
-  classes?: Partial<Record<'root' | 'item', string>>;
+  classes?: Partial<ClassNameMap<'root' | 'item'>>;
 }
 
 const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {

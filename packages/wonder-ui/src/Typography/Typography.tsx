@@ -17,7 +17,7 @@ const defaultVariantMapping = {
   body2: 'p'
 } as const;
 
-interface TypographyStyleProps {
+export interface TypographyStyleProps {
   /** 自动溢出省略 */
   noWrap: boolean;
   /**

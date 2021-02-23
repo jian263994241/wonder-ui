@@ -37,7 +37,12 @@ export default defineConfig({
       },
       {
         title: '布局',
-        children: ['components/divider.md', 'components/space.md']
+        children: [
+          'components/divider.md',
+          'components/grid.md',
+          'components/container.md',
+          'components/space.md'
+        ]
       }
     ]
   }

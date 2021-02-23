@@ -1,15 +1,29 @@
-export type { ButtonBaseProps } from './ButtonBase';
-export type { ButtonProps } from './Button';
-export type { SpaceProps } from './Space';
-export type { SvgIconProps } from './SvgIcon';
-export type { TypographyProps } from './Typography';
+export { default as Button } from './Button';
+export * from './Button';
 
-export { default as Button, ButtonRoot } from './Button';
-export { default as ButtonBase, ButtonBaseRoot } from './ButtonBase';
+export { default as ButtonBase } from './ButtonBase';
+export * from './ButtonBase';
+
+export { default as Col } from './Col';
+export * from './Col';
+
+export { default as Container } from './Container';
+export * from './Container';
+
 export { default as Divider } from './Divider';
+export * from './Divider';
+
+export { default as Row } from './Row';
+export * from './Row';
+
 export { default as Space } from './Space';
-export { default as SvgIcon, SvgIconRoot } from './SvgIcon';
-export { default as Typography, TypographyRoot } from './Typography';
+export * from './Space';
+
+export { default as SvgIcon } from './SvgIcon';
+export * from './SvgIcon';
+
+export { default as Typography } from './Typography';
+export * from './Typography';
 
 export {
   default as styled,

@@ -2,6 +2,7 @@ export { default as capitalize } from './capitalize';
 export { default as createChainedFunction } from './createChainedFunction';
 export { default as createId } from './createId';
 export { default as deepmerge } from './deepmerge';
+export { default as foreach } from './foreach';
 export { default as getSupport } from './getSupport';
 export { default as isObject } from './isObject';
 export { default as map } from './map';

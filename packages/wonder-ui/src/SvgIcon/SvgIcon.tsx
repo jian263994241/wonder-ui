@@ -5,7 +5,7 @@ import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import type { StyledComponentProps, StyleProps } from '../styles/types';
 
-interface SvgIconStyleProps {
+export interface SvgIconStyleProps {
   size: 'inherit' | 'large' | 'medium' | 'small';
   spin?: boolean;
 }

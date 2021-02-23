@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { map } from '@wonder-ui/utils';
+import { map, isObject } from '@wonder-ui/utils';
 
 type Options<Classes extends Record<string, string>> = {
   name: string;
@@ -19,21 +19,24 @@ export default function useClasses<
   const classes = React.useMemo(
     () =>
       map(styleProps, (value, key) => {
-        if (typeof value === 'string' && key != 'children') {
+        if (isObject(value)) return false;
+
+        if (
+          (typeof value === 'string' || typeof value === 'number') &&
+          key != 'children'
+        ) {
           return `${name}-${key}-${value}`;
         }
 
         return value && `${name}-${key}`;
-      }),
-    [JSON.stringify(styleProps)]
+      })
+        .concat(className as string)
+        .concat(classesInput.root as string),
+    [JSON.stringify(styleProps), className, classesInput.root]
   );
 
   return {
     ...classesInput,
-    root: classes
-      .concat(className as string)
-      .concat(classesInput.root as string)
-      .filter(Boolean)
-      .join(' ')
+    root: classes.filter(Boolean).join(' ')
   };
 }

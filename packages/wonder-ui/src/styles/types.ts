@@ -4,6 +4,8 @@ export interface StyleProps<T = any> {
   styleProps: T;
 }
 
+export type ClassNameMap<Classes extends string> = Record<Classes, string>;
+
 export type StyledComponentProps<T extends React.ComponentType<any>> = Omit<
   React.ComponentProps<T>,
   'as' | 'styleProps'
