@@ -1,1 +1,1 @@
-export { default } from 'lodash.map';
+export { default } from 'lodash/map';

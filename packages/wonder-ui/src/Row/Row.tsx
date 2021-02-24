@@ -8,76 +8,103 @@ import type {
   ClassNameMap
 } from '../styles/types';
 import GridContext from './GridContext';
-import Container from '../Container';
-import defaultBreakpoints from './breakpoints';
-import type { BreakpointsSize } from './breakpoints';
+import Container, { ContainerSize } from '../Container';
+import {
+  getGutter,
+  getResponsiveValue,
+  ResponsiveValue,
+  ResponsivePropsValue
+} from './utils';
+import { gridBreakpointsKeys } from '../styles/theme/variables';
 
 export interface RowStyleProps {
-  gutterX: number;
-  gutterY: number;
+  gutter: number | [number, number];
   nowrap?: boolean;
-  alignItems?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
-  justifyContent?: 'start' | 'end' | 'center' | 'around' | 'between' | 'evenly';
-  alignContent?: 'start' | 'end' | 'center' | 'between' | 'around' | 'stretch';
+  alignItems?: ResponsiveValue<
+    'start' | 'end' | 'center' | 'baseline' | 'stretch'
+  >;
+  alignContent?: ResponsiveValue<
+    'start' | 'end' | 'center' | 'between' | 'around' | 'stretch'
+  >;
+  justifyContent?: ResponsiveValue<
+    'start' | 'end' | 'center' | 'around' | 'between' | 'evenly'
+  >;
 }
 
 export const RowRoot = styled('div', {
   name: 'WuiRow',
   slot: 'root'
 })<StyleProps<RowStyleProps>>(
-  ({ theme, styleProps }) => ({
-    display: 'flex',
-    flexWrap: styleProps.nowrap ? 'nowrap' : 'wrap',
-    marginTop: `calc(${theme.spacing(styleProps.gutterY)}px * -1)`,
-    marginRight: `calc(${theme.spacing(styleProps.gutterX)}px * -2)`,
-    marginLeft: `calc(${theme.spacing(styleProps.gutterX)}px * -2)`,
-    /** Styles applied to the root element if alignItem={} */
-    ...(styleProps.alignItems && {
-      alignItems: {
-        center: 'center',
-        start: 'flex-start',
-        end: 'flex-end',
-        baseline: 'baseline',
-        stretch: 'stretch'
-      }[styleProps.alignItems]
-    }),
-    /** Styles applied to the root element if justifyContent={} */
-    ...(styleProps.justifyContent && {
-      justifyContent: {
-        start: 'flex-start',
-        end: 'flex-end',
-        center: 'center',
-        between: 'space-between',
-        around: 'space-around',
-        evenly: 'space-evenly'
-      }[styleProps.justifyContent]
-    }),
-    /** Styles applied to the root element if alignContent={} */
-    ...(styleProps.alignContent && {
-      alignContent: {
-        start: 'flex-start',
-        end: 'flex-end',
-        center: 'center',
-        between: 'space-between',
-        around: 'space-around',
-        stretch: 'stretch'
-      }[styleProps.alignContent]
-    })
-  }),
-  ({ styleProps }) => ({})
+  ({ theme, styleProps }) => {
+    const { gutterX, gutterY } = getGutter(styleProps.gutter);
+
+    return {
+      display: 'flex',
+      flexWrap: styleProps.nowrap ? 'nowrap' : 'wrap',
+      marginTop: `calc(${theme.spacing(gutterY)}px * -1)`,
+      marginRight: `calc(${theme.spacing(gutterX)}px * -2)`,
+      marginLeft: `calc(${theme.spacing(gutterX)}px * -2)`
+    };
+  },
+  ({ theme, styleProps }) => {
+    const breakpoints = theme.variables.gridBreakpoints;
+    const alignItemsProp = getResponsiveValue(styleProps.alignItems);
+    const alignContentProp = getResponsiveValue(styleProps.alignContent);
+    const justifyContentProp = getResponsiveValue(styleProps.justifyContent);
+
+    const styles: any = {};
+
+    gridBreakpointsKeys.forEach((key) => {
+      const mediaQueryKey = `@media (min-width: ${breakpoints[key]}px)`;
+      const alignItems = alignItemsProp[key];
+      const alignContent = alignContentProp[key];
+      const justifyContent = justifyContentProp[key];
+
+      styles[mediaQueryKey] = {
+        /** Styles applied to the root element if alignItem={} */
+        ...(alignItems && {
+          alignItems: ({
+            center: 'center',
+            start: 'flex-start',
+            end: 'flex-end',
+            baseline: 'baseline',
+            stretch: 'stretch'
+          } as any)[alignItems as string]
+        }),
+        /** Styles applied to the root element if justifyContent={} */
+        ...(justifyContent && {
+          justifyContent: ({
+            start: 'flex-start',
+            end: 'flex-end',
+            center: 'center',
+            between: 'space-between',
+            around: 'space-around',
+            evenly: 'space-evenly'
+          } as any)[justifyContent]
+        }),
+        /** Styles applied to the root element if alignContent={} */
+        ...(alignContent && {
+          alignContent: ({
+            start: 'flex-start',
+            end: 'flex-end',
+            center: 'center',
+            between: 'space-between',
+            around: 'space-around',
+            stretch: 'stretch'
+          } as any)[alignContent]
+        })
+      };
+    });
+
+    return styles;
+  }
 );
 
 export interface RowProps extends StyledComponentProps<typeof RowRoot> {
   columns?: number;
-  rowCols?: 'auto' | number;
-  rowColsXs?: 'auto' | number;
-  rowColsSm?: 'auto' | number;
-  rowColsMd?: 'auto' | number;
-  rowColsLg?: 'auto' | number;
-  rowColsXl?: 'auto' | number;
-  rowColsXxl?: 'auto' | number;
-  breakpoints?: Record<BreakpointsSize, number>;
+  rowCols?: ResponsiveValue<'auto' | number>;
   classes?: Partial<ClassNameMap<'root' | 'container'>>;
+  containerSize?: ContainerSize;
 }
 
 const Row: React.FC<RowProps> = React.forwardRef((inProps, ref) => {
@@ -86,21 +113,14 @@ const Row: React.FC<RowProps> = React.forwardRef((inProps, ref) => {
     alignContent,
     alignItems,
     justifyContent,
-    breakpoints = defaultBreakpoints,
     className,
     classes: classesInput,
     columns = 12,
+    containerSize = 'fluid',
     children,
     nowrap = false,
-    gutterX = 2,
-    gutterY = 0,
+    gutter = 2,
     rowCols,
-    rowColsXs,
-    rowColsSm,
-    rowColsMd,
-    rowColsLg,
-    rowColsXl,
-    rowColsXxl,
     ...rest
   } = props;
 
@@ -108,8 +128,7 @@ const Row: React.FC<RowProps> = React.forwardRef((inProps, ref) => {
     alignContent,
     alignItems,
     justifyContent,
-    gutterX,
-    gutterY,
+    gutter,
     nowrap
   };
 
@@ -123,20 +142,16 @@ const Row: React.FC<RowProps> = React.forwardRef((inProps, ref) => {
   return (
     <GridContext.Provider
       value={{
-        gutterX,
-        gutterY,
+        gutter,
         columns,
-        rowCols,
-        rowColsXs,
-        rowColsSm,
-        rowColsMd,
-        rowColsLg,
-        rowColsXl,
-        rowColsXxl,
-        breakpoints
+        rowCols
       }}
     >
-      <Container gutter={gutterX} className={classes.container}>
+      <Container
+        size={containerSize}
+        gutter={Array.isArray(gutter) ? gutter[0] : gutter}
+        className={classes.container}
+      >
         <RowRoot
           className={classes.root}
           styleProps={styleProps}

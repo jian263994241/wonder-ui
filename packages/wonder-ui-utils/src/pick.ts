@@ -1,1 +1,1 @@
-export { default } from 'lodash.pick';
+export { default } from 'lodash/pick';

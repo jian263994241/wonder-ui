@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@babel/plugin-transform-react-jsx": "^7.12.13",
+    "@emotion/babel-plugin": "^11.2.0",
     "@emotion/jest": "^11.1.0",
     "@testing-library/user-event": "^12.6.0",
     "@types/enzyme": "^3.10.8",

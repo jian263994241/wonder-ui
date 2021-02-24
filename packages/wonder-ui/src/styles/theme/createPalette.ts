@@ -125,7 +125,7 @@ function addLightOrDark(
   }
 }
 
-interface PaletteOptions extends Partial<Palette> {}
+export interface PaletteOptions extends Partial<Palette> {}
 
 export default function createPalette(palette: PaletteOptions = {}) {
   const {

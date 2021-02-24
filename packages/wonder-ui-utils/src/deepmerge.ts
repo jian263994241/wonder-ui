@@ -6,12 +6,12 @@ import isObject from './isObject';
  * @param source
  * @param options
  */
-export default function deepmerge(
-  target: any,
+export default function deepmerge<T>(
+  target: T,
   source: any,
   options = { clone: true }
-) {
-  const output = options.clone ? { ...target } : target;
+): T {
+  const output: any = options.clone ? { ...target } : target;
 
   if (isObject(target) && isObject(source)) {
     Object.keys(source).forEach((key) => {
@@ -20,10 +20,14 @@ export default function deepmerge(
         return;
       }
 
-      if (isObject(source[key]) && key in target) {
-        output[key] = deepmerge(target[key], source[key], options);
+      if (isObject((source as any)[key]) && key in target) {
+        output[key] = deepmerge(
+          (target as any)[key],
+          (source as any)[key],
+          options
+        );
       } else {
-        output[key] = source[key];
+        output[key] = (source as any)[key];
       }
     });
   }

@@ -5,29 +5,20 @@ import styled from '../styles/styled';
 import type { StyledComponentProps, StyleProps } from '../styles/types';
 import GridContext from '../Row/GridContext';
 import type { ContextProps } from '../Row/GridContext';
-import { foreach, isObject } from '@wonder-ui/utils';
-import type { BreakpointsSize } from '../Row/breakpoints';
-
-type ResponseProps =
-  | {
-      alignSelf?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
-      cols?: 'auto' | number;
-      order?: number;
-      offset?: number;
-    }
-  | 'auto'
-  | number;
+import { gridBreakpointsKeys } from '../styles/theme/variables';
+import { getGutter, getResponsiveValue, ResponsiveValue } from '../Row/utils';
+import theme from '../styles/defaultTheme';
 
 export interface ColStyleProps {
-  alignSelf?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
-  cols?: 'auto' | number;
-  order?: number;
-  xs?: ResponseProps;
-  sm?: ResponseProps;
-  md?: ResponseProps;
-  lg?: ResponseProps;
-  xl?: ResponseProps;
-  xxl?: ResponseProps;
+  alignSelf?: ResponsiveValue<
+    'start' | 'end' | 'center' | 'baseline' | 'stretch'
+  >;
+  cols?: ResponsiveValue<'auto' | number>;
+  order?: ResponsiveValue<number>;
+  /**
+   * @description 偏移宫格
+   */
+  offset?: ResponsiveValue<number>;
 
   /**
    * @ignore
@@ -36,87 +27,37 @@ export interface ColStyleProps {
   /**
    * @ignore
    */
-  gutterX: ContextProps['gutterX'];
-  /**
-   * @ignore
-   */
-  gutterY: ContextProps['gutterY'];
-  /**
-   * @description 偏移宫格
-   */
-  offset?: number;
+  gutter: ContextProps['gutter'];
+
   /**
    * @ignore
    */
   rowCols?: ContextProps['rowCols'];
-  /**
-   * @ignore
-   */
-  rowColsXs?: ContextProps['rowColsXs'];
-  /**
-   * @ignore
-   */
-  rowColsSm?: ContextProps['rowColsSm'];
-  /**
-   * @ignore
-   */
-  rowColsMd?: ContextProps['rowColsMd'];
-  /**
-   * @ignore
-   */
-  rowColsLg?: ContextProps['rowColsLg'];
-  /**
-   * @ignore
-   */
-  rowColsXl?: ContextProps['rowColsXl'];
-  /**
-   * @ignore
-   */
-  rowColsXxl?: ContextProps['rowColsXxl'];
-  /**
-   * @ignore
-   */
-  breakpoints: ContextProps['breakpoints'];
 }
 
 export const ColRoot = styled('div', { name: 'WuiCol', slot: 'root' })<
   StyleProps<ColStyleProps>
 >(
-  ({ theme, styleProps }) => ({
-    boxSizing: 'border-box',
-    flexShrink: 0,
-    width: '100%',
-    maxWidth: '100%',
-    flex: '1 0 0%',
-    paddingRight: `calc(${theme.spacing(styleProps.gutterX)}px / 2)`,
-    paddingLeft: `calc(${theme.spacing(styleProps.gutterX)}px / 2)`,
-    marginTop: theme.spacing(styleProps.gutterY),
-    order: styleProps.order,
-
-    /** Styles applied to the root element if `offset={number}` */
-    ...(typeof styleProps.offset === 'number' &&
-      styleProps.offset != 0 && {
-        marginLeft: `${(100 / styleProps.columns) * styleProps.offset}%`
-      }),
-
-    /** Styles applied to the root element if alignItem={} */
-    ...(styleProps.alignSelf && {
-      alignItems: {
-        center: 'center',
-        start: 'flex-start',
-        end: 'flex-end',
-        baseline: 'baseline',
-        stretch: 'stretch'
-      }[styleProps.alignSelf]
-    })
-  }),
+  ({ theme, styleProps }) => {
+    const { gutterX, gutterY } = getGutter(styleProps.gutter);
+    return {
+      boxSizing: 'border-box',
+      flexShrink: 0,
+      width: '100%',
+      maxWidth: '100%',
+      flex: '1 0 0%',
+      paddingRight: `calc(${theme.spacing(gutterX)}px / 2)`,
+      paddingLeft: `calc(${theme.spacing(gutterX)}px / 2)`,
+      marginTop: theme.spacing(gutterY)
+    };
+  },
   ({ styleProps }) => {
     const autoCols = (isTrue: boolean) =>
       isTrue && {
         flex: '0 0 auto',
         width: 'auto'
       };
-    const cols = (n: number) =>
+    const makeyCols = (n: number) =>
       n === 0
         ? { display: 'none' }
         : {
@@ -124,7 +65,7 @@ export const ColRoot = styled('div', { name: 'WuiCol', slot: 'root' })<
             width: `${(100 / styleProps.columns) * n}%`
           };
 
-    const rowCols = (n: number) =>
+    const makeRowCols = (n: number) =>
       n === 0
         ? { display: 'none' }
         : {
@@ -132,88 +73,53 @@ export const ColRoot = styled('div', { name: 'WuiCol', slot: 'root' })<
             width: `${100 / n}%`
           };
 
-    const makeCols = (rowColsProp: any, colsProp: any = {}) => ({
-      /** Styles applied to the root element if `cols="auto"` */
-      ...autoCols(
-        colsProp.cols === 'auto' ||
-          colsProp === 'auto' ||
-          rowColsProp === 'auto'
-      ),
+    const breakpoints = theme.variables.gridBreakpoints;
+    const rowColsProp = getResponsiveValue(styleProps.rowCols);
+    const colsProp = getResponsiveValue(styleProps.cols);
+    const offsetProp = getResponsiveValue(styleProps.offset);
+    const alignSelfProp = getResponsiveValue(styleProps.alignSelf);
+    const orderProp = getResponsiveValue(styleProps.order);
 
-      /** Styles applied to the Row element if `rowCols={number}` */
-      ...(typeof rowColsProp === 'number' && rowCols(rowColsProp)),
+    const styles: any = {};
 
-      /** Styles applied to the root element if `cols={number}` */
-      ...(typeof colsProp === 'number' && cols(colsProp)),
+    gridBreakpointsKeys.forEach((key) => {
+      const mediaQueryKey = `@media (min-width: ${breakpoints[key]}px)`;
+      const rowCols = rowColsProp[key];
+      const cols = colsProp[key];
+      const offset = offsetProp[key];
+      const alignSelf = alignSelfProp[key];
+      const order = orderProp[key];
 
-      ...(isObject(colsProp) && {
-        ...(colsProp.cols === 'number' && cols(colsProp)),
-        ...(typeof colsProp.offset === 'number' &&
-          colsProp.offset != 0 && {
-            marginLeft: `${(100 / styleProps.columns) * colsProp.offset}%`
+      styles[mediaQueryKey] = {
+        /** Styles applied to the root element if `cols="auto"` */
+        ...autoCols(rowCols === 'auto' || cols === 'auto'),
+
+        /** Styles applied to the Row element if `rowCols={number}` */
+        ...(typeof rowCols === 'number' && makeRowCols(rowCols)),
+
+        /** Styles applied to the root element if `cols={number}` */
+        ...(typeof cols === 'number' && makeyCols(cols)),
+
+        ...(typeof offset === 'number' &&
+          offset != 0 && {
+            marginLeft: `${(100 / styleProps.columns) * offset}%`
           }),
 
-        ...(colsProp.order != undefined && {
-          order: colsProp.order
-        }),
+        ...(typeof order === 'number' && { order }),
 
-        ...(colsProp.alignSelf && {
-          alignItems: {
+        ...(alignSelf && {
+          alignItems: ({
             center: 'center',
             start: 'flex-start',
             end: 'flex-end',
             baseline: 'baseline',
             stretch: 'stretch'
-          }[colsProp.alignSelf as NonNullable<ColStyleProps['alignSelf']>]
+          } as any)[alignSelf]
         })
-      })
+      };
     });
 
-    const bq = {} as Record<BreakpointsSize, string>;
-
-    foreach(styleProps.breakpoints, (value, key) => {
-      bq[key as BreakpointsSize] = `@media (min-width: ${value}px)`;
-    });
-
-    return {
-      ...makeCols(styleProps.rowCols, styleProps.cols),
-
-      ...((styleProps.rowColsXs || styleProps.xs) && {
-        [bq.xs]: {
-          ...makeCols(styleProps.rowColsXs, styleProps.xs)
-        }
-      }),
-
-      ...((styleProps.rowColsSm || styleProps.sm) && {
-        [bq.sm]: {
-          ...makeCols(styleProps.rowColsSm, styleProps.sm)
-        }
-      }),
-
-      ...((styleProps.rowColsMd || styleProps.md) && {
-        [bq.md]: {
-          ...makeCols(styleProps.rowColsMd, styleProps.md)
-        }
-      }),
-
-      ...((styleProps.rowColsLg || styleProps.lg) && {
-        [bq.lg]: {
-          ...makeCols(styleProps.rowColsLg, styleProps.lg)
-        }
-      }),
-
-      ...((styleProps.rowColsXl || styleProps.xl) && {
-        [bq.xl]: {
-          ...makeCols(styleProps.rowColsXl, styleProps.xl)
-        }
-      }),
-
-      ...((styleProps.rowColsXxl || styleProps.xxl) && {
-        [bq.xxl]: {
-          ...makeCols(styleProps.rowColsXxl, styleProps.xxl)
-        }
-      })
-    };
+    return styles;
   }
 );
 
@@ -227,35 +133,15 @@ const Col: React.FC<ColProps> = React.forwardRef((inProps, ref) => {
 
   const { className, cols, offset = 0, order = 0, children, ...rest } = props;
 
-  const {
-    gutterX,
-    gutterY,
-    columns,
-    rowCols,
-    rowColsXs,
-    rowColsSm,
-    rowColsMd,
-    rowColsLg,
-    rowColsXl,
-    rowColsXxl,
-    breakpoints
-  } = React.useContext(GridContext);
+  const { gutter, columns, rowCols } = React.useContext(GridContext);
 
   const styleProps = {
-    gutterX,
-    gutterY,
+    gutter,
     columns,
     cols,
     offset,
     order,
-    rowCols,
-    rowColsXs,
-    rowColsSm,
-    rowColsMd,
-    rowColsLg,
-    rowColsXl,
-    rowColsXxl,
-    breakpoints
+    rowCols
   };
 
   const classes = useClasses({ styleProps, className, name: 'WuiCol' });

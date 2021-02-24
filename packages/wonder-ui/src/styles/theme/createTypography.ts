@@ -1,12 +1,12 @@
 import { CSSProperties } from 'react';
-export interface Typography {
-  fontFamily: string;
-  fontSize: number;
-  fontWeightLight: number;
-  fontWeightRegular: number;
-  fontWeightMedium: number;
-  fontWeightBold: number;
-  htmlFontSize: number;
+export interface TypographyOptions {
+  fontFamily?: string;
+  fontSize?: number;
+  fontWeightLight?: number;
+  fontWeightRegular?: number;
+  fontWeightMedium?: number;
+  fontWeightBold?: number;
+  htmlFontSize?: number;
 }
 
 export interface BuildVariant {
@@ -28,7 +28,7 @@ const caseAllCaps = {
 
 const defaultFontFamily = `system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"`;
 
-export default function createTypography(typography: Partial<Typography> = {}) {
+export default function createTypography(typography: TypographyOptions = {}) {
   const {
     fontFamily = defaultFontFamily,
     // The default font size of the Material Specification.

@@ -3,21 +3,23 @@ import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import type { StyledComponentProps, StyleProps } from '../styles/types';
-import { foreach } from '@wonder-ui/utils';
+import {
+  ContainerSizeType,
+  containerSizeKeys
+} from '../styles/theme/variables';
 
-const containerMaxWidths = {
-  sm: 540,
-  md: 720,
-  lg: 960,
-  xl: 1140,
-  xxl: 1320
-};
-
-type Size = 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'fluid';
+export type ContainerSize = ContainerSizeType | 'fluid';
 
 export interface ContainerStyleProps {
+  /**
+   * @description 边距
+   * @default 2
+   */
   gutter: number;
-  size: Size;
+  /**
+   * @description 断点宽度
+   */
+  size?: ContainerSize;
 }
 
 const ContainerRoot = styled('div', {
@@ -27,49 +29,29 @@ const ContainerRoot = styled('div', {
   ({ theme, styleProps }) => ({
     width: '100%',
     boxSizing: 'border-box',
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    paddingRight: theme.spacing(styleProps.gutter),
-    paddingLeft: theme.spacing(styleProps.gutter)
+    paddingRight:
+      typeof styleProps.gutter === 'number'
+        ? theme.spacing(styleProps.gutter)
+        : 'auto',
+    paddingLeft:
+      typeof styleProps.gutter === 'number'
+        ? theme.spacing(styleProps.gutter)
+        : 'auto'
   }),
-  ({ styleProps }) => {
-    const bq = {} as Record<Size, string>;
+  ({ theme, styleProps }) => {
+    const containerMaxWidths = theme.variables.containerMaxWidths;
+    const styles: any = {};
 
-    foreach(containerMaxWidths, (value, key) => {
-      bq[key as Size] = `@media (min-width: ${value}px)`;
+    containerSizeKeys.forEach((key) => {
+      const mediaQueryKey = `@media (min-width: ${containerMaxWidths[key]}px)`;
+      if (styleProps.size === key) {
+        styles[mediaQueryKey] = {
+          maxWidth: containerMaxWidths[key]
+        };
+      }
     });
 
-    return {
-      ...(styleProps.size &&
-        styleProps.size != 'fluid' &&
-        {
-          sm: {
-            [bq.sm]: {
-              maxWidth: 540
-            }
-          },
-          md: {
-            [bq.md]: {
-              maxWidth: 720
-            }
-          },
-          lg: {
-            [bq.lg]: {
-              maxWidth: 960
-            }
-          },
-          xl: {
-            [bq.xl]: {
-              maxWidth: 1140
-            }
-          },
-          xxl: {
-            [bq.xxl]: {
-              maxWidth: 1320
-            }
-          }
-        }[styleProps.size])
-    };
+    return styles;
   }
 );
 
@@ -78,7 +60,7 @@ export interface ContainerProps
 
 const Container: React.FC<ContainerProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiContainer' });
-  const { gutter = 2, className, children, size = 'fluid', ...rest } = props;
+  const { gutter = 2, className, children, size, ...rest } = props;
 
   const styleProps = { gutter, size };
 

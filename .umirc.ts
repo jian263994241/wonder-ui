@@ -4,6 +4,13 @@ export default defineConfig({
   title: 'Wonder UI',
   mode: 'site',
   locales: [['zh-CN', '中文']],
+  extraBabelPlugins: [
+    [
+      '@emotion/babel-plugin',
+      { autoLabel: 'dev-only', sourceMap: true, cssPropOptimization: true }
+    ]
+  ],
+
   alias: {
     // '@wonder-ui/core': path.join(__dirname, './packages/wonder-ui/src')
   },

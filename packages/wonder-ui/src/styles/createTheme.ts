@@ -1,14 +1,13 @@
 import * as React from 'react';
-import type { CSSObject } from './styled';
+import type { CSSObject } from '@wonder-ui/styled';
 import * as transitions from './theme/transitions';
-import createPalette, { Palette } from './theme/createPalette';
-import createTypography, { Typography } from './theme/createTypography';
+import createPalette, { PaletteOptions } from './theme/createPalette';
+import createTypography, { TypographyOptions } from './theme/createTypography';
 import createSpacing from './theme/createSpacing';
-import createShape from './theme/createShape';
-import shadows from './theme/shadows';
-import zIndex from './theme/zIndex';
+import variables, { Variables } from './theme/variables';
+import { deepmerge } from '@wonder-ui/utils';
 
-interface ThemeComponent {
+interface ThemeComponents {
   components?: {
     [name: string]: {
       defaultProps?: React.ComponentProps<any>;
@@ -19,42 +18,36 @@ interface ThemeComponent {
   };
 }
 
-interface ThemeOptions extends ThemeComponent {
-  palette?: Partial<Palette>;
+interface ThemeOptions extends ThemeComponents {
+  palette?: PaletteOptions;
   spacing?: number;
-  typography?: Partial<Typography>;
-  shape?: ReturnType<typeof createShape>;
+  typography?: TypographyOptions;
+  variables?: Partial<Variables>;
 }
 
-export interface Theme extends ThemeComponent {
-  shadows: typeof shadows;
+export interface Theme extends ThemeComponents {
   palette: ReturnType<typeof createPalette>;
   transitions: typeof transitions;
   typography: ReturnType<typeof createTypography>;
   spacing: ReturnType<typeof createSpacing>;
-  shape: ReturnType<typeof createShape>;
-  zIndex: typeof zIndex;
+  variables: Readonly<Variables>;
 }
 
 export default function createTheme(options: ThemeOptions = {}): Theme {
   const {
     palette: paletteInput,
     spacing = 8,
-    shape: shapeInput,
     typography,
+    variables: variablesInput,
     ...rest
   } = options;
 
-  const palette = createPalette(paletteInput);
-
   return {
-    palette,
+    palette: createPalette(paletteInput),
     typography: createTypography(typography),
     spacing: createSpacing(spacing),
+    variables: deepmerge(variables, variablesInput),
     transitions,
-    shape: createShape(shapeInput),
-    shadows,
-    zIndex,
     ...rest
   };
 }
