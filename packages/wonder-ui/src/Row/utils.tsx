@@ -4,15 +4,15 @@ import type { GridBreakpoints } from '../styles/theme/variables';
 export function getGutter(gutter?: number | [number, number]) {
   if (typeof gutter === 'number') {
     return {
-      gutterX: gutter,
+      gutterX: gutter || 0,
       gutterY: 0
     };
   }
 
   if (Array.isArray(gutter)) {
     return {
-      gutterX: gutter[0],
-      gutterY: gutter[1]
+      gutterX: gutter[0] || 0,
+      gutterY: gutter[1] || 0
     };
   }
 

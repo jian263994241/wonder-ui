@@ -8,7 +8,7 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| component | 渲染的节点类型 | `keyof ReactHTML` | `svg`
-| size | 尺寸 | `inherit` \| `large` \| `medium` \| `small` | `inherit`
-| spin | 旋转动画 | `boolean` | -
-| titleAccess | 标题 | string | -
+| component | 渲染的节点类型 | `keyof ReactHTML` | svg
+| size | 尺寸 | `'inherit' \| 'large' \| 'medium' \| 'small'` | inherit
+| spin | 旋转动画 | `boolean` |
+| titleAccess | 标题 | `string` |

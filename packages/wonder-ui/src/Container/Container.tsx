@@ -29,6 +29,8 @@ const ContainerRoot = styled('div', {
   ({ theme, styleProps }) => ({
     width: '100%',
     boxSizing: 'border-box',
+    marginRight: 'auto',
+    marginLeft: 'auto',
     paddingRight:
       typeof styleProps.gutter === 'number'
         ? theme.spacing(styleProps.gutter)
@@ -67,7 +69,12 @@ const Container: React.FC<ContainerProps> = React.forwardRef((inProps, ref) => {
   const classes = useClasses({ styleProps, className, name: 'WuiContainer' });
 
   return (
-    <ContainerRoot className={classes.root} styleProps={styleProps} {...rest}>
+    <ContainerRoot
+      className={classes.root}
+      styleProps={styleProps}
+      ref={ref}
+      {...rest}
+    >
       {children}
     </ContainerRoot>
   );

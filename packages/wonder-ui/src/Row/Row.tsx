@@ -9,23 +9,23 @@ import type {
 } from '../styles/types';
 import GridContext from './GridContext';
 import Container, { ContainerSize } from '../Container';
-import {
-  getGutter,
-  getResponsiveValue,
-  ResponsiveValue,
-  ResponsivePropsValue
-} from './utils';
+import { getGutter, getResponsiveValue, ResponsiveValue } from './utils';
 import { gridBreakpointsKeys } from '../styles/theme/variables';
 
 export interface RowStyleProps {
+  /** 间距, x| [x, y] */
   gutter: number | [number, number];
+  /** 换行 */
   nowrap?: boolean;
+  /** flex */
   alignItems?: ResponsiveValue<
     'start' | 'end' | 'center' | 'baseline' | 'stretch'
   >;
+  /** flex */
   alignContent?: ResponsiveValue<
     'start' | 'end' | 'center' | 'between' | 'around' | 'stretch'
   >;
+  /** flex */
   justifyContent?: ResponsiveValue<
     'start' | 'end' | 'center' | 'around' | 'between' | 'evenly'
   >;
@@ -40,10 +40,11 @@ export const RowRoot = styled('div', {
 
     return {
       display: 'flex',
+      boxSizing: 'border-box',
       flexWrap: styleProps.nowrap ? 'nowrap' : 'wrap',
       marginTop: `calc(${theme.spacing(gutterY)}px * -1)`,
-      marginRight: `calc(${theme.spacing(gutterX)}px * -2)`,
-      marginLeft: `calc(${theme.spacing(gutterX)}px * -2)`
+      marginRight: `calc(${theme.spacing(gutterX)}px / -2)`,
+      marginLeft: `calc(${theme.spacing(gutterX)}px / -2)`
     };
   },
   ({ theme, styleProps }) => {
@@ -102,7 +103,7 @@ export const RowRoot = styled('div', {
 
 export interface RowProps extends StyledComponentProps<typeof RowRoot> {
   columns?: number;
-  rowCols?: ResponsiveValue<'auto' | number>;
+  rowCols?: ResponsiveValue<'auto' | boolean | number>;
   classes?: Partial<ClassNameMap<'root' | 'container'>>;
   containerSize?: ContainerSize;
 }
@@ -139,6 +140,8 @@ const Row: React.FC<RowProps> = React.forwardRef((inProps, ref) => {
     classes: classesInput
   });
 
+  const { gutterX } = getGutter(styleProps.gutter);
+
   return (
     <GridContext.Provider
       value={{
@@ -149,7 +152,7 @@ const Row: React.FC<RowProps> = React.forwardRef((inProps, ref) => {
     >
       <Container
         size={containerSize}
-        gutter={Array.isArray(gutter) ? gutter[0] : gutter}
+        gutter={gutterX / 2}
         className={classes.container}
       >
         <RowRoot

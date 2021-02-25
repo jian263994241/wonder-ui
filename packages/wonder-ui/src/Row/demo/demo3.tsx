@@ -1,6 +1,6 @@
 /**
- * title: 基础栅格
- * desc: 使用单一的一组 `Row` 和 `Col` 栅格组件，就可以创建一个基本的栅格系统，所有列`Col`必须放在 `Row` 内。
+ * title: 响应的栅格
+ * desc: 使用 `Row` 上的 `rowCols` prop 设置均分的栅格。 `Col` 上的 `cols` prop 可以单独设置以覆盖`rowCols`
  */
 
 /** @jsx jsx */
@@ -25,14 +25,16 @@ export default function Example() {
         }
       }}
     >
-      <Row>
-        <Col cols={true}>1 of 2</Col>
-        <Col cols={true}>2 of 2</Col>
+      <Row rowCols={{ sm: 3, md: 4, lg: 5 }}>
+        <Col>1 of 3</Col>
+        <Col>2 of 3</Col>
+        <Col>3 of 3</Col>
       </Row>
-      <Row>
-        <Col cols={{ sm: true }}>1 of 3</Col>
-        <Col cols={{ sm: true }}>2 of 3</Col>
-        <Col cols={{ sm: true }}>3 of 3</Col>
+
+      <Row rowCols={5}>
+        <Col cols={1}>1 of 4</Col>
+        <Col cols={{ sm: 7, md: 8, lg: 10 }}>2 of 4</Col>
+        <Col cols={1}>3 of 3</Col>
       </Row>
     </div>
   );

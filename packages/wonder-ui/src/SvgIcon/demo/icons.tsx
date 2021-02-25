@@ -9,9 +9,9 @@ import * as icons from '@wonder-ui/icons';
 export default function Example() {
   return (
     <Row
-      rowCols={{ xs: 2, sm: 3, md: 4, lg: 5 }}
+      rowCols={{ xs: 2, sm: 3, md: 4 }}
       gutter={[2, 2]}
-      containerSize="lg"
+      containerSize="md"
       css={{
         '.col': {
           textAlign: 'center'
