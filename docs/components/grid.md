@@ -12,6 +12,22 @@
 
 <code src="../../packages/wonder-ui/src/Row/demo/demo3.tsx"></code>
 
+## 配置
+
+可以通过`createTheme`创建一个新的主题覆盖 `breakpoints` 配置
+
+```js | pure
+// 默认的 breakpoint
+theme.variables.breakpoints = {
+  xs: 0,
+  sm: 576,
+  md: 768,
+  lg: 992,
+  xl: 1200,
+  xxl: 1400
+}
+```
+
 ## API
 
 <embed src="../../packages/wonder-ui/src/Row/index.md"></embed>

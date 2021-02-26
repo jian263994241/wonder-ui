@@ -1,16 +1,9 @@
 export const containerSizeKeys = ['sm', 'md', 'lg', 'xl', 'xxl'] as const;
 
-export const gridBreakpointsKeys = [
-  'xs',
-  'sm',
-  'md',
-  'lg',
-  'xl',
-  'xxl'
-] as const;
+export const breakpointsKeys = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
 
 export type ContainerSizeType = typeof containerSizeKeys[number];
-export type GridBreakpoints = typeof gridBreakpointsKeys[number];
+export type Breakpoints = typeof breakpointsKeys[number];
 
 export type ZIndexType =
   | 'dropdown'
@@ -23,7 +16,7 @@ export type ZIndexType =
 
 export interface Variables {
   containerMaxWidths: Record<ContainerSizeType, number>;
-  gridBreakpoints: Record<GridBreakpoints, number>;
+  breakpoints: Record<Breakpoints, number>;
   zIndex: Record<ZIndexType, number>;
 }
 
@@ -35,7 +28,7 @@ const variables: Variables = {
     xl: 1140,
     xxl: 1320
   },
-  gridBreakpoints: {
+  breakpoints: {
     xs: 0,
     sm: 576,
     md: 768,

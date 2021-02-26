@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { CSSObject } from '@wonder-ui/styled';
-import * as transitions from './theme/transitions';
+import * as transitions from './transitions';
 import createPalette, { PaletteOptions } from './theme/createPalette';
 import createTypography, { TypographyOptions } from './theme/createTypography';
 import createSpacing from './theme/createSpacing';

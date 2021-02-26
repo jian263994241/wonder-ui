@@ -19,10 +19,10 @@ Container 是最基本的布局元素，它包含，填充和对齐给定设备�
 
 ## 配置
 
-可以通过`createTheme`创建一个新的主题覆盖`Container`的 breakpoints 配置
+可以通过`createTheme`创建一个新的主题覆盖`Container`的 `max-widths` 配置
 
 ```js | pure
-// 默认的 breakpoint
+// 默认的 max-widths
 theme.variables.containerMaxWidths = {
   sm: 540,
   md: 720,

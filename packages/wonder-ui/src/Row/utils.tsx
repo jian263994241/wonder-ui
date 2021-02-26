@@ -1,5 +1,5 @@
 import { isObject } from '@wonder-ui/utils';
-import type { GridBreakpoints } from '../styles/theme/variables';
+import type { Breakpoints } from '../styles/theme/variables';
 
 export function getGutter(gutter?: number | [number, number]) {
   if (typeof gutter === 'number') {
@@ -22,13 +22,13 @@ export function getGutter(gutter?: number | [number, number]) {
   };
 }
 
-export type ResponsiveValue<T = any> = T | Partial<Record<GridBreakpoints, T>>;
+export type ResponsiveValue<T = any> = T | Partial<Record<Breakpoints, T>>;
 
 export type ValueFromResponsive<T extends ResponsiveValue> = T extends Record<
   any,
   any
 >
-  ? T[GridBreakpoints]
+  ? T[Breakpoints]
   : T;
 
 export type ResponsivePropsValue<T, K extends keyof T> = {

@@ -10,7 +10,7 @@ import type {
 import GridContext from './GridContext';
 import Container, { ContainerSize } from '../Container';
 import { getGutter, getResponsiveValue, ResponsiveValue } from './utils';
-import { gridBreakpointsKeys } from '../styles/theme/variables';
+import { breakpointsKeys } from '../styles/theme/variables';
 
 export interface RowStyleProps {
   /** 间距, x| [x, y] */
@@ -48,14 +48,14 @@ export const RowRoot = styled('div', {
     };
   },
   ({ theme, styleProps }) => {
-    const breakpoints = theme.variables.gridBreakpoints;
+    const breakpoints = theme.variables.breakpoints;
     const alignItemsProp = getResponsiveValue(styleProps.alignItems);
     const alignContentProp = getResponsiveValue(styleProps.alignContent);
     const justifyContentProp = getResponsiveValue(styleProps.justifyContent);
 
     const styles: any = {};
 
-    gridBreakpointsKeys.forEach((key) => {
+    breakpointsKeys.forEach((key) => {
       const mediaQueryKey = `@media (min-width: ${breakpoints[key]}px)`;
       const alignItems = alignItemsProp[key];
       const alignContent = alignContentProp[key];
@@ -118,6 +118,7 @@ const Row: React.FC<RowProps> = React.forwardRef((inProps, ref) => {
     classes: classesInput,
     columns = 12,
     containerSize = 'fluid',
+    component,
     children,
     nowrap = false,
     gutter = 2,
@@ -156,6 +157,7 @@ const Row: React.FC<RowProps> = React.forwardRef((inProps, ref) => {
         className={classes.container}
       >
         <RowRoot
+          as={component}
           className={classes.root}
           styleProps={styleProps}
           ref={ref}

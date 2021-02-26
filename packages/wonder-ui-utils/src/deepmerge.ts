@@ -1,4 +1,4 @@
-import isObject from './isObject';
+import isObject from 'lodash/isObject';
 
 /**
  * 拷贝对象

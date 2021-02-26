@@ -114,6 +114,7 @@ const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
     children,
     classes: classesInput,
     className,
+    component,
     direction = 'horizontal',
     size = 'medium',
     split,
@@ -139,6 +140,7 @@ const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
 
   return (
     <SpaceRoot
+      as={component}
       className={classes.root}
       ref={ref}
       theme={theme}

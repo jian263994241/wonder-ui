@@ -48,8 +48,29 @@ export default defineConfig({
           'components/container.md',
           'components/divider.md',
           'components/grid.md',
-          'components/space.md'
+          'components/space.md',
+          'components/whiteSpace.md'
         ]
+      },
+      {
+        title: '数据录入',
+        children: []
+      },
+      {
+        title: '数据展示',
+        children: ['components/collapse.md']
+      },
+      {
+        title: '用户反馈',
+        children: []
+      },
+      {
+        title: '路由',
+        children: []
+      },
+      {
+        title: '其他',
+        children: []
       }
     ]
   }

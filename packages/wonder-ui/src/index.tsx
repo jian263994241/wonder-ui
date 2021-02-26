@@ -7,6 +7,9 @@ export * from './ButtonBase';
 export { default as Col } from './Col';
 export * from './Col';
 
+export { default as Collapse } from './Collapse';
+export * from './Collapse';
+
 export { default as Container } from './Container';
 export * from './Container';
 
@@ -24,6 +27,9 @@ export * from './SvgIcon';
 
 export { default as Typography } from './Typography';
 export * from './Typography';
+
+export { default as WhiteSpace } from './WhiteSpace';
+export * from './WhiteSpace';
 
 export {
   default as styled,

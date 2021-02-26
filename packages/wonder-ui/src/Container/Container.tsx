@@ -24,7 +24,7 @@ export interface ContainerStyleProps {
 
 const ContainerRoot = styled('div', {
   name: 'WuiContainer',
-  slot: 'root'
+  slot: 'Root'
 })<StyleProps<ContainerStyleProps>>(
   ({ theme, styleProps }) => ({
     width: '100%',
@@ -62,7 +62,7 @@ export interface ContainerProps
 
 const Container: React.FC<ContainerProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiContainer' });
-  const { gutter = 2, className, children, size, ...rest } = props;
+  const { gutter = 2, className, children, component, size, ...rest } = props;
 
   const styleProps = { gutter, size };
 
@@ -70,6 +70,7 @@ const Container: React.FC<ContainerProps> = React.forwardRef((inProps, ref) => {
 
   return (
     <ContainerRoot
+      as={component}
       className={classes.root}
       styleProps={styleProps}
       ref={ref}
