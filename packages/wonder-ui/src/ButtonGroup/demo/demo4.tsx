@@ -1,6 +1,6 @@
 /**
  * title: checkbox 按钮
- * desc:
+ * desc: 改变`checked`prop设定激活状态
  */
 /** @jsx jsx */
 import { Button, ButtonGroup, jsx, Space } from '@wonder-ui/core';
@@ -15,6 +15,7 @@ export default function Example() {
     <ButtonGroup>
       {list.map((item, index) => (
         <Button
+          key={index}
           checked={isSelected(item)}
           onClick={() => toggle(item)}
           variant="outlined"

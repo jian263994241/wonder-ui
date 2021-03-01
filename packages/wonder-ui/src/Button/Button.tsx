@@ -140,6 +140,9 @@ export const ButtonRoot = styled(ButtonBase, {
 });
 
 export interface ButtonProps extends StyledComponentProps<typeof ButtonRoot> {
+  /**
+   * @description 状态 checked
+   */
   checked?: boolean;
 }
 

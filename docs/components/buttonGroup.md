@@ -11,3 +11,5 @@
 <code src="../../packages/wonder-ui/src/ButtonGroup/demo/demo5.tsx"></code>
 
 ## API
+
+<embed src="../../packages/wonder-ui/src/ButtonGroup/index.md"></embed>

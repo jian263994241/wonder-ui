@@ -64,6 +64,7 @@ const ButtonGroupRoot = styled('div', {
 
 export interface ButtonGroupProps extends ButtonStyleProps {
   className?: string;
+  style?: React.CSSProperties;
   ref?: React.Ref<any>;
 }
 
