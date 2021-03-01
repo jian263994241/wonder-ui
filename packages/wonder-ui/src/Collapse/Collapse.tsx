@@ -97,6 +97,10 @@ export interface CollapseProps {
    * @description 显示隐藏内容
    */
   visible?: boolean;
+  /**
+   * style
+   */
+  style?: React.CSSProperties;
 }
 
 const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {

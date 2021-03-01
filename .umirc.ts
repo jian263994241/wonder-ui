@@ -58,7 +58,7 @@ export default defineConfig({
       },
       {
         title: '数据展示',
-        children: ['components/collapse.md']
+        children: ['components/badge.md', 'components/collapse.md']
       },
       {
         title: '用户反馈',
