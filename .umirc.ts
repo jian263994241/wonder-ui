@@ -38,6 +38,7 @@ export default defineConfig({
         title: '通用',
         children: [
           'components/button.md',
+          'components/buttonGroup.md',
           'components/icon.md',
           'components/typography.md'
         ]

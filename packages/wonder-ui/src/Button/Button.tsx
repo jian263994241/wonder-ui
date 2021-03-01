@@ -5,6 +5,7 @@ import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import type { StyledComponentProps } from '../styles/types';
 import { darken } from '../styles/colorManipulator';
+import clsx from 'clsx';
 export interface ButtonStyleProps {
   /**
    * @description 按钮类型
@@ -110,7 +111,7 @@ export const ButtonRoot = styled(ButtonBase, {
         color: theme.palette[styleProps.color].contrastText,
         backgroundColor: theme.palette[styleProps.color].main,
         borderColor: theme.palette[styleProps.color].main,
-        '&.state-active': {
+        '&.state-active, &.active': {
           backgroundColor: darken(theme.palette[styleProps.color].main, 0.2),
           borderColor: darken(theme.palette[styleProps.color].main, 0.2)
         }
@@ -119,15 +120,18 @@ export const ButtonRoot = styled(ButtonBase, {
         color: theme.palette[styleProps.color].main,
         backgroundColor: 'transparent',
         borderColor: theme.palette[styleProps.color].main,
-        '&.state-active': {
-          color: darken(theme.palette[styleProps.color].main, 0.2),
-          borderColor: darken(theme.palette[styleProps.color].main, 0.2)
+        '&.state-active, &.active': {
+          color: theme.palette[styleProps.color].contrastText,
+          backgroundColor: theme.palette[styleProps.color].main,
+          borderColor: theme.palette[styleProps.color].main
+          // color: darken(theme.palette[styleProps.color].main, 0.2),
+          // borderColor: darken(theme.palette[styleProps.color].main, 0.2)
         }
       },
       text: {
         color: theme.palette[styleProps.color].main,
         backgroundColor: 'transparent',
-        '&.state-active': {
+        '&.state-active, &.active': {
           color: darken(theme.palette[styleProps.color].main, 0.2)
         }
       }
@@ -135,7 +139,9 @@ export const ButtonRoot = styled(ButtonBase, {
   };
 });
 
-export interface ButtonProps extends StyledComponentProps<typeof ButtonRoot> {}
+export interface ButtonProps extends StyledComponentProps<typeof ButtonRoot> {
+  checked?: boolean;
+}
 
 /**
  * Button
@@ -145,11 +151,13 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
   const {
     children,
     className,
+    checked,
     disabled,
     variant = 'contained',
     size = 'medium',
     color = 'primary',
     shape = 'rect',
+    name,
     disabledBorderRadius = false,
     ...rest
   } = props;
@@ -167,9 +175,9 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
 
   return (
     <ButtonRoot
-      className={classes.root}
-      styleProps={styleProps}
       role="button"
+      className={clsx(classes.root, { active: checked })}
+      styleProps={styleProps}
       aria-disabled={disabled}
       disabled={disabled}
       ref={ref}
