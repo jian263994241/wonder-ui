@@ -8,7 +8,7 @@ import { jsx, Badge, Space } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <Space>
+    <Space wrap>
       <Badge color="primary">primary</Badge>
       <Badge color="secondary">secondary</Badge>
       <Badge color="success">success</Badge>

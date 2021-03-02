@@ -63,7 +63,7 @@ export default defineConfig({
       },
       {
         title: '用户反馈',
-        children: []
+        children: ['components/progress.md']
       },
       {
         title: '路由',

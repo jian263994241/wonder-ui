@@ -16,9 +16,9 @@ export default function Example() {
 
       <ButtonGroup>
         <Button>Button</Button>
-        <Divider orientation="vertical" flexItem />
+        <Divider direction="vertical" flexItem />
         <Button>Button</Button>
-        <Divider orientation="vertical" flexItem />
+        <Divider direction="vertical" flexItem />
         <Button>Button</Button>
       </ButtonGroup>
     </Space>

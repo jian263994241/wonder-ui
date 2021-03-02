@@ -10,7 +10,7 @@ interface ButtonStyleProps {
    * @description 方向
    * @default horizontal
    */
-  orientation?: 'horizontal' | 'vertical';
+  direction?: 'horizontal' | 'vertical';
 }
 
 const ButtonGroupRoot = styled('div', {
@@ -26,7 +26,7 @@ const ButtonGroupRoot = styled('div', {
     }
   }),
   ({ styleProps }) => ({
-    ...(styleProps.orientation === 'vertical'
+    ...(styleProps.direction === 'vertical'
       ? {
           flexDirection: 'column',
           alignItems: 'flex-start',
@@ -71,9 +71,9 @@ export interface ButtonGroupProps extends ButtonStyleProps {
 const ButtonGroup: React.FC<ButtonGroupProps> = React.forwardRef(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiButtonGroup' });
-    const { children, orientation = 'horizontal', className, ...rest } = props;
+    const { children, direction = 'horizontal', className, ...rest } = props;
 
-    const styleProps = { orientation };
+    const styleProps = { direction };
     const classes = useClasses({
       styleProps,
       className,

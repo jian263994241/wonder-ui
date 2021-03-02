@@ -12,14 +12,14 @@ type State = 'entering' | 'entered' | 'exiting' | 'exited';
 
 export interface CollapseStyleProps {
   collapsedSize?: string;
-  orientation?: 'horizontal' | 'vertical';
+  direction?: 'horizontal' | 'vertical';
 }
 
 const CollapseRoot = styled('div', {
   name: 'WuiCollapse',
   slot: 'Root'
 })<StyleProps<CollapseStyleProps>>(({ theme, styleProps }) => {
-  const dimension = styleProps.orientation === 'vertical' ? 'height' : 'width';
+  const dimension = styleProps.direction === 'vertical' ? 'height' : 'width';
   return {
     ...(styleProps.collapsedSize != '0px' && {
       overflow: 'hidden',
@@ -88,7 +88,7 @@ export interface CollapseProps {
    * @description 动画过渡方向
    * @default vertical
    */
-  orientation?: 'horizontal' | 'vertical';
+  direction?: 'horizontal' | 'vertical';
   /**
    * @ignore
    */
@@ -111,7 +111,7 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
     className,
     component,
     collapsedSize: collapsedSizeProp = '0px',
-    orientation = 'vertical',
+    direction = 'vertical',
     onEnter,
     onEntered,
     onEntering,
@@ -123,7 +123,7 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
 
   const nodeRef = React.useRef<HTMLElement>();
   const handleRef = useForkRef(ref, nodeRef);
-  const dimension = orientation === 'vertical' ? 'height' : 'width';
+  const dimension = direction === 'vertical' ? 'height' : 'width';
   const scrollSize = ({
     width: 'scrollWidth',
     height: 'scrollHeight'
@@ -136,7 +136,7 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
 
   const styleProps = {
     collapsedSize,
-    orientation,
+    direction,
     visible
   };
 

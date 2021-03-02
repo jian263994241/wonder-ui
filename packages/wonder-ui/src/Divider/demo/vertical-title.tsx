@@ -13,7 +13,7 @@ export default function Example() {
         merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen,
         quo modo.
       </Typography>
-      <Divider orientation="vertical" flexItem>
+      <Divider direction="vertical" flexItem>
         VERTICAL
       </Divider>
       <Typography>

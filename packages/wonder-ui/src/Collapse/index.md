@@ -14,5 +14,5 @@ sidemenu: false
 | onExit | transition 回调 | `(node: HTMLElement) => void` |
 | onExited | transition 回调 | `(node: HTMLElement) => void` |
 | onExiting | transition 回调 | `(node: HTMLElement) => void` |
-| orientation | 动画过渡方向 | `'horizontal' \| 'vertical'` | vertical
+| direction | 动画过渡方向 | `'horizontal' \| 'vertical'` | vertical
 | visible | 显示隐藏内容 | `boolean` | false

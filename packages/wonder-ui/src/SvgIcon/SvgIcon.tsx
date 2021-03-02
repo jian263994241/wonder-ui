@@ -1,6 +1,6 @@
 import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
-import { keyframes } from '../styles/styled';
+import { keyframes } from '@wonder-ui/styled';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import type { StyledComponentProps, StyleProps } from '../styles/types';

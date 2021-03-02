@@ -1,6 +1,6 @@
 /**
  * title: 水平方向折叠
- * desc: 通过 `orientation=horizontal, collapsedSize` 改变折叠方向
+ * desc: 通过 `direction=horizontal, collapsedSize` 改变折叠方向
  */
 
 /** @jsx jsx */
@@ -25,7 +25,7 @@ export default function Example() {
         <Button onClick={() => setVisible(!visible)}>Toggle</Button>
       </Space>
       <WhiteSpace />
-      <Collapse visible={visible} orientation="horizontal" collapsedSize={1}>
+      <Collapse visible={visible} direction="horizontal" collapsedSize={1}>
         <div
           css={{
             width: 300,

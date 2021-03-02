@@ -10,6 +10,9 @@ export * from './ButtonBase';
 export { default as ButtonGroup } from './ButtonGroup';
 export * from './ButtonGroup';
 
+export { default as CircularProgress } from './CircularProgress';
+export * from './CircularProgress';
+
 export { default as Col } from './Col';
 export * from './Col';
 
@@ -21,6 +24,9 @@ export * from './Container';
 
 export { default as Divider } from './Divider';
 export * from './Divider';
+
+export { default as LinearProgress } from './LinearProgress';
+export * from './LinearProgress';
 
 export { default as Row } from './Row';
 export * from './Row';
@@ -37,13 +43,9 @@ export * from './Typography';
 export { default as WhiteSpace } from './WhiteSpace';
 export * from './WhiteSpace';
 
-export {
-  default as styled,
-  keyframes,
-  jsx,
-  StyledEngineProvider,
-  ThemeProvider
-} from './styles/styled';
+export { default as styled } from './styles/styled';
+
+export { jsx } from '@wonder-ui/styled';
 
 export { default as GlobalStyles } from './styles/GlobalStyles';
 export { default as createTheme } from './styles/createTheme';

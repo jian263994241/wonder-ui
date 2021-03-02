@@ -32,7 +32,7 @@ export interface DividerStyleProps {
    * @description 方向
    * @default horizontal
    */
-  orientation: 'horizontal' | 'vertical';
+  direction: 'horizontal' | 'vertical';
   /**
    * @description flex 子节点
    * @default false
@@ -75,8 +75,8 @@ const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })<
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2)
       }),
-      /* Styles applied to the root element if `orientation="vertical"`. */
-      ...(styleProps.orientation === 'vertical' && {
+      /* Styles applied to the root element if `direction="vertical"`. */
+      ...(styleProps.direction === 'vertical' && {
         height: '100%',
         borderBottomWidth: 0,
         borderRightWidth: 'thin'
@@ -106,9 +106,9 @@ const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })<
     })
   }),
   ({ theme, styleProps }) => ({
-    /* Styles applied to the root element if divider have text and `orientation="vertical"`. */
+    /* Styles applied to the root element if divider have text and `direction="vertical"`. */
     ...(styleProps.withChildren &&
-      styleProps.orientation === 'vertical' && {
+      styleProps.direction === 'vertical' && {
         flexDirection: 'column',
         '&::before, &::after': {
           height: '100%',
@@ -121,9 +121,9 @@ const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })<
       })
   }),
   ({ styleProps }) => ({
-    /* Styles applied to the root element if `textAlign="right" orientation="horizontal"`. */
+    /* Styles applied to the root element if `textAlign="right" direction="horizontal"`. */
     ...(styleProps.textAlign === 'right' &&
-      styleProps.orientation !== 'vertical' && {
+      styleProps.direction !== 'vertical' && {
         '&::before': {
           width: '90%'
         },
@@ -131,9 +131,9 @@ const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })<
           width: '10%'
         }
       }),
-    /* Styles applied to the root element if `textAlign="left" orientation="horizontal"`. */
+    /* Styles applied to the root element if `textAlign="left" direction="horizontal"`. */
     ...(styleProps.textAlign === 'left' &&
-      styleProps.orientation !== 'vertical' && {
+      styleProps.direction !== 'vertical' && {
         '&::before': {
           width: '10%'
         },
@@ -151,7 +151,7 @@ const DividerWrapper = styled('span', { name: 'WuiDivider', slot: 'Wrapper' })<
     display: 'inline-block',
     paddingLeft: theme.spacing(1.2),
     paddingRight: theme.spacing(1.2),
-    ...(styleProps.orientation === 'vertical' && {
+    ...(styleProps.direction === 'vertical' && {
       paddingTop: theme.spacing(1.2),
       paddingBottom: theme.spacing(1.2)
     })
@@ -174,7 +174,7 @@ const Divider: React.FC<DividerProps> = React.forwardRef((inProps, ref) => {
     absolute = false,
     flexItem = false,
     light = false,
-    orientation = 'horizontal',
+    direction = 'horizontal',
     textAlign = 'center',
     variant = 'fullWidth',
     ...rest
@@ -184,7 +184,7 @@ const Divider: React.FC<DividerProps> = React.forwardRef((inProps, ref) => {
     absolute,
     flexItem,
     light,
-    orientation,
+    direction,
     textAlign,
     variant,
     withChildren: !!children

@@ -19,7 +19,7 @@ export default function Example() {
           paddingBottom: 16,
           color: '#fff',
           textAlign: 'center',
-          '&:nth-child(odd)': {
+          '&:nth-of-type(odd)': {
             background: '#0586e9'
           }
         }

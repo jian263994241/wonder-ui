@@ -65,7 +65,8 @@ export const SpaceRoot = styled('div', { name: 'WuiSpace', slot: 'Root' })<
       }),
 
     ...(styleProps.direction === 'vertical' && {
-      flexDirection: 'column'
+      flexDirection: 'column',
+      width: '100%'
     }),
 
     alignItems: {
@@ -87,6 +88,10 @@ const SpaceItem = styled('div', { name: 'WuiSpace', slot: 'Item' })<
     marginRight: styleProps.direction === 'horizontal' ? horizontalSize : 0,
     marginBottom:
       styleProps.direction === 'horizontal' ? verticalSize : horizontalSize,
+
+    ...(styleProps.direction === 'vertical' && {
+      width: '100%'
+    }),
 
     '&:last-child':
       styleProps.direction === 'horizontal'

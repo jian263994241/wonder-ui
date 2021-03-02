@@ -93,10 +93,3 @@ const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
 };
 
 export default wuiStyled;
-
-export {
-  keyframes,
-  jsx,
-  StyledEngineProvider,
-  ThemeProvider
-} from '@wonder-ui/styled';

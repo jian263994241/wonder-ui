@@ -7,7 +7,7 @@ import { Divider, Space, Typography, jsx } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <Space split={<Divider orientation="vertical" style={{ height: '1em' }} />}>
+    <Space split={<Divider direction="vertical" style={{ height: '1em' }} />}>
       <Typography>text</Typography>
       <Typography>text</Typography>
       <Typography>text</Typography>
