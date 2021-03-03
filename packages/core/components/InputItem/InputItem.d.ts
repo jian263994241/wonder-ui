@@ -52,6 +52,8 @@ export interface InputItemProps extends InputBaseProps {
   value?: any;
 
   errorMessage?: string;
+
+  inputProps?: React.InputHTMLAttributes;
 }
 
 export default function InputItem(props: InputItemProps): JSX.Element;

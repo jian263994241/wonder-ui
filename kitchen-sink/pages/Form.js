@@ -48,7 +48,9 @@ export default function FormExamples(props) {
               },
             ]}
           >
-            <InputItem placeholder="请输入">基本</InputItem>
+            <InputItem placeholder="请输入" inputProps={{ maxLength: 1 }}>
+              基本
+            </InputItem>
           </FormItem>
           <FormItem
             name="field_2"

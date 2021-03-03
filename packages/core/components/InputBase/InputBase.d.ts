@@ -8,6 +8,7 @@ export interface InputBaseProps
   rowsMax?: number;
   rowsMin?: number;
   startAdornment?: React.ReactNode;
+  inputProps?: React.InputHTMLAttributes;
 }
 
 export default function InputBase(props: InputBaseProps): JSX.Element;
