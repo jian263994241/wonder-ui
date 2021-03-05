@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
+import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import { keyframes } from '@wonder-ui/styled';
@@ -72,34 +72,21 @@ const LinearProgressBar = styled('span', {
 
 export interface LinearProgressProps extends LinearProgressStyleProps {
   /**
-   * @ignore
-   */
-  className?: string;
-  /**
-   * @ignore
+   * css api
    */
   classes?: Partial<ClassNameMap<'root' | 'bar'>>;
-  /**
-   * @ignore
-   */
-  ref?: React.Ref<any>;
-  /**
-   * @ignore
-   */
-  style?: React.CSSProperties;
   /**
    * 值 0-100
    */
   value?: number;
 }
 
-const LinearProgress: React.FC<LinearProgressProps> = React.forwardRef(
-  (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiLinearProgress' });
+const LinearProgress = createFCWithTheme<LinearProgressProps>(
+  'WuiLinearProgress',
+  (props, ref) => {
     const {
       animated = false,
       className,
-      classes: classesInput,
       color = 'primary',
       striped = false,
       value = 0,
@@ -110,10 +97,9 @@ const LinearProgress: React.FC<LinearProgressProps> = React.forwardRef(
     const styleProps = { animated, color, striped };
 
     const classes = useClasses({
+      ...props,
       styleProps,
-      className,
-      name: 'WuiLinearProgress',
-      classes: classesInput
+      name: 'WuiLinearProgress'
     });
 
     return (
@@ -135,7 +121,5 @@ const LinearProgress: React.FC<LinearProgressProps> = React.forwardRef(
     );
   }
 );
-
-LinearProgress.displayName = 'WuiLinearProgress';
 
 export default LinearProgress;

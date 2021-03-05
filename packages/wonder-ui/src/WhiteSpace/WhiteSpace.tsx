@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
+import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import type { StyleProps } from '../styles/types';
@@ -27,23 +27,19 @@ const WhiteSpaceRoot = styled('div', {
   )
 }));
 
-export interface WhiteSpaceProps extends WhiteSpaceStyleProps {
-  ref?: React.Ref<any>;
-  className?: string;
-  style?: React.CSSProperties;
-}
+export interface WhiteSpaceProps extends WhiteSpaceStyleProps {}
 
-const WhiteSpace: React.FC<WhiteSpaceProps> = React.forwardRef(
-  (inPorps, ref) => {
-    const props = useThemeProps({ props: inPorps, name: 'WuiWhiteSpace' });
+const WhiteSpace: React.FC<WhiteSpaceProps> = createFCWithTheme(
+  'WuiWhiteSpace',
+  (props, ref) => {
     const { size = 'md', children, className, ...rest } = props;
 
     const styleProps = { size };
 
     const classes = useClasses({
+      ...props,
       styleProps,
-      name: 'WuiWhiteSpace',
-      className
+      name: 'WuiWhiteSpace'
     });
 
     return (
@@ -58,7 +54,5 @@ const WhiteSpace: React.FC<WhiteSpaceProps> = React.forwardRef(
     );
   }
 );
-
-WhiteSpace.displayName = 'WuiWhiteSpace';
 
 export default WhiteSpace;

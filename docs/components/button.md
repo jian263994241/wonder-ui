@@ -25,10 +25,8 @@
 
 <code src="../../packages/wonder-ui/src/Button/demo/button-disabled.tsx"></code>
 
-<code src="../../packages/wonder-ui/src/Button/demo/custom-button.tsx"></code>
-
 ## API
 
 <embed src="../../packages/wonder-ui/src/Button/index.md"></embed>
 
-<embed src="../../packages/wonder-ui/src/ButtonBase/index.md"></embed>
+

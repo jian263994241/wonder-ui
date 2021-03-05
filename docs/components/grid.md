@@ -18,7 +18,7 @@
 
 ```js | pure
 // 默认的 breakpoint
-theme.variables.breakpoints = {
+theme.breakpoints = {
   xs: 0,
   sm: 576,
   md: 768,

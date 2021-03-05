@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
+import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import { keyframes } from '@wonder-ui/styled';
@@ -131,21 +131,10 @@ const CircularProgressLabel = styled('div', {
 
 export interface CircularProgressProps extends CircularProgressStyleProps {
   /**
-   * @ignore
-   */
-  className?: string;
-  /**
    * @description css api
    */
   classes?: Partial<ClassNameMap<'root' | 'svg' | 'circle' | 'label'>>;
-  /**
-   * @ignore
-   */
-  ref?: React.Ref<any>;
-  /**
-   * @ignore
-   */
-  style?: React.CSSProperties;
+
   /** 粗细  */
   thickness?: number;
   /**
@@ -158,15 +147,11 @@ export interface CircularProgressProps extends CircularProgressStyleProps {
   label?: React.ReactNode;
 }
 
-const CircularProgress: React.FC<CircularProgressProps> = React.forwardRef(
-  (inProps, ref) => {
-    const props = useThemeProps({
-      props: inProps,
-      name: 'WuiCircularProgress'
-    });
+const CircularProgress = createFCWithTheme<CircularProgressProps>(
+  'WuiCircularProgress',
+  (props, ref) => {
     const {
       color = 'primary',
-      classes: classesInput,
       className,
       thickness = 3.6,
       value = 0,
@@ -195,10 +180,9 @@ const CircularProgress: React.FC<CircularProgressProps> = React.forwardRef(
     }
 
     const classes = useClasses({
+      ...props,
       styleProps,
-      className,
-      name: 'WuiCircularProgress',
-      classes: classesInput
+      name: 'WuiCircularProgress'
     });
 
     return (
@@ -240,7 +224,5 @@ const CircularProgress: React.FC<CircularProgressProps> = React.forwardRef(
     );
   }
 );
-
-CircularProgress.displayName = 'WuiCircularProgress';
 
 export default CircularProgress;

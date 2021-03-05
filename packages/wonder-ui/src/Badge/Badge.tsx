@@ -1,8 +1,8 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import type { StyleProps } from '../styles/types';
+import createFCWithTheme from '../styles/createFCWithTheme';
 
 export interface BadgeStyleProps {
   /**
@@ -36,14 +36,9 @@ const BadgeRoot = styled('div', { name: 'WuiBadge', slot: 'Root' })<
   }
 }));
 
-export interface BadgeProps extends BadgeStyleProps {
-  ref?: React.Ref<any>;
-  className?: string;
-  style?: React.CSSProperties;
-}
+export interface BadgeProps extends BadgeStyleProps {}
 
-const Badge: React.FC<BadgeProps> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiBadge' });
+const Badge = createFCWithTheme<BadgeProps>('WuiBadge', (props, ref) => {
   const {
     color = 'primary',
     className,
@@ -53,21 +48,18 @@ const Badge: React.FC<BadgeProps> = React.forwardRef((inProps, ref) => {
   } = props;
 
   const styleProps = { color, rounded };
-
-  const classes = useClasses({ styleProps, className, name: 'WuiBadge' });
+  const classes = useClasses({ ...props, styleProps, name: 'WuiBadge' });
 
   return (
     <BadgeRoot
-      ref={ref}
       styleProps={styleProps}
       className={classes.root}
+      ref={ref}
       {...rest}
     >
       {children}
     </BadgeRoot>
   );
 });
-
-Badge.displayName = 'WuiBadge';
 
 export default Badge;

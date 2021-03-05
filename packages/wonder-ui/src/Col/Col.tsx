@@ -1,11 +1,11 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
+import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import type { StyledComponentProps, StyleProps } from '../styles/types';
 import GridContext from '../Row/GridContext';
 import type { ContextProps } from '../Row/GridContext';
-import { breakpointsKeys } from '../styles/theme/variables';
+import { breakpointsKeys } from '../styles/theme/breakpoints';
 import { getGutter, getResponsiveValue, ResponsiveValue } from '../Row/utils';
 import theme from '../styles/defaultTheme';
 
@@ -68,7 +68,7 @@ export const ColRoot = styled('div', { name: 'WuiCol', slot: 'root' })<
             width: `${100 / n}%`
           };
 
-    const breakpoints = theme.variables.breakpoints;
+    const breakpoints = theme.breakpoints;
     const rowColsProp = getResponsiveValue(styleProps.rowCols);
     const colsProp = getResponsiveValue(styleProps.cols);
     const offsetProp = getResponsiveValue(styleProps.offset);
@@ -128,9 +128,7 @@ type FliterProps<T> = Omit<T, keyof ContextProps>;
 export interface ColProps
   extends FliterProps<StyledComponentProps<typeof ColRoot>> {}
 
-const Col: React.FC<ColProps> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiCol' });
-
+const Col = createFCWithTheme<ColProps>('WuiCol', (props, ref) => {
   const {
     className,
     cols,
@@ -152,7 +150,7 @@ const Col: React.FC<ColProps> = React.forwardRef((inProps, ref) => {
     rowCols
   };
 
-  const classes = useClasses({ styleProps, className, name: 'WuiCol' });
+  const classes = useClasses({ ...props, styleProps, name: 'WuiCol' });
 
   return (
     <ColRoot
@@ -166,7 +164,5 @@ const Col: React.FC<ColProps> = React.forwardRef((inProps, ref) => {
     </ColRoot>
   );
 });
-
-Col.displayName = 'WuiCol';
 
 export default Col;

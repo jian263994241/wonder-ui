@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
+import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import type {
@@ -8,9 +8,9 @@ import type {
   ClassNameMap
 } from '../styles/types';
 import GridContext from './GridContext';
-import Container, { ContainerSize } from '../Container';
+import Container, { ContainerProps } from '../Container';
 import { getGutter, getResponsiveValue, ResponsiveValue } from './utils';
-import { breakpointsKeys } from '../styles/theme/variables';
+import { breakpointsKeys } from '../styles/theme/breakpoints';
 
 export interface RowStyleProps {
   /** 间距, x| [x, y] */
@@ -48,7 +48,7 @@ export const RowRoot = styled('div', {
     };
   },
   ({ theme, styleProps }) => {
-    const breakpoints = theme.variables.breakpoints;
+    const breakpoints = theme.breakpoints;
     const alignItemsProp = getResponsiveValue(styleProps.alignItems);
     const alignContentProp = getResponsiveValue(styleProps.alignContent);
     const justifyContentProp = getResponsiveValue(styleProps.justifyContent);
@@ -105,17 +105,15 @@ export interface RowProps extends StyledComponentProps<typeof RowRoot> {
   columns?: number;
   rowCols?: ResponsiveValue<'auto' | boolean | number>;
   classes?: Partial<ClassNameMap<'root' | 'container'>>;
-  containerSize?: ContainerSize;
+  containerSize?: ContainerProps['size'];
 }
 
-const Row: React.FC<RowProps> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiRow' });
+const Row = createFCWithTheme<RowProps>('WuiRow', (props, ref) => {
   const {
     alignContent,
     alignItems,
     justifyContent,
     className,
-    classes: classesInput,
     columns = 12,
     containerSize = 'fluid',
     component,
@@ -135,10 +133,9 @@ const Row: React.FC<RowProps> = React.forwardRef((inProps, ref) => {
   };
 
   const classes = useClasses({
+    ...props,
     styleProps,
-    className,
-    name: 'WuiRow',
-    classes: classesInput
+    name: 'WuiRow'
   });
 
   const { gutterX } = getGutter(styleProps.gutter);
@@ -169,7 +166,5 @@ const Row: React.FC<RowProps> = React.forwardRef((inProps, ref) => {
     </GridContext.Provider>
   );
 });
-
-Row.displayName = 'WuiRow';
 
 export default Row;

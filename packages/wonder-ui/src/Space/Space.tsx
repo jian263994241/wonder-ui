@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
+import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import type {
@@ -112,8 +112,7 @@ export interface SpaceProps extends StyledComponentProps<typeof SpaceRoot> {
   classes?: Partial<ClassNameMap<'root' | 'item'>>;
 }
 
-const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'Space' });
+const Space = createFCWithTheme<SpaceProps>('WuiSpace', (props, ref) => {
   const {
     align = 'center',
     children,
@@ -137,10 +136,9 @@ const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
   };
 
   const classes = useClasses({
+    ...props,
     styleProps,
-    className,
-    name: 'Space',
-    classes: classesInput
+    name: 'WuiSpace'
   });
 
   return (
@@ -177,7 +175,5 @@ const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
     </SpaceRoot>
   );
 });
-
-Space.displayName = 'Space';
 
 export default Space;

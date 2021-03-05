@@ -4,8 +4,9 @@ import * as transitions from './transitions';
 import createPalette, { PaletteOptions } from './theme/createPalette';
 import createTypography, { TypographyOptions } from './theme/createTypography';
 import createSpacing from './theme/createSpacing';
-import variables, { Variables } from './theme/variables';
-import { deepmerge } from '@wonder-ui/utils';
+import containerMaxWidths from './theme/containerMaxWidths';
+import breakpoints from './theme/breakpoints';
+import zIndex from './theme/zIndex';
 
 interface ThemeComponents {
   components?: {
@@ -19,18 +20,22 @@ interface ThemeComponents {
 }
 
 interface ThemeOptions extends ThemeComponents {
+  breakpoints?: Partial<typeof breakpoints>;
+  containerMaxWidths?: Partial<typeof containerMaxWidths>;
   palette?: PaletteOptions;
   spacing?: number;
   typography?: TypographyOptions;
-  variables?: Partial<Variables>;
+  zIndex?: Partial<typeof zIndex>;
 }
 
 export interface Theme extends ThemeComponents {
+  breakpoints: typeof breakpoints;
+  containerMaxWidths: typeof containerMaxWidths;
   palette: ReturnType<typeof createPalette>;
+  spacing: ReturnType<typeof createSpacing>;
   transitions: typeof transitions;
   typography: ReturnType<typeof createTypography>;
-  spacing: ReturnType<typeof createSpacing>;
-  variables: Readonly<Variables>;
+  zIndex: typeof zIndex;
 }
 
 export default function createTheme(options: ThemeOptions = {}): Theme {
@@ -38,16 +43,20 @@ export default function createTheme(options: ThemeOptions = {}): Theme {
     palette: paletteInput,
     spacing = 8,
     typography,
-    variables: variablesInput,
+    containerMaxWidths: containerMaxWidthsInput,
+    breakpoints: breakpointsInput,
+    zIndex: zIndexInput,
     ...rest
   } = options;
 
   return {
+    breakpoints: { ...breakpoints, ...breakpointsInput },
+    containerMaxWidths: { ...containerMaxWidths, ...containerMaxWidthsInput },
     palette: createPalette(paletteInput),
-    typography: createTypography(typography),
     spacing: createSpacing(spacing),
-    variables: deepmerge(variables, variablesInput),
     transitions,
+    typography: createTypography(typography),
+    zIndex: { ...zIndex, ...zIndexInput },
     ...rest
   };
 }

@@ -1,5 +1,6 @@
 import useTheme from './useTheme';
 import getThemeProps from './getThemeProps';
+import { Theme } from './createTheme';
 
 type UseThemePropsParams<P> = {
   props: P;
@@ -9,7 +10,7 @@ type UseThemePropsParams<P> = {
 export default function useThemeProps<P extends object = {}>({
   props: inputProps,
   name
-}: UseThemePropsParams<P>): P {
+}: UseThemePropsParams<P>): P & { theme: Theme } {
   const props = { ...inputProps };
 
   const contextTheme = useTheme();

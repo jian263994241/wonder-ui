@@ -4,9 +4,6 @@ export * from './Badge';
 export { default as Button } from './Button';
 export * from './Button';
 
-export { default as ButtonBase } from './ButtonBase';
-export * from './ButtonBase';
-
 export { default as ButtonGroup } from './ButtonGroup';
 export * from './ButtonGroup';
 
@@ -25,8 +22,20 @@ export * from './Container';
 export { default as Divider } from './Divider';
 export * from './Divider';
 
+export { default as Fade } from './Fade';
+export * from './Fade';
+
 export { default as LinearProgress } from './LinearProgress';
 export * from './LinearProgress';
+
+export { default as Modal } from './Modal';
+export * from './Modal';
+
+export { default as Popover } from './Popover';
+export * from './Popover';
+
+export { default as Portal } from './Portal';
+export * from './Portal';
 
 export { default as Row } from './Row';
 export * from './Row';

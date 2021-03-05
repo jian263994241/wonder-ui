@@ -1,6 +1,6 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
+import createFCWithTheme from '../styles/createFCWithTheme';
 import styled from '../styles/styled';
 import type { StyleProps } from '../styles/types';
 import { ButtonRoot } from '../Button';
@@ -68,15 +68,15 @@ export interface ButtonGroupProps extends ButtonStyleProps {
   ref?: React.Ref<any>;
 }
 
-const ButtonGroup: React.FC<ButtonGroupProps> = React.forwardRef(
-  (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiButtonGroup' });
+const ButtonGroup = createFCWithTheme<ButtonGroupProps>(
+  'WuiButtonGroup',
+  (props, ref) => {
     const { children, direction = 'horizontal', className, ...rest } = props;
 
     const styleProps = { direction };
     const classes = useClasses({
+      ...props,
       styleProps,
-      className,
       name: 'WuiButtonGroup'
     });
 

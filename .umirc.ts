@@ -54,6 +54,10 @@ export default defineConfig({
         ]
       },
       {
+        title: '导航',
+        children: ['components/dropdown.md', 'components/steps.md']
+      },
+      {
         title: '数据录入',
         children: []
       },
@@ -63,11 +67,19 @@ export default defineConfig({
       },
       {
         title: '用户反馈',
-        children: ['components/progress.md']
+        children: [
+          'components/popover.md',
+          'components/progress.md',
+          'components/result.md'
+        ]
       },
       {
         title: '路由',
         children: []
+      },
+      {
+        title: '辅助工具',
+        children: ['components/portal.md']
       },
       {
         title: '其他',

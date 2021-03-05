@@ -3,7 +3,7 @@
  */
 import * as React from 'react';
 import { alpha } from '../styles/colorManipulator';
-import useThemeProps from '../styles/useThemeProps';
+import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
 import type { StyledComponentProps, StyleProps } from '../styles/types';
 import styled from '../styles/styled';
@@ -162,12 +162,9 @@ export interface DividerProps extends StyledComponentProps<typeof DividerRoot> {
   classes?: Partial<Record<'root' | 'wrapper', string>>;
 }
 
-const Divider: React.FC<DividerProps> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiDivider' });
-
+const Divider = createFCWithTheme<DividerProps>('WuiDivider', (props, ref) => {
   const {
     className,
-    classes: classesInput,
     children,
     component = children ? 'div' : 'hr',
     theme,
@@ -191,10 +188,9 @@ const Divider: React.FC<DividerProps> = React.forwardRef((inProps, ref) => {
   };
 
   const classes = useClasses({
+    ...props,
     styleProps,
-    className,
-    name: 'WuiDivider',
-    classes: classesInput
+    name: 'WuiDivider'
   });
 
   return (
@@ -218,7 +214,5 @@ const Divider: React.FC<DividerProps> = React.forwardRef((inProps, ref) => {
     </DividerRoot>
   );
 });
-
-Divider.displayName = 'WuiDivider';
 
 export default Divider;

@@ -1,14 +1,8 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
+import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import type { StyledComponentProps, StyleProps } from '../styles/types';
-import {
-  ContainerSizeType,
-  containerSizeKeys
-} from '../styles/theme/variables';
-
-export type ContainerSize = ContainerSizeType | 'fluid';
 
 export interface ContainerStyleProps {
   /**
@@ -19,7 +13,7 @@ export interface ContainerStyleProps {
   /**
    * @description 断点宽度
    */
-  size?: ContainerSize;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'fluid';
 }
 
 const ContainerRoot = styled('div', {
@@ -41,10 +35,10 @@ const ContainerRoot = styled('div', {
         : 'auto'
   }),
   ({ theme, styleProps }) => {
-    const containerMaxWidths = theme.variables.containerMaxWidths;
+    const containerMaxWidths = theme.containerMaxWidths as any;
     const styles: any = {};
 
-    containerSizeKeys.forEach((key) => {
+    Object.keys(containerMaxWidths).forEach((key) => {
       const mediaQueryKey = `@media (min-width: ${containerMaxWidths[key]}px)`;
       if (styleProps.size === key) {
         styles[mediaQueryKey] = {
@@ -60,27 +54,27 @@ const ContainerRoot = styled('div', {
 export interface ContainerProps
   extends StyledComponentProps<typeof ContainerRoot> {}
 
-const Container: React.FC<ContainerProps> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiContainer' });
-  const { gutter = 2, className, children, component, size, ...rest } = props;
+const Container = createFCWithTheme<ContainerProps>(
+  'WuiContainer',
+  (props, ref) => {
+    const { gutter = 2, className, children, component, size, ...rest } = props;
 
-  const styleProps = { gutter, size };
+    const styleProps = { gutter, size };
 
-  const classes = useClasses({ styleProps, className, name: 'WuiContainer' });
+    const classes = useClasses({ ...props, styleProps, name: 'WuiContainer' });
 
-  return (
-    <ContainerRoot
-      as={component}
-      className={classes.root}
-      styleProps={styleProps}
-      ref={ref}
-      {...rest}
-    >
-      {children}
-    </ContainerRoot>
-  );
-});
-
-Container.displayName = 'WuiContainer';
+    return (
+      <ContainerRoot
+        as={component}
+        className={classes.root}
+        styleProps={styleProps}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+      </ContainerRoot>
+    );
+  }
+);
 
 export default Container;

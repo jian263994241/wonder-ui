@@ -32,9 +32,9 @@ export default function Example() {
       </Row>
 
       <Row rowCols={5}>
-        <Col cols={1}>1 of 4</Col>
-        <Col cols={{ sm: 7, md: 8, lg: 10 }}>2 of 4</Col>
-        <Col cols={1}>3 of 3</Col>
+        <Col cols={3}>1 of 4</Col>
+        <Col cols={{ sm: 6, md: 4, lg: 6 }}>2 of 3</Col>
+        <Col cols={3}>3 of 3</Col>
       </Row>
     </div>
   );

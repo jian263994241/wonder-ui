@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
+import createFCWithTheme from '../styles/createFCWithTheme';
 import { keyframes } from '@wonder-ui/styled';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
@@ -45,8 +45,7 @@ export interface SvgIconProps extends StyledComponentProps<typeof SvgIconRoot> {
   titleAccess?: string;
 }
 
-const SvgIcon: React.FC<SvgIconProps> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiSvgIcon' });
+const SvgIcon = createFCWithTheme<SvgIconProps>('WuiSvgIcon', (props, ref) => {
   const {
     children,
     className,
@@ -62,7 +61,7 @@ const SvgIcon: React.FC<SvgIconProps> = React.forwardRef((inProps, ref) => {
     spin
   };
 
-  const classes = useClasses({ styleProps, className, name: 'WuiSvgIcon' });
+  const classes = useClasses({ ...props, styleProps, name: 'WuiSvgIcon' });
 
   return (
     <SvgIconRoot
@@ -81,7 +80,5 @@ const SvgIcon: React.FC<SvgIconProps> = React.forwardRef((inProps, ref) => {
     </SvgIconRoot>
   );
 });
-
-SvgIcon.displayName = 'WuiSvgIcon';
 
 export default SvgIcon;

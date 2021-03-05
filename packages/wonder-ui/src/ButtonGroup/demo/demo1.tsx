@@ -7,7 +7,7 @@ import { Button, ButtonGroup, jsx, Divider, Space } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <Space>
+    <Space wrap>
       <ButtonGroup>
         <Button>Button</Button>
         <Button>Button</Button>

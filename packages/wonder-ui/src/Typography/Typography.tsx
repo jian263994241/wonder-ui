@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyledComponentProps } from '../styles/types';
 import styled from '../styles/styled';
-import useThemeProps from '../styles/useThemeProps';
+import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
 
 const defaultVariantMapping = {
@@ -60,9 +60,9 @@ export const TypographyRoot = styled('span', {
 export interface TypographyProps
   extends StyledComponentProps<typeof TypographyRoot> {}
 
-const Typography: React.FC<TypographyProps> = React.forwardRef(
-  (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiTypography' });
+const Typography = createFCWithTheme<TypographyProps>(
+  'WuiTypography',
+  (props, ref) => {
     const {
       align = 'inherit',
       children,
@@ -87,8 +87,8 @@ const Typography: React.FC<TypographyProps> = React.forwardRef(
     };
 
     const classes = useClasses({
+      ...props,
       styleProps,
-      className,
       name: 'WuiTypography'
     });
 
@@ -105,7 +105,5 @@ const Typography: React.FC<TypographyProps> = React.forwardRef(
     );
   }
 );
-
-Typography.displayName = 'Typography';
 
 export default Typography;
