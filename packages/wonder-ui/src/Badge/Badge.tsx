@@ -15,28 +15,41 @@ export interface BadgeStyleProps {
    * @default false
    */
   rounded?: boolean;
+
+  sup?: boolean;
 }
 
 const BadgeRoot = styled('div', { name: 'WuiBadge', slot: 'Root' })<
   StyleProps<BadgeStyleProps>
->(({ theme, styleProps }) => ({
-  display: 'inline-block',
-  padding: '0.35em 0.65em',
-  fontSize: '.75em',
-  fontWeight: 700,
-  lineHeight: 1,
-  color: theme.palette[styleProps.color || 'primary'].contrastText,
-  textAlign: 'center',
-  whiteSpace: 'nowrap',
-  verticalAlign: 1,
-  borderRadius: styleProps.rounded ? '50rem' : '.25rem',
-  backgroundColor: theme.palette[styleProps.color || 'primary'].main,
-  '&:empty': {
-    display: 'none'
-  }
-}));
+>(({ theme, styleProps }) => {
+  return {
+    display: 'inline-block',
+    padding: '0.25em 0.55em',
+    fontSize: '.65em',
+    fontWeight: 700,
+    lineHeight: 1,
+    color: theme.palette[styleProps.color || 'primary'].contrastText,
+    textAlign: 'center',
+    whiteSpace: 'nowrap',
+    verticalAlign: 1,
+    borderRadius: styleProps.rounded ? '50rem' : '.25rem',
+    backgroundColor: theme.palette[styleProps.color || 'primary'].main,
+    ...(styleProps.sup && {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      transform: 'translate(50%,-50%)',
+      transformOrigin: '100% 0'
+    }),
+    '&:empty': {
+      padding: '0.225rem'
+    }
+  };
+});
 
-export interface BadgeProps extends BadgeStyleProps {}
+export interface BadgeProps extends BadgeStyleProps {
+  text?: React.ReactNode;
+}
 
 const Badge = createFCWithTheme<BadgeProps>('WuiBadge', (props, ref) => {
   const {
@@ -44,10 +57,12 @@ const Badge = createFCWithTheme<BadgeProps>('WuiBadge', (props, ref) => {
     className,
     rounded = false,
     children,
+    text,
+    sup,
     ...rest
   } = props;
 
-  const styleProps = { color, rounded };
+  const styleProps = { color, rounded, sup };
   const classes = useClasses({ ...props, styleProps, name: 'WuiBadge' });
 
   return (
@@ -57,7 +72,7 @@ const Badge = createFCWithTheme<BadgeProps>('WuiBadge', (props, ref) => {
       ref={ref}
       {...rest}
     >
-      {children}
+      {text}
     </BadgeRoot>
   );
 });

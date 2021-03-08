@@ -9,7 +9,7 @@ sidemenu: false
 | alignItems |  flex | `ResponsiveValue< 'start' \| 'end' \| 'center' \| 'baseline' \| 'stretch' >` |
 | classes |  节点className | `Partial<ClassNameMap<'root' \| 'container'>>` |
 | columns | 宫格设置 | `number` | 12
-| containerSize | Container 的 props.size | `ContainerSize` | fluid
+| ContainerProps | Container 的 props | `ContainerProps` |
 | gutter | 间距, `theme.spacing`倍数 | `number \| [number, number]` | 2
 | justifyContent |  flex | `ResponsiveValue< 'start' \| 'end' \| 'center' \| 'around' \| 'between' \| 'evenly' >` |
 | nowrap |  换行 | `boolean` |

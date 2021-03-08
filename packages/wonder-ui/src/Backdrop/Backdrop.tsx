@@ -5,7 +5,7 @@ import type { StyleProps } from '../styles/types';
 import createFCWithTheme from '../styles/createFCWithTheme';
 
 interface BackdropStyleProps {
-  transparent?: boolean;
+  invisible?: boolean;
 }
 
 const BackdropRoot = styled('div', { name: 'WuiBackdrop', slot: 'Root' })<
@@ -22,7 +22,7 @@ const BackdropRoot = styled('div', { name: 'WuiBackdrop', slot: 'Root' })<
   left: 0,
   backgroundColor: 'rgba(0, 0, 0, 0.5)',
   WebkitTapHighlightColor: 'transparent',
-  ...(styleProps.transparent && {
+  ...(styleProps.invisible && {
     backgroundColor: 'transparent'
   })
 }));
@@ -32,13 +32,22 @@ export interface BackdropProps extends BackdropStyleProps {}
 const Backdrop = createFCWithTheme<BackdropProps>(
   'WuiBackdrop',
   (props, ref) => {
-    const { transparent } = props;
+    const { children, className, invisible = false, ...rest } = props;
 
-    const styleProps = { transparent };
+    const styleProps = { invisible };
 
     const classes = useClasses({ ...props, styleProps, name: 'WuiBackdrop' });
 
-    return null;
+    return (
+      <BackdropRoot
+        styleProps={styleProps}
+        className={classes.root}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+      </BackdropRoot>
+    );
   }
 );
 

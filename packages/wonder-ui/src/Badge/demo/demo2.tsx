@@ -10,7 +10,7 @@ export default function Example() {
   return (
     <div>
       <Button>
-        Notifications <Badge color="secondary">1</Badge>
+        Notifications <Badge color="secondary" text="1"></Badge>
       </Button>
     </div>
   );

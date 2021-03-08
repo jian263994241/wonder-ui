@@ -8,7 +8,7 @@
 <code src="../../packages/wonder-ui/src/Badge/demo/demo2.tsx"></code>
 <code src="../../packages/wonder-ui/src/Badge/demo/demo3.tsx"></code>
 <code src="../../packages/wonder-ui/src/Badge/demo/demo4.tsx"></code>
-
+<code src="../../packages/wonder-ui/src/Badge/demo/demo5.tsx"></code>
 ## API
 
 <embed src="../../packages/wonder-ui/src/Badge/index.md"></embed>

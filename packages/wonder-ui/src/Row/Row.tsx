@@ -105,7 +105,7 @@ export interface RowProps extends StyledComponentProps<typeof RowRoot> {
   columns?: number;
   rowCols?: ResponsiveValue<'auto' | boolean | number>;
   classes?: Partial<ClassNameMap<'root' | 'container'>>;
-  containerSize?: ContainerProps['size'];
+  ContainerProps?: ContainerProps;
 }
 
 const Row = createFCWithTheme<RowProps>('WuiRow', (props, ref) => {
@@ -115,9 +115,9 @@ const Row = createFCWithTheme<RowProps>('WuiRow', (props, ref) => {
     justifyContent,
     className,
     columns = 12,
-    containerSize = 'fluid',
     component,
     children,
+    ContainerProps,
     nowrap = false,
     gutter = 2,
     rowCols,
@@ -149,9 +149,10 @@ const Row = createFCWithTheme<RowProps>('WuiRow', (props, ref) => {
       }}
     >
       <Container
-        size={containerSize}
+        size="fluid"
         gutter={gutterX / 2}
         className={classes.container}
+        {...ContainerProps}
       >
         <RowRoot
           as={component}

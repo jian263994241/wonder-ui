@@ -8,7 +8,7 @@ export type ClassNameMap<Classes extends string> = Record<Classes, string>;
 
 export type StyledComponentProps<T extends React.ComponentType<any>> = Omit<
   React.ComponentProps<T>,
-  'as' | 'styleProps'
+  'as' | 'styleProps' | 'ref'
 > &
   Partial<React.ComponentProps<T>['styleProps']>;
 
