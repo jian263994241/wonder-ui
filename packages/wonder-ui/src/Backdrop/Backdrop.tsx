@@ -1,10 +1,14 @@
 import * as React from 'react';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { StyleProps } from '../styles/types';
+import type { StyleProps, StyledComponentProps } from '../styles/types';
 import createFCWithTheme from '../styles/createFCWithTheme';
+import Fade from '../Fade';
 
 interface BackdropStyleProps {
+  /**
+   * 透明背景
+   */
   invisible?: boolean;
 }
 
@@ -27,26 +31,34 @@ const BackdropRoot = styled('div', { name: 'WuiBackdrop', slot: 'Root' })<
   })
 }));
 
-export interface BackdropProps extends BackdropStyleProps {}
+export interface BackdropProps
+  extends StyledComponentProps<typeof BackdropRoot> {
+  /**
+   * 是否显示
+   */
+  visible?: boolean;
+}
 
 const Backdrop = createFCWithTheme<BackdropProps>(
   'WuiBackdrop',
   (props, ref) => {
-    const { children, className, invisible = false, ...rest } = props;
+    const { children, className, invisible = false, visible, ...rest } = props;
 
     const styleProps = { invisible };
 
     const classes = useClasses({ ...props, styleProps, name: 'WuiBackdrop' });
 
     return (
-      <BackdropRoot
-        styleProps={styleProps}
-        className={classes.root}
-        ref={ref}
-        {...rest}
-      >
-        {children}
-      </BackdropRoot>
+      <Fade in={visible}>
+        <BackdropRoot
+          styleProps={styleProps}
+          className={classes.root}
+          ref={ref}
+          {...rest}
+        >
+          {children}
+        </BackdropRoot>
+      </Fade>
     );
   }
 );

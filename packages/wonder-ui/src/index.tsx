@@ -1,3 +1,6 @@
+export { default as Backdrop } from './Backdrop';
+export * from './Backdrop';
+
 export { default as Badge } from './Badge';
 export * from './Badge';
 
@@ -28,7 +31,7 @@ export * from './Fade';
 export { default as LinearProgress } from './LinearProgress';
 export * from './LinearProgress';
 
-export { default as Modal } from './Modal';
+export { default as Modal, ModalManager } from './Modal';
 export * from './Modal';
 
 export { default as Popover } from './Popover';

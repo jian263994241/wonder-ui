@@ -6,27 +6,25 @@
 /** @jsx jsx */
 import * as React from 'react';
 import { jsx, Button, Portal } from '@wonder-ui/core';
+import { useToggle } from '@wonder-ui/hooks';
 
 export default function Example() {
   const target = React.useRef(null);
-  const [visible, setVisible] = React.useState(false);
+  const [visible, { toggle }] = useToggle(false);
 
   return (
     <div>
-      <Button
-        onClick={() => {
-          setVisible(!visible);
-        }}
-      >
-        Toggle
+      <Button onClick={() => toggle()}>Toggle</Button>
+
+      <div css={{ backgroundColor: 'grey' }}>
         {visible && (
           <Portal container={() => target.current}>
-            <div>不在button内</div>
+            <div>Portal Content</div>
           </Portal>
         )}
-      </Button>
+      </div>
 
-      <div ref={target}></div>
+      <div ref={target} css={{ backgroundColor: 'pink' }}></div>
     </div>
   );
 }

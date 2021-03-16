@@ -25,7 +25,7 @@ export default function Example() {
         <Button onClick={() => setVisible(!visible)}>Toggle</Button>
       </Space>
       <WhiteSpace />
-      <Collapse visible={visible}>
+      <Collapse in={visible}>
         <div
           css={{
             border: '1px solid #ccc',

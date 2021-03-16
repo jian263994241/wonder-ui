@@ -37,7 +37,7 @@ type TransitionCallBack = (node: HTMLElement, isAppearing?: boolean) => void;
 export interface FadeProps {
   appear?: boolean;
 
-  children: React.ReactHTMLElement<any>;
+  children: React.ReactElement & React.RefAttributes<React.ReactElement>;
 
   style?: React.CSSProperties;
 
@@ -69,14 +69,14 @@ export interface FadeProps {
   /**
    * @description 显示隐藏内容
    */
-  visible?: boolean;
+  in?: boolean;
 }
 
 const Fade: React.FC<FadeProps> = React.forwardRef(function Fade(props, ref) {
   const {
     appear = true,
     children,
-    visible: inProp,
+    in: inProp,
     onEnter,
     onEntered,
     onEntering,

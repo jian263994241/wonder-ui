@@ -147,7 +147,7 @@ function getHiddenSiblings(container: Element) {
   return hiddenSiblings;
 }
 
-interface Modal {
+export interface Modal {
   mount: Element;
   modalRef: Element;
 }
@@ -169,7 +169,7 @@ interface Container {
 export default class ModalManager {
   private containers: Container[];
 
-  private modals: Modal[];
+  public modals: Modal[];
 
   constructor() {
     this.modals = [];

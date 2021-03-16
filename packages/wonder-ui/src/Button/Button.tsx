@@ -3,7 +3,7 @@ import styled from '../styles/styled';
 import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
 import type { StyledComponentProps } from '../styles/types';
-import { darken } from '../styles/colorManipulator';
+import { darken, alpha } from '../styles/colorManipulator';
 import { useTouchFeedback, useForkRef } from '@wonder-ui/hooks';
 import clsx from 'clsx';
 
@@ -48,11 +48,10 @@ export const ButtonRoot = styled('button', {
     display: 'inline-block',
     position: 'relative',
     textAlign: 'center',
+    outline: 0,
     // Remove grey highlight
     WebkitTapHighlightColor: 'transparent',
     backgroundColor: 'transparent', // Reset default value
-    // We disable the focus ring for mouse, touch and keyboard users.
-    outline: 'none',
     border: '1px solid transparent',
     margin: 0, // Remove the margin in Safari
     borderRadius: 0,
@@ -66,6 +65,7 @@ export const ButtonRoot = styled('button', {
       ['background-color', 'border-color', 'box-shadow', 'color', 'opacity'],
       { duration: 'shorter' }
     ),
+
     // So we take precedent over the style of a native <a /> element.
     '&::-moz-focus-inner': {
       borderStyle: 'none' // Remove Firefox dotted outline.
@@ -151,6 +151,13 @@ export const ButtonRoot = styled('button', {
           '&.state-active, &.active': {
             backgroundColor: darken(theme.palette[styleProps.color].main, 0.2),
             borderColor: darken(theme.palette[styleProps.color].main, 0.2)
+          },
+          '&:focus': {
+            borderColor: darken(theme.palette[styleProps.color].main, 0.2),
+            boxShadow: `0 0 0 0.25rem ${alpha(
+              theme.palette[styleProps.color].main,
+              0.5
+            )}`
           }
         },
         outlined: {

@@ -1,4 +1,4 @@
-export function ownerDocument(node: Node | undefined): Document {
+export function ownerDocument(node: Node | undefined | null): Document {
   return (node && node.ownerDocument) || document;
 }
 

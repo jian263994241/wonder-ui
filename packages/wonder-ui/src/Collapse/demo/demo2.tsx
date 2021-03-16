@@ -25,7 +25,7 @@ export default function Example() {
         <Button onClick={() => setVisible(!visible)}>Toggle</Button>
       </Space>
       <WhiteSpace />
-      <Collapse visible={visible} collapsedSize={30}>
+      <Collapse in={visible} collapsedSize={30}>
         <Typography paragraph>default view text</Typography>
         <div
           css={{

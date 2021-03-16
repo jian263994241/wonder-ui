@@ -1,3 +1,4 @@
+export { default as EventEmitter } from 'eventemitter3';
 export { default as capitalize } from './capitalize';
 export { default as createChainedFunction } from './createChainedFunction';
 export { default as createId } from './createId';
@@ -10,4 +11,5 @@ export { default as map } from 'lodash/map';
 export { default as ownerDocument } from './ownerDocument';
 export { default as ownerWindow } from './ownerWindow';
 export { default as pick } from 'lodash/pick';
+export { default as setRef } from './setRef';
 export { default as uniqueNumber } from './uniqueNumber';

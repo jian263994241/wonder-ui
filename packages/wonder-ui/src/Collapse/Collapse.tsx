@@ -84,14 +84,14 @@ export interface CollapseProps {
   /**
    * @description 显示隐藏内容
    */
-  visible?: boolean;
+  in?: boolean;
 }
 
 const Collapse = createFCWithTheme<CollapseProps>(
   'WuiCollapse',
   (props, ref) => {
     const {
-      visible,
+      in: visible,
       children,
       className,
       component,

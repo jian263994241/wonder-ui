@@ -68,6 +68,7 @@ export default defineConfig({
       {
         title: '用户反馈',
         children: [
+          'components/backdrop.md',
           'components/popover.md',
           'components/progress.md',
           'components/result.md'
@@ -79,7 +80,7 @@ export default defineConfig({
       },
       {
         title: '辅助工具',
-        children: ['components/portal.md']
+        children: ['components/modal.md', 'components/portal.md']
       },
       {
         title: '其他',

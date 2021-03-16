@@ -41,6 +41,7 @@
     "@wonder-ui/utils": "^2.0.0",
     "clsx": "^1.1.1",
     "notistack": "^1.0.5",
+    "react-focus-lock": "^2.5.0",
     "react-popper": "^2.2.4",
     "react-transition-group": "^4.4.1"
   },

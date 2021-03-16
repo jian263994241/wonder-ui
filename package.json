@@ -5,9 +5,10 @@
     "commit": "cz",
     "build": "build:core & build:styled & build:icons",
     "build:core": "yarn workspace @wonder-ui/core build",
-    "build:styles": "yarn workspace @wonder-ui/styles build",
-    "build:styled": "yarn workspace @wonder-ui/styled build",
+    "build:hooks": "yarn workspace @wonder-ui/hooks build",
     "build:icons": "yarn workspace @wonder-ui/icons build",
+    "build:styled": "yarn workspace @wonder-ui/styled build",
+    "build:styles": "yarn workspace @wonder-ui/styles build",
     "build:utils": "yarn workspace @wonder-ui/utils build",
     "doc": "dumi dev",
     "doc:build": "dumi build"

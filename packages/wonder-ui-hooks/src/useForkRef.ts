@@ -1,15 +1,6 @@
 import * as React from 'react';
+import { setRef } from '@wonder-ui/utils';
 import useEventCallback from './useEventCallback';
-
-type Ref<T> = React.MutableRefObject<T> | React.RefCallback<T> | null;
-
-export function setRef(ref: Ref<any>, value: any) {
-  if (typeof ref === 'function') {
-    ref(value);
-  } else if (ref) {
-    ref.current = value;
-  }
-}
 
 export function useForkRef<R extends any[]>(...refs: R) {
   /**
