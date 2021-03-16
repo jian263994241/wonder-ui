@@ -71,6 +71,9 @@ function handleContainer(containerInfo: Container, props: ManagedModalProps) {
     el: HTMLElement | SVGElement;
     value: string;
   }> = [];
+
+  let scrollPositionX: number, scrollPositionY: number;
+
   const container = containerInfo.container;
 
   if (!props.disableScrollLock) {
@@ -90,7 +93,7 @@ function handleContainer(containerInfo: Container, props: ManagedModalProps) {
 
       // .mui-fixed is a global helper.
       const fixedElements = ownerDocument(container).querySelectorAll(
-        '.mui-fixed'
+        '.wui-fixed'
       );
       [].forEach.call(fixedElements, (element: HTMLElement | SVGElement) => {
         restoreStyle.push({
@@ -121,7 +124,32 @@ function handleContainer(containerInfo: Container, props: ManagedModalProps) {
       property: 'overflow',
       el: scrollContainer
     });
+
+    restoreStyle.push({
+      value: scrollContainer.style.position,
+      property: 'position',
+      el: scrollContainer
+    });
+
+    restoreStyle.push({
+      value: scrollContainer.style.top,
+      property: 'top',
+      el: scrollContainer
+    });
+
+    restoreStyle.push({
+      value: scrollContainer.style.left,
+      property: 'left',
+      el: scrollContainer
+    });
+
+    scrollPositionX = containerWindow.pageXOffset;
+    scrollPositionY = containerWindow.pageYOffset;
+
     scrollContainer.style.overflow = 'hidden';
+    scrollContainer.style.position = 'fixed';
+    scrollContainer.style.top = `-${scrollPositionY}px`;
+    scrollContainer.style.left = `-${scrollPositionX}px`;
   }
 
   const restore = () => {
@@ -132,6 +160,10 @@ function handleContainer(containerInfo: Container, props: ManagedModalProps) {
         el.style.removeProperty(property);
       }
     });
+
+    const containerWindow = ownerWindow(container);
+
+    containerWindow.scrollTo(scrollPositionX, scrollPositionY);
   };
 
   return restore;
