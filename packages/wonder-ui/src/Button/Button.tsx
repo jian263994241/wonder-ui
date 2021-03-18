@@ -81,9 +81,9 @@ export const ButtonRoot = styled('button', {
   }),
   ({ theme, styleProps }) => {
     const buttonPadding = {
-      small: `${theme.typography.pxToRem(4)} ${theme.typography.pxToRem(8)}`,
-      medium: `${theme.typography.pxToRem(6)} ${theme.typography.pxToRem(12)}`,
-      large: `${theme.typography.pxToRem(8)} ${theme.typography.pxToRem(16)}`
+      small: theme.spacing(0.5, 1),
+      medium: theme.spacing(0.75, 1.5),
+      large: theme.spacing(1, 2)
     }[styleProps.size];
 
     const buttonfontSize = {
@@ -153,7 +153,6 @@ export const ButtonRoot = styled('button', {
             borderColor: darken(theme.palette[styleProps.color].main, 0.2)
           },
           '&:focus': {
-            borderColor: darken(theme.palette[styleProps.color].main, 0.2),
             boxShadow: `0 0 0 0.25rem ${alpha(
               theme.palette[styleProps.color].main,
               0.5
@@ -170,6 +169,12 @@ export const ButtonRoot = styled('button', {
             borderColor: theme.palette[styleProps.color].main
             // color: darken(theme.palette[styleProps.color].main, 0.2),
             // borderColor: darken(theme.palette[styleProps.color].main, 0.2)
+          },
+          '&:focus': {
+            boxShadow: `0 0 0 0.25rem ${alpha(
+              theme.palette[styleProps.color].main,
+              0.5
+            )}`
           }
         },
         text: {
@@ -177,6 +182,12 @@ export const ButtonRoot = styled('button', {
           backgroundColor: 'transparent',
           '&.state-active, &.active': {
             color: darken(theme.palette[styleProps.color].main, 0.2)
+          },
+          '&:focus': {
+            boxShadow: `0 0 0 0.25rem ${alpha(
+              theme.palette[styleProps.color].main,
+              0.5
+            )}`
           }
         }
       }[styleProps.variant]

@@ -59,11 +59,15 @@ export default defineConfig({
       },
       {
         title: '数据录入',
-        children: []
+        children: ['components/switch.md']
       },
       {
         title: '数据展示',
-        children: ['components/badge.md', 'components/collapse.md']
+        children: [
+          'components/badge.md',
+          'components/collapse.md',
+          'components/list.md'
+        ]
       },
       {
         title: '用户反馈',

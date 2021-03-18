@@ -6,6 +6,7 @@ export { default as deepmerge } from './deepmerge';
 export { default as getScrollbarSize } from './getScrollbarSize';
 export { default as getSupport } from './getSupport';
 export { default as getTransitionDurationFromElement } from './getTransitionDurationFromElement';
+export { default as groupBy } from 'lodash/groupBy';
 export { default as isObject } from 'lodash/isObject';
 export { default as map } from 'lodash/map';
 export { default as ownerDocument } from './ownerDocument';

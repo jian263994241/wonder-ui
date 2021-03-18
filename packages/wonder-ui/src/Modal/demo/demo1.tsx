@@ -12,7 +12,7 @@ const Demo = styled('div')`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
+  width: 320px;
   background-color: rgb(255, 255, 255);
   border: 2px solid rgb(0, 0, 0);
   box-shadow: rgb(0 0 0 / 20%) 0px 11px 15px -7px,
@@ -34,9 +34,7 @@ export default function Example() {
               模态框标题
             </Typography>
             <Typography gutterBottom> 模态框文字文字 </Typography>
-            <Button onClick={() => toggle()} size="small">
-              确定
-            </Button>
+            <Button onClick={() => toggle()}>确定</Button>
           </Demo>
         </Fade>
       </Modal>

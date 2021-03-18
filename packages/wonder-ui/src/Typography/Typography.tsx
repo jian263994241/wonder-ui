@@ -18,13 +18,23 @@ const defaultVariantMapping = {
 } as const;
 
 export interface TypographyStyleProps {
-  /** 自动溢出省略 */
-  noWrap: boolean;
   /**
    * @description 对齐
    * @default inherit
    */
   align: React.CSSProperties['textAlign'];
+  /**
+   * @description 颜色
+   * @default inherit
+   */
+  color: 'inherit' | 'primary' | 'secondary' | 'hint';
+
+  /** 不换行 */
+  noWrap: boolean;
+  /**
+   * 多行省略
+   */
+  lineClamp?: number;
   /** 段落 */
   paragraph: boolean;
   /** 增加间距 */
@@ -42,16 +52,33 @@ export const TypographyRoot = styled('span', {
   slot: 'Root'
 })<StyleProps>(({ theme, styleProps }) => ({
   margin: 0,
-  ...theme.typography[styleProps.variant],
   textAlign: styleProps.align,
+  color:
+    styleProps.color === 'inherit'
+      ? styleProps.color
+      : theme.palette.text[styleProps.color],
+  ...theme.typography[styleProps.variant],
+  //单行展示
   ...(styleProps.noWrap && {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    WebkitLineClamp: 2,
+    maxHeight: 22
   }),
+  //多行省略
+  ...(styleProps.lineClamp != undefined &&
+    !styleProps.noWrap && {
+      display: '-webkit-box',
+      WebkitBoxOrient: 'vertical',
+      WebkitLineClamp: styleProps.lineClamp,
+      overflow: 'hidden'
+    }),
+  //间距
   ...(styleProps.gutterBottom && {
     marginBottom: '0.35em'
   }),
+  //段落
   ...(styleProps.paragraph && {
     marginBottom: 16
   })
@@ -68,7 +95,9 @@ const Typography = createFCWithTheme<TypographyProps>(
       children,
       className,
       component,
+      color = 'inherit',
       gutterBottom = false,
+      lineClamp,
       noWrap = false,
       paragraph = false,
       variant = 'body1',
@@ -76,11 +105,13 @@ const Typography = createFCWithTheme<TypographyProps>(
     } = props;
 
     const _component =
-      component || paragraph ? 'p' : defaultVariantMapping[variant];
+      component || (paragraph ? 'p' : defaultVariantMapping[variant]);
 
     const styleProps = {
       align,
+      color,
       gutterBottom,
+      lineClamp,
       noWrap,
       paragraph,
       variant

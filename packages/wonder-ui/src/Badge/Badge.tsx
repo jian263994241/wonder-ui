@@ -1,7 +1,7 @@
 import * as React from 'react';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { StyleProps } from '../styles/types';
+import type { StyleProps, StyledComponentProps } from '../styles/types';
 import createFCWithTheme from '../styles/createFCWithTheme';
 
 export interface BadgeStyleProps {
@@ -42,14 +42,13 @@ const BadgeRoot = styled('div', { name: 'WuiBadge', slot: 'Root' })<
       transformOrigin: '100% 0'
     }),
     '&:empty': {
-      padding: '0.225rem'
+      padding: '0.225rem',
+      borderRadius: '50%'
     }
   };
 });
 
-export interface BadgeProps extends BadgeStyleProps {
-  text?: React.ReactNode;
-}
+export interface BadgeProps extends StyledComponentProps<typeof BadgeRoot> {}
 
 const Badge = createFCWithTheme<BadgeProps>('WuiBadge', (props, ref) => {
   const {
@@ -57,7 +56,6 @@ const Badge = createFCWithTheme<BadgeProps>('WuiBadge', (props, ref) => {
     className,
     rounded = false,
     children,
-    text,
     sup,
     ...rest
   } = props;
@@ -72,7 +70,7 @@ const Badge = createFCWithTheme<BadgeProps>('WuiBadge', (props, ref) => {
       ref={ref}
       {...rest}
     >
-      {text}
+      {children}
     </BadgeRoot>
   );
 });

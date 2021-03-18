@@ -2,7 +2,7 @@ import { map } from '@wonder-ui/utils';
 
 type Options<Classes extends Record<string, string>> = {
   name: string;
-  styleProps: object;
+  styleProps?: object;
   className?: string;
   classes?: Partial<Classes>;
 };
@@ -11,7 +11,7 @@ export default function useClasses<
   Classes extends Record<string, string> = {}
 >({
   name,
-  styleProps,
+  styleProps = {},
   className,
   classes: classesInput = {}
 }: Options<Classes>) {
@@ -27,10 +27,11 @@ export default function useClasses<
     }
   })
     .concat(className as string)
-    .concat(classesInput.root as string);
+    .concat(classesInput.root as string)
+    .filter(Boolean);
 
   return {
     ...classesInput,
-    root: classes.filter(Boolean).join(' ')
+    root: classes.length > 0 ? classes.join(' ') : undefined
   };
 }

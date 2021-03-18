@@ -1,3 +1,6 @@
+export { default as ArrowForward } from './ArrowForward';
+export * from './ArrowForward';
+
 export { default as Backdrop } from './Backdrop';
 export * from './Backdrop';
 
@@ -31,6 +34,24 @@ export * from './Fade';
 export { default as LinearProgress } from './LinearProgress';
 export * from './LinearProgress';
 
+export { default as List } from './List';
+export * from './List';
+
+export { default as ListHeader } from './ListHeader';
+export * from './ListHeader';
+
+export { default as ListItem } from './ListItem';
+export * from './ListItem';
+
+export { default as ListItemTextAfter } from './ListItemTextAfter';
+export * from './ListItemTextAfter';
+
+export { default as ListItemMedia } from './ListItemMedia';
+export * from './ListItemMedia';
+
+export { default as ListItemText } from './ListItemText';
+export * from './ListItemText';
+
 export { default as Modal, ModalManager } from './Modal';
 export * from './Modal';
 
@@ -48,6 +69,9 @@ export * from './Space';
 
 export { default as SvgIcon } from './SvgIcon';
 export * from './SvgIcon';
+
+export { default as Switch } from './Switch';
+export * from './Switch';
 
 export { default as Typography } from './Typography';
 export * from './Typography';

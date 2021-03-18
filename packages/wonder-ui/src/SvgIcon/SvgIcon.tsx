@@ -50,7 +50,7 @@ const SvgIcon = createFCWithTheme<SvgIconProps>('WuiSvgIcon', (props, ref) => {
     children,
     className,
     component = 'svg',
-    size = 'inherit',
+    size = 'medium',
     spin,
     titleAccess,
     ...rest

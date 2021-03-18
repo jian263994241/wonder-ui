@@ -29,7 +29,9 @@ export default function Example() {
       </Wrapper>
       <Wrapper>
         <Block></Block>
-        <Badge text="+99" color="danger" rounded sup></Badge>
+        <Badge color="danger" rounded sup>
+          +99
+        </Badge>
       </Wrapper>
     </Space>
   );

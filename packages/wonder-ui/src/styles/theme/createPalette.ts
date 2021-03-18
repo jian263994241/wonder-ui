@@ -57,7 +57,7 @@ const common = {
 export const light = {
   text: {
     primary: alpha(common.black, 0.87),
-    secondary: alpha(common.black, 0.54),
+    secondary: alpha(common.black, 0.45),
     disabled: alpha(common.black, 0.38),
     hint: alpha(common.black, 0.38)
   },

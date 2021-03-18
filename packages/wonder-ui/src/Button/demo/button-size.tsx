@@ -15,7 +15,7 @@ export default function Example() {
           Large button
         </Button>
         <Button shape="circle" size="large">
-          <House />
+          <House size="inherit" />
         </Button>
       </Space>
       <Space>
@@ -24,7 +24,7 @@ export default function Example() {
           Small button
         </Button>
         <Button shape="circle" size="small">
-          <House />
+          <House size="inherit" />
         </Button>
       </Space>
     </Space>

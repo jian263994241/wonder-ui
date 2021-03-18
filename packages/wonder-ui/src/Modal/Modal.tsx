@@ -65,7 +65,7 @@ export interface ModalProps {
    */
   disableFocusLock?: boolean;
   /**
-   * @description React 不支持服务端渲染的 createPortal() API。 若您想显示模态框，则需要通过 disablePortal 这个属性来禁用 protal 功能
+   * @description 禁用 Portal
    * @default false
    */
   disablePortal?: boolean;
@@ -130,6 +130,7 @@ const Modal = createFCWithTheme<ModalProps>('WuiModal', (props, ref) => {
     children,
     className,
     closeAfterTransition,
+    component,
     container,
     disableAutoFocus = false,
     disableEscapeKeyDown = false,
@@ -312,6 +313,7 @@ const Modal = createFCWithTheme<ModalProps>('WuiModal', (props, ref) => {
         onKeyDown={handleKeyDown}
         ref={handleRef}
         className={classes.root}
+        as={component}
         {...rest}
       >
         {!hideBackdrop && (

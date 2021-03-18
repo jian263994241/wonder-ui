@@ -47,6 +47,11 @@ type TransitionCallBack = (node: HTMLElement) => void;
 
 export interface CollapseProps {
   /**
+   * React children
+   */
+  children?: any;
+
+  /**
    * @description 折叠尺寸
    * @default 0
    */
