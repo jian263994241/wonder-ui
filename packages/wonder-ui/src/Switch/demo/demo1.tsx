@@ -1,39 +1,21 @@
 /**
- * title: 基本使用
- * desc: 该开关作用为一个辅助操作和一个单独的目标。
- * background: '#f5f5f5'
+ * title: 基本的开关
+ * desc:
+ *
  */
 
 /** @jsx jsx */
-import {
-  jsx,
-  List,
-  ListItem,
-  ListHeader,
-  ListItemMedia,
-  ListItemText,
-  Container
-} from '@wonder-ui/core';
-import { Wifi } from '@wonder-ui/icons';
+import { jsx, Space, Switch } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <Container size="sm">
-      <List>
-        <ListHeader>Settings</ListHeader>
-        <ListItem>
-          <ListItemMedia>
-            <Wifi />
-          </ListItemMedia>
-          <ListItemText>Wi-Fi</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemMedia>
-            <Wifi />
-          </ListItemMedia>
-          <ListItemText>Wi-Fi 2</ListItemText>
-        </ListItem>
-      </List>
-    </Container>
+    <Space wrap>
+      <Switch />
+      <Switch defaultChecked />
+      <Switch defaultChecked color="secondary" />
+      <Switch defaultChecked disabled />
+      <Switch defaultChecked disabled color="secondary" />
+      <Switch disabled />
+    </Space>
   );
 }

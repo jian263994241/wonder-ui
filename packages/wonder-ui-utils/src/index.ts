@@ -14,3 +14,4 @@ export { default as ownerWindow } from './ownerWindow';
 export { default as pick } from 'lodash/pick';
 export { default as setRef } from './setRef';
 export { default as uniqueNumber } from './uniqueNumber';
+export { default as withProps } from './withProps';

@@ -18,6 +18,11 @@ export interface ListItemStyleProps {
    * @default false
    */
   selected?: boolean;
+  /**
+   * @description 是否展示点击状态
+   * @default false
+   */
+  button?: boolean;
 
   alignItems?: 'flex-start' | 'center';
 }
@@ -41,6 +46,10 @@ const ListItemRoot = styled('li', {
   paddingLeft: theme.spacing(2),
   ...(styleProps.selected && {
     backgroundColor: alpha(theme.palette.primary.main, 0.1)
+  }),
+
+  ...(styleProps.button && {
+    cursor: 'pointer'
   }),
 
   '&.state-active': {
@@ -84,11 +93,6 @@ const ListItemBody = styled('div', {
 export interface ListItemProps
   extends StyledComponentProps<typeof ListItemRoot> {
   /**
-   * @description 是否展示点击状态
-   * @default false
-   */
-  button?: boolean;
-  /**
    * @description Css api
    */
   classes?: Partial<ClassNameMap<'root' | 'body'>>;
@@ -113,7 +117,7 @@ const ListItem = createFCWithTheme<ListItemProps>(
     });
     const handleRef = useForkRef(elementRef, ref);
 
-    const styleProps = { alignItems, selected };
+    const styleProps = { alignItems, button, selected };
 
     const classes = useClasses({ ...props, styleProps, name: 'WuiListItem' });
 

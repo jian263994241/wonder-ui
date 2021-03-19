@@ -1,27 +1,17 @@
 /**
- * background: '#f5f5f5'
+ * title: 尺寸
+ * desc: 使用 size 属性 定义小一号开关
+ *
  */
 
 /** @jsx jsx */
-import { jsx, List, ListItem, ListItemText, Container } from '@wonder-ui/core';
+import { jsx, Space, Switch } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <Container size="sm">
-      <List>
-        <ListItem>
-          <ListItemText>Item 1</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemText>Item 2</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemText>Item 3</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemText>Item 4</ListItemText>
-        </ListItem>
-      </List>
-    </Container>
+    <Space>
+      <Switch />
+      <Switch size="small" />
+    </Space>
   );
 }

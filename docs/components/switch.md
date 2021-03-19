@@ -7,14 +7,20 @@
 
 ### 基本使用
 
-该开关作用为一个辅助操作和一个单独的目标。
-
 <code src="../../packages/wonder-ui/src/Switch/demo/demo1.tsx"></code>
 
-### 处理异步
+### 尺寸
 
 <code src="../../packages/wonder-ui/src/Switch/demo/demo2.tsx"></code>
 
+
+### 自定义值
+
+<code src="../../packages/wonder-ui/src/Switch/demo/demo3.tsx"></code>
+
+### 自定义图标
+
+<code src="../../packages/wonder-ui/src/Switch/demo/demo4.tsx"></code>
 
 ## API
 
