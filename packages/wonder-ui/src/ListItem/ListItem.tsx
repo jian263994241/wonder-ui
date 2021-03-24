@@ -9,7 +9,7 @@ import type {
 } from '../styles/types';
 import { useTouchFeedback, useForkRef } from '@wonder-ui/hooks';
 import { groupBy } from '@wonder-ui/utils';
-import { alpha } from '../styles/colorManipulator';
+import { alpha, darken } from '../styles/colorManipulator';
 import ListItemMedia from '../ListItemMedia';
 
 export interface ListItemStyleProps {
@@ -53,7 +53,7 @@ const ListItemRoot = styled('li', {
   }),
 
   '&.state-active': {
-    backgroundColor: alpha(theme.palette.background.paper, 0.5)
+    backgroundColor: darken(theme.palette.background.paper, 0.1)
   },
   '&:last-of-type > .WuiListItem-body': {
     border: 'none'

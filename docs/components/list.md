@@ -48,13 +48,13 @@
 
 #### Checkbox 选择框
 
-<code src="../../packages/wonder-ui/src/List/demo/demo7.tsx"></code>
+<code src="../../packages/wonder-ui/src/List/demo/checkbox.tsx"></code>
 
 #### Switch 开关
 
 该开关作用为一个辅助操作和一个单独的目标。
 
-<code title="列表控件" src="../../packages/wonder-ui/src/Switch/demo/demo1.tsx"></code>
+<code  src="../../packages/wonder-ui/src/List/demo/switch.tsx"></code>
 
 ## API
 

@@ -1,6 +1,6 @@
 /**
- * title: Switch 开关
- * desc: 该开关作用为一个辅助操作和一个单独的目标。
+ * title: Checkbox
+ * desc:
  * background: '#f5f5f5'
  */
 
@@ -13,28 +13,25 @@ import {
   ListItemMedia,
   ListItemText,
   Container,
-  Switch
+  Checkbox
 } from '@wonder-ui/core';
-import { Wifi } from '@wonder-ui/icons';
 
 export default function Example() {
   return (
     <Container size="sm">
-      <List>
+      <List component="div">
         <ListHeader>Settings</ListHeader>
-        <ListItem>
+        <ListItem button component="label">
           <ListItemMedia>
-            <Wifi />
+            <Checkbox circle />
           </ListItemMedia>
           <ListItemText>Wi-Fi</ListItemText>
-          <Switch />
         </ListItem>
-        <ListItem>
+        <ListItem button component="label">
           <ListItemMedia>
-            <Wifi />
+            <Checkbox circle />
           </ListItemMedia>
           <ListItemText>Wi-Fi 2</ListItemText>
-          <Switch />
         </ListItem>
       </List>
     </Container>

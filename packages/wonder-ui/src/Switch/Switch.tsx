@@ -30,11 +30,9 @@ const SwitchRoot = styled('label', {
   })
 }));
 
-const SwitchInput = styled('input', { name: 'WuiSwitch', slot: 'Input' })(
-  () => ({
-    display: 'none'
-  })
-);
+const SwitchInput = styled('input', { name: 'WuiSwitch', slot: 'Input' })({
+  display: 'none'
+});
 
 const SwitchIcon = styled('span', {
   name: 'WuiSwitch',
@@ -194,18 +192,22 @@ export interface SwitchProps {
    * @description medium
    */
   size?: 'medium' | 'small';
+  /**
+   * input value
+   */
+  value?: any;
 }
 
 const Switch = createFCWithTheme<SwitchProps>('WuiSwitch', (props, ref) => {
   const {
     checked: checkedProp,
-    component,
+    checkedIcon,
     className,
     color = 'primary',
+    component,
     defaultChecked = false,
     disabled,
     icon,
-    checkedIcon,
     id,
     inputProps,
     inputRef,
@@ -213,6 +215,7 @@ const Switch = createFCWithTheme<SwitchProps>('WuiSwitch', (props, ref) => {
     onClick,
     required = false,
     size = 'medium',
+    value,
     ...rest
   } = props;
   const [checked, setChecked] = useControlled({
@@ -253,6 +256,7 @@ const Switch = createFCWithTheme<SwitchProps>('WuiSwitch', (props, ref) => {
         ref={inputRef}
         required={required}
         type="checkbox"
+        value={value}
         {...inputProps}
       />
 

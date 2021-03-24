@@ -59,7 +59,11 @@ export default defineConfig({
       },
       {
         title: '数据录入',
-        children: ['components/switch.md']
+        children: [
+          'components/checkbox.md',
+          'components/radio.md',
+          'components/switch.md'
+        ]
       },
       {
         title: '数据展示',

@@ -134,8 +134,8 @@ export default function createPalette(palette: PaletteOptions = {}) {
       dark: blue.A700
     },
     secondary = {
-      light: grey[700],
-      dark: grey[900]
+      light: grey.A400,
+      dark: grey.A700
     },
     error = {
       light: red[500],

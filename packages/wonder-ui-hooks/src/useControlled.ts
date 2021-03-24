@@ -5,7 +5,7 @@ export interface ControlledOptions<T> {
   defaultValue?: T;
   value?: T;
   state?: string;
-  name: string;
+  name?: string;
 }
 
 export function useControlled<V>(options: ControlledOptions<V>) {

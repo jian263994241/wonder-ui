@@ -13,6 +13,9 @@ export * from './Button';
 export { default as ButtonGroup } from './ButtonGroup';
 export * from './ButtonGroup';
 
+export { default as Checkbox } from './Checkbox';
+export * from './Checkbox';
+
 export { default as CircularProgress } from './CircularProgress';
 export * from './CircularProgress';
 
@@ -60,6 +63,9 @@ export * from './Popover';
 
 export { default as Portal } from './Portal';
 export * from './Portal';
+
+export { default as Radio } from './Radio';
+export * from './Radio';
 
 export { default as Row } from './Row';
 export * from './Row';

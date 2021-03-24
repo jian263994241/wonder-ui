@@ -5,16 +5,14 @@ import useThemeProps from './useThemeProps';
 export interface additionProps {
   /** emotion as  */
   component?: keyof React.ReactHTML;
-  /** 相当于 `a` 链接的 `href` 属性，`component`为 `a` 存在时生效 */
-  href?: string;
-  /** 相当于 `a` 链接的 `target` 属性，`href` 存在时生效 */
-  target?: string;
   /** element class */
   className?: string;
   /** element style */
   style?: React.CSSProperties;
   /** theme  */
   theme: Theme;
+
+  [key: string]: any;
 }
 
 export default function createFCWithTheme<P = {}, T = any>(
