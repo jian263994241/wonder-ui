@@ -10,8 +10,6 @@ interface OptionType {
 export function useVirtualList<T = any>(list: T[], options: OptionType) {
   const containerRef = React.useRef<HTMLElement | null>();
   const size = useSize(containerRef as React.MutableRefObject<HTMLElement>);
-  // 暂时禁止 cache
-  // const distanceCache = useRef<{ [key: number]: number }>({});
   const [state, setState] = React.useState({ start: 0, end: 10 });
   const { itemHeight, overscan = 5 } = options;
 
@@ -81,23 +79,13 @@ export function useVirtualList<T = any>(list: T[], options: OptionType) {
   }, [list.length]);
 
   const getDistanceTop = (index: number) => {
-    // 如果有缓存，优先返回缓存值
-    // if (enableCache && distanceCache.current[index]) {
-    //   return distanceCache.current[index];
-    // }
     if (typeof itemHeight === 'number') {
       const height = index * itemHeight;
-      // if (enableCache) {
-      //   distanceCache.current[index] = height;
-      // }
       return height;
     }
     const height = list
       .slice(0, index)
       .reduce((sum, _, i) => sum + itemHeight(i), 0);
-    // if (enableCache) {
-    //   distanceCache.current[index] = height;
-    // }
     return height;
   };
 

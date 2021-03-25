@@ -30,7 +30,7 @@ const ListRoot = styled('ul', {
   }
 }));
 
-export interface ListProps extends StyledComponentProps<typeof ListRoot> {
+export interface ListProps {
   inset?: boolean;
 }
 

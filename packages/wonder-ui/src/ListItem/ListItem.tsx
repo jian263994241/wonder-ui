@@ -57,15 +57,6 @@ const ListItemRoot = styled('li', {
   },
   '&:last-of-type > .WuiListItem-body': {
     border: 'none'
-  },
-  '& + .WuiListHeader-root:before': {
-    content: '""',
-    position: 'absolute',
-    top: -1,
-    left: 0,
-    width: '100%',
-    height: 1,
-    backgroundColor: theme.palette.background.paper
   }
 }));
 

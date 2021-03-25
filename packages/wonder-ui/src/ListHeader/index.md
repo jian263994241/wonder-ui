@@ -2,9 +2,9 @@
 sidemenu: false
 ---
 
-### List
+### ListHeader
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
 | children | children | `ReactNode` |
-| inset | 内嵌样式 | `boolean` |
+| disableSticky | 禁用 sticky | `boolean` |

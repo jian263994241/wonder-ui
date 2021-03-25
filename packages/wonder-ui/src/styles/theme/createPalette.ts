@@ -1,5 +1,14 @@
 import { darken, getContrastRatio, lighten, alpha } from '../colorManipulator';
-import { blue, green, grey, orange, red, ColorKeys, ColorType } from './colors';
+import {
+  blue,
+  green,
+  grey,
+  lightBlue,
+  orange,
+  red,
+  ColorKeys,
+  ColorType
+} from './colors';
 import * as colors from './colors';
 
 interface ColorObj {
@@ -134,8 +143,8 @@ export default function createPalette(palette: PaletteOptions = {}) {
       dark: blue.A700
     },
     secondary = {
-      light: grey.A400,
-      dark: grey.A700
+      light: grey[600],
+      dark: grey[800]
     },
     error = {
       light: red[500],
@@ -150,8 +159,8 @@ export default function createPalette(palette: PaletteOptions = {}) {
       dark: orange[700]
     },
     info = {
-      light: blue[500],
-      dark: blue[700]
+      light: lightBlue[500],
+      dark: lightBlue[700]
     },
     success = {
       light: green[700],
