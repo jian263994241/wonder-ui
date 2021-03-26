@@ -3,7 +3,8 @@ import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import { keyframes } from '@wonder-ui/styled';
-import type { StyleProps, ClassNameMap } from '../styles/types';
+import useThemeProps from '../styles/useThemeProps';
+import type { InProps, PickStyleProps, ClassNameMap } from '../styles/types';
 
 const SIZE = 44;
 
@@ -31,9 +32,13 @@ const circularDashKeyframe = keyframes`
   }
 `;
 
-export interface CircularProgressStyleProps {
+export interface CircularProgressProps {
   /**
-   * @description 颜色
+   * @description css api
+   */
+  classes?: Partial<ClassNameMap<'root' | 'svg' | 'circle' | 'label'>>;
+  /**
+   * @description color
    * @default primary
    */
   color?:
@@ -51,12 +56,22 @@ export interface CircularProgressStyleProps {
   variant?: 'determinate' | 'indeterminate';
   /** 尺寸 */
   size?: number;
+  /** 粗细  */
+  thickness?: number;
+  /**
+   * 值 0-100
+   */
+  value?: number;
+  /**
+   * 标签
+   */
+  label?: React.ReactNode;
 }
 
 const CircularProgressRoot = styled('span', {
   name: 'WuiCircularProgress',
   slot: 'Root'
-})<StyleProps<CircularProgressStyleProps>>(
+})<PickStyleProps<CircularProgressProps, 'color' | 'variant' | 'size'>>(
   ({ theme, styleProps }) => ({
     position: 'relative',
     /* Styles applied to the root element. */
@@ -87,7 +102,7 @@ const CircularProgressSvg = styled('svg', {
 const CircularProgressCircle = styled('circle', {
   name: 'WuiCircularProgress',
   slot: 'Circle'
-})<StyleProps<CircularProgressStyleProps>>(
+})<PickStyleProps<CircularProgressProps, 'variant'>>(
   ({ theme, styleProps }) => ({
     /* Styles applied to the `circle` svg path. */
     stroke: 'currentColor',
@@ -112,7 +127,7 @@ const CircularProgressCircle = styled('circle', {
 const CircularProgressLabel = styled('div', {
   name: 'WuiCircularProgress',
   slot: 'Label'
-})<StyleProps<CircularProgressStyleProps>>(({ theme, styleProps }) => ({
+})<PickStyleProps<CircularProgressProps, 'size'>>(({ theme, styleProps }) => ({
   top: 0,
   left: 0,
   bottom: 0,
@@ -129,100 +144,83 @@ const CircularProgressLabel = styled('div', {
   })
 }));
 
-export interface CircularProgressProps extends CircularProgressStyleProps {
-  /**
-   * @description css api
-   */
-  classes?: Partial<ClassNameMap<'root' | 'svg' | 'circle' | 'label'>>;
+export default function CircularProgress<T>(
+  inProps: InProps<T, CircularProgressProps>
+) {
+  const props = useThemeProps({ props: inProps, name: 'WuiCircularProgress' });
+  const {
+    color = 'primary',
+    className,
+    component,
+    thickness = 3.6,
+    value = 0,
+    variant = 'indeterminate',
+    size = 40,
+    style,
+    label,
+    rootRef,
+    ...rest
+  } = props;
 
-  /** 粗细  */
-  thickness?: number;
-  /**
-   * 值 0-100
-   */
-  value?: number;
-  /**
-   * 标签
-   */
-  label?: React.ReactNode;
-}
+  const styleProps = { color, variant, size };
 
-const CircularProgress = createFCWithTheme<CircularProgressProps>(
-  'WuiCircularProgress',
-  (props, ref) => {
-    const {
-      color = 'primary',
-      className,
-      thickness = 3.6,
-      value = 0,
-      variant = 'indeterminate',
-      size = 40,
-      style,
-      label,
-      ...rest
-    } = props;
+  const circleStyle: any = {};
+  const rootStyle: any = {};
+  const rootProps: any = {};
 
-    const styleProps = { color, variant, size };
-
-    const circleStyle: any = {};
-    const rootStyle: any = {};
-    const rootProps: any = {};
-
-    if (variant === 'determinate') {
-      const circumference = 2 * Math.PI * ((SIZE - thickness) / 2);
-      circleStyle.strokeDasharray = circumference.toFixed(3);
-      rootProps['aria-valuenow'] = Math.round(value);
-      circleStyle.strokeDashoffset = `${(
-        ((100 - value) / 100) *
-        circumference
-      ).toFixed(3)}px`;
-      rootStyle.transform = 'rotate(-90deg)';
-    }
-
-    const classes = useClasses({
-      ...props,
-      styleProps,
-      name: 'WuiCircularProgress'
-    });
-
-    return (
-      <CircularProgressRoot
-        aria-valuemin="0"
-        aria-valuemax="100"
-        role="progressbar"
-        className={classes.root}
-        style={{ width: size, height: size, ...rootStyle, ...style }}
-        styleProps={styleProps}
-        ref={ref}
-        {...rootProps}
-        {...rest}
-      >
-        <CircularProgressSvg
-          className={classes.svg}
-          viewBox={`${SIZE / 2} ${SIZE / 2} ${SIZE} ${SIZE}`}
-        >
-          <CircularProgressCircle
-            className={classes.circle}
-            style={circleStyle}
-            styleProps={styleProps}
-            cx={SIZE}
-            cy={SIZE}
-            r={(SIZE - thickness) / 2}
-            fill="none"
-            strokeWidth={thickness}
-          />
-        </CircularProgressSvg>
-        {variant === 'determinate' && label && (
-          <CircularProgressLabel
-            styleProps={styleProps}
-            className={classes.label}
-          >
-            {label}
-          </CircularProgressLabel>
-        )}
-      </CircularProgressRoot>
-    );
+  if (variant === 'determinate') {
+    const circumference = 2 * Math.PI * ((SIZE - thickness) / 2);
+    circleStyle.strokeDasharray = circumference.toFixed(3);
+    rootProps['aria-valuenow'] = Math.round(value);
+    circleStyle.strokeDashoffset = `${(
+      ((100 - value) / 100) *
+      circumference
+    ).toFixed(3)}px`;
+    rootStyle.transform = 'rotate(-90deg)';
   }
-);
 
-export default CircularProgress;
+  const classes = useClasses({
+    ...props,
+    styleProps,
+    name: 'WuiCircularProgress'
+  });
+
+  return (
+    <CircularProgressRoot
+      as={component}
+      aria-valuemin="0"
+      aria-valuemax="100"
+      role="progressbar"
+      className={classes.root}
+      style={{ width: size, height: size, ...rootStyle, ...style }}
+      styleProps={styleProps}
+      ref={rootRef}
+      {...rootProps}
+      {...rest}
+    >
+      <CircularProgressSvg
+        className={classes.svg}
+        viewBox={`${SIZE / 2} ${SIZE / 2} ${SIZE} ${SIZE}`}
+      >
+        <CircularProgressCircle
+          className={classes.circle}
+          style={circleStyle}
+          styleProps={styleProps}
+          cx={SIZE}
+          cy={SIZE}
+          r={(SIZE - thickness) / 2}
+          fill="none"
+          strokeWidth={thickness}
+        />
+      </CircularProgressSvg>
+      {variant === 'determinate' && label && (
+        <CircularProgressLabel
+          styleProps={styleProps}
+          className={classes.label}
+        >
+          {label}
+        </CircularProgressLabel>
+      )}
+    </CircularProgressRoot>
+  );
+}

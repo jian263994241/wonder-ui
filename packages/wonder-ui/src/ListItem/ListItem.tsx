@@ -7,7 +7,7 @@ import type {
   StyledComponentProps,
   ClassNameMap
 } from '../styles/types';
-import { useTouchFeedback, useForkRef } from '@wonder-ui/hooks';
+import { useTouchFeedback } from '@wonder-ui/hooks';
 import { groupBy } from '@wonder-ui/utils';
 import { alpha, darken } from '../styles/colorManipulator';
 import ListItemMedia from '../ListItemMedia';
@@ -102,15 +102,16 @@ const ListItem = createFCWithTheme<ListItemProps>(
       ...rest
     } = props;
 
-    const elementRef = useTouchFeedback({
-      activeClassName: 'state-active',
-      disabled: !button
-    });
-    const handleRef = useForkRef(elementRef, ref);
-
     const styleProps = { alignItems, button, selected };
 
     const classes = useClasses({ ...props, styleProps, name: 'WuiListItem' });
+
+    const containerProps = useTouchFeedback({
+      ...props,
+      className: classes.root,
+      activeClassName: 'state-active',
+      disabled: !button
+    });
 
     const childGroup = React.useMemo(
       () =>
@@ -126,10 +127,10 @@ const ListItem = createFCWithTheme<ListItemProps>(
     return (
       <ListItemRoot
         as={component}
-        className={classes.root}
         styleProps={styleProps}
-        ref={handleRef}
+        ref={ref}
         {...rest}
+        {...containerProps}
       >
         {childGroup.media}
         <ListItemBody className={classes.body}>{childGroup.body}</ListItemBody>

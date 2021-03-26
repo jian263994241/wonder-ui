@@ -7,12 +7,12 @@ export interface additionProps {
   component?: keyof React.ReactHTML;
   /** element class */
   className?: string;
+  /** css api */
+  classes?: object;
   /** element style */
   style?: React.CSSProperties;
   /** theme  */
   theme: Theme;
-
-  [key: string]: any;
 }
 
 export default function createFCWithTheme<P = {}, T = any>(

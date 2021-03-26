@@ -1,19 +1,29 @@
 import * as React from 'react';
 import useClasses from '../styles/useClasses';
+import useThemeProps from '../styles/useThemeProps';
 import styled from '../styles/styled';
-import type { StyleProps, StyledComponentProps } from '../styles/types';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import type { InProps, PickStyleProps } from '../styles/types';
 import Fade from '../Fade';
 
-interface BackdropStyleProps {
+export interface BackdropProps {
   /**
-   * 透明背景
+   * @description children
+   */
+  children?: React.ReactNode;
+  /**
+   * @description transparent background
+   * @default false
    */
   invisible?: boolean;
+  /**
+   * @description show or hide
+   * @default false
+   */
+  visible?: boolean;
 }
 
 const BackdropRoot = styled('div', { name: 'WuiBackdrop', slot: 'Root' })<
-  StyleProps<BackdropStyleProps>
+  PickStyleProps<BackdropProps, 'invisible'>
 >(({ styleProps }) => ({
   zIndex: -1,
   position: 'fixed',
@@ -31,36 +41,31 @@ const BackdropRoot = styled('div', { name: 'WuiBackdrop', slot: 'Root' })<
   })
 }));
 
-export interface BackdropProps
-  extends StyledComponentProps<typeof BackdropRoot> {
-  /**
-   * 是否显示
-   */
-  visible?: boolean;
+export default function Backdrop<T>(inProps: InProps<T, BackdropProps>) {
+  const props = useThemeProps({ props: inProps, name: 'WuiBackdrop' });
+
+  const {
+    children,
+    className,
+    invisible = false,
+    visible,
+    rootRef,
+    ...rest
+  } = props;
+
+  const styleProps = { invisible };
+  const classes = useClasses({ ...props, styleProps, name: 'WuiBackdrop' });
+
+  return (
+    <Fade in={visible}>
+      <BackdropRoot
+        styleProps={styleProps}
+        className={classes.root}
+        ref={rootRef}
+        {...rest}
+      >
+        {children}
+      </BackdropRoot>
+    </Fade>
+  );
 }
-
-const Backdrop = createFCWithTheme<BackdropProps>(
-  'WuiBackdrop',
-  (props, ref) => {
-    const { children, className, invisible = false, visible, ...rest } = props;
-
-    const styleProps = { invisible };
-
-    const classes = useClasses({ ...props, styleProps, name: 'WuiBackdrop' });
-
-    return (
-      <Fade in={visible}>
-        <BackdropRoot
-          styleProps={styleProps}
-          className={classes.root}
-          ref={ref}
-          {...rest}
-        >
-          {children}
-        </BackdropRoot>
-      </Fade>
-    );
-  }
-);
-
-export default Backdrop;

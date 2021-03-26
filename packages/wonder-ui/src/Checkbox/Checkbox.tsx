@@ -1,18 +1,32 @@
 import * as React from 'react';
-import createFCWithTheme from '../styles/createFCWithTheme';
 import styled from '../styles/styled';
-import type { StyleProps } from '../styles/types';
+import useClasses from '../styles/useClasses';
+import useThemeProps from '../styles/useThemeProps';
+import type { InProps, PickStyleProps } from '../styles/types';
 import { alpha } from '../styles/colorManipulator';
 import { useForkRef, useControlled } from '@wonder-ui/hooks';
 
-export interface SwitchStyleProps {
-  checked?: boolean;
+export interface CheckboxProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  /**
+   * @description shape
+   * @default false
+   */
   circle?: boolean;
-  color?: 'primary' | 'secondary';
+  /**
+   * @description color
+   * @default primary
+   */
+  color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
+  /**
+   * @description indeterminate
+   * @default false
+   */
+  indeterminate?: boolean;
 }
 
 const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })<
-  StyleProps<SwitchStyleProps>
+  PickStyleProps<CheckboxProps, 'circle' | 'color'>
 >(({ theme, styleProps }) => ({
   appearance: 'none',
   colorAdjust: 'exact',
@@ -59,81 +73,67 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })<
   }
 }));
 
-export interface CheckboxProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  /**
-   * @description shape
-   * @default false
-   */
-  circle?: boolean;
-  /**
-   * @description color
-   * @default primary
-   */
-  color?: 'primary' | 'secondary';
-  /**
-   * @description indeterminate
-   * @default false
-   */
-  indeterminate?: boolean;
-}
+export default function Checkbox(inProps: InProps<CheckboxProps>) {
+  const props = useThemeProps({ props: inProps, name: 'WuiCheckbox' });
 
-const Checkbox = createFCWithTheme<CheckboxProps>(
-  'WuiCheckbox',
-  (props, ref) => {
-    const {
-      checked: checkedProp,
-      circle = false,
-      color = 'primary',
-      component,
-      defaultChecked: defaultCheckedProp = false,
-      disabled,
-      indeterminate = false,
-      onChange,
-      ...rest
-    } = props;
-    const [checked, setChecked] = useControlled({
-      name: 'WuiCheckbox',
-      value: checkedProp,
-      defaultValue: defaultCheckedProp
-    });
+  const {
+    checked: checkedProp,
+    circle = false,
+    color = 'primary',
+    component,
+    className,
+    defaultChecked: defaultCheckedProp = false,
+    disabled,
+    indeterminate = false,
+    onChange,
+    rootRef: rootRefProp,
+    ...rest
+  } = props;
+  const [checked, setChecked] = useControlled({
+    name: 'WuiCheckbox',
+    value: checkedProp,
+    defaultValue: defaultCheckedProp
+  });
 
-    const rootRef = React.useRef<HTMLInputElement>(null);
-    const hadnleRef = useForkRef(rootRef, ref);
+  const rootRef = React.useRef<HTMLInputElement>(null);
+  const hadnleRef = useForkRef(rootRef, rootRefProp);
 
-    const styleProps = { color, disabled, circle };
+  const styleProps = { color, circle };
 
-    React.useEffect(() => {
-      if (rootRef.current) {
-        rootRef.current.indeterminate = checked ? false : indeterminate;
+  const classes = useClasses({
+    ...props,
+    styleProps: { ...styleProps, checked, disabled },
+    name: 'WuiCheckbox'
+  });
+
+  React.useEffect(() => {
+    if (rootRef.current) {
+      rootRef.current.indeterminate = checked ? false : indeterminate;
+    }
+  }, [indeterminate, checked]);
+
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
+    (e) => {
+      const input = e.target;
+
+      setChecked(input.checked);
+      if (onChange) {
+        onChange(e);
       }
-    }, [indeterminate, checked]);
+    },
+    [onChange, indeterminate]
+  );
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
-      (e) => {
-        const input = e.target;
-
-        setChecked(input.checked);
-        if (onChange) {
-          onChange(e);
-        }
-      },
-      [onChange]
-    );
-
-    return (
-      <CheckboxRoot
-        as={component}
-        checked={checked}
-        disabled={disabled}
-        onChange={handleChange}
-        type="checkbox"
-        styleProps={styleProps}
-        ref={hadnleRef}
-        {...rest}
-      />
-    );
-  }
-);
-
-export default Checkbox;
+  return (
+    <CheckboxRoot
+      className={classes.root}
+      checked={checked}
+      disabled={disabled}
+      onChange={handleChange}
+      type="checkbox"
+      styleProps={styleProps}
+      ref={hadnleRef}
+      {...rest}
+    />
+  );
+}

@@ -5,7 +5,6 @@ export * from './useCountDown';
 export * from './useCounter';
 export * from './useDebounce';
 export * from './useDebounceFn';
-export * from './useDisabledTouchMove';
 export * from './useDynamicList';
 export * from './useEnhancedEffect';
 export * from './useEventCallback';

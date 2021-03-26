@@ -1,17 +1,20 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
-import type { StyledComponentProps, StyleProps } from '../styles/types';
+import type { InProps, PickStyleProps } from '../styles/types';
 
-interface ListStyleProps {
+export interface ListProps {
+  /**
+   * @description 内嵌样式
+   */
   inset?: boolean;
 }
 
 const ListRoot = styled('ul', {
   name: 'WuiList',
   slot: 'Root'
-})<StyleProps<ListStyleProps>>(({ theme, styleProps }) => ({
+})<PickStyleProps<ListProps, 'inset'>>(({ theme, styleProps }) => ({
   listStyle: 'none',
   margin: 0,
   padding: 0,
@@ -30,12 +33,16 @@ const ListRoot = styled('ul', {
   }
 }));
 
-export interface ListProps {
-  inset?: boolean;
-}
-
-const List = createFCWithTheme<ListProps>('WuiList', (props, ref) => {
-  const { children, className, component, inset = false, ...rest } = props;
+export default function List<T>(inProps: InProps<T, ListProps>) {
+  const props = useThemeProps({ name: 'WuiList', props: inProps });
+  const {
+    children,
+    className,
+    component,
+    inset = false,
+    rootRef,
+    ...rest
+  } = props;
 
   const styleProps = { inset };
 
@@ -46,12 +53,10 @@ const List = createFCWithTheme<ListProps>('WuiList', (props, ref) => {
       className={classes.root}
       as={component}
       styleProps={styleProps}
-      ref={ref}
+      ref={rootRef}
       {...rest}
     >
       {children}
     </ListRoot>
   );
-});
-
-export default List;
+}

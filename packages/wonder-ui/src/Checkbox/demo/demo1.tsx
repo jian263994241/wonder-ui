@@ -5,15 +5,26 @@
  */
 
 /** @jsx jsx */
-import { jsx, Space, Checkbox } from '@wonder-ui/core';
+import { jsx, Checkbox, Space } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <Space wrap>
-      <Checkbox defaultChecked />
-      <Checkbox defaultChecked color="secondary" />
-      <Checkbox defaultChecked disabled />
-      <Checkbox disabled defaultChecked color="secondary" />
-    </Space>
+    <div>
+      <Space wrap>
+        <Checkbox defaultChecked />
+        <Checkbox defaultChecked color="secondary" />
+        <Checkbox defaultChecked color="danger" />
+        <Checkbox defaultChecked color="warning" />
+        <Checkbox defaultChecked color="info" />
+      </Space>
+      <br />
+      <Space wrap>
+        <Checkbox disabled defaultChecked />
+        <Checkbox disabled defaultChecked color="secondary" />
+        <Checkbox disabled defaultChecked color="danger" />
+        <Checkbox disabled defaultChecked color="warning" />
+        <Checkbox disabled defaultChecked color="info" />
+      </Space>
+    </div>
   );
 }

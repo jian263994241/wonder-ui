@@ -1,10 +1,14 @@
 import * as React from 'react';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { StyleProps, StyledComponentProps } from '../styles/types';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
+import type { InProps, PickStyleProps } from '../styles/types';
 
-export interface BadgeStyleProps {
+export interface BadgeProps {
+  /**
+   * @description children
+   */
+  children?: React.ReactNode;
   /**
    * @description 徽章颜色
    * @default primary
@@ -15,25 +19,28 @@ export interface BadgeStyleProps {
    * @default false
    */
   rounded?: boolean;
-
+  /**
+   * @description 角标
+   * @default false
+   */
   sup?: boolean;
 }
 
-const BadgeRoot = styled('div', { name: 'WuiBadge', slot: 'Root' })<
-  StyleProps<BadgeStyleProps>
+const BadgeRoot = styled('span', { name: 'WuiBadge', slot: 'Root' })<
+  PickStyleProps<BadgeProps, 'color' | 'rounded' | 'sup'>
 >(({ theme, styleProps }) => {
   return {
     display: 'inline-block',
     padding: '0.25em 0.55em',
-    fontSize: '.65em',
-    fontWeight: 700,
+    fontSize: '.75em',
+    fontWeight: 500,
     lineHeight: 1,
-    color: theme.palette[styleProps.color || 'primary'].contrastText,
+    color: theme.palette[styleProps.color].contrastText,
     textAlign: 'center',
     whiteSpace: 'nowrap',
     verticalAlign: 1,
     borderRadius: styleProps.rounded ? '50rem' : '.25rem',
-    backgroundColor: theme.palette[styleProps.color || 'primary'].main,
+    backgroundColor: theme.palette[styleProps.color].main,
     ...(styleProps.sup && {
       position: 'absolute',
       top: 0,
@@ -48,15 +55,16 @@ const BadgeRoot = styled('div', { name: 'WuiBadge', slot: 'Root' })<
   };
 });
 
-export interface BadgeProps extends StyledComponentProps<typeof BadgeRoot> {}
-
-const Badge = createFCWithTheme<BadgeProps>('WuiBadge', (props, ref) => {
+export default function Badge<T>(inProps: InProps<T, BadgeProps>) {
+  const props = useThemeProps({ props: inProps, name: 'WuiBadge' });
   const {
     color = 'primary',
     className,
+    component,
     rounded = false,
     children,
-    sup,
+    sup = false,
+    rootRef,
     ...rest
   } = props;
 
@@ -65,14 +73,13 @@ const Badge = createFCWithTheme<BadgeProps>('WuiBadge', (props, ref) => {
 
   return (
     <BadgeRoot
+      as={component}
       styleProps={styleProps}
       className={classes.root}
-      ref={ref}
+      ref={rootRef}
       {...rest}
     >
       {children}
     </BadgeRoot>
   );
-});
-
-export default Badge;
+}

@@ -1,13 +1,17 @@
 import * as React from 'react';
 import useClasses from '../styles/useClasses';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
+import type { InProps, PickStyleProps } from '../styles/types';
 import styled from '../styles/styled';
-import type { StyleProps } from '../styles/types';
 import { ButtonRoot } from '../Button';
 
-interface ButtonStyleProps {
+interface ButtonGroupProps {
   /**
-   * @description 方向
+   * @description children
+   */
+  children?: React.ReactNode;
+  /**
+   * @description direction
    * @default horizontal
    */
   direction?: 'horizontal' | 'vertical';
@@ -16,7 +20,7 @@ interface ButtonStyleProps {
 const ButtonGroupRoot = styled('div', {
   name: 'ButtonGroup',
   slot: 'Root'
-})<StyleProps<ButtonStyleProps>>(
+})<PickStyleProps<ButtonGroupProps, 'direction'>>(
   () => ({
     position: 'relative',
     display: 'inline-flex',
@@ -62,36 +66,32 @@ const ButtonGroupRoot = styled('div', {
   })
 );
 
-export interface ButtonGroupProps extends ButtonStyleProps {
-  className?: string;
-  style?: React.CSSProperties;
-  ref?: React.Ref<any>;
+export default function ButtonGroup<T>(inProps: InProps<T, ButtonGroupProps>) {
+  const props = useThemeProps({ props: inProps, name: 'WuiButtonGroup' });
+  const {
+    children,
+    direction = 'horizontal',
+    className,
+    rootRef,
+    ...rest
+  } = props;
+
+  const styleProps = { direction };
+  const classes = useClasses({
+    ...props,
+    styleProps,
+    name: 'WuiButtonGroup'
+  });
+
+  return (
+    <ButtonGroupRoot
+      role="group"
+      className={classes.root}
+      ref={rootRef}
+      styleProps={styleProps}
+      {...rest}
+    >
+      {children}
+    </ButtonGroupRoot>
+  );
 }
-
-const ButtonGroup = createFCWithTheme<ButtonGroupProps>(
-  'WuiButtonGroup',
-  (props, ref) => {
-    const { children, direction = 'horizontal', className, ...rest } = props;
-
-    const styleProps = { direction };
-    const classes = useClasses({
-      ...props,
-      styleProps,
-      name: 'WuiButtonGroup'
-    });
-
-    return (
-      <ButtonGroupRoot
-        role="group"
-        className={classes.root}
-        ref={ref}
-        styleProps={styleProps}
-        {...rest}
-      >
-        {children}
-      </ButtonGroupRoot>
-    );
-  }
-);
-
-export default ButtonGroup;

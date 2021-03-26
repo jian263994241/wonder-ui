@@ -118,14 +118,10 @@ export default function Example() {
 
       <List>
         <ListHeader>Links, Secondary text</ListHeader>
-        <ListItem
-          button
-          media={
-            <ListItemMedia>
-              <PersonCircle />
-            </ListItemMedia>
-          }
-        >
+        <ListItem button>
+          <ListItemMedia>
+            <PersonCircle />
+          </ListItemMedia>
           <ListItemText primary={'Primary text'} secondary={'Secondary text'} />
           <ListItemTextAfter>CEO</ListItemTextAfter>
           <ArrowForward />

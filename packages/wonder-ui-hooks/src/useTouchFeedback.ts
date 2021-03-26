@@ -1,58 +1,97 @@
 import * as React from 'react';
+import clsx from 'clsx';
 
-export interface TouchFeedbackOptions {
+type HandleEvents =
+  | 'onTouchStart'
+  | 'onTouchMove'
+  | 'onTouchEnd'
+  | 'onTouchCancel'
+  | 'onMouseDown'
+  | 'onMouseUp'
+  | 'onMouseLeave';
+
+export interface TouchFeedbackOptions<T = Element>
+  extends Partial<Record<HandleEvents, React.DOMAttributes<T>[HandleEvents]>> {
+  /**
+   * 禁用
+   */
   disabled?: boolean;
-  activeClassName?: string;
+  /**
+   * 激活className
+   */
+  activeClassName: string;
+  /**
+   * extends className
+   */
+  className?: string;
 }
 
-export function useTouchFeedback<T extends HTMLElement>(
-  options: TouchFeedbackOptions = {}
+export function useTouchFeedback<T = Element>(
+  options: TouchFeedbackOptions<T>
 ) {
-  const { disabled, activeClassName = 'active' } = options;
+  const { disabled, activeClassName, className } = options;
 
-  const nodeRef = React.useRef<T>(null);
+  const [active, setActive] = React.useState(false);
 
-  const events = <const>[
-    'touchstart',
-    'touchmove',
-    'touchend',
-    'touchcancel',
-    'mousedown',
-    'mouseup',
-    'mouseleave'
-  ];
+  const triggerEvent = (
+    eventType: HandleEvents,
+    isActive: boolean,
+    event: any
+  ) => {
+    const handleInProp = options[eventType];
 
-  React.useEffect(() => {
-    const node = nodeRef.current;
-
-    if (node && !disabled) {
-      const activeTrue = () => {
-        node.classList.add(activeClassName);
-      };
-
-      const activeFalse = () => {
-        node.classList.remove(activeClassName);
-      };
-
-      events.forEach((eventName: typeof events[number]) => {
-        if (eventName === 'touchstart' || eventName === 'mousedown') {
-          node.addEventListener(eventName, activeTrue, { passive: true });
-        } else {
-          node.addEventListener(eventName, activeFalse, { passive: true });
-        }
-      });
-
-      return () => {
-        events.forEach((eventName: typeof events[number]) => {
-          if (eventName === 'touchstart' || eventName === 'mousedown') {
-            node.removeEventListener(eventName, activeTrue);
-          } else {
-            node.removeEventListener(eventName, activeFalse);
-          }
-        });
-      };
+    if (handleInProp) {
+      handleInProp(event);
     }
-  }, [nodeRef, disabled]);
 
-  return nodeRef;
+    if (!disabled && isActive !== active) {
+      setActive(isActive);
+    }
+  };
+
+  const onTouchStart: React.DOMAttributes<T>['onTouchStart'] = (e) => {
+    triggerEvent('onTouchStart', true, e);
+  };
+
+  const onTouchMove: React.DOMAttributes<T>['onTouchMove'] = (e) => {
+    triggerEvent('onTouchMove', false, e);
+  };
+
+  const onTouchEnd: React.DOMAttributes<T>['onTouchEnd'] = (e) => {
+    triggerEvent('onTouchEnd', false, e);
+  };
+
+  const onTouchCancel: React.DOMAttributes<T>['onTouchCancel'] = (e) => {
+    triggerEvent('onTouchCancel', false, e);
+  };
+
+  const onMouseDown: React.DOMAttributes<T>['onMouseDown'] = (e) => {
+    // pc simulate mobile
+    triggerEvent('onMouseDown', true, e);
+  };
+
+  const onMouseUp: React.DOMAttributes<T>['onMouseUp'] = (e) => {
+    triggerEvent('onMouseUp', false, e);
+  };
+
+  const onMouseLeave: React.DOMAttributes<T>['onMouseLeave'] = (e) => {
+    triggerEvent('onMouseLeave', false, e);
+  };
+
+  const events = {
+    onTouchStart,
+    onTouchMove,
+    onTouchEnd,
+    onTouchCancel,
+    onMouseDown,
+    onMouseUp,
+    onMouseLeave
+  };
+
+  return {
+    ...events,
+    className: clsx(className, { [activeClassName]: active })
+  };
 }
+
+export default useTouchFeedback;

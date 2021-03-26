@@ -1,49 +1,60 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
-import type { StyledComponentProps } from '../styles/types';
+import useThemeProps from '../styles/useThemeProps';
+import type { InProps, PickStyleProps } from '../styles/types';
 import { darken, alpha } from '../styles/colorManipulator';
-import { useTouchFeedback, useForkRef } from '@wonder-ui/hooks';
+import { useTouchFeedback } from '@wonder-ui/hooks';
 import clsx from 'clsx';
 
-export interface ButtonStyleProps {
+export interface ButtonProps {
   /**
-   * @description 按钮类型
+   * @description checked state
+   */
+  checked?: boolean;
+  /**
+   * @description children
+   */
+  children?: React.ReactNode;
+  /**
+   * @description button type
    * @default contained
    */
   variant: 'text' | 'outlined' | 'contained';
   /**
-   * @description 按钮大小
+   * @description size
    * @default medium
    */
   size: 'small' | 'medium' | 'large';
   /**
-   * @description 按钮颜色
+   * @description color
    * @default primary
    */
   color: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
   /**
-   * @description 按钮形状
+   * @description shape
    * @default rect
    */
   shape: 'circle' | 'round' | 'rect';
-  /** 禁用圆角 */
+  /**
+   * @description disable border radius
+   */
   disabledBorderRadius?: boolean;
-  /** 将按钮宽度调整为其父宽度的选项 */
-  fullWidth?: boolean;
-  /** 按钮失效状态 */
+  /**
+   * @description disabled
+   */
   disabled?: boolean;
-}
-
-interface StyleProps {
-  styleProps: ButtonStyleProps;
 }
 
 export const ButtonRoot = styled('button', {
   name: 'WuiButton',
   slot: 'Root'
-})<StyleProps>(
+})<
+  PickStyleProps<
+    ButtonProps,
+    'color' | 'disabled' | 'disabledBorderRadius' | 'shape' | 'size' | 'variant'
+  >
+>(
   ({ theme, styleProps }) => ({
     display: 'inline-block',
     position: 'relative',
@@ -195,34 +206,22 @@ export const ButtonRoot = styled('button', {
   }
 );
 
-export interface ButtonProps extends StyledComponentProps<typeof ButtonRoot> {
-  /**
-   * @description 状态 checked
-   */
-  checked?: boolean;
-}
-
-/**
- * Button
- */
-const Button = createFCWithTheme<ButtonProps>('WuiButton', (props, ref) => {
+export default function Button<T>(inProps: InProps<T, ButtonProps>) {
+  const props = useThemeProps({ props: inProps, name: 'WuiButton' });
   const {
     component,
     children,
     className,
     checked,
-    disabled,
+    disabled = false,
     variant = 'contained',
     size = 'medium',
     color = 'primary',
     shape = 'rect',
-    name,
     disabledBorderRadius = false,
+    rootRef,
     ...rest
   } = props;
-
-  const elementRef = useTouchFeedback({ activeClassName: 'state-active' });
-  const handleRef = useForkRef(elementRef, ref);
 
   const styleProps = {
     variant,
@@ -234,21 +233,24 @@ const Button = createFCWithTheme<ButtonProps>('WuiButton', (props, ref) => {
   };
 
   const classes = useClasses({ ...props, styleProps, name: 'WuiButton' });
+  const containerProps = useTouchFeedback({
+    ...props,
+    className: clsx(classes.root, { active: checked }),
+    activeClassName: 'state-active'
+  });
 
   return (
     <ButtonRoot
       role="button"
-      className={clsx(classes.root, { active: checked })}
       styleProps={styleProps}
       aria-disabled={disabled}
       disabled={disabled}
-      ref={handleRef}
+      ref={rootRef}
       as={component}
       {...rest}
+      {...containerProps}
     >
       {children}
     </ButtonRoot>
   );
-});
-
-export default Button;
+}

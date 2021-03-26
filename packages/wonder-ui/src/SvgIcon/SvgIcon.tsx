@@ -1,13 +1,30 @@
 import * as React from 'react';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
 import { keyframes } from '@wonder-ui/styled';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
-import type { StyledComponentProps, StyleProps } from '../styles/types';
+import type { InProps, PickStyleProps } from '../styles/types';
 
-export interface SvgIconStyleProps {
+export interface SvgIconProps {
+  /**
+   * @description size
+   * @default medium
+   */
   size: 'inherit' | 'large' | 'medium' | 'small';
+  /**
+   * @description spin animate
+   * @default false
+   */
   spin?: boolean;
+  /**
+   * @description viewBox
+   * @default '0 0 16 16'
+   */
+  viewBox?: string;
+  /**
+   * @description title
+   */
+  titleAccess?: string;
 }
 
 const spin = keyframes({
@@ -16,8 +33,8 @@ const spin = keyframes({
   }
 });
 
-export const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })<
-  StyleProps<SvgIconStyleProps>
+const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })<
+  PickStyleProps<SvgIconProps, 'size' | 'spin'>
 >(({ theme, styleProps }) => ({
   userSelect: 'none',
   width: '1em',
@@ -25,8 +42,7 @@ export const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })<
   display: 'inline-block',
   fill: 'currentColor',
   flexShrink: 0,
-  // verticalAlign: 'middle',
-  verticalAlign: theme.typography.pxToRem(-2),
+  verticalAlign: -1,
   transition: theme.transitions.create('fill', {
     duration: theme.transitions.duration.shorter
   }),
@@ -41,25 +57,23 @@ export const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })<
   }[styleProps.size]
 }));
 
-export interface SvgIconProps extends StyledComponentProps<typeof SvgIconRoot> {
-  titleAccess?: string;
-}
-
-const SvgIcon = createFCWithTheme<SvgIconProps>('WuiSvgIcon', (props, ref) => {
+export default function SvgIcon<T = React.SVGAttributes<SVGElement>>(
+  inProps: InProps<T, SvgIconProps>
+) {
+  const props = useThemeProps({ name: 'WuiSvgIcon', props: inProps });
   const {
     children,
     className,
     component = 'svg',
     size = 'medium',
-    spin,
+    spin = false,
+    viewBox = '0 0 16 16',
     titleAccess,
+    rootRef,
     ...rest
   } = props;
 
-  const styleProps = {
-    size,
-    spin
-  };
+  const styleProps = { size, spin };
 
   const classes = useClasses({ ...props, styleProps, name: 'WuiSvgIcon' });
 
@@ -69,16 +83,14 @@ const SvgIcon = createFCWithTheme<SvgIconProps>('WuiSvgIcon', (props, ref) => {
       styleProps={styleProps}
       as={component}
       focusable="false"
-      viewBox="0 0 16 16"
+      viewBox={viewBox}
       aria-hidden={titleAccess ? undefined : true}
       role={titleAccess ? 'img' : undefined}
-      ref={ref}
+      ref={rootRef}
       {...rest}
     >
       {children}
       {titleAccess ? <title>{titleAccess}</title> : null}
     </SvgIconRoot>
   );
-});
-
-export default SvgIcon;
+}

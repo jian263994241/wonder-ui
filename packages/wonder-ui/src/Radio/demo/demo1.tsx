@@ -5,29 +5,31 @@
  */
 
 /** @jsx jsx */
-import { jsx, Space, Radio, Typography } from '@wonder-ui/core';
+import { jsx, Space, Typography, Radio } from '@wonder-ui/core';
 
 export default function Example() {
   return (
     <Space wrap>
-      <div>
-        <Typography component="label">
-          <Radio name="radio-demo" />
-          <span>选项一</span>
-        </Typography>
-      </div>
-      <div>
-        <Typography component="label">
-          <Radio name="radio-demo" />
-          <span>选项二</span>
-        </Typography>
-      </div>
-      <div>
-        <Typography component="label">
-          <Radio name="radio-demo" />
-          <span>选项三</span>
-        </Typography>
-      </div>
+      <Typography component="label">
+        <Radio name="radio-demo" />
+        <span>Primary</span>
+      </Typography>
+      <Typography component="label">
+        <Radio name="radio-demo" color="secondary" />
+        <span>Secondary</span>
+      </Typography>
+      <Typography component="label">
+        <Radio name="radio-demo" color="danger" />
+        <span>Danger</span>
+      </Typography>
+      <Typography component="label">
+        <Radio name="radio-demo" color="warning" />
+        <span>Warning</span>
+      </Typography>
+      <Typography component="label">
+        <Radio name="radio-demo" color="info" />
+        <span>Info</span>
+      </Typography>
     </Space>
   );
 }

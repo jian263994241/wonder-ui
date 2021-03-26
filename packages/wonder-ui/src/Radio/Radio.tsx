@@ -5,7 +5,7 @@ import type { StyleProps } from '../styles/types';
 import { alpha } from '../styles/colorManipulator';
 
 export interface SwitchStyleProps {
-  color?: 'primary' | 'secondary';
+  color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
 }
 
 const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })<
@@ -55,7 +55,7 @@ export interface RadioProps
    * @description color
    * @default primary
    */
-  color?: 'primary' | 'secondary';
+  color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
 }
 
 const Radio = createFCWithTheme<RadioProps>('WuiRadio', (props, ref) => {
