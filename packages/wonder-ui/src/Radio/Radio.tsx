@@ -31,6 +31,9 @@ const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })<
   borderStyle: 'solid',
   borderColor: theme.palette.divider,
   borderRadius: '50%',
+  transition: theme.transitions.create(['border-color', 'background'], {
+    duration: 'shortest'
+  }),
   '&:disabled': {
     pointerEvents: 'none',
     filter: 'none',
