@@ -7,7 +7,7 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| color | 颜色 | `'inherit' \| 'primary' \| 'secondary' \| 'success' \| 'danger' \| 'warning' \| 'info'` | primary
+| color | 颜色 | `'primary' \| 'secondary' \| 'success' \| 'error' \| 'danger' \| 'warning' \| 'info'` | primary
 | component | root element | `keyof ReactHTML \| ComponentType` | span
 | label | 标签 | `ReactNode` |
 | rootRef | ref | `Ref` |
