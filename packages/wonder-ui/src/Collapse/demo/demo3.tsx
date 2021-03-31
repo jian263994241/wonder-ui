@@ -25,7 +25,7 @@ export default function Example() {
         <Button onClick={() => setVisible(!visible)}>Toggle</Button>
       </Space>
       <WhiteSpace />
-      <Collapse in={visible} direction="horizontal" collapsedSize={1}>
+      <Collapse in={visible} direction="horizontal">
         <div
           css={{
             width: 300,

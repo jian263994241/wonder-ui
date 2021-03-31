@@ -3,10 +3,8 @@
  * desc:
  *
  */
-
 /** @jsx jsx */
-
-import { jsx, Switch, Space, useTheme } from '@wonder-ui/core';
+import { jsx, Toggle, Space, useTheme } from '@wonder-ui/core';
 import {
   ToggleOff,
   ToggleOn,
@@ -20,17 +18,17 @@ export default function Example() {
   const theme = useTheme();
   return (
     <Space>
-      <Switch
+      <Toggle
         css={{ color: theme.palette.blue[300] }}
         icon={<ToggleOff size="large" />}
         checkedIcon={<ToggleOn size="large" />}
       />
-      <Switch
+      <Toggle
         css={{ color: theme.palette.pink[400] }}
         icon={<CheckCircle />}
         checkedIcon={<CheckCircleFill />}
       />
-      <Switch
+      <Toggle
         css={{ color: theme.palette.orange[600] }}
         icon={<CheckSquare />}
         checkedIcon={<CheckSquareFill />}

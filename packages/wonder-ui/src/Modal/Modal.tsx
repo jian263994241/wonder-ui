@@ -1,5 +1,5 @@
 import * as React from 'react';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import Portal, { getContainer, Container } from '../Portal/Portal';
@@ -9,6 +9,7 @@ import { useForkRef, useEventCallback } from '@wonder-ui/hooks';
 import Backdrop, { BackdropProps } from '../Backdrop';
 import FocusLock, { AutoFocusInside } from 'react-focus-lock';
 import { ReactFocusLockProps } from 'react-focus-lock/interfaces';
+import { InProps } from '../styles/types';
 
 // A modal manager used to track and manage the state of open Modals.
 // Modals don't open on the server so this won't conflict with concurrent requests.
@@ -40,6 +41,11 @@ export interface ModalProps {
    * @description 子节点
    */
   children: React.ReactElement;
+  /**
+   * @description Root element
+   * @default div
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
   /**
    * @description 容器 HTMLElement
    */
@@ -124,7 +130,8 @@ export interface ModalProps {
   visible?: boolean;
 }
 
-const Modal = createFCWithTheme<ModalProps>('WuiModal', (props, ref) => {
+export default function Modal<P extends InProps<ModalProps>>(inProps: P) {
+  const props = useThemeProps({ props: inProps, name: 'WuiModal' });
   const {
     BackdropProps,
     children,
@@ -147,6 +154,7 @@ const Modal = createFCWithTheme<ModalProps>('WuiModal', (props, ref) => {
     onTransitionEnter,
     onTransitionExited,
     visible = false,
+    rootRef,
     ...rest
   } = props;
 
@@ -157,7 +165,7 @@ const Modal = createFCWithTheme<ModalProps>('WuiModal', (props, ref) => {
   }>({});
   const mountNodeRef = React.useRef(null);
   const modalRef = React.useRef<Element | null>(null);
-  const handleRef = useForkRef(modalRef, ref);
+  const handleRef = useForkRef(modalRef, rootRef);
   const hasTransition = getHasTransition(props);
 
   const getDoc = () => ownerDocument(mountNodeRef.current);
@@ -335,6 +343,4 @@ const Modal = createFCWithTheme<ModalProps>('WuiModal', (props, ref) => {
       </ModalRoot>
     </Portal>
   );
-});
-
-export default Modal;
+}

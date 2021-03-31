@@ -8,3 +8,4 @@ sidemenu: false
 | --- | --- | --- | ---
 | children | children | `ReactNode` |
 | classes | css api | `ClassNameMap<'root' \| 'body'>` |
+| component | root element | `keyof ReactHTML \| ComponentType` | li

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import createFCWithTheme from '../styles/createFCWithTheme';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import { keyframes } from '@wonder-ui/styled';
@@ -50,6 +49,11 @@ export interface CircularProgressProps {
     | 'warning'
     | 'info';
   /**
+   * @description Root element
+   * @default span
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+  /**
    * @description 类型
    * @default indeterminate
    */
@@ -75,7 +79,7 @@ const CircularProgressRoot = styled('span', {
   ({ theme, styleProps }) => ({
     position: 'relative',
     /* Styles applied to the root element. */
-    display: 'inline-flex',
+    display: 'inline-block',
     /* Styles applied to the root element if `variant="determinate"`. */
     ...(styleProps.variant === 'determinate' && {
       transition: theme.transitions.create('transform')
@@ -144,9 +148,9 @@ const CircularProgressLabel = styled('div', {
   })
 }));
 
-export default function CircularProgress<T>(
-  inProps: InProps<T, CircularProgressProps>
-) {
+export default function CircularProgress<
+  P extends InProps<CircularProgressProps>
+>(inProps: P) {
   const props = useThemeProps({ props: inProps, name: 'WuiCircularProgress' });
   const {
     color = 'primary',

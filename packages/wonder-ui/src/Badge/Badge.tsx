@@ -15,6 +15,11 @@ export interface BadgeProps {
    */
   color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
   /**
+   * @description Root element
+   * @default span
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+  /**
    * @description 圆角徽章
    * @default false
    */
@@ -55,16 +60,16 @@ const BadgeRoot = styled('span', { name: 'WuiBadge', slot: 'Root' })<
   };
 });
 
-export default function Badge<T>(inProps: InProps<T, BadgeProps>) {
+export default function Badge<P extends InProps<BadgeProps>>(inProps: P) {
   const props = useThemeProps({ props: inProps, name: 'WuiBadge' });
   const {
-    color = 'primary',
-    className,
-    component,
-    rounded = false,
     children,
-    sup = false,
+    className,
+    color = 'primary',
+    component,
     rootRef,
+    rounded = false,
+    sup = false,
     ...rest
   } = props;
 
@@ -74,9 +79,9 @@ export default function Badge<T>(inProps: InProps<T, BadgeProps>) {
   return (
     <BadgeRoot
       as={component}
-      styleProps={styleProps}
       className={classes.root}
       ref={rootRef}
+      styleProps={styleProps}
       {...rest}
     >
       {children}

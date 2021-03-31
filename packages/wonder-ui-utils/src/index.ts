@@ -3,6 +3,7 @@ export { default as capitalize } from './capitalize';
 export { default as createChainedFunction } from './createChainedFunction';
 export { default as createId } from './createId';
 export { default as deepmerge } from './deepmerge';
+export { default as getAutoSizeDuration } from './getAutoSizeDuration';
 export { default as getScrollbarSize } from './getScrollbarSize';
 export { default as getSupport } from './getSupport';
 export { default as getTransitionDurationFromElement } from './getTransitionDurationFromElement';

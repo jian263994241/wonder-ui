@@ -27,9 +27,7 @@ const StyledSvgIcon = styled(SvgIcon, { name: 'ArrowForward', slot: 'Root' })<
   }[styleProps.direction]
 }));
 
-export default function ArrowForward<T>(
-  inProps: InProps<T, ArrowForwardProps>
-) {
+export default function ArrowForward(inProps: InProps<ArrowForwardProps>) {
   const props = useThemeProps({ props: inProps, name: 'WuiArrowForward' });
 
   const {

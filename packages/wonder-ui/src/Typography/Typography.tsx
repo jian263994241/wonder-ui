@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { StyledComponentProps } from '../styles/types';
 import styled from '../styles/styled';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
+import { PickStyleProps, InProps } from '../styles/types';
 
 const defaultVariantMapping = {
   h1: 'h1',
@@ -17,40 +17,68 @@ const defaultVariantMapping = {
   body2: 'p'
 } as const;
 
-export interface TypographyStyleProps {
+export interface TypographyProps {
   /**
    * @description 对齐
    * @default inherit
    */
-  align: React.CSSProperties['textAlign'];
+  align?: React.CSSProperties['textAlign'];
   /**
    * @description 颜色
    * @default inherit
    */
-  color: 'inherit' | 'primary' | 'secondary' | 'hint';
-
-  /** 不换行 */
-  noWrap: boolean;
+  color?: 'inherit' | 'primary' | 'secondary' | 'hint';
   /**
-   * 多行省略
+   * @description children
+   */
+  children?: React.ReactNode;
+  /**
+   * @description Root element
+   * @default span
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+  /**
+   * @description 不换行
+   * @default false
+   */
+  noWrap?: boolean;
+  /**
+   * @description 多行省略
+   * @default 0
    */
   lineClamp?: number;
-  /** 段落 */
-  paragraph: boolean;
-  /** 增加间距 */
-  gutterBottom: boolean;
-  /** 样式类型 */
-  variant: keyof typeof defaultVariantMapping;
-}
-
-interface StyleProps {
-  styleProps: TypographyStyleProps;
+  /**
+   * @description 段落
+   * @default false
+   */
+  paragraph?: boolean;
+  /**
+   * @description 增加间距
+   * @default false
+   */
+  gutterBottom?: boolean;
+  /**
+   * @description 样式类型
+   * @default body1
+   */
+  variant?: keyof typeof defaultVariantMapping;
 }
 
 export const TypographyRoot = styled('span', {
   name: 'WuiTypography',
   slot: 'Root'
-})<StyleProps>(({ theme, styleProps }) => ({
+})<
+  PickStyleProps<
+    TypographyProps,
+    | 'align'
+    | 'color'
+    | 'variant'
+    | 'gutterBottom'
+    | 'lineClamp'
+    | 'noWrap'
+    | 'paragraph'
+  >
+>(({ theme, styleProps }) => ({
   margin: 0,
   textAlign: styleProps.align,
   color:
@@ -67,7 +95,7 @@ export const TypographyRoot = styled('span', {
     maxHeight: 22
   }),
   //多行省略
-  ...(styleProps.lineClamp != undefined &&
+  ...(styleProps.lineClamp != 0 &&
     !styleProps.noWrap && {
       display: '-webkit-box',
       WebkitBoxOrient: 'vertical',
@@ -84,57 +112,53 @@ export const TypographyRoot = styled('span', {
   })
 }));
 
-export interface TypographyProps
-  extends StyledComponentProps<typeof TypographyRoot> {}
+export default function Typography<P extends InProps<TypographyProps>>(
+  inProps: P
+) {
+  const props = useThemeProps({ props: inProps, name: 'WuiTypography' });
+  const {
+    align = 'inherit',
+    children,
+    className,
+    color = 'inherit',
+    component,
+    gutterBottom = false,
+    lineClamp = 0,
+    noWrap = false,
+    paragraph = false,
+    rootRef,
+    variant = 'body1',
+    ...rest
+  } = props;
 
-const Typography = createFCWithTheme<TypographyProps>(
-  'WuiTypography',
-  (props, ref) => {
-    const {
-      align = 'inherit',
-      children,
-      className,
-      component,
-      color = 'inherit',
-      gutterBottom = false,
-      lineClamp,
-      noWrap = false,
-      paragraph = false,
-      variant = 'body1',
-      ...rest
-    } = props;
+  const _component =
+    component || (paragraph ? 'p' : defaultVariantMapping[variant]);
 
-    const _component =
-      component || (paragraph ? 'p' : defaultVariantMapping[variant]);
+  const styleProps = {
+    align,
+    color,
+    gutterBottom,
+    lineClamp,
+    noWrap,
+    paragraph,
+    variant
+  };
 
-    const styleProps = {
-      align,
-      color,
-      gutterBottom,
-      lineClamp,
-      noWrap,
-      paragraph,
-      variant
-    };
+  const classes = useClasses({
+    ...props,
+    styleProps,
+    name: 'WuiTypography'
+  });
 
-    const classes = useClasses({
-      ...props,
-      styleProps,
-      name: 'WuiTypography'
-    });
-
-    return (
-      <TypographyRoot
-        className={classes.root}
-        as={_component}
-        styleProps={styleProps}
-        ref={ref}
-        {...rest}
-      >
-        {children}
-      </TypographyRoot>
-    );
-  }
-);
-
-export default Typography;
+  return (
+    <TypographyRoot
+      as={_component}
+      className={classes.root}
+      ref={rootRef}
+      styleProps={styleProps}
+      {...rest}
+    >
+      {children}
+    </TypographyRoot>
+  );
+}

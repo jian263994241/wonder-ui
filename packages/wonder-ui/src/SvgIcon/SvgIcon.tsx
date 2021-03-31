@@ -7,10 +7,19 @@ import type { InProps, PickStyleProps } from '../styles/types';
 
 export interface SvgIconProps {
   /**
+   * @description children
+   */
+  children?: React.ReactNode;
+  /**
+   * @description Root element
+   * @default svg
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+  /**
    * @description size
    * @default medium
    */
-  size: 'inherit' | 'large' | 'medium' | 'small';
+  size?: 'inherit' | 'large' | 'medium' | 'small';
   /**
    * @description spin animate
    * @default false
@@ -57,19 +66,17 @@ const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })<
   }[styleProps.size]
 }));
 
-export default function SvgIcon<T = React.SVGAttributes<SVGElement>>(
-  inProps: InProps<T, SvgIconProps>
-) {
+export default function SvgIcon<P extends InProps<SvgIconProps>>(inProps: P) {
   const props = useThemeProps({ name: 'WuiSvgIcon', props: inProps });
   const {
     children,
     className,
     component = 'svg',
+    rootRef,
     size = 'medium',
     spin = false,
-    viewBox = '0 0 16 16',
     titleAccess,
-    rootRef,
+    viewBox = '0 0 16 16',
     ...rest
   } = props;
 
@@ -79,14 +86,14 @@ export default function SvgIcon<T = React.SVGAttributes<SVGElement>>(
 
   return (
     <SvgIconRoot
-      className={classes.root}
-      styleProps={styleProps}
-      as={component}
-      focusable="false"
-      viewBox={viewBox}
       aria-hidden={titleAccess ? undefined : true}
-      role={titleAccess ? 'img' : undefined}
+      as={component}
+      className={classes.root}
+      focusable="false"
       ref={rootRef}
+      role={titleAccess ? 'img' : undefined}
+      styleProps={styleProps}
+      viewBox={viewBox}
       {...rest}
     >
       {children}

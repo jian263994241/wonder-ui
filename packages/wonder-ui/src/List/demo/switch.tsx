@@ -13,7 +13,7 @@ import {
   ListItemMedia,
   ListItemText,
   Container,
-  Switch
+  Toggle
 } from '@wonder-ui/core';
 import { Wifi } from '@wonder-ui/icons';
 
@@ -27,14 +27,14 @@ export default function Example() {
             <Wifi />
           </ListItemMedia>
           <ListItemText>Wi-Fi</ListItemText>
-          <Switch />
+          <Toggle />
         </ListItem>
         <ListItem>
           <ListItemMedia>
             <Wifi />
           </ListItemMedia>
           <ListItemText>Wi-Fi 2</ListItemText>
-          <Switch />
+          <Toggle />
         </ListItem>
       </List>
     </Container>

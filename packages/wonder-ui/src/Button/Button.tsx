@@ -17,25 +17,30 @@ export interface ButtonProps {
    */
   children?: React.ReactNode;
   /**
+   * @description color
+   * @default primary
+   */
+  color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
+  /**
+   * @description Root element
+   * @default button
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+  /**
    * @description button type
    * @default contained
    */
-  variant: 'text' | 'outlined' | 'contained';
+  variant?: 'text' | 'outlined' | 'contained';
   /**
    * @description size
    * @default medium
    */
-  size: 'small' | 'medium' | 'large';
-  /**
-   * @description color
-   * @default primary
-   */
-  color: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
+  size?: 'small' | 'medium' | 'large';
   /**
    * @description shape
    * @default rect
    */
-  shape: 'circle' | 'round' | 'rect';
+  shape?: 'circle' | 'round' | 'rect';
   /**
    * @description disable border radius
    */
@@ -206,30 +211,30 @@ export const ButtonRoot = styled('button', {
   }
 );
 
-export default function Button<T>(inProps: InProps<T, ButtonProps>) {
+export default function Button<P extends InProps<ButtonProps>>(inProps: P) {
   const props = useThemeProps({ props: inProps, name: 'WuiButton' });
   const {
-    component,
+    checked,
     children,
     className,
-    checked,
-    disabled = false,
-    variant = 'contained',
-    size = 'medium',
     color = 'primary',
-    shape = 'rect',
+    component,
+    disabled = false,
     disabledBorderRadius = false,
     rootRef,
+    shape = 'rect',
+    size = 'medium',
+    variant = 'contained',
     ...rest
   } = props;
 
   const styleProps = {
-    variant,
-    size,
     color,
-    shape,
+    disabled,
     disabledBorderRadius,
-    disabled
+    shape,
+    size,
+    variant
   };
 
   const classes = useClasses({ ...props, styleProps, name: 'WuiButton' });
@@ -241,12 +246,12 @@ export default function Button<T>(inProps: InProps<T, ButtonProps>) {
 
   return (
     <ButtonRoot
-      role="button"
-      styleProps={styleProps}
       aria-disabled={disabled}
+      as={component}
       disabled={disabled}
       ref={rootRef}
-      as={component}
+      role="button"
+      styleProps={styleProps}
       {...rest}
       {...containerProps}
     >

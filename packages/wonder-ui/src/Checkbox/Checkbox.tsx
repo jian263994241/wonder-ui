@@ -79,9 +79,8 @@ export default function Checkbox(inProps: InProps<CheckboxProps>) {
   const {
     checked: checkedProp,
     circle = false,
-    color = 'primary',
-    component,
     className,
+    color = 'primary',
     defaultChecked: defaultCheckedProp = false,
     disabled,
     indeterminate = false,
@@ -90,7 +89,6 @@ export default function Checkbox(inProps: InProps<CheckboxProps>) {
     ...rest
   } = props;
   const [checked, setChecked] = useControlled({
-    name: 'WuiCheckbox',
     value: checkedProp,
     defaultValue: defaultCheckedProp
   });
@@ -102,7 +100,7 @@ export default function Checkbox(inProps: InProps<CheckboxProps>) {
 
   const classes = useClasses({
     ...props,
-    styleProps: { ...styleProps, checked, disabled },
+    styleProps: { ...styleProps, checked, disabled, indeterminate },
     name: 'WuiCheckbox'
   });
 
@@ -126,13 +124,13 @@ export default function Checkbox(inProps: InProps<CheckboxProps>) {
 
   return (
     <CheckboxRoot
-      className={classes.root}
       checked={checked}
+      className={classes.root}
       disabled={disabled}
       onChange={handleChange}
-      type="checkbox"
-      styleProps={styleProps}
       ref={hadnleRef}
+      styleProps={styleProps}
+      type="checkbox"
       {...rest}
     />
   );

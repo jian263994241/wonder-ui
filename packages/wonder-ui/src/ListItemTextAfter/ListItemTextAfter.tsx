@@ -1,7 +1,19 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import createFCWithTheme from '../styles/createFCWithTheme';
-import type { StyledComponentProps } from '../styles/types';
+import useThemeProps from '../styles/useThemeProps';
+import type { InProps } from '../styles/types';
+
+export interface ListItemTextAfterProps {
+  /**
+   * @description children
+   */
+  children?: React.ReactNode;
+  /**
+   * @description Root element
+   * @default div
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+}
 
 const ListItemTextAfterRoot = styled('div', {
   name: 'WuiListItemTextAfter',
@@ -17,19 +29,14 @@ const ListItemTextAfterRoot = styled('div', {
   paddingRight: 5
 }));
 
-export interface ListItemTextAfterProps
-  extends StyledComponentProps<typeof ListItemTextAfterRoot> {}
-
-const ListItemTextAfter = createFCWithTheme<ListItemTextAfterProps>(
-  'WuiListItemTextAfter',
-  (props, ref) => {
-    const { children, component, ...rest } = props;
-    return (
-      <ListItemTextAfterRoot as={component} ref={ref} {...rest}>
-        {children}
-      </ListItemTextAfterRoot>
-    );
-  }
-);
-
-export default ListItemTextAfter;
+export default function ListItemTextAfter<
+  P extends InProps<ListItemTextAfterProps>
+>(inProps: P) {
+  const props = useThemeProps({ props: inProps, name: 'WuiListItemTextAfter' });
+  const { children, component, rootRef, ...rest } = props;
+  return (
+    <ListItemTextAfterRoot as={component} ref={rootRef} {...rest}>
+      {children}
+    </ListItemTextAfterRoot>
+  );
+}

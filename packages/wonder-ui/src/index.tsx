@@ -76,8 +76,8 @@ export * from './Space';
 export { default as SvgIcon } from './SvgIcon';
 export * from './SvgIcon';
 
-export { default as Switch } from './Switch';
-export * from './Switch';
+export { default as Toggle } from './Toggle';
+export * from './Toggle';
 
 export { default as Typography } from './Typography';
 export * from './Typography';

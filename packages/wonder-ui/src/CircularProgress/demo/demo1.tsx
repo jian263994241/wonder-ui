@@ -9,12 +9,8 @@ import { jsx, Space, CircularProgress } from '@wonder-ui/core';
 export default function Example() {
   return (
     <Space>
-      <CircularProgress />
+      <CircularProgress color="primary" />
       <CircularProgress color="secondary" />
-      <CircularProgress color="success" />
-      <CircularProgress color="danger" />
-      <CircularProgress color="warning" />
-      <CircularProgress color="info" />
     </Space>
   );
 }

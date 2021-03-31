@@ -3,7 +3,7 @@
  * desc: 按钮标签面几种类型 `a` | `button` | `input`
  */
 /** @jsx jsx */
-import { Button, jsx, Space } from '@wonder-ui/core';
+import { jsx, Space, Button } from '@wonder-ui/core';
 
 export default function ButtonTags() {
   return (

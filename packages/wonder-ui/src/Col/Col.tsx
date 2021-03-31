@@ -1,43 +1,42 @@
 import * as React from 'react';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { StyledComponentProps, StyleProps } from '../styles/types';
+import type { PickStyleProps, InProps } from '../styles/types';
 import GridContext from '../Row/GridContext';
 import type { ContextProps } from '../Row/GridContext';
 import { breakpointsKeys } from '../styles/theme/breakpoints';
 import { getGutter, getResponsiveValue, ResponsiveValue } from '../Row/utils';
 import theme from '../styles/defaultTheme';
 
-export interface ColStyleProps {
+export interface ColProps {
   /** flex 对齐 */
   alignSelf?: ResponsiveValue<
     'start' | 'end' | 'center' | 'baseline' | 'stretch'
   >;
+  /**
+   * @description 子节点
+   */
+  children?: React.ReactNode;
+  /**
+   * @description Root element
+   * @default div
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
   /** 占位格 */
   cols?: ResponsiveValue<'auto' | boolean | number>;
   /** flex order */
   order?: ResponsiveValue<number>;
   /** 偏移宫格 */
   offset?: ResponsiveValue<number>;
-
-  /**
-   * @ignore
-   */
-  columns: ContextProps['columns'];
-  /**
-   * @ignore
-   */
-  gutter?: ContextProps['gutter'];
-
-  /**
-   * @ignore
-   */
-  rowCols?: ContextProps['rowCols'];
 }
 
-export const ColRoot = styled('div', { name: 'WuiCol', slot: 'root' })<
-  StyleProps<ColStyleProps>
+export const ColRoot = styled('div', { name: 'WuiCol', slot: 'Root' })<
+  PickStyleProps<
+    ColProps,
+    'alignSelf' | 'cols' | 'offset' | 'order',
+    ContextProps
+  >
 >(
   ({ theme, styleProps }) => {
     const { gutterX, gutterY } = getGutter(styleProps.gutter);
@@ -108,13 +107,13 @@ export const ColRoot = styled('div', { name: 'WuiCol', slot: 'root' })<
         ...(typeof order === 'number' && { order }),
 
         ...(alignSelf && {
-          alignItems: ({
+          alignItems: {
             center: 'center',
             start: 'flex-start',
             end: 'flex-end',
             baseline: 'baseline',
             stretch: 'stretch'
-          } as any)[alignSelf]
+          }[alignSelf]
         })
       };
     });
@@ -123,25 +122,25 @@ export const ColRoot = styled('div', { name: 'WuiCol', slot: 'root' })<
   }
 );
 
-type FliterProps<T> = Omit<T, keyof ContextProps>;
+export default function Col<P extends InProps<ColProps>>(inProps: P) {
+  const props = useThemeProps({ props: inProps, name: 'WuiCol' });
 
-export interface ColProps
-  extends FliterProps<StyledComponentProps<typeof ColRoot>> {}
-
-const Col = createFCWithTheme<ColProps>('WuiCol', (props, ref) => {
   const {
-    className,
-    cols,
-    component,
-    offset,
-    order,
+    alignSelf = 'start',
     children,
+    className,
+    cols = false,
+    component,
+    offset = 0,
+    order = 0,
+    rootRef,
     ...rest
   } = props;
 
   const { gutter, columns, rowCols } = React.useContext(GridContext);
 
   const styleProps = {
+    alignSelf,
     gutter,
     columns,
     cols,
@@ -157,12 +156,10 @@ const Col = createFCWithTheme<ColProps>('WuiCol', (props, ref) => {
       as={component}
       className={classes.root}
       styleProps={styleProps}
-      ref={ref}
+      ref={rootRef}
       {...rest}
     >
       {children}
     </ColRoot>
   );
-});
-
-export default Col;
+}

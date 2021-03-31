@@ -6,9 +6,11 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| absolute | 定位方式	 | `boolean` | false
-| flexItem | flex 子节点	 | `boolean` | false
-| light | 更亮	 | `boolean` | false
-| direction | 方向	 | `'horizontal' \| 'vertical'` | horizontal
-| textAlign | 水平方向下的文本对齐方式	 | `'center' \| 'left' \| 'right'` | center
-| variant | 类型	 | `'inset' \| 'middle' \| 'fullWidth'` | fullWidth
+| absolute | position	 | `boolean` | false
+| children | children | `ReactNode` |
+| component | root element | `keyof ReactHTML \| ComponentType` | hr
+| direction | direction	 | `'horizontal' \| 'vertical'` | horizontal
+| flexItem | flexItem	 | `boolean` | false
+| light | light	 | `boolean` | false
+| textAlign | textAlign	 | `'center' \| 'left' \| 'right'` | center
+| variant | type	 | `'inset' \| 'middle' \| 'fullWidth'` | fullWidth

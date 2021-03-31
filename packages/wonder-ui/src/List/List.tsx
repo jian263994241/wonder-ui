@@ -6,6 +6,15 @@ import type { InProps, PickStyleProps } from '../styles/types';
 
 export interface ListProps {
   /**
+   * @description children
+   */
+  children?: React.ReactNode;
+  /**
+   * @description Root element
+   * @default ul
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+  /**
    * @description 内嵌样式
    */
   inset?: boolean;
@@ -33,7 +42,7 @@ const ListRoot = styled('ul', {
   }
 }));
 
-export default function List<T>(inProps: InProps<T, ListProps>) {
+export default function List<P extends InProps<ListProps>>(inProps: P) {
   const props = useThemeProps({ name: 'WuiList', props: inProps });
   const {
     children,

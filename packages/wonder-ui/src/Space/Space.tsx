@@ -1,20 +1,47 @@
 import * as React from 'react';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type {
-  StyledComponentProps,
-  StyleProps,
-  ClassNameMap
-} from '../styles/types';
+import type { ClassNameMap, PickStyleProps, InProps } from '../styles/types';
 
 type SpaceSize = 'small' | 'medium' | 'large' | number;
-
-export interface SpaceStyleProps {
-  direction: 'horizontal' | 'vertical';
-  align: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
-  size: SpaceSize | [SpaceSize, SpaceSize];
-  wrap: boolean;
+export interface SpaceProps {
+  /**
+   * @description flex alignItems
+   * @default center
+   */
+  align?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
+  /**
+   * @description css api
+   */
+  classes?: Partial<ClassNameMap<'root' | 'item'>>;
+  /**
+   * @description children
+   */
+  children?: React.ReactNode;
+  /**
+   * @description Root element
+   * @default div
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+  /**
+   * @description direction
+   * @default horizontal
+   */
+  direction?: 'horizontal' | 'vertical';
+  /**
+   * @description gutter size
+   * @default medium
+   */
+  size?: SpaceSize | [SpaceSize, SpaceSize];
+  /**
+   * @description split node
+   */
+  split?: React.ReactNode;
+  /**
+   * @description wrap
+   */
+  wrap?: boolean;
 }
 
 function getNumberSize(theme: any, size: SpaceSize) {
@@ -29,7 +56,7 @@ function getNumberSize(theme: any, size: SpaceSize) {
 
 function getSize(
   theme: any,
-  options: Pick<SpaceStyleProps, 'size' | 'wrap' | 'direction'>
+  options: Pick<SpaceProps, 'size' | 'wrap' | 'direction'>
 ) {
   let horizontalSize: SpaceSize, verticalSize: SpaceSize;
 
@@ -37,10 +64,10 @@ function getSize(
     horizontalSize = options.size[0];
     verticalSize = options.size[1];
   } else {
-    horizontalSize = options.size;
-
+    let size = options.size || 0;
+    horizontalSize = size;
     verticalSize =
-      options.wrap && options.direction === 'horizontal' ? options.size : 0;
+      options.wrap && options.direction === 'horizontal' ? size : 0;
   }
 
   return [
@@ -50,7 +77,7 @@ function getSize(
 }
 
 export const SpaceRoot = styled('div', { name: 'WuiSpace', slot: 'Root' })<
-  StyleProps<SpaceStyleProps>
+  PickStyleProps<SpaceProps, 'align' | 'size' | 'wrap' | 'direction'>
 >(({ theme, styleProps }) => {
   const [, verticalSize] = getSize(theme, styleProps);
 
@@ -80,7 +107,7 @@ export const SpaceRoot = styled('div', { name: 'WuiSpace', slot: 'Root' })<
 });
 
 const SpaceItem = styled('div', { name: 'WuiSpace', slot: 'Item' })<
-  StyleProps<SpaceStyleProps>
+  PickStyleProps<SpaceProps, 'align' | 'size' | 'wrap' | 'direction'>
 >(({ theme, styleProps }) => {
   const [horizontalSize, verticalSize] = getSize(theme, styleProps);
 
@@ -107,19 +134,16 @@ const SpaceItem = styled('div', { name: 'WuiSpace', slot: 'Item' })<
   };
 });
 
-export interface SpaceProps extends StyledComponentProps<typeof SpaceRoot> {
-  split?: React.ReactNode;
-  classes?: Partial<ClassNameMap<'root' | 'item'>>;
-}
-
-const Space = createFCWithTheme<SpaceProps>('WuiSpace', (props, ref) => {
+export default function Space<P extends InProps<SpaceProps>>(inProps: P) {
+  const props = useThemeProps({ props: inProps, name: 'WuiSpace' });
   const {
     align = 'center',
     children,
-    classes: classesInput,
     className,
+    classes: classesInput,
     component,
     direction = 'horizontal',
+    rootRef,
     size = 'medium',
     split,
     theme,
@@ -145,9 +169,9 @@ const Space = createFCWithTheme<SpaceProps>('WuiSpace', (props, ref) => {
     <SpaceRoot
       as={component}
       className={classes.root}
-      ref={ref}
-      theme={theme}
+      ref={rootRef}
       styleProps={styleProps}
+      theme={theme}
       {...rest}
     >
       {childrenArray.map((child, index) => {
@@ -174,6 +198,4 @@ const Space = createFCWithTheme<SpaceProps>('WuiSpace', (props, ref) => {
       })}
     </SpaceRoot>
   );
-});
-
-export default Space;
+}

@@ -1,15 +1,21 @@
 import * as React from 'react';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
 import styled from '../styles/styled';
-import type { StyleProps } from '../styles/types';
+import useClasses from '../styles/useClasses';
+import type { PickStyleProps, InProps } from '../styles/types';
 import { alpha } from '../styles/colorManipulator';
 
-export interface SwitchStyleProps {
+export interface RadioProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  /**
+   * @description color
+   * @default primary
+   */
   color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
 }
 
 const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })<
-  StyleProps<SwitchStyleProps>
+  PickStyleProps<RadioProps, 'color'>
 >(({ theme, styleProps }) => ({
   appearance: 'none',
   colorAdjust: 'exact',
@@ -49,29 +55,21 @@ const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })<
   }
 }));
 
-export interface RadioProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  /**
-   * @description color
-   * @default primary
-   */
-  color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
-}
-
-const Radio = createFCWithTheme<RadioProps>('WuiRadio', (props, ref) => {
-  const { color = 'primary', component, ...rest } = props;
+export default function Radio<P extends InProps<RadioProps>>(inProps: P) {
+  const props = useThemeProps({ props: inProps, name: 'WuiRadio' });
+  const { className, color = 'primary', rootRef, ...rest } = props;
 
   const styleProps = { color };
 
+  const classes = useClasses({ ...props, styleProps, name: 'WuiRadio' });
+
   return (
     <RadioRoot
-      as={component}
-      type="radio"
+      className={classes.root}
+      ref={rootRef}
       styleProps={styleProps}
-      ref={ref}
+      type="radio"
       {...rest}
     />
   );
-});
-
-export default Radio;
+}

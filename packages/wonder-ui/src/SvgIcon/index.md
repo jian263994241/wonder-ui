@@ -6,7 +6,7 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| component | 渲染的节点类型 | `keyof ReactHTML` | svg
+| component | root element | `keyof ReactHTML \| ComponentType` | svg
 | rootRef | ref | `Ref` |
 | size | 尺寸 | `'inherit' \| 'large' \| 'medium' \| 'small'` | medium
 | spin | 旋转动画 | `boolean` |

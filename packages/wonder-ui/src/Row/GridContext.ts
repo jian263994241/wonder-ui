@@ -1,12 +1,15 @@
 import * as React from 'react';
 import type { RowProps } from './Row';
 
-export type ContextProps<
-  T extends Required<RowProps> = Required<RowProps>
-> = Pick<T, 'columns'> & Partial<Pick<T, 'gutter' | 'rowCols'>>;
+export interface ContextProps {
+  columns: number;
+  gutter: number | [number, number];
+  rowCols?: RowProps['rowCols'];
+}
 
 const Context = React.createContext<ContextProps>({
-  columns: 12
+  columns: 12,
+  gutter: 0
 });
 
 export default Context;

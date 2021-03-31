@@ -7,4 +7,5 @@ sidemenu: false
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
 | children | children | `ReactNode` |
-| disableSticky | 禁用 sticky | `boolean` |
+| component | root element | `keyof ReactHTML \| ComponentType` | li
+| disableSticky | disable sticky | `boolean` |

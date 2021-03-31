@@ -50,7 +50,7 @@
 
 <code src="../../packages/wonder-ui/src/List/demo/checkbox.tsx"></code>
 
-#### Switch 开关
+#### Toggle 开关
 
 该开关作用为一个辅助操作和一个单独的目标。
 

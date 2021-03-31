@@ -1,40 +1,52 @@
 import * as React from 'react';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type {
-  StyledComponentProps,
-  StyleProps,
-  ClassNameMap
-} from '../styles/types';
+import type { ClassNameMap, PickStyleProps, InProps } from '../styles/types';
 import GridContext from './GridContext';
 import Container, { ContainerProps } from '../Container';
 import { getGutter, getResponsiveValue, ResponsiveValue } from './utils';
 import { breakpointsKeys } from '../styles/theme/breakpoints';
 
-export interface RowStyleProps {
-  /** 间距, x| [x, y] */
-  gutter: number | [number, number];
-  /** 换行 */
-  nowrap?: boolean;
-  /** flex */
+export interface RowProps {
+  /**
+   * @description flex align
+   */
   alignItems?: ResponsiveValue<
     'start' | 'end' | 'center' | 'baseline' | 'stretch'
   >;
-  /** flex */
   alignContent?: ResponsiveValue<
     'start' | 'end' | 'center' | 'between' | 'around' | 'stretch'
   >;
-  /** flex */
+  columns?: number;
+  /**
+   * @description 子节点
+   */
+  children?: React.ReactNode;
+  /**
+   * @description Root element
+   * @default div
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+  classes?: Partial<ClassNameMap<'root' | 'container'>>;
+  ContainerProps?: ContainerProps;
+  gutter: number | [number, number];
   justifyContent?: ResponsiveValue<
     'start' | 'end' | 'center' | 'around' | 'between' | 'evenly'
   >;
+  nowrap?: boolean;
+  rowCols?: ResponsiveValue<'auto' | boolean | number>;
 }
 
 export const RowRoot = styled('div', {
   name: 'WuiRow',
-  slot: 'root'
-})<StyleProps<RowStyleProps>>(
+  slot: 'Root'
+})<
+  PickStyleProps<
+    RowProps,
+    'alignContent' | 'alignItems' | 'justifyContent' | 'gutter' | 'nowrap'
+  >
+>(
   ({ theme, styleProps }) => {
     const { gutterX, gutterY } = getGutter(styleProps.gutter);
 
@@ -64,35 +76,35 @@ export const RowRoot = styled('div', {
       styles[mediaQueryKey] = {
         /** Styles applied to the root element if alignItem={} */
         ...(alignItems && {
-          alignItems: ({
+          alignItems: {
             center: 'center',
             start: 'flex-start',
             end: 'flex-end',
             baseline: 'baseline',
             stretch: 'stretch'
-          } as any)[alignItems as string]
+          }[alignItems]
         }),
         /** Styles applied to the root element if justifyContent={} */
         ...(justifyContent && {
-          justifyContent: ({
+          justifyContent: {
             start: 'flex-start',
             end: 'flex-end',
             center: 'center',
             between: 'space-between',
             around: 'space-around',
             evenly: 'space-evenly'
-          } as any)[justifyContent]
+          }[justifyContent]
         }),
         /** Styles applied to the root element if alignContent={} */
         ...(alignContent && {
-          alignContent: ({
+          alignContent: {
             start: 'flex-start',
             end: 'flex-end',
             center: 'center',
             between: 'space-between',
             around: 'space-around',
             stretch: 'stretch'
-          } as any)[alignContent]
+          }[alignContent]
         })
       };
     });
@@ -101,18 +113,12 @@ export const RowRoot = styled('div', {
   }
 );
 
-export interface RowProps extends StyledComponentProps<typeof RowRoot> {
-  columns?: number;
-  rowCols?: ResponsiveValue<'auto' | boolean | number>;
-  classes?: Partial<ClassNameMap<'root' | 'container'>>;
-  ContainerProps?: ContainerProps;
-}
-
-const Row = createFCWithTheme<RowProps>('WuiRow', (props, ref) => {
+export default function Row<P extends InProps<RowProps>>(inProps: P) {
+  const props = useThemeProps({ props: inProps, name: 'WuiRow' });
   const {
-    alignContent,
-    alignItems,
-    justifyContent,
+    alignContent = 'start',
+    alignItems = 'start',
+    justifyContent = 'start',
     className,
     columns = 12,
     component,
@@ -121,6 +127,7 @@ const Row = createFCWithTheme<RowProps>('WuiRow', (props, ref) => {
     nowrap = false,
     gutter = 2,
     rowCols,
+    rootRef,
     ...rest
   } = props;
 
@@ -158,7 +165,7 @@ const Row = createFCWithTheme<RowProps>('WuiRow', (props, ref) => {
           as={component}
           className={classes.root}
           styleProps={styleProps}
-          ref={ref}
+          ref={rootRef}
           {...rest}
         >
           {children}
@@ -166,6 +173,4 @@ const Row = createFCWithTheme<RowProps>('WuiRow', (props, ref) => {
       </Container>
     </GridContext.Provider>
   );
-});
-
-export default Row;
+}

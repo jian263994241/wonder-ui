@@ -62,7 +62,7 @@ export default defineConfig({
         children: [
           'components/checkbox.md',
           'components/radio.md',
-          'components/switch.md'
+          'components/toggle.md'
         ]
       },
       {

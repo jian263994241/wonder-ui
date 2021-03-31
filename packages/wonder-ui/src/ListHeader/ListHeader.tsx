@@ -1,17 +1,30 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
-import type { StyledComponentProps, StyleProps } from '../styles/types';
+import type { PickStyleProps, InProps } from '../styles/types';
 
-interface ListHeaderStyleProps {
+export interface ListHeaderProps {
+  /**
+   * @description children
+   */
+  children?: React.ReactNode;
+  /**
+   * @description Root element
+   * @default li
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+  /**
+   * @description Disable sticky
+   * @default false
+   */
   disableSticky?: boolean;
 }
 
 const ListHeaderRoot = styled('li', {
   name: 'WuiListHeader',
   slot: 'Root'
-})<StyleProps<ListHeaderStyleProps>>(
+})<PickStyleProps<ListHeaderProps, 'disableSticky'>>(
   ({ theme, styleProps }) => ({
     ...theme.typography.body1,
     backgroundColor: theme.palette.background.default,
@@ -32,32 +45,32 @@ const ListHeaderRoot = styled('li', {
   })
 );
 
-export interface ListHeaderProps
-  extends StyledComponentProps<typeof ListHeaderRoot> {
-  disableSticky?: boolean;
+export default function ListHeader<P extends InProps<ListHeaderProps>>(
+  inProps: P
+) {
+  const props = useThemeProps({ props: inProps, name: 'WuiListHeader' });
+  const {
+    children,
+    component,
+    className,
+    disableSticky = false,
+    rootRef,
+    ...rest
+  } = props;
+
+  const styleProps = { disableSticky };
+
+  const classes = useClasses({ ...props, styleProps, name: 'WuiListHeader' });
+
+  return (
+    <ListHeaderRoot
+      className={classes.root}
+      as={component}
+      styleProps={styleProps}
+      ref={rootRef}
+      {...rest}
+    >
+      {children}
+    </ListHeaderRoot>
+  );
 }
-
-const ListHeader = createFCWithTheme<ListHeaderProps>(
-  'WuiListHeader',
-  (props, ref) => {
-    const { children, component, className, disableSticky, ...rest } = props;
-
-    const styleProps = { disableSticky };
-
-    const classes = useClasses({ ...props, styleProps, name: 'WuiListHeader' });
-
-    return (
-      <ListHeaderRoot
-        className={classes.root}
-        as={component}
-        styleProps={styleProps}
-        ref={ref}
-        {...rest}
-      >
-        {children}
-      </ListHeaderRoot>
-    );
-  }
-);
-
-export default ListHeader;

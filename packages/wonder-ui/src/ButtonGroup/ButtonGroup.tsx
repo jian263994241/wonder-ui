@@ -5,11 +5,16 @@ import type { InProps, PickStyleProps } from '../styles/types';
 import styled from '../styles/styled';
 import { ButtonRoot } from '../Button';
 
-interface ButtonGroupProps {
+export interface ButtonGroupProps {
   /**
    * @description children
    */
   children?: React.ReactNode;
+  /**
+   * @description Root element
+   * @default div
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
   /**
    * @description direction
    * @default horizontal
@@ -66,12 +71,15 @@ const ButtonGroupRoot = styled('div', {
   })
 );
 
-export default function ButtonGroup<T>(inProps: InProps<T, ButtonGroupProps>) {
+export default function ButtonGroup<P extends InProps<ButtonGroupProps>>(
+  inProps: P
+) {
   const props = useThemeProps({ props: inProps, name: 'WuiButtonGroup' });
   const {
     children,
-    direction = 'horizontal',
     className,
+    component,
+    direction = 'horizontal',
     rootRef,
     ...rest
   } = props;
@@ -85,6 +93,7 @@ export default function ButtonGroup<T>(inProps: InProps<T, ButtonGroupProps>) {
 
   return (
     <ButtonGroupRoot
+      as={component}
       role="group"
       className={classes.root}
       ref={rootRef}

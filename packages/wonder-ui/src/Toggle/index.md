@@ -2,17 +2,18 @@
 sidemenu: false
 ---
 
-### Switch
+### Toggle
 
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
 | checked | checked | `boolean` | false
+| checkedIcon | checked icon | `ReactElement` |
 | classes | css api | `ClassNameMap<'root' \| 'input' \| 'icon'>` |
-| color | color | `'primary' \| 'secondary'` | primary
+| color | color | `'primary' \| 'secondary' \| 'danger' \| 'warning' \| 'info'` | primary
+| component | root element | `keyof ReactHTML \| ComponentType` | div
 | defaultChecked | default checked | `boolean` |
 | disabled | disabled | `boolean` | false
-| checkedIcon | checked icon | `ReactElement` |
 | icon | icon | `ReactElement` |
 | id |  | `string` |
 | inputProps | input props | `InputHTMLAttributes` | {}

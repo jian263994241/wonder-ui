@@ -7,5 +7,8 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| gutter | 边距	 | `number` | 2
-| size | 断点宽度	 | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'xxl' \| 'fluid'` |
+| children | children | `ReactNode` |
+| component | root element | `keyof ReactHTML \| ComponentType` | div
+| gutter | gutter	 | `number` | 2
+| rootRef | ref | `Ref` |
+| size | max width size	 | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'xxl' \| 'fluid'` | fluid

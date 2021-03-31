@@ -1,86 +1,66 @@
 import * as React from 'react';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { StyleProps } from '../styles/types';
+import type { PickStyleProps, InProps } from '../styles/types';
 import { Transition, TransitionStatus } from 'react-transition-group';
-import clsx from 'clsx';
-import { getTransitionDurationFromElement } from '@wonder-ui/utils';
+import {
+  getAutoSizeDuration,
+  getTransitionDurationFromElement
+} from '@wonder-ui/utils';
 import { useForkRef } from '@wonder-ui/hooks';
 
 const reflow = (node: HTMLElement) => node.offsetHeight;
 
-export interface CollapseStyleProps {
-  collapsedSize?: string;
-  direction?: 'horizontal' | 'vertical';
-}
-
-const CollapseRoot = styled('div', {
-  name: 'WuiCollapse',
-  slot: 'Root'
-})<StyleProps<CollapseStyleProps>>(({ theme, styleProps }) => {
-  const dimension = styleProps.direction === 'vertical' ? 'height' : 'width';
-  return {
-    ...(styleProps.collapsedSize != '0px' && {
-      overflow: 'hidden',
-      [dimension]: styleProps.collapsedSize
-    }),
-
-    '&.collapse:not(.show)': {
-      ...(styleProps.collapsedSize === '0px' && { display: 'none' })
-    },
-    '&.collapsing': {
-      [dimension]: styleProps.collapsedSize || 0,
-      overflow: 'hidden',
-      transition: theme.transitions.create(dimension, {
-        duration: 'standard',
-        easing: 'ease'
-      })
-    },
-    '@media (prefers-reduced-motion: reduce)': {
-      transition: 'none'
-    }
-  };
-});
-
-type TransitionCallBack = (node: HTMLElement) => void;
+type EndHandler<RefE = HTMLElement> = (
+  node: RefE,
+  maybeIsAppearing?: boolean
+) => void;
 
 export interface CollapseProps {
   /**
-   * React children
+   * @description Children
    */
-  children?: any;
-
+  children?: React.ReactNode;
+  /**
+   * @description Root element
+   * @default div
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
   /**
    * @description 折叠尺寸
    * @default 0
    */
   collapsedSize?: string | number;
-
+  /**
+   * @description transition duration ms
+   * @default auto
+   */
+  timeout?: 'atuo' | number;
   /**
    * transition 回调
    */
-  onEnter?: TransitionCallBack;
+  onEnter?: EndHandler;
   /**
    * transition 回调
    */
-  onEntered?: TransitionCallBack;
+  onEntered?: EndHandler;
   /**
    * transition 回调
    */
-  onEntering?: TransitionCallBack;
+  onEntering?: EndHandler;
   /**
    * transition 回调
    */
-  onExit?: TransitionCallBack;
+  onExit?: EndHandler;
   /**
    * transition 回调
    */
-  onExited?: TransitionCallBack;
+  onExited?: EndHandler;
   /**
    * transition 回调
    */
-  onExiting?: TransitionCallBack;
+  onExiting?: EndHandler;
   /**
    * @description 动画过渡方向
    * @default vertical
@@ -92,144 +72,198 @@ export interface CollapseProps {
   in?: boolean;
 }
 
-const Collapse = createFCWithTheme<CollapseProps>(
-  'WuiCollapse',
-  (props, ref) => {
-    const {
-      in: visible,
-      children,
-      className,
-      component,
-      collapsedSize: collapsedSizeProp = '0px',
-      direction = 'vertical',
-      onEnter,
-      onEntered,
-      onEntering,
-      onExit,
-      onExited,
-      onExiting,
-      ...rest
-    } = props;
+const CollapseRoot = styled('div', {
+  name: 'WuiCollapse',
+  slot: 'Root'
+})<
+  PickStyleProps<
+    CollapseProps,
+    'direction' | 'in' | 'collapsedSize',
+    { state: TransitionStatus }
+  >
+>(({ theme, styleProps }) => {
+  return {
+    overflow: 'hidden',
 
-    const nodeRef = React.useRef<HTMLElement>();
-    const handleRef = useForkRef(ref, nodeRef);
-    const dimension = direction === 'vertical' ? 'height' : 'width';
-    const scrollSize = ({
-      width: 'scrollWidth',
-      height: 'scrollHeight'
-    } as const)[dimension];
+    ...(styleProps.direction === 'horizontal'
+      ? {
+          width: 0,
+          minWidth: styleProps.collapsedSize,
+          transition: theme.transitions.create('width')
+        }
+      : {
+          height: 0,
+          minHeight: styleProps.collapsedSize,
+          transition: theme.transitions.create('height')
+        }),
 
-    const collapsedSize =
-      typeof collapsedSizeProp === 'number'
-        ? `${collapsedSizeProp}px`
-        : collapsedSizeProp;
+    ...(styleProps.state === 'entered' && {
+      height: 'auto',
+      overflow: 'visible',
+      ...(styleProps.direction === 'horizontal' && {
+        width: 'auto'
+      })
+    }),
 
-    const styleProps = {
-      collapsedSize,
-      direction,
-      visible
-    };
+    ...(styleProps.state === 'exited' &&
+      !styleProps.in &&
+      styleProps.collapsedSize === '0px' && {
+        visibility: 'hidden'
+      }),
 
-    const classes = useClasses({ ...props, styleProps, name: 'WuiCollapse' });
+    '@media (prefers-reduced-motion: reduce)': {
+      transition: 'none'
+    }
+  };
+});
 
-    const normalizedTransitionCallback = (
-      callback: (node: HTMLElement, maybeIsAppearing?: boolean) => void
-    ) => (maybeIsAppearing?: boolean) => {
-      if (callback) {
-        const node = nodeRef.current;
+export default function Collapse<P extends InProps<CollapseProps>>(inProps: P) {
+  const props = useThemeProps({ props: inProps, name: 'WuiCollapse' });
+  const {
+    children,
+    className,
+    collapsedSize: collapsedSizeProp = '0px',
+    component,
+    direction = 'vertical',
+    in: visible = false,
+    onEnter,
+    onEntered,
+    onEntering,
+    onExit,
+    onExited,
+    onExiting,
+    rootRef,
+    timeout = 'atuo',
+    ...rest
+  } = props;
 
-        if (node) {
-          // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
-          if (maybeIsAppearing === undefined) {
-            callback(node);
-          } else {
-            callback(node, maybeIsAppearing);
-          }
+  const nodeRef = React.useRef<HTMLElement>();
+  const handleRef = useForkRef(rootRef, nodeRef);
+  const isHorizontal = direction === 'horizontal';
+  const dimension = isHorizontal ? 'width' : 'height';
+
+  const scrollSize = isHorizontal ? 'scrollWidth' : 'scrollHeight';
+
+  const collapsedSize =
+    typeof collapsedSizeProp === 'number'
+      ? `${collapsedSizeProp}px`
+      : collapsedSizeProp;
+
+  const styleProps = { direction, in: visible, collapsedSize };
+  const classes = useClasses({ ...props, styleProps, name: 'WuiCollapse' });
+
+  const normalizedTransitionCallback = (
+    callback: (node: HTMLElement, maybeIsAppearing?: boolean) => void
+  ) => (maybeIsAppearing?: boolean) => {
+    if (callback) {
+      const node = nodeRef.current;
+
+      if (node) {
+        // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
+        if (maybeIsAppearing === undefined) {
+          callback(node);
+        } else {
+          callback(node, maybeIsAppearing);
         }
       }
-    };
+    }
+  };
 
-    const handleEnter = normalizedTransitionCallback((node) => {
-      if (onEnter) {
-        onEnter(node);
-      }
-    });
+  const getTransitionDuration = () => {
+    const node = nodeRef.current;
+    let transitionDuration;
 
-    const handleEntering = normalizedTransitionCallback((node) => {
-      node.style[dimension] = collapsedSize;
-      node.style[dimension] = node[scrollSize] + 'px';
-      if (onEntering) {
-        onEntering(node);
-      }
-    });
+    if (!node) return 0;
 
-    const handleEntered = normalizedTransitionCallback((node) => {
-      node.style[dimension] = collapsedSize != '0px' ? 'auto' : '';
-      if (onEntered) {
-        onEntered(node);
-      }
-    });
-
-    const handleExit = normalizedTransitionCallback((node) => {
-      node.style[dimension] = node.getBoundingClientRect()[dimension] + 'px';
-      reflow(node);
-      if (onExit) {
-        onExit(node);
-      }
-    });
-    const handleExiting = normalizedTransitionCallback((node) => {
-      node.style[dimension] = collapsedSize;
-      if (onExiting) {
-        onExiting(node);
-      }
-    });
-
-    const handleExited = normalizedTransitionCallback((node) => {
-      node.style[dimension] = collapsedSize != '0px' ? collapsedSize : '';
-      if (onExited) {
-        onExited(node);
-      }
-    });
-
-    const addEndListener = (done: () => void) => {
-      const transitionDuration = getTransitionDurationFromElement(
-        nodeRef.current
+    if (timeout === 'atuo') {
+      transitionDuration = getAutoSizeDuration(
+        node[scrollSize] - Number(collapsedSize.replace('px', ''))
       );
-      setTimeout(done, transitionDuration);
-    };
+    } else {
+      transitionDuration =
+        typeof timeout === 'number'
+          ? timeout
+          : getTransitionDurationFromElement(node);
+    }
 
-    return (
-      <Transition
-        in={visible}
-        onEnter={handleEnter}
-        onEntered={handleEntered}
-        onEntering={handleEntering}
-        onExit={handleExit}
-        onExited={handleExited}
-        onExiting={handleExiting}
-        addEndListener={addEndListener}
-        nodeRef={nodeRef}
-      >
-        {(state: TransitionStatus) => {
-          return (
-            <CollapseRoot
-              as={component}
-              className={clsx(classes.root, {
-                show: state === 'entered',
-                collapse: state === 'entered' || state === 'exited',
-                collapsing: state === 'entering' || state === 'exiting'
-              })}
-              styleProps={styleProps}
-              ref={handleRef}
-              {...rest}
-            >
-              {children}
-            </CollapseRoot>
-          );
-        }}
-      </Transition>
-    );
-  }
-);
+    return transitionDuration;
+  };
 
-export default Collapse;
+  const handleEnter = normalizedTransitionCallback((node) => {
+    if (onEnter) {
+      onEnter(node);
+    }
+  });
+
+  const handleEntering = normalizedTransitionCallback((node) => {
+    node.style[dimension] = collapsedSize;
+    node.style[dimension] = node[scrollSize] + 'px';
+
+    node.style.transitionDuration = getTransitionDuration() + 'ms';
+    reflow(node);
+    if (onEntering) {
+      onEntering(node);
+    }
+  });
+
+  const handleEntered = normalizedTransitionCallback((node) => {
+    node.style[dimension] = collapsedSize != '0px' ? 'auto' : '';
+    if (onEntered) {
+      onEntered(node);
+    }
+  });
+
+  const handleExit = normalizedTransitionCallback((node) => {
+    node.style[dimension] = node.getBoundingClientRect()[dimension] + 'px';
+    reflow(node);
+    if (onExit) {
+      onExit(node);
+    }
+  });
+  const handleExiting = normalizedTransitionCallback((node) => {
+    node.style[dimension] = collapsedSize;
+    node.style.transitionDuration = getTransitionDuration() + 'ms';
+    if (onExiting) {
+      onExiting(node);
+    }
+  });
+
+  const handleExited = normalizedTransitionCallback((node) => {
+    node.style[dimension] = collapsedSize != '0px' ? collapsedSize : '';
+    if (onExited) {
+      onExited(node);
+    }
+  });
+
+  const addEndListener = (done: () => void) => {
+    setTimeout(done, getTransitionDuration());
+  };
+
+  return (
+    <Transition
+      in={visible}
+      onEnter={handleEnter}
+      onEntered={handleEntered}
+      onEntering={handleEntering}
+      onExit={handleExit}
+      onExited={handleExited}
+      onExiting={handleExiting}
+      addEndListener={addEndListener}
+      nodeRef={nodeRef}
+    >
+      {(state: TransitionStatus) => {
+        return (
+          <CollapseRoot
+            as={component}
+            className={classes.root}
+            styleProps={{ ...styleProps, state }}
+            ref={handleRef}
+            {...rest}
+          >
+            {children}
+          </CollapseRoot>
+        );
+      }}
+    </Transition>
+  );
+}

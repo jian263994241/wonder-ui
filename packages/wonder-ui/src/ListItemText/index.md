@@ -6,10 +6,11 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| children | children | `ReactNode` |
-| classes | css api | `ClassNameMap<'root' \| 'primary' \| 'secondary'>` |
-| disableTypography | disable Typography | `boolean` | false
-| primary | children | `ReactNode` |
+| children | Primary text | `ReactNode` |
+| classes | Css api | `ClassNameMap<'root' \| 'primary' \| 'secondary'>` |
+| component | Root element | `keyof ReactHTML \| ComponentType` | div
+| disableTypography | Disable Typography | `boolean` | false
+| primary | Primary text | `ReactNode` |
 | primaryTypographyProps | props | `TypographyProps` |
-| secondary | children | `ReactNode` |
+| secondary | Secondary text | `ReactNode` |
 | secondaryTypographyProps | props | `TypographyProps` |

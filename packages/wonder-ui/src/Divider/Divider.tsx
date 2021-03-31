@@ -3,21 +3,34 @@
  */
 import * as React from 'react';
 import { alpha } from '../styles/colorManipulator';
-import createFCWithTheme from '../styles/createFCWithTheme';
+import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
-import type { StyledComponentProps, StyleProps } from '../styles/types';
 import styled from '../styles/styled';
+import type { ClassNameMap, PickStyleProps, InProps } from '../styles/types';
 
-export interface DividerStyleProps {
+export interface DividerProps {
   /**
    * @description 定位方式
    * @default false
    */
   absolute?: boolean;
   /**
+   * @description Children
+   */
+  children?: React.ReactElement;
+  /**
+   * @description Root element
+   * @default hr
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+  /**
+   * @description css api
+   */
+  classes?: Partial<ClassNameMap<'root' | 'wrapper'>>;
+  /**
    * @ignore
    */
-  withChildren?: boolean;
+  withChildren: boolean;
   /**
    * @description 更亮
    * @default false
@@ -46,7 +59,16 @@ export interface DividerStyleProps {
 }
 
 const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })<
-  StyleProps<DividerStyleProps>
+  PickStyleProps<
+    DividerProps,
+    | 'absolute'
+    | 'direction'
+    | 'flexItem'
+    | 'light'
+    | 'textAlign'
+    | 'variant'
+    | 'withChildren'
+  >
 >(
   ({ theme, styleProps }) => {
     return {
@@ -145,7 +167,16 @@ const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })<
 );
 
 const DividerWrapper = styled('span', { name: 'WuiDivider', slot: 'Wrapper' })<
-  StyleProps<DividerStyleProps>
+  PickStyleProps<
+    DividerProps,
+    | 'absolute'
+    | 'direction'
+    | 'flexItem'
+    | 'light'
+    | 'textAlign'
+    | 'variant'
+    | 'withChildren'
+  >
 >(({ theme, styleProps }) => {
   return {
     display: 'inline-block',
@@ -158,21 +189,19 @@ const DividerWrapper = styled('span', { name: 'WuiDivider', slot: 'Wrapper' })<
   };
 });
 
-export interface DividerProps extends StyledComponentProps<typeof DividerRoot> {
-  classes?: Partial<Record<'root' | 'wrapper', string>>;
-}
-
-const Divider = createFCWithTheme<DividerProps>('WuiDivider', (props, ref) => {
+export default function Divider<P extends InProps<DividerProps>>(inProps: P) {
+  const props = useThemeProps({ props: inProps, name: 'WuiDivider' });
   const {
-    className,
-    children,
-    component = children ? 'div' : 'hr',
-    theme,
     absolute = false,
+    children,
+    className,
+    component = children ? 'div' : 'hr',
+    direction = 'horizontal',
     flexItem = false,
     light = false,
-    direction = 'horizontal',
+    rootRef,
     textAlign = 'center',
+    theme,
     variant = 'fullWidth',
     ...rest
   } = props;
@@ -195,24 +224,22 @@ const Divider = createFCWithTheme<DividerProps>('WuiDivider', (props, ref) => {
 
   return (
     <DividerRoot
-      className={classes.root}
       as={component}
-      ref={ref}
-      theme={theme}
+      className={classes.root}
+      ref={rootRef}
       styleProps={styleProps}
+      theme={theme}
       {...rest}
     >
       {children ? (
         <DividerWrapper
           className={classes.wrapper}
-          theme={theme}
           styleProps={styleProps}
+          theme={theme}
         >
           {children}
         </DividerWrapper>
       ) : null}
     </DividerRoot>
   );
-});
-
-export default Divider;
+}

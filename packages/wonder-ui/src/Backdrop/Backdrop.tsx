@@ -11,6 +11,11 @@ export interface BackdropProps {
    */
   children?: React.ReactNode;
   /**
+   * @description Root element
+   * @default div
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+  /**
    * @description transparent background
    * @default false
    */
@@ -41,15 +46,16 @@ const BackdropRoot = styled('div', { name: 'WuiBackdrop', slot: 'Root' })<
   })
 }));
 
-export default function Backdrop<T>(inProps: InProps<T, BackdropProps>) {
+export default function Backdrop<P extends InProps<BackdropProps>>(inProps: P) {
   const props = useThemeProps({ props: inProps, name: 'WuiBackdrop' });
 
   const {
     children,
     className,
+    component,
     invisible = false,
-    visible,
     rootRef,
+    visible,
     ...rest
   } = props;
 
@@ -59,9 +65,10 @@ export default function Backdrop<T>(inProps: InProps<T, BackdropProps>) {
   return (
     <Fade in={visible}>
       <BackdropRoot
-        styleProps={styleProps}
+        as={component}
         className={classes.root}
         ref={rootRef}
+        styleProps={styleProps}
         {...rest}
       >
         {children}
