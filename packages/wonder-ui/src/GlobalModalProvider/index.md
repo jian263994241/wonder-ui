@@ -9,3 +9,4 @@ sidemenu: false
 | children | Children	 | `any` |
 | component | Modal component	 | `ComponentType` |
 | modalStack | Modal stack	 | `boolean` | false
+| ref | ref | `React.Ref<GlobalModalContextProps>` |
