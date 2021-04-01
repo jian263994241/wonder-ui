@@ -15,11 +15,11 @@ type RunModalProps = Props & Partial<Pick<GlobalModalProps, 'modalKey'>>;
 type ModalState = Props & Pick<GlobalModalProps, 'visible' | 'modalKey'>;
 type GlobalModalComponentProps = Props & GlobalModalProps;
 
-type ContextProps = {
+export interface GlobalModalContextProps {
   runModal: (props: RunModalProps) => void;
-};
+}
 
-export const GlobalModalContext = React.createContext<ContextProps>({
+export const GlobalModalContext = React.createContext<GlobalModalContextProps>({
   runModal: () => console.error('GlobalModalContext is missing.')
 });
 
@@ -41,6 +41,10 @@ export interface GlobalModalProviderProps {
    * @default false
    */
   modalStack?: boolean;
+  /**
+   * @description ref
+   */
+  ref?: React.Ref<GlobalModalContextProps>;
 }
 
 const GlobalModalProvider: React.FC<GlobalModalProviderProps> = React.forwardRef(

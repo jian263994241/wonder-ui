@@ -10,8 +10,10 @@ import {
   Modal,
   Typography,
   GlobalModalProvider,
-  useGlobalModal
+  useGlobalModal,
+  GlobalModalContextProps
 } from '@wonder-ui/core';
+import * as React from 'react';
 
 const Demo = styled('div')`
   position: absolute;
@@ -26,6 +28,10 @@ const Demo = styled('div')`
   padding: 32px;
 `;
 
+const GlobalModal = React.createRef<GlobalModalContextProps | null>();
+
+console.log(GlobalModal);
+
 function App() {
   const { runModal } = useGlobalModal();
 
@@ -34,7 +40,8 @@ function App() {
       <Button
         onClick={() => {
           runModal({ message: 'Alert Message 1111111' });
-          runModal({ message: 'Alert Message 2222222' });
+          //or
+          GlobalModal.current?.runModal({ message: 'Alert Message 2222222' });
         }}
       >
         Alert
@@ -46,6 +53,7 @@ function App() {
 export default function Example() {
   return (
     <GlobalModalProvider
+      ref={GlobalModal}
       modalStack
       component={({ visible, onClose, message }) => {
         return (
