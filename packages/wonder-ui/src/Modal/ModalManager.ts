@@ -126,6 +126,12 @@ function handleContainer(containerInfo: Container, props: ManagedModalProps) {
     });
 
     restoreStyle.push({
+      value: scrollContainer.style.width,
+      property: 'width',
+      el: scrollContainer
+    });
+
+    restoreStyle.push({
       value: scrollContainer.style.position,
       property: 'position',
       el: scrollContainer
@@ -147,6 +153,7 @@ function handleContainer(containerInfo: Container, props: ManagedModalProps) {
     scrollPositionY = containerWindow.pageYOffset;
 
     scrollContainer.style.overflow = 'hidden';
+    scrollContainer.style.width = '100%';
     scrollContainer.style.position = 'fixed';
     scrollContainer.style.top = `-${scrollPositionY}px`;
     scrollContainer.style.left = `-${scrollPositionX}px`;
