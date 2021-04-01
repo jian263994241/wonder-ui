@@ -240,7 +240,7 @@ export default function Button<P extends InProps<ButtonProps>>(inProps: P) {
   const classes = useClasses({ ...props, styleProps, name: 'WuiButton' });
   const containerProps = useTouchFeedback({
     ...props,
-    className: clsx(classes.root, { active: checked }),
+    prefixClassName: clsx(classes.root, { active: checked }),
     activeClassName: 'state-active'
   });
 

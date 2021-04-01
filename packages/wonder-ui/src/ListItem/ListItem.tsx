@@ -111,7 +111,7 @@ export default function ListItem<P extends InProps<ListItemProps>>(inProps: P) {
 
   const containerProps = useTouchFeedback({
     ...props,
-    className: classes.root,
+    prefixClassName: classes.root,
     activeClassName: 'state-active',
     disabled: !button
   });

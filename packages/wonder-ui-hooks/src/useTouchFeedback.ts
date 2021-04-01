@@ -23,13 +23,13 @@ export interface TouchFeedbackOptions<T = Element>
   /**
    * extends className
    */
-  className?: string;
+  prefixClassName?: string;
 }
 
 export function useTouchFeedback<T = Element>(
   options: TouchFeedbackOptions<T>
 ) {
-  const { disabled, activeClassName, className } = options;
+  const { disabled, activeClassName, prefixClassName } = options;
 
   const [active, setActive] = React.useState(false);
 
@@ -90,7 +90,7 @@ export function useTouchFeedback<T = Element>(
 
   return {
     ...events,
-    className: clsx(className, { [activeClassName]: active })
+    className: clsx(prefixClassName, { [activeClassName]: active })
   };
 }
 

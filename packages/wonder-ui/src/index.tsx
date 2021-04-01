@@ -34,6 +34,12 @@ export * from './Divider';
 export { default as Fade } from './Fade';
 export * from './Fade';
 
+export {
+  default as GlobalModalProvider,
+  useGlobalModal
+} from './GlobalModalProvider';
+export * from './GlobalModalProvider';
+
 export { default as LinearProgress } from './LinearProgress';
 export * from './LinearProgress';
 

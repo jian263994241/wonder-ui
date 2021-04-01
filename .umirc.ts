@@ -79,7 +79,8 @@ export default defineConfig({
           'components/backdrop.md',
           'components/popover.md',
           'components/progress.md',
-          'components/result.md'
+          'components/result.md',
+          'components/toast.md'
         ]
       },
       {
@@ -88,7 +89,11 @@ export default defineConfig({
       },
       {
         title: '辅助工具',
-        children: ['components/modal.md', 'components/portal.md']
+        children: [
+          'components/global-modal-provider.md',
+          'components/modal.md',
+          'components/portal.md'
+        ]
       },
       {
         title: '其他',
