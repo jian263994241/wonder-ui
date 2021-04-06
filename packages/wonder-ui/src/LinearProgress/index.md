@@ -9,5 +9,4 @@ sidemenu: false
 | --- | --- | --- | ---
 | animated | 条纹动画 | `boolean` |
 | color | 颜色 | `'primary' \| 'secondary' \| 'success' \| 'error' \| 'danger' \| 'warning' \| 'info'` | primary
-| striped | 条纹 | `boolean` |
 | value | 值 | `number` |
