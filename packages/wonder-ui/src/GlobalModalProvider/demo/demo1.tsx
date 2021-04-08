@@ -30,8 +30,6 @@ const Demo = styled('div')`
 
 const GlobalModal = React.createRef<GlobalModalContextProps | null>();
 
-console.log(GlobalModal);
-
 function App() {
   const { runModal } = useGlobalModal();
 

@@ -3,18 +3,9 @@ import useThemeProps from '../styles/useThemeProps';
 import { keyframes } from '@wonder-ui/styled';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
-import type { InProps, PickStyleProps } from '../styles/types';
+import type { BaseProps, PickStyleProps } from '../styles/types';
 
-export interface SvgIconProps {
-  /**
-   * @description children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default svg
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
+export interface SvgIconProps extends BaseProps {
   /**
    * @description size
    * @default medium
@@ -66,7 +57,7 @@ const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })<
   }[styleProps.size]
 }));
 
-export default function SvgIcon<P extends InProps<SvgIconProps>>(inProps: P) {
+const SvgIcon: React.FC<SvgIconProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ name: 'WuiSvgIcon', props: inProps });
   const {
     children,
@@ -90,7 +81,7 @@ export default function SvgIcon<P extends InProps<SvgIconProps>>(inProps: P) {
       as={component}
       className={classes.root}
       focusable="false"
-      ref={rootRef}
+      ref={ref}
       role={titleAccess ? 'img' : undefined}
       styleProps={styleProps}
       viewBox={viewBox}
@@ -100,4 +91,6 @@ export default function SvgIcon<P extends InProps<SvgIconProps>>(inProps: P) {
       {titleAccess ? <title>{titleAccess}</title> : null}
     </SvgIconRoot>
   );
-}
+});
+
+export default SvgIcon;

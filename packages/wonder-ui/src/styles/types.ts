@@ -9,15 +9,34 @@ export interface PickStyleProps<
   styleProps: Required<Pick<Props, StylePropKeys>> & Extra;
 }
 
-export type InProps<P> = {
+export interface BaseProps {
   /** element class */
   className?: string;
-  /** root ref */
-  rootRef?: React.Ref<any>;
-  /** element style */
-  style?: React.CSSProperties;
-  /** theme  */
+  /**
+   * @description children
+   */
+  children?: React.ReactNode;
+  /**
+   * @description Root element
+   * @default span
+   */
+  component?: keyof React.ReactHTML | React.ComponentType;
+  /**
+   * Theme
+   */
   theme?: Theme;
-} & P;
+  /**
+   * Ref
+   */
+  ref?: React.Ref<any>;
+  /**
+   * Element style
+   */
+  style?: React.CSSProperties;
+  /**
+   * rest
+   */
+  [prop: string]: any;
+}
 
 export type ClassNameMap<Classes extends string> = Record<Classes, string>;

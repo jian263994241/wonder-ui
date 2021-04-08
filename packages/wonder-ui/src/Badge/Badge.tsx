@@ -2,23 +2,14 @@ import * as React from 'react';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import type { InProps, PickStyleProps } from '../styles/types';
+import type { BaseProps, PickStyleProps } from '../styles/types';
 
-export interface BadgeProps {
-  /**
-   * @description children
-   */
-  children?: React.ReactNode;
+export interface BadgeProps extends BaseProps {
   /**
    * @description 徽章颜色
    * @default primary
    */
   color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
-  /**
-   * @description Root element
-   * @default span
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
   /**
    * @description 圆角徽章
    * @default false
@@ -60,14 +51,13 @@ const BadgeRoot = styled('span', { name: 'WuiBadge', slot: 'Root' })<
   };
 });
 
-export default function Badge<P extends InProps<BadgeProps>>(inProps: P) {
+const Badge: React.FC<BadgeProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiBadge' });
   const {
     children,
     className,
     color = 'primary',
     component,
-    rootRef,
     rounded = false,
     sup = false,
     ...rest
@@ -80,11 +70,13 @@ export default function Badge<P extends InProps<BadgeProps>>(inProps: P) {
     <BadgeRoot
       as={component}
       className={classes.root}
-      ref={rootRef}
+      ref={ref}
       styleProps={styleProps}
       {...rest}
     >
       {children}
     </BadgeRoot>
   );
-}
+});
+
+export default Badge;

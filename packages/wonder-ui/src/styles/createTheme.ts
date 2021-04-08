@@ -1,12 +1,15 @@
 import * as React from 'react';
 import type { CSSObject } from '@wonder-ui/styled';
 import * as transitions from './transitions';
-import createPalette, { PaletteOptions } from './theme/createPalette';
+import createPalette, { PaletteOptions, Palette } from './theme/createPalette';
 import createTypography, { TypographyOptions } from './theme/createTypography';
-import createSpacing from './theme/createSpacing';
-import containerMaxWidths from './theme/containerMaxWidths';
-import breakpoints from './theme/breakpoints';
-import zIndex from './theme/zIndex';
+import createSpacing, { SpacingConfig, Spacing } from './theme/createSpacing';
+import createBreakpoints, {
+  Breakpoints,
+  BreakpointsOptions
+} from './theme/createBreakpoints';
+import shadows from './theme/shadows';
+import zIndex, { ZIndex } from './theme/zIndex';
 
 interface ThemeComponents {
   components?: {
@@ -20,22 +23,22 @@ interface ThemeComponents {
 }
 
 interface ThemeOptions extends ThemeComponents {
-  breakpoints?: Partial<typeof breakpoints>;
-  containerMaxWidths?: Partial<typeof containerMaxWidths>;
+  breakpoints?: BreakpointsOptions;
   palette?: PaletteOptions;
-  spacing?: number;
+  spacing?: SpacingConfig;
   typography?: TypographyOptions;
-  zIndex?: Partial<typeof zIndex>;
+  shadows?: string[];
+  zIndex?: Partial<ZIndex>;
 }
 
 export interface Theme extends ThemeComponents {
-  breakpoints: typeof breakpoints;
-  containerMaxWidths: typeof containerMaxWidths;
-  palette: ReturnType<typeof createPalette>;
-  spacing: ReturnType<typeof createSpacing>;
+  breakpoints: Breakpoints;
+  palette: Palette;
+  spacing: Spacing;
   transitions: typeof transitions;
   typography: ReturnType<typeof createTypography>;
-  zIndex: typeof zIndex;
+  shadows: string[];
+  zIndex: ZIndex;
 }
 
 export default function createTheme(options: ThemeOptions = {}): Theme {
@@ -43,20 +46,19 @@ export default function createTheme(options: ThemeOptions = {}): Theme {
     palette: paletteInput,
     spacing = 8,
     typography,
-    containerMaxWidths: containerMaxWidthsInput,
     breakpoints: breakpointsInput,
     zIndex: zIndexInput,
     ...rest
   } = options;
 
   return {
-    breakpoints: { ...breakpoints, ...breakpointsInput },
-    containerMaxWidths: { ...containerMaxWidths, ...containerMaxWidthsInput },
+    breakpoints: createBreakpoints(breakpointsInput),
     palette: createPalette(paletteInput),
     spacing: createSpacing(spacing),
     transitions,
     typography: createTypography(typography),
     zIndex: { ...zIndex, ...zIndexInput },
+    shadows,
     ...rest
   };
 }

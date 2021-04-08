@@ -2,12 +2,11 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import type { InProps, PickStyleProps } from '../styles/types';
+import type { BaseProps, PickStyleProps } from '../styles/types';
 import { alpha } from '../styles/colorManipulator';
 import { useForkRef, useControlled } from '@wonder-ui/hooks';
 
-export interface CheckboxProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface CheckboxProps extends BaseProps {
   /**
    * @description shape
    * @default false
@@ -43,7 +42,7 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })<
   borderColor: theme.palette.divider,
   borderRadius: styleProps.circle ? '50%' : '.25em',
   transition: theme.transitions.create(['border-color', 'background'], {
-    duration: 'shortest'
+    duration: theme.transitions.duration.shortest
   }),
   '&:disabled': {
     pointerEvents: 'none',
@@ -76,7 +75,7 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })<
   }
 }));
 
-export default function Checkbox(inProps: InProps<CheckboxProps>) {
+const Checkbox: React.FC<CheckboxProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiCheckbox' });
 
   const {
@@ -88,7 +87,6 @@ export default function Checkbox(inProps: InProps<CheckboxProps>) {
     disabled,
     indeterminate = false,
     onChange,
-    rootRef: rootRefProp,
     ...rest
   } = props;
   const [checked, setChecked] = useControlled({
@@ -97,7 +95,7 @@ export default function Checkbox(inProps: InProps<CheckboxProps>) {
   });
 
   const rootRef = React.useRef<HTMLInputElement>(null);
-  const hadnleRef = useForkRef(rootRef, rootRefProp);
+  const hadnleRef = useForkRef(rootRef, ref);
 
   const styleProps = { color, circle };
 
@@ -137,4 +135,6 @@ export default function Checkbox(inProps: InProps<CheckboxProps>) {
       {...rest}
     />
   );
-}
+});
+
+export default Checkbox;

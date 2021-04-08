@@ -6,19 +6,10 @@ import { useTouchFeedback } from '@wonder-ui/hooks';
 import { groupBy } from '@wonder-ui/utils';
 import { alpha, darken } from '../styles/colorManipulator';
 import ListItemMedia from '../ListItemMedia';
-import type { ClassNameMap, PickStyleProps, InProps } from '../styles/types';
+import type { BaseProps, ClassNameMap, PickStyleProps } from '../styles/types';
 
-export interface ListItemProps {
+export interface ListItemProps extends BaseProps {
   alignItems?: 'flex-start' | 'center';
-  /**
-   * @description children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default li
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
   /**
    * @description Css api
    */
@@ -91,7 +82,7 @@ const ListItemBody = styled('div', {
   }
 }));
 
-export default function ListItem<P extends InProps<ListItemProps>>(inProps: P) {
+const ListItem: React.FC<ListItemProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiListItem' });
 
   const {
@@ -101,7 +92,6 @@ export default function ListItem<P extends InProps<ListItemProps>>(inProps: P) {
     className,
     component,
     selected = false,
-    rootRef,
     ...rest
   } = props;
 
@@ -131,7 +121,7 @@ export default function ListItem<P extends InProps<ListItemProps>>(inProps: P) {
     <ListItemRoot
       as={component}
       styleProps={styleProps}
-      ref={rootRef}
+      ref={ref}
       {...rest}
       {...containerProps}
     >
@@ -139,4 +129,6 @@ export default function ListItem<P extends InProps<ListItemProps>>(inProps: P) {
       <ListItemBody className={classes.body}>{childGroup.body}</ListItemBody>
     </ListItemRoot>
   );
-}
+});
+
+export default ListItem;

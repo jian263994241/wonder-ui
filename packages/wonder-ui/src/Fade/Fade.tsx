@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Transition, TransitionStatus } from 'react-transition-group';
+import Transition, { TransitionEventListener } from '../Transition';
+import { reflow, getTransitionProps } from '../Transition/utils';
 import { duration } from '../styles/transitions';
 import { useForkRef } from '@wonder-ui/hooks';
 import useTheme from '../styles/useTheme';
@@ -18,100 +19,48 @@ const defaultTimeout = {
   exit: duration.leavingScreen
 };
 
-const reflow = (node: Element) => node.scrollTop;
-
-function getTransitionProps(props: any, options: any) {
-  const { timeout, style = {} } = props;
-
-  return {
-    duration:
-      style.transitionDuration || typeof timeout === 'number'
-        ? timeout
-        : timeout[options.mode] || 0,
-    delay: style.transitionDelay
-  };
-}
-
-type TransitionCallBack = (node: HTMLElement, isAppearing?: boolean) => void;
-
-export interface FadeProps {
+export interface FadeProps extends TransitionEventListener<HTMLElement> {
+  /**
+   * @description Perform the enter transition when it first mounts if `in` is also `true`.
+   * @default true
+   */
   appear?: boolean;
-
+  /**
+   * @description children
+   */
   children: React.ReactElement & React.RefAttributes<React.ReactElement>;
-
-  style?: React.CSSProperties;
-
-  timeout?: any;
-  /**
-   * transition 回调
-   */
-  onEnter?: TransitionCallBack;
-  /**
-   * transition 回调
-   */
-  onEntered?: TransitionCallBack;
-  /**
-   * transition 回调
-   */
-  onEntering?: TransitionCallBack;
-  /**
-   * transition 回调
-   */
-  onExit?: TransitionCallBack;
-  /**
-   * transition 回调
-   */
-  onExited?: TransitionCallBack;
-  /**
-   * transition 回调
-   */
-  onExiting?: TransitionCallBack;
   /**
    * @description 显示隐藏内容
    */
   in?: boolean;
+  /**
+   * @description style
+   */
+  style?: React.CSSProperties;
+  /**
+   * @description Transition timeout
+   */
+  timeout?: number | { appear?: number; enter?: number; exit?: number };
 }
 
-const Fade: React.FC<FadeProps> = React.forwardRef(function Fade(props, ref) {
+const Fade: React.FC<FadeProps> = React.forwardRef((props, ref) => {
   const {
     appear = true,
     children,
     in: inProp,
     onEnter,
-    onEntered,
-    onEntering,
     onExit,
-    onExited,
-    onExiting,
     style,
     timeout = defaultTimeout,
-    ...other
+    ...rest
   } = props;
   const theme = useTheme();
 
-  const enableStrictModeCompat = true;
-  const nodeRef = React.useRef<HTMLElement>();
+  const nodeRef = React.useRef<HTMLElement>(null);
   const foreignRef = useForkRef(children.ref, ref);
   const handleRef = useForkRef(nodeRef, foreignRef);
 
-  const normalizedTransitionCallback = (
-    callback?: (node: HTMLElement, maybeIsAppearing?: boolean) => void
-  ) => (maybeIsAppearing?: boolean) => {
-    if (callback) {
-      const node = nodeRef.current;
-
-      // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
-      if (maybeIsAppearing === undefined) {
-        callback(node as HTMLElement);
-      } else {
-        callback(node as HTMLElement, maybeIsAppearing);
-      }
-    }
-  };
-
-  const handleEntering = normalizedTransitionCallback(onEntering);
-
-  const handleEnter = normalizedTransitionCallback((node, isAppearing) => {
+  const handleEnter: FadeProps['onEnter'] = (node, isAppearing) => {
     reflow(node); // So the animation always start from the start.
 
     const transitionProps = getTransitionProps(
@@ -129,13 +78,9 @@ const Fade: React.FC<FadeProps> = React.forwardRef(function Fade(props, ref) {
     if (onEnter) {
       onEnter(node, isAppearing);
     }
-  });
+  };
 
-  const handleEntered = normalizedTransitionCallback(onEntered);
-
-  const handleExiting = normalizedTransitionCallback(onExiting);
-
-  const handleExit = normalizedTransitionCallback((node) => {
+  const handleExit: FadeProps['onExit'] = (node) => {
     const transitionProps = getTransitionProps(
       { style, timeout },
       {
@@ -151,34 +96,28 @@ const Fade: React.FC<FadeProps> = React.forwardRef(function Fade(props, ref) {
     if (onExit) {
       onExit(node);
     }
-  });
-
-  const handleExited = normalizedTransitionCallback(onExited);
+  };
 
   return (
     <Transition
       appear={appear}
       in={inProp}
-      nodeRef={enableStrictModeCompat ? nodeRef : undefined}
       onEnter={handleEnter}
-      onEntered={handleEntered}
-      onEntering={handleEntering}
       onExit={handleExit}
-      onExited={handleExited}
-      onExiting={handleExiting}
       timeout={timeout}
-      {...other}
+      nodeRef={nodeRef}
+      {...rest}
     >
-      {(state: TransitionStatus, childProps: any) => {
+      {(state, childProps) => {
         return React.cloneElement(children, {
+          ...childProps,
           style: {
             visibility: state === 'exited' && !inProp ? 'hidden' : undefined,
             ...(styles[state as keyof typeof styles] || { opacity: 0 }),
             ...style,
             ...children.props.style
           },
-          ref: handleRef,
-          ...childProps
+          ref: handleRef
         });
       }}
     </Transition>

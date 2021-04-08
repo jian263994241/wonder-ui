@@ -2,10 +2,10 @@ import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { ClassNameMap, PickStyleProps, InProps } from '../styles/types';
+import type { BaseProps, ClassNameMap, PickStyleProps } from '../styles/types';
 
 type SpaceSize = 'small' | 'medium' | 'large' | number;
-export interface SpaceProps {
+export interface SpaceProps extends BaseProps {
   /**
    * @description flex alignItems
    * @default center
@@ -15,15 +15,6 @@ export interface SpaceProps {
    * @description css api
    */
   classes?: Partial<ClassNameMap<'root' | 'item'>>;
-  /**
-   * @description children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default div
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
   /**
    * @description direction
    * @default horizontal
@@ -134,7 +125,7 @@ const SpaceItem = styled('div', { name: 'WuiSpace', slot: 'Item' })<
   };
 });
 
-export default function Space<P extends InProps<SpaceProps>>(inProps: P) {
+const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiSpace' });
   const {
     align = 'center',
@@ -143,7 +134,6 @@ export default function Space<P extends InProps<SpaceProps>>(inProps: P) {
     classes: classesInput,
     component,
     direction = 'horizontal',
-    rootRef,
     size = 'medium',
     split,
     theme,
@@ -169,7 +159,7 @@ export default function Space<P extends InProps<SpaceProps>>(inProps: P) {
     <SpaceRoot
       as={component}
       className={classes.root}
-      ref={rootRef}
+      ref={ref}
       styleProps={styleProps}
       theme={theme}
       {...rest}
@@ -198,4 +188,6 @@ export default function Space<P extends InProps<SpaceProps>>(inProps: P) {
       })}
     </SpaceRoot>
   );
-}
+});
+
+export default Space;

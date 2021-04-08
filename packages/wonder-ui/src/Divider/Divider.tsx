@@ -6,31 +6,18 @@ import { alpha } from '../styles/colorManipulator';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { ClassNameMap, PickStyleProps, InProps } from '../styles/types';
+import type { BaseProps, ClassNameMap, PickStyleProps } from '../styles/types';
 
-export interface DividerProps {
+export interface DividerProps extends BaseProps {
   /**
    * @description 定位方式
    * @default false
    */
   absolute?: boolean;
   /**
-   * @description Children
-   */
-  children?: React.ReactElement;
-  /**
-   * @description Root element
-   * @default hr
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
-  /**
    * @description css api
    */
   classes?: Partial<ClassNameMap<'root' | 'wrapper'>>;
-  /**
-   * @ignore
-   */
-  withChildren: boolean;
   /**
    * @description 更亮
    * @default false
@@ -67,7 +54,8 @@ const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })<
     | 'light'
     | 'textAlign'
     | 'variant'
-    | 'withChildren'
+    | 'withChildren',
+    { withChildren: boolean }
   >
 >(
   ({ theme, styleProps }) => {
@@ -189,7 +177,7 @@ const DividerWrapper = styled('span', { name: 'WuiDivider', slot: 'Wrapper' })<
   };
 });
 
-export default function Divider<P extends InProps<DividerProps>>(inProps: P) {
+const Divider: React.FC<DividerProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiDivider' });
   const {
     absolute = false,
@@ -199,7 +187,6 @@ export default function Divider<P extends InProps<DividerProps>>(inProps: P) {
     direction = 'horizontal',
     flexItem = false,
     light = false,
-    rootRef,
     textAlign = 'center',
     theme,
     variant = 'fullWidth',
@@ -226,7 +213,7 @@ export default function Divider<P extends InProps<DividerProps>>(inProps: P) {
     <DividerRoot
       as={component}
       className={classes.root}
-      ref={rootRef}
+      ref={ref}
       styleProps={styleProps}
       theme={theme}
       {...rest}
@@ -242,4 +229,6 @@ export default function Divider<P extends InProps<DividerProps>>(inProps: P) {
       ) : null}
     </DividerRoot>
   );
-}
+});
+
+export default Divider;

@@ -2,19 +2,10 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
-import type { ClassNameMap, InProps } from '../styles/types';
+import type { BaseProps, ClassNameMap } from '../styles/types';
 import Typography, { TypographyProps } from '../Typography';
 
-export interface ListItemTextProps {
-  /**
-   * @description Primary text
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default div
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
+export interface ListItemTextProps extends BaseProps {
   /**
    * @description Css api
    */
@@ -53,75 +44,76 @@ const ListItemTextRoot = styled('div', {
   flex: '1 1 auto'
 }));
 
-export default function ListItemText<P extends InProps<ListItemTextProps>>(
-  inProps: P
-) {
-  const props = useThemeProps({ props: inProps, name: 'WuiListItemText' });
-  const {
-    children,
-    className,
-    component,
-    disableTypography = false,
-    primary: primaryProp,
-    primaryTypographyProps,
-    secondary: secondaryProp,
-    secondaryTypographyProps,
-    rootRef,
-    ...rest
-  } = props;
+const ListItemText: React.FC<ListItemTextProps> = React.forwardRef(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiListItemText' });
+    const {
+      children,
+      className,
+      component,
+      disableTypography = false,
+      primary: primaryProp,
+      primaryTypographyProps,
+      secondary: secondaryProp,
+      secondaryTypographyProps,
+      ...rest
+    } = props;
 
-  let primary: any = primaryProp != null ? primaryProp : children;
-  let secondary: any = secondaryProp;
+    let primary: any = primaryProp != null ? primaryProp : children;
+    let secondary: any = secondaryProp;
 
-  const styleProps = {};
+    const styleProps = {};
 
-  const classes = useClasses({
-    ...props,
-    styleProps,
-    name: 'WuiListItemText'
-  });
+    const classes = useClasses({
+      ...props,
+      styleProps,
+      name: 'WuiListItemText'
+    });
 
-  if (primary != null && primary.type !== Typography && !disableTypography) {
-    primary = (
-      <Typography
-        variant="body1"
-        className={classes.primary}
-        component="span"
-        color="primary"
-        {...primaryTypographyProps}
+    if (primary != null && primary.type !== Typography && !disableTypography) {
+      primary = (
+        <Typography
+          variant="body1"
+          className={classes.primary}
+          component="span"
+          color="primary"
+          {...primaryTypographyProps}
+        >
+          {primary}
+        </Typography>
+      );
+    }
+
+    if (
+      secondary != null &&
+      secondary.type !== Typography &&
+      !disableTypography
+    ) {
+      secondary = (
+        <Typography
+          variant="body2"
+          component="div"
+          className={classes.secondary}
+          color="secondary"
+          {...secondaryTypographyProps}
+        >
+          {secondary}
+        </Typography>
+      );
+    }
+
+    return (
+      <ListItemTextRoot
+        as={component}
+        className={classes.root}
+        ref={ref}
+        {...rest}
       >
         {primary}
-      </Typography>
-    );
-  }
-
-  if (
-    secondary != null &&
-    secondary.type !== Typography &&
-    !disableTypography
-  ) {
-    secondary = (
-      <Typography
-        variant="body2"
-        component="div"
-        className={classes.secondary}
-        color="secondary"
-        {...secondaryTypographyProps}
-      >
         {secondary}
-      </Typography>
+      </ListItemTextRoot>
     );
   }
+);
 
-  return (
-    <ListItemTextRoot
-      as={component}
-      className={classes.root}
-      ref={rootRef}
-      {...rest}
-    >
-      {primary}
-      {secondary}
-    </ListItemTextRoot>
-  );
-}
+export default ListItemText;

@@ -2,13 +2,13 @@ import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { ClassNameMap, PickStyleProps, InProps } from '../styles/types';
+import type { BaseProps, ClassNameMap, PickStyleProps } from '../styles/types';
 import GridContext from './GridContext';
 import Container, { ContainerProps } from '../Container';
 import { getGutter, getResponsiveValue, ResponsiveValue } from './utils';
-import { breakpointsKeys } from '../styles/theme/breakpoints';
+import { breakpointKeys } from '../styles/theme/createBreakpoints';
 
-export interface RowProps {
+export interface RowProps extends BaseProps {
   /**
    * @description flex align
    */
@@ -60,15 +60,14 @@ export const RowRoot = styled('div', {
     };
   },
   ({ theme, styleProps }) => {
-    const breakpoints = theme.breakpoints;
     const alignItemsProp = getResponsiveValue(styleProps.alignItems);
     const alignContentProp = getResponsiveValue(styleProps.alignContent);
     const justifyContentProp = getResponsiveValue(styleProps.justifyContent);
 
     const styles: any = {};
 
-    breakpointsKeys.forEach((key) => {
-      const mediaQueryKey = `@media (min-width: ${breakpoints[key]}px)`;
+    breakpointKeys.forEach((key) => {
+      const mediaQueryKey = theme.breakpoints.up(key);
       const alignItems = alignItemsProp[key];
       const alignContent = alignContentProp[key];
       const justifyContent = justifyContentProp[key];
@@ -113,7 +112,7 @@ export const RowRoot = styled('div', {
   }
 );
 
-export default function Row<P extends InProps<RowProps>>(inProps: P) {
+const Row: React.FC<RowProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiRow' });
   const {
     alignContent = 'start',
@@ -125,9 +124,8 @@ export default function Row<P extends InProps<RowProps>>(inProps: P) {
     children,
     ContainerProps,
     nowrap = false,
-    gutter = 2,
+    gutter = 0,
     rowCols,
-    rootRef,
     ...rest
   } = props;
 
@@ -165,7 +163,7 @@ export default function Row<P extends InProps<RowProps>>(inProps: P) {
           as={component}
           className={classes.root}
           styleProps={styleProps}
-          ref={rootRef}
+          ref={ref}
           {...rest}
         >
           {children}
@@ -173,4 +171,6 @@ export default function Row<P extends InProps<RowProps>>(inProps: P) {
       </Container>
     </GridContext.Provider>
   );
-}
+});
+
+export default Row;

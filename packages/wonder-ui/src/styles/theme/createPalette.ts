@@ -56,6 +56,13 @@ export interface Palette {
   mode: 'light' | 'dark';
   contrastThreshold: number;
   tonalOffset: number;
+  augmentColor: (
+    color: ColorIntent,
+    mainShade?: ColorKeys,
+    lightShade?: ColorKeys,
+    darkShade?: ColorKeys
+  ) => ColorObj;
+  getContrastText: (background: string) => string;
 }
 
 const common = {
@@ -136,7 +143,7 @@ function addLightOrDark(
 
 export interface PaletteOptions extends Partial<Palette> {}
 
-export default function createPalette(palette: PaletteOptions = {}) {
+export default function createPalette(palette: PaletteOptions = {}): Palette {
   const {
     primary = {
       light: blue.A400,
@@ -180,12 +187,12 @@ export default function createPalette(palette: PaletteOptions = {}) {
     return contrastText;
   }
 
-  function augmentColor(
-    color: ColorIntent,
-    mainShade: ColorKeys = '500',
-    lightShade: ColorKeys = '300',
-    darkShade: ColorKeys = '700'
-  ) {
+  const augmentColor: Palette['augmentColor'] = (
+    color,
+    mainShade = '500',
+    lightShade = '300',
+    darkShade = '700'
+  ) => {
     color = { ...color };
 
     if (!color.main) {
@@ -204,7 +211,7 @@ export default function createPalette(palette: PaletteOptions = {}) {
     const { main, light, dark, contrastText } = color;
 
     return { main, light, dark, contrastText } as ColorObj;
-  }
+  };
 
   const modes = { dark, light };
 

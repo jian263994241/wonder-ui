@@ -4,7 +4,7 @@ import { usePopper } from 'react-popper';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { InProps } from '../styles/types';
+import type {} from '../styles/types';
 import { useEventListener, useEnhancedEffect } from '@wonder-ui/hooks';
 
 const PopoverRoot = styled('div', {
@@ -19,7 +19,7 @@ export interface PopoverProps {
   children?: any;
 }
 
-export default function Popover<P extends InProps<PopoverProps>>(inProps: P) {
+export default function Popover<P extends PopoverProps>(inProps: P) {
   const props = useThemeProps({ props: inProps, name: 'WuiPopover' });
   const { children, target, ...rest } = props;
 

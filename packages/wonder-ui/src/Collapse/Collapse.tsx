@@ -2,31 +2,20 @@ import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { PickStyleProps, InProps } from '../styles/types';
-import { Transition, TransitionStatus } from 'react-transition-group';
+import type { BaseProps, PickStyleProps } from '../styles/types';
+import Transition, {
+  TransitionEventListener,
+  TransitionStatus
+} from '../Transition';
+import { reflow } from '../Transition/utils';
 import {
   getAutoSizeDuration,
   getTransitionDurationFromElement
 } from '@wonder-ui/utils';
 import { useForkRef } from '@wonder-ui/hooks';
+import { duration } from '../styles/transitions';
 
-const reflow = (node: HTMLElement) => node.offsetHeight;
-
-type EndHandler<RefE = HTMLElement> = (
-  node: RefE,
-  maybeIsAppearing?: boolean
-) => void;
-
-export interface CollapseProps {
-  /**
-   * @description Children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default div
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
+export interface CollapseProps extends BaseProps, TransitionEventListener {
   /**
    * @description 折叠尺寸
    * @default 0
@@ -34,33 +23,13 @@ export interface CollapseProps {
   collapsedSize?: string | number;
   /**
    * @description transition duration ms
-   * @default auto
+   * @default 300
    */
-  timeout?: 'atuo' | number;
-  /**
-   * transition 回调
-   */
-  onEnter?: EndHandler;
-  /**
-   * transition 回调
-   */
-  onEntered?: EndHandler;
-  /**
-   * transition 回调
-   */
-  onEntering?: EndHandler;
-  /**
-   * transition 回调
-   */
-  onExit?: EndHandler;
-  /**
-   * transition 回调
-   */
-  onExited?: EndHandler;
-  /**
-   * transition 回调
-   */
-  onExiting?: EndHandler;
+  timeout?:
+    | 'atuo'
+    | number
+    | { appear?: number; enter?: number; exit?: number };
+
   /**
    * @description 动画过渡方向
    * @default vertical
@@ -117,7 +86,7 @@ const CollapseRoot = styled('div', {
   };
 });
 
-export default function Collapse<P extends InProps<CollapseProps>>(inProps: P) {
+const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiCollapse' });
   const {
     children,
@@ -132,13 +101,13 @@ export default function Collapse<P extends InProps<CollapseProps>>(inProps: P) {
     onExit,
     onExited,
     onExiting,
-    rootRef,
-    timeout = 'atuo',
+    timeout = duration.standard,
     ...rest
   } = props;
 
-  const nodeRef = React.useRef<HTMLElement>();
-  const handleRef = useForkRef(rootRef, nodeRef);
+  const timer = React.useRef<any>();
+  const nodeRef = React.useRef<HTMLElement>(null);
+  const handleRef = useForkRef(ref, nodeRef);
   const isHorizontal = direction === 'horizontal';
   const dimension = isHorizontal ? 'width' : 'height';
 
@@ -151,23 +120,6 @@ export default function Collapse<P extends InProps<CollapseProps>>(inProps: P) {
 
   const styleProps = { direction, in: visible, collapsedSize };
   const classes = useClasses({ ...props, styleProps, name: 'WuiCollapse' });
-
-  const normalizedTransitionCallback = (
-    callback: (node: HTMLElement, maybeIsAppearing?: boolean) => void
-  ) => (maybeIsAppearing?: boolean) => {
-    if (callback) {
-      const node = nodeRef.current;
-
-      if (node) {
-        // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
-        if (maybeIsAppearing === undefined) {
-          callback(node);
-        } else {
-          callback(node, maybeIsAppearing);
-        }
-      }
-    }
-  };
 
   const getTransitionDuration = () => {
     const node = nodeRef.current;
@@ -189,13 +141,13 @@ export default function Collapse<P extends InProps<CollapseProps>>(inProps: P) {
     return transitionDuration;
   };
 
-  const handleEnter = normalizedTransitionCallback((node) => {
+  const handleEnter: CollapseProps['onExit'] = (node) => {
     if (onEnter) {
       onEnter(node);
     }
-  });
+  };
 
-  const handleEntering = normalizedTransitionCallback((node) => {
+  const handleEntering: CollapseProps['onEntering'] = (node) => {
     node.style[dimension] = collapsedSize;
     node.style[dimension] = node[scrollSize] + 'px';
 
@@ -204,40 +156,49 @@ export default function Collapse<P extends InProps<CollapseProps>>(inProps: P) {
     if (onEntering) {
       onEntering(node);
     }
-  });
+  };
 
-  const handleEntered = normalizedTransitionCallback((node) => {
+  const handleEntered: CollapseProps['onEntered'] = (node) => {
     node.style[dimension] = collapsedSize != '0px' ? 'auto' : '';
     if (onEntered) {
       onEntered(node);
     }
-  });
+  };
 
-  const handleExit = normalizedTransitionCallback((node) => {
+  const handleExit: CollapseProps['onExit'] = (node) => {
     node.style[dimension] = node.getBoundingClientRect()[dimension] + 'px';
     reflow(node);
     if (onExit) {
       onExit(node);
     }
-  });
-  const handleExiting = normalizedTransitionCallback((node) => {
+  };
+
+  const handleExiting: CollapseProps['onExiting'] = (node) => {
     node.style[dimension] = collapsedSize;
     node.style.transitionDuration = getTransitionDuration() + 'ms';
     if (onExiting) {
       onExiting(node);
     }
-  });
+  };
 
-  const handleExited = normalizedTransitionCallback((node) => {
+  const handleExited: CollapseProps['onExited'] = (node) => {
     node.style[dimension] = collapsedSize != '0px' ? collapsedSize : '';
     if (onExited) {
       onExited(node);
     }
-  });
-
-  const addEndListener = (done: () => void) => {
-    setTimeout(done, getTransitionDuration());
   };
+
+  const addEndListener: CollapseProps['addEndListener'] = (node, next) => {
+    if (timeout === 'auto') {
+      timer.current = setTimeout(next, getTransitionDuration());
+    }
+  };
+
+  React.useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
 
   return (
     <Transition
@@ -250,8 +211,9 @@ export default function Collapse<P extends InProps<CollapseProps>>(inProps: P) {
       onExiting={handleExiting}
       addEndListener={addEndListener}
       nodeRef={nodeRef}
+      timeout={timeout != 'auto' ? (timeout as any) : null}
     >
-      {(state: TransitionStatus) => {
+      {(state) => {
         return (
           <CollapseRoot
             as={component}
@@ -266,4 +228,6 @@ export default function Collapse<P extends InProps<CollapseProps>>(inProps: P) {
       }}
     </Transition>
   );
-}
+});
+
+export default Collapse;

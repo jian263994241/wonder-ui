@@ -2,18 +2,9 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
-import type { PickStyleProps, InProps } from '../styles/types';
+import type { BaseProps, PickStyleProps } from '../styles/types';
 
-export interface ListHeaderProps {
-  /**
-   * @description children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default li
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
+export interface ListHeaderProps extends BaseProps {
   /**
    * @description Disable sticky
    * @default false
@@ -45,32 +36,33 @@ const ListHeaderRoot = styled('li', {
   })
 );
 
-export default function ListHeader<P extends InProps<ListHeaderProps>>(
-  inProps: P
-) {
-  const props = useThemeProps({ props: inProps, name: 'WuiListHeader' });
-  const {
-    children,
-    component,
-    className,
-    disableSticky = false,
-    rootRef,
-    ...rest
-  } = props;
+const ListHeader: React.FC<ListHeaderProps> = React.forwardRef(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiListHeader' });
+    const {
+      children,
+      component,
+      className,
+      disableSticky = false,
+      ...rest
+    } = props;
 
-  const styleProps = { disableSticky };
+    const styleProps = { disableSticky };
 
-  const classes = useClasses({ ...props, styleProps, name: 'WuiListHeader' });
+    const classes = useClasses({ ...props, styleProps, name: 'WuiListHeader' });
 
-  return (
-    <ListHeaderRoot
-      className={classes.root}
-      as={component}
-      styleProps={styleProps}
-      ref={rootRef}
-      {...rest}
-    >
-      {children}
-    </ListHeaderRoot>
-  );
-}
+    return (
+      <ListHeaderRoot
+        className={classes.root}
+        as={component}
+        styleProps={styleProps}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+      </ListHeaderRoot>
+    );
+  }
+);
+
+export default ListHeader;

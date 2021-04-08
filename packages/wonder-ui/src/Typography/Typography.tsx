@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
-import { PickStyleProps, InProps } from '../styles/types';
+import { BaseProps, PickStyleProps } from '../styles/types';
 
 const defaultVariantMapping = {
   h1: 'h1',
@@ -17,7 +17,7 @@ const defaultVariantMapping = {
   body2: 'p'
 } as const;
 
-export interface TypographyProps {
+export interface TypographyProps extends BaseProps {
   /**
    * @description 对齐
    * @default inherit
@@ -28,15 +28,6 @@ export interface TypographyProps {
    * @default inherit
    */
   color?: 'inherit' | 'primary' | 'secondary' | 'hint';
-  /**
-   * @description children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default span
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
   /**
    * @description 不换行
    * @default false
@@ -112,53 +103,54 @@ export const TypographyRoot = styled('span', {
   })
 }));
 
-export default function Typography<P extends InProps<TypographyProps>>(
-  inProps: P
-) {
-  const props = useThemeProps({ props: inProps, name: 'WuiTypography' });
-  const {
-    align = 'inherit',
-    children,
-    className,
-    color = 'inherit',
-    component,
-    gutterBottom = false,
-    lineClamp = 0,
-    noWrap = false,
-    paragraph = false,
-    rootRef,
-    variant = 'body1',
-    ...rest
-  } = props;
+const Typography: React.FC<TypographyProps> = React.forwardRef(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiTypography' });
+    const {
+      align = 'inherit',
+      children,
+      className,
+      color = 'inherit',
+      component,
+      gutterBottom = false,
+      lineClamp = 0,
+      noWrap = false,
+      paragraph = false,
+      variant = 'body1',
+      ...rest
+    } = props;
 
-  const _component =
-    component || (paragraph ? 'p' : defaultVariantMapping[variant]);
+    const _component =
+      component || (paragraph ? 'p' : defaultVariantMapping[variant]);
 
-  const styleProps = {
-    align,
-    color,
-    gutterBottom,
-    lineClamp,
-    noWrap,
-    paragraph,
-    variant
-  };
+    const styleProps = {
+      align,
+      color,
+      gutterBottom,
+      lineClamp,
+      noWrap,
+      paragraph,
+      variant
+    };
 
-  const classes = useClasses({
-    ...props,
-    styleProps,
-    name: 'WuiTypography'
-  });
+    const classes = useClasses({
+      ...props,
+      styleProps,
+      name: 'WuiTypography'
+    });
 
-  return (
-    <TypographyRoot
-      as={_component}
-      className={classes.root}
-      ref={rootRef}
-      styleProps={styleProps}
-      {...rest}
-    >
-      {children}
-    </TypographyRoot>
-  );
-}
+    return (
+      <TypographyRoot
+        as={_component}
+        className={classes.root}
+        ref={ref}
+        styleProps={styleProps}
+        {...rest}
+      >
+        {children}
+      </TypographyRoot>
+    );
+  }
+);
+
+export default Typography;

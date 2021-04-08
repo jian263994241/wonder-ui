@@ -77,6 +77,7 @@ export default defineConfig({
         title: '用户反馈',
         children: [
           'components/backdrop.md',
+          'components/modal.md',
           'components/popover.md',
           'components/progress.md',
           'components/result.md',
@@ -88,10 +89,10 @@ export default defineConfig({
         children: []
       },
       {
-        title: '辅助工具',
+        title: '辅助',
         children: [
           'components/global-modal-provider.md',
-          'components/modal.md',
+
           'components/portal.md'
         ]
       },

@@ -1,12 +1,4 @@
-export type easingType = {
-  easeInOut: string;
-  easeOut: string;
-  easeIn: string;
-  ease: string;
-  sharp: string;
-};
-
-export const easing: easingType = {
+export const easing = {
   // This is the most common easing curve.
   easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
   // Objects enter the screen at full velocity from off-screen and
@@ -20,17 +12,7 @@ export const easing: easingType = {
   sharp: 'cubic-bezier(0.4, 0, 0.6, 1)'
 };
 
-export type DurationType = {
-  shortest: number;
-  shorter: number;
-  short: number;
-  standard: number;
-  complex: number;
-  enteringScreen: number;
-  leavingScreen: number;
-};
-
-export const duration: DurationType = {
+export const duration = {
   shortest: 150,
   shorter: 200,
   short: 250,
@@ -47,17 +29,19 @@ export const duration: DurationType = {
 export const formatMs = (milliseconds: number) =>
   `${Math.round(milliseconds)}ms`;
 
+type Mode = 'enter' | 'exit' | 'appear';
+
 export const create = (
   props: string | string[] = 'all',
   options: {
-    duration?: keyof DurationType | number;
-    easing?: keyof easingType;
-    delay?: number;
+    duration?: string | number;
+    easing?: string | Partial<Record<Mode, string>>;
+    delay?: string | number;
   } = {}
 ) => {
   const {
-    duration: durationOption = 'standard',
-    easing: easingOption = 'easeInOut',
+    duration: durationInput = duration.standard,
+    easing: easingInput = easing.easeInOut,
     delay = 0
   } = options;
 
@@ -65,12 +49,10 @@ export const create = (
     .map(
       (animatedProp) =>
         `${animatedProp} ${
-          typeof durationOption === 'string'
-            ? formatMs(duration[durationOption])
-            : formatMs(durationOption)
-        } ${easing[easingOption]} ${
-          typeof delay === 'string' ? delay : formatMs(delay)
-        }`
+          typeof durationInput === 'number'
+            ? formatMs(durationInput)
+            : durationInput
+        } ${easingInput} ${typeof delay === 'number' ? formatMs(delay) : delay}`
     )
     .join(',');
 };

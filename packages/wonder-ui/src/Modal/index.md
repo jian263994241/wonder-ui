@@ -24,5 +24,4 @@ sidemenu: false
 | onKeyDown | esc键盘事件 | `(event) => void` |
 | onTransitionEnter | 过渡动画事件 | `() => void` |
 | onTransitionExited | 过渡动画事件 | `() => void` |
-| rootRef | ref | `Ref` |
 | visible | 是否显示 回调 | `boolean` | false

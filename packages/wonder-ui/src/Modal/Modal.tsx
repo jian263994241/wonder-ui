@@ -7,9 +7,9 @@ import ModalManager, { ariaHidden, Modal as ModalType } from './ModalManager';
 import { ownerDocument, createChainedFunction } from '@wonder-ui/utils';
 import { useForkRef, useEventCallback } from '@wonder-ui/hooks';
 import Backdrop, { BackdropProps } from '../Backdrop';
-import FocusLock, { AutoFocusInside } from 'react-focus-lock';
+import FocusLock from 'react-focus-lock';
 import { ReactFocusLockProps } from 'react-focus-lock/interfaces';
-import { InProps } from '../styles/types';
+import type { BaseProps } from '../styles/types';
 
 // A modal manager used to track and manage the state of open Modals.
 // Modals don't open on the server so this won't conflict with concurrent requests.
@@ -28,10 +28,13 @@ const ModalRoot = styled('div', {
   right: 0,
   bottom: 0,
   top: 0,
-  left: 0
+  left: 0,
+  overflow: 'auto',
+  outline: 0,
+  WebkitOverflowScrolling: 'touch'
 }));
 
-export interface ModalProps {
+export interface ModalProps extends BaseProps {
   /**
    * @description Backdrop Props
    * @default {}
@@ -41,11 +44,6 @@ export interface ModalProps {
    * @description 子节点
    */
   children: React.ReactElement;
-  /**
-   * @description Root element
-   * @default div
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
   /**
    * @description 容器 HTMLElement
    */
@@ -130,7 +128,7 @@ export interface ModalProps {
   visible?: boolean;
 }
 
-export default function Modal<P extends InProps<ModalProps>>(inProps: P) {
+const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiModal' });
   const {
     BackdropProps,
@@ -154,7 +152,6 @@ export default function Modal<P extends InProps<ModalProps>>(inProps: P) {
     onTransitionEnter,
     onTransitionExited,
     visible = false,
-    rootRef,
     ...rest
   } = props;
 
@@ -165,7 +162,7 @@ export default function Modal<P extends InProps<ModalProps>>(inProps: P) {
   }>({});
   const mountNodeRef = React.useRef(null);
   const modalRef = React.useRef<Element | null>(null);
-  const handleRef = useForkRef(modalRef, rootRef);
+  const handleRef = useForkRef(modalRef, ref);
   const hasTransition = getHasTransition(props);
 
   const getDoc = () => ownerDocument(mountNodeRef.current);
@@ -300,6 +297,7 @@ export default function Modal<P extends InProps<ModalProps>>(inProps: P) {
   const { tabIndex = '-1', onEnter, onExited } = children as any;
 
   childProps.tabIndex = tabIndex;
+  childProps['data-autofocus'] = !disableAutoFocus;
 
   if (hasTransition) {
     childProps.onEnter = createChainedFunction(handleEnter, onEnter);
@@ -316,13 +314,20 @@ export default function Modal<P extends InProps<ModalProps>>(inProps: P) {
       container={container}
       ref={handlePortalRef}
     >
-      <ModalRoot
-        role="presentation"
-        onKeyDown={handleKeyDown}
+      <FocusLock
+        disabled={disableFocusLock}
+        noFocusGuards={disableFocusLock}
+        autoFocus={!disableAutoFocus}
+        as={ModalRoot}
         ref={handleRef}
-        className={classes.root}
-        as={component}
-        {...rest}
+        lockProps={{
+          role: 'presentation',
+          onKeyDown: handleKeyDown,
+          className: classes.root,
+          as: component,
+          ...rest
+        }}
+        {...FocusLockProps}
       >
         {!hideBackdrop && (
           <Backdrop
@@ -331,16 +336,10 @@ export default function Modal<P extends InProps<ModalProps>>(inProps: P) {
             {...BackdropProps}
           />
         )}
-        <FocusLock
-          disabled={disableFocusLock}
-          autoFocus={!disableAutoFocus}
-          {...FocusLockProps}
-        >
-          <AutoFocusInside disabled={disableAutoFocus}>
-            {React.cloneElement(children, childProps)}
-          </AutoFocusInside>
-        </FocusLock>
-      </ModalRoot>
+        {React.cloneElement(children, childProps)}
+      </FocusLock>
     </Portal>
   );
-}
+});
+
+export default Modal;

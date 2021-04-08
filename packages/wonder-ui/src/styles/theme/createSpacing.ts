@@ -1,4 +1,10 @@
-export default function createSpacing(spacingInput: number = 8) {
+export type SpacingConfig = number | ((factor: number) => number);
+
+export type Spacing = (...args: number[]) => number | string;
+
+export default function createSpacing(
+  spacingInput: SpacingConfig = 8
+): Spacing {
   const transform =
     typeof spacingInput === 'function'
       ? (spacingInput as () => number)

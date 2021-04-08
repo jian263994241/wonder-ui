@@ -25,6 +25,10 @@
 
 <code src="../../packages/wonder-ui/src/Button/demo/button-disabled.tsx"></code>
 
+### 图标按钮
+
+<code src="../../packages/wonder-ui/src/IconButton/demo/demo1.tsx"></code>
+
 ## API
 
 <embed src="../../packages/wonder-ui/src/Button/index.md"></embed>

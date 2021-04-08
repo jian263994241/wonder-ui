@@ -2,19 +2,9 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
-import type { InProps } from '../styles/types';
+import type { BaseProps } from '../styles/types';
 
-export interface ListItemMediaProps {
-  /**
-   * @description children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default div
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
-}
+export interface ListItemMediaProps extends BaseProps {}
 
 const ListItemMediaRoot = styled('div', {
   name: 'WuiListItemMedia',
@@ -29,22 +19,24 @@ const ListItemMediaRoot = styled('div', {
   padding: '10px 0'
 }));
 
-export default function ListItemMedia<P extends InProps<ListItemMediaProps>>(
-  inProps: P
-) {
-  const props = useThemeProps({ props: inProps, name: 'WuiListItemMedia' });
-  const { children, component, className, rootRef, ...rest } = props;
+const ListItemMedia: React.FC<ListItemMediaProps> = React.forwardRef(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiListItemMedia' });
+    const { children, component, className, ...rest } = props;
 
-  const classes = useClasses({ ...props, name: 'WuiListItemMedia' });
+    const classes = useClasses({ ...props, name: 'WuiListItemMedia' });
 
-  return (
-    <ListItemMediaRoot
-      className={classes.root}
-      as={component}
-      ref={rootRef}
-      {...rest}
-    >
-      {children}
-    </ListItemMediaRoot>
-  );
-}
+    return (
+      <ListItemMediaRoot
+        className={classes.root}
+        as={component}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+      </ListItemMediaRoot>
+    );
+  }
+);
+
+export default ListItemMedia;

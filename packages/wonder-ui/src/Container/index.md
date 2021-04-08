@@ -10,5 +10,4 @@ sidemenu: false
 | children | children | `ReactNode` |
 | component | root element | `keyof ReactHTML \| ComponentType` | div
 | gutter | gutter	 | `number` | 2
-| rootRef | ref | `Ref` |
 | size | max width size	 | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'xxl' \| 'fluid'` | fluid

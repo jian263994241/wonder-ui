@@ -2,11 +2,11 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
-import type { PickStyleProps, InProps } from '../styles/types';
+import type { PickStyleProps } from '../styles/types';
 import SvgIcon, { SvgIconProps } from '../SvgIcon';
 import { alpha } from '../styles/colorManipulator';
 
-export interface ArrowForwardProps extends Pick<SvgIconProps, 'size'> {
+export interface ArrowForwardProps extends SvgIconProps {
   /**
    * @description 方向
    * @default right
@@ -27,30 +27,38 @@ const StyledSvgIcon = styled(SvgIcon, { name: 'ArrowForward', slot: 'Root' })<
   }[styleProps.direction]
 }));
 
-export default function ArrowForward(inProps: InProps<ArrowForwardProps>) {
-  const props = useThemeProps({ props: inProps, name: 'WuiArrowForward' });
+const ArrowForward: React.FC<ArrowForwardProps> = React.forwardRef(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiArrowForward' });
 
-  const {
-    size = 'small',
-    direction = 'right',
-    className,
-    rootRef,
-    ...rest
-  } = props;
+    const {
+      size = 'small',
+      direction = 'right',
+      className,
+      rootRef,
+      ...rest
+    } = props;
 
-  const styleProps = { direction };
-  const classes = useClasses({ ...props, styleProps, name: 'WuiArrowForward' });
+    const styleProps = { direction };
+    const classes = useClasses({
+      ...props,
+      styleProps,
+      name: 'WuiArrowForward'
+    });
 
-  return (
-    <StyledSvgIcon
-      viewBox="0 0 24 24"
-      className={classes.root}
-      size={size}
-      styleProps={styleProps}
-      rootRef={rootRef}
-      {...rest}
-    >
-      <path d="M7.892 2.808a1 1 0 00-.077 1.327l.077.087L15.671 12l-7.779 7.778a1 1 0 00-.077 1.327l.077.087a1 1 0 001.327.078l.088-.078 8.485-8.485a1 1 0 00.078-1.327l-.078-.087-8.485-8.485a1 1 0 00-1.415 0z" />
-    </StyledSvgIcon>
-  );
-}
+    return (
+      <StyledSvgIcon
+        viewBox="0 0 24 24"
+        className={classes.root}
+        size={size}
+        styleProps={styleProps}
+        ref={ref}
+        {...rest}
+      >
+        <path d="M7.892 2.808a1 1 0 00-.077 1.327l.077.087L15.671 12l-7.779 7.778a1 1 0 00-.077 1.327l.077.087a1 1 0 001.327.078l.088-.078 8.485-8.485a1 1 0 00.078-1.327l-.078-.087-8.485-8.485a1 1 0 00-1.415 0z" />
+      </StyledSvgIcon>
+    );
+  }
+);
+
+export default ArrowForward;

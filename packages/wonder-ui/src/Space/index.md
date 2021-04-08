@@ -11,7 +11,6 @@ sidemenu: false
 | children | children | `ReactNode` |
 | component | root element | `keyof ReactHTML \| ComponentType` | div
 | direction | direction | `'vertical' \| 'horizontal'` | horizontal
-| rootRef | ref | `Ref` |
 | size | gutter size	| `SpaceSize \| [SpaceSize, SpaceSize]` , `SpaceSize = 'small' \| 'medium' \| 'large' \| 'number'` | medium
 | split | split node	| `ReactNode` |
 | wrap | wrap | `boolean` | false

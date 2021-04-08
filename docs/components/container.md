@@ -6,31 +6,16 @@ Container 是最基本的布局元素，它包含，填充和对齐给定设备�
 
 ## 响应式宽度
 
-|  | Extra small (<576px) | Small (≥576px) | Medium (≥768px) | Large (≥992px) | X-Large (≥1200px) | XX-Large (≥1400px)
-| --- | --- | --- | --- | --- | --- | ---
-| \- 	| 100%	| 540px | 720px | 960px	| 1140px | 1320px
-| sm	| 100%	| 540px | 720px	| 960px	| 1140px | 1320px
-| md	| 100%	| 100%	| 720px | 960px	| 1140px | 1320px
-| lg	| 100%	| 100%	| 100% | 960px | 1140px | 1320px
-| xl	| 100%	| 100%	| 100% | 100%	| 1140px | 1320px
-| xxl	| 100%	| 100%	| 100% | 100%	| 100%| 1320px
-| fluid	| 100% | 100% |	100% | 100%	|100% |	100%
+| - | Extra small (<600px) | Small (≥600px) | Medium (≥960px) | Large (≥1280px) | X-Large (≥1920px)
+| --- | --- | --- | --- | --- | ---
+| sm	| 100%	| 600px | 600px	| 600px	| 600px
+| md	| 100%	| 100%	| 960px | 960px	| 960px
+| lg	| 100%	| 100%	| 100% | 1280px | 1280px
+| xl	| 100%	| 100%	| 100% | 100%	| 1920px
+| fluid	| 100% | 100% |	100% | 100%	|100%
 
 
-## 配置
 
-可以通过`createTheme`创建一个新的主题覆盖`Container`的 `max-widths` 配置
-
-```js | pure
-// 默认的 max-widths
-theme.containerMaxWidths = {
-  sm: 540,
-  md: 720,
-  lg: 960,
-  xl: 1140,
-  xxl: 1320
-}
-```
 
 ## API
 

@@ -4,7 +4,6 @@
  */
 /** @jsx jsx */
 import { Button, jsx, Space } from '@wonder-ui/core';
-import { House } from '@wonder-ui/icons';
 
 export default function Example() {
   return (
@@ -14,17 +13,17 @@ export default function Example() {
         <Button shape="round" size="large">
           Large button
         </Button>
-        <Button shape="circle" size="large">
-          <House size="inherit" />
+      </Space>
+      <Space>
+        <Button size="medium">Medium button</Button>
+        <Button shape="round" size="medium">
+          Medium button
         </Button>
       </Space>
       <Space>
         <Button size="small">Small button</Button>
         <Button shape="round" size="small">
           Small button
-        </Button>
-        <Button shape="circle" size="small">
-          <House size="inherit" />
         </Button>
       </Space>
     </Space>

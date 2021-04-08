@@ -2,18 +2,9 @@ import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { PickStyleProps, InProps } from '../styles/types';
+import type { BaseProps, PickStyleProps } from '../styles/types';
 
-export interface ContainerProps {
-  /**
-   * @description Children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default div
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
+export interface ContainerProps extends BaseProps {
   /**
    * @description 边距
    * @default 2
@@ -23,7 +14,7 @@ export interface ContainerProps {
    * @description 断点宽度
    * @default fluid
    */
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'fluid';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'fluid';
 }
 
 const ContainerRoot = styled('div', {
@@ -45,14 +36,14 @@ const ContainerRoot = styled('div', {
         : 'auto'
   }),
   ({ theme, styleProps }) => {
-    const containerMaxWidths = theme.containerMaxWidths as any;
     const styles: any = {};
 
-    Object.keys(containerMaxWidths).forEach((key) => {
-      const mediaQueryKey = `@media (min-width: ${containerMaxWidths[key]}px)`;
+    theme.breakpoints.keys.forEach((key) => {
+      const mediaQueryKey = theme.breakpoints.up(key);
+
       if (styleProps.size === key) {
         styles[mediaQueryKey] = {
-          maxWidth: containerMaxWidths[key]
+          maxWidth: theme.breakpoints.values[key] - 30
         };
       }
     });
@@ -61,16 +52,13 @@ const ContainerRoot = styled('div', {
   }
 );
 
-export default function Container<P extends InProps<ContainerProps>>(
-  inProps: P
-) {
+const Container: React.FC<ContainerProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiContainer' });
   const {
     children,
     className,
     component,
     gutter = 2,
-    rootRef,
     size = 'fluid',
     ...rest
   } = props;
@@ -83,11 +71,13 @@ export default function Container<P extends InProps<ContainerProps>>(
     <ContainerRoot
       as={component}
       className={classes.root}
-      ref={rootRef}
+      ref={ref}
       styleProps={styleProps}
       {...rest}
     >
       {children}
     </ContainerRoot>
   );
-}
+});
+
+export default Container;

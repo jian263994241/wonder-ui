@@ -2,10 +2,10 @@ import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import { PickStyleProps, InProps, ClassNameMap } from '../styles/types';
+import { BaseProps, PickStyleProps, ClassNameMap } from '../styles/types';
 import { useControlled, useEventCallback } from '@wonder-ui/hooks';
 
-export interface ToggleProps {
+export interface ToggleProps extends BaseProps {
   /**
    * @description checked
    */
@@ -19,11 +19,6 @@ export interface ToggleProps {
    * @default primary
    */
   color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
-  /**
-   * @description Root element
-   * @default div
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
   /**
    * @description default checked
    */
@@ -196,7 +191,7 @@ const ToggleIcon = styled('span', {
   }
 );
 
-export default function Toggle<P extends InProps<ToggleProps>>(inProps: P) {
+const Toggle: React.FC<ToggleProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiToggle' });
   const {
     checked: checkedProp,
@@ -213,7 +208,6 @@ export default function Toggle<P extends InProps<ToggleProps>>(inProps: P) {
     onChange,
     onClick,
     required = false,
-    rootRef,
     size = 'medium',
     value,
     ...rest
@@ -243,7 +237,7 @@ export default function Toggle<P extends InProps<ToggleProps>>(inProps: P) {
       htmlFor={id}
       onClick={onClick}
       styleProps={styleProps}
-      ref={rootRef}
+      ref={ref}
       {...rest}
     >
       <ToggleInput
@@ -266,4 +260,6 @@ export default function Toggle<P extends InProps<ToggleProps>>(inProps: P) {
       {checked ? checkedIcon : icon}
     </ToggleRoot>
   );
-}
+});
+
+export default Toggle;

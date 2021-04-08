@@ -1,20 +1,11 @@
 import * as React from 'react';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import type { InProps, PickStyleProps } from '../styles/types';
+import type { BaseProps, PickStyleProps } from '../styles/types';
 import styled from '../styles/styled';
-import { ButtonRoot } from '../Button';
+import { ButtonRoot } from '../Button/Button';
 
-export interface ButtonGroupProps {
-  /**
-   * @description children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default div
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
+export interface ButtonGroupProps extends BaseProps {
   /**
    * @description direction
    * @default horizontal
@@ -71,36 +62,37 @@ const ButtonGroupRoot = styled('div', {
   })
 );
 
-export default function ButtonGroup<P extends InProps<ButtonGroupProps>>(
-  inProps: P
-) {
-  const props = useThemeProps({ props: inProps, name: 'WuiButtonGroup' });
-  const {
-    children,
-    className,
-    component,
-    direction = 'horizontal',
-    rootRef,
-    ...rest
-  } = props;
+const ButtonGroup: React.FC<ButtonGroupProps> = React.forwardRef(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiButtonGroup' });
+    const {
+      children,
+      className,
+      component,
+      direction = 'horizontal',
+      ...rest
+    } = props;
 
-  const styleProps = { direction };
-  const classes = useClasses({
-    ...props,
-    styleProps,
-    name: 'WuiButtonGroup'
-  });
+    const styleProps = { direction };
+    const classes = useClasses({
+      ...props,
+      styleProps,
+      name: 'WuiButtonGroup'
+    });
 
-  return (
-    <ButtonGroupRoot
-      as={component}
-      role="group"
-      className={classes.root}
-      ref={rootRef}
-      styleProps={styleProps}
-      {...rest}
-    >
-      {children}
-    </ButtonGroupRoot>
-  );
-}
+    return (
+      <ButtonGroupRoot
+        as={component}
+        role="group"
+        className={classes.root}
+        ref={ref}
+        styleProps={styleProps}
+        {...rest}
+      >
+        {children}
+      </ButtonGroupRoot>
+    );
+  }
+);
+
+export default ButtonGroup;

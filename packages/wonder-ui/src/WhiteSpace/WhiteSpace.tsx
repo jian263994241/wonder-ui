@@ -2,18 +2,9 @@ import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { PickStyleProps, InProps } from '../styles/types';
+import type { BaseProps, PickStyleProps } from '../styles/types';
 
-export interface WhiteSpaceProps {
-  /**
-   * @description children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default div
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
+export interface WhiteSpaceProps extends BaseProps {
   /**
    * @description 尺寸
    * @default md
@@ -36,36 +27,31 @@ const WhiteSpaceRoot = styled('div', {
   )
 }));
 
-export default function WhiteSpace<P extends InProps<WhiteSpaceProps>>(
-  inProps: P
-) {
-  const props = useThemeProps({ props: inProps, name: 'WuiWhiteSpace' });
-  const {
-    size = 'md',
-    children,
-    className,
-    component,
-    rootRef,
-    ...rest
-  } = props;
+const WhiteSpace: React.FC<WhiteSpaceProps> = React.forwardRef(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiWhiteSpace' });
+    const { size = 'md', children, className, component, ...rest } = props;
 
-  const styleProps = { size };
+    const styleProps = { size };
 
-  const classes = useClasses({
-    ...props,
-    styleProps,
-    name: 'WuiWhiteSpace'
-  });
+    const classes = useClasses({
+      ...props,
+      styleProps,
+      name: 'WuiWhiteSpace'
+    });
 
-  return (
-    <WhiteSpaceRoot
-      as={component}
-      className={classes.root}
-      styleProps={styleProps}
-      ref={rootRef}
-      {...rest}
-    >
-      {children}
-    </WhiteSpaceRoot>
-  );
-}
+    return (
+      <WhiteSpaceRoot
+        as={component}
+        className={classes.root}
+        styleProps={styleProps}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+      </WhiteSpaceRoot>
+    );
+  }
+);
+
+export default WhiteSpace;

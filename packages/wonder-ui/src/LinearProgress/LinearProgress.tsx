@@ -3,7 +3,7 @@ import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import { keyframes } from '@wonder-ui/styled';
-import type { ClassNameMap, InProps, PickStyleProps } from '../styles/types';
+import type { BaseProps, ClassNameMap, PickStyleProps } from '../styles/types';
 
 const progressActiveKeyframes = keyframes`
   0%{width:0;opacity:.1}
@@ -11,16 +11,7 @@ const progressActiveKeyframes = keyframes`
   to{width:100%;opacity:0}
 `;
 
-export interface LinearProgressProps {
-  /**
-   * @description Children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default div
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
+export interface LinearProgressProps extends BaseProps {
   /**
    * css api
    */
@@ -100,7 +91,9 @@ const LinearProgressBar = styled('span', {
     textAlign: 'center',
     whiteSpace: 'nowrap',
     backgroundColor: theme.palette[styleProps.color || 'primary'].main,
-    transition: theme.transitions.create('width', { easing: 'ease' }),
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.ease
+    }),
     position: 'relative',
     borderRadius: '.25rem',
     ...(styleProps.animated && {
@@ -126,48 +119,49 @@ const LinearProgressBar = styled('span', {
   })
 );
 
-export default function LinearProgress<P extends InProps<LinearProgressProps>>(
-  inProps: P
-) {
-  const props = useThemeProps({ props: inProps, name: 'WuiLinearProgress' });
-  const {
-    animated = false,
-    className,
-    color = 'primary',
-    value = 0,
-    children,
-    rootRef,
-    ...rest
-  } = props;
+const LinearProgress: React.FC<LinearProgressProps> = React.forwardRef(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiLinearProgress' });
+    const {
+      animated = false,
+      className,
+      color = 'primary',
+      value = 0,
+      children,
+      ...rest
+    } = props;
 
-  const styleProps = { animated, color };
+    const styleProps = { animated, color };
 
-  const classes = useClasses({
-    ...props,
-    styleProps,
-    name: 'WuiLinearProgress'
-  });
+    const classes = useClasses({
+      ...props,
+      styleProps,
+      name: 'WuiLinearProgress'
+    });
 
-  return (
-    <LinearProgressRoot
-      role="progressbar"
-      className={classes.root}
-      styleProps={styleProps}
-      ref={rootRef}
-      {...rest}
-    >
-      <LinearProgressBody className={classes.body}>
-        <LinearProgressBar
-          style={{ width: `${value}%` }}
-          className={classes.bar}
-          styleProps={styleProps}
-        ></LinearProgressBar>
-      </LinearProgressBody>
-      {children && (
-        <LinearProgressInfo className={classes.info}>
-          {children}
-        </LinearProgressInfo>
-      )}
-    </LinearProgressRoot>
-  );
-}
+    return (
+      <LinearProgressRoot
+        role="progressbar"
+        className={classes.root}
+        styleProps={styleProps}
+        ref={ref}
+        {...rest}
+      >
+        <LinearProgressBody className={classes.body}>
+          <LinearProgressBar
+            style={{ width: `${value}%` }}
+            className={classes.bar}
+            styleProps={styleProps}
+          ></LinearProgressBar>
+        </LinearProgressBody>
+        {children && (
+          <LinearProgressInfo className={classes.info}>
+            {children}
+          </LinearProgressInfo>
+        )}
+      </LinearProgressRoot>
+    );
+  }
+);
+
+export default LinearProgress;

@@ -1,7 +1,5 @@
 import { isObject } from '@wonder-ui/utils';
-import breakpoints from '../styles/theme/breakpoints';
-
-type Breakpoints = typeof breakpoints;
+import { BreakpointKeys } from '../styles/theme/createBreakpoints';
 
 export function getGutter(gutter?: number | [number, number]) {
   if (typeof gutter === 'number') {
@@ -24,9 +22,7 @@ export function getGutter(gutter?: number | [number, number]) {
   };
 }
 
-export type ResponsiveValue<T = any> =
-  | T
-  | Partial<Record<keyof Breakpoints, T>>;
+export type ResponsiveValue<T = any> = T | Partial<Record<BreakpointKeys, T>>;
 
 export function getResponsiveValue<T = any>(inValue?: ResponsiveValue<T>) {
   if (inValue && isObject(inValue)) {
@@ -35,8 +31,7 @@ export function getResponsiveValue<T = any>(inValue?: ResponsiveValue<T>) {
       sm: inValue.sm,
       md: inValue.md,
       lg: inValue.lg,
-      xl: inValue.xl,
-      xxl: inValue.xxl
+      xl: inValue.xl
     };
   }
   return {

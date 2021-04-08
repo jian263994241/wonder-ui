@@ -2,27 +2,18 @@ import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { PickStyleProps, InProps } from '../styles/types';
 import GridContext from '../Row/GridContext';
+import type { BaseProps, PickStyleProps } from '../styles/types';
 import type { ContextProps } from '../Row/GridContext';
-import { breakpointsKeys } from '../styles/theme/breakpoints';
+import { breakpointKeys } from '../styles/theme/createBreakpoints';
 import { getGutter, getResponsiveValue, ResponsiveValue } from '../Row/utils';
 import theme from '../styles/defaultTheme';
 
-export interface ColProps {
+export interface ColProps extends BaseProps {
   /** flex 对齐 */
   alignSelf?: ResponsiveValue<
     'start' | 'end' | 'center' | 'baseline' | 'stretch'
   >;
-  /**
-   * @description 子节点
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default div
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
   /** 占位格 */
   cols?: ResponsiveValue<'auto' | boolean | number>;
   /** flex order */
@@ -67,7 +58,6 @@ export const ColRoot = styled('div', { name: 'WuiCol', slot: 'Root' })<
             width: `${100 / n}%`
           };
 
-    const breakpoints = theme.breakpoints;
     const rowColsProp = getResponsiveValue(styleProps.rowCols);
     const colsProp = getResponsiveValue(styleProps.cols);
     const offsetProp = getResponsiveValue(styleProps.offset);
@@ -76,8 +66,8 @@ export const ColRoot = styled('div', { name: 'WuiCol', slot: 'Root' })<
 
     const styles: any = {};
 
-    breakpointsKeys.forEach((key) => {
-      const mediaQueryKey = `@media (min-width: ${breakpoints[key]}px)`;
+    breakpointKeys.forEach((key) => {
+      const mediaQueryKey = theme.breakpoints.up(key);
       const rowCols = rowColsProp[key];
       const cols = colsProp[key];
       const offset = offsetProp[key];
@@ -122,7 +112,7 @@ export const ColRoot = styled('div', { name: 'WuiCol', slot: 'Root' })<
   }
 );
 
-export default function Col<P extends InProps<ColProps>>(inProps: P) {
+const Col: React.FC<ColProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiCol' });
 
   const {
@@ -133,7 +123,6 @@ export default function Col<P extends InProps<ColProps>>(inProps: P) {
     component,
     offset = 0,
     order = 0,
-    rootRef,
     ...rest
   } = props;
 
@@ -156,10 +145,12 @@ export default function Col<P extends InProps<ColProps>>(inProps: P) {
       as={component}
       className={classes.root}
       styleProps={styleProps}
-      ref={rootRef}
+      ref={ref}
       {...rest}
     >
       {children}
     </ColRoot>
   );
-}
+});
+
+export default Col;

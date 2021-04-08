@@ -1,6 +1,6 @@
 /**
  * title: 按钮禁用
- * desc: 按钮禁用会添加 `pointer-events none` 阻止触发事件
+ * desc:
  */
 /** @jsx jsx */
 import { Button, jsx, Space } from '@wonder-ui/core';

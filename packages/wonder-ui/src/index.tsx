@@ -19,6 +19,9 @@ export * from './Checkbox';
 export { default as CircularProgress } from './CircularProgress';
 export * from './CircularProgress';
 
+export { default as CloseButton } from './CloseButton';
+export * from './CloseButton';
+
 export { default as Col } from './Col';
 export * from './Col';
 
@@ -39,6 +42,9 @@ export {
   useGlobalModal
 } from './GlobalModalProvider';
 export * from './GlobalModalProvider';
+
+export { default as IconButton } from './IconButton';
+export * from './IconButton';
 
 export { default as LinearProgress } from './LinearProgress';
 export * from './LinearProgress';
@@ -64,6 +70,9 @@ export * from './ListItemText';
 export { default as Modal, ModalManager } from './Modal';
 export * from './Modal';
 
+export { default as ModalContent } from './ModalContent';
+export * from './ModalContent';
+
 export { default as Popover } from './Popover';
 export * from './Popover';
 
@@ -76,11 +85,17 @@ export * from './Radio';
 export { default as Row } from './Row';
 export * from './Row';
 
+export { default as Snackbar } from './Snackbar';
+export * from './Snackbar';
+
 export { default as Space } from './Space';
 export * from './Space';
 
 export { default as SvgIcon } from './SvgIcon';
 export * from './SvgIcon';
+
+export { default as Toast } from './Toast';
+export * from './Toast';
 
 export { default as Toggle } from './Toggle';
 export * from './Toggle';

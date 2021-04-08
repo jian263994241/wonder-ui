@@ -11,4 +11,3 @@ sidemenu: false
 | circle | shep | `boolean` | false
 | color | color | `'primary' \| 'secondary' \| 'danger' \| 'warning' \| 'info'` | primary
 | indeterminate | indeterminate | `boolean` | false
-| rootRef | ref | `Ref` |

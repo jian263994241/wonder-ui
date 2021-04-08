@@ -2,18 +2,9 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
-import type { InProps, PickStyleProps } from '../styles/types';
+import type { BaseProps, PickStyleProps } from '../styles/types';
 
-export interface ListProps {
-  /**
-   * @description children
-   */
-  children?: React.ReactNode;
-  /**
-   * @description Root element
-   * @default ul
-   */
-  component?: keyof React.ReactHTML | React.ComponentType;
+export interface ListProps extends BaseProps {
   /**
    * @description 内嵌样式
    */
@@ -42,16 +33,9 @@ const ListRoot = styled('ul', {
   }
 }));
 
-export default function List<P extends InProps<ListProps>>(inProps: P) {
+const List: React.FC<ListProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ name: 'WuiList', props: inProps });
-  const {
-    children,
-    className,
-    component,
-    inset = false,
-    rootRef,
-    ...rest
-  } = props;
+  const { children, className, component, inset = false, ...rest } = props;
 
   const styleProps = { inset };
 
@@ -62,10 +46,12 @@ export default function List<P extends InProps<ListProps>>(inProps: P) {
       className={classes.root}
       as={component}
       styleProps={styleProps}
-      ref={rootRef}
+      ref={ref}
       {...rest}
     >
       {children}
     </ListRoot>
   );
-}
+});
+
+export default List;
