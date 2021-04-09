@@ -8,24 +8,22 @@ import { jsx, Button, Dialog } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <div>
-      <Dialog
-        title="Vertical Buttons"
-        buttonsVertical
-        buttons={[
-          {
-            children: 'Option 1'
-          },
-          {
-            children: 'Option 2'
-          },
-          {
-            children: 'Option 3'
-          }
-        ]}
-      >
-        <Button>Show Dialog</Button>
-      </Dialog>
-    </div>
+    <Dialog
+      title="Vertical Buttons"
+      buttonsVertical
+      buttons={[
+        {
+          children: 'Option 1'
+        },
+        {
+          children: 'Option 2'
+        },
+        {
+          children: 'Option 3'
+        }
+      ]}
+    >
+      <Button>Show Dialog</Button>
+    </Dialog>
   );
 }
