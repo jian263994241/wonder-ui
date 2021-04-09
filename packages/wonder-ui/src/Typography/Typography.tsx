@@ -77,6 +77,9 @@ export const TypographyRoot = styled('span', {
       ? styleProps.color
       : theme.palette.text[styleProps.color],
   ...theme.typography[styleProps.variant],
+  ...(!styleProps.noWrap && {
+    overflowWrap: 'break-word'
+  }),
   //单行展示
   ...(styleProps.noWrap && {
     overflow: 'hidden',
