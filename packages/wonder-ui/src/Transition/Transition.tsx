@@ -5,8 +5,6 @@ import {
 } from 'react-transition-group';
 import { useForkRef } from '@wonder-ui/hooks';
 
-export type { TransitionStatus };
-
 type EndHandler<RefElement extends HTMLElement> = (
   node: RefElement,
   maybeIsAppearing?: boolean
@@ -109,8 +107,6 @@ const Transtion: React.FC<TransitionProps> = React.forwardRef((props, ref) => {
 
   const nodeRef = React.useRef<any>(null);
   const handleRef = useForkRef(nodeRef, ref);
-
-  const ref2 = React.useRef();
 
   const normalizedTransitionCallback = (callback?: EndHandler<any>) => (
     maybeIsAppearing?: boolean
