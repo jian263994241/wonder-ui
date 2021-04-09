@@ -32,7 +32,7 @@ export interface DividerProps extends BaseProps {
    * @description 方向
    * @default horizontal
    */
-  direction: 'horizontal' | 'vertical';
+  direction?: 'horizontal' | 'vertical';
   /**
    * @description flex 子节点
    * @default false

@@ -294,7 +294,7 @@ const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
 
   const childProps: any = {};
 
-  const { tabIndex = '-1', onEnter, onExited } = children as any;
+  const { tabIndex = '-1', onEnter, onExited } = children.props as any;
 
   childProps.tabIndex = tabIndex;
   childProps['data-autofocus'] = !disableAutoFocus;

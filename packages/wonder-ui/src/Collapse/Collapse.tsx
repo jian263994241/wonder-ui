@@ -12,7 +12,6 @@ import {
   getAutoSizeDuration,
   getTransitionDurationFromElement
 } from '@wonder-ui/utils';
-import { useForkRef } from '@wonder-ui/hooks';
 import { duration } from '../styles/transitions';
 
 export interface CollapseProps extends BaseProps, TransitionEventListener {
@@ -106,8 +105,6 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
   } = props;
 
   const timer = React.useRef<any>();
-  const nodeRef = React.useRef<HTMLElement>(null);
-  const handleRef = useForkRef(ref, nodeRef);
   const isHorizontal = direction === 'horizontal';
   const dimension = isHorizontal ? 'width' : 'height';
 
@@ -121,8 +118,7 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
   const styleProps = { direction, in: visible, collapsedSize };
   const classes = useClasses({ ...props, styleProps, name: 'WuiCollapse' });
 
-  const getTransitionDuration = () => {
-    const node = nodeRef.current;
+  const getTransitionDuration = (node: any) => {
     let transitionDuration;
 
     if (!node) return 0;
@@ -151,7 +147,7 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
     node.style[dimension] = collapsedSize;
     node.style[dimension] = node[scrollSize] + 'px';
 
-    node.style.transitionDuration = getTransitionDuration() + 'ms';
+    node.style.transitionDuration = getTransitionDuration(node) + 'ms';
     reflow(node);
     if (onEntering) {
       onEntering(node);
@@ -175,7 +171,7 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
 
   const handleExiting: CollapseProps['onExiting'] = (node) => {
     node.style[dimension] = collapsedSize;
-    node.style.transitionDuration = getTransitionDuration() + 'ms';
+    node.style.transitionDuration = getTransitionDuration(node) + 'ms';
     if (onExiting) {
       onExiting(node);
     }
@@ -190,7 +186,7 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
 
   const addEndListener: CollapseProps['addEndListener'] = (node, next) => {
     if (timeout === 'auto') {
-      timer.current = setTimeout(next, getTransitionDuration());
+      timer.current = setTimeout(next, getTransitionDuration(node));
     }
   };
 
@@ -210,16 +206,16 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
       onExited={handleExited}
       onExiting={handleExiting}
       addEndListener={addEndListener}
-      nodeRef={nodeRef}
       timeout={timeout != 'auto' ? (timeout as any) : null}
+      ref={ref}
     >
-      {(state) => {
+      {(state, childProps) => {
         return (
           <CollapseRoot
             as={component}
             className={classes.root}
             styleProps={{ ...styleProps, state }}
-            ref={handleRef}
+            {...childProps}
             {...rest}
           >
             {children}

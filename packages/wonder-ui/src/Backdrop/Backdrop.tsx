@@ -30,7 +30,7 @@ const BackdropRoot = styled('div', { name: 'WuiBackdrop', slot: 'Root' })<
   bottom: 0,
   top: 0,
   left: 0,
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  backgroundColor: 'rgba(0, 0, 0, 0.4)',
   WebkitTapHighlightColor: 'transparent',
   ...(styleProps.invisible && {
     backgroundColor: 'transparent'

@@ -84,9 +84,9 @@ export interface TransitionProps extends TransitionEventListener {
    */
   timeout?: number | { appear?: number; enter?: number; exit?: number };
   /**
-   * @description node
+   * children ref
    */
-  nodeRef: React.RefObject<any>;
+  ref?: React.Ref<any>;
 }
 
 /**
@@ -104,11 +104,13 @@ const Transtion: React.FC<TransitionProps> = React.forwardRef((props, ref) => {
     onExited,
     onExiting,
     timeout,
-    nodeRef,
     ...rest
   } = props;
 
-  useForkRef(ref, nodeRef);
+  const nodeRef = React.useRef<any>(null);
+  const handleRef = useForkRef(nodeRef, ref);
+
+  const ref2 = React.useRef();
 
   const normalizedTransitionCallback = (callback?: EndHandler<any>) => (
     maybeIsAppearing?: boolean
@@ -157,7 +159,7 @@ const Transtion: React.FC<TransitionProps> = React.forwardRef((props, ref) => {
     >
       {(status: TransitionStatus, childProps: any) => {
         if (typeof children === 'function') {
-          return children(status, childProps);
+          return children(status, { ...childProps, ref: handleRef });
         }
       }}
     </TransitionComponent>

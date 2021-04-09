@@ -13,7 +13,7 @@
 <code src="../../packages/wonder-ui/src/Modal/demo/demo1.tsx"></code>
 
 
-### 自定义
+### 自定义浮层
 
 借助 `Modal` 组件创建一个自己的Modal框:
 

@@ -6,11 +6,11 @@ export default function createSvgIcon(
   title: string,
   viewBox: string = '0 0 16 16'
 ) {
-  const Icon = React.forwardRef((props: SvgIconProps, ref: any) => {
+  const Icon: React.FC<SvgIconProps> = React.forwardRef((props, ref) => {
     return (
       <SvgIcon
         {...props}
-        rootRef={ref}
+        ref={ref}
         viewBox={viewBox}
         titleAccess={title}
         children={paths}

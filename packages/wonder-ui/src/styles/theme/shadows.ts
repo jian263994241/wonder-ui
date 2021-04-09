@@ -1,6 +1,6 @@
-const shadowKeyUmbraOpacity = 0.12;
-const shadowKeyPenumbraOpacity = 0.1;
-const shadowAmbientShadowOpacity = 0.08;
+const shadowKeyUmbraOpacity = 0.14;
+const shadowKeyPenumbraOpacity = 0.12;
+const shadowAmbientShadowOpacity = 0.1;
 
 function createShadow(...px: number[]) {
   return [

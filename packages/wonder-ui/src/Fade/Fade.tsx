@@ -2,7 +2,6 @@ import * as React from 'react';
 import Transition, { TransitionEventListener } from '../Transition';
 import { reflow, getTransitionProps } from '../Transition/utils';
 import { duration } from '../styles/transitions';
-import { useForkRef } from '@wonder-ui/hooks';
 import useTheme from '../styles/useTheme';
 
 const styles = {
@@ -56,10 +55,6 @@ const Fade: React.FC<FadeProps> = React.forwardRef((props, ref) => {
   } = props;
   const theme = useTheme();
 
-  const nodeRef = React.useRef<HTMLElement>(null);
-  const foreignRef = useForkRef(children.ref, ref);
-  const handleRef = useForkRef(nodeRef, foreignRef);
-
   const handleEnter: FadeProps['onEnter'] = (node, isAppearing) => {
     reflow(node); // So the animation always start from the start.
 
@@ -105,7 +100,7 @@ const Fade: React.FC<FadeProps> = React.forwardRef((props, ref) => {
       onEnter={handleEnter}
       onExit={handleExit}
       timeout={timeout}
-      nodeRef={nodeRef}
+      ref={ref}
       {...rest}
     >
       {(state, childProps) => {
@@ -115,9 +110,8 @@ const Fade: React.FC<FadeProps> = React.forwardRef((props, ref) => {
             visibility: state === 'exited' && !inProp ? 'hidden' : undefined,
             ...(styles[state as keyof typeof styles] || { opacity: 0 }),
             ...style,
-            ...children.props.style
-          },
-          ref: handleRef
+            ...childProps.style
+          }
         });
       }}
     </Transition>

@@ -77,6 +77,7 @@ export default defineConfig({
         title: '用户反馈',
         children: [
           'components/backdrop.md',
+          'components/dialog.md',
           'components/modal.md',
           'components/popover.md',
           'components/progress.md',

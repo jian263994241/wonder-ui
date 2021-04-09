@@ -6,6 +6,7 @@ export interface ZIndex {
   modal: number;
   popover: number;
   tooltip: number;
+  dialog: number;
   snackbar: number;
 }
 
@@ -17,5 +18,6 @@ export default {
   modal: 1050,
   popover: 1060,
   tooltip: 1070,
-  snackbar: 1080
+  dialog: 1080,
+  snackbar: 1090
 } as ZIndex;

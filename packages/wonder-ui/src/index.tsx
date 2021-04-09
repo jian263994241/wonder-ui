@@ -10,6 +10,9 @@ export * from './Badge';
 export { default as Button } from './Button';
 export * from './Button';
 
+export { default as ButtonBase } from './ButtonBase';
+export * from './ButtonBase';
+
 export { default as ButtonGroup } from './ButtonGroup';
 export * from './ButtonGroup';
 
@@ -30,6 +33,9 @@ export * from './Collapse';
 
 export { default as Container } from './Container';
 export * from './Container';
+
+export { default as Dialog } from './Dialog';
+export * from './Dialog';
 
 export { default as Divider } from './Divider';
 export * from './Divider';
