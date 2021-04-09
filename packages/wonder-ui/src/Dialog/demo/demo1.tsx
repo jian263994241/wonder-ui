@@ -16,7 +16,6 @@ export default function Example() {
 
       <Dialog
         visible={visible}
-        onClose={() => toggle()}
         title="Dialog Title"
         text="message..."
         buttonsVertical
