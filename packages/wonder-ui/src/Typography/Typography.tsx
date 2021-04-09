@@ -85,8 +85,7 @@ export const TypographyRoot = styled('span', {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    WebkitLineClamp: 2,
-    maxHeight: 22
+    WebkitLineClamp: 2
   }),
   //多行省略
   ...(styleProps.lineClamp != 0 &&

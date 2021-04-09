@@ -9,21 +9,26 @@ import Transition, { TransitionProps } from '../Transition';
 import Typography, { TypographyProps } from '../Typography';
 import { alpha } from '../styles/colorManipulator';
 import { reflow, getTransitionProps } from '../Transition/utils';
+import { createChainedFunction } from '@wonder-ui/utils';
 import { duration } from '../styles/transitions';
+import { useControlled } from '@wonder-ui/hooks';
 
 export interface DialogButtonProps extends ButtonBaseProps {
   primary?: boolean;
 }
 
 export interface DialogProps extends BaseProps {
+  children?: React.ReactElement;
   classes?: ClassNameMap<
     'root' | 'body' | 'title' | 'text' | 'buttonGroup' | 'button'
   >;
   visible?: boolean;
+  defaultVisible?: boolean;
   title?: string;
   titleTypographyProps?: TypographyProps;
   text?: string;
   textTypographyProps?: TypographyProps;
+  textAfter?: React.ReactNode;
   buttons?: DialogButtonProps[];
   buttonsVertical?: boolean;
   ModalProps?: ModalProps;
@@ -70,7 +75,10 @@ const DialogBody = styled('div', {
   name: 'WuiDialog',
   slot: 'Body'
 })(() => ({
-  padding: 15
+  padding: 15,
+  '&:empty': {
+    display: 'none'
+  }
 }));
 
 const DialogButtonGroup = styled('div', {
@@ -103,12 +111,12 @@ const DialogButton = styled(ButtonBase, {
     borderStyle: 'solid',
     borderColor: theme.palette.divider,
     ...(styleProps.buttonsVertical
-      ? { borderBottomWidth: 'thin' }
+      ? { borderBottomWidth: 'thin', flexShrink: 0 }
       : { borderRightWidth: 'thin' }),
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     boxSizing: 'border-box',
-    flexShrink: 0,
+
     '&.state-active': {
       backgroundColor: 'rgba(0,0,0,0.1)'
     },
@@ -127,15 +135,24 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
     className,
     theme,
     ModalProps,
-    visible,
+    visible: visibleProp,
+    defaultVisible = false,
     title,
     titleTypographyProps,
     text,
     textTypographyProps,
+    textAfter,
     style,
     buttonsVertical = false,
     ...rest
   } = props;
+
+  const [visible, setVisible] = useControlled({
+    value: visibleProp,
+    defaultValue: defaultVisible
+  });
+
+  const toogleVisibleIfUncontroled = () => setVisible(!visible);
 
   const timeout = defaultTimeout;
 
@@ -177,84 +194,98 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
   };
 
   return (
-    <Modal
-      visible={visible}
-      style={{ zIndex: theme.zIndex.dialog }}
-      theme={theme}
-      {...ModalProps}
-    >
-      <Transition
-        appear
-        in={visible}
-        ref={ref}
-        onEnter={handleEnter}
-        onExit={handleExit}
-        timeout={timeout}
+    <React.Fragment>
+      {children &&
+        React.cloneElement(children, {
+          onClick: createChainedFunction(
+            toogleVisibleIfUncontroled,
+            children.props.onClick
+          )
+        })}
+      <Modal
+        visible={visible}
+        style={{ zIndex: theme.zIndex.dialog }}
+        theme={theme}
+        {...ModalProps}
       >
-        {(state, childProps) => (
-          <DialogRoot
-            {...childProps}
-            {...rest}
-            className={classes.root}
-            theme={theme}
-            style={{
-              visibility: state === 'exited' && !visible ? 'hidden' : undefined,
-              ...(styles[state as keyof typeof styles] || {
-                opacity: 0
-              }),
-              ...childProps.style
-            }}
-          >
-            <DialogBody theme={theme} className={classes.body}>
-              {title && (
-                <Typography
-                  variant="subtitle1"
-                  align="center"
-                  noWrap
-                  gutterBottom
-                  className={classes.title}
-                  {...titleTypographyProps}
+        <Transition
+          appear
+          in={visible}
+          ref={ref}
+          onEnter={handleEnter}
+          onExit={handleExit}
+          timeout={timeout}
+        >
+          {(state, childProps) => (
+            <DialogRoot
+              {...childProps}
+              {...rest}
+              className={classes.root}
+              theme={theme}
+              style={{
+                visibility:
+                  state === 'exited' && !visible ? 'hidden' : undefined,
+                ...(styles[state as keyof typeof styles] || {
+                  opacity: 0
+                }),
+                ...childProps.style
+              }}
+            >
+              <DialogBody theme={theme} className={classes.body}>
+                {title && (
+                  <Typography
+                    variant="subtitle1"
+                    align="center"
+                    noWrap
+                    gutterBottom
+                    className={classes.title}
+                    {...titleTypographyProps}
+                  >
+                    {title}
+                  </Typography>
+                )}
+
+                {text && (
+                  <Typography
+                    variant="body1"
+                    align="center"
+                    className={classes.text}
+                    gutterBottom
+                    {...textTypographyProps}
+                  >
+                    {text}
+                  </Typography>
+                )}
+
+                {textAfter}
+              </DialogBody>
+
+              {buttons.length > 0 && (
+                <DialogButtonGroup
+                  styleProps={styleProps}
+                  theme={theme}
+                  className={classes.buttonGroup}
                 >
-                  {title}
-                </Typography>
+                  {buttons.map((props, index) => (
+                    <DialogButton
+                      key={index}
+                      theme={theme}
+                      className={classes.button}
+                      {...props}
+                      styleProps={styleProps}
+                      onClick={createChainedFunction(
+                        toogleVisibleIfUncontroled,
+                        props.onClick
+                      )}
+                    />
+                  ))}
+                </DialogButtonGroup>
               )}
-
-              {text && (
-                <Typography
-                  variant="body1"
-                  align="center"
-                  className={classes.text}
-                  gutterBottom
-                  {...textTypographyProps}
-                >
-                  {text}
-                </Typography>
-              )}
-
-              {children}
-            </DialogBody>
-
-            {buttons.length > 0 && (
-              <DialogButtonGroup
-                styleProps={styleProps}
-                theme={theme}
-                className={classes.buttonGroup}
-              >
-                {buttons.map((props, index) => (
-                  <DialogButton
-                    key={index}
-                    theme={theme}
-                    className={classes.button}
-                    {...props}
-                    styleProps={styleProps}
-                  />
-                ))}
-              </DialogButtonGroup>
-            )}
-          </DialogRoot>
-        )}
-      </Transition>
-    </Modal>
+            </DialogRoot>
+          )}
+        </Transition>
+      </Modal>
+    </React.Fragment>
   );
 });
 

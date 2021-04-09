@@ -76,7 +76,7 @@ export default function createTypography(typography: TypographyOptions = {}) {
     h4: buildVariant(fontWeightRegular, 28, 1.17, 0.25),
     h5: buildVariant(fontWeightRegular, 24, 1.33, 0),
     h6: buildVariant(fontWeightMedium, 20, 1.6, 0.15),
-    subtitle1: buildVariant(fontWeightBold, 16, 1.75, 0.15),
+    subtitle1: buildVariant(fontWeightMedium, 16, 1.75, 0.15),
     subtitle2: buildVariant(fontWeightMedium, 14, 1.57, 0.1),
     body1: buildVariant(fontWeightRegular, 15, 1.5, 0.15),
     body2: buildVariant(fontWeightRegular, 13, 1.43, 0.15),
