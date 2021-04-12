@@ -22,7 +22,7 @@ export default function Example() {
       <Button onClick={() => toggle()}>Show Modal</Button>
 
       <Modal visible={visible} onClose={() => toggle()}>
-        <Fade in={visible}>
+        <Fade in>
           <ModalContent
             title="Modal Title"
             onOk={() => toggle()}

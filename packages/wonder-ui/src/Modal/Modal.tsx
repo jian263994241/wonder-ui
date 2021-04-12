@@ -9,7 +9,8 @@ import { useForkRef, useEventCallback } from '@wonder-ui/hooks';
 import Backdrop, { BackdropProps } from '../Backdrop';
 import FocusLock from 'react-focus-lock';
 import { ReactFocusLockProps } from 'react-focus-lock/interfaces';
-import type { BaseProps } from '../styles/types';
+import type { BaseProps, PickStyleProps } from '../styles/types';
+import type { TransitionEventListener } from '../Transition';
 
 // A modal manager used to track and manage the state of open Modals.
 // Modals don't open on the server so this won't conflict with concurrent requests.
@@ -18,21 +19,6 @@ const defaultManager = new ModalManager();
 function getHasTransition(props: React.PropsWithChildren<any>) {
   return props.children ? props.children.props.hasOwnProperty('in') : false;
 }
-
-const ModalRoot = styled('div', {
-  name: 'WuiModal',
-  slot: 'Root'
-})(({ theme }) => ({
-  position: 'fixed',
-  zIndex: theme.zIndex.modal,
-  right: 0,
-  bottom: 0,
-  top: 0,
-  left: 0,
-  overflow: 'auto',
-  outline: 0,
-  WebkitOverflowScrolling: 'touch'
-}));
 
 export interface ModalProps extends BaseProps {
   /**
@@ -128,6 +114,27 @@ export interface ModalProps extends BaseProps {
   visible?: boolean;
 }
 
+const ModalRoot = styled('div', {
+  name: 'WuiModal',
+  slot: 'Root'
+})<PickStyleProps<ModalProps, 'visible', { exited: boolean }>>(
+  ({ theme, styleProps }) => ({
+    position: 'fixed',
+    zIndex: theme.zIndex.modal,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    left: 0,
+    overflow: 'auto',
+    outline: 0,
+    WebkitOverflowScrolling: 'touch',
+    ...(!styleProps.visible &&
+      styleProps.exited && {
+        visibility: 'hidden'
+      })
+  })
+);
+
 const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiModal' });
   const {
@@ -145,6 +152,8 @@ const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
     FocusLockProps,
     hideBackdrop = false,
     keepMounted,
+    labelElement = null,
+    labelTrigerEvent = 'onClick',
     manager = defaultManager,
     onBackdropClick,
     onClose,
@@ -154,6 +163,8 @@ const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
     visible = false,
     ...rest
   } = props;
+
+  React.Children.only(children);
 
   const [exited, setExited] = React.useState(true);
   const modal = React.useRef<{
@@ -292,6 +303,10 @@ const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
     }
   };
 
+  const styleProps = { visible, exited };
+
+  const classes = useClasses({ ...props, styleProps, name: 'WuiModal' });
+
   const childProps: any = {};
 
   const { tabIndex = '-1', onEnter, onExited } = children.props as any;
@@ -300,13 +315,10 @@ const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
   childProps['data-autofocus'] = !disableAutoFocus;
 
   if (hasTransition) {
+    childProps.in = visible;
     childProps.onEnter = createChainedFunction(handleEnter, onEnter);
     childProps.onExited = createChainedFunction(handleExited, onExited);
   }
-
-  const styleProps = { visible };
-
-  const classes = useClasses({ ...props, styleProps, name: 'WuiModal' });
 
   return (
     <Portal
@@ -318,16 +330,17 @@ const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
         disabled={disableFocusLock}
         noFocusGuards={disableFocusLock}
         autoFocus={!disableAutoFocus}
-        as={ModalRoot}
         ref={handleRef}
+        {...FocusLockProps}
+        as={ModalRoot as React.ElementType<any>}
         lockProps={{
           role: 'presentation',
           onKeyDown: handleKeyDown,
           className: classes.root,
           as: component,
+          styleProps,
           ...rest
         }}
-        {...FocusLockProps}
       >
         {!hideBackdrop && (
           <Backdrop

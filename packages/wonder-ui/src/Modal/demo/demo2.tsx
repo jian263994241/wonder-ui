@@ -27,8 +27,8 @@ export default function Example() {
     <div>
       <Button onClick={() => toggle()}>Show Modal</Button>
 
-      <Modal visible={visible} onClose={() => toggle()}>
-        <Fade in={visible}>
+      <Modal visible={visible} keepMounted onClose={() => toggle()}>
+        <Fade in>
           <Demo>
             <Typography variant="h2" gutterBottom>
               模态框标题
