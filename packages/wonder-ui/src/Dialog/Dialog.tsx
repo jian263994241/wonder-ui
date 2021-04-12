@@ -9,7 +9,7 @@ import Transition, { TransitionProps } from '../Transition';
 import Typography, { TypographyProps } from '../Typography';
 import { alpha } from '../styles/colorManipulator';
 import { reflow, getTransitionProps } from '../Transition/utils';
-import { createChainedFunction } from '@wonder-ui/utils';
+import { createChainedFunction, noop } from '@wonder-ui/utils';
 import { duration } from '../styles/transitions';
 import { useControlled } from '@wonder-ui/hooks';
 
@@ -18,19 +18,57 @@ export interface DialogButtonProps extends ButtonBaseProps {
 }
 
 export interface DialogProps extends BaseProps {
+  /**
+   * @description Target element
+   */
   children?: React.ReactElement;
+  /**
+   * @description Css api
+   */
   classes?: ClassNameMap<
     'root' | 'body' | 'title' | 'text' | 'buttonGroup' | 'button'
   >;
+  /**
+   * @description Visible
+   */
   visible?: boolean;
+  /**
+   * @description Default visible
+   * @default false
+   */
   defaultVisible?: boolean;
-  title?: string;
+  /**
+   * @description Title
+   */
+  title?: React.ReactChild;
+  /**
+   * @description Title props
+   */
   titleTypographyProps?: TypographyProps;
-  text?: string;
+  /**
+   * @description Text
+   */
+  text?: React.ReactChild;
+  /**
+   * @description Text props
+   */
   textTypographyProps?: TypographyProps;
-  textAfter?: React.ReactNode;
+  /**
+   * @description After text node
+   */
+  textAfter?: React.ReactChild;
+  /**
+   * @description Buttons
+   */
   buttons?: DialogButtonProps[];
+  /**
+   * @description Buttons vertical
+   */
   buttonsVertical?: boolean;
+  /**
+   * @description Modal props
+   * @ignore
+   */
   ModalProps?: ModalProps;
 }
 
@@ -59,9 +97,9 @@ const DialogRoot = styled('div', {
   position: 'relative',
   margin: '0 auto',
   borderRadius: 13,
-  boxShadow: theme.shadows[5],
+  boxShadow: theme.shadows[4],
   backgroundColor: alpha(theme.palette.background.paper, 0.95),
-  width: 300,
+  width: 295,
   display: 'block',
   textAlign: 'left',
   top: '50%',
@@ -274,8 +312,8 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
                       {...props}
                       styleProps={styleProps}
                       onClick={createChainedFunction(
-                        toogleVisibleIfUncontroled,
-                        props.onClick
+                        props.onClick || noop,
+                        toogleVisibleIfUncontroled
                       )}
                     />
                   ))}

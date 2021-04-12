@@ -37,6 +37,9 @@ export * from './Container';
 export { default as Dialog } from './Dialog';
 export * from './Dialog';
 
+export { default as DialogAlert } from './DialogAlert';
+export * from './DialogAlert';
+
 export { default as Divider } from './Divider';
 export * from './Divider';
 

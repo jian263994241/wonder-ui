@@ -11,3 +11,15 @@
 ### 垂直按钮
 
 <code src="../../packages/wonder-ui/src/Dialog/demo/demo2.tsx"></code>
+
+### 提示框
+
+提示信息, 确认信息, 录入信息
+
+<code src="../../packages/wonder-ui/src/Dialog/demo/demo3.tsx"></code>
+
+## API
+
+<embed src="../../packages/wonder-ui/src/Dialog/index.md"></embed>
+
+<embed src="../../packages/wonder-ui/src/DialogAlert/index.md"></embed>

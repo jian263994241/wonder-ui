@@ -1,3 +1,6 @@
+import StackManager from './StackManager';
+import isPromise from './isPromise';
+
 /**
  * Safe chained function
  *
@@ -8,6 +11,7 @@
  */
 
 export default function createChainedFunction(...funcs: any[]) {
+  const manager = new StackManager();
   return funcs.reduce(
     (acc, func) => {
       if (func == null) {
@@ -16,8 +20,26 @@ export default function createChainedFunction(...funcs: any[]) {
 
       return function chainedFunction(this: any, ...args: any[]) {
         const self = this;
-        acc.apply(self, args);
-        func.apply(self, args);
+
+        manager.run((next) => {
+          const promise = acc.apply(self, args);
+
+          if (isPromise(promise)) {
+            return promise;
+          } else {
+            next();
+          }
+        });
+
+        manager.run((next) => {
+          const promise = func.apply(self, args);
+
+          if (isPromise(promise)) {
+            return promise;
+          } else {
+            next();
+          }
+        });
       };
     },
     () => {}
