@@ -4,6 +4,10 @@
 
 ## 代码演示
 
+### 基础用法
+
+主要用在移动端设置块状间距的辅助组件
+
 <code src="../../packages/wonder-ui/src/WhiteSpace/demo/demo1.tsx"></code>
 
 ## API

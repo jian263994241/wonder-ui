@@ -4,9 +4,16 @@
 
 ## 代码演示
 
+
+### 基础用法
+
 <code src="../../packages/wonder-ui/src/Space/demo/demo1.tsx"></code>
 
+### 设置分隔符
+
 <code src="../../packages/wonder-ui/src/Space/demo/spaceSplit.tsx"></code>
+
+### 行间距
 
 <code src="../../packages/wonder-ui/src/Space/demo/wrap.tsx"></code>
 

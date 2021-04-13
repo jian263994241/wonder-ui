@@ -16,7 +16,7 @@
 
 提示信息, 确认信息, 录入信息
 
-<code src="../../packages/wonder-ui/src/Dialog/demo/demo3.tsx"></code>
+<code src="../../packages/wonder-ui/src/DialogAlert/demo/demo1.tsx"></code>
 
 ## API
 

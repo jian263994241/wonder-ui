@@ -5,10 +5,15 @@
 
 ## 代码演示
 
+### 基础使用
 
 <code src="../../packages/wonder-ui/src/Row/demo/demo1.tsx"></code>
 
+### 均分栅格
+
 <code src="../../packages/wonder-ui/src/Row/demo/demo2.tsx"></code>
+
+### 响应式
 
 <code src="../../packages/wonder-ui/src/Row/demo/demo3.tsx"></code>
 
