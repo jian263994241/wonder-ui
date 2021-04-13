@@ -1,6 +1,6 @@
 /**
  * title: 换行排列
- * desc: 相邻组件水平间距
+ * desc: 可以设置水平和垂直方向的间距
  */
 /** @jsx jsx */
 import { Space, Button, jsx } from '@wonder-ui/core';

@@ -78,6 +78,7 @@ export default defineConfig({
         children: [
           'components/backdrop.md',
           'components/dialog.md',
+          'components/drawer.md',
           'components/modal.md',
           'components/popover.md',
           'components/progress.md',

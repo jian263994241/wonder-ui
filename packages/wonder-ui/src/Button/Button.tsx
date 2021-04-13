@@ -4,8 +4,8 @@ import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import type { PickStyleProps } from '../styles/types';
 import { darken } from '../styles/colorManipulator';
-import clsx from 'clsx';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
+import clsx from 'clsx';
 
 export interface ButtonProps extends ButtonBaseProps {
   /**
@@ -31,11 +31,7 @@ export interface ButtonProps extends ButtonBaseProps {
    * @description shape
    * @default rect
    */
-  shape?: 'round' | 'rect';
-  /**
-   * @description disable border radius
-   */
-  disabledBorderRadius?: boolean;
+  shape?: 'default' | 'round' | 'square';
   /**
    * @description disabled
    */
@@ -49,54 +45,38 @@ export const ButtonRoot = styled(ButtonBase, {
   ButtonBaseProps &
     PickStyleProps<
       ButtonProps,
-      | 'color'
-      | 'disabled'
-      | 'disabledBorderRadius'
-      | 'shape'
-      | 'size'
-      | 'variant'
+      'color' | 'disabled' | 'shape' | 'size' | 'variant'
     >
 >(({ theme, styleProps }) => {
-  const buttonPadding = {
-    small: theme.spacing(0.3, 0.7),
-    medium: theme.spacing(0.6, 1.4),
-    large: theme.spacing(0.9, 2)
-  }[styleProps.size];
-
-  const buttonfontSize = {
-    small: theme.typography.pxToRem(12),
-    medium: theme.typography.pxToRem(14),
-    large: theme.typography.pxToRem(18)
-  }[styleProps.size];
-
   return {
     ...theme.typography.button,
+    padding: {
+      small: theme.spacing(0.3, 0.7),
+      medium: theme.spacing(0.6, 1.4),
+      large: theme.spacing(0.9, 2)
+    }[styleProps.size],
+    fontSize: {
+      small: theme.typography.pxToRem(12),
+      medium: theme.typography.pxToRem(14),
+      large: theme.typography.pxToRem(18)
+    }[styleProps.size],
 
     ...(styleProps.disabled && {
       opacity: 0.65
     }),
 
     ...{
+      default: {
+        borderRadius: theme.shape.borderRadius
+      },
       round: {
-        padding: buttonPadding,
-        fontSize: buttonfontSize,
         borderRadius: {
           small: theme.typography.pxToRem(14),
           medium: theme.typography.pxToRem(16),
           large: theme.typography.pxToRem(20)
         }[styleProps.size]
       },
-      rect: {
-        padding: buttonPadding,
-        fontSize: buttonfontSize,
-        ...(!styleProps.disabledBorderRadius && {
-          borderRadius: {
-            small: theme.typography.pxToRem(3.2),
-            medium: theme.typography.pxToRem(4),
-            large: theme.typography.pxToRem(4.8)
-          }[styleProps.size]
-        })
-      }
+      square: {}
     }[styleProps.shape],
 
     ...{
@@ -151,8 +131,7 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
     className,
     color = 'primary',
     disabled = false,
-    disabledBorderRadius = false,
-    shape = 'rect',
+    shape = 'default',
     size = 'medium',
     variant = 'contained',
     ...rest
@@ -161,7 +140,6 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
   const styleProps = {
     color,
     disabled,
-    disabledBorderRadius,
     shape,
     size,
     variant

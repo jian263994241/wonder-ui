@@ -1,16 +1,4 @@
-export interface ZIndex {
-  dropdown: number;
-  sticky: number;
-  fixed: number;
-  drawer: number;
-  modal: number;
-  popover: number;
-  tooltip: number;
-  dialog: number;
-  snackbar: number;
-}
-
-export default {
+const zIndex = {
   dropdown: 1000,
   sticky: 1020,
   fixed: 1030,
@@ -20,4 +8,8 @@ export default {
   tooltip: 1070,
   dialog: 1080,
   snackbar: 1090
-} as ZIndex;
+};
+
+export default zIndex;
+
+export type ZIndex = typeof zIndex;

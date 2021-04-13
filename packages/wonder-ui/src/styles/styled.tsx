@@ -7,6 +7,14 @@ type Options = {
   overridesResolver?: (props: any, styleOverrides: any) => CSSObject;
 };
 
+export const shouldForwardProp = (prop: string) =>
+  prop !== 'styleProps' &&
+  prop !== 'theme' &&
+  prop !== 'isRtl' &&
+  prop !== 'sx' &&
+  prop !== 'as' &&
+  prop !== 'classes';
+
 const lowercaseFirstLetter = (str: string) => {
   return str.charAt(0).toLowerCase() + str.slice(1);
 };
@@ -49,7 +57,7 @@ const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
   }
 
   const defaultStyledResolver = styled(tag, {
-    // shouldForwardProp,
+    shouldForwardProp,
     label: className || componentName || '',
     target: className,
     ...styledOptions

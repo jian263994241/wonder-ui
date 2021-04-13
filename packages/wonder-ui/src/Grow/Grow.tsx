@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Transition, { TransitionEventListener } from '../Transition';
+import Transition, { BaseTransitionProps } from '../Transition';
 import useTheme from '../styles/useTheme';
 import { useForkRef } from '@wonder-ui/hooks';
 import { reflow } from '../Transition/utils';
@@ -19,7 +19,7 @@ const styles = {
   }
 };
 
-export interface GrowProps extends TransitionEventListener {
+export interface GrowProps extends BaseTransitionProps {
   /**
    * @description Perform the enter transition when it first mounts if `in` is also `true`.
    * @default true

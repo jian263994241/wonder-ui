@@ -1,6 +1,6 @@
 /**
  * title: 基础用法
- * desc:
+ * desc: 通过`size`来设置间隔大小
  */
 
 /** @jsx jsx */

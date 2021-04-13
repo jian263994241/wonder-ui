@@ -19,10 +19,10 @@ export default function Example() {
 
   return (
     <div>
-      <Button onClick={() => toggle()}>Show Modal</Button>
+      <Button onClick={() => toggle()}>Open</Button>
 
       <Modal visible={visible} onClose={() => toggle()}>
-        <Fade in>
+        <Fade>
           <ModalContent
             title="Modal Title"
             onOk={() => toggle()}

@@ -88,9 +88,16 @@ const defaultTimeout = {
   exit: duration.leavingScreen
 };
 
-const DialogRoot = styled('div', {
+const DialogRoot = styled(Modal, {
   name: 'WuiDialog',
   slot: 'Root'
+})(({ theme }) => ({
+  zIndex: theme.zIndex.dialog
+}));
+
+const DialogContentRoot = styled('div', {
+  name: 'WuiDialog',
+  slot: 'ContentRoot'
 })(({ theme }) => ({
   boxSizing: 'border-box',
   outline: 0,
@@ -109,9 +116,9 @@ const DialogRoot = styled('div', {
   userSelect: 'none'
 }));
 
-const DialogBody = styled('div', {
+const DialogContentBody = styled('div', {
   name: 'WuiDialog',
-  slot: 'Body'
+  slot: 'ContentBody'
 })(() => ({
   padding: 15,
   '&:empty': {
@@ -154,9 +161,11 @@ const DialogButton = styled(ButtonBase, {
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     boxSizing: 'border-box',
-
     '&.state-active': {
       backgroundColor: 'rgba(0,0,0,0.1)'
+    },
+    '&:focus': {
+      backgroundColor: 'rgba(0,0,0,0.05)'
     },
     '&:last-child': {
       borderWidth: 0
@@ -191,6 +200,10 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
   });
 
   const toogleVisibleIfUncontroled = () => setVisible(!visible);
+
+  if (children) {
+    React.Children.only(children);
+  }
 
   const timeout = defaultTimeout;
 
@@ -240,12 +253,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
             children.props.onClick
           )
         })}
-      <Modal
-        visible={visible}
-        style={{ zIndex: theme.zIndex.dialog }}
-        theme={theme}
-        {...ModalProps}
-      >
+      <DialogRoot visible={visible} theme={theme} {...ModalProps}>
         <Transition
           appear
           in={visible}
@@ -255,7 +263,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
           timeout={timeout}
         >
           {(state, childProps) => (
-            <DialogRoot
+            <DialogContentRoot
               {...childProps}
               {...rest}
               className={classes.root}
@@ -269,7 +277,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
                 ...childProps.style
               }}
             >
-              <DialogBody theme={theme} className={classes.body}>
+              <DialogContentBody theme={theme} className={classes.body}>
                 {title && (
                   <Typography
                     variant="subtitle1"
@@ -277,6 +285,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
                     noWrap
                     gutterBottom
                     className={classes.title}
+                    theme={theme}
                     {...titleTypographyProps}
                   >
                     {title}
@@ -288,6 +297,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
                     variant="body1"
                     align="center"
                     className={classes.text}
+                    theme={theme}
                     gutterBottom
                     {...textTypographyProps}
                   >
@@ -296,7 +306,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
                 )}
 
                 {textAfter}
-              </DialogBody>
+              </DialogContentBody>
 
               {buttons.length > 0 && (
                 <DialogButtonGroup
@@ -319,10 +329,10 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
                   ))}
                 </DialogButtonGroup>
               )}
-            </DialogRoot>
+            </DialogContentRoot>
           )}
         </Transition>
-      </Modal>
+      </DialogRoot>
     </React.Fragment>
   );
 });

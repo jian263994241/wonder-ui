@@ -9,6 +9,7 @@ import createBreakpoints, {
   BreakpointsOptions
 } from './theme/createBreakpoints';
 import shadows from './theme/shadows';
+import shape, { Shape } from './theme/shape';
 import zIndex, { ZIndex } from './theme/zIndex';
 
 interface ThemeComponents {
@@ -24,41 +25,49 @@ interface ThemeComponents {
 
 interface ThemeOptions extends ThemeComponents {
   breakpoints?: BreakpointsOptions;
+  direction?: 'ltr' | 'rtl';
   palette?: PaletteOptions;
   spacing?: SpacingConfig;
   typography?: TypographyOptions;
   shadows?: string[];
+  shape?: Shape;
   zIndex?: Partial<ZIndex>;
 }
 
 export interface Theme extends ThemeComponents {
   breakpoints: Breakpoints;
+  direction: 'ltr' | 'rtl';
   palette: Palette;
   spacing: Spacing;
   transitions: typeof transitions;
   typography: ReturnType<typeof createTypography>;
   shadows: string[];
+  shape: Shape;
   zIndex: ZIndex;
 }
 
 export default function createTheme(options: ThemeOptions = {}): Theme {
   const {
+    breakpoints: breakpointsInput,
+    direction = 'ltr',
     palette: paletteInput,
+    shape: shapeInput,
     spacing = 8,
     typography,
-    breakpoints: breakpointsInput,
     zIndex: zIndexInput,
     ...rest
   } = options;
 
   return {
     breakpoints: createBreakpoints(breakpointsInput),
+    direction,
     palette: createPalette(paletteInput),
+    shadows,
+    shape: { ...shape, ...shapeInput },
     spacing: createSpacing(spacing),
     transitions,
     typography: createTypography(typography),
     zIndex: { ...zIndex, ...zIndexInput },
-    shadows,
     ...rest
   };
 }

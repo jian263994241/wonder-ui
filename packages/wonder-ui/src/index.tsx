@@ -43,6 +43,9 @@ export * from './DialogAlert';
 export { default as Divider } from './Divider';
 export * from './Divider';
 
+export { default as Drawer } from './Drawer';
+export * from './Drawer';
+
 export { default as Fade } from './Fade';
 export * from './Fade';
 
@@ -82,6 +85,9 @@ export * from './Modal';
 export { default as ModalContent } from './ModalContent';
 export * from './ModalContent';
 
+export { default as Paper } from './Paper';
+export * from './Paper';
+
 export { default as Popover } from './Popover';
 export * from './Popover';
 
@@ -93,6 +99,9 @@ export * from './Radio';
 
 export { default as Row } from './Row';
 export * from './Row';
+
+export { default as Slide } from './Slide';
+export * from './Slide';
 
 export { default as Snackbar } from './Snackbar';
 export * from './Snackbar';

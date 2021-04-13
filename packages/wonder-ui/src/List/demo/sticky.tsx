@@ -1,6 +1,6 @@
 /**
  * title: 固定的副标题列表
- * desc: 此性能由 CSS sticky 位置实现
+ * desc: 此性能由 CSS sticky 位置实现, 可以通过`disableSticky`禁用此选项
  * background: '#f5f5f5'
  */
 

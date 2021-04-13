@@ -1,6 +1,6 @@
 /**
  * title: 基础用法
- * desc: 配合 Divider 分割
+ * desc: 配合 `Divider` 分割
  */
 /** @jsx jsx */
 import { Button, ButtonGroup, jsx, Divider, Space } from '@wonder-ui/core';

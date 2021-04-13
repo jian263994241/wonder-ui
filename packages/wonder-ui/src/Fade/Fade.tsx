@@ -1,5 +1,8 @@
 import * as React from 'react';
-import Transition, { TransitionEventListener } from '../Transition';
+import Transition, {
+  BaseTransitionProps,
+  TransitionTimeout
+} from '../Transition';
 import { reflow, getTransitionProps } from '../Transition/utils';
 import { duration } from '../styles/transitions';
 import useTheme from '../styles/useTheme';
@@ -18,28 +21,20 @@ const defaultTimeout = {
   exit: duration.leavingScreen
 };
 
-export interface FadeProps extends TransitionEventListener<HTMLElement> {
-  /**
-   * @description Perform the enter transition when it first mounts if `in` is also `true`.
-   * @default true
-   */
-  appear?: boolean;
+export interface FadeProps extends BaseTransitionProps<HTMLElement> {
   /**
    * @description children
    */
   children: React.ReactElement & React.RefAttributes<React.ReactElement>;
   /**
-   * @description 显示隐藏内容
-   */
-  in?: boolean;
-  /**
    * @description style
    */
   style?: React.CSSProperties;
   /**
-   * @description Transition timeout
+   * @description transition duration ms
+   *
    */
-  timeout?: number | { appear?: number; enter?: number; exit?: number };
+  timeout?: TransitionTimeout;
 }
 
 const Fade: React.FC<FadeProps> = React.forwardRef((props, ref) => {
@@ -117,5 +112,9 @@ const Fade: React.FC<FadeProps> = React.forwardRef((props, ref) => {
     </Transition>
   );
 });
+
+Fade.defaultProps = {
+  in: false // Modal hasTransition
+};
 
 export default Fade;

@@ -25,10 +25,10 @@ export default function Example() {
 
   return (
     <div>
-      <Button onClick={() => toggle()}>Show Modal</Button>
+      <Button onClick={() => toggle()}>Open</Button>
 
       <Modal visible={visible} keepMounted onClose={() => toggle()}>
-        <Fade in>
+        <Fade>
           <Demo>
             <Typography variant="h2" gutterBottom>
               模态框标题

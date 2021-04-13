@@ -15,53 +15,61 @@ type EndListener<RefElement extends HTMLElement> = (
   next: () => void
 ) => void;
 
-export interface TransitionEventListener<
+export interface TransitionActions {
+  /**
+   * Normally a component is not transitioned if it is shown when the
+   * `<Transition>` component mounts. If you want to transition on the first
+   * mount set  appear to true, and the component will transition in as soon
+   * as the `<Transition>` mounts. Note: there are no specific "appear" states.
+   * appear only adds an additional enter transition.
+   */
+  appear?: boolean;
+
+  /**
+   * Enable or disable enter transitions.
+   */
+  enter?: boolean;
+
+  /**
+   * Enable or disable exit transitions.
+   */
+  exit?: boolean;
+}
+export interface BaseTransitionProps<
   RefElement extends HTMLElement = HTMLElement
-> {
+> extends TransitionActions {
+  /**
+   * Show the component; triggers the enter or exit states
+   */
+  in?: boolean;
   /**
    *  addEndListener
    */
   addEndListener?: EndListener<RefElement>;
   /**
-   * transition 回调
+   * transition event
    */
   onEnter?: EndHandler<RefElement>;
   /**
-   * transition 回调
+   * transition event
    */
   onEntered?: EndHandler<RefElement>;
   /**
-   * transition 回调
+   * transition event
    */
   onEntering?: EndHandler<RefElement>;
   /**
-   * transition 回调
+   * transition event
    */
   onExit?: EndHandler<RefElement>;
   /**
-   * transition 回调
+   * transition event
    */
   onExited?: EndHandler<RefElement>;
   /**
-   * transition 回调
+   * transition event
    */
   onExiting?: EndHandler<RefElement>;
-}
-
-export interface TransitionProps extends TransitionEventListener {
-  /**
-   * @description Perform the enter transition when it first mounts if `in` is also `true`.
-   *
-   */
-  appear?: boolean;
-  /**
-   * @description Children
-   */
-  children?: (status: TransitionStatus, childProps: any) => React.ReactNode;
-  /**
-   * Show the component; triggers the enter or exit states
-   */
-  in?: boolean;
   /**
    * By default the child component is mounted immediately along with the
    * parent Transition component. If you want to "lazy mount" the component on
@@ -77,14 +85,31 @@ export interface TransitionProps extends TransitionEventListener {
    */
   unmountOnExit?: boolean;
   /**
-   * @description transition duration ms
-   * @default auto
+   * any
    */
-  timeout?: number | { appear?: number; enter?: number; exit?: number };
+  [prop: string]: any;
+}
+
+export type TransitionTimeout =
+  | number
+  | { appear?: number; enter?: number; exit?: number };
+
+export interface TransitionProps
+  extends BaseTransitionProps,
+    TransitionActions {
+  /**
+   * @description Children
+   */
+  children?: (status: TransitionStatus, childProps: any) => React.ReactNode;
   /**
    * children ref
    */
   ref?: React.Ref<any>;
+  /**
+   * @description transition duration ms
+   *
+   */
+  timeout?: TransitionTimeout;
 }
 
 /**
@@ -161,5 +186,9 @@ const Transtion: React.FC<TransitionProps> = React.forwardRef((props, ref) => {
     </TransitionComponent>
   );
 });
+
+Transtion.defaultProps = {
+  in: false
+};
 
 export default Transtion;

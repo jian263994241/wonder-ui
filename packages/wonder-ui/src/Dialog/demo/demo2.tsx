@@ -23,7 +23,7 @@ export default function Example() {
         }
       ]}
     >
-      <Button>Show Dialog</Button>
+      <Button>Open</Button>
     </Dialog>
   );
 }

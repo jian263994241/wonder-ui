@@ -10,7 +10,6 @@ import Backdrop, { BackdropProps } from '../Backdrop';
 import FocusLock from 'react-focus-lock';
 import { ReactFocusLockProps } from 'react-focus-lock/interfaces';
 import type { BaseProps, PickStyleProps } from '../styles/types';
-import type { TransitionEventListener } from '../Transition';
 
 // A modal manager used to track and manage the state of open Modals.
 // Modals don't open on the server so this won't conflict with concurrent requests.
@@ -333,10 +332,10 @@ const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
         ref={handleRef}
         {...FocusLockProps}
         as={ModalRoot as React.ElementType<any>}
+        className={classes.root}
         lockProps={{
           role: 'presentation',
           onKeyDown: handleKeyDown,
-          className: classes.root,
           as: component,
           styleProps,
           ...rest

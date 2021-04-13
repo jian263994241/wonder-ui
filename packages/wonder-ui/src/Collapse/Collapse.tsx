@@ -4,8 +4,9 @@ import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
 import type { BaseProps, PickStyleProps } from '../styles/types';
 import Transition, {
-  TransitionEventListener,
-  TransitionStatus
+  BaseTransitionProps,
+  TransitionStatus,
+  TransitionTimeout
 } from '../Transition';
 import { reflow } from '../Transition/utils';
 import {
@@ -14,7 +15,7 @@ import {
 } from '@wonder-ui/utils';
 import { duration } from '../styles/transitions';
 
-export interface CollapseProps extends BaseProps, TransitionEventListener {
+export interface CollapseProps extends BaseProps, BaseTransitionProps {
   /**
    * @description 折叠尺寸
    * @default 0
@@ -24,20 +25,12 @@ export interface CollapseProps extends BaseProps, TransitionEventListener {
    * @description transition duration ms
    * @default 300
    */
-  timeout?:
-    | 'atuo'
-    | number
-    | { appear?: number; enter?: number; exit?: number };
-
+  timeout?: 'atuo' | TransitionTimeout;
   /**
    * @description 动画过渡方向
    * @default vertical
    */
   direction?: 'horizontal' | 'vertical';
-  /**
-   * @description 显示隐藏内容
-   */
-  in?: boolean;
 }
 
 const CollapseRoot = styled('div', {
