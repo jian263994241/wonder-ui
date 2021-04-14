@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ReactDOM from 'react-dom';
 import useThemeProps from '../styles/useThemeProps';
 import styled from '../styles/styled';
 import { BaseProps, PickStyleProps } from '../styles/types';
@@ -11,13 +12,36 @@ import { useControlled } from '@wonder-ui/hooks';
 import { createChainedFunction, isPromise } from '@wonder-ui/utils';
 
 export interface PreloaderProps extends BaseProps {
+  /**
+   *  Trigger Element
+   */
   children?: React.ReactElement;
-  disablePortal?: boolean;
-  middleLength?: number;
-  onLoad?: () => Promise<any>;
-  text?: string;
-  visible?: boolean;
+  /**
+   * default visible
+   */
   defaultVisible?: boolean;
+  /**
+   * Disable portal
+   * @default false
+   */
+  disablePortal?: boolean;
+  /**
+   * Vertical middle fix top length
+   * @default 0
+   */
+  middleLength?: number;
+  /**
+   * Async callback
+   */
+  onLoad?: () => Promise<any>;
+  /**
+   * Show text
+   */
+  text?: string;
+  /**
+   * visible
+   */
+  visible?: boolean;
 }
 
 const PreloaderRoot = styled('div', {
@@ -31,7 +55,7 @@ const PreloaderRoot = styled('div', {
 const PreloaderInner = styled('div', {
   name: 'WuiPreloader',
   slot: 'Inner'
-})<PickStyleProps<PreloaderProps, 'middleLength'>>(({ styleProps }) => ({
+})<PickStyleProps<PreloaderProps, 'middleLength'>>(({ theme, styleProps }) => ({
   boxSizing: 'border-box',
   position: 'fixed',
   top: `calc(50% + ${styleProps.middleLength}px)`,
@@ -41,14 +65,21 @@ const PreloaderInner = styled('div', {
   willChange: 'transform, opacity',
   color: '#fff',
   display: 'block',
-  borderRadius: 5,
+  borderRadius: theme.shape.borderRadius,
   backgroundColor: 'rgba(0,0,0,0.7)',
   padding: 16,
   outline: 'none',
-  textAlign: 'center'
+  textAlign: 'center',
+  fontSize: 0
 }));
 
-const Preloader: React.FC<PreloaderProps> = React.forwardRef((inProps, ref) => {
+export type PreloaderActions = {
+  show: (props?: PreloaderProps) => void;
+  hide: () => void;
+};
+
+const Preloader: React.FC<PreloaderProps> &
+  Partial<PreloaderActions> = React.forwardRef((inProps, ref) => {
   const {
     children,
     component,
@@ -117,4 +148,23 @@ const Preloader: React.FC<PreloaderProps> = React.forwardRef((inProps, ref) => {
   );
 });
 
-export default Preloader;
+const container = document.createElement('div');
+
+let count = 0;
+Preloader.show = (props: PreloaderProps = {}) => {
+  ++count;
+  if (count <= 1) {
+    ReactDOM.render(<Preloader visible {...props} />, container);
+  }
+};
+
+Preloader.hide = () => {
+  if (count > 0) {
+    --count;
+  }
+  if (count <= 0) {
+    ReactDOM.render(<Preloader visible={false} />, container);
+  }
+};
+
+export default Preloader as React.FC<PreloaderProps> & PreloaderActions;

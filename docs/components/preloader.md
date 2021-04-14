@@ -12,3 +12,17 @@
 ### 异步使用
 
 <code src="../../packages/wonder-ui/src/Preloader/demo/demo2.tsx"></code>
+
+### 方法调用
+
+组件提供了两个全局方法, 方便调用:
+
+- Preloader.show(props);
+- Preloader.hide();
+
+<code src="../../packages/wonder-ui/src/Preloader/demo/demo3.tsx"></code>
+
+
+## API
+
+<embed src="../../packages/wonder-ui/src/Preloader/index.md"></embed>

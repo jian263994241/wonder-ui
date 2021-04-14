@@ -1,6 +1,6 @@
 import * as React from 'react';
 import useClasses from '../styles/useClasses';
-import styled from '../styles/styled';
+import styled, { shouldForwardProp } from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import type { BaseProps, PickStyleProps, ClassNameMap } from '../styles/types';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
@@ -141,7 +141,9 @@ const DialogButtonGroup = styled('div', {
 
 const DialogButton = styled(ButtonBase, {
   name: 'WuiDialog',
-  slot: 'button'
+  slot: 'button',
+  shouldForwardProp: (prop: string) =>
+    shouldForwardProp(prop) && prop !== 'primary'
 })<DialogButtonProps & PickStyleProps<DialogProps, 'buttonsVertical'>>(
   ({ theme, primary, styleProps }) => ({
     width: '100%',

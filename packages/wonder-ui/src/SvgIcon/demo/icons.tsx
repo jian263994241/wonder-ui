@@ -11,7 +11,6 @@ export default function Example() {
     <Row
       rowCols={{ xs: 2, sm: 3, md: 4 }}
       gutter={[2, 2]}
-      containerSize="md"
       css={{
         '.col': {
           textAlign: 'center'

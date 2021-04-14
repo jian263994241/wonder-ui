@@ -20,7 +20,7 @@ export default function Example() {
 
   return (
     <div>
-      <Button onClick={() => open()}>Show Preloader</Button>
+      <Button onClick={() => open()}>Open</Button>
       <Preloader visible={visible} />
     </div>
   );

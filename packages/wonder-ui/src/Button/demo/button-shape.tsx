@@ -9,9 +9,7 @@ export default function Example() {
   return (
     <Space>
       <Button>Default</Button>
-      <Button shape="square" square>
-        Square
-      </Button>
+      <Button shape="square">Square</Button>
       <Button shape="round">Round</Button>
     </Space>
   );

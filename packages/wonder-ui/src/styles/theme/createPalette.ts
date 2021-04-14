@@ -1,3 +1,4 @@
+import { getDevice } from '@wonder-ui/utils';
 import { darken, getContrastRatio, lighten, alpha } from '../colorManipulator';
 import {
   blue,
@@ -182,10 +183,14 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
       light: grey[900],
       dark: grey[900]
     },
-    mode = 'light',
+    mode: modeProp,
     contrastThreshold = 3,
     tonalOffset = 0.2
   } = palette;
+
+  const device = getDevice();
+
+  const mode = !modeProp ? device.prefersColorScheme() : modeProp;
 
   function getContrastText(background: string) {
     const contrastText =
