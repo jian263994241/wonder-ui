@@ -23,6 +23,7 @@ export interface DrawerProps extends BaseProps {
   transitionDuration?: SlideProps['timeout'];
   SlideProps?: SlideProps;
   onClose?: ModalProps['onClose'];
+  ModalProps?: ModalProps;
 }
 
 const DrawerRoot = styled(Modal, { name: 'Drawer', slot: 'Root' })(

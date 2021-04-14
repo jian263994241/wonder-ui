@@ -216,7 +216,7 @@ const Slide: React.FC<SlideProps> = React.forwardRef((props, ref) => {
 
   return (
     <Transition
-      nodeRef={childrenRef}
+      ref={handleRef}
       onEnter={handleEnter}
       onEntering={handleEntering}
       onExit={handleExit}
@@ -228,7 +228,6 @@ const Slide: React.FC<SlideProps> = React.forwardRef((props, ref) => {
     >
       {(state, childProps) => {
         return React.cloneElement(children, {
-          ref: handleRef,
           style: {
             visibility: state === 'exited' && !inProp ? 'hidden' : undefined,
             ...style,

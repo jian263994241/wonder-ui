@@ -1,2 +1,2 @@
-export { default } from './Drawer';
+export { default, isHorizontal } from './Drawer';
 export type { DrawerProps } from './Drawer';
