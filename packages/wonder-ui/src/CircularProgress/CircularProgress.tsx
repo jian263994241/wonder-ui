@@ -47,8 +47,9 @@ export interface CircularProgressProps extends BaseProps {
     | 'success'
     | 'danger'
     | 'warning'
-    | 'info';
-
+    | 'info'
+    | 'light'
+    | 'dark';
   /**
    * @description 类型
    * @default indeterminate
@@ -76,6 +77,8 @@ const CircularProgressRoot = styled('span', {
     position: 'relative',
     /* Styles applied to the root element. */
     display: 'inline-block',
+
+    fontSize: 0,
     /* Styles applied to the root element if `variant="determinate"`. */
     ...(styleProps.variant === 'determinate' && {
       transition: theme.transitions.create('transform')

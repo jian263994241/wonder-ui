@@ -8,6 +8,7 @@ type Size = { width?: number; height?: number };
 export function useSize(target: BasicTarget): Size {
   const [state, setState] = React.useState<Size>(() => {
     const el = getTargetElement(target);
+
     return {
       width: ((el || {}) as HTMLElement).clientWidth,
       height: ((el || {}) as HTMLElement).clientHeight
@@ -16,12 +17,13 @@ export function useSize(target: BasicTarget): Size {
 
   useEnhancedEffect(() => {
     const el = getTargetElement(target);
+
     if (!el) {
       return () => {};
     }
 
-    const resizeObserver = new ResizeObserver((entries) => {
-      entries.forEach((entry) => {
+    const resizeObserver = new ResizeObserver((entries: any) => {
+      entries.forEach((entry: any) => {
         setState({
           width: entry.target.clientWidth,
           height: entry.target.clientHeight

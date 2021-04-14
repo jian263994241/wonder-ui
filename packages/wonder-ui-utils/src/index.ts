@@ -5,6 +5,7 @@ export { default as createChainedFunction } from './createChainedFunction';
 export { default as createId } from './createId';
 export { default as debounce } from 'lodash/debounce';
 export { default as deepmerge } from './deepmerge';
+export { default as fill } from 'lodash/fill';
 export { default as getAutoSizeDuration } from './getAutoSizeDuration';
 export { default as getScrollbarSize } from './getScrollbarSize';
 export { default as getSupport } from './getSupport';

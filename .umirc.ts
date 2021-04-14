@@ -81,6 +81,7 @@ export default defineConfig({
           'components/drawer.md',
           'components/modal.md',
           'components/popover.md',
+          'components/preloader.md',
           'components/progress.md',
           'components/result.md',
           'components/toast.md'

@@ -94,6 +94,9 @@ export * from './Popover';
 export { default as Portal } from './Portal';
 export * from './Portal';
 
+export { default as Preloader } from './Preloader';
+export * from './Preloader';
+
 export { default as Radio } from './Radio';
 export * from './Radio';
 

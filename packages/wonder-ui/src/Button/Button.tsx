@@ -16,7 +16,15 @@ export interface ButtonProps extends ButtonBaseProps {
    * @description color
    * @default primary
    */
-  color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
+  color?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'info'
+    | 'light'
+    | 'dark';
   /**
    * @description button type
    * @default contained

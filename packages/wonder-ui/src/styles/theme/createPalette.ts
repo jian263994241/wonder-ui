@@ -45,7 +45,6 @@ export interface Palette {
     disabled: string;
     disabledBackground: string;
   };
-
   primary: ColorObj;
   secondary: ColorObj;
   error: ColorObj;
@@ -53,6 +52,8 @@ export interface Palette {
   warning: ColorObj;
   info: ColorObj;
   success: ColorObj;
+  light: ColorObj;
+  dark: ColorObj;
   mode: 'light' | 'dark';
   contrastThreshold: number;
   tonalOffset: number;
@@ -173,6 +174,14 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
       light: green[700],
       dark: green[900]
     },
+    light: lightProp = {
+      light: grey[50],
+      dark: grey[900]
+    },
+    dark: darkProp = {
+      light: grey[900],
+      dark: grey[900]
+    },
     mode = 'light',
     contrastThreshold = 3,
     tonalOffset = 0.2
@@ -225,6 +234,8 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
     warning: augmentColor(warning),
     info: augmentColor(info),
     success: augmentColor(success),
+    light: augmentColor(lightProp),
+    dark: augmentColor(darkProp),
     // the background and the text.
     contrastThreshold,
     // Takes a background color and returns the text color that maximizes the contrast.
