@@ -1,9 +1,8 @@
 import React from 'react';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import clsx from 'clsx';
-import useForkRef from '@wonder-ui/utils/useForkRef';
 
-const Transition = React.forwardRef(function Transition(props, ref) {
+export default function Transition(props) {
   const {
     in: inProp,
     action,
@@ -14,7 +13,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     ...rest
   } = props;
   const nodeRef = React.useRef(null);
-  const handleNodeRef = useForkRef(nodeRef, ref);
 
   const prefix = action === 'POP' ? 'backward' : 'forward';
 
@@ -31,15 +29,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
       classNames={classNames}
       {...rest}
     >
-      <div
-        ref={handleNodeRef}
-        className={clsx(prefix, className)}
-        style={style}
-      >
+      <div ref={nodeRef} className={clsx(prefix, className)} style={style}>
         {children}
       </div>
     </CSSTransition>
   );
-});
-
-export default Transition;
+}

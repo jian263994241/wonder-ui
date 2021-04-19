@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { styles, duration } from './styles';
-import { withStyles } from '@wonder-ui/styles';
+import withStyles from 'react-jss';
 import Transition from './Transition';
 
 /**

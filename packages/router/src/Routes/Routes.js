@@ -4,7 +4,7 @@ import { matchPath, useRouteMatch, useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import Route from '../RouteTransition';
 import styles from './styles';
-import { withStyles } from '@wonder-ui/styles';
+import withStyles from 'react-jss';
 import { useLocation } from '../hooks';
 import { addQuery, createRoutesFromArray } from '../utils';
 

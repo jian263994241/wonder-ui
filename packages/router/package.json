@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/router",
-  "version": "1.3.8",
+  "version": "1.3.9",
   "description": "UI Router base on react@16.8 & react-router-dom",
   "main": "index.js",
   "types": "src/index.d.ts",
@@ -23,13 +23,14 @@
     "clsx": "^1.1.0",
     "prop-types": "^15.7.2",
     "querystringify": "^2.2.0",
+    "react-jss": "^10.6.0",
     "react-router-dom": "^5.2.0",
     "react-transition-group": "^4.4.0"
   },
   "peerDependencies": {
+    "@wonder-ui/styles": ">=2.0.2",
     "react": ">=16.8.6",
-    "react-dom": ">=16.8.6",
-    "@wonder-ui/styles": ">=2.0.2"
+    "react-dom": ">=16.8.6"
   },
   "repository": {
     "type": "git",
