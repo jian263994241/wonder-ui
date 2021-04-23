@@ -82,7 +82,7 @@ export const light = {
   divider: grey[300],
   background: {
     paper: common.white,
-    default: grey[50]
+    default: '#F3F4F5'
   },
   action: {
     // The color of an active action like an icon button.

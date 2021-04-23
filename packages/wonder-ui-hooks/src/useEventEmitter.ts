@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { EventEmitter } from '@wonder-ui/utils';
+import EventEmitter from 'eventemitter3';
 
 export function useEventEmitter<
   EventTypes extends EventEmitter.ValidEventTypes = symbol,

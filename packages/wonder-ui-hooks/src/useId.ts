@@ -13,10 +13,9 @@ export function createId(mask = 'xxxxxxxxxx', map = '0123456789abcdef') {
 /**
  * 生成随机ID
  */
-export function useId(): string {
-  return React.useMemo(() => {
-    return createId();
-  }, []);
+export function useId(prefix?: string): string {
+  const { current: newId } = React.useRef(prefix + createId());
+  return newId;
 }
 
 export default useId;
