@@ -9,14 +9,15 @@ export interface ListItemMediaProps extends BaseProps {}
 const ListItemMediaRoot = styled('div', {
   name: 'WuiListItemMedia',
   slot: 'Root'
-})(() => ({
+})(({ theme }) => ({
   userSelect: 'none',
   display: 'flex',
   flexShrink: 0,
   flexWrap: 'nowrap',
   alignItems: 'center',
   boxSizing: 'border-box',
-  padding: '10px 0'
+  padding: '10px 0',
+  marginRight: theme.spacing(2)
 }));
 
 const ListItemMedia: React.FC<ListItemMediaProps> = React.forwardRef(

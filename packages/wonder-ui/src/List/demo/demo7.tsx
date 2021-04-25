@@ -9,8 +9,6 @@ import {
   ListHeader,
   ListItem,
   ListItemText,
-  ListItemAvatar,
-  ListItemExtra,
   Container
 } from '@wonder-ui/core';
 

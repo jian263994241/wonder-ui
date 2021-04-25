@@ -93,11 +93,7 @@ export default defineConfig({
       },
       {
         title: '辅助',
-        children: [
-          'components/global-modal-provider.md',
-
-          'components/portal.md'
-        ]
+        children: ['components/portal.md']
       },
       {
         title: '其他',

@@ -6,7 +6,6 @@
 
 /** @jsx jsx */
 import {
-  ArrowForward,
   Badge,
   Button,
   jsx,
@@ -15,7 +14,7 @@ import {
   ListItem,
   ListItemText,
   ListItemMedia,
-  ListItemTextAfter,
+  ListItemExtra,
   Container
 } from '@wonder-ui/core';
 import { PersonCircle, InfoCircleFill, TrashFill } from '@wonder-ui/icons';
@@ -43,27 +42,27 @@ export default function Example() {
             <PersonCircle />
           </ListItemMedia>
           <ListItemText>Item 1</ListItemText>
-          <ListItemTextAfter>CEO</ListItemTextAfter>
+          <ListItemExtra>CEO</ListItemExtra>
         </ListItem>
         <ListItem>
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
           <ListItemText>Item 2</ListItemText>
-          <ListItemTextAfter>
+          <ListItemExtra>
             <Badge color="secondary" rounded>
               5
             </Badge>
-          </ListItemTextAfter>
+          </ListItemExtra>
         </ListItem>
         <ListItem>
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
           <ListItemText>Item 3</ListItemText>
-          <ListItemTextAfter>
+          <ListItemExtra>
             <Badge color="secondary">5</Badge>
-          </ListItemTextAfter>
+          </ListItemExtra>
         </ListItem>
       </List>
 
@@ -100,46 +99,40 @@ export default function Example() {
 
       <List>
         <ListHeader>Links</ListHeader>
-        <ListItem button>
+        <ListItem button arrow="horizontal">
           <ListItemText>Item 1</ListItemText>
-          <ListItemTextAfter>CEO</ListItemTextAfter>
-          <ArrowForward />
+          <ListItemExtra>CEO</ListItemExtra>
         </ListItem>
-        <ListItem button>
+        <ListItem button arrow="horizontal">
           <ListItemText>Item 2</ListItemText>
-          <ListItemTextAfter>CEO</ListItemTextAfter>
-          <ArrowForward />
+          <ListItemExtra>CEO</ListItemExtra>
         </ListItem>
-        <ListItem button>
+        <ListItem button arrow="horizontal">
           <ListItemText>Item 3</ListItemText>
-          <ArrowForward />
         </ListItem>
       </List>
 
       <List>
         <ListHeader>Links, Secondary text</ListHeader>
-        <ListItem button>
+        <ListItem button arrow="horizontal">
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
           <ListItemText primary={'Primary text'} secondary={'Secondary text'} />
-          <ListItemTextAfter>CEO</ListItemTextAfter>
-          <ArrowForward />
+          <ListItemExtra>CEO</ListItemExtra>
         </ListItem>
-        <ListItem button>
+        <ListItem button arrow="horizontal">
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
           <ListItemText primary={'Primary text'} secondary={'Secondary text'} />
-          <ListItemTextAfter>CEO</ListItemTextAfter>
-          <ArrowForward />
+          <ListItemExtra>CEO</ListItemExtra>
         </ListItem>
-        <ListItem button>
+        <ListItem button arrow="horizontal">
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
           <ListItemText primary={'Primary text'} secondary={'Secondary text'} />
-          <ArrowForward />
         </ListItem>
       </List>
     </Container>

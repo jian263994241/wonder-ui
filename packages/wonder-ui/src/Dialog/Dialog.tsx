@@ -33,11 +33,6 @@ export interface DialogProps extends BaseProps {
    */
   visible?: boolean;
   /**
-   * @description Default visible
-   * @default false
-   */
-  defaultVisible?: boolean;
-  /**
    * @description Title
    */
   title?: React.ReactChild;
@@ -56,7 +51,7 @@ export interface DialogProps extends BaseProps {
   /**
    * @description After text node
    */
-  textAfter?: React.ReactChild;
+  content?: React.ReactChild;
   /**
    * @description Buttons
    */
@@ -69,7 +64,7 @@ export interface DialogProps extends BaseProps {
    * @description Modal props
    * @ignore
    */
-  ModalProps?: ModalProps;
+  ModalProps?: Partial<ModalProps>;
 }
 
 const styles = {
@@ -91,7 +86,7 @@ const defaultTimeout = {
 const DialogRoot = styled(Modal, {
   name: 'WuiDialog',
   slot: 'Root'
-})(({ theme }) => ({
+})<ModalProps>(({ theme }) => ({
   zIndex: theme.zIndex.dialog
 }));
 
@@ -150,11 +145,10 @@ const DialogButton = styled(ButtonBase, {
     height: 44,
     color: theme.palette.primary.main,
     fontWeight: primary ? 600 : 400,
-    fontSize: 14,
+    fontSize: theme.typography.pxToRem(16),
     textAlign: 'center',
     backgroundColor: 'transparent',
     borderWidth: 0,
-
     borderStyle: 'solid',
     borderColor: theme.palette.divider,
     ...(styleProps.buttonsVertical
@@ -180,32 +174,33 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
 
   const {
     buttons = [],
-    children,
+    children: childrenProp,
     className,
     theme,
-    ModalProps,
-    visible: visibleProp,
-    defaultVisible = false,
+    ModalProps = {},
+    visible: visibleProp = false,
     title,
     titleTypographyProps,
     text,
     textTypographyProps,
-    textAfter,
+    content,
     style,
     buttonsVertical = false,
     ...rest
   } = props;
 
-  const [visible, setVisible] = useControlled({
-    value: visibleProp,
-    defaultValue: defaultVisible
-  });
-
-  const toogleVisibleIfUncontroled = () => setVisible(!visible);
+  const children = childrenProp || ModalProps.children;
 
   if (children) {
     React.Children.only(children);
   }
+
+  const [visible, setVisible] = useControlled({
+    value: !!children ? undefined : visibleProp,
+    defaultValue: false
+  });
+
+  const toogleVisibleIfUncontroled = () => setVisible(!visible);
 
   const timeout = defaultTimeout;
 
@@ -285,7 +280,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
                     variant="subtitle1"
                     align="center"
                     noWrap
-                    gutterBottom
+                    gutterBottom={!!text || !!content}
                     className={classes.title}
                     theme={theme}
                     {...titleTypographyProps}
@@ -307,7 +302,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
                   </Typography>
                 )}
 
-                {textAfter}
+                {content}
               </DialogContentBody>
 
               {buttons.length > 0 && (

@@ -37,9 +37,6 @@ export * from './Container';
 export { default as Dialog } from './Dialog';
 export * from './Dialog';
 
-export { default as DialogAlert } from './DialogAlert';
-export * from './DialogAlert';
-
 export { default as Divider } from './Divider';
 export * from './Divider';
 
@@ -48,12 +45,6 @@ export * from './Drawer';
 
 export { default as Fade } from './Fade';
 export * from './Fade';
-
-export {
-  default as GlobalModalProvider,
-  useGlobalModal
-} from './GlobalModalProvider';
-export * from './GlobalModalProvider';
 
 export { default as IconButton } from './IconButton';
 export * from './IconButton';
@@ -70,8 +61,8 @@ export * from './ListHeader';
 export { default as ListItem } from './ListItem';
 export * from './ListItem';
 
-export { default as ListItemTextAfter } from './ListItemTextAfter';
-export * from './ListItemTextAfter';
+export { default as ListItemExtra } from './ListItemExtra';
+export * from './ListItemExtra';
 
 export { default as ListItemMedia } from './ListItemMedia';
 export * from './ListItemMedia';
@@ -126,6 +117,8 @@ export * from './Typography';
 
 export { default as WhiteSpace } from './WhiteSpace';
 export * from './WhiteSpace';
+
+export { default as withDialog } from './withDialog';
 
 export { default as styled } from './styles/styled';
 

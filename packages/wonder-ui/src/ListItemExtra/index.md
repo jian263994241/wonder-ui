@@ -2,7 +2,7 @@
 sidemenu: false
 ---
 
-### ListItemTextAfter
+### ListItemExtra
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---

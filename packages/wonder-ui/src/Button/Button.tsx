@@ -5,7 +5,10 @@ import useThemeProps from '../styles/useThemeProps';
 import type { PickStyleProps } from '../styles/types';
 import { darken } from '../styles/colorManipulator';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
+import { getDevice } from '@wonder-ui/utils';
 import clsx from 'clsx';
+
+const device = getDevice();
 
 export interface ButtonProps extends ButtonBaseProps {
   /**
@@ -96,6 +99,12 @@ export const ButtonRoot = styled(ButtonBase, {
           backgroundColor: darken(theme.palette[styleProps.color].main, 0.3),
           borderColor: darken(theme.palette[styleProps.color].main, 0.3)
         },
+        ...(device.desktop && {
+          '&:hover': {
+            backgroundColor: darken(theme.palette[styleProps.color].main, 0.3),
+            borderColor: darken(theme.palette[styleProps.color].main, 0.3)
+          }
+        }),
         '&:focus': {
           boxShadow: theme.shadows[3]
         }
@@ -108,6 +117,12 @@ export const ButtonRoot = styled(ButtonBase, {
           color: darken(theme.palette[styleProps.color].main, 0.3),
           borderColor: darken(theme.palette[styleProps.color].main, 0.3)
         },
+        ...(device.desktop && {
+          '&:hover': {
+            color: darken(theme.palette[styleProps.color].main, 0.3),
+            borderColor: darken(theme.palette[styleProps.color].main, 0.3)
+          }
+        }),
         '&.active': {
           color: theme.palette[styleProps.color].contrastText,
           backgroundColor: theme.palette[styleProps.color].main,
@@ -123,6 +138,11 @@ export const ButtonRoot = styled(ButtonBase, {
         '&.state-active': {
           opacity: 0.75
         },
+        ...(device.desktop && {
+          '&:hover': {
+            opacity: 0.75
+          }
+        }),
         '&:focus': {
           textShadow: `1px 1px 5px rgba(0,0,0,0.22)}`
         }
@@ -157,7 +177,6 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
 
   return (
     <ButtonRoot
-      data-autofocus="true"
       disabled={disabled}
       ref={ref}
       styleProps={styleProps}

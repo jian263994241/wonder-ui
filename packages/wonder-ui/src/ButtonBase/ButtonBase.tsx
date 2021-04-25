@@ -6,6 +6,7 @@ import type { PickStyleProps, BaseProps } from '../styles/types';
 import { useTouchFeedback } from '@wonder-ui/hooks';
 
 export interface ButtonBaseProps extends BaseProps {
+  autofocus?: boolean;
   disabled?: boolean;
   /**
    * Click event
@@ -55,7 +56,13 @@ const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiButtonBase' });
 
-    const { disabled = false, className, component, ...rest } = props;
+    const {
+      autofocus = true,
+      disabled = false,
+      className,
+      component,
+      ...rest
+    } = props;
 
     const styleProps = { disabled };
 
@@ -71,6 +78,7 @@ const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
     return (
       <ButtonBaseRoot
         as={component}
+        data-autofocus={autofocus}
         role="button"
         aria-disabled={disabled}
         disabled={disabled}

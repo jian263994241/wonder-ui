@@ -7,13 +7,12 @@
 /** @jsx jsx */
 import * as React from 'react';
 import {
-  ArrowForward,
   jsx,
   List,
   ListItem,
   ListItemProps,
   ListItemText,
-  ListItemTextAfter,
+  ListItemExtra,
   Container
 } from '@wonder-ui/core';
 
@@ -36,18 +35,16 @@ export default function Example() {
 
         <ListItemLink href="#列表链接">
           <ListItemText>Link 2</ListItemText>
-          <ListItemTextAfter>CEO</ListItemTextAfter>
+          <ListItemExtra>CEO</ListItemExtra>
         </ListItemLink>
 
-        <ListItemLink href="#列表链接">
+        <ListItemLink href="#列表链接" arrow="horizontal">
           <ListItemText>Link 3</ListItemText>
-          <ArrowForward />
         </ListItemLink>
 
-        <ListItemLink href="#列表链接">
+        <ListItemLink href="#列表链接" arrow="horizontal">
           <ListItemText>Link 4</ListItemText>
-          <ListItemTextAfter>CEO</ListItemTextAfter>
-          <ArrowForward />
+          <ListItemExtra>CEO</ListItemExtra>
         </ListItemLink>
       </List>
     </Container>

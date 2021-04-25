@@ -47,7 +47,7 @@ export default function Example() {
         {dataList.map((item, index) => (
           <ListItem component="label" button key={index}>
             <ListItemMedia>
-              <Checkbox small name="demo-checkbox3" />
+              <Checkbox name="demo-checkbox3" />
             </ListItemMedia>
             <ListItemText>Movie {item}</ListItemText>
           </ListItem>
@@ -59,7 +59,7 @@ export default function Example() {
         {dataList.map((item, index) => (
           <ListItem component="label" button key={index}>
             <ListItemText>Movie {item}</ListItemText>
-            <Checkbox small name="demo-checkbox4" />
+            <Checkbox name="demo-checkbox4" />
           </ListItem>
         ))}
       </List>

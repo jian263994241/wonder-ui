@@ -9,21 +9,23 @@ import { jsx, Button, Dialog } from '@wonder-ui/core';
 export default function Example() {
   return (
     <Dialog
-      title="Vertical Buttons"
       buttonsVertical
       buttons={[
         {
-          children: 'Option 1'
+          children: '标为未读',
+          onClick: () => {
+            alert('标为未读');
+          }
         },
         {
-          children: 'Option 2'
-        },
-        {
-          children: 'Option 3'
+          children: '置顶聊天',
+          onClick: () => {
+            alert('置顶聊天');
+          }
         }
       ]}
     >
-      <Button>Open</Button>
+      <Button>垂直按钮</Button>
     </Dialog>
   );
 }

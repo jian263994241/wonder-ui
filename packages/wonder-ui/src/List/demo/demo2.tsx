@@ -6,7 +6,6 @@
 
 /** @jsx jsx */
 import {
-  ArrowForward,
   Collapse,
   Container,
   jsx,
@@ -36,9 +35,12 @@ export default function Example() {
           <ListItemText>Item 2</ListItemText>
         </ListItem>
 
-        <ListItem onClick={() => toggle()} button>
-          <ListItemText>Item 3</ListItemText>
-          <ArrowForward direction={visible ? 'up' : 'down'} />
+        <ListItem
+          arrow={visible ? 'vertical-up' : 'vertical'}
+          onClick={() => toggle()}
+          button
+        >
+          Item 3
         </ListItem>
 
         <Collapse in={visible}>

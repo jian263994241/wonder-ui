@@ -85,4 +85,4 @@
 
 <embed src="../../packages/wonder-ui/src/ListItemText/index.md"></embed>
 
-<embed src="../../packages/wonder-ui/src/ListItemTextAfter/index.md"></embed>
+<embed src="../../packages/wonder-ui/src/ListItemExtra/index.md"></embed>
