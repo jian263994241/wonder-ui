@@ -7,3 +7,7 @@
 ### 基础抽屉
 
 <code src="../../packages/wonder-ui/src/Drawer/demo/demo1.tsx"></code>
+
+## API
+
+<embed src="../../packages/wonder-ui/src/Drawer/index.md"></embed>

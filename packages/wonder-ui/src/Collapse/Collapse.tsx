@@ -2,6 +2,7 @@ import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
+import useTheme from '../styles/useTheme';
 import type { BaseProps, PickStyleProps } from '../styles/types';
 import Transition, {
   BaseTransitionProps,
@@ -9,10 +10,6 @@ import Transition, {
   TransitionTimeout
 } from '../Transition';
 import { reflow } from '../Transition/utils';
-import {
-  getAutoSizeDuration,
-  getTransitionDurationFromElement
-} from '@wonder-ui/utils';
 import { duration } from '../styles/transitions';
 
 export interface CollapseProps extends BaseProps, BaseTransitionProps {
@@ -25,7 +22,7 @@ export interface CollapseProps extends BaseProps, BaseTransitionProps {
    * @description transition duration ms
    * @default 300
    */
-  timeout?: 'atuo' | TransitionTimeout;
+  timeout?: 'auto' | TransitionTimeout;
   /**
    * @description 动画过渡方向
    * @default vertical
@@ -93,10 +90,10 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
     onExit,
     onExited,
     onExiting,
-    timeout = duration.standard,
+    timeout = 'auto',
     ...rest
   } = props;
-
+  const theme = useTheme();
   const timer = React.useRef<any>();
   const isHorizontal = direction === 'horizontal';
   const dimension = isHorizontal ? 'width' : 'height';
@@ -117,40 +114,34 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
     if (!node) return 0;
 
     if (timeout === 'atuo') {
-      transitionDuration = getAutoSizeDuration(
+      transitionDuration = theme.transitions.getAutoHeightDuration(
         node[scrollSize] - Number(collapsedSize.replace('px', ''))
       );
     } else {
       transitionDuration =
         typeof timeout === 'number'
           ? timeout
-          : getTransitionDurationFromElement(node);
+          : theme.transitions.getTransitionDurationFromElement(node);
     }
 
     return transitionDuration;
   };
 
-  const handleEnter: CollapseProps['onExit'] = (node) => {
-    if (onEnter) {
-      onEnter(node);
-    }
-  };
-
-  const handleEntering: CollapseProps['onEntering'] = (node) => {
+  const handleEntering: CollapseProps['onEntering'] = (node, isAppearing) => {
     node.style[dimension] = collapsedSize;
     node.style[dimension] = node[scrollSize] + 'px';
 
     node.style.transitionDuration = getTransitionDuration(node) + 'ms';
     reflow(node);
     if (onEntering) {
-      onEntering(node);
+      onEntering(node, isAppearing);
     }
   };
 
-  const handleEntered: CollapseProps['onEntered'] = (node) => {
+  const handleEntered: CollapseProps['onEntered'] = (node, isAppearing) => {
     node.style[dimension] = collapsedSize != '0px' ? 'auto' : '';
     if (onEntered) {
-      onEntered(node);
+      onEntered(node, isAppearing);
     }
   };
 
@@ -192,14 +183,14 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
   return (
     <Transition
       in={visible}
-      onEnter={handleEnter}
+      onEnter={onEnter}
       onEntered={handleEntered}
       onEntering={handleEntering}
       onExit={handleExit}
       onExited={handleExited}
       onExiting={handleExiting}
       addEndListener={addEndListener}
-      timeout={timeout != 'auto' ? (timeout as any) : null}
+      timeout={timeout != 'auto' ? timeout : null}
       ref={ref}
     >
       {(state, childProps) => {

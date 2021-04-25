@@ -17,4 +17,4 @@ sidemenu: false
 | onExit | transition 回调 | `(node: HTMLElement) => void` |
 | onExited | transition 回调 | `(node: HTMLElement) => void` |
 | onExiting | transition 回调 | `(node: HTMLElement) => void` |
-| timeout | transition duration ms | `'atuo' \| number \| { appear?: number; enter?: number; exit?: number }` | 300
+| timeout | transition duration ms | `'atuo' \| number \| { appear?: number; enter?: number; exit?: number }` | atuo

@@ -5,10 +5,12 @@ import {
 } from 'react-transition-group';
 import { useForkRef } from '@wonder-ui/hooks';
 
-type EndHandler<RefElement extends HTMLElement> = (
+type EnterHandler<RefElement extends HTMLElement> = (
   node: RefElement,
-  maybeIsAppearing?: boolean
+  maybeIsAppearing: boolean
 ) => void;
+
+type ExitHandler<RefElement extends HTMLElement> = (node: RefElement) => void;
 
 type EndListener<RefElement extends HTMLElement> = (
   node: RefElement,
@@ -49,27 +51,27 @@ export interface BaseTransitionProps<
   /**
    * transition event
    */
-  onEnter?: EndHandler<RefElement>;
+  onEnter?: EnterHandler<RefElement>;
   /**
    * transition event
    */
-  onEntered?: EndHandler<RefElement>;
+  onEntered?: EnterHandler<RefElement>;
   /**
    * transition event
    */
-  onEntering?: EndHandler<RefElement>;
+  onEntering?: EnterHandler<RefElement>;
   /**
    * transition event
    */
-  onExit?: EndHandler<RefElement>;
+  onExit?: ExitHandler<RefElement>;
   /**
    * transition event
    */
-  onExited?: EndHandler<RefElement>;
+  onExited?: ExitHandler<RefElement>;
   /**
    * transition event
    */
-  onExiting?: EndHandler<RefElement>;
+  onExiting?: ExitHandler<RefElement>;
   /**
    * By default the child component is mounted immediately along with the
    * parent Transition component. If you want to "lazy mount" the component on
@@ -92,7 +94,8 @@ export interface BaseTransitionProps<
 
 export type TransitionTimeout =
   | number
-  | { appear?: number; enter?: number; exit?: number };
+  | { appear?: number; enter?: number; exit?: number }
+  | null;
 
 export interface TransitionProps
   extends BaseTransitionProps,
@@ -133,9 +136,9 @@ const Transtion: React.FC<TransitionProps> = React.forwardRef((props, ref) => {
   const nodeRef = React.useRef<any>(null);
   const handleRef = useForkRef(nodeRef, ref);
 
-  const normalizedTransitionCallback = (callback?: EndHandler<any>) => (
-    maybeIsAppearing?: boolean
-  ) => {
+  const normalizedTransitionCallback = (
+    callback?: (...args: any[]) => void
+  ) => (maybeIsAppearing?: boolean) => {
     if (callback) {
       const node = nodeRef.current;
 
@@ -175,7 +178,7 @@ const Transtion: React.FC<TransitionProps> = React.forwardRef((props, ref) => {
       onExited={handleExited}
       onExiting={handleExiting}
       nodeRef={nodeRef}
-      timeout={timeout}
+      timeout={timeout != null ? timeout : undefined}
       {...rest}
     >
       {(status: TransitionStatus, childProps: any) => {

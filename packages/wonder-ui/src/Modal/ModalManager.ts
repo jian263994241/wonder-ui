@@ -168,9 +168,11 @@ function handleContainer(containerInfo: Container, props: ManagedModalProps) {
       }
     });
 
-    const containerWindow = ownerWindow(container);
+    if (restoreStyle.length > 0) {
+      const containerWindow = ownerWindow(container);
 
-    containerWindow.scrollTo(scrollPositionX, scrollPositionY);
+      containerWindow.scrollTo(scrollPositionX, scrollPositionY);
+    }
   };
 
   return restore;

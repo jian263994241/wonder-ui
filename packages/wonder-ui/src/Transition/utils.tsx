@@ -12,7 +12,7 @@ export const getTransitionProps = (
   props: {
     easing?: string | Partial<Record<Mode, string>>;
     style?: React.CSSProperties;
-    timeout?: number | Partial<Record<Mode, number>>;
+    timeout?: any;
   },
   options: {
     mode: Mode;

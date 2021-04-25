@@ -9,20 +9,53 @@ import Slide, { SlideProps } from '../Slide';
 import clsx from 'clsx';
 import { duration } from '../styles/transitions';
 import { DefaultTheme } from '../styles/defaultTheme';
-import { BaseTransitionProps } from '../Transition';
 
 export interface DrawerProps extends BaseProps {
+  /**
+   * 出现的位置
+   * @default left
+   */
   anchor?: 'bottom' | 'left' | 'right' | 'top';
+  /**
+   * css api
+   */
   classes?: ClassNameMap<'root' | 'modal' | 'docked' | 'paper'>;
+  /**
+   * 阴影
+   */
   elevation?: number;
-  position?: 'bottom' | 'left' | 'right' | 'top';
+  /**
+   * 变量
+   * @default temporary
+   */
   variant?: 'permanent' | 'persistent' | 'temporary';
+  /**
+   * 显示
+   */
   visible?: boolean;
+  /**
+   * PaperProps
+   */
   PaperProps?: PaperProps;
-  TransitionComponent?: React.ComponentType<BaseTransitionProps>;
+  /**
+   * @ignore
+   */
+  TransitionComponent?: React.ComponentType<SlideProps>;
+  /**
+   * @ignore
+   */
   transitionDuration?: SlideProps['timeout'];
+  /**
+   * @ignore
+   */
   SlideProps?: SlideProps;
+  /**
+   * onClose
+   */
   onClose?: ModalProps['onClose'];
+  /**
+   * Modal props
+   */
   ModalProps?: ModalProps;
 }
 

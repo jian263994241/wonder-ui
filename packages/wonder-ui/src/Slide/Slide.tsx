@@ -11,7 +11,7 @@ import { ownerWindow, debounce } from '@wonder-ui/utils';
 
 export interface SlideProps extends BaseTransitionProps<HTMLElement> {
   appear?: boolean;
-  children: React.ReactElement;
+  children: React.ReactElement & React.RefAttributes<React.ReactElement>;
   direction?: 'down' | 'left' | 'right' | 'up';
   easing?: {
     enter: string;
@@ -106,8 +106,9 @@ const Slide: React.FC<SlideProps> = React.forwardRef((props, ref) => {
     ...rest
   } = props;
   const theme = useTheme();
-  const childrenRef = React.useRef<HTMLElement>(null);
-  const handleRef = useForkRef(childrenRef, ref);
+  const nodeRef = React.useRef<HTMLElement>(null);
+  const foreignRef = useForkRef(children.ref, ref);
+  const handleRef = useForkRef(nodeRef, foreignRef);
 
   const handleEnter: SlideProps['onEnter'] = (node, isAppearing) => {
     setTranslateValue(direction, node);
@@ -181,8 +182,8 @@ const Slide: React.FC<SlideProps> = React.forwardRef((props, ref) => {
   };
 
   const updatePosition = React.useCallback(() => {
-    if (childrenRef.current) {
-      setTranslateValue(direction, childrenRef.current);
+    if (nodeRef.current) {
+      setTranslateValue(direction, nodeRef.current);
     }
   }, [direction]);
 
@@ -193,12 +194,12 @@ const Slide: React.FC<SlideProps> = React.forwardRef((props, ref) => {
     }
 
     const handleResize = debounce(() => {
-      if (childrenRef.current) {
-        setTranslateValue(direction, childrenRef.current);
+      if (nodeRef.current) {
+        setTranslateValue(direction, nodeRef.current);
       }
     });
 
-    const containerWindow = ownerWindow(childrenRef.current);
+    const containerWindow = ownerWindow(nodeRef.current);
     containerWindow.addEventListener('resize', handleResize);
     return () => {
       handleResize.cancel();

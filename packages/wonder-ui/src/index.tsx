@@ -46,6 +46,9 @@ export * from './Drawer';
 export { default as Fade } from './Fade';
 export * from './Fade';
 
+export { default as Grow } from './Grow';
+export * from './Grow';
+
 export { default as IconButton } from './IconButton';
 export * from './IconButton';
 

@@ -56,3 +56,43 @@ export const create = (
     )
     .join(',');
 };
+
+export const getAutoHeightDuration = (height?: number) => {
+  if (!height) {
+    return 0;
+  }
+
+  const constant = height / 36;
+
+  // https://www.wolframalpha.com/input/?i=(4+%2B+15+*+(x+%2F+36+)+**+0.25+%2B+(x+%2F+36)+%2F+5)+*+10
+  return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
+};
+
+export function getTransitionDurationFromElement(element?: HTMLElement) {
+  if (!element) {
+    return 0;
+  }
+
+  // Get transition-duration of the element
+  let { transitionDuration, transitionDelay } = window.getComputedStyle(
+    element
+  );
+
+  const floatTransitionDuration = Number.parseFloat(transitionDuration);
+  const floatTransitionDelay = Number.parseFloat(transitionDelay);
+
+  // Return 0 if element or transition duration is not found
+  if (!floatTransitionDuration && !floatTransitionDelay) {
+    return 0;
+  }
+
+  // If multiple durations are defined, take the first
+  transitionDuration = transitionDuration.split(',')[0];
+  transitionDelay = transitionDelay.split(',')[0];
+
+  return (
+    (Number.parseFloat(transitionDuration) +
+      Number.parseFloat(transitionDelay)) *
+    1000
+  );
+}

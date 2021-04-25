@@ -1,8 +1,12 @@
 import * as React from 'react';
-import Transition, { BaseTransitionProps } from '../Transition';
+import Transition, {
+  BaseTransitionProps,
+  TransitionTimeout,
+  TransitionProps
+} from '../Transition';
 import useTheme from '../styles/useTheme';
 import { useForkRef } from '@wonder-ui/hooks';
-import { reflow } from '../Transition/utils';
+import { reflow, getTransitionProps } from '../Transition/utils';
 
 function getScale(value: number) {
   return `scale(${value}, ${value ** 2})`;
@@ -25,6 +29,10 @@ export interface GrowProps extends BaseTransitionProps {
    * @default true
    */
   appear?: boolean;
+  easing?: {
+    enter: string;
+    exit: string;
+  };
   /**
    * @description A single child content element.
    */
@@ -33,6 +41,10 @@ export interface GrowProps extends BaseTransitionProps {
    * @description 显示隐藏内容
    */
   in?: boolean;
+
+  style?: React.CSSProperties;
+
+  timeout?: TransitionTimeout | 'auto';
 }
 
 /**
@@ -45,36 +57,143 @@ const Grow: React.FC<GrowProps> = React.forwardRef((props, ref) => {
     appear = true,
     children,
     in: inProp,
+    easing,
     onEnter,
     onEntered,
     onEntering,
     onExit,
     onExited,
-    onExiting
+    onExiting,
+    style,
+    timeout = 'auto'
   } = props;
 
-  const timer = React.useRef();
-  const autoTimeout = React.useRef();
+  const timer = React.useRef<any>();
+  const autoTimeout = React.useRef<number>();
   const theme = useTheme();
 
-  const nodeRef = React.useRef<HTMLElement>(null);
-  const foreignRef = useForkRef(children.ref, ref);
-  const handleRef = useForkRef(nodeRef, foreignRef);
+  const handleRef = useForkRef(children.ref, ref);
 
-  const normalizedTransitionCallback = (
-    callback?: (node: HTMLElement, maybeIsAppearing?: boolean) => void
-  ) => (maybeIsAppearing?: boolean) => {
-    if (callback) {
-      const node = nodeRef.current;
+  const handleEnter: TransitionProps['onEnter'] = (node, isAppearing) => {
+    reflow(node); // So the animation always start from the start.
 
-      // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
-      if (maybeIsAppearing === undefined) {
-        callback(node as HTMLElement);
-      } else {
-        callback(node as HTMLElement, maybeIsAppearing);
+    const {
+      duration: transitionDuration,
+      delay,
+      easing: transitionTimingFunction
+    } = getTransitionProps(
+      { style, timeout, easing },
+      {
+        mode: 'enter'
       }
+    );
+
+    let duration;
+    if (timeout === 'auto') {
+      duration = theme.transitions.getAutoHeightDuration(node.clientHeight);
+      autoTimeout.current = duration;
+    } else {
+      duration = transitionDuration;
+    }
+
+    node.style.transition = [
+      theme.transitions.create('opacity', {
+        duration,
+        delay
+      }),
+      theme.transitions.create('transform', {
+        duration: duration * 0.666,
+        delay,
+        easing: transitionTimingFunction
+      })
+    ].join(',');
+
+    if (onEnter) {
+      onEnter(node, isAppearing);
     }
   };
 
-  return null;
+  const handleExit: TransitionProps['onExit'] = (node) => {
+    const {
+      duration: transitionDuration,
+      delay,
+      easing: transitionTimingFunction
+    } = getTransitionProps(
+      { style, timeout, easing },
+      {
+        mode: 'exit'
+      }
+    );
+
+    let duration;
+    if (timeout === 'auto') {
+      duration = theme.transitions.getAutoHeightDuration(node.clientHeight);
+      autoTimeout.current = duration;
+    } else {
+      duration = transitionDuration;
+    }
+
+    node.style.transition = [
+      theme.transitions.create('opacity', {
+        duration,
+        delay
+      }),
+      theme.transitions.create('transform', {
+        duration: duration * 0.666,
+        delay: delay || duration * 0.333,
+        easing: transitionTimingFunction
+      })
+    ].join(',');
+
+    node.style.opacity = '0';
+    node.style.transform = getScale(0.75);
+
+    if (onExit) {
+      onExit(node);
+    }
+  };
+
+  const addEndListener: TransitionProps['addEndListener'] = (node, next) => {
+    if (timeout === 'auto') {
+      timer.current = setTimeout(next, autoTimeout.current || 0);
+    }
+  };
+
+  React.useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
+
+  return (
+    <Transition
+      appear={appear}
+      in={inProp}
+      ref={handleRef}
+      onEnter={handleEnter}
+      onEntering={onEntering}
+      onEntered={onEntered}
+      onExit={handleExit}
+      onExiting={onExiting}
+      onExited={onExited}
+      addEndListener={addEndListener}
+      timeout={timeout === 'auto' ? null : timeout}
+    >
+      {(state, childProps) => {
+        return React.cloneElement(children, {
+          ...childProps,
+          style: {
+            opacity: 0,
+            transform: getScale(0.75),
+            visibility: state === 'exited' && !inProp ? 'hidden' : undefined,
+            ...(styles as any)[state],
+            ...style,
+            ...children.props.style
+          }
+        });
+      }}
+    </Transition>
+  );
 });
+
+export default Grow;
