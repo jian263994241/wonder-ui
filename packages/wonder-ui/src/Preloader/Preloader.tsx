@@ -5,8 +5,7 @@ import styled from '../styles/styled';
 import { BaseProps, PickStyleProps } from '../styles/types';
 import CircularProgress from '../CircularProgress';
 import Typography from '../Typography';
-import Backdrop from '../Backdrop';
-import Portal from '../Portal';
+import Modal, { ModalProps } from '../Modal';
 import WhiteSpace from '../WhiteSpace';
 import { useControlled } from '@wonder-ui/hooks';
 import { createChainedFunction, isPromise } from '@wonder-ui/utils';
@@ -17,14 +16,10 @@ export interface PreloaderProps extends BaseProps {
    */
   children?: React.ReactElement;
   /**
-   * default visible
-   */
-  defaultVisible?: boolean;
-  /**
-   * Disable portal
+   * ModalProps
    * @default false
    */
-  disablePortal?: boolean;
+  ModalProps?: Partial<ModalProps>;
   /**
    * Vertical middle fix top length
    * @default 0
@@ -44,12 +39,11 @@ export interface PreloaderProps extends BaseProps {
   visible?: boolean;
 }
 
-const PreloaderRoot = styled('div', {
+const PreloaderRoot = styled(Modal, {
   name: 'WuiPreloader',
   slot: 'Root'
-})(({ theme }) => ({
-  zIndex: theme.zIndex.dialog + 5,
-  position: 'fixed'
+})<ModalProps>(({ theme }) => ({
+  zIndex: theme.zIndex.dialog + 5
 }));
 
 const PreloaderInner = styled('div', {
@@ -83,10 +77,9 @@ const Preloader: React.FC<PreloaderProps> &
   const {
     children,
     component,
-    disablePortal = false,
+    ModalProps = {},
     theme,
     visible: visibleProp,
-    defaultVisible = false,
     middleLength = 0,
     text,
     onLoad,
@@ -97,7 +90,7 @@ const Preloader: React.FC<PreloaderProps> &
   });
 
   const [visible, setVisibleOnControl] = useControlled({
-    defaultValue: defaultVisible,
+    defaultValue: false,
     value: visibleProp
   });
 
@@ -128,22 +121,28 @@ const Preloader: React.FC<PreloaderProps> &
           ...children.props,
           onClick: createChainedFunction(handleClick, children.props.onClick)
         })}
-      {visible && (
-        <Portal disablePortal={disablePortal}>
-          <PreloaderRoot as={component} theme={theme} ref={ref} {...rest}>
-            <Backdrop visible invisible theme={theme} />
-            <PreloaderInner styleProps={styleProps} theme={theme}>
-              <CircularProgress size={34} color="light" theme={theme} />
-              {text && (
-                <React.Fragment>
-                  <WhiteSpace size="sm" />
-                  <Typography theme={theme}>{text}</Typography>
-                </React.Fragment>
-              )}
-            </PreloaderInner>
-          </PreloaderRoot>
-        </Portal>
-      )}
+
+      <PreloaderRoot
+        component={component}
+        theme={theme}
+        ref={ref}
+        visible={visible}
+        disableScrollLock
+        disableFocusLock
+        BackdropProps={{ invisible: true }}
+        {...ModalProps}
+        {...rest}
+      >
+        <PreloaderInner styleProps={styleProps} theme={theme}>
+          <CircularProgress size={34} color="light" theme={theme} />
+          {text && (
+            <React.Fragment>
+              <WhiteSpace size="sm" />
+              <Typography theme={theme}>{text}</Typography>
+            </React.Fragment>
+          )}
+        </PreloaderInner>
+      </PreloaderRoot>
     </React.Fragment>
   );
 });
