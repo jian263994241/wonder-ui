@@ -9,7 +9,6 @@ sidemenu: false
 | children | Target element | `ReactElement` |
 | classes | Classes | `ClassNameMap< 'root' \| 'body' \| 'title' \| 'text' \| 'buttonGroup' \| 'button' >` |
 | visible | Visible | `boolean` |
-| defaultVisible | Visible | `boolean` | false
 | title | Title | `ReactChild` |
 | titleTypographyProps | Title props | `TypographyProps` |
 | text | Text | `ReactChild` |
