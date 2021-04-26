@@ -107,7 +107,7 @@ const ToggleIcon = styled('span', {
       border: 'none',
       position: 'relative',
       transition: theme.transitions.create(['background-color'], {
-        duration: theme.transitions.duration.shortest
+        duration: theme.transitions.duration.area.small
       }),
       boxSizing: 'border-box',
       display: 'block',
@@ -119,7 +119,7 @@ const ToggleIcon = styled('span', {
         top: 2,
         transform: 'scale(1)',
         transition: theme.transitions.create(['transform'], {
-          duration: theme.transitions.duration.shortest
+          duration: theme.transitions.duration.area.small
         }),
         zIndex: 1
       },
@@ -131,7 +131,7 @@ const ToggleIcon = styled('span', {
         top: 2,
         transform: 'translateX(0px)',
         transition: theme.transitions.create(['transform'], {
-          duration: theme.transitions.duration.shortest
+          duration: theme.transitions.duration.area.small
         }),
         zIndex: 2
       },

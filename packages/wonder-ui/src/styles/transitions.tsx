@@ -14,7 +14,7 @@ export const easing = {
 
 //https://material.io/design/motion/speed.html#controlling-speed
 export const duration = {
-  shortest: 100,
+  shortest: 150,
   shorter: 200,
   short: 250,
   // most basic recommended timing
