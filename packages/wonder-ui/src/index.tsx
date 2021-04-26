@@ -109,9 +109,6 @@ export * from './Space';
 export { default as SvgIcon } from './SvgIcon';
 export * from './SvgIcon';
 
-export { default as Toast } from './Toast';
-export * from './Toast';
-
 export { default as Toggle } from './Toggle';
 export * from './Toggle';
 

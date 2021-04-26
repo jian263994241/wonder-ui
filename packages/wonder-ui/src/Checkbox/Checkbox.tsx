@@ -41,9 +41,12 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })<
   borderStyle: 'solid',
   borderColor: theme.palette.divider,
   borderRadius: styleProps.circle ? '50%' : '.25em',
-  transition: theme.transitions.create(['border-color', 'background'], {
-    duration: theme.transitions.duration.shortest
-  }),
+  transition: theme.transitions.create(
+    ['border-color', 'background-color', 'box-shadow', 'opacity'],
+    {
+      duration: theme.transitions.duration.shortest
+    }
+  ),
   '&:disabled': {
     pointerEvents: 'none',
     filter: 'none',

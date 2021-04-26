@@ -17,10 +17,7 @@ const styles = {
   }
 };
 
-const defaultTimeout = {
-  enter: duration.enteringScreen,
-  exit: duration.leavingScreen
-};
+const defaultTimeout = duration.area.medium;
 
 export interface FadeProps extends BaseTransitionProps<HTMLElement> {
   /**

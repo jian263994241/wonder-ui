@@ -14,10 +14,10 @@ export default function Example() {
         text="内容, 内容, 内容..."
         buttons={[
           {
-            children: '取消'
+            text: '取消'
           },
           {
-            children: '好的',
+            text: '好的',
             primary: true
           }
         ]}
@@ -38,7 +38,7 @@ export default function Example() {
         }
         buttons={[
           {
-            children: '知道啦!',
+            text: '知道啦!',
             primary: true
           }
         ]}

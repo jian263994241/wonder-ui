@@ -25,25 +25,33 @@ const styles = {
 
 export interface GrowProps extends BaseTransitionProps {
   /**
-   * @description Perform the enter transition when it first mounts if `in` is also `true`.
+   * Perform the enter transition when it first mounts if `in` is also `true`.
    * @default true
    */
   appear?: boolean;
+  /**
+   * The transition timing function.
+   * You may specify a single easing or a object containing enter and exit values.
+   */
   easing?: {
     enter: string;
     exit: string;
   };
   /**
-   * @description A single child content element.
+   * A single child content element.
    */
   children: React.ReactElement & React.RefAttributes<React.ReactElement>;
   /**
-   * @description 显示隐藏内容
+   * 显示隐藏内容
    */
   in?: boolean;
-
+  /**
+   * @ignore
+   */
   style?: React.CSSProperties;
-
+  /**
+   * The duration for the transition, in milliseconds.
+   */
   timeout?: TransitionTimeout | 'auto';
 }
 
@@ -195,5 +203,9 @@ const Grow: React.FC<GrowProps> = React.forwardRef((props, ref) => {
     </Transition>
   );
 });
+
+Grow.defaultProps = {
+  in: false // Modal hasTransition
+};
 
 export default Grow;

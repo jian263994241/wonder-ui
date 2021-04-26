@@ -12,18 +12,27 @@ export const easing = {
   sharp: 'cubic-bezier(0.4, 0, 0.6, 1)'
 };
 
+//https://material.io/design/motion/speed.html#controlling-speed
 export const duration = {
-  shortest: 150,
+  shortest: 100,
   shorter: 200,
   short: 250,
   // most basic recommended timing
   standard: 300,
   // this is to be used in complex animations
   complex: 375,
-  // recommended when something is entering screen
-  enteringScreen: 225,
-  // recommended when something is leaving screen
-  leavingScreen: 195
+  // Transition Area
+  area: {
+    small: 100,
+    medium: {
+      enter: 250,
+      exit: 200
+    },
+    large: {
+      enter: 300,
+      exit: 250
+    }
+  }
 };
 
 export const formatMs = (milliseconds: number) =>

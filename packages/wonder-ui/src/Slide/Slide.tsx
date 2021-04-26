@@ -85,10 +85,7 @@ const defaultEasing = {
   exit: easing.sharp
 };
 
-const defaultTimeout = {
-  enter: duration.enteringScreen,
-  exit: duration.leavingScreen
-};
+const defaultTimeout = duration.area.medium;
 
 const Slide: React.FC<SlideProps> = React.forwardRef((props, ref) => {
   const {

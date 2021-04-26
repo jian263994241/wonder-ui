@@ -21,7 +21,7 @@ export default function Example() {
   return (
     <div>
       <Button onClick={() => open()}>Open</Button>
-      <Preloader visible={visible} />
+      <Preloader visible={visible} text="加载中..." />
     </div>
   );
 }

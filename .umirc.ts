@@ -84,7 +84,7 @@ export default defineConfig({
           'components/preloader.md',
           'components/progress.md',
           'components/result.md',
-          'components/toast.md'
+          'components/snackbar.md'
         ]
       },
       {

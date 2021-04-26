@@ -27,8 +27,13 @@ export default function Example() {
     <div>
       <Button onClick={() => toggle()}>Open</Button>
 
-      <Modal visible={visible} keepMounted onClose={() => toggle()}>
-        <Fade>
+      <Modal
+        visible={visible}
+        keepMounted
+        onClose={() => toggle()}
+        BackdropProps={{ transitionDuration: 400 }}
+      >
+        <Fade timeout={400}>
           <Demo>
             <Typography variant="h2" gutterBottom>
               模态框标题

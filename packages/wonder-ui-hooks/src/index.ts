@@ -20,6 +20,7 @@ export * from './useInViewport';
 export * from './useKeyPress';
 export * from './useLocalStorageState';
 export * from './useMap';
+export * from './useMediaQuery';
 export * from './usePrevious';
 export * from './useResponsive';
 export * from './useScroll';

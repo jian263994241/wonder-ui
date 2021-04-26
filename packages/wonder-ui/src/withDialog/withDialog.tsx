@@ -11,16 +11,16 @@ const StackContext = React.createContext({
 interface Dialogs {
   custom: (props: DialogProps) => void;
   alert: (props: {
-    title?: React.ReactChild;
-    text?: React.ReactChild;
-    content?: React.ReactChild;
+    title?: React.ReactNode;
+    text?: React.ReactNode;
+    content?: React.ReactNode;
     onOk?: () => void;
     okText?: string;
   }) => void;
   confirm: (props: {
-    title?: React.ReactChild;
-    text?: React.ReactChild;
-    content?: React.ReactChild;
+    title?: React.ReactNode;
+    text?: React.ReactNode;
+    content?: React.ReactNode;
     onOk?: () => void;
     okText?: string;
     onCancel?: () => void;
@@ -46,7 +46,7 @@ export default function withDialog<P>(
         manager.run((clearQueue) => {
           const customProps = {
             ...rest,
-            buttons: buttons.map((button: any, index: number) => {
+            buttons: buttons.map((button) => {
               return {
                 ...button,
                 onClick: createChainedFunction(button.onClick, () => {
@@ -59,7 +59,8 @@ export default function withDialog<P>(
               onTransitionExited: createChainedFunction(() => {
                 clearQueue();
               }, ModalProps.onTransitionExited)
-            }
+            },
+            key: new Date().getTime()
           };
           setDialogProps({ ...customProps, visible: true });
         });
@@ -72,7 +73,7 @@ export default function withDialog<P>(
 
           makeDialog({
             ...rest,
-            buttons: [{ children: okText, primary: true, onClick: onOk }]
+            buttons: [{ text: okText, primary: true, onClick: onOk }]
           });
         },
         confirm: (props = {}) => {

@@ -40,10 +40,6 @@ export interface DrawerProps extends BaseProps {
   /**
    * @ignore
    */
-  TransitionComponent?: React.ComponentType<SlideProps>;
-  /**
-   * @ignore
-   */
   transitionDuration?: SlideProps['timeout'];
   /**
    * @ignore
@@ -159,16 +155,12 @@ export function getAnchor(
     : anchor;
 }
 
-const defaultTransitionDuration = {
-  enter: duration.enteringScreen,
-  exit: duration.leavingScreen
-};
+const defaultTransitionDuration = duration.area.medium;
 
 const Drawer: React.FC<DrawerProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiDrawer' });
   const {
     PaperProps = {},
-    TransitionComponent = Slide,
     SlideProps,
     anchor: anchorProp = 'left',
     children,
@@ -217,7 +209,7 @@ const Drawer: React.FC<DrawerProps> = React.forwardRef((inProps, ref) => {
   }
 
   const slidingDrawer = (
-    <TransitionComponent
+    <Slide
       in={visible}
       direction={oppositeDirection[anchorInvariant]}
       timeout={transitionDuration}
@@ -225,7 +217,7 @@ const Drawer: React.FC<DrawerProps> = React.forwardRef((inProps, ref) => {
       {...SlideProps}
     >
       {drawer}
-    </TransitionComponent>
+    </Slide>
   );
 
   if (variant === 'persistent') {

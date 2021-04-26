@@ -21,93 +21,97 @@ function getHasTransition(props: React.PropsWithChildren<any>) {
 
 export interface ModalProps extends BaseProps {
   /**
-   * @description Backdrop Props
+   * Backdrop Props
    * @default {}
    */
-  BackdropProps?: BackdropProps;
+  BackdropProps?: Partial<BackdropProps>;
   /**
-   * @description 子节点
+   * 子节点
    */
   children: React.ReactElement;
   /**
-   * @description 容器 HTMLElement
+   * 容器 HTMLElement
    */
   container?: Container;
   /**
-   * @description 过渡后关闭
+   * 过渡后关闭
    * @default false
    */
   closeAfterTransition?: boolean;
   /**
-   * @description 禁用AutoFocus
+   * 禁用AutoFocus
    * @default false
    */
   disableAutoFocus?: boolean;
   /**
-   * @description 禁用esc按键执行关闭
+   * 禁用esc按键执行关闭
    * @default false
    */
   disableEscapeKeyDown?: boolean;
   /**
-   * @description 禁用FocusLock
+   * 禁用FocusLock
    * @default false
    */
   disableFocusLock?: boolean;
   /**
-   * @description 禁用 Portal
+   * 禁用 Portal
    * @default false
    */
   disablePortal?: boolean;
   /**
-   * @description 禁用滚动锁
+   * 禁用滚动锁
    * @default false
    */
   disableScrollLock?: boolean;
   /**
-   * @description FocusLock Props
+   * FocusLock Props
    * @default {}
    */
   FocusLockProps?: ReactFocusLockProps;
   /**
-   * @description 隐藏Backdrop
+   * 隐藏Backdrop
    * @default false
    */
   hideBackdrop?: boolean;
   /**
-   * @description 保持Modal节点
+   * @ignore
+   */
+  hasTransition?: boolean;
+  /**
+   * 保持Modal节点
    * @default false
    */
   keepMounted?: boolean;
   /**
    * @ignore
-   * @description Modal manager
+   * Modal manager
    */
   manager?: InstanceType<typeof ModalManager>;
   /**
-   * @description 背景板点击事件
+   * 背景板点击事件
    */
   onBackdropClick?: (event: React.MouseEvent) => void;
   /**
-   * @description Modal关闭事件
+   * Modal关闭事件
    */
   onClose?: <T extends 'backdropClick' | 'escapeKeyDown'>(
     event: T extends 'escapeKeyDown' ? React.KeyboardEvent : React.MouseEvent,
     type: T
   ) => void;
   /**
-   * @description esc键盘事件
+   * esc键盘事件
    */
   onKeyDown?: (event: React.KeyboardEvent) => void;
   /**
-   * @description 过渡动画事件
+   * 过渡动画事件
    */
   onTransitionEnter?: () => void;
   /**
-   * @description 过渡动画事件
+   * 过渡动画事件
    */
   onTransitionExited?: () => void;
   /**
-   * @description 是否显示
+   * 是否显示
    * @default false
    */
   visible?: boolean;
@@ -150,6 +154,7 @@ const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
     disableScrollLock = false,
     FocusLockProps,
     hideBackdrop = false,
+    hasTransition: hasTransitionProp,
     keepMounted,
     labelElement = null,
     labelTrigerEvent = 'onClick',
@@ -173,7 +178,10 @@ const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
   const mountNodeRef = React.useRef(null);
   const modalRef = React.useRef<Element | null>(null);
   const handleRef = useForkRef(modalRef, ref);
-  const hasTransition = getHasTransition(props);
+  const hasTransition =
+    hasTransitionProp != undefined
+      ? hasTransitionProp
+      : getHasTransition(props);
 
   const getDoc = () => ownerDocument(mountNodeRef.current);
   const getModal = () => {

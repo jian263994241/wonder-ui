@@ -12,6 +12,8 @@ import Transition, {
 import { reflow } from '../Transition/utils';
 import { duration } from '../styles/transitions';
 
+const defaultTimeout = duration.area.medium;
+
 export interface CollapseProps extends BaseProps, BaseTransitionProps {
   /**
    * @description 折叠尺寸
@@ -90,7 +92,7 @@ const Collapse: React.FC<CollapseProps> = React.forwardRef((inProps, ref) => {
     onExit,
     onExited,
     onExiting,
-    timeout = 'auto',
+    timeout = defaultTimeout,
     ...rest
   } = props;
   const theme = useTheme();

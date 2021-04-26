@@ -5,18 +5,27 @@ import styled from '../styles/styled';
 import type { BaseProps, PickStyleProps } from '../styles/types';
 import { useForkRef } from '@wonder-ui/hooks';
 import Fade from '../Fade';
+import { TransitionProps } from '../Transition';
 
 export interface BackdropProps extends BaseProps {
   /**
-   * @description transparent background
+   * children
+   */
+  children?: React.ReactNode;
+  /**
+   * Transparent background
    * @default false
    */
   invisible?: boolean;
   /**
-   * @description show or hide
+   * Show or hide
    * @default false
    */
-  visible?: boolean;
+  visible: boolean;
+  /**
+   * The duration for the transition, in milliseconds.
+   */
+  transitionDuration?: TransitionProps['timeout'];
 }
 
 const BackdropRoot = styled('div', { name: 'WuiBackdrop', slot: 'Root' })<
@@ -48,6 +57,7 @@ const Backdrop: React.FC<BackdropProps> = React.forwardRef((inProps, ref) => {
     invisible = false,
     rootRef,
     visible,
+    transitionDuration,
     ...rest
   } = props;
   const nodeRef = React.useRef<HTMLElement>(null);
@@ -69,12 +79,11 @@ const Backdrop: React.FC<BackdropProps> = React.forwardRef((inProps, ref) => {
   }, []);
 
   return (
-    <Fade in={visible} ref={handleRef}>
+    <Fade in={visible} timeout={transitionDuration} ref={handleRef} {...rest}>
       <BackdropRoot
         as={component}
         className={classes.root}
         styleProps={styleProps}
-        {...rest}
       >
         {children}
       </BackdropRoot>

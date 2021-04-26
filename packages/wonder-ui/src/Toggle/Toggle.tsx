@@ -98,7 +98,7 @@ const ToggleIcon = styled('span', {
   name: 'WuiSwitch',
   slot: 'Icon'
 })<PickStyleProps<ToggleProps, 'color' | 'checked' | 'disabled' | 'size'>>(
-  ({ styleProps }) => {
+  ({ theme, styleProps }) => {
     return {
       margin: 0,
       padding: 0,
@@ -106,7 +106,9 @@ const ToggleIcon = styled('span', {
       appearance: 'none',
       border: 'none',
       position: 'relative',
-      transition: '0.3s',
+      transition: theme.transitions.create(['background-color'], {
+        duration: theme.transitions.duration.shortest
+      }),
       boxSizing: 'border-box',
       display: 'block',
       '&:before': {
@@ -116,7 +118,9 @@ const ToggleIcon = styled('span', {
         position: 'absolute',
         top: 2,
         transform: 'scale(1)',
-        transitionDuration: '0.3s',
+        transition: theme.transitions.create(['transform'], {
+          duration: theme.transitions.duration.shortest
+        }),
         zIndex: 1
       },
       '&:after': {
@@ -126,7 +130,9 @@ const ToggleIcon = styled('span', {
         position: 'absolute',
         top: 2,
         transform: 'translateX(0px)',
-        transitionDuration: '0.3s',
+        transition: theme.transitions.create(['transform'], {
+          duration: theme.transitions.duration.shortest
+        }),
         zIndex: 2
       },
 

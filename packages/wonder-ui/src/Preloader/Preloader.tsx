@@ -9,6 +9,7 @@ import Modal, { ModalProps } from '../Modal';
 import WhiteSpace from '../WhiteSpace';
 import { useControlled } from '@wonder-ui/hooks';
 import { createChainedFunction, isPromise } from '@wonder-ui/utils';
+import Fade from '../Fade';
 
 export interface PreloaderProps extends BaseProps {
   /**
@@ -61,7 +62,7 @@ const PreloaderInner = styled('div', {
   display: 'block',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: 'rgba(0,0,0,0.7)',
-  padding: 16,
+  padding: 12,
   outline: 'none',
   textAlign: 'center',
   fontSize: 0
@@ -133,15 +134,17 @@ const Preloader: React.FC<PreloaderProps> &
         {...ModalProps}
         {...rest}
       >
-        <PreloaderInner styleProps={styleProps} theme={theme}>
-          <CircularProgress size={34} color="light" theme={theme} />
-          {text && (
-            <React.Fragment>
-              <WhiteSpace size="sm" />
-              <Typography theme={theme}>{text}</Typography>
-            </React.Fragment>
-          )}
-        </PreloaderInner>
+        <Fade>
+          <PreloaderInner styleProps={styleProps} theme={theme}>
+            <CircularProgress size={34} color="light" theme={theme} />
+            {text && (
+              <React.Fragment>
+                <WhiteSpace size="sm" />
+                <Typography theme={theme}>{text}</Typography>
+              </React.Fragment>
+            )}
+          </PreloaderInner>
+        </Fade>
       </PreloaderRoot>
     </React.Fragment>
   );

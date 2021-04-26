@@ -12,13 +12,13 @@ export default function Example() {
       buttonsVertical
       buttons={[
         {
-          children: '标为未读',
+          text: '标为未读',
           onClick: () => {
             alert('标为未读');
           }
         },
         {
-          children: '置顶聊天',
+          text: '置顶聊天',
           onClick: () => {
             alert('置顶聊天');
           }

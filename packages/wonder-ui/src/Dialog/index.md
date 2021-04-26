@@ -9,10 +9,10 @@ sidemenu: false
 | children | Target element | `ReactElement` |
 | classes | Classes | `ClassNameMap< 'root' \| 'body' \| 'title' \| 'text' \| 'buttonGroup' \| 'button' >` |
 | visible | Visible | `boolean` |
-| title | Title | `ReactChild` |
+| title | Title | `ReactNode` |
 | titleTypographyProps | Title props | `TypographyProps` |
-| text | Text | `ReactChild` |
+| text | Text | `ReactNode` |
 | textTypographyProps | Text props | `TypographyProps` |
-| textAfter | Node | `ReactChild` |
+| textAfter | Node | `ReactNode` |
 | buttons | Buttons | `DialogButtonProps[]` |
 | buttonsVertical | Buttons Vertical | `boolean` | false
