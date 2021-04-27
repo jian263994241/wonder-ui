@@ -1,5 +1,5 @@
 /**
- * title: 基础使用
+ * title: 基础抽屉
  * desc: 方向 `'down' | 'left' | 'right' | 'up'`
  */
 
@@ -30,10 +30,10 @@ export default function Example() {
   return (
     <div>
       <Space>
-        <Button onClick={() => open('left')}>Left</Button>
-        <Button onClick={() => open('right')}>Right</Button>
-        <Button onClick={() => open('top')}>Top</Button>
-        <Button onClick={() => open('bottom')}>Bottom</Button>
+        <Button onClick={() => open('left')}>左</Button>
+        <Button onClick={() => open('right')}>右</Button>
+        <Button onClick={() => open('top')}>上</Button>
+        <Button onClick={() => open('bottom')}>下</Button>
       </Space>
 
       <Drawer anchor={anchor} visible={visible} onClose={() => toggleVisible()}>

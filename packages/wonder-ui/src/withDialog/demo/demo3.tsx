@@ -14,7 +14,9 @@ export default withDialog(function Example(props) {
       <Button
         onClick={() => {
           dialog.toast('一条通知信息');
-          dialog.toast('一条通知信息1');
+          dialog.toast('一条通知信息.');
+          dialog.toast('一条通知信息..');
+          dialog.toast('一条通知信息...');
         }}
       >
         toast

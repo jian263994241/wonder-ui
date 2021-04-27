@@ -5,7 +5,7 @@
 
 ## 代码演示
 
-### 基础使用
+### 基本使用
 
 
 <code src="../../packages/wonder-ui/src/Snackbar/demo/demo1.tsx"></code>
@@ -19,3 +19,9 @@
 使用消息条（Snackbar）来显示一个带警告提示组件的 toast
 
 <code src="../../packages/wonder-ui/src/withDialog/demo/demo3.tsx"></code>
+
+
+## API
+
+
+<embed src="../../packages/wonder-ui/src/Snackbar/index.md"></embed>

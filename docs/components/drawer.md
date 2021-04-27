@@ -4,7 +4,7 @@
 
 ## 代码演示
 
-### 基础抽屉
+### 基本使用
 
 <code src="../../packages/wonder-ui/src/Drawer/demo/demo1.tsx"></code>
 

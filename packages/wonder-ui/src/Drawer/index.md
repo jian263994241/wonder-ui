@@ -12,4 +12,3 @@ sidemenu: false
 | variant | 变量 | `'permanent' \| 'persistent' \| 'temporary'` | temporary
 | visible | 显示 | `boolean` |
 | onClose | 回调 | `() => void` |
-| ModalProps | Modal props | `ModalProps` |

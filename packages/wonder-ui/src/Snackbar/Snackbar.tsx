@@ -5,7 +5,7 @@ import useClasses from '../styles/useClasses';
 import type { BaseProps, PickStyleProps } from '../styles/types';
 import clsx from 'clsx';
 import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
-import SnackbarContent from '../SnackbarContent';
+import SnackbarContent, { SnackbarContentProps } from '../SnackbarContent';
 import ClickAwayListener, {
   ClickAwayListenerProps
 } from '../ClickAwayListener';
@@ -13,23 +13,73 @@ import Grow from '../Grow';
 import { BaseTransitionProps, TransitionTimeout } from '../Transition';
 
 export interface SnackbarProps extends BaseProps {
+  /**
+   * @ignore
+   */
   ClickAwayListenerProps?: Partial<ClickAwayListenerProps>;
+  /**
+   * @ignore
+   */
+  ContentProps?: Partial<SnackbarContentProps>;
+  /**
+   * 过渡动画组件
+   */
   TransitionComponent?: React.ComponentType<BaseTransitionProps>;
+  /**
+   * 过渡动画组件属性
+   */
   TransitionProps?: BaseTransitionProps;
+  /**
+   * 操作区
+   */
   actions?: React.ReactNode;
+  /**
+   * 定位
+   */
   anchorOrigin?: {
     vertical?: 'top' | 'center' | 'bottom';
     horizontal?: 'left' | 'center' | 'right';
   };
+  /**
+   * 自动关闭持续时间
+   * @default null
+   */
   autoHideDuration?: number | null;
+  /**
+   * @ignore
+   */
   children?: React.ReactElement;
+  /**
+   * @ignore
+   */
   disableWindowBlurListener?: boolean;
+  /**
+   * 内容
+   */
   message?: React.ReactNode;
+  /**
+   * 关闭回调事件
+   */
   onClose?: (event: Event, reason: 'timeout' | 'clickaway') => void;
+  /**
+   * @ignore
+   */
   onMouseEnter?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * @ignore
+   */
   onMouseLeave?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * 暂停持续时间
+   */
   resumeHideDuration?: boolean | null;
+  /**
+   * 过渡动画持续时间
+   */
   transitionDuration?: TransitionTimeout;
+  /**
+   * 是否显示
+   */
   visible?: boolean;
 }
 
@@ -90,6 +140,7 @@ const Snackbar: React.FC<SnackbarProps> = React.forwardRef((inProps, ref) => {
       horizontal: 'left'
     },
     ClickAwayListenerProps,
+    ContentProps,
     TransitionComponent = Grow,
     TransitionProps: { onEnter, onExited, ...TransitionProps } = {},
     autoHideDuration = null,
@@ -235,6 +286,7 @@ const Snackbar: React.FC<SnackbarProps> = React.forwardRef((inProps, ref) => {
               message={message}
               action={action}
               center={vertical === 'center' && horizontal === 'center'}
+              {...ContentProps}
             />
           )}
         </TransitionComponent>

@@ -5,7 +5,7 @@
 
 ## 代码演示
 
-### 基础使用
+### 基本使用
 
 <code src="../../packages/wonder-ui/src/Row/demo/demo1.tsx"></code>
 
