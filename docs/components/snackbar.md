@@ -9,3 +9,13 @@
 
 
 <code src="../../packages/wonder-ui/src/Snackbar/demo/demo1.tsx"></code>
+
+### 消息条的位置
+
+<code src="../../packages/wonder-ui/src/Snackbar/demo/demo2.tsx"></code>
+
+### Toast（提示）
+
+使用消息条（Snackbar）来显示一个带警告提示组件的 toast
+
+<code src="../../packages/wonder-ui/src/withDialog/demo/demo3.tsx"></code>

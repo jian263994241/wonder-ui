@@ -1,15 +1,24 @@
 /**
- * title: 简单的消息条
- * desc:
+ * title: 基础消息条
+ * desc: 一条基本的通知消息
  */
 
 /** @jsx jsx */
-import { jsx, Button, Snackbar, Space } from '@wonder-ui/core';
+import { jsx, Button, Snackbar } from '@wonder-ui/core';
+import { useToggle } from '@wonder-ui/hooks';
 
 export default function Example() {
+  const [visible, { toggle }] = useToggle();
+
   return (
     <div>
-      <Snackbar visible message="123213" />
+      <Button onClick={() => toggle()}>简单的消息条</Button>
+      <Snackbar
+        visible={visible}
+        message="简单的消息条"
+        autoHideDuration={3000}
+        onClose={() => toggle()}
+      />
     </div>
   );
 }

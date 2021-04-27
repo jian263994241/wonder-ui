@@ -2,14 +2,37 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
-import type { BaseProps, ClassNameMap } from '../styles/types';
+import type { BaseProps, ClassNameMap, PickStyleProps } from '../styles/types';
 import { emphasize } from '../styles/colorManipulator';
 import Paper from '../Paper';
+
+export interface SnackbarContentProps extends BaseProps {
+  /**
+   * 操作区
+   */
+  action?: React.ReactNode;
+  /**
+   * @ignore
+   */
+  classes?: ClassNameMap<'root' | 'message' | 'action'>;
+  /**
+   * @ignore
+   */
+  center?: boolean;
+  /**
+   * 内容
+   */
+  message?: React.ReactNode;
+  /**
+   * @ignore
+   */
+  role?: string;
+}
 
 const SnackbarContentRoot = styled(Paper, {
   name: 'WuiSnackbarContent',
   slot: 'Root'
-})(({ theme }) => {
+})<PickStyleProps<SnackbarContentProps, 'center'>>(({ theme, styleProps }) => {
   const emphasis = theme.palette.mode === 'light' ? 0.75 : 0.98;
   const backgroundColor = emphasize(theme.palette.background.default, emphasis);
 
@@ -23,10 +46,13 @@ const SnackbarContentRoot = styled(Paper, {
     padding: '6px 16px',
     borderRadius: theme.shape.borderRadius,
     flexGrow: 1,
-    [theme.breakpoints.up('sm')]: {
-      flexGrow: 'initial',
-      minWidth: 288
-    }
+
+    ...(!styleProps.center && {
+      [theme.breakpoints.up('sm')]: {
+        flexGrow: 'initial',
+        minWidth: 288
+      }
+    })
   };
 });
 
@@ -48,30 +74,20 @@ const SnackbarContentAction = styled('div', {
   marginRight: -8
 });
 
-export interface SnackbarContentProps extends BaseProps {
-  /**
-   * 操作区
-   */
-  action?: React.ReactNode;
-  /**
-   * @ignore
-   */
-  classes?: ClassNameMap<'root' | 'message' | 'action'>;
-  /**
-   * 内容
-   */
-  message?: React.ReactNode;
-  /**
-   * @ignore
-   */
-  role?: string;
-}
-
 const SnackbarContent: React.FC<SnackbarContentProps> = React.forwardRef(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiSnackbarContent' });
-    const { action, children, className, theme, message, ...rest } = props;
+    const {
+      action,
+      children,
+      className,
+      center = false,
+      theme,
+      message,
+      ...rest
+    } = props;
 
+    const styleProps = { center };
     const classes = useClasses({ ...props, name: 'WuiSnackbarContent' });
 
     return (
@@ -79,6 +95,7 @@ const SnackbarContent: React.FC<SnackbarContentProps> = React.forwardRef(
         ref={ref}
         className={classes.root}
         theme={theme}
+        styleProps={styleProps}
         {...rest}
       >
         <SnackbarContentMessage className={classes.message} theme={theme}>

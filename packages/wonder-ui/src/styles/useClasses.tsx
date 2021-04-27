@@ -1,4 +1,5 @@
-import { map } from '@wonder-ui/utils';
+import clsx from 'clsx';
+import { map, isObject } from '@wonder-ui/utils';
 
 type Options<Classes extends Record<string, string>> = {
   name: string;
@@ -15,23 +16,33 @@ export default function useClasses<
   className,
   classes: classesInput = {}
 }: Options<Classes>) {
-  const classes = map(styleProps, (value, key) => {
+  const makeClassName = (key: string, value: string | number) => {
     if (key === 'children' && value) {
       return `${name}-withChildren`;
     }
-
     if (typeof value === 'string' || typeof value === 'number') {
       return `${name}-${key}-${value}`;
     } else if (typeof value === 'boolean') {
       return value && `${name}-${key}`;
     }
-  })
-    .concat(className as string)
-    .concat(classesInput.root as string)
-    .filter(Boolean);
+  };
+
+  const classes = clsx(
+    map(styleProps, (value, key) => {
+      if (isObject(value)) {
+        return map(value, (value: any, key: string) => {
+          return makeClassName(key, value);
+        });
+      } else {
+        makeClassName(key, value);
+      }
+    }),
+    classesInput.root,
+    className
+  );
 
   return {
     ...classesInput,
-    root: classes.length > 0 ? classes.join(' ') : undefined
+    root: classes.length > 0 ? classes : undefined
   };
 }

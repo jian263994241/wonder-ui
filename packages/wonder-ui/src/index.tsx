@@ -22,6 +22,9 @@ export * from './Checkbox';
 export { default as CircularProgress } from './CircularProgress';
 export * from './CircularProgress';
 
+export { default as ClickAwayListener } from './ClickAwayListener';
+export * from './ClickAwayListener';
+
 export { default as CloseButton } from './CloseButton';
 export * from './CloseButton';
 

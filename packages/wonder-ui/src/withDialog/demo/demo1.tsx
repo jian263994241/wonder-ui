@@ -1,6 +1,6 @@
 /**
  * title: 提示栈
- * desc:
+ * desc: withDialog 提供 `alert`, `confirm`, `toast` 等静态方法
  */
 
 /** @jsx jsx */
@@ -17,6 +17,7 @@ export default withDialog(function Example(props) {
           dialog.alert({ title: '标题', text: 'dialog 2' });
           dialog.confirm({ title: '标题', text: '确定这么干吗?' });
           dialog.alert({ title: '标题', text: 'dialog 4' });
+          dialog.toast('队列结束');
         }}
       >
         提示框

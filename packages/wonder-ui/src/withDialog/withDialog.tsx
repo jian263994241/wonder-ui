@@ -2,6 +2,7 @@ import * as React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import Manager from './Manager';
 import Dialog, { DialogProps } from '../Dialog';
+import Snackbar, { SnackbarProps } from '../Snackbar';
 import { createChainedFunction } from '@wonder-ui/utils';
 
 const StackContext = React.createContext({
@@ -26,6 +27,18 @@ interface Dialogs {
     onCancel?: () => void;
     cancelText?: string;
   }) => void;
+  toast: (
+    message: React.ReactNode,
+    options: {
+      stack?: boolean;
+      onClose?: () => void;
+      autoHideDuration?: number;
+      anchorOrigin?: {
+        vertical?: 'top' | 'center' | 'bottom';
+        horizontal?: 'left' | 'center' | 'right';
+      };
+    }
+  ) => void;
 }
 
 export default function withDialog<P>(
@@ -39,6 +52,7 @@ export default function withDialog<P>(
     (props, ref) => {
       const { manager } = React.useContext(StackContext);
       const [dialogProps, setDialogProps] = React.useState<DialogProps>({});
+      const [toastProps, setToastProps] = React.useState<SnackbarProps>({});
 
       const makeDialog = (props: DialogProps = {}) => {
         const { buttons = [], ModalProps = {}, ...rest } = props;
@@ -50,7 +64,7 @@ export default function withDialog<P>(
               return {
                 ...button,
                 onClick: createChainedFunction(button.onClick, () => {
-                  setDialogProps({ ...customProps, visible: false });
+                  setDialogProps((prev) => ({ ...prev, visible: false }));
                 })
               };
             }),
@@ -92,6 +106,47 @@ export default function withDialog<P>(
               { children: okText, primary: true, onClick: onOk }
             ]
           });
+        },
+        toast: (message, options = {}) => {
+          const {
+            autoHideDuration = 2000,
+            stack = true,
+            onClose,
+            anchorOrigin = {
+              vertical: 'center',
+              horizontal: 'center'
+            }
+          } = options;
+
+          const customProps = {
+            message,
+            autoHideDuration,
+            anchorOrigin,
+            key: new Date().getTime()
+          };
+
+          if (stack) {
+            manager.run((clearQueue) => {
+              setToastProps({
+                ...customProps,
+                visible: true,
+                onClose: () => {
+                  setToastProps((prev) => ({ ...prev, visible: false }));
+                  clearQueue();
+                  onClose && onClose();
+                }
+              });
+            });
+          } else {
+            setToastProps({
+              ...customProps,
+              visible: true,
+              onClose: () => {
+                setToastProps((prev) => ({ ...prev, visible: false }));
+                onClose && onClose();
+              }
+            });
+          }
         }
       };
 
@@ -99,6 +154,7 @@ export default function withDialog<P>(
         <React.Fragment>
           <Component {...props} dialog={dialog} ref={ref} />
           <Dialog visible={false} {...dialogProps} />
+          <Snackbar visible={false} {...toastProps} />
         </React.Fragment>
       );
     }
