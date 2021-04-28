@@ -39,4 +39,6 @@ export interface BaseProps {
   [prop: string]: any;
 }
 
-export type ClassNameMap<Classes extends string> = Record<Classes, string>;
+export type ClassNameMap<Classes extends string> = Partial<
+  Record<Classes, string>
+>;

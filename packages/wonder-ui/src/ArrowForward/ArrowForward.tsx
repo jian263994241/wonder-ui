@@ -4,7 +4,6 @@ import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import type { PickStyleProps } from '../styles/types';
 import SvgIcon, { SvgIconProps } from '../SvgIcon';
-import { alpha } from '../styles/colorManipulator';
 
 export interface ArrowForwardProps extends SvgIconProps {
   /**
@@ -17,7 +16,7 @@ export interface ArrowForwardProps extends SvgIconProps {
 const StyledSvgIcon = styled(SvgIcon, { name: 'ArrowForward', slot: 'Root' })<
   PickStyleProps<ArrowForwardProps, 'direction'>
 >(({ theme, styleProps }) => ({
-  color: alpha(theme.palette.text.primary, 0.3),
+  color: 'inherit',
   transition: theme.transitions.create(['transform']),
   transform: {
     left: 'rotate(180deg)',
@@ -32,7 +31,7 @@ const ArrowForward: React.FC<ArrowForwardProps> = React.forwardRef(
     const props = useThemeProps({ props: inProps, name: 'WuiArrowForward' });
 
     const {
-      size = 'small',
+      size = 'medium',
       direction = 'right',
       className,
       rootRef,
@@ -48,14 +47,13 @@ const ArrowForward: React.FC<ArrowForwardProps> = React.forwardRef(
 
     return (
       <StyledSvgIcon
-        viewBox="0 0 24 24"
         className={classes.root}
         size={size}
         styleProps={styleProps}
         ref={ref}
         {...rest}
       >
-        <path d="M7.892 2.808a1 1 0 00-.077 1.327l.077.087L15.671 12l-7.779 7.778a1 1 0 00-.077 1.327l.077.087a1 1 0 001.327.078l.088-.078 8.485-8.485a1 1 0 00.078-1.327l-.078-.087-8.485-8.485a1 1 0 00-1.415 0z" />
+        <path d="M4.646 1.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L10.293 8 4.646 2.354a.5.5 0 010-.708z" />
       </StyledSvgIcon>
     );
   }

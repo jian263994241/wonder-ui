@@ -55,7 +55,11 @@ export default defineConfig({
       },
       {
         title: '导航',
-        children: ['components/dropdown.md', 'components/steps.md']
+        children: [
+          'components/dropdown.md',
+          'components/navbar.md',
+          'components/steps.md'
+        ]
       },
       {
         title: '数据录入',

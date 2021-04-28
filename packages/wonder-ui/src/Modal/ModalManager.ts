@@ -131,32 +131,32 @@ function handleContainer(containerInfo: Container, props: ManagedModalProps) {
       el: scrollContainer
     });
 
-    restoreStyle.push({
-      value: scrollContainer.style.position,
-      property: 'position',
-      el: scrollContainer
-    });
+    // restoreStyle.push({
+    //   value: scrollContainer.style.position,
+    //   property: 'position',
+    //   el: scrollContainer
+    // });
 
-    restoreStyle.push({
-      value: scrollContainer.style.top,
-      property: 'top',
-      el: scrollContainer
-    });
+    // restoreStyle.push({
+    //   value: scrollContainer.style.top,
+    //   property: 'top',
+    //   el: scrollContainer
+    // });
 
-    restoreStyle.push({
-      value: scrollContainer.style.left,
-      property: 'left',
-      el: scrollContainer
-    });
+    // restoreStyle.push({
+    //   value: scrollContainer.style.left,
+    //   property: 'left',
+    //   el: scrollContainer
+    // });
 
-    scrollPositionX = containerWindow.pageXOffset;
-    scrollPositionY = containerWindow.pageYOffset;
+    // scrollPositionX = containerWindow.pageXOffset;
+    // scrollPositionY = containerWindow.pageYOffset;
 
     scrollContainer.style.overflow = 'hidden';
     scrollContainer.style.width = '100%';
-    scrollContainer.style.position = 'fixed';
-    scrollContainer.style.top = `-${scrollPositionY}px`;
-    scrollContainer.style.left = `-${scrollPositionX}px`;
+    // scrollContainer.style.position = 'fixed';
+    // scrollContainer.style.top = `-${scrollPositionY}px`;
+    // scrollContainer.style.left = `-${scrollPositionX}px`;
   }
 
   const restore = () => {
@@ -168,11 +168,11 @@ function handleContainer(containerInfo: Container, props: ManagedModalProps) {
       }
     });
 
-    if (restoreStyle.length > 0) {
-      const containerWindow = ownerWindow(container);
+    // if (restoreStyle.length > 0) {
+    //   const containerWindow = ownerWindow(container);
 
-      containerWindow.scrollTo(scrollPositionX, scrollPositionY);
-    }
+    //   containerWindow.scrollTo(scrollPositionX, scrollPositionY);
+    // }
   };
 
   return restore;

@@ -1,4 +1,5 @@
 const shape = {
+  navbarHeight: 44,
   borderRadius: 4
 };
 

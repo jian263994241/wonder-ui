@@ -9,7 +9,7 @@ export interface ListItemTextProps extends BaseProps {
   /**
    * @description Css api
    */
-  classes?: Partial<ClassNameMap<'root' | 'primary' | 'secondary'>>;
+  classes?: ClassNameMap<'root' | 'primary' | 'secondary'>;
   /**
    * @description Primary text
    */

@@ -22,7 +22,7 @@ export interface ListItemProps extends BaseProps {
   /**
    * @description Css api
    */
-  classes?: Partial<ClassNameMap<'root' | 'body'>>;
+  classes?: ClassNameMap<'root' | 'body'>;
   /**
    * divider
    */
@@ -116,7 +116,8 @@ const ListItemBody = styled('div', {
 const ListItemArrow = styled(ArrowForward, {
   name: 'WuiListItem',
   slot: 'Arrow'
-})<ArrowForwardProps>(() => ({
+})<ArrowForwardProps>(({ theme }) => ({
+  color: alpha(theme.palette.text.primary, 0.3),
   alignItems: 'inherit',
   pointerEvents: 'none',
   fontSize: 15

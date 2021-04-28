@@ -17,7 +17,7 @@ export interface DividerProps extends BaseProps {
   /**
    * @description css api
    */
-  classes?: Partial<ClassNameMap<'root' | 'wrapper'>>;
+  classes?: ClassNameMap<'root' | 'wrapper'>;
   /**
    * @description 更亮
    * @default false

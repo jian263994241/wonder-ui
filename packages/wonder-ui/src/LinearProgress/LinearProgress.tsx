@@ -15,7 +15,7 @@ export interface LinearProgressProps extends BaseProps {
   /**
    * css api
    */
-  classes?: Partial<ClassNameMap<'root' | 'body' | 'bar' | 'info'>>;
+  classes?: ClassNameMap<'root' | 'body' | 'bar' | 'info'>;
   /**
    * @description 颜色
    * @default primary

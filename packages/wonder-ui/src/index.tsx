@@ -82,6 +82,12 @@ export * from './Modal';
 export { default as ModalContent } from './ModalContent';
 export * from './ModalContent';
 
+export { default as Navbar } from './Navbar';
+export * from './Navbar';
+
+export { default as Page } from './Page';
+export * from './Page';
+
 export { default as Paper } from './Paper';
 export * from './Paper';
 

@@ -8,6 +8,7 @@ import { useTouchFeedback } from '@wonder-ui/hooks';
 export interface ButtonBaseProps extends BaseProps {
   autofocus?: boolean;
   disabled?: boolean;
+  disabledTouchState?: boolean;
   /**
    * Click event
    */
@@ -59,6 +60,7 @@ const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
     const {
       autofocus = true,
       disabled = false,
+      disabledTouchState = false,
       className,
       component,
       ...rest
@@ -70,7 +72,7 @@ const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
 
     const containerProps = useTouchFeedback({
       ...props,
-      disabled,
+      disabled: disabled || disabledTouchState,
       prefixClassName: classes.root,
       activeClassName: 'state-active'
     });

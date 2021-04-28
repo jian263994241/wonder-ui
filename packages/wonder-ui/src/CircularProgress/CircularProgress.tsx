@@ -35,7 +35,7 @@ export interface CircularProgressProps extends BaseProps {
   /**
    * @description css api
    */
-  classes?: Partial<ClassNameMap<'root' | 'svg' | 'circle' | 'label'>>;
+  classes?: ClassNameMap<'root' | 'svg' | 'circle' | 'label'>;
   /**
    * @description color
    * @default primary

@@ -13,7 +13,7 @@ export interface ToggleProps extends BaseProps {
   /**
    * css api
    */
-  classes?: Partial<ClassNameMap<'root' | 'input' | 'icon'>>;
+  classes?: ClassNameMap<'root' | 'input' | 'icon'>;
   /**
    * @description color
    * @default primary

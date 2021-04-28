@@ -2,11 +2,11 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import type { BaseProps, PickStyleProps } from '../styles/types';
+import type { PickStyleProps } from '../styles/types';
 import { alpha } from '../styles/colorManipulator';
-import { useTouchFeedback } from '@wonder-ui/hooks';
+import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 
-export interface IconButtonProps extends BaseProps {
+export interface IconButtonProps extends ButtonBaseProps {
   color?: 'default' | 'inherit' | 'primary' | 'secondary';
   disabled?: boolean;
   edge?: 'end' | 'start' | boolean;
@@ -14,10 +14,12 @@ export interface IconButtonProps extends BaseProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const IconButtonRoot = styled('button', {
+const IconButtonRoot = styled(ButtonBase, {
   name: 'WuiIconButton',
   slot: 'Root'
-})<PickStyleProps<IconButtonProps, 'color' | 'edge' | 'size'>>(
+})<
+  ButtonBaseProps & PickStyleProps<IconButtonProps, 'color' | 'edge' | 'size'>
+>(
   ({ theme }) => ({
     display: 'inline-block',
     position: 'relative',
@@ -61,7 +63,7 @@ const IconButtonRoot = styled('button', {
     lineHeight: 0,
     color: theme.palette.action.active,
     transition: theme.transitions.create('background-color', {
-      duration: theme.transitions.duration.shortest
+      duration: theme.transitions.duration.short
     }),
     '&.state-active': {
       backgroundColor: alpha(
@@ -127,6 +129,7 @@ const IconButton: React.FC<IconButtonProps> = React.forwardRef(
       color = 'default',
       disabled = false,
       size = 'medium',
+
       ...rest
     } = props;
 
@@ -134,19 +137,12 @@ const IconButton: React.FC<IconButtonProps> = React.forwardRef(
 
     const classes = useClasses({ ...props, styleProps, name: 'WuiIconButton' });
 
-    const containerProps = useTouchFeedback({
-      ...props,
-      disabled,
-      prefixClassName: classes.root,
-      activeClassName: 'state-active'
-    });
-
     return (
       <IconButtonRoot
         styleProps={styleProps}
         disabled={disabled}
+        className={classes.root}
         ref={ref}
-        {...containerProps}
         {...rest}
       >
         {children}

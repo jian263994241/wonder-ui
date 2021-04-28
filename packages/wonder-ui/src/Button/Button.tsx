@@ -3,7 +3,7 @@ import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import type { PickStyleProps } from '../styles/types';
-import { darken } from '../styles/colorManipulator';
+import { alpha, darken } from '../styles/colorManipulator';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 import { getDevice } from '@wonder-ui/utils';
 import clsx from 'clsx';
@@ -99,12 +99,6 @@ export const ButtonRoot = styled(ButtonBase, {
           backgroundColor: darken(theme.palette[styleProps.color].main, 0.3),
           borderColor: darken(theme.palette[styleProps.color].main, 0.3)
         },
-        ...(device.desktop && {
-          '&:hover': {
-            backgroundColor: darken(theme.palette[styleProps.color].main, 0.3),
-            borderColor: darken(theme.palette[styleProps.color].main, 0.3)
-          }
-        }),
         '&:focus': {
           boxShadow: theme.shadows[3]
         }
@@ -115,21 +109,22 @@ export const ButtonRoot = styled(ButtonBase, {
         borderColor: theme.palette[styleProps.color].main,
         '&.state-active': {
           color: darken(theme.palette[styleProps.color].main, 0.3),
+          backgroundColor: alpha(
+            theme.palette[styleProps.color].main,
+            theme.palette.action.hoverOpacity
+          ),
           borderColor: darken(theme.palette[styleProps.color].main, 0.3)
         },
-        ...(device.desktop && {
-          '&:hover': {
-            color: darken(theme.palette[styleProps.color].main, 0.3),
-            borderColor: darken(theme.palette[styleProps.color].main, 0.3)
-          }
-        }),
         '&.active': {
           color: theme.palette[styleProps.color].contrastText,
           backgroundColor: theme.palette[styleProps.color].main,
           borderColor: theme.palette[styleProps.color].main
         },
         '&:focus': {
-          boxShadow: theme.shadows[3]
+          backgroundColor: alpha(
+            theme.palette[styleProps.color].main,
+            theme.palette.action.hoverOpacity
+          )
         }
       },
       text: {
@@ -138,11 +133,6 @@ export const ButtonRoot = styled(ButtonBase, {
         '&.state-active': {
           opacity: 0.75
         },
-        ...(device.desktop && {
-          '&:hover': {
-            opacity: 0.75
-          }
-        }),
         '&:focus': {
           textShadow: `1px 1px 5px rgba(0,0,0,0.22)}`
         }

@@ -14,7 +14,7 @@ export interface SpaceProps extends BaseProps {
   /**
    * @description css api
    */
-  classes?: Partial<ClassNameMap<'root' | 'item'>>;
+  classes?: ClassNameMap<'root' | 'item'>;
   /**
    * @description direction
    * @default horizontal

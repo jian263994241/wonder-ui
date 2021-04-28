@@ -9,9 +9,9 @@ import {
   Button,
   Drawer,
   DrawerProps,
+  Page,
   Space,
   Typography,
-  Divider,
   isHorizontal
 } from '@wonder-ui/core';
 import { useToggle } from '@wonder-ui/hooks';
@@ -37,19 +37,32 @@ export default function Example() {
       </Space>
 
       <Drawer anchor={anchor} visible={visible} onClose={() => toggleVisible()}>
-        <div style={{ width: isHorizontal(anchor) ? 300 : '100%' }}>
-          <div style={{ padding: '10px 16px' }}>
-            <Typography variant="subtitle1">Basic Drawer</Typography>
-          </div>
-          <Divider />
+        <Page
+          title="Basic Drawer"
+          style={{
+            position: 'relative',
+            ...(isHorizontal(anchor)
+              ? { width: 300, height: '100%' }
+              : { width: '100%', height: 200 })
+          }}
+          showCloseButton
+          onClose={() => toggleVisible()}
+        >
           <div style={{ padding: '10px 16px' }}>
             <Typography>
               Some contents... <br />
               Some contents... <br />
-              Some contents...
+              Some contents... <br />
+              Some contents... <br />
+              Some contents... <br />
+              Some contents... <br />
+              Some contents... <br />
+              Some contents... <br />
+              Some contents... <br />
+              Some contents... <br />
             </Typography>
           </div>
-        </div>
+        </Page>
       </Drawer>
     </div>
   );

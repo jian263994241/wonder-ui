@@ -28,9 +28,9 @@ export interface RowProps extends BaseProps {
    * @default div
    */
   component?: keyof React.ReactHTML | React.ComponentType;
-  classes?: Partial<ClassNameMap<'root' | 'container'>>;
+  classes?: ClassNameMap<'root' | 'container'>;
   ContainerProps?: ContainerProps;
-  gutter: number | [number, number];
+  gutter?: number | [number, number];
   justifyContent?: ResponsiveValue<
     'start' | 'end' | 'center' | 'around' | 'between' | 'evenly'
   >;

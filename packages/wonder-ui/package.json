@@ -40,6 +40,7 @@
     "@wonder-ui/styled": "^1.0.7",
     "@wonder-ui/utils": "^2.0.0",
     "clsx": "^1.1.1",
+    "dom-helpers": "^5.2.1",
     "hoist-non-react-statics": "^3.3.2",
     "notistack": "^1.0.5",
     "react-focus-lock": "^2.5.0",
