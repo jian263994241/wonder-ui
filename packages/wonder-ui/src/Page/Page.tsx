@@ -46,6 +46,10 @@ const PageContent = styled('div', {
 
 export interface PageProps extends BaseProps {
   /**
+   * @ignore
+   */
+  ContentProps?: React.HTMLAttributes<HTMLDivElement>;
+  /**
    * 导航栏属性
    */
   NavbarProps?: Partial<NavbarProps>;
@@ -57,10 +61,7 @@ export interface PageProps extends BaseProps {
    * css
    */
   classes?: ClassNameMap<'root' | 'content' | 'navbar' | 'toolbar'>;
-  /**
-   * 内容Ref
-   */
-  contentRef?: React.Ref<HTMLDivElement>;
+
   /**
    * 导航栏
    */
@@ -100,9 +101,9 @@ const Page: React.FC<PageProps> = React.forwardRef((inProps, ref) => {
   const {
     NavbarProps = {},
     ToolbarProps = {},
+    ContentProps = {},
     children,
     className,
-    contentRef,
     navbar = null,
     onBack,
     onClose,
@@ -182,9 +183,10 @@ const Page: React.FC<PageProps> = React.forwardRef((inProps, ref) => {
         : null}
 
       <PageContent
-        ref={contentRef}
-        className={classes.content}
+        {...ContentProps}
+        className={clsx(classes.content, ContentProps.className)}
         style={{
+          ...ContentProps.style,
           paddingTop: contentPaddingTop,
           paddingBottom: contentPaddingBottom
         }}

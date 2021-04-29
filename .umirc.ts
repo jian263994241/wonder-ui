@@ -3,6 +3,10 @@ import { defineConfig } from 'dumi';
 export default defineConfig({
   title: 'Wonder UI',
   mode: 'site',
+  outputPath: 'dumi-static',
+  publicPath: './',
+  history: { type: 'hash' },
+  exportStatic: {},
   locales: [['zh-CN', '中文']],
   extraBabelPlugins: [
     [

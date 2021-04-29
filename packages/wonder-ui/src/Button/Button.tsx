@@ -5,10 +5,7 @@ import useThemeProps from '../styles/useThemeProps';
 import type { PickStyleProps, ClassNameMap } from '../styles/types';
 import { alpha, darken } from '../styles/colorManipulator';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
-import { getDevice } from '@wonder-ui/utils';
 import clsx from 'clsx';
-
-const device = getDevice();
 
 export interface ButtonProps extends ButtonBaseProps {
   classes?: ClassNameMap<'root' | 'label' | 'startIcon' | 'endIcon'>;
@@ -86,9 +83,9 @@ export const ButtonRoot = styled(ButtonBase, {
       large: theme.typography.pxToRem(18)
     }[styleProps.size],
 
-    ...(styleProps.disabled && {
-      color: theme.palette.action.disabled
-    }),
+    '&[disabled]': {
+      opacity: 0.5
+    },
 
     /* Styles applied to the root element if `edge="start"`. */
     ...(styleProps.edge === 'start' && {
@@ -118,12 +115,14 @@ export const ButtonRoot = styled(ButtonBase, {
         opacity: '0.3'
       }
     }),
-
     ...(styleProps.color !== 'inherit' &&
       styleProps.variant === 'text' && {
         color: theme.palette[styleProps.color].main
       }),
 
+    ...(styleProps.disabled && {
+      color: theme.palette.action.disabled
+    }),
     ...(styleProps.color !== 'inherit' &&
       styleProps.variant === 'contained' && {
         color: theme.palette[styleProps.color].contrastText,
