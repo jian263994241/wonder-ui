@@ -1,5 +1,4 @@
 import * as React from 'react';
-import clsx from 'clsx';
 
 type HandleEvents =
   | 'onTouchStart'
@@ -8,7 +7,21 @@ type HandleEvents =
   | 'onTouchCancel'
   | 'onMouseDown'
   | 'onMouseUp'
-  | 'onMouseLeave';
+  | 'onMouseLeave'
+  | 'onMouseEnter';
+
+const triggerEventsName = {
+  touch: [
+    'onTouchStart',
+    'onTouchMove',
+    'onTouchEnd',
+    'onTouchCancel',
+    'onMouseDown',
+    'onMouseUp',
+    'onMouseLeave'
+  ],
+  hover: ['onMouseEnter', 'onMouseDown', 'onMouseLeave']
+};
 
 export interface TouchFeedbackOptions<T = Element>
   extends Partial<Record<HandleEvents, React.DOMAttributes<T>[HandleEvents]>> {
@@ -17,19 +30,15 @@ export interface TouchFeedbackOptions<T = Element>
    */
   disabled?: boolean;
   /**
-   * 激活className
+   * 触发类型
    */
-  activeClassName: string;
-  /**
-   * extends className
-   */
-  prefixClassName?: string;
+  type: 'touch' | 'hover';
 }
 
 export function useTouchFeedback<T = Element>(
   options: TouchFeedbackOptions<T>
 ) {
-  const { disabled, activeClassName, prefixClassName } = options;
+  const { disabled, type = 'touch' } = options;
 
   const [active, setActive] = React.useState(false);
 
@@ -44,7 +53,16 @@ export function useTouchFeedback<T = Element>(
       handleInProp(event);
     }
 
-    if (!disabled && isActive !== active) {
+    if (disabled) {
+      return;
+    }
+
+    const eventTypes = triggerEventsName[type];
+    if (!eventTypes.some((eventName) => eventName === eventType)) {
+      return;
+    }
+
+    if (isActive !== active) {
       setActive(isActive);
     }
   };
@@ -78,20 +96,22 @@ export function useTouchFeedback<T = Element>(
     triggerEvent('onMouseLeave', false, e);
   };
 
-  const events = {
+  const onMouseEnter: React.DOMAttributes<T>['onMouseEnter'] = (e) => {
+    triggerEvent('onMouseEnter', true, e);
+  };
+
+  const handleEvents = {
     onTouchStart,
     onTouchMove,
     onTouchEnd,
     onTouchCancel,
     onMouseDown,
     onMouseUp,
-    onMouseLeave
+    onMouseLeave,
+    onMouseEnter
   };
 
-  return {
-    ...events,
-    className: clsx(prefixClassName, { [activeClassName]: active })
-  };
+  return [active, handleEvents] as const;
 }
 
 export default useTouchFeedback;
