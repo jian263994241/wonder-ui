@@ -30,13 +30,7 @@ const ArrowForward: React.FC<ArrowForwardProps> = React.forwardRef(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiArrowForward' });
 
-    const {
-      size = 'medium',
-      direction = 'right',
-      className,
-      rootRef,
-      ...rest
-    } = props;
+    const { size, direction = 'right', className, rootRef, ...rest } = props;
 
     const styleProps = { direction };
     const classes = useClasses({
@@ -44,7 +38,6 @@ const ArrowForward: React.FC<ArrowForwardProps> = React.forwardRef(
       styleProps,
       name: 'WuiArrowForward'
     });
-
     return (
       <StyledSvgIcon
         className={classes.root}

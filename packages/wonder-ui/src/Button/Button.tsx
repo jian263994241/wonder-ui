@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import type { PickStyleProps } from '../styles/types';
+import type { PickStyleProps, ClassNameMap } from '../styles/types';
 import { alpha, darken } from '../styles/colorManipulator';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 import { getDevice } from '@wonder-ui/utils';
@@ -11,6 +11,7 @@ import clsx from 'clsx';
 const device = getDevice();
 
 export interface ButtonProps extends ButtonBaseProps {
+  classes?: ClassNameMap<'root' | 'label' | 'startIcon' | 'endIcon'>;
   /**
    * @description checked state
    */
@@ -20,6 +21,7 @@ export interface ButtonProps extends ButtonBaseProps {
    * @default primary
    */
   color?:
+    | 'inherit'
     | 'primary'
     | 'secondary'
     | 'success'
@@ -28,6 +30,7 @@ export interface ButtonProps extends ButtonBaseProps {
     | 'info'
     | 'light'
     | 'dark';
+  edge?: 'end' | 'start' | boolean;
   /**
    * @description button type
    * @default contained
@@ -44,6 +47,14 @@ export interface ButtonProps extends ButtonBaseProps {
    */
   shape?: 'default' | 'round' | 'square';
   /**
+   * 左边图标
+   */
+  startIcon?: React.ReactNode;
+  /**
+   * 右边图标
+   */
+  endIcon?: React.ReactNode;
+  /**
    * @description disabled
    */
   disabled?: boolean;
@@ -56,11 +67,14 @@ export const ButtonRoot = styled(ButtonBase, {
   ButtonBaseProps &
     PickStyleProps<
       ButtonProps,
-      'color' | 'disabled' | 'shape' | 'size' | 'variant'
+      'color' | 'disabled' | 'edge' | 'shape' | 'size' | 'variant'
     >
 >(({ theme, styleProps }) => {
   return {
     ...theme.typography.button,
+    display: 'inline-flex',
+    backgroundColor: 'transparent',
+    color: 'inherit',
     padding: {
       small: theme.spacing(0.3, 0.7),
       medium: theme.spacing(0.6, 1.4),
@@ -73,7 +87,16 @@ export const ButtonRoot = styled(ButtonBase, {
     }[styleProps.size],
 
     ...(styleProps.disabled && {
-      opacity: 0.65
+      color: theme.palette.action.disabled
+    }),
+
+    /* Styles applied to the root element if `edge="start"`. */
+    ...(styleProps.edge === 'start' && {
+      marginLeft: styleProps.size === 'small' ? -3 : -12
+    }),
+    /* Styles applied to the root element if `edge="end"`. */
+    ...(styleProps.edge === 'end' && {
+      marginRight: styleProps.size === 'small' ? -3 : -12
     }),
 
     ...{
@@ -90,24 +113,47 @@ export const ButtonRoot = styled(ButtonBase, {
       square: {}
     }[styleProps.shape],
 
-    ...{
-      contained: {
+    ...(styleProps.variant === 'text' && {
+      '&.active-state': {
+        opacity: '0.3'
+      }
+    }),
+
+    ...(styleProps.color !== 'inherit' &&
+      styleProps.variant === 'text' && {
+        color: theme.palette[styleProps.color].main
+      }),
+
+    ...(styleProps.color !== 'inherit' &&
+      styleProps.variant === 'contained' && {
         color: theme.palette[styleProps.color].contrastText,
         backgroundColor: theme.palette[styleProps.color].main,
         borderColor: theme.palette[styleProps.color].main,
-        '&.state-active, &.active': {
+        ...(styleProps.disabled && {
+          color: theme.palette.action.disabled,
+          backgroundColor: theme.palette.action.disabledBackground,
+          borderColor: theme.palette.action.disabled
+        }),
+        '&.active-state, &.active': {
           backgroundColor: darken(theme.palette[styleProps.color].main, 0.3),
           borderColor: darken(theme.palette[styleProps.color].main, 0.3)
         },
+
         '&:focus': {
           boxShadow: theme.shadows[3]
         }
-      },
-      outlined: {
+      }),
+
+    ...(styleProps.color !== 'inherit' &&
+      styleProps.variant === 'outlined' && {
         color: theme.palette[styleProps.color].main,
         backgroundColor: 'transparent',
         borderColor: theme.palette[styleProps.color].main,
-        '&.state-active': {
+        ...(styleProps.disabled && {
+          color: theme.palette.action.disabled,
+          borderColor: theme.palette.action.disabled
+        }),
+        '&.active-state': {
           color: darken(theme.palette[styleProps.color].main, 0.3),
           backgroundColor: alpha(
             theme.palette[styleProps.color].main,
@@ -121,25 +167,45 @@ export const ButtonRoot = styled(ButtonBase, {
           borderColor: theme.palette[styleProps.color].main
         },
         '&:focus': {
-          backgroundColor: alpha(
-            theme.palette[styleProps.color].main,
-            theme.palette.action.hoverOpacity
-          )
+          boxShadow: theme.shadows[3]
         }
-      },
-      text: {
-        color: theme.palette[styleProps.color].main,
-        backgroundColor: 'transparent',
-        '&.state-active': {
-          opacity: 0.75
-        },
-        '&:focus': {
-          textShadow: `1px 1px 5px rgba(0,0,0,0.22)}`
-        }
-      }
-    }[styleProps.variant]
+      })
   };
 });
+
+const ButtonLabel = styled('span', {
+  name: 'WuiButton',
+  slot: 'Label'
+})({
+  width: '100%',
+  display: 'inherit',
+  alignItems: 'inherit',
+  justifyContent: 'inherit'
+});
+
+const ButtonStartIcon = styled('span', {
+  name: 'WuiButton',
+  slot: 'StartIcon'
+})<PickStyleProps<ButtonProps, 'size'>>(({ styleProps }) => ({
+  display: 'inherit',
+  marginRight: 4,
+  marginLeft: -4,
+  ...(styleProps.size === 'small' && {
+    marginLeft: -2
+  })
+}));
+
+const ButtonEndIcon = styled('span', {
+  name: 'WuiButton',
+  slot: 'EndIcon'
+})<PickStyleProps<ButtonProps, 'size'>>(({ styleProps }) => ({
+  display: 'inherit',
+  marginRight: -4,
+  marginLeft: 4,
+  ...(styleProps.size === 'small' && {
+    marginRight: -2
+  })
+}));
 
 const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiButton' });
@@ -147,10 +213,14 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
     checked,
     children,
     className,
+    component = 'button',
     color = 'primary',
     disabled = false,
+    edge = false,
     shape = 'default',
     size = 'medium',
+    startIcon: startIconProp,
+    endIcon: endIconProp,
     variant = 'contained',
     ...rest
   } = props;
@@ -158,6 +228,7 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
   const styleProps = {
     color,
     disabled,
+    edge,
     shape,
     size,
     variant
@@ -165,15 +236,36 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
 
   const classes = useClasses({ ...props, styleProps, name: 'WuiButton' });
 
+  const startIcon = startIconProp && (
+    <ButtonStartIcon className={classes.startIcon} styleProps={styleProps}>
+      {startIconProp}
+    </ButtonStartIcon>
+  );
+
+  const endIcon = endIconProp && (
+    <ButtonEndIcon className={classes.endIcon} styleProps={styleProps}>
+      {endIconProp}
+    </ButtonEndIcon>
+  );
+
   return (
     <ButtonRoot
+      component={component}
       disabled={disabled}
       ref={ref}
       styleProps={styleProps}
       className={clsx(classes.root, { active: checked })}
       {...rest}
     >
-      {children}
+      {component != 'input' ? (
+        <ButtonLabel className={classes.label}>
+          {startIcon}
+          {children}
+          {endIcon}
+        </ButtonLabel>
+      ) : (
+        children
+      )}
     </ButtonRoot>
   );
 });

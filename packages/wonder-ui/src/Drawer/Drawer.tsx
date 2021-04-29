@@ -5,7 +5,8 @@ import type { BaseProps, ClassNameMap, PickStyleProps } from '../styles/types';
 import styled from '../styles/styled';
 import Modal, { ModalProps } from '../Modal';
 import Paper, { PaperProps } from '../Paper';
-import Slide, { SlideProps } from '../Slide';
+import { BaseTransitionProps, TransitionTimeout } from '../Transition';
+import Slide from '../Slide';
 import clsx from 'clsx';
 import { duration } from '../styles/transitions';
 import { DefaultTheme } from '../styles/defaultTheme';
@@ -40,11 +41,13 @@ export interface DrawerProps extends BaseProps {
   /**
    * @ignore
    */
-  transitionDuration?: SlideProps['timeout'];
+  transitionDuration?: TransitionTimeout;
+
+  TransitionComponent?: React.ComponentType<BaseTransitionProps>;
   /**
    * @ignore
    */
-  SlideProps?: SlideProps;
+  TransitionProps?: BaseTransitionProps;
   /**
    * onClose
    */
@@ -161,7 +164,8 @@ const Drawer: React.FC<DrawerProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiDrawer' });
   const {
     PaperProps = {},
-    SlideProps,
+    TransitionComponent = Slide,
+    TransitionProps,
     anchor: anchorProp = 'left',
     children,
     className,
@@ -209,15 +213,15 @@ const Drawer: React.FC<DrawerProps> = React.forwardRef((inProps, ref) => {
   }
 
   const slidingDrawer = (
-    <Slide
+    <TransitionComponent
       in={visible}
       direction={oppositeDirection[anchorInvariant]}
       timeout={transitionDuration}
       appear={mounted.current}
-      {...SlideProps}
+      {...TransitionProps}
     >
       {drawer}
-    </Slide>
+    </TransitionComponent>
   );
 
   if (variant === 'persistent') {

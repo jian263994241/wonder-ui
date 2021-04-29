@@ -34,7 +34,7 @@ export default function useClasses<
           return makeClassName(key, value);
         });
       } else {
-        makeClassName(key, value);
+        return makeClassName(key, value);
       }
     }),
     classesInput.root,

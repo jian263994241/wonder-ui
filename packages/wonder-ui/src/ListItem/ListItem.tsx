@@ -10,8 +10,8 @@ import ListItemMedia from '../ListItemMedia';
 import ListItemExtra from '../ListItemExtra';
 import type { BaseProps, ClassNameMap, PickStyleProps } from '../styles/types';
 import { getDevice } from '@wonder-ui/utils';
+import clsx from 'clsx';
 
-const device = getDevice();
 export interface ListItemProps extends BaseProps {
   alignItems?: 'flex-start' | 'center';
   /**
@@ -64,7 +64,7 @@ const ListItemRoot = styled('li', {
       cursor: 'pointer'
     }),
 
-    '&.state-active': {
+    '&.active-state': {
       backgroundColor: darken(theme.palette.background.paper, 0.1)
     },
 
@@ -129,6 +129,8 @@ const direction = {
   'vertical-up': 'up'
 } as const;
 
+const device = getDevice();
+
 const ListItem: React.FC<ListItemProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiListItem' });
 
@@ -148,11 +150,10 @@ const ListItem: React.FC<ListItemProps> = React.forwardRef((inProps, ref) => {
 
   const classes = useClasses({ ...props, styleProps, name: 'WuiListItem' });
 
-  const containerProps = useTouchFeedback({
+  const [touchActive, handleEvents] = useTouchFeedback({
     ...props,
-    prefixClassName: classes.root,
-    activeClassName: 'state-active',
-    disabled: !button
+    disabled: !button,
+    type: device.desktop ? 'hover' : 'touch'
   });
 
   const childGroup = React.useMemo(
@@ -177,10 +178,13 @@ const ListItem: React.FC<ListItemProps> = React.forwardRef((inProps, ref) => {
   return (
     <ListItemRoot
       as={component}
+      className={clsx(classes.root, {
+        'active-state': touchActive
+      })}
       styleProps={styleProps}
       ref={ref}
       {...rest}
-      {...containerProps}
+      {...handleEvents}
     >
       {childGroup.media}
       <ListItemInner styleProps={styleProps}>

@@ -7,6 +7,7 @@
 import {
   jsx,
   ArrowForward,
+  Button,
   IconButton,
   Navbar,
   Container,
@@ -19,11 +20,11 @@ export default function Example() {
   return (
     <Container size="sm">
       <Space direction="vertical">
-        <Navbar right={<CloseButton edge="end" disabledTouchState />} />
+        <Navbar right={<CloseButton edge="end" />} />
 
         <Navbar
           left={
-            <IconButton edge="start" disabledTouchState>
+            <IconButton edge="start">
               <ArrowForward direction="left" />
             </IconButton>
           }
@@ -34,7 +35,7 @@ export default function Example() {
         <Navbar
           title="导航栏"
           left={
-            <IconButton edge="start" disabledTouchState>
+            <IconButton edge="start">
               <ArrowForward direction="left" />
             </IconButton>
           }
@@ -43,12 +44,12 @@ export default function Example() {
         <Navbar
           title="导航栏"
           left={
-            <IconButton edge="start" disabledTouchState>
+            <IconButton edge="start">
               <ArrowForward direction="left" />
             </IconButton>
           }
           right={
-            <IconButton edge="end" disabledTouchState>
+            <IconButton edge="end">
               <ThreeDotsVertical />
             </IconButton>
           }
@@ -57,16 +58,16 @@ export default function Example() {
         <Navbar
           title="导航栏"
           left={
-            <IconButton edge="start" disabledTouchState>
+            <IconButton edge="start">
               <ArrowForward direction="left" />
             </IconButton>
           }
           right={
             <div>
-              <IconButton size="small" disabledTouchState>
+              <IconButton size="small">
                 <Search />
               </IconButton>
-              <IconButton size="small" edge="end" disabledTouchState>
+              <IconButton size="small" edge="end">
                 <ThreeDotsVertical />
               </IconButton>
             </div>
@@ -75,7 +76,27 @@ export default function Example() {
 
         <Navbar
           title="导航栏"
-          right={<CloseButton edge="end" disabledTouchState />}
+          subTitle="副标题"
+          right={<CloseButton edge="end" />}
+        />
+
+        <Navbar
+          title="导航栏"
+          subTitle="副标题"
+          left={
+            <Button
+              startIcon={<ArrowForward direction="left" />}
+              variant="text"
+              edge="start"
+            >
+              返回
+            </Button>
+          }
+          right={
+            <Button variant="text" edge="end">
+              关闭
+            </Button>
+          }
         />
       </Space>
     </Container>

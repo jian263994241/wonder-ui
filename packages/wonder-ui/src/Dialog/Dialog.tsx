@@ -156,7 +156,7 @@ const DialogButton = styled(ButtonBase, {
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   boxSizing: 'border-box',
-  '&.state-active': {
+  '&.active-state': {
     backgroundColor: 'rgba(0,0,0,0.1)'
   },
   '&:focus': {

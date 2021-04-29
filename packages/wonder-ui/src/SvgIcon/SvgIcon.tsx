@@ -64,7 +64,7 @@ const SvgIcon: React.FC<SvgIconProps> = React.forwardRef((inProps, ref) => {
     className,
     component = 'svg',
     rootRef,
-    size = 'medium',
+    size = 'small',
     spin = false,
     titleAccess,
     viewBox = '0 0 16 16',

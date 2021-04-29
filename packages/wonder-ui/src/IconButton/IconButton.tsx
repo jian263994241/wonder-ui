@@ -9,7 +9,7 @@ import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 export interface IconButtonProps extends ButtonBaseProps {
   color?: 'default' | 'inherit' | 'primary' | 'secondary';
   disabled?: boolean;
-  edge?: 'end' | 'start' | boolean;
+  edge?: 'end' | 'start' | false;
   size?: 'medium' | 'small';
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
@@ -39,10 +39,6 @@ const IconButtonRoot = styled(ButtonBase, {
     textDecoration: 'none',
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
-    transition: theme.transitions.create(
-      ['background-color', 'border-color', 'box-shadow', 'color', 'opacity'],
-      { duration: theme.transitions.duration.shorter }
-    ),
 
     // So we take precedent over the style of a native <a /> element.
     '&::-moz-focus-inner': {
@@ -62,14 +58,8 @@ const IconButtonRoot = styled(ButtonBase, {
     overflow: 'visible', // Explicitly set the default value to solve a bug on IE11.
     lineHeight: 0,
     color: theme.palette.action.active,
-    transition: theme.transitions.create('background-color', {
-      duration: theme.transitions.duration.short
-    }),
-    '&.state-active': {
-      backgroundColor: alpha(
-        theme.palette.action.active,
-        theme.palette.action.hoverOpacity
-      )
+    '&.active-state': {
+      opacity: 0.3
     },
     /* Styles applied to the root element if `edge="start"`. */
     ...(styleProps.edge === 'start' && {
@@ -87,23 +77,11 @@ const IconButtonRoot = styled(ButtonBase, {
     }),
     /* Styles applied to the root element if `color="primary"`. */
     ...(styleProps.color === 'primary' && {
-      color: theme.palette.primary.main,
-      '&.state-active': {
-        backgroundColor: alpha(
-          theme.palette.primary.main,
-          theme.palette.action.hoverOpacity
-        )
-      }
+      color: theme.palette.primary.main
     }),
     /* Styles applied to the root element if `color="secondary"`. */
     ...(styleProps.color === 'secondary' && {
-      color: theme.palette.secondary.main,
-      '&.state-active': {
-        backgroundColor: alpha(
-          theme.palette.secondary.main,
-          theme.palette.action.hoverOpacity
-        )
-      }
+      color: theme.palette.secondary.main
     }),
     /* Styles applied to the root element if `size="small"`. */
     ...(styleProps.size === 'small' && {
@@ -129,7 +107,6 @@ const IconButton: React.FC<IconButtonProps> = React.forwardRef(
       color = 'default',
       disabled = false,
       size = 'medium',
-
       ...rest
     } = props;
 

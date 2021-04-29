@@ -8,9 +8,14 @@ import { Button, jsx, Space } from '@wonder-ui/core';
 export default function Example() {
   return (
     <Space>
-      <Button disabled>Disabled button</Button>
-      <Button color="secondary" disabled>
-        Disabled button
+      <Button variant="contained" disabled>
+        Contained Button
+      </Button>
+      <Button variant="outlined" disabled>
+        Outlined Button
+      </Button>
+      <Button variant="text" disabled>
+        Text Button
       </Button>
     </Space>
   );

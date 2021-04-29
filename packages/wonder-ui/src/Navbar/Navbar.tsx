@@ -83,6 +83,18 @@ const NavbarTitle = styled('div', {
   paddingRight: 16
 });
 
+const NavbarSubTitle = styled('div', {
+  name: 'WuiNavbar',
+  slot: 'SubTitle'
+})({
+  display: 'block',
+  fontSize: '0.65em',
+  fontWeight: 400,
+  textAlign: 'center',
+  lineHeight: 1,
+  color: 'rgba(0, 0, 0, 0.6)'
+});
+
 const NavbarLeft = styled('div', {
   name: 'WuiNavbar',
   slot: 'Left'
@@ -126,6 +138,10 @@ export interface NavbarProps extends BaseProps {
    * 标题
    */
   title?: React.ReactNode;
+  /**
+   * 副标题
+   */
+  subTitle?: React.ReactNode;
 }
 
 const Navbar: React.FC<NavbarProps> = React.forwardRef((inProps, ref) => {
@@ -134,6 +150,7 @@ const Navbar: React.FC<NavbarProps> = React.forwardRef((inProps, ref) => {
     children,
     className,
     title,
+    subTitle,
     left: barLeft,
     right: barRight,
     theme,
@@ -225,6 +242,7 @@ const Navbar: React.FC<NavbarProps> = React.forwardRef((inProps, ref) => {
           className={classes.title}
         >
           {title}
+          {subTitle && <NavbarSubTitle>{subTitle}</NavbarSubTitle>}
         </NavbarTitle>
         {barRight && (
           <NavbarRight

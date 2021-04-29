@@ -49,6 +49,7 @@ export default defineConfig({
           'components/container.md',
           'components/divider.md',
           'components/grid.md',
+          'components/page.md',
           'components/space.md',
           'components/whiteSpace.md'
         ]

@@ -4,11 +4,13 @@ import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import type { PickStyleProps, BaseProps } from '../styles/types';
 import { useTouchFeedback } from '@wonder-ui/hooks';
+import { getDevice } from '@wonder-ui/utils';
+import clsx from 'clsx';
 
 export interface ButtonBaseProps extends BaseProps {
   autofocus?: boolean;
   disabled?: boolean;
-  disabledTouchState?: boolean;
+  disabledTouchFeedback?: boolean;
   /**
    * Click event
    */
@@ -53,6 +55,8 @@ const ButtonBaseRoot = styled('button', {
   })
 }));
 
+const device = getDevice();
+
 const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiButtonBase' });
@@ -60,7 +64,7 @@ const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
     const {
       autofocus = true,
       disabled = false,
-      disabledTouchState = false,
+      disabledTouchFeedback = false,
       className,
       component,
       ...rest
@@ -70,23 +74,25 @@ const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
 
     const classes = useClasses({ ...props, styleProps, name: 'WuiButtonBase' });
 
-    const containerProps = useTouchFeedback({
+    const [touchActive, handleEvents] = useTouchFeedback({
       ...props,
-      disabled: disabled || disabledTouchState,
-      prefixClassName: classes.root,
-      activeClassName: 'state-active'
+      disabled: disabled || disabledTouchFeedback,
+      type: device.desktop ? 'hover' : 'touch'
     });
 
     return (
       <ButtonBaseRoot
         as={component}
+        className={clsx(classes.root, {
+          'active-state': touchActive
+        })}
         data-autofocus={autofocus}
         role="button"
         aria-disabled={disabled}
         disabled={disabled}
         styleProps={styleProps}
         ref={ref}
-        {...containerProps}
+        {...handleEvents}
         {...rest}
       ></ButtonBaseRoot>
     );
