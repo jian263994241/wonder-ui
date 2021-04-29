@@ -118,6 +118,9 @@ export * from './Space';
 export { default as SvgIcon } from './SvgIcon';
 export * from './SvgIcon';
 
+export { default as Swipe } from './Swipe';
+export * from './Swipe';
+
 export { default as Toggle } from './Toggle';
 export * from './Toggle';
 

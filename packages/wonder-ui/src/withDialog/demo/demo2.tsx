@@ -37,13 +37,13 @@ export default withDialog(function Example(props) {
               {
                 children: '标为未读',
                 onClick: () => {
-                  alert('标为未读');
+                  console.log('标为未读');
                 }
               },
               {
                 children: '置顶聊天',
                 onClick: () => {
-                  alert('置顶聊天');
+                  console.log('置顶聊天');
                 }
               },
               {

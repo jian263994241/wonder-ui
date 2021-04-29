@@ -6,7 +6,6 @@ export default defineConfig({
   outputPath: 'dumi-static',
   publicPath: './',
   history: { type: 'hash' },
-  exportStatic: {},
   locales: [['zh-CN', '中文']],
   extraBabelPlugins: [
     [
@@ -79,7 +78,8 @@ export default defineConfig({
         children: [
           'components/badge.md',
           'components/collapse.md',
-          'components/list.md'
+          'components/list.md',
+          'components/swipe.md'
         ]
       },
       {

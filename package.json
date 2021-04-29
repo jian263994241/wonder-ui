@@ -15,6 +15,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@babel/plugin-transform-react-jsx-development": "^7.12.17",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "@testing-library/jest-dom": "^5.11.6",

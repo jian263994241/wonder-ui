@@ -19,7 +19,8 @@ const styles = {
   },
   entered: {
     opacity: 1,
-    transform: 'none'
+    transform: getScale(1)
+    // transform: 'none'
   }
 };
 

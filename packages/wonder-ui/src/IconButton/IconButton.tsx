@@ -9,7 +9,7 @@ import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 export interface IconButtonProps extends ButtonBaseProps {
   color?: 'default' | 'inherit' | 'primary' | 'secondary';
   disabled?: boolean;
-  edge?: 'end' | 'start' | false;
+  edge?: 'end' | 'start' | boolean;
   size?: 'medium' | 'small';
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
