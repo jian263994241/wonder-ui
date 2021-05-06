@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { map, isObject } from '@wonder-ui/utils';
+import { isObject, mapObject } from '@wonder-ui/utils';
 
 type Options<Classes extends Record<string, string>> = {
   name: string;
@@ -28,9 +28,9 @@ export default function useClasses<
   };
 
   const classes = clsx(
-    map(styleProps, (value, key) => {
+    mapObject(styleProps, (value, key) => {
       if (isObject(value)) {
-        return map(value, (value: any, key: string) => {
+        return mapObject(value, (value, key) => {
           return makeClassName(key, value);
         });
       } else {

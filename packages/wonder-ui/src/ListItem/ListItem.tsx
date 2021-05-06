@@ -3,13 +3,12 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
 import { useTouchFeedback } from '@wonder-ui/hooks';
-import { groupBy } from '@wonder-ui/utils';
 import { alpha, darken } from '../styles/colorManipulator';
 import ArrowForward, { ArrowForwardProps } from '../ArrowForward';
 import ListItemMedia from '../ListItemMedia';
 import ListItemExtra from '../ListItemExtra';
 import type { BaseProps, ClassNameMap, PickStyleProps } from '../styles/types';
-import { getDevice } from '@wonder-ui/utils';
+import { getDevice, groupBy } from '@wonder-ui/utils';
 import clsx from 'clsx';
 
 export interface ListItemProps extends BaseProps {

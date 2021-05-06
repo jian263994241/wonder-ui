@@ -4,6 +4,7 @@ import useThemeProps from '../styles/useThemeProps';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import type { BaseProps, ClassNameMap } from '../styles/types';
+import { noop } from '@wonder-ui/utils';
 
 const SwipeRoot = styled('div', {
   name: 'WuiSwipe',
@@ -87,8 +88,6 @@ export interface SwipeProps extends BaseProps, SwipeOptions {
     Pick<Swipejs, 'next' | 'prev' | 'getNumSlides' | 'getPos' | 'slide'>
   >;
 }
-
-const noop = () => {};
 
 const Swipe: React.FC<SwipeProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiSwipe' });
