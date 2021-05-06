@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/utils",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Wonder-UI utils",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -44,7 +44,7 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "tag": "stable",
+    "tag": "latest",
     "access": "public"
   }
 }
