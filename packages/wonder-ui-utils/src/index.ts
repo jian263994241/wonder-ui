@@ -8,7 +8,7 @@ export { default as getScrollbarSize } from './getScrollbarSize';
 export { default as getSupport } from './getSupport';
 export { default as isObject } from './isObject';
 export { default as isPromise } from './isPromise';
-export { default as noop } from 'lodash/noop';
+export { default as noop } from './noop';
 export { default as ownerDocument } from './ownerDocument';
 export { default as ownerWindow } from './ownerWindow';
 export { default as setRef } from './setRef';

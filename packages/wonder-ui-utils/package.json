@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/utils",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Wonder-UI utils",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -20,12 +20,10 @@
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
     "test:coverage": "tsdx test --coverage",
-    "example": "cd ./example && ale start",
-    "publish:next": "npm version prerelease & npm publish ./ --access=public --tag=next"
+    "example": "cd ./example && ale start"
   },
   "keywords": [
-    "wonder ui",
-    "react-utils"
+    "wonder ui"
   ],
   "author": "jian.li",
   "homepage": "https://github.com/jian263994241/wonder-ui/tree/master/packages",
