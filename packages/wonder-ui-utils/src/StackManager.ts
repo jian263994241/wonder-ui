@@ -25,7 +25,6 @@ export default class StackManager {
 
     if (fn) {
       this.run(fn);
-      // setTimeout(() => this.run(fn), 0);
     }
   };
 
