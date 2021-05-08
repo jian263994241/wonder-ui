@@ -55,7 +55,6 @@ const Backdrop: React.FC<BackdropProps> = React.forwardRef((inProps, ref) => {
     className,
     component,
     invisible = false,
-    rootRef,
     visible,
     transitionDuration,
     ...rest
