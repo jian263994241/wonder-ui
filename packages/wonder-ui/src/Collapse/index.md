@@ -8,7 +8,7 @@ sidemenu: false
 | --- | --- | --- | ---
 | children | children | `ReactNode` |
 | collapsedSize | 折叠尺寸 | `string \| number` | 0
-| component | root element | `keyof ReactHTML \| ComponentType` | div
+| component | root element | `ElementType` | div
 | direction | 动画过渡方向 | `'horizontal' \| 'vertical'` | vertical
 | in | 显示隐藏内容 | `boolean` | false
 | onEnter | transition 回调 | `(node: HTMLElement) => void` |

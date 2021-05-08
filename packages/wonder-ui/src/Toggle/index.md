@@ -11,7 +11,7 @@ sidemenu: false
 | checkedIcon | checked icon | `ReactElement` |
 | classes | css api | `ClassNameMap<'root' \| 'input' \| 'icon'>` |
 | color | color | `'primary' \| 'secondary' \| 'danger' \| 'warning' \| 'info'` | primary
-| component | root element | `keyof ReactHTML \| ComponentType` | div
+| component | root element | `ElementType` | div
 | defaultChecked | default checked | `boolean` |
 | disabled | disabled | `boolean` | false
 | icon | icon | `ReactElement` |

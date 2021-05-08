@@ -10,7 +10,7 @@ sidemenu: false
 | FocusLockProps | FocusLock Props | `ReactFocusLockProps` | {}
 | children | 子节点 | `ReactElement` |
 | closeAfterTransition | 过渡后关闭 | `boolean` | false
-| component | root element | `keyof ReactHTML \| ComponentType` | div
+| component | root element | `ElementType` | div
 | container | container | `HTMLElement` |
 | disableAutoFocus | 禁用AutoFocus | `boolean` | false
 | disableEscapeKeyDown | 禁用esc按键执行关闭 | `boolean` | false

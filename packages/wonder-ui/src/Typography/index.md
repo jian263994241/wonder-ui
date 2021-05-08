@@ -9,7 +9,7 @@ sidemenu: false
 | align | 对齐 | `CSS.Properties['textAlign']` | inherit
 | children | children | `ReactNode` |
 | color | 颜色 | `'inherit' \| 'primary' \| 'secondary' \| 'hint'` | inherit
-| component | root element | `keyof ReactHTML \| ComponentType` | span
+| component | root element | `ElementType` | span
 | gutterBottom | 增加间距 | `boolean` | false
 | lineClamp | 显示行数 | `number` |
 | noWrap | 不换行 | `boolean` | false

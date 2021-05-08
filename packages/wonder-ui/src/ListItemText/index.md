@@ -8,7 +8,7 @@ sidemenu: false
 | --- | --- | --- | ---
 | children | Primary text | `ReactNode` |
 | classes | Css api | `ClassNameMap<'root' \| 'primary' \| 'secondary'>` |
-| component | Root element | `keyof ReactHTML \| ComponentType` | div
+| component | Root element | `ElementType` | div
 | disableTypography | Disable Typography | `boolean` | false
 | primary | Primary text | `ReactNode` |
 | primaryTypographyProps | props | `TypographyProps` |

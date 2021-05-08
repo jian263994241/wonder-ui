@@ -9,7 +9,7 @@ sidemenu: false
 | --- | --- | --- | ---
 | align | flex alignItems	 | `'start' \| 'end' \| 'center' \| 'baseline'` | center
 | children | children | `ReactNode` |
-| component | root element | `keyof ReactHTML \| ComponentType` | div
+| component | root element | `ElementType` | div
 | direction | direction | `'vertical' \| 'horizontal'` | horizontal
 | size | gutter size	| `SpaceSize \| [SpaceSize, SpaceSize]` , `SpaceSize = 'small' \| 'medium' \| 'large' \| 'number'` | medium
 | split | split node	| `ReactNode` |

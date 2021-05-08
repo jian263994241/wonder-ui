@@ -8,7 +8,7 @@ sidemenu: false
 | --- | --- | --- | ---
 | absolute | position	 | `boolean` | false
 | children | children | `ReactNode` |
-| component | root element | `keyof ReactHTML \| ComponentType` | hr
+| component | root element | `ElementType` | hr
 | direction | direction	 | `'horizontal' \| 'vertical'` | horizontal
 | flexItem | flexItem	 | `boolean` | false
 | light | light	 | `boolean` | false
