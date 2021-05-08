@@ -9,18 +9,13 @@ export interface PickStyleProps<
   styleProps: Required<Pick<Props, StylePropKeys>> & Extra;
 }
 
-export interface BaseProps {
-  /** element class */
-  className?: string;
-  /**
-   * @description children
-   */
+export interface BaseProps extends React.AriaAttributes {
   children?: React.ReactNode;
   /**
    * @description Root element
    * @default span
    */
-  component?: keyof React.ReactHTML | React.ComponentType;
+  component?: React.ElementType;
   /**
    * Theme
    */
@@ -30,7 +25,11 @@ export interface BaseProps {
    */
   ref?: React.Ref<any>;
   /**
-   * Element style
+   * HTML Attributes
+   */
+  className?: string;
+  /**
+   * HTML Attributes
    */
   style?: React.CSSProperties;
   /**
