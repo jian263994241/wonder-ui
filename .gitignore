@@ -1,6 +1,7 @@
 .Ds_Store
 .eslintcache
 .yarn
+.yarnrc
 .vscode
 .idea
 
@@ -9,6 +10,7 @@ package-lock.json
 npm-packages
 lerna-debug.log
 yarn-error.log
+yarn.lock
 dist
 build
 
