@@ -43,8 +43,8 @@
     "hoist-non-react-statics": "^3.3.2",
     "react-focus-lock": "^2.5.0",
     "react-popper": "^2.2.4",
-    "react-transition-group": "^4.4.1",
-    "swipejs": "^2.3.1"
+    "react-slick": "^0.28.1",
+    "react-transition-group": "^4.4.1"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
@@ -61,6 +61,7 @@
   },
   "devDependencies": {
     "@types/hoist-non-react-statics": "^3.3.1",
+    "@types/react-slick": "^0.23.4",
     "@types/react-transition-group": "^4.4.1"
   }
 }

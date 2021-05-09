@@ -1,214 +1,214 @@
 import * as React from 'react';
-import Swipejs from 'swipejs';
-import useThemeProps from '../styles/useThemeProps';
+import Slider, { Settings } from 'react-slick';
+import IconButton from '../IconButton';
+import { mapObject } from '@wonder-ui/utils';
+import ArrowForward from '../ArrowForward';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
-import type { BaseProps, ClassNameMap } from '../styles/types';
-import { noop } from '@wonder-ui/utils';
+import useThemeProps from '../styles/useThemeProps';
+import ButtonBase from '../ButtonBase';
+import { alpha } from '../styles/colorManipulator';
 
-const SwipeRoot = styled('div', {
+const SwipeRoot = styled(Slider, {
   name: 'WuiSwipe',
   slot: 'Root'
-})({
-  overflow: 'hidden',
-  visibility: 'hidden',
-  position: 'relative'
-});
-
-const SwipeInner = styled('div', {
-  name: 'WuiSwipe',
-  slot: 'Inner'
-})({
-  overflow: 'hidden',
+})<Settings>({
   position: 'relative',
-  '& > div': {
-    float: 'left',
-    width: '100%',
+  display: 'block',
+  boxSizing: 'border-box',
+  userSelect: 'none',
+  WebkitTouchCallout: 'none',
+  touchAction: 'pan-y',
+  WebkitTapHighlightColor: 'transparent',
+  '& > .slick-list': {
     position: 'relative',
-    overflow: 'hidden'
+    display: 'block',
+    overflow: 'hidden',
+    margin: 0,
+    padding: 0
+  },
+  '& > .slick-list:focus': {
+    outline: 'none'
+  },
+  '& > .slick-list.dragging': {
+    cursor: 'pointer'
+  },
+  '& .slick-track, & .slick-list': {
+    transform: 'translate3d(0, 0, 0)'
+  },
+  '& .slick-track': {
+    position: 'relative',
+    display: 'block',
+    transform: 'translate3d(0, 0, 0)',
+    top: 0,
+    left: 0
+  },
+  '& .slick-track:before': {
+    display: 'table',
+    content: '""'
+  },
+  '& .slick-track:after': {
+    display: 'table',
+    content: '""',
+    clear: 'both'
+  },
+  '& .slick-slide': {
+    display: 'none',
+    float: 'left',
+    height: '100%',
+    minHeight: 1
+  },
+  '&.slick-vertical .slick-slide': {
+    display: 'block',
+    height: 'auto',
+    border: '1px solid transparent'
+  },
+  '&[dir=rtl] .slick-slide': {
+    float: 'right'
+  },
+  '& .slick-slide img': {
+    display: 'block'
+  },
+  '& .slick-slide.slick-loading img': {
+    display: 'none'
+  },
+  '& .slick-slide.dragging img': {
+    pointerEvents: 'none'
+  },
+  '&.slick-initialized .slick-slide': {
+    display: 'block'
+  },
+  '&.slick-loading .slick-track': {
+    visibility: 'hidden'
+  },
+  '&.slick-loading .slick-slide': {
+    visibility: 'hidden'
+  },
+  '& .slick-arrow.slick-hidden': {
+    display: 'none'
+  },
+  '& > .slick-dots': {
+    position: 'absolute',
+    display: 'block',
+    width: '100%',
+    listStyle: 'none',
+    textAlign: 'center',
+    bottom: 10,
+    margin: 0,
+    padding: 0
+  },
+  '& > .slick-dots li': {
+    position: 'relative',
+    display: 'inline-block',
+    margin: '0 5px',
+    padding: 0
   }
 });
 
-interface SwipeOptions {
-  /**
-   * index position at which Swipe should start
-   * @default 0
-   */
-  startSlide?: number;
-  /**
-   * speed of prev and next transitions in milliseconds.
-   * @default 400
-   */
-  speed?: number;
-  /**
-   * when specified, start an auto-playing slideshow (time in milliseconds between slide change).
-   * @default 3000
-   */
-  auto?: number;
-  /**
-   * listen to mouse events in addition to the touch events
-   * @default false
-   */
-  draggable?: boolean;
-  /**
-   * create an infinite feel with no endpoints.
-   */
-  continuous?: boolean;
-  /**
-   * auto restart slideshow after user's touch event or next/prev calls.
-   */
-  autoRestart?: boolean;
-  /**
-   * prevent any touch events on this container from scrolling the page.
-   */
-  disableScroll?: boolean;
-  /**
-   * stop event propagation.
-   */
-  stopPropagation?: boolean;
-  /**
-   * ignore touch events on any element matching this selector
-   * @default null
-   */
-  ignore?: string;
-  /**
-   * runs at slide change. Three parameters are passed to the function: index (the current slide index)elem (the current slide element) and dir (direction: 1 for left or backward-1 for right or forward).
-   */
-  callback?: (index: number, elem: HTMLElement, dir: number) => void;
-  /**
-   * runs at the end of a slide transition. Two parameters are passed to the function: index (the current slide index) and elem (the current slide element).
-   */
-  transitionEnd?: (index: number, elem: HTMLElement) => void;
+const SwipeArrowButton = styled(IconButton, {
+  name: 'WuiSwipe',
+  slot: 'Arrow',
+  shouldForwardProp: (prop: string) =>
+    prop !== 'currentSlide' && prop !== 'slideCount' && prop !== 'next'
+})(({ next, theme }) => ({
+  position: 'absolute',
+  top: '50%',
+  zIndex: 1,
+  color: theme.palette.common.white,
+  transform: 'translateY(-50%)',
+  ...(next ? { right: 0 } : { left: 0 })
+}));
+
+const SwipeDot = styled(ButtonBase, { name: 'WuiSwipe', slot: 'Dot' })(
+  ({ theme }) => ({
+    fontSize: 0,
+    lineHeight: 0,
+    display: 'block',
+    padding: 3,
+    cursor: 'pointer',
+    color: 'transparent',
+    border: 0,
+    outline: 'none',
+    background: alpha(theme.palette.common.white, 0.6),
+    borderRadius: '50%',
+    '.slick-active > &': {
+      background: theme.palette.common.white
+    }
+  })
+);
+
+export interface SwipeMethod {
+  slickNext(): void;
+  slickPause(): void;
+  slickPlay(): void;
+  slickPrev(): void;
+  slickGoTo(slideNumber: number, dontAnimate?: boolean): void;
 }
 
-export interface SwipeProps extends BaseProps, SwipeOptions {
-  classes?: ClassNameMap<'root' | 'inner'>;
-  disabled?: boolean;
-  ref?: React.Ref<
-    Pick<Swipejs, 'next' | 'prev' | 'getNumSlides' | 'getPos' | 'slide'>
-  >;
+export interface SwipeProps extends Settings {
+  ref?: React.Ref<SwipeMethod>;
 }
 
 const Swipe: React.FC<SwipeProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiSwipe' });
   const {
+    arrows = false,
+    customPaging = (index) => <SwipeDot key={index} />,
     children,
     className,
-    disabled = false,
-    auto = 3000,
-    startSlide = 0,
-    speed = 400,
-    draggable = true,
-    autoRestart = true,
-    continuous = true,
-    disableScroll = false,
-    stopPropagation = false,
-    ignore,
-    callback,
-    transitionEnd,
+    dots = false,
+    prevArrow = (
+      <SwipeArrowButton size="small">
+        <ArrowForward direction="left" />
+      </SwipeArrowButton>
+    ),
+    nextArrow = (
+      <SwipeArrowButton next size="small">
+        <ArrowForward direction="right" />
+      </SwipeArrowButton>
+    ),
     ...rest
   } = props;
 
-  const rootRef = React.useRef<HTMLDivElement>(null);
-  const [slider, setSlider] = React.useState<Swipejs>({
-    prev: noop,
-    next: noop,
-    getPos: () => 0,
-    getNumSlides: () => 0,
-    slide: noop,
-    restart: noop,
-    stop: noop,
-    setup: noop,
-    kill: noop,
-    disable: noop,
-    enable: noop
-  });
-
   const classes = useClasses({ ...props, name: 'WuiSwipe' });
+  const SliderRef = React.useRef<Slider>(null);
 
   React.useImperativeHandle(
     ref,
-    () => ({
-      next: () => {
-        slider.next();
-      },
-      prev: () => {
-        slider.prev();
-      },
-      slide: (index: number, duration: number = speed) => {
-        slider.slide(index, duration);
-      },
-      getNumSlides: () => {
-        return slider.getNumSlides();
-      },
-      getPos: () => {
-        return slider.getPos();
-      }
-    }),
-    [slider]
+    () => {
+      return {
+        slickNext() {
+          SliderRef.current?.slickNext();
+        },
+        slickPause() {
+          SliderRef.current?.slickPause();
+        },
+        slickPlay() {
+          SliderRef.current?.slickPlay();
+        },
+        slickPrev() {
+          SliderRef.current?.slickPrev();
+        },
+        slickGoTo(slideNumber: number, dontAnimate?: boolean) {
+          SliderRef.current?.slickGoTo(slideNumber, dontAnimate);
+        }
+      };
+    },
+    []
   );
 
-  React.useEffect(() => {
-    if (!rootRef.current) return;
-
-    const { current: root } = rootRef;
-
-    setTimeout(() => {
-      const slider = new Swipejs(root);
-      setSlider(slider);
-    }, 0);
-
-    return () => {
-      slider.kill();
-    };
-  }, []);
-
-  React.useEffect(() => {
-    slider.setup({
-      startSlide,
-      auto,
-      draggable,
-      autoRestart,
-      continuous,
-      disableScroll,
-      stopPropagation,
-      ignore,
-      callback,
-      transitionEnd
-    });
-  }, [
-    slider,
-    startSlide,
-    auto,
-    draggable,
-    autoRestart,
-    continuous,
-    disableScroll,
-    stopPropagation,
-    ignore,
-    callback,
-    transitionEnd
-  ]);
-
-  React.useEffect(() => {
-    if (disabled) {
-      slider.disable();
-    } else {
-      slider.enable();
-    }
-  }, [slider, disabled]);
-
-  React.useEffect(() => {
-    if (auto > 0) {
-      slider.restart();
-    } else {
-      slider.stop();
-    }
-  }, [slider, auto]);
-
   return (
-    <SwipeRoot {...rest} ref={rootRef} className={classes.root}>
-      <SwipeInner>{children}</SwipeInner>
+    <SwipeRoot
+      arrows={arrows}
+      className={classes.root}
+      customPaging={customPaging}
+      dots={dots}
+      nextArrow={nextArrow}
+      prevArrow={prevArrow}
+      {...rest}
+      ref={SliderRef}
+    >
+      {children}
     </SwipeRoot>
   );
 });
