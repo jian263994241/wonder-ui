@@ -16,7 +16,7 @@ const SwipeItem = styled('div')`
 export default function Example() {
   return (
     <Container>
-      <Swipe autoplay arrows dots>
+      <Swipe autoplay arrows dots infinite>
         <SwipeItem>1</SwipeItem>
         <SwipeItem>2</SwipeItem>
         <SwipeItem>3</SwipeItem>

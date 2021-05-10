@@ -1,12 +1,11 @@
 import * as React from 'react';
-import Slider, { Settings } from 'react-slick';
-import IconButton from '../IconButton';
-import { mapObject } from '@wonder-ui/utils';
 import ArrowForward from '../ArrowForward';
+import ButtonBase from '../ButtonBase';
+import IconButton from '../IconButton';
+import Slider, { Settings } from 'react-slick';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import ButtonBase from '../ButtonBase';
 import { alpha } from '../styles/colorManipulator';
 
 const SwipeRoot = styled(Slider, {
@@ -137,16 +136,8 @@ const SwipeDot = styled(ButtonBase, { name: 'WuiSwipe', slot: 'Dot' })(
   })
 );
 
-export interface SwipeMethod {
-  slickNext(): void;
-  slickPause(): void;
-  slickPlay(): void;
-  slickPrev(): void;
-  slickGoTo(slideNumber: number, dontAnimate?: boolean): void;
-}
-
 export interface SwipeProps extends Settings {
-  ref?: React.Ref<SwipeMethod>;
+  ref?: React.Ref<Slider>;
 }
 
 const Swipe: React.FC<SwipeProps> = React.forwardRef((inProps, ref) => {
@@ -157,6 +148,7 @@ const Swipe: React.FC<SwipeProps> = React.forwardRef((inProps, ref) => {
     children,
     className,
     dots = false,
+    infinite = false,
     prevArrow = (
       <SwipeArrowButton size="small">
         <ArrowForward direction="left" />
@@ -171,31 +163,6 @@ const Swipe: React.FC<SwipeProps> = React.forwardRef((inProps, ref) => {
   } = props;
 
   const classes = useClasses({ ...props, name: 'WuiSwipe' });
-  const SliderRef = React.useRef<Slider>(null);
-
-  React.useImperativeHandle(
-    ref,
-    () => {
-      return {
-        slickNext() {
-          SliderRef.current?.slickNext();
-        },
-        slickPause() {
-          SliderRef.current?.slickPause();
-        },
-        slickPlay() {
-          SliderRef.current?.slickPlay();
-        },
-        slickPrev() {
-          SliderRef.current?.slickPrev();
-        },
-        slickGoTo(slideNumber: number, dontAnimate?: boolean) {
-          SliderRef.current?.slickGoTo(slideNumber, dontAnimate);
-        }
-      };
-    },
-    []
-  );
 
   return (
     <SwipeRoot
@@ -203,10 +170,11 @@ const Swipe: React.FC<SwipeProps> = React.forwardRef((inProps, ref) => {
       className={classes.root}
       customPaging={customPaging}
       dots={dots}
+      infinite={infinite}
       nextArrow={nextArrow}
       prevArrow={prevArrow}
       {...rest}
-      ref={SliderRef}
+      ref={ref}
     >
       {children}
     </SwipeRoot>
