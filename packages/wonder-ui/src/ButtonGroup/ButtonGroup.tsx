@@ -3,9 +3,14 @@ import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import type { BaseProps, PickStyleProps } from '../styles/types';
 import styled from '../styles/styled';
-import { ButtonRoot } from '../Button/Button';
+import { ButtonRoot, ButtonProps } from '../Button/Button';
+import * as ReactIs from 'react-is';
 
 export interface ButtonGroupProps extends BaseProps {
+  /**
+   * Button Props
+   */
+  ButtonProps?: Partial<ButtonProps>;
   /**
    * @description direction
    * @default horizontal
@@ -66,6 +71,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = React.forwardRef(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiButtonGroup' });
     const {
+      ButtonProps,
       children,
       className,
       component,
@@ -89,7 +95,17 @@ const ButtonGroup: React.FC<ButtonGroupProps> = React.forwardRef(
         styleProps={styleProps}
         {...rest}
       >
-        {children}
+        {React.Children.toArray(children).map((node: any) => {
+          if (ReactIs.isElement(node)) {
+            if ((node.type as any).displayName === 'WuiButton') {
+              return React.cloneElement(node, {
+                ...ButtonProps,
+                ...node.props
+              });
+            }
+          }
+          return node;
+        })}
       </ButtonGroupRoot>
     );
   }

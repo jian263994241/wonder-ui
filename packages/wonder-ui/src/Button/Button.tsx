@@ -269,4 +269,6 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
   );
 });
 
+Button.displayName = 'WuiButton';
+
 export default Button;

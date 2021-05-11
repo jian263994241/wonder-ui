@@ -12,13 +12,12 @@ export default function Example() {
   const { isSelected, toggle } = useSelections(list, [0]);
 
   return (
-    <ButtonGroup>
+    <ButtonGroup ButtonProps={{ variant: 'outlined' }}>
       {list.map((item, index) => (
         <Button
           key={index}
           checked={isSelected(item)}
           onClick={() => toggle(item)}
-          variant="outlined"
         >
           Button-{index}
         </Button>

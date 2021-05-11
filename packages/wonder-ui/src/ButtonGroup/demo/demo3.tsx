@@ -22,10 +22,10 @@ export default function Example() {
         <Button>Button</Button>
       </ButtonGroup>
 
-      <ButtonGroup direction="vertical">
-        <Button variant="outlined">Button</Button>
-        <Button variant="outlined">Button</Button>
-        <Button variant="outlined">Button</Button>
+      <ButtonGroup direction="vertical" ButtonProps={{ variant: 'outlined' }}>
+        <Button>Button</Button>
+        <Button>Button</Button>
+        <Button>Button</Button>
       </ButtonGroup>
     </Space>
   );
