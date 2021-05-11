@@ -2,7 +2,7 @@ import * as React from 'react';
 import useEventCallback from './useEventCallback';
 
 export interface ControlledOptions<T> {
-  defaultValue: T;
+  defaultValue?: T;
   value?: T;
 }
 
