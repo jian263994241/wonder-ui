@@ -44,6 +44,7 @@ export interface Palette {
     hoverOpacity: number;
     selected: string;
     disabled: string;
+    disabledOpacity: number;
     disabledBackground: string;
   };
   primary: ColorObj;
@@ -89,11 +90,13 @@ export const light = {
     active: alpha(common.black, 0.54),
     // The color of an hovered action.
     hover: alpha(common.black, 0.08),
-    hoverOpacity: 0.08,
+    hoverOpacity: 0.6,
     // The color of a selected action.
     selected: alpha(common.black, 0.14),
     // The color of a disabled action.
     disabled: alpha(common.black, 0.26),
+    // The color of a disabled action.
+    disabledOpacity: 0.08,
     // The background color of a disabled action.
     disabledBackground: alpha(common.black, 0.12)
   }
@@ -116,11 +119,13 @@ export const dark = {
     active: common.white,
     // The color of an hovered action.
     hover: alpha(common.white, 0.1),
-    hoverOpacity: 0.08,
+    hoverOpacity: 0.6,
     // The color of a selected action.
     selected: alpha(common.white, 0.2),
     // The color of a disabled action.
     disabled: alpha(common.white, 0.3),
+    // The color of a disabled action.
+    disabledOpacity: 0.08,
     // The background color of a disabled action.
     disabledBackground: alpha(common.white, 0.12)
   }

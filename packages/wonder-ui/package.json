@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/core",
-  "version": "2.0.0-4",
+  "version": "2.0.0-5",
   "description": "Wonder-UI react components",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -34,7 +34,7 @@
   "dependencies": {
     "@popperjs/core": "^2.9.0",
     "@types/react-is": "^17.0.0",
-    "@wonder-ui/hooks": "^0.1.2",
+    "@wonder-ui/hooks": "^0.1.4",
     "@wonder-ui/styled": "^1.0.7",
     "@wonder-ui/utils": "^2.0.3",
     "clsx": "^1.1.1",
@@ -42,7 +42,6 @@
     "hoist-non-react-statics": "^3.3.2",
     "react-focus-lock": "^2.5.0",
     "react-is": "^17.0.2",
-    "react-popper": "^2.2.4",
     "react-slick": "^0.28.1",
     "react-transition-group": "^4.4.1"
   },

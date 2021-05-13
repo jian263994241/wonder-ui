@@ -1,7 +1,7 @@
 import * as React from 'react';
+import Dialog, { DialogProps } from '../Dialog';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import Manager from './Manager';
-import Dialog, { DialogProps } from '../Dialog';
 import Snackbar, { SnackbarProps } from '../Snackbar';
 import { createChainedFunction } from '@wonder-ui/utils';
 
@@ -29,7 +29,7 @@ interface Dialogs {
   }) => void;
   toast: (
     message: React.ReactNode,
-    options: {
+    options?: {
       stack?: boolean;
       onClose?: () => void;
       autoHideDuration?: number;
