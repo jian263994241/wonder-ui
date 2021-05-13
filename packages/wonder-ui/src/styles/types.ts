@@ -12,8 +12,7 @@ export interface PickStyleProps<
 export interface BaseProps extends React.AriaAttributes {
   children?: React.ReactNode;
   /**
-   * @description Root element
-   * @default span
+   * Root element
    */
   component?: React.ElementType;
   /**
@@ -41,3 +40,13 @@ export interface BaseProps extends React.AriaAttributes {
 export type ClassNameMap<Classes extends string> = Partial<
   Record<Classes, string>
 >;
+
+export interface RestProps {
+  [prop: string]: any;
+}
+
+export type FC<Props> = React.FC<Props & RestProps>;
+
+export type StyleProps<Props> = {
+  styleProps: Props;
+};

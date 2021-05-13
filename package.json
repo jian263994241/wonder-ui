@@ -15,6 +15,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@babel/helper-define-map": "^7.13.12",
     "@babel/plugin-transform-react-jsx-development": "^7.12.17",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",

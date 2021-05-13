@@ -1,15 +1,15 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
-import useClasses from '../styles/useClasses';
-import styled from '../styles/styled';
-import Portal, { getContainer, Container } from '../Portal/Portal';
-import ModalManager, { ariaHidden, Modal as ModalType } from './ModalManager';
-import { ownerDocument, createChainedFunction } from '@wonder-ui/utils';
-import { useForkRef, useEventCallback } from '@wonder-ui/hooks';
 import Backdrop, { BackdropProps } from '../Backdrop';
 import FocusLock from 'react-focus-lock';
+import ModalManager, { ariaHidden, Modal as ModalType } from './ModalManager';
+import Portal, { Container, getContainer } from '../Portal/Portal';
+import styled from '../styles/styled';
+import useClasses from '../styles/useClasses';
+import useThemeProps from '../styles/useThemeProps';
+import { createChainedFunction, ownerDocument } from '@wonder-ui/utils';
 import { ReactFocusLockProps } from 'react-focus-lock/interfaces';
-import type { BaseProps, PickStyleProps } from '../styles/types';
+import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
+import type { FC, StyleProps } from '../styles/types';
 
 // A modal manager used to track and manage the state of open Modals.
 // Modals don't open on the server so this won't conflict with concurrent requests.
@@ -19,7 +19,7 @@ function getHasTransition(props: React.PropsWithChildren<any>) {
   return props.children ? props.children.props.hasOwnProperty('in') : false;
 }
 
-export interface ModalProps extends BaseProps {
+export interface ModalProps {
   /**
    * Backdrop Props
    * @default {}
@@ -29,6 +29,14 @@ export interface ModalProps extends BaseProps {
    * 子节点
    */
   children: React.ReactElement;
+  /**
+   * HTML Attributes
+   */
+  className?: string;
+  /**
+   * Root element
+   */
+  component?: React.ElementType;
   /**
    * 容器 HTMLElement
    */
@@ -90,26 +98,34 @@ export interface ModalProps extends BaseProps {
   /**
    * 背景板点击事件
    */
-  onBackdropClick?: (event: React.MouseEvent) => void;
+  onBackdropClick?(event: React.MouseEvent): void;
   /**
    * Modal关闭事件
    */
-  onClose?: <T extends 'backdropClick' | 'escapeKeyDown'>(
+  onClose?<T extends 'backdropClick' | 'escapeKeyDown'>(
     event: T extends 'escapeKeyDown' ? React.KeyboardEvent : React.MouseEvent,
     type: T
-  ) => void;
+  ): void;
   /**
    * esc键盘事件
    */
-  onKeyDown?: (event: React.KeyboardEvent) => void;
+  onKeyDown?(event: React.KeyboardEvent): void;
   /**
    * 过渡动画事件
    */
-  onTransitionEnter?: () => void;
+  onTransitionEnter?(): void;
   /**
    * 过渡动画事件
    */
-  onTransitionExited?: () => void;
+  onTransitionExited?(): void;
+  /**
+   * Ref
+   */
+  ref?: React.Ref<any>;
+  /**
+   * HTML Attributes
+   */
+  style?: React.CSSProperties;
   /**
    * 是否显示
    * @default false
@@ -120,25 +136,23 @@ export interface ModalProps extends BaseProps {
 const ModalRoot = styled('div', {
   name: 'WuiModal',
   slot: 'Root'
-})<PickStyleProps<ModalProps, 'visible', { exited: boolean }>>(
-  ({ theme, styleProps }) => ({
-    position: 'fixed',
-    zIndex: theme.zIndex.modal,
-    right: 0,
-    bottom: 0,
-    top: 0,
-    left: 0,
-    overflow: 'auto',
-    outline: 0,
-    WebkitOverflowScrolling: 'touch',
-    ...(!styleProps.visible &&
-      styleProps.exited && {
-        visibility: 'hidden'
-      })
-  })
-);
+})<StyleProps<ModalProps & { exited: boolean }>>(({ theme, styleProps }) => ({
+  position: 'fixed',
+  zIndex: theme.zIndex.modal,
+  right: 0,
+  bottom: 0,
+  top: 0,
+  left: 0,
+  overflow: 'auto',
+  outline: 0,
+  WebkitOverflowScrolling: 'touch',
+  ...(!styleProps.visible &&
+    styleProps.exited && {
+      visibility: 'hidden'
+    })
+}));
 
-const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
+const Modal: FC<ModalProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiModal' });
   const {
     BackdropProps,
@@ -156,8 +170,6 @@ const Modal: React.FC<ModalProps> = React.forwardRef((inProps, ref) => {
     hideBackdrop = false,
     hasTransition: hasTransitionProp,
     keepMounted,
-    labelElement = null,
-    labelTrigerEvent = 'onClick',
     manager = defaultManager,
     onBackdropClick,
     onClose,
