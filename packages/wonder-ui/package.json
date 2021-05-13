@@ -19,9 +19,7 @@
     "lint:fix": "tsdx lint src --fix",
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
-    "test:coverage": "tsdx test --coverage",
-    "example": "cd ./example && ale start",
-    "publish:next": "npm version prerelease & npm publish ./ --access=public --tag=next"
+    "test:coverage": "tsdx test --coverage"
   },
   "keywords": [
     "react",
@@ -35,6 +33,7 @@
   "license": "MIT",
   "dependencies": {
     "@popperjs/core": "^2.9.0",
+    "@types/react-is": "^17.0.0",
     "@wonder-ui/hooks": "^0.1.2",
     "@wonder-ui/styled": "^1.0.7",
     "@wonder-ui/utils": "^2.0.3",
@@ -42,6 +41,7 @@
     "dom-helpers": "^5.2.1",
     "hoist-non-react-statics": "^3.3.2",
     "react-focus-lock": "^2.5.0",
+    "react-is": "^17.0.2",
     "react-popper": "^2.2.4",
     "react-slick": "^0.28.1",
     "react-transition-group": "^4.4.1"

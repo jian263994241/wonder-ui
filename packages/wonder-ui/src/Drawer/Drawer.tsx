@@ -42,7 +42,9 @@ export interface DrawerProps extends BaseProps {
    * @ignore
    */
   transitionDuration?: TransitionTimeout;
-
+  /**
+   * @ignore
+   */
   TransitionComponent?: React.ComponentType<BaseTransitionProps>;
   /**
    * @ignore
@@ -67,9 +69,9 @@ const DrawerRoot = styled(Modal, { name: 'Drawer', slot: 'Root' })(
 const DrawerDockedRoot = styled('div', {
   name: 'Drawer',
   slot: 'Docked'
-})(() => ({
+})({
   flex: '0 0 auto'
-}));
+});
 
 const DrawerPaper = styled(Paper, {
   name: 'Drawer',
