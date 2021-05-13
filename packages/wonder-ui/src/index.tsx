@@ -121,6 +121,17 @@ export * from './SvgIcon';
 export { default as Swipe } from './Swipe';
 export * from './Swipe';
 
+export { default as TabContext } from './TabContext';
+
+export { default as Tabs } from './Tabs';
+export * from './Tabs';
+
+export { default as Tab } from './Tab';
+export * from './Tab';
+
+export { default as TabPane } from './TabPane';
+export * from './TabPane';
+
 export { default as Toggle } from './Toggle';
 export * from './Toggle';
 

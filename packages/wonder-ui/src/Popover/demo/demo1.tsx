@@ -8,21 +8,30 @@ import * as React from 'react';
 import { jsx, Button, Popover } from '@wonder-ui/core';
 
 export default function Example() {
-  const [target, setTarget] = React.useState<Element | null>(null);
   const [visible, setVisible] = React.useState(false);
+
+  const buttonRef = React.useRef<HTMLElement>(null);
 
   return (
     <div>
       <Button
-        ref={(node: any) => setTarget(node)}
+        ref={buttonRef}
         onClick={() => {
-          setVisible(!visible);
+          setVisible(true);
         }}
       >
-        Toggle
+        弹出框
       </Button>
-
-      <Popover target={target}>123321</Popover>
+      <Popover
+        visible={visible}
+        anchorEl={() => buttonRef.current}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        onClose={() => {
+          setVisible(false);
+        }}
+      >
+        <div style={{ padding: 16 }}>气泡卡片内容...</div>
+      </Popover>
     </div>
   );
 }

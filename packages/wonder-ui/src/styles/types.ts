@@ -45,8 +45,6 @@ export interface RestProps {
   [prop: string]: any;
 }
 
-export type FC<Props> = React.FC<Props & RestProps>;
-
 export type StyleProps<Props> = {
   styleProps: Props;
 };
