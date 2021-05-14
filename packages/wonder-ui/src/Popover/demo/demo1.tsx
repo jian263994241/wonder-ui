@@ -6,12 +6,11 @@
 /** @jsx jsx */
 import * as React from 'react';
 import { jsx, Button, Popover } from '@wonder-ui/core';
-import { useBoolean, useUrlState } from '@wonder-ui/hooks';
+import { useBoolean } from '@wonder-ui/hooks';
 
 export default function Example() {
   const [visible, actions] = useBoolean(false);
   const buttonRef = React.useRef<HTMLElement>(null);
-  const [state, setState] = useUrlState({ count: '1' });
 
   return (
     <div>
