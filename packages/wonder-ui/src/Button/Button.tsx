@@ -1,11 +1,11 @@
 import * as React from 'react';
+import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
+import clsx from 'clsx';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import type { PickStyleProps, ClassNameMap } from '../styles/types';
 import { alpha, darken } from '../styles/colorManipulator';
-import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
-import clsx from 'clsx';
+import type { PickStyleProps, ClassNameMap } from '../styles/types';
 
 export interface ButtonProps extends ButtonBaseProps {
   classes?: ClassNameMap<'root' | 'label' | 'startIcon' | 'endIcon'>;
@@ -256,7 +256,7 @@ const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
       className={clsx(classes.root, { active: checked })}
       {...rest}
     >
-      {component != 'input' ? (
+      {component !== 'input' ? (
         <ButtonLabel className={classes.label}>
           {startIcon}
           {children}

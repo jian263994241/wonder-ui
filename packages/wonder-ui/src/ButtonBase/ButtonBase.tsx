@@ -1,11 +1,11 @@
 import * as React from 'react';
+import clsx from 'clsx';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import type { PickStyleProps, BaseProps } from '../styles/types';
-import { useTouchFeedback } from '@wonder-ui/hooks';
 import { getDevice } from '@wonder-ui/utils';
-import clsx from 'clsx';
+import { useTouchFeedback } from '@wonder-ui/hooks';
+import type { PickStyleProps, BaseProps } from '../styles/types';
 
 export interface ButtonBaseProps extends BaseProps {
   autofocus?: boolean;
@@ -21,9 +21,10 @@ const ButtonBaseRoot = styled('button', {
   name: 'WuiButtonBase',
   slot: 'Root'
 })<PickStyleProps<ButtonBaseProps, 'disabled'>>(({ theme, styleProps }) => ({
-  display: 'inline-block',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   position: 'relative',
-  textAlign: 'center',
   outline: 0,
   // Remove #0f0d0d highlight
   WebkitTapHighlightColor: 'transparent',
@@ -54,6 +55,16 @@ const ButtonBaseRoot = styled('button', {
     cursor: 'not-allowed'
   })
 }));
+
+// const ButtonBaseActiveState = styled(Backdrop, {
+//   name: 'WuiListItem',
+//   slot: 'activeState'
+// })(({ theme }) => ({
+//   position: 'absolute',
+//   zIndex: 99,
+//   backgroundColor: theme.palette.action.hover,
+//   pointerEvents: 'none'
+// }));
 
 const device = getDevice();
 

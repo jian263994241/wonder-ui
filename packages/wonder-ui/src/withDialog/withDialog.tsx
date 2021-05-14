@@ -4,6 +4,7 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import Manager from './Manager';
 import Snackbar, { SnackbarProps } from '../Snackbar';
 import { createChainedFunction } from '@wonder-ui/utils';
+import { useSafeState } from '@wonder-ui/hooks';
 
 const StackContext = React.createContext({
   manager: new Manager()
@@ -51,8 +52,8 @@ export default function withDialog<P>(
   const returnComponent = React.forwardRef<React.ComponentType<P>, P>(
     (props, ref) => {
       const { manager } = React.useContext(StackContext);
-      const [dialogProps, setDialogProps] = React.useState<DialogProps>({});
-      const [toastProps, setToastProps] = React.useState<SnackbarProps>({});
+      const [dialogProps, setDialogProps] = useSafeState<DialogProps>({});
+      const [toastProps, setToastProps] = useSafeState<SnackbarProps>({});
 
       const makeDialog = (props: DialogProps = {}) => {
         const { buttons = [], ModalProps = {}, ...rest } = props;
