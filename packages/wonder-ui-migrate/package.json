@@ -1,5 +1,5 @@
 {
-  "name": "@wonder-ui/migrate-v2",
+  "name": "@wonder-ui/migrate",
   "version": "1.0.0",
   "description": "迁移",
   "main": "index.js",
