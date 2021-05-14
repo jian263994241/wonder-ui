@@ -89,8 +89,7 @@ export default defineConfig({
           'components/backdrop.md',
           'components/dialog.md',
           'components/drawer.md',
-          'components/modal.md',
-          'components/popover.md',
+
           'components/preloader.md',
           'components/progress.md',
           'components/result.md',
@@ -103,7 +102,11 @@ export default defineConfig({
       },
       {
         title: '辅助',
-        children: ['components/portal.md']
+        children: [
+          'components/modal.md',
+          'components/popover.md',
+          'components/portal.md'
+        ]
       },
       {
         title: '其他',
