@@ -88,7 +88,7 @@ export default function Example() {
       <Snackbar
         visible={visible}
         message="简单的消息条"
-        autoHideDuration={3000}
+        autoHideDuration={null}
         anchorOrigin={{ vertical, horizontal }}
         onClose={handleClose}
         key={vertical + horizontal}

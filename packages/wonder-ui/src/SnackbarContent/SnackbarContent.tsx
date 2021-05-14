@@ -40,12 +40,8 @@ const SnackbarContentRoot = styled(Paper, {
     ...theme.typography.body2,
     color: theme.palette.getContrastText(backgroundColor),
     backgroundColor,
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
     padding: '6px 16px',
     borderRadius: theme.shape.borderRadius,
-    flexGrow: 1,
 
     ...(!styleProps.center && {
       [theme.breakpoints.up('sm')]: {
