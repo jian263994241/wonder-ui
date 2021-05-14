@@ -344,9 +344,11 @@ const Popover: React.FC<PopoverProps & RestProps> = React.forwardRef(
       const resolvedAnchorEl = getAnchorEl(anchorEl);
       const containerWindow = ownerWindow(resolvedAnchorEl);
       containerWindow.addEventListener('resize', handleResize);
+      containerWindow.addEventListener('scroll', handleResize);
       return () => {
         handleResize.cancel();
         containerWindow.removeEventListener('resize', handleResize);
+        containerWindow.removeEventListener('scroll', handleResize);
       };
     }, [anchorEl, visible, setPositioningStyles]);
 
