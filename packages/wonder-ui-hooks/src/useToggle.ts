@@ -2,7 +2,7 @@ import * as React from 'react';
 
 type IState = string | number | boolean | undefined;
 
-export interface Actions<T = IState> {
+interface Actions<T = IState> {
   setLeft: () => void;
   setRight: () => void;
   toggle: (value?: T) => void;

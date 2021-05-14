@@ -7,7 +7,7 @@ interface EventTarget {
   };
 }
 
-export interface Options<T> {
+interface Options<T> {
   initialValue?: T;
   transformer?: (value: T) => T;
   getValueFromEvent?: (e: any) => T;
