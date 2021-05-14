@@ -1,0 +1,11 @@
+{
+  "name": "@wonder-ui/migrate-v2",
+  "version": "1.0.0",
+  "description": "迁移",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jianl",
+  "license": "MIT"
+}
