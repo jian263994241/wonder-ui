@@ -26,7 +26,7 @@ export interface Palette {
     black: string;
     white: string;
   };
-
+  colors: typeof colors;
   text: {
     primary: string;
     secondary: string;
@@ -237,6 +237,7 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
   return {
     mode,
     common,
+    colors,
     primary: augmentColor(primary),
     secondary: augmentColor(secondary),
     error: augmentColor(error),
@@ -257,6 +258,5 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
     // E.g., shift from Red 500 to Red 300 or Red 700.
     tonalOffset,
     ...modes[mode],
-    ...colors
   };
 }
