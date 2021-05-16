@@ -63,14 +63,14 @@ export interface PopperProps<
   TModifier extends Partial<Modifier<any, any>> = Partial<Modifier<any, any>>
 > {
   anchorEl: AnchorEl;
-  children?:
-    | React.ReactNode
-    | ((childProps: {
-        placement: Placement;
-        TransitionProps?: Pick<TransitionProps, 'in' | 'onEnter' | 'onExited'>;
-        attributes: PopperState['attributes'];
-        styles: PopperState['attributes'];
-      }) => React.ReactNode);
+  children: (childProps: {
+    placement: Placement;
+    TransitionProps?: Pick<TransitionProps, 'in' | 'onEnter' | 'onExited'>;
+    attributes: PopperState['attributes'];
+    styles: {
+      arrow?: any;
+    };
+  }) => React.ReactNode;
   className?: string;
   container?: PortalProps['container'];
   disablePortal?: boolean;
@@ -187,9 +187,8 @@ const Popper: React.FC<PopperProps & RestProps> = React.forwardRef(
         });
 
         handlePopperRefRef.current(popper);
-        setTimeout(() => {
-          forceUpdate();
-        }, 0);
+
+        setTimeout(forceUpdate, 0);
       }
     }, [anchorEl, disablePortal, modifiers, open, rtlPlacement, popperOptions]);
 
@@ -272,7 +271,7 @@ const Popper: React.FC<PopperProps & RestProps> = React.forwardRef(
             ...style
           }}
         >
-          {typeof children === 'function' ? children(childProps) : children}
+          {children && children(childProps)}
         </div>
       </Portal>
     );

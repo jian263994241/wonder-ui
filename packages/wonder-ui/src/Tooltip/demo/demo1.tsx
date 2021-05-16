@@ -4,8 +4,7 @@
  */
 
 /** @jsx jsx */
-import { jsx, Button, Space } from '@wonder-ui/core';
-import Tooltip from '../Tooltip';
+import { jsx, Button, Space, Tooltip } from '@wonder-ui/core';
 
 export default function Example() {
   return (
