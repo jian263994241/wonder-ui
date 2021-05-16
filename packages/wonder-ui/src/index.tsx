@@ -94,6 +94,9 @@ export * from './Paper';
 export { default as Popover } from './Popover';
 export * from './Popover';
 
+export { default as Popper } from './Popper';
+export * from './Popper';
+
 export { default as Portal } from './Portal';
 export * from './Portal';
 
@@ -134,6 +137,9 @@ export * from './TabPane';
 
 export { default as Toggle } from './Toggle';
 export * from './Toggle';
+
+export { default as Tooltip } from './Tooltip';
+export * from './Tooltip';
 
 export { default as Typography } from './Typography';
 export * from './Typography';
