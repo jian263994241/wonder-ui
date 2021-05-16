@@ -6,7 +6,11 @@ import {
   OptionsGeneric,
   State as PopperState
 } from '@popperjs/core';
-import { useEnhancedEffect, useForkRef } from '@wonder-ui/hooks';
+import {
+  useEnhancedEffect,
+  useForkRef,
+  useForceUpdate
+} from '@wonder-ui/hooks';
 import { ownerDocument, setRef } from '@wonder-ui/utils';
 import * as React from 'react';
 import Portal, { PortalProps } from '../Portal';
@@ -100,6 +104,7 @@ const Popper: React.FC<PopperProps & RestProps> = React.forwardRef(
       ...rest
     } = props;
 
+    const forceUpdate = useForceUpdate();
     const tooltipRef = React.useRef<HTMLElement>(null);
     const ownRef = useForkRef(tooltipRef, ref);
 
@@ -181,9 +186,10 @@ const Popper: React.FC<PopperProps & RestProps> = React.forwardRef(
           modifiers: popperModifiers
         });
 
-        console.log(popper);
-
         handlePopperRefRef.current(popper);
+        setTimeout(() => {
+          forceUpdate();
+        }, 0);
       }
     }, [anchorEl, disablePortal, modifiers, open, rtlPlacement, popperOptions]);
 
@@ -256,6 +262,12 @@ const Popper: React.FC<PopperProps & RestProps> = React.forwardRef(
           role="tooltip"
           {...rest}
           style={{
+            // Prevents scroll issue, waiting for Popper.js to add this style once initiated.
+            position: 'fixed',
+            // Fix Popper.js display issue
+            top: 0,
+            left: 0,
+            display: !open && keepMounted && !transition ? 'none' : null,
             ...(popperStyles as any),
             ...style
           }}

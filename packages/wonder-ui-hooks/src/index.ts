@@ -17,8 +17,9 @@ export * from './useForkRef';
 export * from './useFullscreen';
 export * from './useHistoryTravel';
 export * from './useId';
-export * from './useInViewport';
 export * from './useInterval';
+export * from './useInViewport';
+export * from './useIsFocusVisible';
 export * from './useKeyPress';
 export * from './useLocalStorageState';
 export * from './useMap';
@@ -44,3 +45,4 @@ export * from './useUnmountedRef';
 export * from './useUpdateEffect';
 export * from './useUrlState';
 export * from './useVirtualList';
+

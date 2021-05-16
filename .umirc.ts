@@ -80,7 +80,8 @@ export default defineConfig({
           'components/collapse.md',
           'components/list.md',
           'components/swipe.md',
-          'components/tabs.md'
+          'components/tabs.md',
+          'components/tooltip.md'
         ]
       },
       {
