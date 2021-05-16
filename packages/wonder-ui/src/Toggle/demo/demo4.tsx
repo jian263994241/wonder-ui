@@ -19,17 +19,17 @@ export default function Example() {
   return (
     <Space>
       <Toggle
-        css={{ color: theme.palette.blue[300] }}
+        css={{ color: theme.palette.colors.blue[300] }}
         icon={<ToggleOff size="large" />}
         checkedIcon={<ToggleOn size="large" />}
       />
       <Toggle
-        css={{ color: theme.palette.pink[400] }}
+        css={{ color: theme.palette.colors.pink[400] }}
         icon={<CheckCircle />}
         checkedIcon={<CheckCircleFill />}
       />
       <Toggle
-        css={{ color: theme.palette.orange[600] }}
+        css={{ color: theme.palette.colors.orange[600] }}
         icon={<CheckSquare />}
         checkedIcon={<CheckSquareFill />}
       />
