@@ -1,15 +1,15 @@
-import * as React from 'react';
+import { useForkRef } from '@wonder-ui/hooks';
+import { debounce, ownerDocument, ownerWindow } from '@wonder-ui/utils';
 import clsx from 'clsx';
+import * as React from 'react';
 import Grow from '../Grow';
 import Modal, { ModalProps } from '../Modal';
 import Paper, { PaperProps } from '../Paper';
 import styled from '../styles/styled';
+import type { ClassNameMap, RestProps } from '../styles/types';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import { BaseTransitionProps, TransitionTimeout } from '../Transition';
-import { debounce, ownerDocument, ownerWindow } from '@wonder-ui/utils';
-import { useForkRef } from '@wonder-ui/hooks';
-import type { RestProps, ClassNameMap } from '../styles/types';
 
 type Rect = { width: number; height: number };
 type AnchorEl = HTMLElement | null | (() => HTMLElement | null);
@@ -46,7 +46,9 @@ export function getOffsetLeft(rect: Rect, horizontal: Horizontal) {
 }
 
 function getAnchorEl(anchorEl?: AnchorEl) {
-  return typeof anchorEl === 'function' ? anchorEl() : anchorEl;
+  return (typeof anchorEl === 'function'
+    ? anchorEl()
+    : anchorEl) as HTMLElement;
 }
 
 function getTransformOriginValue(transformOrigin: TransformOrigin) {
