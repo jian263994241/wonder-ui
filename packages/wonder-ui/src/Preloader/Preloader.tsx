@@ -10,6 +10,7 @@ import WhiteSpace from '../WhiteSpace';
 import { useControlled } from '@wonder-ui/hooks';
 import { createChainedFunction, isPromise } from '@wonder-ui/utils';
 import Fade from '../Fade';
+import { emphasize, darken } from '../styles/colorManipulator';
 
 export interface PreloaderProps extends BaseProps {
   /**
@@ -50,23 +51,28 @@ const PreloaderRoot = styled(Modal, {
 const PreloaderInner = styled('div', {
   name: 'WuiPreloader',
   slot: 'Inner'
-})<PickStyleProps<PreloaderProps, 'middleLength'>>(({ theme, styleProps }) => ({
-  boxSizing: 'border-box',
-  position: 'fixed',
-  top: `calc(50% + ${styleProps.middleLength}px)`,
-  left: '50%',
-  transform: 'translate3d(-50%, -50%, 0)',
-  contain: 'content',
-  willChange: 'transform, opacity',
-  color: '#fff',
-  display: 'block',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: 'rgba(0,0,0,0.7)',
-  padding: 12,
-  outline: 'none',
-  textAlign: 'center',
-  fontSize: 0
-}));
+})<PickStyleProps<PreloaderProps, 'middleLength'>>(({ theme, styleProps }) => {
+  const emphasis = theme.palette.mode === 'light' ? 0.75 : 0.98;
+  const backgroundColor = emphasize(theme.palette.background.default, emphasis);
+
+  return {
+    boxSizing: 'border-box',
+    position: 'fixed',
+    top: `calc(50% + ${styleProps.middleLength}px)`,
+    left: '50%',
+    transform: 'translate3d(-50%, -50%, 0)',
+    contain: 'content',
+    willChange: 'transform, opacity',
+    color: theme.palette.getContrastText(backgroundColor),
+    display: 'block',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: backgroundColor,
+    padding: 12,
+    outline: 'none',
+    textAlign: 'center',
+    fontSize: 0
+  };
+});
 
 export type PreloaderActions = {
   show: (props?: PreloaderProps) => void;
