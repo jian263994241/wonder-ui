@@ -29,13 +29,13 @@ export default function Example() {
   return (
     <Wrapper size="sm">
       <List inset>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <HeartFill />
           </ListItemMedia>
           <ListItemText>Item 1</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <HeartFill />
           </ListItemMedia>
@@ -46,35 +46,36 @@ export default function Example() {
           onClick={() => toggle()}
           button
           arrow={visible ? 'vertical-up' : 'vertical'}
+          divider
         >
           <ListItemText>Item 3</ListItemText>
         </ListItem>
 
         <Collapse in={visible}>
           <List>
-            <ListItem>
+            <ListItem divider>
               <ListItemMedia>
                 <HeartFill />
               </ListItemMedia>
               <ListItemText>Item 1</ListItemText>
             </ListItem>
-            <ListItem>
+            <ListItem divider>
               <ListItemMedia>
                 <HeartFill />
               </ListItemMedia>
               <ListItemText>Item 2</ListItemText>
             </ListItem>
 
-            <ListItem>
+            <ListItem divider>
               <ListItemText>Item 3</ListItemText>
             </ListItem>
           </List>
         </Collapse>
 
-        <ListItem>
+        <ListItem divider>
           <ListItemText>Item 4</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemText>Item 5</ListItemText>
         </ListItem>
       </List>

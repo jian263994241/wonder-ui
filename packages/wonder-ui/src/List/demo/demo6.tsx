@@ -20,7 +20,7 @@ export default function Example() {
   return (
     <Container size="sm">
       <List>
-        <ListItem alignItems="flex-start">
+        <ListItem divider alignItems="flex-start">
           <ListItemMedia>
             <img
               width="70"
@@ -47,7 +47,7 @@ export default function Example() {
             }
           />
         </ListItem>
-        <ListItem alignItems="flex-start">
+        <ListItem divider alignItems="flex-start">
           <ListItemMedia>
             <img
               width="70"

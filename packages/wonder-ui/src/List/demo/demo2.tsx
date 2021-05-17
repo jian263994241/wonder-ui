@@ -8,6 +8,7 @@
 import {
   Collapse,
   Container,
+  Divider,
   jsx,
   List,
   ListItemMedia,
@@ -22,13 +23,13 @@ export default function Example() {
   return (
     <Container size="sm">
       <List>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <HeartFill />
           </ListItemMedia>
           <ListItemText>Item 1</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <HeartFill />
           </ListItemMedia>
@@ -39,35 +40,36 @@ export default function Example() {
           arrow={visible ? 'vertical-up' : 'vertical'}
           onClick={() => toggle()}
           button
+          divider
         >
           Item 3
         </ListItem>
 
         <Collapse in={visible}>
           <List>
-            <ListItem>
+            <ListItem divider>
               <ListItemMedia>
                 <HeartFill />
               </ListItemMedia>
               <ListItemText>Item 1</ListItemText>
             </ListItem>
-            <ListItem>
+            <ListItem divider>
               <ListItemMedia>
                 <HeartFill />
               </ListItemMedia>
               <ListItemText>Item 2</ListItemText>
             </ListItem>
 
-            <ListItem>
+            <ListItem divider>
               <ListItemText>Item 3</ListItemText>
             </ListItem>
           </List>
         </Collapse>
 
-        <ListItem>
+        <ListItem divider>
           <ListItemText>Item 4</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemText>Item 5</ListItemText>
         </ListItem>
       </List>

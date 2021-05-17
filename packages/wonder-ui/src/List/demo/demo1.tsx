@@ -20,20 +20,20 @@ export default function Example() {
   return (
     <Container size="sm">
       <List>
-        <ListItem>
+        <ListItem divider>
           <ListItemText>Item 1</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemText>Item 2</ListItemText>
         </ListItem>
         <ListHeader />
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <HouseFill />
           </ListItemMedia>
           <ListItemText>Item 3</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <HeartFill />
           </ListItemMedia>

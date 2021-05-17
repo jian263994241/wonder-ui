@@ -1,15 +1,26 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
-import type { BaseProps } from '../styles/types';
+import useThemeProps from '../styles/useThemeProps';
+import type { RestProps } from '../styles/types';
 
-export interface ListItemMediaProps extends BaseProps {}
+export interface ListItemMediaProps {
+  children?: React.ReactNode;
+  className?: string;
+  component?: React.ElementType;
+  disabled?: boolean;
+  ref?: React.Ref<any>;
+  style?: React.CSSProperties;
+}
+
+type StyleProps = {
+  styleProps: Partial<ListItemMediaProps>;
+};
 
 const ListItemMediaRoot = styled('div', {
   name: 'WuiListItemMedia',
   slot: 'Root'
-})(({ theme }) => ({
+})<StyleProps>(({ theme, styleProps }) => ({
   userSelect: 'none',
   display: 'flex',
   flexShrink: 0,
@@ -17,27 +28,36 @@ const ListItemMediaRoot = styled('div', {
   alignItems: 'center',
   boxSizing: 'border-box',
   padding: '10px 0',
-  marginRight: theme.spacing(2)
+  marginRight: theme.spacing(2),
+  ...(styleProps.disabled && {
+    opacity: theme.palette.action.disabledOpacity
+  })
 }));
 
-const ListItemMedia: React.FC<ListItemMediaProps> = React.forwardRef(
-  (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiListItemMedia' });
-    const { children, component, className, ...rest } = props;
+const ListItemMedia: React.FC<
+  ListItemMediaProps & RestProps
+> = React.forwardRef((inProps, ref) => {
+  const props = useThemeProps({ props: inProps, name: 'WuiListItemMedia' });
+  const { children, component, className, disabled = false, ...rest } = props;
 
-    const classes = useClasses({ ...props, name: 'WuiListItemMedia' });
+  const styleProps = { disabled };
+  const classes = useClasses({
+    ...props,
+    styleProps,
+    name: 'WuiListItemMedia'
+  });
 
-    return (
-      <ListItemMediaRoot
-        className={classes.root}
-        as={component}
-        ref={ref}
-        {...rest}
-      >
-        {children}
-      </ListItemMediaRoot>
-    );
-  }
-);
+  return (
+    <ListItemMediaRoot
+      as={component}
+      className={classes.root}
+      styleProps={styleProps}
+      ref={ref}
+      {...rest}
+    >
+      {children}
+    </ListItemMediaRoot>
+  );
+});
 
 export default ListItemMedia;

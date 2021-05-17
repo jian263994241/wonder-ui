@@ -24,27 +24,27 @@ export default function Example() {
     <Container size="sm">
       <List>
         <ListHeader>Simple List</ListHeader>
-        <ListItem>
+        <ListItem divider>
           <ListItemText>Item 1</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemText>Item 2</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemText>Item 3</ListItemText>
         </ListItem>
       </List>
 
       <List>
         <ListHeader>Data list, with icons</ListHeader>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
           <ListItemText>Item 1</ListItemText>
           <ListItemExtra>CEO</ListItemExtra>
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
@@ -55,7 +55,7 @@ export default function Example() {
             </Badge>
           </ListItemExtra>
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
@@ -68,7 +68,7 @@ export default function Example() {
 
       <List>
         <ListHeader>Data list, with button</ListHeader>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
@@ -77,7 +77,7 @@ export default function Example() {
             <InfoCircleFill size="inherit" />
           </Button>
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
@@ -86,7 +86,7 @@ export default function Example() {
             <InfoCircleFill size="inherit" />
           </Button>
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
@@ -99,36 +99,36 @@ export default function Example() {
 
       <List>
         <ListHeader>Links</ListHeader>
-        <ListItem button arrow="horizontal">
+        <ListItem button divider arrow="horizontal">
           <ListItemText>Item 1</ListItemText>
           <ListItemExtra>CEO</ListItemExtra>
         </ListItem>
-        <ListItem button arrow="horizontal">
+        <ListItem button divider arrow="horizontal">
           <ListItemText>Item 2</ListItemText>
           <ListItemExtra>CEO</ListItemExtra>
         </ListItem>
-        <ListItem button arrow="horizontal">
+        <ListItem button divider arrow="horizontal">
           <ListItemText>Item 3</ListItemText>
         </ListItem>
       </List>
 
       <List>
         <ListHeader>Links, Secondary text</ListHeader>
-        <ListItem button arrow="horizontal">
+        <ListItem button divider arrow="horizontal">
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
           <ListItemText primary={'Primary text'} secondary={'Secondary text'} />
           <ListItemExtra>CEO</ListItemExtra>
         </ListItem>
-        <ListItem button arrow="horizontal">
+        <ListItem button divider arrow="horizontal">
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
           <ListItemText primary={'Primary text'} secondary={'Secondary text'} />
           <ListItemExtra>CEO</ListItemExtra>
         </ListItem>
-        <ListItem button arrow="horizontal">
+        <ListItem button divider arrow="horizontal">
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>

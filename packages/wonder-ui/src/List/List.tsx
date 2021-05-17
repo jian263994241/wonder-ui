@@ -2,13 +2,15 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
-import type { BaseProps, PickStyleProps } from '../styles/types';
+import type { RestProps, PickStyleProps } from '../styles/types';
 
-export interface ListProps extends BaseProps {
-  /**
-   * @description 内嵌样式
-   */
+export interface ListProps {
+  children?: React.ReactNode;
+  className?: string;
+  component?: React.ElementType;
   inset?: boolean;
+  ref?: React.Ref<any>;
+  style?: React.CSSProperties;
 }
 
 const ListRoot = styled('ul', {
@@ -33,25 +35,27 @@ const ListRoot = styled('ul', {
   }
 }));
 
-const List: React.FC<ListProps> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({ name: 'WuiList', props: inProps });
-  const { children, className, component, inset = false, ...rest } = props;
+const List: React.FC<ListProps & RestProps> = React.forwardRef(
+  (inProps, ref) => {
+    const props = useThemeProps({ name: 'WuiList', props: inProps });
+    const { children, className, component, inset = false, ...rest } = props;
 
-  const styleProps = { inset };
+    const styleProps = { inset };
 
-  const classes = useClasses({ ...props, styleProps, name: 'WuiList' });
+    const classes = useClasses({ ...props, styleProps, name: 'WuiList' });
 
-  return (
-    <ListRoot
-      className={classes.root}
-      as={component}
-      styleProps={styleProps}
-      ref={ref}
-      {...rest}
-    >
-      {children}
-    </ListRoot>
-  );
-});
+    return (
+      <ListRoot
+        className={classes.root}
+        as={component}
+        styleProps={styleProps}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+      </ListRoot>
+    );
+  }
+);
 
 export default List;

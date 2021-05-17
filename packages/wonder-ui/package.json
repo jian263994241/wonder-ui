@@ -36,7 +36,7 @@
     "@types/react-is": "^17.0.0",
     "@wonder-ui/hooks": "^0.1.4",
     "@wonder-ui/styled": "^1.0.7",
-    "@wonder-ui/utils": "^2.0.3",
+    "@wonder-ui/utils": "^2.0.4",
     "clsx": "^1.1.1",
     "dom-helpers": "^5.2.1",
     "hoist-non-react-statics": "^3.3.2",

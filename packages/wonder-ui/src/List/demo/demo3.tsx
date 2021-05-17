@@ -19,13 +19,13 @@ export default function Example() {
   return (
     <Container size="sm">
       <List>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <FileEarmarkFill />
           </ListItemMedia>
           <ListItemText primary="Index" secondary="Jan 9, 2014" />
         </ListItem>
-        <ListItem>
+        <ListItem divider>
           <ListItemMedia>
             <FileEarmarkFill />
           </ListItemMedia>

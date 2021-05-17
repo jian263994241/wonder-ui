@@ -6,7 +6,7 @@ import ListItemMedia from '../ListItemMedia';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import { alpha, darken } from '../styles/colorManipulator';
+import { alpha } from '../styles/colorManipulator';
 import { getDevice, groupBy } from '@wonder-ui/utils';
 import { useTouchFeedback } from '@wonder-ui/hooks';
 import type { RestProps, ClassNameMap } from '../styles/types';
@@ -20,7 +20,10 @@ export interface ListItemProps {
    * arrow
    */
   arrow?: 'empty' | 'horizontal' | 'vertical' | 'vertical-up';
-
+  /**
+   * 内容
+   */
+  children?: React.ReactNode;
   /**
    * @description Css api
    */
@@ -33,6 +36,10 @@ export interface ListItemProps {
    * divider
    */
   divider?: boolean;
+  /**
+   * disabled
+   */
+  disabled?: boolean;
   /**
    * @description 选中状态
    * @default false
@@ -58,7 +65,7 @@ export interface ListItemProps {
 }
 
 type StyleProps = {
-  styleProps: ListItemProps;
+  styleProps: Partial<ListItemProps>;
 };
 
 const ListItemRoot = styled('li', {
@@ -77,21 +84,19 @@ const ListItemRoot = styled('li', {
   alignItems: styleProps.alignItems || 'center',
   textDecoration: 'none',
   paddingLeft: theme.spacing(2),
-  ...(styleProps.selected && {
-    backgroundColor: alpha(theme.palette.primary.main, 0.1)
-  }),
+  ...(styleProps.selected &&
+    !styleProps.disabled && {
+      backgroundColor: theme.palette.action.selected
+      // backgroundColor: alpha(theme.palette.primary.main, 0.18)
+    }),
 
   ...(styleProps.button && {
     cursor: 'pointer'
   }),
 
-  ...(device.desktop &&
-    styleProps.button &&
-    !styleProps.selected && {
-      '&:hover': {
-        backgroundColor: darken(theme.palette.background.paper, 0.1)
-      }
-    }),
+  ...(styleProps.disabled && {
+    pointerEvents: 'none'
+  }),
 
   [`&:last-of-type > ${ListItemInner}`]: {
     border: 'none'
@@ -125,6 +130,9 @@ const ListItemInner = styled('div', {
     borderStyle: 'solid',
     borderColor: theme.palette.divider,
     borderBottomWidth: 'thin'
+  }),
+  ...(styleProps.disabled && {
+    opacity: theme.palette.action.disabledOpacity
   })
 }));
 
@@ -167,19 +175,20 @@ const ListItem: React.FC<ListItemProps & RestProps> = React.forwardRef(
       button = false,
       children,
       className,
-      divider = true,
+      divider = false,
+      disabled = false,
       component,
       selected = false,
       ...rest
     } = props;
 
-    const styleProps = { alignItems, button, divider, selected };
+    const styleProps = { alignItems, button, divider, disabled, selected };
 
     const classes = useClasses({ ...props, styleProps, name: 'WuiListItem' });
 
     const [touchActive, handleEvents] = useTouchFeedback({
       ...props,
-      disabled: !button,
+      disabled: !button || disabled,
       type: device.desktop ? 'hover' : 'touch'
     });
 
@@ -211,8 +220,10 @@ const ListItem: React.FC<ListItemProps & RestProps> = React.forwardRef(
         {...rest}
         {...handleEvents}
       >
-        <ListItemActiveState visible={touchActive} />
-        {childGroup.media}
+        {childGroup.media &&
+          childGroup.media.map((media: any) =>
+            React.cloneElement(media, { disabled })
+          )}
         <ListItemInner styleProps={styleProps}>
           <ListItemBody className={classes.body}>
             {childGroup.body}
@@ -222,6 +233,7 @@ const ListItem: React.FC<ListItemProps & RestProps> = React.forwardRef(
             <ListItemArrow direction={direction[arrow]} />
           )}
         </ListItemInner>
+        <ListItemActiveState visible={touchActive} />
       </ListItemRoot>
     );
   }

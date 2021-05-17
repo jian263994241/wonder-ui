@@ -24,6 +24,7 @@ export default function Example() {
             onClick={() =>
               isSelected(item) ? toggle(item) : setSelected([item])
             }
+            disabled={item === 1}
           >
             <ListItemText>Item {item}</ListItemText>
           </ListItem>

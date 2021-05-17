@@ -21,13 +21,13 @@ export default function Example() {
     <Container size="sm">
       <List component="div">
         <ListHeader>Settings</ListHeader>
-        <ListItem button component="label">
+        <ListItem button divider component="label">
           <ListItemMedia>
             <Checkbox circle />
           </ListItemMedia>
           <ListItemText>Wi-Fi</ListItemText>
         </ListItem>
-        <ListItem button component="label">
+        <ListItem button divider component="label">
           <ListItemMedia>
             <Checkbox circle />
           </ListItemMedia>

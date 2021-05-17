@@ -22,7 +22,7 @@ interface LinkProps extends ListItemProps {
 }
 
 const ListItemLink: React.FC<LinkProps> = React.forwardRef((props, ref) => (
-  <ListItem {...props} ref={ref} component="a" button />
+  <ListItem {...props} ref={ref} component="a" button divider />
 ));
 
 export default function Example() {
