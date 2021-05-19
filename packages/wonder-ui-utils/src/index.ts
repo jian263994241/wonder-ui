@@ -1,10 +1,12 @@
 export { default as StackManager } from './StackManager';
 export { default as camelCase } from './camelCase';
 export { default as capitalize } from './capitalize';
+export { default as composeClasses } from './composeClasses';
 export { default as createChainedFunction } from './createChainedFunction';
 export { default as createId } from './createId';
 export { default as debounce } from './debounce';
 export { default as deepmerge } from './deepmerge';
+export { default as generateUtilityClasses } from './generateUtilityClasses';
 export { default as getDevice } from './getDevice';
 export { default as getScrollbarSize } from './getScrollbarSize';
 export { default as getSupport } from './getSupport';
