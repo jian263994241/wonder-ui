@@ -48,7 +48,7 @@ function baseAssignValue(object: Obj, key: any, value: any) {
  * groupBy([6.1, 4.2, 6.3], Math.floor)
  * // => { '4': [4.2], '6': [6.1, 6.3] }
  */
-function groupBy(collection: any[], iteratee: Func) {
+export function groupBy(collection: any[], iteratee: Func) {
   return collection.reduce((result, value, key) => {
     key = iteratee(value);
     if (hasOwnProperty.call(result, key)) {
@@ -59,5 +59,3 @@ function groupBy(collection: any[], iteratee: Func) {
     return result;
   }, {});
 }
-
-export default groupBy;

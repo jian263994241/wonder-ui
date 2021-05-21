@@ -1,13 +1,19 @@
 import * as React from 'react';
+import { hoistStatics } from './hoistStatics';
 
-const getDisplayName = (Component: React.ElementType) =>
+export const getDisplayName = (Component: React.ElementType) =>
   typeof Component === 'string'
     ? Component
     : !Component
     ? undefined
     : Component.displayName || Component.name || 'Component';
-
-const withProps = <T extends React.ElementType, P = any>(
+/**
+ * Map props
+ * @param BaseComponent
+ * @param mapProps
+ * @returns
+ */
+export const withProps = <T extends React.ElementType, P = any>(
   BaseComponent: T,
   mapProps: (props: P) => React.ComponentProps<T>
 ) => {
@@ -18,9 +24,9 @@ const withProps = <T extends React.ElementType, P = any>(
     }
   );
 
+  hoistStatics(BaseComponent, hoc);
+
   hoc.displayName = `withProps(${getDisplayName(BaseComponent)})`;
 
   return hoc;
 };
-
-export default withProps;

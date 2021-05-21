@@ -1,5 +1,5 @@
-import StackManager from './StackManager';
-import isPromise from './isPromise';
+import { StackManager } from './StackManager';
+import { isPromise } from './is';
 
 /**
  * Safe chained function
@@ -10,7 +10,7 @@ import isPromise from './isPromise';
  * @returns {function|null}
  */
 
-export default function createChainedFunction(...funcs: any[]) {
+export function createChainedFunction(...funcs: any[]) {
   const manager = new StackManager();
   return funcs.reduce(
     (acc, func) => {
@@ -18,9 +18,7 @@ export default function createChainedFunction(...funcs: any[]) {
         return acc;
       }
 
-      return function chainedFunction(this: any, ...args: any[]) {
-        const self = this;
-
+      return function chainedFunction(self: any, ...args: any[]) {
         manager.run((next) => {
           const promise = acc.apply(self, args);
 

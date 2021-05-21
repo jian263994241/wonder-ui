@@ -1,4 +1,4 @@
-import isObject from './isObject';
+import { isObject } from './is';
 
 /**
  * Creates a debounced function that delays invoking `func` until after `wait`
@@ -77,7 +77,7 @@ interface DebounceSettings {
   trailing?: boolean;
 }
 
-function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number = 0,
   options: DebounceSettings = {}
@@ -236,5 +236,3 @@ function debounce<T extends (...args: any[]) => any>(
 
   return debounced;
 }
-
-export default debounce;

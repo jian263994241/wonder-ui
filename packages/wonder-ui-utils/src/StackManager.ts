@@ -1,8 +1,8 @@
-import isPromise from './isPromise';
+import { isPromise } from './is';
 
 type Fn = (...args: any[]) => any;
 
-export default class StackManager {
+export class StackManager {
   modalStack: Fn[];
 
   modalLock = false;
