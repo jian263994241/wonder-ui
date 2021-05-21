@@ -7,12 +7,11 @@ import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 import Modal, { ModalProps } from '../Modal';
 import Typography, { TypographyProps } from '../Typography';
 import { alpha } from '../styles/colorManipulator';
-import { createChainedFunction } from '@wonder-ui/utils';
+import { createChainedFunction, css } from '@wonder-ui/utils';
 import { duration } from '../styles/transitions';
 import Grow from '../Grow';
 import { TransitionTimeout, BaseTransitionProps } from '../Transition';
 import { useControlled } from '@wonder-ui/hooks';
-import clsx from 'clsx';
 
 export interface DialogButtonProps extends ButtonBaseProps {
   primary?: boolean;
@@ -217,6 +216,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
           )
         })}
       <DialogRoot
+        autoFocus={false}
         visible={visible}
         theme={theme}
         BackdropProps={{ transitionDuration, ...ModalProps.BackdropProps }}
@@ -279,9 +279,10 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
 
                   return (
                     <DialogButton
+                      autofocus={false}
                       key={index}
                       theme={theme}
-                      className={clsx({ primary }, classes.button, className)}
+                      className={css({ primary }, classes.button, className)}
                       styleProps={{ ...styleProps, primary }}
                       onClick={createChainedFunction(
                         onClick,

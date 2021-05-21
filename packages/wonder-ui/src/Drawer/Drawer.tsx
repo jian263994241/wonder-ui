@@ -1,15 +1,15 @@
 import * as React from 'react';
-import useClasses from '../styles/useClasses';
-import useThemeProps from '../styles/useThemeProps';
-import type { BaseProps, ClassNameMap, PickStyleProps } from '../styles/types';
-import styled from '../styles/styled';
 import Modal, { ModalProps } from '../Modal';
 import Paper, { PaperProps } from '../Paper';
-import { BaseTransitionProps, TransitionTimeout } from '../Transition';
 import Slide from '../Slide';
-import clsx from 'clsx';
-import { duration } from '../styles/transitions';
+import styled from '../styles/styled';
+import useClasses from '../styles/useClasses';
+import useThemeProps from '../styles/useThemeProps';
+import { BaseTransitionProps, TransitionTimeout } from '../Transition';
+import { css } from '@wonder-ui/utils';
 import { DefaultTheme } from '../styles/defaultTheme';
+import { duration } from '../styles/transitions';
+import type { BaseProps, ClassNameMap, PickStyleProps } from '../styles/types';
 
 export interface DrawerProps extends BaseProps {
   /**
@@ -195,7 +195,7 @@ const Drawer: React.FC<DrawerProps> = React.forwardRef((inProps, ref) => {
       elevation={variant === 'temporary' ? elevation : 0}
       square
       {...PaperProps}
-      className={clsx(classes.paper, PaperProps.className)}
+      className={css(classes.paper, PaperProps.className)}
       styleProps={styleProps}
     >
       {children}
@@ -205,7 +205,7 @@ const Drawer: React.FC<DrawerProps> = React.forwardRef((inProps, ref) => {
   if (variant === 'permanent') {
     return (
       <DrawerDockedRoot
-        className={clsx(classes.root, classes.docked)}
+        className={css(classes.root, classes.docked)}
         ref={ref}
         {...rest}
       >
@@ -229,7 +229,7 @@ const Drawer: React.FC<DrawerProps> = React.forwardRef((inProps, ref) => {
   if (variant === 'persistent') {
     return (
       <DrawerDockedRoot
-        className={clsx(classes.root, classes.docked)}
+        className={css(classes.root, classes.docked)}
         ref={ref}
         {...rest}
       >
@@ -242,7 +242,7 @@ const Drawer: React.FC<DrawerProps> = React.forwardRef((inProps, ref) => {
   return (
     <DrawerRoot
       visible={visible}
-      className={clsx(classes.root, classes.modal)}
+      className={css(classes.root, classes.modal)}
       ref={ref}
       {...rest}
     >

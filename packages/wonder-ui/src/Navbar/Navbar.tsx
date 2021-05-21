@@ -1,11 +1,10 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import useThemeProps from '../styles/useThemeProps';
 import useClasses from '../styles/useClasses';
+import useThemeProps from '../styles/useThemeProps';
 import { emphasize } from '../styles/colorManipulator';
+import { useForkRef, useSize } from '@wonder-ui/hooks';
 import type { BaseProps, ClassNameMap } from '../styles/types';
-import { useSize, useForkRef } from '@wonder-ui/hooks';
-import getComputedStyle from 'dom-helpers/getComputedStyle';
 
 const NavbarRoot = styled('div', {
   name: 'WuiNavbar',
@@ -178,7 +177,7 @@ const Navbar: React.FC<NavbarProps> = React.forwardRef((inProps, ref) => {
 
     const noLeft = !barLeft;
     const noRight = !barRight;
-    const navbarStyles = getComputedStyle(innerEl);
+    const navbarStyles = window.getComputedStyle(innerEl);
     const paddingLeft = Number(navbarStyles.paddingLeft.replace('px', ''));
     const paddingRight = Number(navbarStyles.paddingRight.replace('px', ''));
     const navbarInnerWidth = navbarInnerWidth2 - paddingLeft - paddingRight;

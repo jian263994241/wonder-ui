@@ -109,7 +109,7 @@ const SwipeArrowButton = styled(IconButton, {
   slot: 'Arrow',
   shouldForwardProp: (prop: string) =>
     prop !== 'currentSlide' && prop !== 'slideCount' && prop !== 'next'
-})(({ next, theme }) => ({
+})<{ next?: boolean }>(({ next, theme }) => ({
   position: 'absolute',
   top: '50%',
   zIndex: 1,

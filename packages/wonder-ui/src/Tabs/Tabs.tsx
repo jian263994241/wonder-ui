@@ -1,5 +1,4 @@
 import * as React from 'react';
-import clsx from 'clsx';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';

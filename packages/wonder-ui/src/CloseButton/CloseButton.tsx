@@ -7,7 +7,7 @@ export interface CloseButtonProps extends IconButtonProps {
   SvgIconProps?: Partial<SvgIconProps>;
 }
 
-const CloseButton: React.FC<IconButtonProps> = React.forwardRef(
+const CloseButton: React.FC<CloseButtonProps> = React.forwardRef(
   (props, ref) => {
     const { SvgIconProps, ...rest } = props;
     return (

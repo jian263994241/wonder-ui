@@ -1,14 +1,13 @@
 import * as React from 'react';
 import ArrowForward, { ArrowForwardProps } from '../ArrowForward';
-import Backdrop from '../Backdrop';
+import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 import ListItemExtra from '../ListItemExtra';
 import ListItemMedia from '../ListItemMedia';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { getDevice, groupBy } from '@wonder-ui/utils';
-import { useTouchFeedback } from '@wonder-ui/hooks';
+import { groupBy } from '@wonder-ui/utils';
 import type { RestProps, ClassNameMap } from '../styles/types';
 
 export interface ListItemProps {
@@ -68,10 +67,10 @@ type StyleProps = {
   styleProps: Partial<ListItemProps>;
 };
 
-const ListItemRoot = styled('li', {
+const ListItemRoot = styled(ButtonBase, {
   name: 'WuiListItem',
   slot: 'Root'
-})<StyleProps>(({ theme, styleProps }) => ({
+})<StyleProps & ButtonBaseProps>(({ theme, styleProps }) => ({
   overflow: 'hidden',
   position: 'relative',
   transition: 'background-color 200ms',
@@ -80,10 +79,13 @@ const ListItemRoot = styled('li', {
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   outline: 0,
+  border: 0,
   display: 'flex',
   alignItems: styleProps.alignItems || 'center',
   textDecoration: 'none',
   paddingLeft: theme.spacing(2),
+  cursor: 'auto',
+  whiteSpace: 'unset',
   ...(styleProps.selected &&
     !styleProps.disabled && {
       backgroundColor: theme.palette.action.selected
@@ -101,16 +103,6 @@ const ListItemRoot = styled('li', {
   [`&:last-of-type > ${ListItemInner}`]: {
     border: 'none'
   }
-}));
-
-const ListItemActiveState = styled(Backdrop, {
-  name: 'WuiListItem',
-  slot: 'activeState'
-})(({ theme }) => ({
-  position: 'absolute',
-  zIndex: 99,
-  backgroundColor: theme.palette.action.hover,
-  pointerEvents: 'none'
 }));
 
 const ListItemInner = styled('div', {
@@ -163,8 +155,6 @@ const direction = {
   'vertical-up': 'up'
 } as const;
 
-const device = getDevice();
-
 const ListItem: React.FC<ListItemProps & RestProps> = React.forwardRef(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiListItem' });
@@ -177,7 +167,7 @@ const ListItem: React.FC<ListItemProps & RestProps> = React.forwardRef(
       className,
       divider = false,
       disabled = false,
-      component,
+      component = 'li',
       selected = false,
       ...rest
     } = props;
@@ -185,12 +175,6 @@ const ListItem: React.FC<ListItemProps & RestProps> = React.forwardRef(
     const styleProps = { alignItems, button, divider, disabled, selected };
 
     const classes = useClasses({ ...props, styleProps, name: 'WuiListItem' });
-
-    const [touchActive, handleEvents] = useTouchFeedback({
-      ...props,
-      disabled: !button || disabled,
-      type: device.desktop ? 'hover' : 'touch'
-    });
 
     const childGroup = React.useMemo(
       () =>
@@ -213,12 +197,14 @@ const ListItem: React.FC<ListItemProps & RestProps> = React.forwardRef(
 
     return (
       <ListItemRoot
-        as={component}
+        component={component}
         className={classes.root}
+        disabledTouchFeedback={!button}
         styleProps={styleProps}
+        disabled={disabled}
+        autofocus={!disabled}
         ref={ref}
         {...rest}
-        {...handleEvents}
       >
         {childGroup.media &&
           childGroup.media.map((media: any) =>
@@ -233,7 +219,6 @@ const ListItem: React.FC<ListItemProps & RestProps> = React.forwardRef(
             <ListItemArrow direction={direction[arrow]} />
           )}
         </ListItemInner>
-        <ListItemActiveState visible={touchActive} />
       </ListItemRoot>
     );
   }

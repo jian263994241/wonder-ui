@@ -1,18 +1,11 @@
-import { ownerWindow, ownerDocument, getScrollbarSize } from '@wonder-ui/utils';
+import {
+  allowScrollOnElement,
+  disableBodyScroll,
+  enableBodyScroll
+} from '@wonder-ui/utils';
 
 export interface ManagedModalProps {
   disableScrollLock?: boolean;
-}
-
-// Is a vertical scrollbar displayed?
-function isOverflowing(container: Element): boolean {
-  const doc = ownerDocument(container);
-
-  if (doc.body === container) {
-    return ownerWindow(container).innerWidth > doc.documentElement.clientWidth;
-  }
-
-  return container.scrollHeight > container.clientHeight;
 }
 
 export function ariaHidden(element: Element, show: boolean): void {
@@ -21,13 +14,6 @@ export function ariaHidden(element: Element, show: boolean): void {
   } else {
     element.removeAttribute('aria-hidden');
   }
-}
-
-function getPaddingRight(element: Element): number {
-  return (
-    parseInt(ownerWindow(element).getComputedStyle(element).paddingRight, 10) ||
-    0
-  );
 }
 
 function ariaHiddenSiblings(
@@ -62,125 +48,28 @@ function findIndexOf<T>(items: T[], callback: (item: T) => boolean): number {
   return idx;
 }
 
-function handleContainer(containerInfo: Container, props: ManagedModalProps) {
-  const restoreStyle: Array<{
-    /**
-     * CSS property name (HYPHEN CASE) to be modified.
-     */
-    property: string;
-    el: HTMLElement | SVGElement;
-    value: string;
-  }> = [];
-
-  let scrollPositionX: number, scrollPositionY: number;
-
+function handleContainer(
+  modal: Modal,
+  containerInfo: Container,
+  props: ManagedModalProps
+) {
   const container = containerInfo.container;
 
   if (!props.disableScrollLock) {
-    if (isOverflowing(container)) {
-      // Compute the size before applying overflow hidden to avoid any scroll jumps.
-      const scrollbarSize = getScrollbarSize(ownerDocument(container));
-
-      restoreStyle.push({
-        value: container.style.paddingRight,
-        property: 'padding-right',
-        el: container
-      });
-      // Use computed style, here to get the real padding to add our scrollbar width.
-      container.style.paddingRight = `${
-        getPaddingRight(container) + scrollbarSize
-      }px`;
-
-      // .mui-fixed is a global helper.
-      const fixedElements = ownerDocument(container).querySelectorAll(
-        '.wui-fixed'
-      );
-      [].forEach.call(fixedElements, (element: HTMLElement | SVGElement) => {
-        restoreStyle.push({
-          value: element.style.paddingRight,
-          property: 'padding-right',
-          el: element
-        });
-        element.style.paddingRight = `${
-          getPaddingRight(element) + scrollbarSize
-        }px`;
-      });
-    }
-
-    // Improve Gatsby support
-    // https://css-tricks.com/snippets/css/force-vertical-scrollbar/
-    const parent = container.parentElement;
-    const containerWindow = ownerWindow(container);
-    const scrollContainer =
-      parent?.nodeName === 'HTML' &&
-      containerWindow.getComputedStyle(parent).overflowY === 'scroll'
-        ? parent
-        : container;
-
-    // Block the scroll even if no scrollbar is visible to account for mobile keyboard
-    // screensize shrink.
-    restoreStyle.push({
-      value: scrollContainer.style.overflow,
-      property: 'overflow',
-      el: scrollContainer
-    });
-
-    restoreStyle.push({
-      value: scrollContainer.style.width,
-      property: 'width',
-      el: scrollContainer
-    });
-
-    // restoreStyle.push({
-    //   value: scrollContainer.style.position,
-    //   property: 'position',
-    //   el: scrollContainer
-    // });
-
-    // restoreStyle.push({
-    //   value: scrollContainer.style.top,
-    //   property: 'top',
-    //   el: scrollContainer
-    // });
-
-    // restoreStyle.push({
-    //   value: scrollContainer.style.left,
-    //   property: 'left',
-    //   el: scrollContainer
-    // });
-
-    // scrollPositionX = containerWindow.pageXOffset;
-    // scrollPositionY = containerWindow.pageYOffset;
-
-    scrollContainer.style.overflow = 'hidden';
-    scrollContainer.style.width = '100%';
-    // scrollContainer.style.position = 'fixed';
-    // scrollContainer.style.top = `-${scrollPositionY}px`;
-    // scrollContainer.style.left = `-${scrollPositionX}px`;
+    disableBodyScroll(container);
+    allowScrollOnElement(modal.modalRef);
   }
 
   const restore = () => {
-    restoreStyle.forEach(({ value, el, property }) => {
-      if (value) {
-        el.style.setProperty(property, value);
-      } else {
-        el.style.removeProperty(property);
-      }
-    });
-
-    // if (restoreStyle.length > 0) {
-    //   const containerWindow = ownerWindow(container);
-
-    //   containerWindow.scrollTo(scrollPositionX, scrollPositionY);
-    // }
+    enableBodyScroll(container);
   };
 
   return restore;
 }
 
-function getHiddenSiblings(container: Element) {
-  const hiddenSiblings: Element[] = [];
-  [].forEach.call(container.children, (element: Element) => {
+function getHiddenSiblings(container: HTMLElement): HTMLElement[] {
+  const hiddenSiblings: HTMLElement[] = [];
+  [].forEach.call(container.children, (element: HTMLElement) => {
     if (element.getAttribute('aria-hidden') === 'true') {
       hiddenSiblings.push(element);
     }
@@ -189,13 +78,13 @@ function getHiddenSiblings(container: Element) {
 }
 
 export interface Modal {
-  mount: Element;
-  modalRef: Element;
+  mount: HTMLElement;
+  modalRef: HTMLElement;
 }
 
 interface Container {
   container: HTMLElement;
-  hiddenSiblings: Element[];
+  hiddenSiblings: HTMLElement[];
   modals: Modal[];
   restore: null | (() => void);
 }
@@ -244,6 +133,7 @@ export default class ModalManager {
       this.containers,
       (item) => item.container === container
     );
+
     if (containerIndex !== -1) {
       this.containers[containerIndex].modals.push(modal);
       return modalIndex;
@@ -267,7 +157,7 @@ export default class ModalManager {
     const containerInfo = this.containers[containerIndex];
 
     if (!containerInfo.restore) {
-      containerInfo.restore = handleContainer(containerInfo, props);
+      containerInfo.restore = handleContainer(modal, containerInfo, props);
     }
   }
 

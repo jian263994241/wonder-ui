@@ -1,10 +1,9 @@
 import * as React from 'react';
+import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
+import { ButtonProps, ButtonRoot } from '../Button/Button';
 import type { BaseProps, PickStyleProps } from '../styles/types';
-import styled from '../styles/styled';
-import { ButtonRoot, ButtonProps } from '../Button/Button';
-import * as ReactIs from 'react-is';
 
 export interface ButtonGroupProps extends BaseProps {
   /**
@@ -96,7 +95,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = React.forwardRef(
         {...rest}
       >
         {React.Children.toArray(children).map((node: any) => {
-          if (ReactIs.isElement(node)) {
+          if (React.isValidElement<any>(node)) {
             if ((node.type as any).displayName === 'WuiButton') {
               return React.cloneElement(node, {
                 ...ButtonProps,

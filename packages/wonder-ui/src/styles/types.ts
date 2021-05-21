@@ -44,7 +44,3 @@ export type ClassNameMap<Classes extends string> = Partial<
 export interface RestProps {
   [prop: string]: any;
 }
-
-export type StyleProps<Props> = {
-  styleProps: Props;
-};

@@ -1,14 +1,14 @@
 import * as React from 'react';
-import styled from '../styles/styled';
-import useThemeProps from '../styles/useThemeProps';
-import useClasses from '../styles/useClasses';
-import type { BaseProps, ClassNameMap } from '../styles/types';
-import Navbar, { NavbarProps } from '../Navbar';
+import ArrowForward from '../ArrowForward';
 import CloseButton from '../CloseButton';
 import IconButton from '../IconButton';
-import ArrowForward from '../ArrowForward';
+import Navbar, { NavbarProps } from '../Navbar';
+import styled from '../styles/styled';
+import useClasses from '../styles/useClasses';
+import useThemeProps from '../styles/useThemeProps';
+import { css } from '@wonder-ui/utils';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
-import clsx from 'clsx';
+import type { BaseProps, ClassNameMap } from '../styles/types';
 
 const PageRoot = styled('div', {
   name: 'WuiPage',
@@ -153,7 +153,7 @@ const Page: React.FC<PageProps> = React.forwardRef((inProps, ref) => {
       {navbar ? (
         React.cloneElement(navbar, {
           ...NavbarProps,
-          className: clsx(
+          className: css(
             navbar.props.className,
             classes.navbar,
             NavbarProps.className
@@ -170,7 +170,7 @@ const Page: React.FC<PageProps> = React.forwardRef((inProps, ref) => {
           right={barRight}
           left={barLeft}
           {...NavbarProps}
-          className={clsx(classes.navbar, NavbarProps.className)}
+          className={css(classes.navbar, NavbarProps.className)}
           ref={handleNavbarRef}
         />
       ) : null}
@@ -184,7 +184,7 @@ const Page: React.FC<PageProps> = React.forwardRef((inProps, ref) => {
 
       <PageContent
         {...ContentProps}
-        className={clsx(classes.content, ContentProps.className)}
+        className={css(classes.content, ContentProps.className)}
         style={{
           ...ContentProps.style,
           paddingTop: contentPaddingTop,

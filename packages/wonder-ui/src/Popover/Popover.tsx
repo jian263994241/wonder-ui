@@ -1,15 +1,14 @@
-import { useForkRef } from '@wonder-ui/hooks';
-import { debounce, ownerDocument, ownerWindow } from '@wonder-ui/utils';
-import clsx from 'clsx';
 import * as React from 'react';
 import Grow from '../Grow';
 import Modal, { ModalProps } from '../Modal';
 import Paper, { PaperProps } from '../Paper';
 import styled from '../styles/styled';
-import type { ClassNameMap, RestProps } from '../styles/types';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import { BaseTransitionProps, TransitionTimeout } from '../Transition';
+import { debounce, getDocument, getWindow, css } from '@wonder-ui/utils';
+import { useForkRef } from '@wonder-ui/hooks';
+import type { ClassNameMap, RestProps } from '../styles/types';
 
 type Rect = { width: number; height: number };
 type AnchorEl = HTMLElement | null | (() => HTMLElement | null);
@@ -193,7 +192,7 @@ const Popover: React.FC<PopoverProps & RestProps> = React.forwardRef(
       const anchorElement =
         resolvedAnchorEl && resolvedAnchorEl.nodeType === 1
           ? resolvedAnchorEl
-          : ownerDocument(paperRef.current).body;
+          : getDocument(paperRef.current).body;
       const anchorRect = anchorElement.getBoundingClientRect();
 
       return {
@@ -247,7 +246,7 @@ const Popover: React.FC<PopoverProps & RestProps> = React.forwardRef(
         const right = left + elemRect.width;
 
         // Use the parent window of the anchorEl if provided
-        const containerWindow = ownerWindow(getAnchorEl(anchorEl));
+        const containerWindow = getWindow(getAnchorEl(anchorEl));
 
         // Window thresholds taking required margin into account
         const heightThreshold = containerWindow.innerHeight - marginThreshold;
@@ -344,7 +343,7 @@ const Popover: React.FC<PopoverProps & RestProps> = React.forwardRef(
         setPositioningStyles();
       });
       const resolvedAnchorEl = getAnchorEl(anchorEl);
-      const containerWindow = ownerWindow(resolvedAnchorEl);
+      const containerWindow = getWindow(resolvedAnchorEl);
       containerWindow.addEventListener('resize', handleResize);
       containerWindow.addEventListener('scroll', handleResize);
       return () => {
@@ -356,7 +355,7 @@ const Popover: React.FC<PopoverProps & RestProps> = React.forwardRef(
 
     const container =
       containerProp ||
-      (anchorEl ? ownerDocument(getAnchorEl(anchorEl)).body : undefined);
+      (anchorEl ? getDocument(getAnchorEl(anchorEl)).body : undefined);
 
     return (
       <PopoverRoot
@@ -376,7 +375,7 @@ const Popover: React.FC<PopoverProps & RestProps> = React.forwardRef(
         >
           <PopoverPaper
             {...PaperProps}
-            className={clsx(classes.paper, PaperProps?.className)}
+            className={css(classes.paper, PaperProps?.className)}
             elevation={elevation}
             ref={handdlePaperRef}
           >

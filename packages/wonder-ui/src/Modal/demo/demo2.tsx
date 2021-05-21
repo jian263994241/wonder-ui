@@ -4,7 +4,16 @@
  */
 
 /** @jsx jsx */
-import { jsx, Button, Fade, Modal, styled, Typography } from '@wonder-ui/core';
+import {
+  jsx,
+  Button,
+  Fade,
+  Modal,
+  styled,
+  Typography,
+  WhiteSpace,
+  Space
+} from '@wonder-ui/core';
 import { useToggle } from '@wonder-ui/hooks';
 
 const Demo = styled('div')`
@@ -29,7 +38,6 @@ export default function Example() {
 
       <Modal
         visible={visible}
-        keepMounted
         onClose={() => toggle()}
         BackdropProps={{ transitionDuration: 400 }}
       >
@@ -38,8 +46,18 @@ export default function Example() {
             <Typography variant="h2" gutterBottom>
               模态框标题
             </Typography>
-            <Typography gutterBottom> 模态框文字文字 </Typography>
-            <Button onClick={() => toggle()}>确定</Button>
+            <Typography gutterBottom style={{ height: 60, overflow: 'auto' }}>
+              模态框文字文字, 模态框文字文字, 模态框文字文字, 模态框文字文字,
+              模态框文字文字, 模态框文字文字, 模态框文字文字, 模态框文字文字,
+              模态框文字文字, 模态框文字文字, 模态框文字文字, 模态框文字文字
+            </Typography>
+            <WhiteSpace />
+            <Space>
+              <Button onClick={() => toggle()}>确定</Button>
+              <Button onClick={() => toggle()} color="secondary">
+                取消
+              </Button>
+            </Space>
           </Demo>
         </Fade>
       </Modal>

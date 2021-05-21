@@ -1,11 +1,10 @@
 import * as React from 'react';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
-import clsx from 'clsx';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import { alpha, darken } from '../styles/colorManipulator';
-import type { PickStyleProps, ClassNameMap } from '../styles/types';
+import { css } from '@wonder-ui/utils';
+import type { PickStyleProps, ClassNameMap, RestProps } from '../styles/types';
 
 export interface ButtonProps extends ButtonBaseProps {
   classes?: ClassNameMap<'root' | 'label' | 'startIcon' | 'endIcon'>;
@@ -110,11 +109,11 @@ export const ButtonRoot = styled(ButtonBase, {
       square: {}
     }[styleProps.shape],
 
-    ...(styleProps.variant === 'text' && {
-      '&.active-state': {
-        opacity: '0.3'
-      }
-    }),
+    // ...(styleProps.variant === 'text' && {
+    //   // '&.active-state': {
+    //   //   opacity: '0.3'
+    //   // }
+    // }),
     ...(styleProps.color !== 'inherit' &&
       styleProps.variant === 'text' && {
         color: theme.palette[styleProps.color].main
@@ -127,16 +126,16 @@ export const ButtonRoot = styled(ButtonBase, {
       styleProps.variant === 'contained' && {
         color: theme.palette[styleProps.color].contrastText,
         backgroundColor: theme.palette[styleProps.color].main,
-        borderColor: theme.palette[styleProps.color].main,
+
         ...(styleProps.disabled && {
           color: theme.palette.action.disabled,
           backgroundColor: theme.palette.action.disabledBackground,
           borderColor: theme.palette.action.disabled
         }),
-        '&.active-state, &.active': {
-          backgroundColor: darken(theme.palette[styleProps.color].main, 0.3),
-          borderColor: darken(theme.palette[styleProps.color].main, 0.3)
-        },
+        // '&.active-state, &.active': {
+        //   backgroundColor: darken(theme.palette[styleProps.color].main, 0.3),
+        //   borderColor: darken(theme.palette[styleProps.color].main, 0.3)
+        // },
 
         '&:focus': {
           boxShadow: theme.shadows[3]
@@ -147,19 +146,20 @@ export const ButtonRoot = styled(ButtonBase, {
       styleProps.variant === 'outlined' && {
         color: theme.palette[styleProps.color].main,
         backgroundColor: 'transparent',
+        border: '1px solid',
         borderColor: theme.palette[styleProps.color].main,
         ...(styleProps.disabled && {
           color: theme.palette.action.disabled,
           borderColor: theme.palette.action.disabled
         }),
-        '&.active-state': {
-          color: darken(theme.palette[styleProps.color].main, 0.3),
-          backgroundColor: alpha(
-            theme.palette[styleProps.color].main,
-            theme.palette.action.hoverOpacity
-          ),
-          borderColor: darken(theme.palette[styleProps.color].main, 0.3)
-        },
+        // '&.active-state': {
+        //   color: darken(theme.palette[styleProps.color].main, 0.3),
+        //   backgroundColor: alpha(
+        //     theme.palette[styleProps.color].main,
+        //     theme.palette.action.hoverOpacity
+        //   ),
+        //   borderColor: darken(theme.palette[styleProps.color].main, 0.3)
+        // },
         '&.active': {
           color: theme.palette[styleProps.color].contrastText,
           backgroundColor: theme.palette[styleProps.color].main,
@@ -206,68 +206,70 @@ const ButtonEndIcon = styled('span', {
   })
 }));
 
-const Button: React.FC<ButtonProps> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiButton' });
-  const {
-    checked,
-    children,
-    className,
-    component = 'button',
-    color = 'primary',
-    disabled = false,
-    edge = false,
-    shape = 'default',
-    size = 'medium',
-    startIcon: startIconProp,
-    endIcon: endIconProp,
-    variant = 'contained',
-    ...rest
-  } = props;
+const Button: React.FC<ButtonProps & RestProps> = React.forwardRef(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiButton' });
+    const {
+      checked = false,
+      children,
+      className,
+      component = 'button',
+      color = 'primary',
+      disabled = false,
+      edge = false,
+      shape = 'default',
+      size = 'medium',
+      startIcon: startIconProp,
+      endIcon: endIconProp,
+      variant = 'contained',
+      ...rest
+    } = props;
 
-  const styleProps = {
-    color,
-    disabled,
-    edge,
-    shape,
-    size,
-    variant
-  };
+    const styleProps = {
+      color,
+      disabled,
+      edge,
+      shape,
+      size,
+      variant
+    };
 
-  const classes = useClasses({ ...props, styleProps, name: 'WuiButton' });
+    const classes = useClasses({ ...props, styleProps, name: 'WuiButton' });
 
-  const startIcon = startIconProp && (
-    <ButtonStartIcon className={classes.startIcon} styleProps={styleProps}>
-      {startIconProp}
-    </ButtonStartIcon>
-  );
+    const startIcon = startIconProp && (
+      <ButtonStartIcon className={classes.startIcon} styleProps={styleProps}>
+        {startIconProp}
+      </ButtonStartIcon>
+    );
 
-  const endIcon = endIconProp && (
-    <ButtonEndIcon className={classes.endIcon} styleProps={styleProps}>
-      {endIconProp}
-    </ButtonEndIcon>
-  );
+    const endIcon = endIconProp && (
+      <ButtonEndIcon className={classes.endIcon} styleProps={styleProps}>
+        {endIconProp}
+      </ButtonEndIcon>
+    );
 
-  return (
-    <ButtonRoot
-      component={component}
-      disabled={disabled}
-      ref={ref}
-      styleProps={styleProps}
-      className={clsx(classes.root, { active: checked })}
-      {...rest}
-    >
-      {component !== 'input' ? (
-        <ButtonLabel className={classes.label}>
-          {startIcon}
-          {children}
-          {endIcon}
-        </ButtonLabel>
-      ) : (
-        children
-      )}
-    </ButtonRoot>
-  );
-});
+    return (
+      <ButtonRoot
+        component={component}
+        disabled={disabled}
+        ref={ref}
+        styleProps={styleProps}
+        className={css(classes.root, { active: checked })}
+        {...rest}
+      >
+        {component !== 'input' ? (
+          <ButtonLabel className={classes.label}>
+            {startIcon}
+            {children}
+            {endIcon}
+          </ButtonLabel>
+        ) : (
+          children
+        )}
+      </ButtonRoot>
+    );
+  }
+);
 
 Button.displayName = 'WuiButton';
 

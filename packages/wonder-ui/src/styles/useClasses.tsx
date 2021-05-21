@@ -1,5 +1,16 @@
-import clsx from 'clsx';
-import { isObject, mapObject } from '@wonder-ui/utils';
+import { isObject, mapObject, css } from '@wonder-ui/utils';
+
+const globalClasses: Record<string, string> = {
+  active: 'Wui-active',
+  checked: 'Wui-checked',
+  disabled: 'Wui-disabled',
+  error: 'Wui-error',
+  focused: 'Wui-focused',
+  focusVisible: 'Wui-focusVisible',
+  required: 'Wui-required',
+  expanded: 'Wui-expanded',
+  selected: 'Wui-selected'
+};
 
 type Options<Classes extends Record<string, string>> = {
   name: string;
@@ -23,11 +34,11 @@ export default function useClasses<
     if (typeof value === 'string' || typeof value === 'number') {
       return `${name}-${key}-${value}`;
     } else if (typeof value === 'boolean') {
-      return value && `${name}-${key}`;
+      return value && (globalClasses[key] || `${name}-${key}`);
     }
   };
 
-  const classes = clsx(
+  const classes = css(
     mapObject(styleProps, (value, key) => {
       if (isObject(value)) {
         return mapObject(value, (value, key) => {
@@ -43,6 +54,6 @@ export default function useClasses<
 
   return {
     ...classesInput,
-    root: classes.length > 0 ? classes : undefined
+    root: classes && classes.length > 0 ? classes : undefined
   };
 }

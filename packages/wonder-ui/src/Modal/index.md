@@ -6,13 +6,13 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
+| autoFocus | Auto focus | `boolean` | false
 | BackdropProps | Backdrop Props | `BackdropProps` | {}
 | FocusLockProps | FocusLock Props | `ReactFocusLockProps` | {}
 | children | 子节点 | `ReactElement` |
 | closeAfterTransition | 过渡后关闭 | `boolean` | false
 | component | root element | `ElementType` | div
 | container | container | `HTMLElement` |
-| disableAutoFocus | 禁用AutoFocus | `boolean` | false
 | disableEscapeKeyDown | 禁用esc按键执行关闭 | `boolean` | false
 | disableFocusLock | 禁用FocusLock | `boolean` | false
 | disablePortal | 禁用protal | `boolean` | false

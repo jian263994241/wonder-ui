@@ -6,10 +6,10 @@ import Portal, { Container, getContainer } from '../Portal/Portal';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import { createChainedFunction, ownerDocument } from '@wonder-ui/utils';
+import { createChainedFunction, getDocument } from '@wonder-ui/utils';
 import { ReactFocusLockProps } from 'react-focus-lock/interfaces';
 import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
-import type { RestProps, StyleProps } from '../styles/types';
+import type { RestProps } from '../styles/types';
 
 // A modal manager used to track and manage the state of open Modals.
 // Modals don't open on the server so this won't conflict with concurrent requests.
@@ -20,6 +20,10 @@ function getHasTransition(props: React.PropsWithChildren<any>) {
 }
 
 export interface ModalProps {
+  /**
+   * AutoFocus
+   */
+  autoFocus?: boolean;
   /**
    * Backdrop Props
    * @default {}
@@ -46,11 +50,7 @@ export interface ModalProps {
    * @default false
    */
   closeAfterTransition?: boolean;
-  /**
-   * 禁用AutoFocus
-   * @default false
-   */
-  disableAutoFocus?: boolean;
+
   /**
    * 禁用esc按键执行关闭
    * @default false
@@ -133,10 +133,16 @@ export interface ModalProps {
   visible?: boolean;
 }
 
+type StyleProps = {
+  styleProps: Partial<ModalProps> & {
+    exited: boolean;
+  };
+};
+
 const ModalRoot = styled('div', {
   name: 'WuiModal',
   slot: 'Root'
-})<StyleProps<ModalProps & { exited: boolean }>>(({ theme, styleProps }) => ({
+})<StyleProps>(({ theme, styleProps }) => ({
   position: 'fixed',
   zIndex: theme.zIndex.modal,
   right: 0,
@@ -156,13 +162,13 @@ const Modal: React.FC<ModalProps & RestProps> = React.forwardRef(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiModal' });
     const {
+      autoFocus = false,
       BackdropProps,
       children,
       className,
       closeAfterTransition,
       component,
       container,
-      disableAutoFocus = false,
       disableEscapeKeyDown = false,
       disableFocusLock = false,
       disablePortal = false,
@@ -196,7 +202,7 @@ const Modal: React.FC<ModalProps & RestProps> = React.forwardRef(
         ? hasTransitionProp
         : getHasTransition(props);
 
-    const getDoc = () => ownerDocument(mountNodeRef.current);
+    const getDoc = () => getDocument(mountNodeRef.current);
     const getModal = () => {
       modal.current.modalRef = modalRef.current;
       modal.current.mount = mountNodeRef.current;
@@ -332,7 +338,7 @@ const Modal: React.FC<ModalProps & RestProps> = React.forwardRef(
     const { tabIndex = '-1', onEnter, onExited } = children.props as any;
 
     childProps.tabIndex = tabIndex;
-    childProps['data-autofocus'] = !disableAutoFocus;
+    childProps['data-autofocus'] = autoFocus;
 
     if (hasTransition) {
       childProps.in = visible;
@@ -346,21 +352,14 @@ const Modal: React.FC<ModalProps & RestProps> = React.forwardRef(
         container={container}
         ref={handlePortalRef}
       >
-        <FocusLock
-          disabled={disableFocusLock}
-          noFocusGuards={disableFocusLock}
-          autoFocus={!disableAutoFocus}
-          ref={handleRef}
-          {...FocusLockProps}
-          as={ModalRoot as React.ElementType<any>}
+        <ModalRoot
+          role="presentation"
+          {...rest}
+          as={component}
           className={classes.root}
-          lockProps={{
-            role: 'presentation',
-            onKeyDown: handleKeyDown,
-            as: component,
-            styleProps,
-            ...rest
-          }}
+          onKeyDown={handleKeyDown}
+          styleProps={styleProps}
+          ref={handleRef}
         >
           {!hideBackdrop && (
             <Backdrop
@@ -369,8 +368,15 @@ const Modal: React.FC<ModalProps & RestProps> = React.forwardRef(
               {...BackdropProps}
             />
           )}
-          {React.cloneElement(children, childProps)}
-        </FocusLock>
+          <FocusLock
+            disabled={disableFocusLock}
+            noFocusGuards={disableFocusLock}
+            autoFocus={autoFocus}
+            {...FocusLockProps}
+          >
+            {children ? React.cloneElement(children, childProps) : null}
+          </FocusLock>
+        </ModalRoot>
       </Portal>
     );
   }

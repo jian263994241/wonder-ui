@@ -1,16 +1,16 @@
 import * as React from 'react';
-import styled from '../styles/styled';
-import useThemeProps from '../styles/useThemeProps';
-import useClasses from '../styles/useClasses';
-import type { BaseProps, PickStyleProps } from '../styles/types';
-import clsx from 'clsx';
-import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
-import SnackbarContent, { SnackbarContentProps } from '../SnackbarContent';
 import ClickAwayListener, {
   ClickAwayListenerProps
 } from '../ClickAwayListener';
 import Grow from '../Grow';
+import SnackbarContent, { SnackbarContentProps } from '../SnackbarContent';
+import styled from '../styles/styled';
+import useClasses from '../styles/useClasses';
+import useThemeProps from '../styles/useThemeProps';
 import { BaseTransitionProps, TransitionTimeout } from '../Transition';
+import { css } from '@wonder-ui/utils';
+import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
+import type { BaseProps, PickStyleProps } from '../styles/types';
 
 export interface SnackbarProps extends BaseProps {
   /**
@@ -266,7 +266,7 @@ const Snackbar: React.FC<SnackbarProps> = React.forwardRef((inProps, ref) => {
     >
       <SnackbarRoot
         styleProps={styleProps}
-        className={clsx(classes.root, className)}
+        className={css(classes.root, className)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         ref={handleRef}

@@ -10,7 +10,7 @@ import createBreakpoints, {
 } from './theme/createBreakpoints';
 import shadows from './theme/shadows';
 import shape, { Shape } from './theme/shape';
-import zIndex, { ZIndex } from './theme/zIndex';
+import zIndex from './theme/zIndex';
 
 interface ThemeComponents {
   components?: {
@@ -31,7 +31,7 @@ interface ThemeOptions extends ThemeComponents {
   typography?: TypographyOptions;
   shadows?: string[];
   shape?: Shape;
-  zIndex?: Partial<ZIndex>;
+  zIndex?: Partial<typeof zIndex>;
 }
 
 export interface Theme extends ThemeComponents {
@@ -43,7 +43,7 @@ export interface Theme extends ThemeComponents {
   typography: ReturnType<typeof createTypography>;
   shadows: string[];
   shape: Shape;
-  zIndex: ZIndex;
+  zIndex: typeof zIndex;
 }
 
 export default function createTheme(options: ThemeOptions = {}): Theme {

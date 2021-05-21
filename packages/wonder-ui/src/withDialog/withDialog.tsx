@@ -1,9 +1,8 @@
 import * as React from 'react';
 import Dialog, { DialogProps } from '../Dialog';
-import hoistNonReactStatics from 'hoist-non-react-statics';
 import Manager from './Manager';
 import Snackbar, { SnackbarProps } from '../Snackbar';
-import { createChainedFunction } from '@wonder-ui/utils';
+import { createChainedFunction, hoistStatics } from '@wonder-ui/utils';
 import { useSafeState } from '@wonder-ui/hooks';
 
 const StackContext = React.createContext({
@@ -161,7 +160,7 @@ export default function withDialog<P>(
     }
   );
 
-  hoistNonReactStatics(returnComponent, Component);
+  hoistStatics(Component, returnComponent);
 
   return returnComponent;
 }

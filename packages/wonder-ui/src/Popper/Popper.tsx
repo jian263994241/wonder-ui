@@ -1,3 +1,6 @@
+import * as React from 'react';
+import Portal, { PortalProps } from '../Portal';
+import useThemeProps from '../styles/useThemeProps';
 import {
   createPopper,
   Instance as PopperInstance,
@@ -6,17 +9,15 @@ import {
   OptionsGeneric,
   State as PopperState
 } from '@popperjs/core';
+import { getDocument } from '@wonder-ui/utils';
 import {
+  setRef,
   useEnhancedEffect,
-  useForkRef,
-  useForceUpdate
+  useForceUpdate,
+  useForkRef
 } from '@wonder-ui/hooks';
-import { ownerDocument, setRef } from '@wonder-ui/utils';
-import * as React from 'react';
-import Portal, { PortalProps } from '../Portal';
-import type { RestProps } from '../styles/types';
-import useThemeProps from '../styles/useThemeProps';
 import { TransitionProps } from '../Transition';
+import type { RestProps } from '../styles/types';
 
 type AnchorEl = HTMLElement | null | (() => HTMLElement | null);
 type BasePlacement = 'top' | 'bottom' | 'right' | 'left';
@@ -252,7 +253,7 @@ const Popper: React.FC<PopperProps & RestProps> = React.forwardRef(
 
     const container =
       containerProp ||
-      (anchorEl ? ownerDocument(getAnchorEl(anchorEl)).body : undefined);
+      (anchorEl ? getDocument(getAnchorEl(anchorEl)).body : undefined);
 
     return (
       <Portal disablePortal={disablePortal} container={container}>

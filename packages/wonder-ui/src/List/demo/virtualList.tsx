@@ -15,6 +15,8 @@ import {
   Typography
 } from '@wonder-ui/core';
 import { useVirtualList } from '@wonder-ui/hooks';
+import { disableBodyScroll, allowScrollOnElement } from '@wonder-ui/utils';
+import * as React from 'react';
 
 const dataList = Array(2000).fill('');
 
@@ -23,9 +25,18 @@ export default function Example() {
     overscan: 15,
     itemHeight: 44
   });
+  const rootRef = React.useRef<HTMLDivElement>(null);
 
   return (
-    <Container size="sm">
+    <Container size="sm" ref={rootRef}>
+      <button
+        onClick={() => {
+          disableBodyScroll(document.querySelector<HTMLElement>('#root')!);
+          allowScrollOnElement(rootRef.current);
+        }}
+      >
+        aaaa
+      </button>
       <div
         {...containerProps}
         style={{

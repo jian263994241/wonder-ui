@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ownerDocument } from '@wonder-ui/utils';
+import { getDocument } from '@wonder-ui/utils';
 import { useForkRef, useEventCallback } from '@wonder-ui/hooks';
 
 function mapEventPropToEvent(
@@ -69,7 +69,7 @@ export default function ClickAwayListener(
     touchEvent = 'onTouchEnd'
   } = props;
   const movedRef = React.useRef(false);
-  const nodeRef = React.useRef<Element>(null);
+  const nodeRef = React.useRef<HTMLElement>(null);
   const activatedRef = React.useRef(false);
   const syntheticEventRef = React.useRef(false);
 
@@ -98,7 +98,7 @@ export default function ClickAwayListener(
     const insideReactTree = syntheticEventRef.current;
     syntheticEventRef.current = false;
 
-    const doc = ownerDocument(nodeRef.current);
+    const doc = getDocument(nodeRef.current);
 
     // 1. IE11 support, which trigger the handleClickAway even after the unbind
     // 2. The child might render null.
@@ -163,7 +163,7 @@ export default function ClickAwayListener(
   React.useEffect(() => {
     if (touchEvent !== false) {
       const mappedTouchEvent = mapEventPropToEvent(touchEvent);
-      const doc = ownerDocument(nodeRef.current);
+      const doc = getDocument(nodeRef.current);
 
       const handleTouchMove = () => {
         movedRef.current = true;
@@ -188,7 +188,7 @@ export default function ClickAwayListener(
   React.useEffect(() => {
     if (mouseEvent !== false) {
       const mappedMouseEvent = mapEventPropToEvent(mouseEvent);
-      const doc = ownerDocument(nodeRef.current);
+      const doc = getDocument(nodeRef.current);
 
       doc.addEventListener(mappedMouseEvent, handleClickAway);
 

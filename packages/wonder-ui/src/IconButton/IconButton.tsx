@@ -58,9 +58,9 @@ const IconButtonRoot = styled(ButtonBase, {
     overflow: 'visible', // Explicitly set the default value to solve a bug on IE11.
     lineHeight: 0,
     color: theme.palette.action.active,
-    '&.active-state': {
-      opacity: 0.3
-    },
+    // '&.active-state': {
+    //   opacity: 0.3
+    // },
     /* Styles applied to the root element if `edge="start"`. */
     ...(styleProps.edge === 'start' && {
       marginLeft: styleProps.size === 'small' ? -3 : -12

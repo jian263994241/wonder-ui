@@ -1,7 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { useEnhancedEffect, useForkRef } from '@wonder-ui/hooks';
-import { setRef } from '@wonder-ui/utils';
+import { useEnhancedEffect, useForkRef, setRef } from '@wonder-ui/hooks';
 
 export type Container = HTMLElement | null | (() => HTMLElement | null);
 

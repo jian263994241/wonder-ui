@@ -49,6 +49,9 @@ export * from './Drawer';
 export { default as Fade } from './Fade';
 export * from './Fade';
 
+export { default as FocusZone } from './FocusZone';
+export * from './FocusZone';
+
 export { default as Grow } from './Grow';
 export * from './Grow';
 

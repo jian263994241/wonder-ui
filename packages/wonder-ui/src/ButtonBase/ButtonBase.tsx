@@ -1,35 +1,41 @@
 import * as React from 'react';
-import clsx from 'clsx';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import { getDevice } from '@wonder-ui/utils';
+import { getDevice, css } from '@wonder-ui/utils';
 import { useTouchFeedback } from '@wonder-ui/hooks';
-import type { PickStyleProps, BaseProps } from '../styles/types';
+import type { RestProps } from '../styles/types';
 
-export interface ButtonBaseProps extends BaseProps {
+export interface ButtonBaseProps {
   autofocus?: boolean;
+  children?: React.ReactNode;
+  className?: string;
+  component?: React.ElementType;
   disabled?: boolean;
   disabledTouchFeedback?: boolean;
-  /**
-   * Click event
-   */
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  ref?: React.Ref<any>;
+  style?: React.CSSProperties;
 }
+
+type StyleProps = {
+  styleProps: Partial<ButtonBaseProps>;
+};
 
 const ButtonBaseRoot = styled('button', {
   name: 'WuiButtonBase',
   slot: 'Root'
-})<PickStyleProps<ButtonBaseProps, 'disabled'>>(({ theme, styleProps }) => ({
+})<StyleProps>(({ theme, styleProps }) => ({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
   position: 'relative',
   outline: 0,
+  border: 0,
   // Remove #0f0d0d highlight
   WebkitTapHighlightColor: 'transparent',
   backgroundColor: 'transparent', // Reset default value
-  border: '1px solid transparent',
+
   margin: 0, // Remove the margin in Safari
   borderRadius: 0,
   padding: 0, // Remove the padding in Firefox
@@ -56,32 +62,49 @@ const ButtonBaseRoot = styled('button', {
   })
 }));
 
-// const ButtonBaseActiveState = styled(Backdrop, {
-//   name: 'WuiListItem',
-//   slot: 'activeState'
-// })(({ theme }) => ({
-//   position: 'absolute',
-//   zIndex: 99,
-//   backgroundColor: theme.palette.action.hover,
-//   pointerEvents: 'none'
-// }));
+const TouchFeedback = styled('span', {
+  name: 'TouchFeedback',
+  slot: 'Root'
+})(({ theme }) => ({
+  display: 'block',
+  overflow: 'hidden',
+  pointerEvents: 'none',
+  position: 'absolute',
+  zIndex: 0,
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0,
+  borderRadius: 'inherit',
+  backgroundColor: 'currentColor',
+  opacity: 0,
+  transition: theme.transitions.create(['opacity', 'background-color']),
+  '&.Wui-active': {
+    opacity: 0.18
+  },
+  '*:focus &': {
+    opacity: 0.08
+  }
+}));
 
 const device = getDevice();
 
-const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
+const ButtonBase: React.FC<ButtonBaseProps & RestProps> = React.forwardRef(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiButtonBase' });
 
     const {
-      autofocus = true,
+      autofocus = false,
       disabled = false,
       disabledTouchFeedback = false,
       className,
-      component,
+      children,
+      component = 'button',
+      theme,
       ...rest
     } = props;
 
-    const styleProps = { disabled };
+    const styleProps = { disabled, disabledTouchFeedback };
 
     const classes = useClasses({ ...props, styleProps, name: 'WuiButtonBase' });
 
@@ -94,18 +117,28 @@ const ButtonBase: React.FC<ButtonBaseProps> = React.forwardRef(
     return (
       <ButtonBaseRoot
         as={component}
-        className={clsx(classes.root, {
-          'active-state': touchActive
-        })}
-        data-autofocus={autofocus}
-        role="button"
         aria-disabled={disabled}
+        data-autofocus={autofocus}
         disabled={disabled}
+        role="button"
+        {...rest}
         styleProps={styleProps}
         ref={ref}
+        theme={theme}
+        className={css(classes.root, {
+          'active-state': touchActive
+        })}
         {...handleEvents}
-        {...rest}
-      ></ButtonBaseRoot>
+      >
+        {component !== 'input' ? (
+          <React.Fragment>
+            {children}
+            {!disabledTouchFeedback && (
+              <TouchFeedback className={css({ 'Wui-active': touchActive })} />
+            )}
+          </React.Fragment>
+        ) : null}
+      </ButtonBaseRoot>
     );
   }
 );
