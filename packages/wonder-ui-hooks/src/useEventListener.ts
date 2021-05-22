@@ -1,52 +1,45 @@
 import * as React from 'react';
-import { BasicTarget, getTargetElement } from './utils/dom';
-import useEventCallback from './useEventCallback';
+import { on } from '@wonder-ui/utils';
 
-type Target = BasicTarget<HTMLElement | Element | Window | Document>;
-
-interface EventListenerOptions extends AddEventListenerOptions {
-  target?: Target;
-}
-
-export function useEventListener(
-  eventName: keyof HTMLElementEventMap,
-  handler: Function,
-  options: EventListenerOptions
+/**
+ * Hook to attach an event handler on mount and handle cleanup.
+ * @param element - Element (or ref to an element) to attach the event handler to
+ * @param eventName - The event to attach a handler for
+ * @param callback - The handler for the event
+ * @param useCapture - Whether or not to attach the handler for the capture phase
+ */
+export function useEventListener<
+  TElement extends Element,
+  IEvent extends Event
+>(
+  element:
+    | React.RefObject<TElement | undefined | null>
+    | TElement
+    | Window
+    | Document
+    | undefined
+    | null,
+  eventName: string,
+  callback: (event: IEvent) => void,
+  useCapture?: boolean
 ) {
-  const _handler = useEventCallback((e: Event) => {
-    if (handler) {
-      handler(e);
-    }
-  });
+  // Use a ref for the callback to prevent repeatedly attaching/unattaching callbacks that are unstable across renders
+  const callbackRef = React.useRef(callback);
+  callbackRef.current = callback;
 
   React.useEffect(() => {
-    const targetElement = getTargetElement(options.target, window)!;
-    if (!targetElement.addEventListener) {
+    const actualElement =
+      element && 'current' in element ? element.current : element;
+    if (!actualElement) {
       return;
     }
 
-    const eventListener = (event: Event) => {
-      return _handler(event);
-    };
-
-    targetElement.addEventListener(eventName, eventListener, {
-      capture: options.capture,
-      once: options.once,
-      passive: options.passive
-    });
-
-    return () => {
-      targetElement.removeEventListener(eventName, eventListener, {
-        capture: options.capture
-      });
-    };
-  }, [
-    eventName,
-    options.target,
-    options.capture,
-    options.once,
-    options.passive
-  ]);
+    const dispose = on(
+      actualElement,
+      eventName,
+      (event: IEvent) => callbackRef.current(event),
+      useCapture
+    );
+    return dispose;
+  }, [element, eventName, useCapture]);
 }
-
-export default useEventListener;

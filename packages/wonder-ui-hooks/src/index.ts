@@ -1,6 +1,7 @@
 export * from './useAsync';
 export * from './useBoolean';
 export * from './useClickAway';
+export * from './useConst';
 export * from './useControlled';
 export * from './useCountDown';
 export * from './useCounter';
@@ -17,11 +18,12 @@ export * from './useForkRef';
 export * from './useFullscreen';
 export * from './useHistoryTravel';
 export * from './useId';
-export * from './useInterval';
 export * from './useInViewport';
+export * from './useInterval';
 export * from './useIsFocusVisible';
 export * from './useKeyPress';
 export * from './useLocalStorageState';
+export * from './useLockFn';
 export * from './useMap';
 export * from './useMediaQuery';
 export * from './useMount';
@@ -45,4 +47,3 @@ export * from './useUnmountedRef';
 export * from './useUpdateEffect';
 export * from './useUrlState';
 export * from './useVirtualList';
-

@@ -8,15 +8,16 @@ interface Actions {
 }
 
 export function useBoolean(defaultValue = false): [boolean, Actions] {
-  const [state, { toggle }] = useToggle(defaultValue);
+  const [state, setState] = React.useState(defaultValue);
 
-  const actions: Actions = React.useMemo(() => {
-    const setTrue = () => toggle(true);
-    const setFalse = () => toggle(false);
-    return { toggle, setTrue, setFalse };
-  }, [toggle]);
+  const toggle = React.useCallback(() => {
+    setState(!state);
+  }, [state]);
 
-  return [state, actions];
+  const setTrue = React.useCallback(() => setState(true), []);
+  const setFalse = React.useCallback(() => setState(false), []);
+
+  return [state, { toggle, setTrue, setFalse }];
 }
 
 export default useBoolean;

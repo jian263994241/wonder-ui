@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useAsync } from './useAsync';
 
 export function useInterval(
   fn: () => void,
@@ -7,6 +8,7 @@ export function useInterval(
     immediate?: boolean;
   } = {}
 ): void {
+  const async = useAsync();
   const immediate = options.immediate;
 
   const fnRef = React.useRef<() => void>();
@@ -17,13 +19,13 @@ export function useInterval(
     if (immediate && fnRef.current) {
       fnRef.current();
     }
-    const timer = setInterval(() => {
+    const timer = async.setInterval(() => {
       if (fnRef.current) {
         fnRef.current();
       }
     }, delay);
     return () => {
-      clearInterval(timer);
+      async.clearInterval(timer);
     };
   }, [delay]);
 }

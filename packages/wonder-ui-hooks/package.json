@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/hooks",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "Wonder-UI hooks",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -26,7 +26,7 @@
   },
   "keywords": [
     "wonder ui",
-    "react-utils"
+    "react-hooks"
   ],
   "author": "jian.li",
   "homepage": "https://github.com/jian263994241/wonder-ui/tree/master/packages",
@@ -35,6 +35,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@wonder-ui/utils": "^2.1.1",
     "dayjs": "^1.10.3",
     "eventemitter3": "^4.0.7",
     "intersection-observer": "^0.12.0",

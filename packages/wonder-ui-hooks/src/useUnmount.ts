@@ -1,12 +1,12 @@
 import * as React from 'react';
-import useEventCallback from './useEventCallback';
+import useEnhancedEffect from './useEnhancedEffect';
 
-export const useUnmount = (fn: any) => {
-  const fnPersist = useEventCallback(fn);
+export const useUnmount = (callback: () => void) => {
+  const fnPersist = React.useRef(callback);
 
-  React.useEffect(
+  useEnhancedEffect(
     () => () => {
-      fnPersist();
+      fnPersist.current();
     },
     []
   );

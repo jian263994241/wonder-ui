@@ -1,14 +1,22 @@
 import * as React from 'react';
-import useEventCallback from './useEventCallback';
-
-export function useMount(fn: () => void = () => {}) {
+import useEnhancedEffect from './useEnhancedEffect';
+/**
+ * Hook which asynchronously executes a callback once the component has been mounted.
+ *
+ * @param callback - Function to call before mount.
+ */
+export function useMount(callback: () => void = () => {}) {
   const [mounted, setMounted] = React.useState(false);
-  const callback = useEventCallback(fn);
+  const mountRef = React.useRef(callback);
+  mountRef.current = callback;
 
-  React.useEffect(() => {
+  useEnhancedEffect(() => {
     setMounted(true);
+    mountRef.current?.();
 
-    callback();
+    () => {
+      setMounted(false);
+    };
   }, []);
 
   return mounted;
