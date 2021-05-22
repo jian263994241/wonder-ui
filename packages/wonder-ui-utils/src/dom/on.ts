@@ -1,10 +1,19 @@
-export function on(
+import { isObject } from '../is';
+
+export function on<IEvent extends Event>(
   element: Element | Window | Document,
   eventName: string,
-  callback: (ev: Event) => void,
-  options?: boolean
+  callback: (ev: IEvent) => void,
+  options?: boolean | AddEventListenerOptions
 ): () => void {
+  //@ts-expect-error
   element.addEventListener(eventName, callback, options);
 
-  return () => element.removeEventListener(eventName, callback, options);
+  return () =>
+    element.removeEventListener(
+      eventName,
+      //@ts-expect-error
+      callback,
+      isObject(options) ? options.capture : options
+    );
 }

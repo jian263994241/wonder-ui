@@ -46,6 +46,8 @@ export function css(...args: ICssInput[]): string | undefined {
         typeof arg.toString === 'function'
       ) {
         classes.push(arg.toString());
+      } else if (Array.isArray(arg)) {
+        classes.push(css(...arg));
       } else {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         for (let key in arg as any) {
