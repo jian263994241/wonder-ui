@@ -1,13 +1,13 @@
 const globalPseudoClassesMapping: Record<string, string> = {
-  active: 'active',
-  checked: 'checked',
-  disabled: 'disabled',
-  error: 'error',
-  focused: 'focused',
-  focusVisible: 'focusVisible',
-  required: 'required',
-  expanded: 'expanded',
-  selected: 'selected'
+  active: 'Wui-active',
+  checked: 'Wui-checked',
+  disabled: 'Wui-disabled',
+  error: 'Wui-error',
+  focused: 'Wui-focused',
+  focusVisible: 'Wui-focusVisible',
+  required: 'Wui-required',
+  expanded: 'Wui-expanded',
+  selected: 'Wui-selected'
 };
 
 export function generateUtilityClass(
@@ -15,10 +15,7 @@ export function generateUtilityClass(
   slot: string
 ): string {
   const globalPseudoClass = globalPseudoClassesMapping[slot];
-  return (
-    'Wui' +
-    (globalPseudoClass ? `-${globalPseudoClass}` : `${componentName}-${slot}`)
-  );
+  return globalPseudoClass ? globalPseudoClass : `${componentName}-${slot}`;
 }
 
 export function generateUtilityClasses<T extends string>(

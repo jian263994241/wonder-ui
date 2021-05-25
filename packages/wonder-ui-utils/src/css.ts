@@ -34,7 +34,7 @@ export type ICssInput =
  *
  * @public
  */
-export function css(...args: ICssInput[]): string | undefined {
+export function css(...args: ICssInput[]): string {
   let classes = [];
 
   for (let arg of args) {
@@ -60,5 +60,5 @@ export function css(...args: ICssInput[]): string | undefined {
     }
   }
 
-  return classes.length > 0 ? classes.join(' ') : undefined;
+  return classes.join(' ');
 }
