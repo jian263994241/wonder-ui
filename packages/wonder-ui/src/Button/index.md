@@ -7,7 +7,6 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| checked | 状态 | `boolean` |
 | children | children | `ReactNode` |
 | color | 按钮颜色 | `'primary' \| 'secondary' \| 'success' \| 'danger' \| 'warning' \| 'info'` | primary
 | component | root element | `ElementType` | button
