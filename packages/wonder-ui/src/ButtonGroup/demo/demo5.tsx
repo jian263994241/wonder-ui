@@ -16,7 +16,7 @@ export default function Example() {
       {list.map((item, index) => (
         <Button
           key={index}
-          checked={isSelected(item)}
+          variant={isSelected(item) ? 'contained' : 'outlined'}
           onClick={() => setSelected([item])}
         >
           Button-{index}

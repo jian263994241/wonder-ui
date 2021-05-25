@@ -65,6 +65,8 @@ export const ButtonRoot = styled(ButtonBase, {
 
       ...(styleProps.color !== 'inherit' &&
         styleProps.variant === 'contained' && {
+          border: '1px solid',
+          borderColor: 'transparent',
           color: theme.palette[styleProps.color].contrastText,
           backgroundColor: theme.palette[styleProps.color].main
         }),

@@ -8,13 +8,13 @@ import { Button, ButtonGroup, jsx, Divider, Space } from '@wonder-ui/core';
 export default function Example() {
   return (
     <Space wrap>
-      <ButtonGroup>
+      <ButtonGroup ButtonProps={{ variant: 'contained' }}>
         <Button>Button</Button>
         <Button>Button</Button>
         <Button>Button</Button>
       </ButtonGroup>
 
-      <ButtonGroup>
+      <ButtonGroup ButtonProps={{ variant: 'contained' }}>
         <Button>Button</Button>
         <Divider direction="vertical" flexItem />
         <Button>Button</Button>

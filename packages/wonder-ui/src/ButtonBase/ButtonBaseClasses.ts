@@ -1,6 +1,6 @@
 import { composeClasses, css, generateUtilityClasses } from '@wonder-ui/utils';
 
-export const buttonBaseClasses = generateUtilityClasses('ButtonBase', [
+export const buttonBaseClasses = generateUtilityClasses('WuiButtonBase', [
   'root',
   'disabled',
   'focusVisible'
@@ -20,7 +20,7 @@ export const useClasses = (styleProps: ButtonBaseStyleProps) => {
     root: ['root', disabled && 'disabled', focusVisible && 'focusVisible']
   };
 
-  const composedClasses = composeClasses('ButtonBase', slots, classes);
+  const composedClasses = composeClasses('WuiButtonBase', slots, classes);
 
   composedClasses.root = css(
     composedClasses.root,

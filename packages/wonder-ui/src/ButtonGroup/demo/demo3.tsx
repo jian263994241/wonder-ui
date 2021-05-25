@@ -14,7 +14,7 @@ export default function Example() {
         <Button>Button</Button>
       </ButtonGroup>
 
-      <ButtonGroup direction="vertical">
+      <ButtonGroup direction="vertical" ButtonProps={{ variant: 'contained' }}>
         <Button>Button</Button>
         <Divider />
         <Button>Button</Button>
