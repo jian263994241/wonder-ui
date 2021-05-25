@@ -1,21 +1,16 @@
 import * as React from 'react';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
+import { alpha } from '../styles/colorManipulator';
+import { buttonClasses, ButtonStyleProps, useClasses } from './ButtonClasses';
 import { css } from '@wonder-ui/utils';
-import type { PickStyleProps, ClassNameMap, RestProps } from '../styles/types';
 
-export interface ButtonProps extends ButtonBaseProps {
-  classes?: ClassNameMap<'root' | 'label' | 'startIcon' | 'endIcon'>;
-  /**
-   * @description checked state
-   */
-  checked?: boolean;
-  /**
-   * @description color
-   * @default primary
-   */
+export interface ButtonProps
+  extends Omit<React.HTMLProps<HTMLButtonElement>, 'ref' | 'size' | 'as'> {
+  LinkComponent?: React.ElementType;
+  children?: React.ReactNode;
+  classes?: Partial<typeof buttonClasses>;
   color?:
     | 'inherit'
     | 'primary'
@@ -26,151 +21,175 @@ export interface ButtonProps extends ButtonBaseProps {
     | 'info'
     | 'light'
     | 'dark';
-  edge?: 'end' | 'start' | boolean;
-  /**
-   * @description button type
-   * @default contained
-   */
-  variant?: 'text' | 'outlined' | 'contained';
-  /**
-   * @description size
-   * @default medium
-   */
-  size?: 'small' | 'medium' | 'large';
-  /**
-   * @description shape
-   * @default rect
-   */
-  shape?: 'default' | 'round' | 'square';
-  /**
-   * 左边图标
-   */
-  startIcon?: React.ReactNode;
-  /**
-   * 右边图标
-   */
-  endIcon?: React.ReactNode;
-  /**
-   * @description disabled
-   */
+  component?: React.ElementType;
+  disableElevation?: boolean;
+  disableFocusRipple?: boolean;
+  disableRipple?: boolean;
   disabled?: boolean;
+  edge?: 'end' | 'start';
+  endIcon?: React.ReactNode;
+  focusVisibleClassName?: string;
+  fullWidth?: boolean;
+  href?: string;
+  shape?: 'default' | 'round' | 'square';
+  size?: 'small' | 'medium' | 'large';
+  startIcon?: React.ReactNode;
+  to?: string | object;
+  type?: 'button' | 'reset' | 'submit';
+  variant?: 'text' | 'outlined' | 'contained';
 }
 
 export const ButtonRoot = styled(ButtonBase, {
   name: 'WuiButton',
-  slot: 'Root'
-})<
-  ButtonBaseProps &
-    PickStyleProps<
-      ButtonProps,
-      'color' | 'disabled' | 'edge' | 'shape' | 'size' | 'variant'
-    >
->(({ theme, styleProps }) => {
-  return {
-    ...theme.typography.button,
-    display: 'inline-flex',
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    padding: {
-      small: theme.spacing(0.3, 0.7),
-      medium: theme.spacing(0.6, 1.4),
-      large: theme.spacing(0.9, 2)
-    }[styleProps.size],
-    fontSize: {
-      small: theme.typography.pxToRem(12),
-      medium: theme.typography.pxToRem(14),
-      large: theme.typography.pxToRem(18)
-    }[styleProps.size],
-
-    '&[disabled]': {
-      opacity: 0.5
-    },
-
-    /* Styles applied to the root element if `edge="start"`. */
-    ...(styleProps.edge === 'start' && {
-      marginLeft: styleProps.size === 'small' ? -3 : -12
-    }),
-    /* Styles applied to the root element if `edge="end"`. */
-    ...(styleProps.edge === 'end' && {
-      marginRight: styleProps.size === 'small' ? -3 : -12
-    }),
-
-    ...{
-      default: {
+  slot: 'Root',
+  shouldForwardProp: () => true
+})<ButtonBaseProps & { styleProps: ButtonStyleProps }>(
+  ({ theme, styleProps }) => {
+    return {
+      ...theme.typography.button,
+      display: 'inline-flex',
+      backgroundColor: 'transparent',
+      ...(styleProps.shape === 'default' && {
         borderRadius: theme.shape.borderRadius
-      },
-      round: {
-        borderRadius: {
-          small: theme.typography.pxToRem(14),
-          medium: theme.typography.pxToRem(16),
-          large: theme.typography.pxToRem(20)
-        }[styleProps.size]
-      },
-      square: {}
-    }[styleProps.shape],
-
-    // ...(styleProps.variant === 'text' && {
-    //   // '&.active-state': {
-    //   //   opacity: '0.3'
-    //   // }
-    // }),
-    ...(styleProps.color !== 'inherit' &&
-      styleProps.variant === 'text' && {
-        color: theme.palette[styleProps.color].main
       }),
-
-    ...(styleProps.disabled && {
-      color: theme.palette.action.disabled
-    }),
-    ...(styleProps.color !== 'inherit' &&
-      styleProps.variant === 'contained' && {
-        color: theme.palette[styleProps.color].contrastText,
-        backgroundColor: theme.palette[styleProps.color].main,
-
-        ...(styleProps.disabled && {
-          color: theme.palette.action.disabled,
-          backgroundColor: theme.palette.action.disabledBackground,
-          borderColor: theme.palette.action.disabled
-        }),
-        // '&.active-state, &.active': {
-        //   backgroundColor: darken(theme.palette[styleProps.color].main, 0.3),
-        //   borderColor: darken(theme.palette[styleProps.color].main, 0.3)
-        // },
-
-        '&:focus': {
-          boxShadow: theme.shadows[3]
+      transition: theme.transitions.create(
+        ['background-color', 'box-shadow', 'border-color', 'color'],
+        {
+          duration: theme.transitions.duration.short
         }
-      }),
-
-    ...(styleProps.color !== 'inherit' &&
-      styleProps.variant === 'outlined' && {
-        color: theme.palette[styleProps.color].main,
-        backgroundColor: 'transparent',
-        border: '1px solid',
-        borderColor: theme.palette[styleProps.color].main,
-        ...(styleProps.disabled && {
-          color: theme.palette.action.disabled,
-          borderColor: theme.palette.action.disabled
+      ),
+      ...(styleProps.color !== 'inherit' &&
+        styleProps.variant === 'text' && {
+          color: theme.palette[styleProps.color].main
         }),
-        // '&.active-state': {
-        //   color: darken(theme.palette[styleProps.color].main, 0.3),
-        //   backgroundColor: alpha(
-        //     theme.palette[styleProps.color].main,
-        //     theme.palette.action.hoverOpacity
-        //   ),
-        //   borderColor: darken(theme.palette[styleProps.color].main, 0.3)
-        // },
-        '&.active': {
+
+      ...(styleProps.color !== 'inherit' &&
+        styleProps.variant === 'contained' && {
           color: theme.palette[styleProps.color].contrastText,
-          backgroundColor: theme.palette[styleProps.color].main,
-          borderColor: theme.palette[styleProps.color].main
+          backgroundColor: theme.palette[styleProps.color].main
+        }),
+
+      ...(styleProps.color !== 'inherit' &&
+        styleProps.variant === 'outlined' && {
+          color: theme.palette[styleProps.color].main,
+          backgroundColor: 'transparent',
+          border: '1px solid',
+          borderColor: theme.palette[styleProps.color].main,
+          '&.active': {
+            color: theme.palette[styleProps.color].contrastText,
+            backgroundColor: theme.palette[styleProps.color].main,
+            borderColor: theme.palette[styleProps.color].main
+          }
+        }),
+      '&:hover': {
+        textDecoration: 'none',
+        backgroundColor: alpha(
+          theme.palette.text.primary,
+          theme.palette.action.hoverOpacity
+        ),
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: 'transparent'
         },
-        '&:focus': {
-          boxShadow: theme.shadows[3]
-        }
-      })
-  };
-});
+        ...(styleProps.variant === 'text' &&
+          styleProps.color !== 'inherit' && {
+            backgroundColor: alpha(
+              theme.palette[styleProps.color].main,
+              theme.palette.action.hoverOpacity
+            ),
+            // Reset on touch devices, it doesn't add specificity
+            '@media (hover: none)': {
+              backgroundColor: 'transparent'
+            }
+          }),
+        ...(styleProps.variant === 'outlined' &&
+          styleProps.color !== 'inherit' && {
+            border: `1px solid ${theme.palette[styleProps.color].main}`,
+            backgroundColor: alpha(
+              theme.palette[styleProps.color].main,
+              theme.palette.action.hoverOpacity
+            ),
+            // Reset on touch devices, it doesn't add specificity
+            '@media (hover: none)': {
+              backgroundColor: 'transparent'
+            }
+          }),
+        ...(styleProps.variant === 'contained' && {
+          backgroundColor: theme.palette.colors.grey.A100,
+          boxShadow: theme.shadows[4],
+          // Reset on touch devices, it doesn't add specificity
+          '@media (hover: none)': {
+            // boxShadow: theme.shadows[2],
+            backgroundColor: theme.palette.colors.grey[300]
+          }
+        }),
+        ...(styleProps.variant === 'contained' &&
+          styleProps.color !== 'inherit' && {
+            backgroundColor: theme.palette[styleProps.color].dark,
+            // Reset on touch devices, it doesn't add specificity
+            '@media (hover: none)': {
+              backgroundColor: theme.palette[styleProps.color].main
+            }
+          })
+      },
+      '&:active': {
+        ...(styleProps.variant === 'contained' && {
+          boxShadow: theme.shadows[6]
+        })
+      },
+      [`&.${buttonClasses.focusVisible}`]: {
+        ...(styleProps.variant === 'contained' && {
+          boxShadow: theme.shadows[6]
+        })
+      },
+      [`&.${buttonClasses.disabled}`]: {
+        color: theme.palette.action.disabled,
+        ...(styleProps.variant === 'outlined' && {
+          border: `1px solid ${theme.palette.action.disabledBackground}`
+        }),
+        ...(styleProps.variant === 'outlined' &&
+          styleProps.color === 'secondary' && {
+            border: `1px solid ${theme.palette.action.disabled}`
+          }),
+        ...(styleProps.variant === 'contained' && {
+          color: theme.palette.action.disabled,
+          boxShadow: theme.shadows[0],
+          backgroundColor: theme.palette.action.disabledBackground
+        })
+      },
+      [`&.${buttonClasses.sizeSmall}`]: {
+        ...(styleProps.shape === 'round' && {
+          borderRadius: theme.typography.pxToRem(14)
+        }),
+        fontSize: theme.typography.pxToRem(12),
+        padding: theme.spacing(0.3, 0.7)
+      },
+      [`&.${buttonClasses.sizeMedium}`]: {
+        ...(styleProps.shape === 'round' && {
+          borderRadius: theme.typography.pxToRem(16)
+        }),
+        fontSize: theme.typography.pxToRem(14),
+        padding: theme.spacing(0.6, 1.4)
+      },
+      [`&.${buttonClasses.sizeLarge}`]: {
+        ...(styleProps.shape === 'round' && {
+          borderRadius: theme.typography.pxToRem(20)
+        }),
+        fontSize: theme.typography.pxToRem(18),
+        padding: theme.spacing(0.9, 2)
+      },
+      [`&.${buttonClasses.fullWidth}`]: {
+        width: '100%'
+      },
+      [`&.${buttonClasses.edgeStart}`]: {
+        marginLeft: styleProps.size === 'small' ? -3 : -12
+      },
+      [`&.${buttonClasses.edgeEnd}`]: {
+        marginRight: styleProps.size === 'small' ? -3 : -12
+      }
+    };
+  }
+);
 
 const ButtonLabel = styled('span', {
   name: 'WuiButton',
@@ -182,94 +201,118 @@ const ButtonLabel = styled('span', {
   justifyContent: 'inherit'
 });
 
+const commonIconStyles = (styleProps: ButtonStyleProps) => ({
+  ...(styleProps.size === 'small' && {
+    '& > *:nth-of-type(1)': {
+      fontSize: 18
+    }
+  }),
+  ...(styleProps.size === 'medium' && {
+    '& > *:nth-of-type(1)': {
+      fontSize: 20
+    }
+  }),
+  ...(styleProps.size === 'large' && {
+    '& > *:nth-of-type(1)': {
+      fontSize: 22
+    }
+  })
+});
+
 const ButtonStartIcon = styled('span', {
   name: 'WuiButton',
   slot: 'StartIcon'
-})<PickStyleProps<ButtonProps, 'size'>>(({ styleProps }) => ({
+})<{ styleProps: ButtonStyleProps }>(({ styleProps }) => ({
   display: 'inherit',
-  marginRight: 4,
+  marginRight: 8,
   marginLeft: -4,
   ...(styleProps.size === 'small' && {
     marginLeft: -2
-  })
+  }),
+  ...commonIconStyles(styleProps)
 }));
 
 const ButtonEndIcon = styled('span', {
   name: 'WuiButton',
   slot: 'EndIcon'
-})<PickStyleProps<ButtonProps, 'size'>>(({ styleProps }) => ({
+})<{ styleProps: ButtonStyleProps }>(({ styleProps }) => ({
   display: 'inherit',
   marginRight: -4,
-  marginLeft: 4,
+  marginLeft: 8,
   ...(styleProps.size === 'small' && {
     marginRight: -2
-  })
+  }),
+  ...commonIconStyles(styleProps)
 }));
 
-const Button: React.FC<ButtonProps & RestProps> = React.forwardRef(
-  (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiButton' });
-    const {
-      checked = false,
-      children,
-      className,
-      component = 'button',
-      color = 'primary',
-      disabled = false,
-      edge = false,
-      shape = 'default',
-      size = 'medium',
-      startIcon: startIconProp,
-      endIcon: endIconProp,
-      variant = 'contained',
-      ...rest
-    } = props;
+const Button = React.forwardRef<HTMLElement, ButtonProps>((inProps, ref) => {
+  const props = useThemeProps({ props: inProps, name: 'WuiButton' });
+  const {
+    children,
+    color = 'primary',
+    component = 'button',
+    disableElevation = false,
+    disableFocusRipple = false,
+    disableRipple = false,
+    disabled = false,
+    edge,
+    endIcon: endIconProp,
+    focusVisibleClassName,
+    fullWidth = false,
+    shape = 'default',
+    size = 'medium',
+    startIcon: startIconProp,
+    variant = 'text',
+    ...rest
+  } = props;
 
-    const styleProps = {
-      color,
-      disabled,
-      edge,
-      shape,
-      size,
-      variant
-    };
+  const styleProps = {
+    ...props,
+    color,
+    component,
+    disabled,
+    disableElevation,
+    disableFocusRipple,
+    fullWidth,
+    shape,
+    size,
+    variant
+  };
 
-    const classes = useClasses({ ...props, styleProps, name: 'WuiButton' });
+  const classes = useClasses(styleProps);
 
-    const startIcon = startIconProp && (
-      <ButtonStartIcon className={classes.startIcon} styleProps={styleProps}>
-        {startIconProp}
-      </ButtonStartIcon>
-    );
+  const startIcon = startIconProp && (
+    <ButtonStartIcon className={classes.startIcon} styleProps={styleProps}>
+      {startIconProp}
+    </ButtonStartIcon>
+  );
 
-    const endIcon = endIconProp && (
-      <ButtonEndIcon className={classes.endIcon} styleProps={styleProps}>
-        {endIconProp}
-      </ButtonEndIcon>
-    );
+  const endIcon = endIconProp && (
+    <ButtonEndIcon className={classes.endIcon} styleProps={styleProps}>
+      {endIconProp}
+    </ButtonEndIcon>
+  );
 
-    return (
-      <ButtonRoot
-        component={component}
-        disabled={disabled}
-        ref={ref}
-        styleProps={styleProps}
-        className={css(classes.root, { active: checked })}
-        {...rest}
-      >
-        {component !== 'input' ? (
-          <ButtonLabel className={classes.label}>
-            {startIcon}
-            {children}
-            {endIcon}
-          </ButtonLabel>
-        ) : (
-          children
-        )}
-      </ButtonRoot>
-    );
-  }
-);
+  return (
+    <ButtonRoot
+      classes={classes}
+      component={component}
+      disableRipple={disableRipple}
+      disabled={disabled}
+      focusRipple={!disableFocusRipple}
+      focusVisibleClassName={css(classes.focusVisible, focusVisibleClassName)}
+      ref={ref}
+      styleProps={styleProps}
+      {...rest}
+    >
+      <ButtonLabel className={classes.label}>
+        {startIcon}
+        {children}
+        {endIcon}
+      </ButtonLabel>
+    </ButtonRoot>
+  );
+});
 
 Button.displayName = 'WuiButton';
 

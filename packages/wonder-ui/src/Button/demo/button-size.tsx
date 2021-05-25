@@ -9,20 +9,26 @@ export default function Example() {
   return (
     <Space direction="vertical" align="start">
       <Space>
-        <Button size="large">Large button</Button>
-        <Button shape="round" size="large">
+        <Button variant="contained" size="large">
+          Large button
+        </Button>
+        <Button variant="contained" shape="round" size="large">
           Large button
         </Button>
       </Space>
       <Space>
-        <Button size="medium">Medium button</Button>
-        <Button shape="round" size="medium">
+        <Button variant="contained" size="medium">
+          Medium button
+        </Button>
+        <Button variant="contained" shape="round" size="medium">
           Medium button
         </Button>
       </Space>
       <Space>
-        <Button size="small">Small button</Button>
-        <Button shape="round" size="small">
+        <Button variant="contained" size="small">
+          Small button
+        </Button>
+        <Button variant="contained" shape="round" size="small">
           Small button
         </Button>
       </Space>

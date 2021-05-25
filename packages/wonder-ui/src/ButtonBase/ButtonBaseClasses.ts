@@ -6,10 +6,8 @@ export const buttonBaseClasses = generateUtilityClasses('ButtonBase', [
   'focusVisible'
 ]);
 
-export type ButtonBaseClasses = typeof buttonBaseClasses;
-
 export interface ButtonBaseStyleProps {
-  classes?: Partial<ButtonBaseClasses>;
+  classes?: Partial<typeof buttonBaseClasses>;
   disabled?: boolean;
   focusVisible?: boolean;
   focusVisibleClassName?: string;

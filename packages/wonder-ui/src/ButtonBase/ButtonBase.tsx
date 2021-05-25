@@ -1,12 +1,11 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import TouchRipple, { TouchRippleAction } from './TouchRipple';
+import TouchRipple, {
+  TouchRippleAction,
+  TouchRippleProps
+} from './TouchRipple';
 import useThemeProps from '../styles/useThemeProps';
-import {
-  buttonBaseClasses,
-  ButtonBaseClasses,
-  useClasses
-} from './ButtonBaseClasses';
+import { buttonBaseClasses, useClasses } from './ButtonBaseClasses';
 import { css } from '@wonder-ui/utils';
 import {
   useEventCallback,
@@ -24,11 +23,11 @@ export interface ButtonBaseActions {
 export interface ButtonBaseProps
   extends Omit<React.HTMLProps<HTMLButtonElement>, 'ref' | 'as'> {
   LinkComponent?: React.ElementType;
-  TouchRippleProps?: object;
+  TouchRippleProps?: Partial<TouchRippleProps>;
   actionRef?: React.Ref<ButtonBaseActions>;
   centerRipple?: boolean;
   children?: React.ReactNode;
-  classes?: Partial<ButtonBaseClasses>;
+  classes?: Partial<typeof buttonBaseClasses>;
   component?: React.ElementType;
   disableRipple?: boolean;
   disableTouchRipple?: boolean;
@@ -37,6 +36,7 @@ export interface ButtonBaseProps
   focusVisibleClassName?: string;
   href?: any;
   target?: string;
+  to?: any;
   type?: 'button' | 'reset' | 'submit';
   onFocusVisible?(event: any): void;
 }
@@ -93,6 +93,7 @@ const ButtonBase = React.forwardRef<HTMLElement, ButtonBaseProps>(
       disableRipple = false,
       disableTouchRipple = false,
       focusRipple = false,
+      focusVisibleClassName,
       theme,
       onMouseDown,
       onContextMenu,

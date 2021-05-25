@@ -8,13 +8,27 @@ import { jsx, Space, Button } from '@wonder-ui/core';
 export default function ButtonTags() {
   return (
     <Space wrap>
-      <Button component="a" href="#" target="_blank">
+      <Button variant="contained" href="#/components/button" target="_blank">
         Link
       </Button>
-      <Button>Button</Button>
-      <Button component="input" type="button" value="Input"></Button>
-      <Button component="input" type="submit" value="Submit"></Button>
-      <Button component="input" type="reset" value="Reset"></Button>
+      <Button
+        variant="contained"
+        component="input"
+        type="button"
+        value="Input"
+      ></Button>
+      <Button
+        variant="contained"
+        component="input"
+        type="submit"
+        value="Submit"
+      ></Button>
+      <Button
+        variant="contained"
+        component="input"
+        type="reset"
+        value="Reset"
+      ></Button>
     </Space>
   );
 }

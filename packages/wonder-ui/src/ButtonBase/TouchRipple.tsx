@@ -61,7 +61,7 @@ export const TouchRippleRoot = styled('span', {
 export const TouchRippleRipple = styled(Ripple, {
   name: 'MuiTouchRipple',
   slot: 'Ripple',
-  shouldForwardProp: (prop) => true
+  shouldForwardProp: () => true
 })<RippleProps>`
   opacity: 0;
   position: absolute;

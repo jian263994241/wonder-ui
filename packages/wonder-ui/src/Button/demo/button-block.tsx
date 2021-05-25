@@ -3,18 +3,18 @@
  * desc: 通过辅助样式实现块状按钮
  */
 /** @jsx jsx */
-import { jsx, Button } from '@wonder-ui/core';
+import { jsx, Button, WhiteSpace } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <div
-      css={{
-        display: 'grid',
-        gap: 8
-      }}
-    >
-      <Button>Block button</Button>
-      <Button>Block button</Button>
+    <div>
+      <Button variant="contained" fullWidth>
+        Block button
+      </Button>
+      <WhiteSpace size="sm" />
+      <Button variant="contained" fullWidth>
+        Block button
+      </Button>
     </div>
   );
 }
