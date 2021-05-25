@@ -1,16 +1,16 @@
-import { getDevice } from '@wonder-ui/utils';
-import { darken, getContrastRatio, lighten, alpha } from '../colorManipulator';
+import * as colors from './colors';
+import { alpha, darken, getContrastRatio, lighten } from '../colorManipulator';
 import {
   blue,
+  ColorKeys,
+  ColorType,
   green,
   grey,
   lightBlue,
   orange,
-  red,
-  ColorKeys,
-  ColorType
+  red
 } from './colors';
-import * as colors from './colors';
+import { getDevice } from '@wonder-ui/utils';
 
 interface ColorObj {
   main: string;
@@ -90,7 +90,7 @@ export const light = {
     active: alpha(common.black, 0.54),
     // The color of an hovered action.
     hover: alpha(common.black, 0.08),
-    hoverOpacity: 0.6,
+    hoverOpacity: 0.08,
     // The color of a selected action.
     selected: alpha(common.black, 0.14),
     // The color of a disabled action.
@@ -119,7 +119,7 @@ export const dark = {
     active: common.white,
     // The color of an hovered action.
     hover: alpha(common.white, 0.1),
-    hoverOpacity: 0.6,
+    hoverOpacity: 0.08,
     // The color of a selected action.
     selected: alpha(common.white, 0.2),
     // The color of a disabled action.
@@ -154,39 +154,39 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
   const {
     primary = {
       light: blue.A400,
-      dark: blue.A700
+      dark: blue[900]
     },
     secondary = {
       light: grey[600],
-      dark: grey[800]
+      dark: grey[700]
     },
     error = {
-      light: red[500],
+      light: red[600],
       dark: red[700]
     },
     danger = {
-      light: red[500],
+      light: red[600],
       dark: red[700]
     },
     warning = {
-      light: orange[500],
+      light: orange[600],
       dark: orange[700]
     },
     info = {
-      light: lightBlue[500],
+      light: lightBlue[600],
       dark: lightBlue[700]
     },
     success = {
-      light: green[700],
-      dark: green[900]
+      light: green[600],
+      dark: green[700]
     },
     light: lightProp = {
       light: grey[50],
-      dark: grey[900]
+      dark: grey[300]
     },
     dark: darkProp = {
       light: grey[900],
-      dark: grey[900]
+      dark: grey[800]
     },
     mode: modeProp,
     contrastThreshold = 3,
@@ -257,6 +257,6 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
     // two indexes within its tonal palette.
     // E.g., shift from Red 500 to Red 300 or Red 700.
     tonalOffset,
-    ...modes[mode],
+    ...modes[mode]
   };
 }
