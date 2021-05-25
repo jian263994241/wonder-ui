@@ -1,9 +1,11 @@
-// based on https://github.com/WICG/focus-visible/blob/v4.1.5/src/focus-visible.js
 import * as React from 'react';
+import { getDocument, on } from '@wonder-ui/utils';
+import { useUnmount } from './useUnmount';
+// based on https://github.com/WICG/focus-visible/blob/v4.1.5/src/focus-visible.js
 
 let hadKeyboardEvent = true;
 let hadFocusVisibleRecently = false;
-let hadFocusVisibleRecentlyTimeout:number| null = null;
+let hadFocusVisibleRecentlyTimeout: number | null = null;
 
 const inputTypesWhitelist = {
   text: true,
@@ -18,9 +20,8 @@ const inputTypesWhitelist = {
   week: true,
   time: true,
   datetime: true,
-  'datetime-local': true,
+  'datetime-local': true
 };
-
 
 /**
  * Computes whether the given element should automatically trigger the
@@ -32,7 +33,11 @@ const inputTypesWhitelist = {
 function focusTriggersKeyboardModality(node: HTMLInputElement) {
   const { type, tagName } = node;
 
-  if (tagName === 'INPUT' && inputTypesWhitelist[type as keyof typeof inputTypesWhitelist] && !node.readOnly) {
+  if (
+    tagName === 'INPUT' &&
+    inputTypesWhitelist[type as keyof typeof inputTypesWhitelist] &&
+    !node.readOnly
+  ) {
     return true;
   }
 
@@ -84,30 +89,22 @@ function handleVisibilityChange(this: any) {
   }
 }
 
-
 function prepare(doc: Document) {
-  doc.addEventListener('keydown', handleKeyDown, true);
-  doc.addEventListener('mousedown', handlePointerDown, true);
-  doc.addEventListener('pointerdown', handlePointerDown, true);
-  doc.addEventListener('touchstart', handlePointerDown, true);
-  doc.addEventListener('visibilitychange', handleVisibilityChange, true);
-}
-
-function teardown(doc: Document) {
-  doc.removeEventListener('keydown', handleKeyDown, true);
-  doc.removeEventListener('mousedown', handlePointerDown, true);
-  doc.removeEventListener('pointerdown', handlePointerDown, true);
-  doc.removeEventListener('touchstart', handlePointerDown, true);
-  doc.removeEventListener('visibilitychange', handleVisibilityChange, true);
+  return [
+    on(doc, 'keydown', handleKeyDown, true),
+    on(doc, 'mousedown', handlePointerDown, true),
+    on(doc, 'pointerdown', handlePointerDown, true),
+    on(doc, 'touchstart', handlePointerDown, true),
+    on(doc, 'visibilitychange', handleVisibilityChange, true)
+  ];
 }
 
 function isFocusVisible(event: React.FocusEvent) {
   const { target } = event;
   try {
-    if(target){
+    if (target) {
       return target.matches(':focus-visible');
     }
-
   } catch (error) {
     // Browsers not implementing :focus-visible will throw a SyntaxError.
     // We use our own heuristic for those browsers.
@@ -117,15 +114,25 @@ function isFocusVisible(event: React.FocusEvent) {
 
   // No need for validFocusTarget check. The user does that by attaching it to
   // focusable events only.
-  return hadKeyboardEvent || focusTriggersKeyboardModality(target as HTMLInputElement);
+  return (
+    hadKeyboardEvent ||
+    focusTriggersKeyboardModality(target as HTMLInputElement)
+  );
 }
 
 export const useIsFocusVisible = () => {
+  const eventsRef = React.useRef<Array<Function>>([]);
   const ref = React.useCallback((node) => {
     if (node != null) {
-      prepare(node.ownerDocument);
+      eventsRef.current = prepare(getDocument(node));
     }
   }, []);
+
+  useUnmount(() => {
+    eventsRef.current.forEach((tardown) => {
+      tardown();
+    });
+  });
 
   const isFocusVisibleRef = React.useRef(false);
 
@@ -168,7 +175,12 @@ export const useIsFocusVisible = () => {
     return false;
   }
 
-  return { isFocusVisibleRef, onFocus: handleFocusVisible, onBlur: handleBlurVisible, ref };
-}
+  return {
+    isFocusVisibleRef,
+    onFocus: handleFocusVisible,
+    onBlur: handleBlurVisible,
+    ref
+  };
+};
 
 export default useIsFocusVisible;
