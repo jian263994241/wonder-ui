@@ -1,9 +1,9 @@
 import * as React from 'react';
-import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import { keyframes } from '@wonder-ui/styled';
 import useThemeProps from '../styles/useThemeProps';
-import type { BaseProps, PickStyleProps, ClassNameMap } from '../styles/types';
+import { circularProgressClasses, useClasses } from './CircularProgressClasses';
+import { keyframes } from '@wonder-ui/styled';
+import { generateUtilityStyles, capitalize } from '@wonder-ui/utils';
 
 const SIZE = 44;
 
@@ -31,13 +31,14 @@ const circularDashKeyframe = keyframes`
   }
 `;
 
-export interface CircularProgressProps extends BaseProps {
+export interface CircularProgressProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref' | 'label'> {
   /**
-   * @description css api
+   * Css api
    */
-  classes?: ClassNameMap<'root' | 'svg' | 'circle' | 'label'>;
+  classes?: Partial<typeof circularProgressClasses>;
   /**
-   * @description color
+   * Color
    * @default primary
    */
   color?:
@@ -50,8 +51,10 @@ export interface CircularProgressProps extends BaseProps {
     | 'info'
     | 'light'
     | 'dark';
+  /** Root element */
+  component?: React.ElementType;
   /**
-   * @description 类型
+   * 类型
    * @default indeterminate
    */
   variant?: 'determinate' | 'indeterminate';
@@ -69,68 +72,75 @@ export interface CircularProgressProps extends BaseProps {
   label?: React.ReactNode;
 }
 
-const CircularProgressRoot = styled('span', {
+const colors = [
+  'primary',
+  'secondary',
+  'success',
+  'danger',
+  'warning',
+  'info',
+  'light',
+  'dark'
+];
+
+const CircularProgressRoot = styled('div', {
   name: 'WuiCircularProgress',
   slot: 'Root'
-})<PickStyleProps<CircularProgressProps, 'color' | 'variant' | 'size'>>(
-  ({ theme, styleProps }) => ({
-    position: 'relative',
-    /* Styles applied to the root element. */
-    display: 'inline-block',
-
-    fontSize: 0,
-    /* Styles applied to the root element if `variant="determinate"`. */
-    ...(styleProps.variant === 'determinate' && {
-      transition: theme.transitions.create('transform')
-    }),
-    /* Styles applied to the root element unless `color="inherit"`. */
-    ...(styleProps.color !== 'inherit' && {
-      color: theme.palette[styleProps.color || 'primary'].main
-    })
-  }),
-  ({ styleProps }) => ({
-    ...(styleProps.variant === 'indeterminate' && {
-      animation: `${circularRotateKeyframe} 1.4s linear infinite`
-    })
+})(({ theme }) => ({
+  position: 'relative',
+  /* Styles applied to the root element. */
+  display: 'inline-block',
+  fontSize: 0,
+  [`&.${circularProgressClasses.determinate}`]: {
+    transition: theme.transitions.create('transform')
+  },
+  [`&.${circularProgressClasses.indeterminate}`]: {
+    animation: `${circularRotateKeyframe} 1.4s linear infinite`
+  },
+  ...generateUtilityStyles(colors, (styles, color) => {
+    //@ts-expect-error
+    const cssName = circularProgressClasses[`color${capitalize(color)}`];
+    styles[`&.${cssName}`] = {
+      //@ts-expect-error
+      color: theme.palette[color].main
+    };
   })
-);
+}));
 
 const CircularProgressSvg = styled('svg', {
   name: 'WuiCircularProgress',
   slot: 'Svg'
-})(() => ({
-  display: 'block'
-}));
+})({
+  display: 'block',
+  pointerEvents: 'none'
+});
 
 const CircularProgressCircle = styled('circle', {
   name: 'WuiCircularProgress',
   slot: 'Circle'
-})<PickStyleProps<CircularProgressProps, 'variant'>>(
-  ({ theme, styleProps }) => ({
-    /* Styles applied to the `circle` svg path. */
-    stroke: 'currentColor',
-    // Use butt to follow the specification, by chance, it's already the default CSS value.
-    // strokeLinecap: 'butt',
-    /* Styles applied to the `circle` svg path if `variant="determinate"`. */
-    ...(styleProps.variant === 'determinate' && {
-      transition: theme.transitions.create('stroke-dashoffset')
-    })
-  }),
-  ({ styleProps }) => ({
-    ...(styleProps.variant === 'indeterminate' && {
-      animation: `${circularDashKeyframe} 1.4s ease-in-out infinite`,
-      /* Some default value that looks fine waiting for the animation to kicks in. */
-      strokeDasharray: '80px, 200px',
-      /* Add the unit to fix a Edge 16 and below bug. */
-      strokeDashoffset: 0
-    })
-  })
-);
+})(({ theme }) => ({
+  /* Styles applied to the `circle` svg path. */
+  stroke: 'currentColor',
+  // Use butt to follow the specification, by chance, it's already the default CSS value.
+  // strokeLinecap: 'butt',
+  /* Styles applied to the `circle` svg path if `variant="determinate"`. */
+  [`.${circularProgressClasses.determinate} &`]: {
+    transition: theme.transitions.create('stroke-dashoffset')
+  },
+  [`.${circularProgressClasses.indeterminate} &`]: {
+    animation: `${circularDashKeyframe} 1.4s ease-in-out infinite`,
+    /* Some default value that looks fine waiting for the animation to kicks in. */
+    strokeDasharray: '80px, 200px',
+    /* Add the unit to fix a Edge 16 and below bug. */
+    strokeDashoffset: 0
+  }
+}));
 
 const CircularProgressLabel = styled('div', {
   name: 'WuiCircularProgress',
   slot: 'Label'
-})<PickStyleProps<CircularProgressProps, 'size'>>(({ theme, styleProps }) => ({
+})(({ theme }) => ({
+  ...theme.typography.body2,
   top: 0,
   left: 0,
   bottom: 0,
@@ -139,15 +149,11 @@ const CircularProgressLabel = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  transform: 'rotate(90deg)',
-  ...theme.typography.caption,
-  ...(styleProps.size && {
-    fontSize: theme.typography.pxToRem(styleProps.size),
-    transform: 'rotate(90deg) scale(0.25)'
-  })
+  transform: 'rotate(90deg) scale(0.25)',
+  userSelect: 'none'
 }));
 
-const CircularProgress: React.FC<CircularProgressProps> = React.forwardRef(
+const CircularProgress = React.forwardRef<HTMLElement, CircularProgressProps>(
   (inProps, ref) => {
     const props = useThemeProps({
       props: inProps,
@@ -166,7 +172,7 @@ const CircularProgress: React.FC<CircularProgressProps> = React.forwardRef(
       ...rest
     } = props;
 
-    const styleProps = { color, variant, size };
+    const styleProps = { ...props, color, variant };
 
     const circleStyle: any = {};
     const rootStyle: any = {};
@@ -183,11 +189,7 @@ const CircularProgress: React.FC<CircularProgressProps> = React.forwardRef(
       rootStyle.transform = 'rotate(-90deg)';
     }
 
-    const classes = useClasses({
-      ...props,
-      styleProps,
-      name: 'WuiCircularProgress'
-    });
+    const classes = useClasses(styleProps);
 
     return (
       <CircularProgressRoot
@@ -197,7 +199,6 @@ const CircularProgress: React.FC<CircularProgressProps> = React.forwardRef(
         role="progressbar"
         className={classes.root}
         style={{ width: size, height: size, ...rootStyle, ...style }}
-        styleProps={styleProps}
         ref={ref}
         {...rootProps}
         {...rest}
@@ -209,7 +210,6 @@ const CircularProgress: React.FC<CircularProgressProps> = React.forwardRef(
           <CircularProgressCircle
             className={classes.circle}
             style={circleStyle}
-            styleProps={styleProps}
             cx={SIZE}
             cy={SIZE}
             r={(SIZE - thickness) / 2}
@@ -219,8 +219,8 @@ const CircularProgress: React.FC<CircularProgressProps> = React.forwardRef(
         </CircularProgressSvg>
         {variant === 'determinate' && label && (
           <CircularProgressLabel
-            styleProps={styleProps}
             className={classes.label}
+            style={{ fontSize: size }}
           >
             {label}
           </CircularProgressLabel>

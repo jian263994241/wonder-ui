@@ -15,7 +15,6 @@ import {
   Typography
 } from '@wonder-ui/core';
 import { useVirtualList } from '@wonder-ui/hooks';
-import { disableBodyScroll, allowScrollOnElement } from '@wonder-ui/utils';
 import * as React from 'react';
 
 const dataList = Array(2000).fill('');
@@ -29,14 +28,6 @@ export default function Example() {
 
   return (
     <Container size="sm" ref={rootRef}>
-      <button
-        onClick={() => {
-          disableBodyScroll(document.querySelector<HTMLElement>('#root')!);
-          allowScrollOnElement(rootRef.current);
-        }}
-      >
-        aaaa
-      </button>
       <div
         {...containerProps}
         style={{
@@ -49,7 +40,7 @@ export default function Example() {
           This example shows how to use Virtual List
         </Typography>
         <List {...wrapperProps}>
-          <ListHeader>Virtual List</ListHeader>
+          <ListHeader sticky>Virtual List</ListHeader>
           {list.map(({ data, index }) => (
             <ListItem key={index} style={{ height: 44 }}>
               <ListItemText>Item {index}</ListItemText>

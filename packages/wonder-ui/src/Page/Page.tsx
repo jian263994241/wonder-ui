@@ -4,11 +4,10 @@ import CloseButton from '../CloseButton';
 import IconButton from '../IconButton';
 import Navbar, { NavbarProps } from '../Navbar';
 import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import { css } from '@wonder-ui/utils';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
-import type { BaseProps, ClassNameMap } from '../styles/types';
+import { pageClasses, useClasses } from './PageClasses';
 
 const PageRoot = styled('div', {
   name: 'WuiPage',
@@ -31,7 +30,7 @@ const PageRoot = styled('div', {
 const PageContent = styled('div', {
   name: 'WuiPage',
   slot: 'Content'
-})(({ theme }) => ({
+})({
   overflow: 'auto',
   boxSizing: 'border-box',
   height: '100%',
@@ -39,12 +38,10 @@ const PageContent = styled('div', {
   zIndex: 1,
   paddingTop: 'env(safe-area-inset-top)',
   paddingBottom: 'env(safe-area-inset-bottom)'
-  // '.WuiNavbar-root + &': {
-  //   paddingTop: `calc(${theme.shape.navbarHeight}px + env(safe-area-inset-top))`
-  // }
-}));
+});
 
-export interface PageProps extends BaseProps {
+export interface PageProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref' | 'title'> {
   /**
    * @ignore
    */
@@ -60,8 +57,7 @@ export interface PageProps extends BaseProps {
   /**
    * css
    */
-  classes?: ClassNameMap<'root' | 'content' | 'navbar' | 'toolbar'>;
-
+  classes?: Partial<typeof pageClasses>;
   /**
    * 导航栏
    */
@@ -96,7 +92,7 @@ export interface PageProps extends BaseProps {
   toolbar?: React.ReactElement & React.RefAttributes<React.ReactElement>;
 }
 
-const Page: React.FC<PageProps> = React.forwardRef((inProps, ref) => {
+const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiPage' });
   const {
     NavbarProps = {},
@@ -115,7 +111,7 @@ const Page: React.FC<PageProps> = React.forwardRef((inProps, ref) => {
     ...rest
   } = props;
 
-  const classes = useClasses({ ...props, name: 'WuiPage' });
+  const classes = useClasses({ ...props });
 
   const navbarRef = React.useRef<HTMLElement>(null);
   const handleNavbarRef = useForkRef(
@@ -140,16 +136,20 @@ const Page: React.FC<PageProps> = React.forwardRef((inProps, ref) => {
   }, [toolbarHeight]);
 
   const barLeft = showBackButton ? (
-    <IconButton edge="start" disabledTouchFeedback onClick={onBack}>
-      <ArrowForward size="small" direction="left" />
+    <IconButton edge="start" disableRipple onClick={onBack}>
+      <ArrowForward fontSize="inherit" direction="left" />
     </IconButton>
   ) : null;
   const barRight = showCloseButton ? (
-    <CloseButton disabledTouchFeedback edge="end" onClick={onClose} />
+    <CloseButton disableRipple edge="end" onClick={onClose} />
   ) : null;
 
   return (
-    <PageRoot ref={ref} className={classes.root} {...rest}>
+    <PageRoot
+      ref={ref as React.Ref<HTMLDivElement>}
+      className={css(classes.root, className)}
+      {...rest}
+    >
       {navbar ? (
         React.cloneElement(navbar, {
           ...NavbarProps,

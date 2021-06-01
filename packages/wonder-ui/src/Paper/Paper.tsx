@@ -1,9 +1,9 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import useClasses from '../styles/useClasses';
 import { alpha } from '../styles/colorManipulator';
-import type { BaseProps, PickStyleProps } from '../styles/types';
+import { css } from '@wonder-ui/utils';
+import { paperClasses, PaperStyleProps, useClasses } from './PaperClasses';
 
 const getOverlayAlpha = (elevation: number): number => {
   let alphaValue;
@@ -15,39 +15,48 @@ const getOverlayAlpha = (elevation: number): number => {
   return Number((alphaValue / 100).toFixed(2));
 };
 
-export interface PaperProps extends BaseProps {
+export interface PaperProps
+  extends Omit<
+    React.HTMLProps<HTMLElement>,
+    'as' | 'ref' | 'content' | 'title'
+  > {
+  classes?: Partial<typeof paperClasses>;
+  component?: React.ElementType;
   elevation?: number;
   square?: boolean;
   variant?: 'elevation' | 'outlined';
+  ref?: React.Ref<any>;
 }
 
 const PaperRoot = styled('div', {
   name: 'WuiPaper',
   slot: 'Root'
-})<PickStyleProps<PaperProps, 'elevation' | 'square' | 'variant'>>(
-  ({ theme, styleProps }) => ({
-    backgroundColor: theme.palette.background.paper,
-    color: theme.palette.text.primary,
-    transition: theme.transitions.create('box-shadow'),
-    ...(!styleProps.square && {
-      borderRadius: theme.shape.borderRadius
-    }),
-    ...(styleProps.variant === 'outlined' && {
-      border: `1px solid ${theme.palette.divider}`
-    }),
-    ...(styleProps.variant === 'elevation' && {
-      boxShadow: theme.shadows[styleProps.elevation],
-      ...(theme.palette.mode === 'dark' && {
-        backgroundImage: `linear-gradient(${alpha(
-          '#fff',
-          getOverlayAlpha(styleProps.elevation)
-        )}, ${alpha('#fff', getOverlayAlpha(styleProps.elevation))})`
-      })
-    })
-  })
-);
+})<{ styleProps: PaperStyleProps }>(({ theme, styleProps }) => ({
+  backgroundColor: theme.palette.background.paper,
+  color: theme.palette.text.primary,
+  transition: theme.transitions.create('box-shadow'),
+  borderRadius: theme.shape.borderRadius,
 
-const Paper: React.FC<PaperProps> = React.forwardRef((inProps, ref) => {
+  [`&.${paperClasses.square}`]: {
+    borderRadius: 0
+  },
+
+  [`&.${paperClasses.outlined}`]: {
+    border: `1px solid ${theme.palette.divider}`
+  },
+
+  [`&.${paperClasses.elevation}`]: {
+    boxShadow: theme.shadows[styleProps.elevation!],
+    ...(theme.palette.mode === 'dark' && {
+      backgroundImage: `linear-gradient(${alpha(
+        '#fff',
+        getOverlayAlpha(styleProps.elevation!)
+      )}, ${alpha('#fff', getOverlayAlpha(styleProps.elevation!))})`
+    })
+  }
+}));
+
+const Paper = React.forwardRef<HTMLElement, PaperProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiPaper' });
   const {
     className,
@@ -58,16 +67,16 @@ const Paper: React.FC<PaperProps> = React.forwardRef((inProps, ref) => {
     ...rest
   } = props;
 
-  const styleProps = { elevation, square, variant };
+  const styleProps = { ...props, elevation, square, variant };
 
-  const classes = useClasses({ ...props, styleProps, name: 'WuiPaper' });
+  const classes = useClasses(styleProps);
 
   return (
     <PaperRoot
       as={component}
-      className={classes.root}
+      className={css(classes.root, className)}
       styleProps={styleProps}
-      ref={ref}
+      ref={ref as React.Ref<HTMLDivElement>}
       {...rest}
     />
   );

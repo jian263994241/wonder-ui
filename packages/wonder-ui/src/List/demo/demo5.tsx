@@ -7,11 +7,10 @@
 /** @jsx jsx */
 import {
   jsx,
-  List,
   ListItem,
   ListItemText,
   Container,
-  FocusZone
+  MenuList
 } from '@wonder-ui/core';
 import { useSelections } from '@wonder-ui/hooks';
 
@@ -22,24 +21,13 @@ export default function Example() {
 
   return (
     <Container size="sm">
-      <FocusZone direction="vertical">
-        <List>
-          {listData.map((item, index) => (
-            <ListItem
-              button
-              data-is-focusable={item != 1}
-              key={index}
-              selected={isSelected(item)}
-              onClick={() =>
-                isSelected(item) ? toggle(item) : setSelected([item])
-              }
-              disabled={item === 1}
-            >
-              <ListItemText>Item {item}</ListItemText>
-            </ListItem>
-          ))}
-        </List>
-      </FocusZone>
+      <MenuList>
+        {listData.map((item, index) => (
+          <ListItem button key={index} tabIndex={0} disabled={item === 1}>
+            <ListItemText>Item {item}</ListItemText>
+          </ListItem>
+        ))}
+      </MenuList>
     </Container>
   );
 }

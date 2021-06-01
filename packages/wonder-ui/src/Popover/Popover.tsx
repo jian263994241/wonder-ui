@@ -3,12 +3,11 @@ import Grow from '../Grow';
 import Modal, { ModalProps } from '../Modal';
 import Paper, { PaperProps } from '../Paper';
 import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import { BaseTransitionProps, TransitionTimeout } from '../Transition';
-import { debounce, getDocument, getWindow, css } from '@wonder-ui/utils';
+import { css, debounce, getDocument, getWindow } from '@wonder-ui/utils';
+import { popoverClasses, useClasses } from './PopoverClasses';
 import { useForkRef } from '@wonder-ui/hooks';
-import type { ClassNameMap, RestProps } from '../styles/types';
 
 type Rect = { width: number; height: number };
 type AnchorEl = HTMLElement | null | (() => HTMLElement | null);
@@ -58,12 +57,15 @@ function getTransformOriginValue(transformOrigin: TransformOrigin) {
 
 const PopoverRoot = styled(Modal, {
   name: 'WuiPopover',
-  slot: 'Root'
+  slot: 'Root',
+  shouldForwardProp: () => true
 })<ModalProps>({});
 
-const PopoverPaper = styled(Paper, { name: 'WuiPopover', slot: 'Paper' })<
-  PaperProps
->({
+const PopoverPaper = styled(Paper, {
+  name: 'WuiPopover',
+  slot: 'Paper',
+  shouldForwardProp: () => true
+})<PaperProps>({
   position: 'absolute',
   overflowY: 'auto',
   overflowX: 'hidden',
@@ -93,7 +95,7 @@ export interface PopoverProps extends Omit<ModalProps, 'children'> {
   /**
    * 支持updatePosition（）操作
    */
-  action?: React.Ref<any>;
+  actionRef?: React.Ref<any>;
   /**
    * 设置位置描点的element
    */
@@ -122,7 +124,7 @@ export interface PopoverProps extends Omit<ModalProps, 'children'> {
   /**
    * @ignore
    */
-  classes?: ClassNameMap<'root' | 'paper'>;
+  classes?: Partial<typeof popoverClasses>;
   /**
    * 边框深度
    * @default 8
@@ -149,242 +151,241 @@ export interface PopoverProps extends Omit<ModalProps, 'children'> {
    * 是否显示
    */
   visible?: boolean;
+
+  ref?: React.Ref<any>;
 }
 
-const Popover: React.FC<PopoverProps & RestProps> = React.forwardRef(
-  (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiPopover' });
-    const {
-      PaperProps,
-      TransitionComponent = Grow,
-      TransitionProps: { onEntering, ...TransitionProps } = {},
-      action,
-      anchorEl,
-      anchorOrigin = { vertical: 'top', horizontal: 'left' },
-      anchorPosition = { top: 0, left: 0 },
-      anchorReference = 'anchorEl',
-      children,
-      className,
-      container: containerProp,
-      elevation = 8,
-      marginThreshold = 16,
-      transformOrigin = { vertical: 'top', horizontal: 'left' },
-      transitionDuration,
-      visible = false,
-      ...rest
-    } = props;
+const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
+  const props = useThemeProps({ props: inProps, name: 'WuiPopover' });
+  const {
+    PaperProps,
+    TransitionComponent = Grow,
+    TransitionProps: { onEntering, ...TransitionProps } = {},
+    actionRef,
+    anchorEl,
+    anchorOrigin = { vertical: 'top', horizontal: 'left' },
+    anchorPosition = { top: 0, left: 0 },
+    anchorReference = 'anchorEl',
+    children,
+    className,
+    container: containerProp,
+    elevation = 8,
+    marginThreshold = 16,
+    transformOrigin = { vertical: 'top', horizontal: 'left' },
+    transitionDuration,
+    visible = false,
+    ...rest
+  } = props;
 
-    const styleProps = {};
+  const styleProps = { ...props };
 
-    const classes = useClasses({ ...props, styleProps, name: 'WuiPopover' });
+  const classes = useClasses(styleProps);
 
-    const paperRef = React.useRef<HTMLElement>(null);
-    const handdlePaperRef = useForkRef(paperRef, PaperProps?.ref);
+  const paperRef = React.useRef<HTMLElement>(null);
+  const handdlePaperRef = useForkRef(paperRef, PaperProps?.ref);
 
-    const getAnchorOffset = React.useCallback(() => {
-      if (anchorReference === 'anchorPosition') {
-        return anchorPosition;
-      }
+  const getAnchorOffset = React.useCallback(() => {
+    if (anchorReference === 'anchorPosition') {
+      return anchorPosition;
+    }
 
-      const resolvedAnchorEl = getAnchorEl(anchorEl);
+    const resolvedAnchorEl = getAnchorEl(anchorEl);
 
-      // If an anchor element wasn't provided, just use the parent body element of this Popover
-      const anchorElement =
-        resolvedAnchorEl && resolvedAnchorEl.nodeType === 1
-          ? resolvedAnchorEl
-          : getDocument(paperRef.current).body;
-      const anchorRect = anchorElement.getBoundingClientRect();
+    // If an anchor element wasn't provided, just use the parent body element of this Popover
+    const anchorElement =
+      resolvedAnchorEl && resolvedAnchorEl.nodeType === 1
+        ? resolvedAnchorEl
+        : getDocument(paperRef.current).body;
+    const anchorRect = anchorElement.getBoundingClientRect();
 
+    return {
+      top: anchorRect.top + getOffsetTop(anchorRect, anchorOrigin.vertical),
+      left: anchorRect.left + getOffsetLeft(anchorRect, anchorOrigin.horizontal)
+    };
+  }, [
+    anchorEl,
+    anchorOrigin.horizontal,
+    anchorOrigin.vertical,
+    anchorPosition,
+    anchorReference
+  ]);
+
+  const getTransformOrigin = React.useCallback(
+    (elemRect: Rect) => {
       return {
-        top: anchorRect.top + getOffsetTop(anchorRect, anchorOrigin.vertical),
-        left:
-          anchorRect.left + getOffsetLeft(anchorRect, anchorOrigin.horizontal)
+        vertical: getOffsetTop(elemRect, transformOrigin.vertical),
+        horizontal: getOffsetLeft(elemRect, transformOrigin.horizontal)
       };
-    }, [
-      anchorEl,
-      anchorOrigin.horizontal,
-      anchorOrigin.vertical,
-      anchorPosition,
-      anchorReference
-    ]);
+    },
+    [transformOrigin.horizontal, transformOrigin.vertical]
+  );
 
-    const getTransformOrigin = React.useCallback(
-      (elemRect: Rect) => {
+  const getPositioningStyle = React.useCallback(
+    (element: HTMLElement) => {
+      const elemRect = {
+        width: element.offsetWidth,
+        height: element.offsetHeight
+      };
+
+      // Get the transform origin point on the element itself
+      const elemTransformOrigin = getTransformOrigin(elemRect);
+
+      if (anchorReference === 'none') {
         return {
-          vertical: getOffsetTop(elemRect, transformOrigin.vertical),
-          horizontal: getOffsetLeft(elemRect, transformOrigin.horizontal)
-        };
-      },
-      [transformOrigin.horizontal, transformOrigin.vertical]
-    );
-
-    const getPositioningStyle = React.useCallback(
-      (element: HTMLElement) => {
-        const elemRect = {
-          width: element.offsetWidth,
-          height: element.offsetHeight
-        };
-
-        // Get the transform origin point on the element itself
-        const elemTransformOrigin = getTransformOrigin(elemRect);
-
-        if (anchorReference === 'none') {
-          return {
-            top: null,
-            left: null,
-            transformOrigin: getTransformOriginValue(elemTransformOrigin)
-          };
-        }
-
-        // Get the offset of the anchoring element
-        const anchorOffset = getAnchorOffset();
-
-        // Calculate element positioning
-        let top = anchorOffset.top - elemTransformOrigin.vertical;
-        let left = anchorOffset.left - elemTransformOrigin.horizontal;
-        const bottom = top + elemRect.height;
-        const right = left + elemRect.width;
-
-        // Use the parent window of the anchorEl if provided
-        const containerWindow = getWindow(getAnchorEl(anchorEl));
-
-        // Window thresholds taking required margin into account
-        const heightThreshold = containerWindow.innerHeight - marginThreshold;
-        const widthThreshold = containerWindow.innerWidth - marginThreshold;
-
-        // Check if the vertical axis needs shifting
-        if (top < marginThreshold) {
-          const diff = top - marginThreshold;
-          top -= diff;
-          elemTransformOrigin.vertical += diff;
-        } else if (bottom > heightThreshold) {
-          const diff = bottom - heightThreshold;
-          top -= diff;
-          elemTransformOrigin.vertical += diff;
-        }
-
-        // Check if the horizontal axis needs shifting
-        if (left < marginThreshold) {
-          const diff = left - marginThreshold;
-          left -= diff;
-          elemTransformOrigin.horizontal += diff;
-        } else if (right > widthThreshold) {
-          const diff = right - widthThreshold;
-          left -= diff;
-          elemTransformOrigin.horizontal += diff;
-        }
-
-        return {
-          top: `${Math.round(top)}px`,
-          left: `${Math.round(left)}px`,
+          top: null,
+          left: null,
           transformOrigin: getTransformOriginValue(elemTransformOrigin)
         };
-      },
-      [
-        anchorEl,
-        anchorReference,
-        getAnchorOffset,
-        getTransformOrigin,
-        marginThreshold
-      ]
-    );
-
-    const setPositioningStyles = React.useCallback(() => {
-      const { current: element } = paperRef;
-
-      if (!element) {
-        return;
       }
 
-      const positioning = getPositioningStyle(element);
+      // Get the offset of the anchoring element
+      const anchorOffset = getAnchorOffset();
 
-      if (positioning.top !== null) {
-        element.style.top = positioning.top;
-      }
-      if (positioning.left !== null) {
-        element.style.left = positioning.left;
-      }
-      element.style.transformOrigin = positioning.transformOrigin;
-    }, [getPositioningStyle]);
+      // Calculate element positioning
+      let top = anchorOffset.top - elemTransformOrigin.vertical;
+      let left = anchorOffset.left - elemTransformOrigin.horizontal;
+      const bottom = top + elemRect.height;
+      const right = left + elemRect.width;
 
-    const handleEntering: typeof onEntering = (element, isAppearing) => {
-      if (onEntering) {
-        onEntering(element, isAppearing);
-      }
-      setPositioningStyles();
-    };
+      // Use the parent window of the anchorEl if provided
+      const containerWindow = getWindow(getAnchorEl(anchorEl));
 
-    React.useEffect(() => {
-      if (visible) {
-        setPositioningStyles();
-      }
-    });
+      // Window thresholds taking required margin into account
+      const heightThreshold = containerWindow.innerHeight - marginThreshold;
+      const widthThreshold = containerWindow.innerWidth - marginThreshold;
 
-    React.useImperativeHandle(
-      action,
-      () => {
-        return {
-          updatePosition: () => {
-            if (visible) {
-              setPositioningStyles();
-            }
-          }
-        };
-      },
-      [visible, setPositioningStyles]
-    );
-
-    React.useEffect(() => {
-      if (!visible) {
-        return undefined;
+      // Check if the vertical axis needs shifting
+      if (top < marginThreshold) {
+        const diff = top - marginThreshold;
+        top -= diff;
+        elemTransformOrigin.vertical += diff;
+      } else if (bottom > heightThreshold) {
+        const diff = bottom - heightThreshold;
+        top -= diff;
+        elemTransformOrigin.vertical += diff;
       }
 
-      const handleResize = debounce(() => {
-        setPositioningStyles();
-      });
-      const resolvedAnchorEl = getAnchorEl(anchorEl);
-      const containerWindow = getWindow(resolvedAnchorEl);
-      containerWindow.addEventListener('resize', handleResize);
-      containerWindow.addEventListener('scroll', handleResize);
-      return () => {
-        handleResize.cancel();
-        containerWindow.removeEventListener('resize', handleResize);
-        containerWindow.removeEventListener('scroll', handleResize);
+      // Check if the horizontal axis needs shifting
+      if (left < marginThreshold) {
+        const diff = left - marginThreshold;
+        left -= diff;
+        elemTransformOrigin.horizontal += diff;
+      } else if (right > widthThreshold) {
+        const diff = right - widthThreshold;
+        left -= diff;
+        elemTransformOrigin.horizontal += diff;
+      }
+
+      return {
+        top: `${Math.round(top)}px`,
+        left: `${Math.round(left)}px`,
+        transformOrigin: getTransformOriginValue(elemTransformOrigin)
       };
-    }, [anchorEl, visible, setPositioningStyles]);
+    },
+    [
+      anchorEl,
+      anchorReference,
+      getAnchorOffset,
+      getTransformOrigin,
+      marginThreshold
+    ]
+  );
 
-    const container =
-      containerProp ||
-      (anchorEl ? getDocument(getAnchorEl(anchorEl)).body : undefined);
+  const setPositioningStyles = React.useCallback(() => {
+    const { current: element } = paperRef;
 
-    return (
-      <PopoverRoot
-        BackdropProps={{ invisible: true }}
-        className={classes.root}
-        container={container}
-        visible={visible}
-        ref={ref}
-        {...rest}
+    if (!element) {
+      return;
+    }
+
+    const positioning = getPositioningStyle(element);
+
+    if (positioning.top !== null) {
+      element.style.top = positioning.top;
+    }
+    if (positioning.left !== null) {
+      element.style.left = positioning.left;
+    }
+    element.style.transformOrigin = positioning.transformOrigin;
+  }, [getPositioningStyle]);
+
+  const handleEntering: typeof onEntering = (element, isAppearing) => {
+    if (onEntering) {
+      onEntering(element, isAppearing);
+    }
+    setPositioningStyles();
+  };
+
+  React.useEffect(() => {
+    if (visible) {
+      setPositioningStyles();
+    }
+  });
+
+  React.useImperativeHandle(
+    actionRef,
+    () => {
+      return {
+        updatePosition: () => {
+          if (visible) {
+            setPositioningStyles();
+          }
+        }
+      };
+    },
+    [visible, setPositioningStyles]
+  );
+
+  React.useEffect(() => {
+    if (!visible) {
+      return undefined;
+    }
+
+    const handleResize = debounce(() => {
+      setPositioningStyles();
+    });
+    const resolvedAnchorEl = getAnchorEl(anchorEl);
+    const containerWindow = getWindow(resolvedAnchorEl);
+    containerWindow.addEventListener('resize', handleResize);
+    containerWindow.addEventListener('scroll', handleResize);
+    return () => {
+      handleResize.cancel();
+      containerWindow.removeEventListener('resize', handleResize);
+      containerWindow.removeEventListener('scroll', handleResize);
+    };
+  }, [anchorEl, visible, setPositioningStyles]);
+
+  const container =
+    containerProp ||
+    (anchorEl ? getDocument(getAnchorEl(anchorEl)).body : undefined);
+
+  return (
+    <PopoverRoot
+      BackdropProps={{ invisible: true }}
+      container={container}
+      visible={visible}
+      ref={ref}
+      {...rest}
+      classes={{ root: css(classes.root, className) }}
+    >
+      <TransitionComponent
+        appear
+        in={visible}
+        timeout={transitionDuration}
+        onEntering={handleEntering}
+        {...TransitionProps}
       >
-        <TransitionComponent
-          appear
-          in={visible}
-          timeout={transitionDuration}
-          onEntering={handleEntering}
-          {...TransitionProps}
+        <PopoverPaper
+          {...PaperProps}
+          className={css(classes.paper, PaperProps?.className)}
+          elevation={elevation}
+          ref={handdlePaperRef}
         >
-          <PopoverPaper
-            {...PaperProps}
-            className={css(classes.paper, PaperProps?.className)}
-            elevation={elevation}
-            ref={handdlePaperRef}
-          >
-            {children}
-          </PopoverPaper>
-        </TransitionComponent>
-      </PopoverRoot>
-    );
-  }
-);
+          {children}
+        </PopoverPaper>
+      </TransitionComponent>
+    </PopoverRoot>
+  );
+});
 
 export default Popover;

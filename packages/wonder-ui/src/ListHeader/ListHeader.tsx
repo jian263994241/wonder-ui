@@ -1,22 +1,23 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import useClasses from '../styles/useClasses';
-import type { BaseProps, PickStyleProps } from '../styles/types';
+import { css } from '@wonder-ui/utils';
+import { listHeaderClasses, useClasses } from './ListHeaderClasses';
 
-export interface ListHeaderProps extends BaseProps {
-  /**
-   * @description Disable sticky
-   * @default false
-   */
+export interface ListHeaderProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
+  classes?: Partial<typeof listHeaderClasses>;
+  component?: React.ElementType;
   disableSticky?: boolean;
+  sticky?: boolean;
+  ref?: React.Ref<any>;
 }
 
 const ListHeaderRoot = styled('li', {
   name: 'WuiListHeader',
   slot: 'Root'
-})<PickStyleProps<ListHeaderProps, 'disableSticky'>>(
-  ({ theme, styleProps }) => ({
+})(
+  ({ theme }) => ({
     ...theme.typography.body1,
     backgroundColor: theme.palette.background.default,
     width: '100%',
@@ -25,38 +26,41 @@ const ListHeaderRoot = styled('li', {
     padding: theme.spacing(1, 2),
     display: 'flex',
     justifyContent: 'start',
-    position: styleProps.disableSticky ? 'relative' : 'sticky',
+    position: 'relative',
     top: 0,
     zIndex: 1,
     marginTop: -1
   }),
-  ({ styleProps }) => ({
-    //fix ios
-    position: styleProps.disableSticky ? 'relative' : '-webkit-sticky'
-  })
+
+  `
+    &.${listHeaderClasses.sticky} {
+      position: sticky;
+      position: -webkit-sticky;
+    }
+  `
 );
 
-const ListHeader: React.FC<ListHeaderProps> = React.forwardRef(
+const ListHeader = React.forwardRef<HTMLElement, ListHeaderProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiListHeader' });
     const {
       children,
       component,
       className,
+      sticky = false,
       disableSticky = false,
       ...rest
     } = props;
 
-    const styleProps = { disableSticky };
+    const styleProps = { ...props, sticky };
 
-    const classes = useClasses({ ...props, styleProps, name: 'WuiListHeader' });
+    const classes = useClasses(styleProps);
 
     return (
       <ListHeaderRoot
-        className={classes.root}
+        className={css(classes.root, className)}
         as={component}
-        styleProps={styleProps}
-        ref={ref}
+        ref={ref as React.Ref<HTMLLIElement>}
         {...rest}
       >
         {children}

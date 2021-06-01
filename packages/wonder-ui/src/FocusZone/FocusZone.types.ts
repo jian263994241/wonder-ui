@@ -58,13 +58,10 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement> {
   ref?: React.Ref<IFocusZone>;
 
   /**
-   * Additional class name to provide on the root element, in addition to the ms-FocusZone class.
-   */
-  className?: string;
-  /**
    * Content
    */
   children?: React.ReactElement;
+
   /**
    * Defines which arrows to react to.
    * @defaultvalue FocusZoneDirection.bidirectional

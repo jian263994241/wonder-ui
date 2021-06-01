@@ -64,10 +64,10 @@ export default function Example() {
           }
           right={
             <div>
-              <IconButton size="small">
+              <IconButton>
                 <Search />
               </IconButton>
-              <IconButton size="small" edge="end">
+              <IconButton edge="end">
                 <ThreeDotsVertical />
               </IconButton>
             </div>
@@ -88,12 +88,19 @@ export default function Example() {
               startIcon={<ArrowForward direction="left" />}
               variant="text"
               edge="start"
+              disableRipple
+              style={{ height: 44 }}
             >
               返回
             </Button>
           }
           right={
-            <Button variant="text" edge="end">
+            <Button
+              variant="text"
+              edge="end"
+              disableRipple
+              style={{ height: 44 }}
+            >
               关闭
             </Button>
           }

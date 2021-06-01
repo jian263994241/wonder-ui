@@ -59,7 +59,7 @@ const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
   const defaultStyledResolver = styled(tag, {
     shouldForwardProp: (prop: string) => shouldForwardProp(prop),
     label: className || componentName || '',
-    target: className,
+    // target: className,
     ...styledOptions
   });
 

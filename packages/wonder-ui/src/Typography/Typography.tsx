@@ -1,33 +1,40 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import useClasses from '../styles/useClasses';
-import { BaseProps, PickStyleProps } from '../styles/types';
+import { css } from '@wonder-ui/utils';
+import {
+  defaultVariantMapping,
+  typographyClasses,
+  TypographyStyleProps,
+  useClasses
+} from './TypographyClasses';
 
-const defaultVariantMapping = {
-  h1: 'h1',
-  h2: 'h2',
-  h3: 'h3',
-  h4: 'h4',
-  h5: 'h5',
-  h6: 'h6',
-  subtitle1: 'h6',
-  subtitle2: 'h6',
-  body1: 'p',
-  body2: 'p'
-} as const;
-
-export interface TypographyProps extends BaseProps {
+export interface TypographyProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
   /**
    * @description 对齐
    * @default inherit
    */
-  align?: React.CSSProperties['textAlign'];
+  align?: 'center' | 'inherit' | 'justify' | 'left' | 'right';
+  /**
+   * class
+   */
+  classes?: Partial<typeof typographyClasses>;
   /**
    * @description 颜色
    * @default inherit
    */
-  color?: 'inherit' | 'primary' | 'secondary' | 'hint';
+  color?:
+    | 'inherit'
+    | 'primary'
+    | 'secondary'
+    | 'textPrimary'
+    | 'textSecondary'
+    | 'error';
+  /**
+   * Root element
+   */
+  component?: React.ElementType;
   /**
    * @description 不换行
    * @default false
@@ -58,54 +65,47 @@ export interface TypographyProps extends BaseProps {
 export const TypographyRoot = styled('span', {
   name: 'WuiTypography',
   slot: 'Root'
-})<
-  PickStyleProps<
-    TypographyProps,
-    | 'align'
-    | 'color'
-    | 'variant'
-    | 'gutterBottom'
-    | 'lineClamp'
-    | 'noWrap'
-    | 'paragraph'
-  >
->(({ theme, styleProps }) => ({
+})<{ styleProps: TypographyStyleProps }>(({ theme, styleProps }) => ({
   margin: 0,
-  textAlign: styleProps.align,
-  color:
-    styleProps.color === 'inherit'
-      ? styleProps.color
-      : theme.palette.text[styleProps.color],
   ...theme.typography[styleProps.variant],
-  ...(!styleProps.noWrap && {
-    overflowWrap: 'break-word'
-  }),
-  //单行展示
-  ...(styleProps.noWrap && {
+  textAlign: styleProps.align,
+
+  [`&.${typographyClasses.colorPrimary}`]: {
+    color: theme.palette.primary.main
+  },
+  [`&.${typographyClasses.colorTextPrimary}`]: {
+    color: theme.palette.text.primary
+  },
+  [`&.${typographyClasses.colorSecondary}`]: {
+    color: theme.palette.secondary.main
+  },
+  [`&.${typographyClasses.colorTextSecondary}`]: {
+    color: theme.palette.text.secondary
+  },
+  [`&.${typographyClasses.colorError}`]: {
+    color: theme.palette.error.main
+  },
+
+  [`&.${typographyClasses.lineClamp}`]: {
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: styleProps.lineClamp,
+    overflow: 'hidden'
+  },
+  [`&.${typographyClasses.noWrap}`]: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    WebkitLineClamp: 2
-  }),
-  //多行省略
-  ...(styleProps.lineClamp != 0 &&
-    !styleProps.noWrap && {
-      display: '-webkit-box',
-      WebkitBoxOrient: 'vertical',
-      WebkitLineClamp: styleProps.lineClamp,
-      overflow: 'hidden'
-    }),
-  //间距
-  ...(styleProps.gutterBottom && {
+    whiteSpace: 'nowrap'
+  },
+  [`&.${typographyClasses.gutterBottom}`]: {
     marginBottom: '0.35em'
-  }),
-  //段落
-  ...(styleProps.paragraph && {
+  },
+  [`&.${typographyClasses.paragraph}`]: {
     marginBottom: 16
-  })
+  }
 }));
 
-const Typography: React.FC<TypographyProps> = React.forwardRef(
+const Typography = React.forwardRef<HTMLElement, TypographyProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiTypography' });
     const {
@@ -115,7 +115,7 @@ const Typography: React.FC<TypographyProps> = React.forwardRef(
       color = 'inherit',
       component,
       gutterBottom = false,
-      lineClamp = 0,
+      lineClamp,
       noWrap = false,
       paragraph = false,
       variant = 'body1',
@@ -126,6 +126,7 @@ const Typography: React.FC<TypographyProps> = React.forwardRef(
       component || (paragraph ? 'p' : defaultVariantMapping[variant]);
 
     const styleProps = {
+      ...props,
       align,
       color,
       gutterBottom,
@@ -135,16 +136,12 @@ const Typography: React.FC<TypographyProps> = React.forwardRef(
       variant
     };
 
-    const classes = useClasses({
-      ...props,
-      styleProps,
-      name: 'WuiTypography'
-    });
+    const classes = useClasses(styleProps);
 
     return (
       <TypographyRoot
         as={_component}
-        className={classes.root}
+        className={css(classes.root, className)}
         ref={ref}
         styleProps={styleProps}
         {...rest}

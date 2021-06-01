@@ -1,9 +1,15 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import type { BaseProps } from '../styles/types';
+import { css } from '@wonder-ui/utils';
+import { listItemExtraClasses, useClasses } from './ListItemExtraClasses';
 
-export interface ListItemExtraProps extends BaseProps {}
+export interface ListItemExtraProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
+  classes?: Partial<typeof listItemExtraClasses>;
+  component?: React.ElementType;
+  ref?: React.Ref<any>;
+}
 
 const ListItemExtraRoot = styled('div', {
   name: 'WuiListItemExtra',
@@ -19,15 +25,20 @@ const ListItemExtraRoot = styled('div', {
   paddingRight: theme.spacing(1)
 }));
 
-const ListItemExtra: React.FC<ListItemExtraProps> = React.forwardRef(
+const ListItemExtra = React.forwardRef<HTMLElement, ListItemExtraProps>(
   (inProps, ref) => {
-    const props = useThemeProps({
-      props: inProps,
-      name: 'WuiListItemExtra'
-    });
-    const { children, component, ...rest } = props;
+    const props = useThemeProps({ props: inProps, name: 'WuiListItemExtra' });
+    const { children, className, component, ...rest } = props;
+
+    const classes = useClasses(props);
+
     return (
-      <ListItemExtraRoot as={component} ref={ref} {...rest}>
+      <ListItemExtraRoot
+        className={css(classes.root, className)}
+        as={component}
+        ref={ref as React.Ref<HTMLDivElement>}
+        {...rest}
+      >
         {children}
       </ListItemExtraRoot>
     );

@@ -23,13 +23,13 @@ export default function Example() {
         <ListHeader>Settings</ListHeader>
         <ListItem button divider component="label">
           <ListItemMedia>
-            <Checkbox circle />
+            <Checkbox />
           </ListItemMedia>
           <ListItemText>Wi-Fi</ListItemText>
         </ListItem>
         <ListItem button divider component="label">
           <ListItemMedia>
-            <Checkbox circle />
+            <Checkbox />
           </ListItemMedia>
           <ListItemText>Wi-Fi 2</ListItemText>
         </ListItem>

@@ -40,6 +40,9 @@ export * from './Container';
 export { default as Dialog } from './Dialog';
 export * from './Dialog';
 
+export { default as DialogContent } from './DialogContent';
+export * from './DialogContent';
+
 export { default as Divider } from './Divider';
 export * from './Divider';
 
@@ -78,6 +81,9 @@ export * from './ListItemMedia';
 
 export { default as ListItemText } from './ListItemText';
 export * from './ListItemText';
+
+export { default as MenuList } from './MenuList';
+export * from './MenuList';
 
 export { default as Modal, ModalManager } from './Modal';
 export * from './Modal';

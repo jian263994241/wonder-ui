@@ -7,17 +7,16 @@
 /** @jsx jsx */
 import {
   Badge,
-  Button,
+  Container,
   jsx,
   List,
   ListHeader,
   ListItem,
-  ListItemText,
-  ListItemMedia,
   ListItemExtra,
-  Container
+  ListItemMedia,
+  ListItemText
 } from '@wonder-ui/core';
-import { PersonCircle, InfoCircleFill, TrashFill } from '@wonder-ui/icons';
+import { InfoCircleFill, PersonCircle, TrashFill } from '@wonder-ui/icons';
 
 export default function Example() {
   return (
@@ -50,9 +49,7 @@ export default function Example() {
           </ListItemMedia>
           <ListItemText>Item 2</ListItemText>
           <ListItemExtra>
-            <Badge color="secondary" rounded>
-              5
-            </Badge>
+            <Badge color="secondary" text="5" />
           </ListItemExtra>
         </ListItem>
         <ListItem divider>
@@ -61,7 +58,7 @@ export default function Example() {
           </ListItemMedia>
           <ListItemText>Item 3</ListItemText>
           <ListItemExtra>
-            <Badge color="secondary">5</Badge>
+            <Badge color="secondary" text="5" />
           </ListItemExtra>
         </ListItem>
       </List>
@@ -73,27 +70,27 @@ export default function Example() {
             <PersonCircle />
           </ListItemMedia>
           <ListItemText>Item 1</ListItemText>
-          <Button color="secondary" size="small" variant="text">
-            <InfoCircleFill size="inherit" />
-          </Button>
+          <ListItemExtra>
+            <InfoCircleFill fontSize="inherit" />
+          </ListItemExtra>
         </ListItem>
         <ListItem divider>
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
           <ListItemText>Item 2</ListItemText>
-          <Button color="secondary" size="small" variant="text">
-            <InfoCircleFill size="inherit" />
-          </Button>
+          <ListItemExtra>
+            <InfoCircleFill fontSize="inherit" />
+          </ListItemExtra>
         </ListItem>
         <ListItem divider>
           <ListItemMedia>
             <PersonCircle />
           </ListItemMedia>
           <ListItemText>Item 3</ListItemText>
-          <Button color="secondary" size="small" variant="text">
-            <TrashFill size="inherit" />
-          </Button>
+          <ListItemExtra>
+            <TrashFill fontSize="inherit" />
+          </ListItemExtra>
         </ListItem>
       </List>
 

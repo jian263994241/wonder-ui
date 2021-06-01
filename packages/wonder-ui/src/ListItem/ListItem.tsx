@@ -4,13 +4,13 @@ import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 import ListItemExtra from '../ListItemExtra';
 import ListItemMedia from '../ListItemMedia';
 import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
 import { groupBy } from '@wonder-ui/utils';
-import type { RestProps, ClassNameMap } from '../styles/types';
+import { listItemClasses, useClasses } from './ListItemClasses';
 
-export interface ListItemProps {
+export interface ListItemProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'type'> {
   /**
    * 水平对齐
    */
@@ -24,9 +24,9 @@ export interface ListItemProps {
    */
   children?: React.ReactNode;
   /**
-   * @description Css api
+   * Css api
    */
-  classes?: ClassNameMap<'root' | 'body'>;
+  classes?: Partial<typeof listItemClasses>;
   /**
    * Root element
    */
@@ -40,12 +40,12 @@ export interface ListItemProps {
    */
   disabled?: boolean;
   /**
-   * @description 选中状态
+   * 选中状态
    * @default false
    */
   selected?: boolean;
   /**
-   * @description 是否展示点击状态
+   * 是否展示点击状态
    * @default false
    */
   button?: boolean;
@@ -53,10 +53,6 @@ export interface ListItemProps {
    * HTML Attributes
    */
   className?: string;
-  /**
-   * HTML Attributes
-   */
-  style?: React.CSSProperties;
   /**
    * ref
    */
@@ -86,15 +82,6 @@ const ListItemRoot = styled(ButtonBase, {
   paddingLeft: theme.spacing(2),
   cursor: 'auto',
   whiteSpace: 'unset',
-  ...(styleProps.selected &&
-    !styleProps.disabled && {
-      backgroundColor: theme.palette.action.selected
-      // backgroundColor: alpha(theme.palette.primary.main, 0.18)
-    }),
-
-  ...(styleProps.button && {
-    cursor: 'pointer'
-  }),
 
   ...(styleProps.disabled && {
     pointerEvents: 'none'
@@ -155,7 +142,7 @@ const direction = {
   'vertical-up': 'up'
 } as const;
 
-const ListItem: React.FC<ListItemProps & RestProps> = React.forwardRef(
+const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiListItem' });
 
@@ -172,9 +159,16 @@ const ListItem: React.FC<ListItemProps & RestProps> = React.forwardRef(
       ...rest
     } = props;
 
-    const styleProps = { alignItems, button, divider, disabled, selected };
+    const styleProps = {
+      ...props,
+      alignItems,
+      button,
+      divider,
+      disabled,
+      selected
+    };
 
-    const classes = useClasses({ ...props, styleProps, name: 'WuiListItem' });
+    const classes = useClasses(styleProps);
 
     const childGroup = React.useMemo(
       () =>
@@ -199,10 +193,10 @@ const ListItem: React.FC<ListItemProps & RestProps> = React.forwardRef(
       <ListItemRoot
         component={component}
         className={classes.root}
-        disabledTouchFeedback={!button}
+        disableRipple={!button}
         styleProps={styleProps}
         disabled={disabled}
-        autofocus={!disabled}
+        selected={selected}
         ref={ref}
         {...rest}
       >
@@ -210,13 +204,16 @@ const ListItem: React.FC<ListItemProps & RestProps> = React.forwardRef(
           childGroup.media.map((media: any) =>
             React.cloneElement(media, { disabled })
           )}
-        <ListItemInner styleProps={styleProps}>
+        <ListItemInner styleProps={styleProps} className={classes.inner}>
           <ListItemBody className={classes.body}>
             {childGroup.body}
           </ListItemBody>
           {childGroup.extra}
           {arrow && arrow != 'empty' && (
-            <ListItemArrow direction={direction[arrow]} />
+            <ListItemArrow
+              className={classes.arrow}
+              direction={direction[arrow]}
+            />
           )}
         </ListItemInner>
       </ListItemRoot>

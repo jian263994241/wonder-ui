@@ -1,6 +1,7 @@
 /**
  * title: 基本使用
  * desc: 使用 buttons 定义按钮
+ *
  */
 
 /** @jsx jsx */
@@ -22,7 +23,7 @@ export default function Example() {
           }
         ]}
       >
-        <Button>提示框(文字)</Button>
+        <Button variant="contained">提示框(文字)</Button>
       </Dialog>
       <Dialog
         title="标题"
@@ -43,7 +44,7 @@ export default function Example() {
           }
         ]}
       >
-        <Button>提示框(图片)</Button>
+        <Button variant="contained">提示框(图片)</Button>
       </Dialog>
     </Space>
   );

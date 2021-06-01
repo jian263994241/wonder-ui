@@ -1,66 +1,25 @@
 import * as React from 'react';
-import useClasses from '../styles/useClasses';
+import DialogContent, { DialogContentProps } from '../DialogContent';
+import Grow from '../Grow';
+import Modal, { ModalProps } from '../Modal';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import type { BaseProps, PickStyleProps, ClassNameMap } from '../styles/types';
-import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
-import Modal, { ModalProps } from '../Modal';
-import Typography, { TypographyProps } from '../Typography';
-import { alpha } from '../styles/colorManipulator';
+import { BaseTransitionProps, TransitionTimeout } from '../Transition';
 import { createChainedFunction, css } from '@wonder-ui/utils';
+import { dialogClasses, useClasses } from './DialogClasses';
 import { duration } from '../styles/transitions';
-import Grow from '../Grow';
-import { TransitionTimeout, BaseTransitionProps } from '../Transition';
 import { useControlled } from '@wonder-ui/hooks';
 
-export interface DialogButtonProps extends ButtonBaseProps {
-  primary?: boolean;
-  text?: React.ReactNode;
-}
-
-export interface DialogProps extends BaseProps {
+export interface DialogProps extends Omit<DialogContentProps, 'classes'> {
+  classes?: Partial<typeof dialogClasses>;
   /**
    * Target element
    */
   children?: React.ReactElement;
   /**
-   * Css api
-   */
-  classes?: ClassNameMap<
-    'root' | 'body' | 'title' | 'text' | 'buttonGroup' | 'button'
-  >;
-  /**
    * Visible
    */
   visible?: boolean;
-  /**
-   * Title
-   */
-  title?: React.ReactNode;
-  /**
-   * Title props
-   */
-  titleTypographyProps?: TypographyProps;
-  /**
-   * Text
-   */
-  text?: React.ReactNode;
-  /**
-   * Text props
-   */
-  textTypographyProps?: TypographyProps;
-  /**
-   * After text node
-   */
-  content?: React.ReactNode;
-  /**
-   * Buttons
-   */
-  buttons?: DialogButtonProps[];
-  /**
-   * Buttons vertical
-   */
-  buttonsVertical?: boolean;
   /**
    * 动画过渡组件
    */
@@ -92,80 +51,6 @@ const DialogRoot = styled(Modal, {
   zIndex: theme.zIndex.dialog
 }));
 
-const DialogContentRoot = styled('div', {
-  name: 'WuiDialog',
-  slot: 'ContentRoot'
-})(({ theme }) => ({
-  boxSizing: 'border-box',
-  outline: 0,
-  position: 'relative',
-  borderRadius: 13,
-  boxShadow: theme.shadows[4],
-  backgroundColor: alpha(theme.palette.background.paper, 0.95),
-  width: 295,
-  display: 'block',
-  textAlign: 'left',
-  overflow: 'hidden',
-  userSelect: 'none'
-}));
-
-const DialogContentBody = styled('div', {
-  name: 'WuiDialog',
-  slot: 'ContentBody'
-})(() => ({
-  padding: 15,
-  '&:empty': {
-    display: 'none'
-  }
-}));
-
-const DialogButtonGroup = styled('div', {
-  name: 'WuiDialog',
-  slot: 'buttonGroup'
-})<PickStyleProps<DialogProps, 'buttonsVertical'>>(({ theme, styleProps }) => ({
-  position: 'relative',
-  display: 'flex',
-  flexDirection: styleProps.buttonsVertical ? 'column' : 'row',
-  borderWidth: 0,
-  borderTopWidth: 'thin',
-  borderStyle: 'solid',
-  borderColor: theme.palette.divider
-}));
-
-const DialogButton = styled(ButtonBase, {
-  name: 'WuiDialog',
-  slot: 'button'
-})<
-  DialogButtonProps &
-    PickStyleProps<DialogProps, 'buttonsVertical', { primary: boolean }>
->(({ theme, styleProps }) => ({
-  width: '100%',
-  height: 44,
-  color: theme.palette.primary.main,
-  fontWeight: styleProps.primary ? 600 : 400,
-  fontSize: theme.typography.pxToRem(16),
-  textAlign: 'center',
-  backgroundColor: 'transparent',
-  borderWidth: 0,
-  borderStyle: 'solid',
-  borderColor: theme.palette.divider,
-  ...(styleProps.buttonsVertical
-    ? { borderBottomWidth: 'thin', flexShrink: 0 }
-    : { borderRightWidth: 'thin' }),
-  textOverflow: 'ellipsis',
-  overflow: 'hidden',
-  boxSizing: 'border-box',
-  '&.active-state': {
-    backgroundColor: 'rgba(0,0,0,0.1)'
-  },
-  '&:focus': {
-    // boxShadow: theme.shadows[2]
-  },
-  '&:last-child': {
-    borderWidth: 0
-  }
-}));
-
 const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiDialog' });
 
@@ -173,14 +58,10 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
     buttons = [],
     children: childrenProp,
     className,
+    classes: classesProp,
     theme,
     ModalProps = {},
     visible: visibleProp = false,
-    title,
-    titleTypographyProps,
-    text,
-    textTypographyProps,
-    content,
     style,
     buttonsVertical = false,
     TranstionComponent = Grow,
@@ -202,9 +83,9 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
 
   const toogleVisibleIfUncontroled = () => setVisible(!visible);
 
-  const styleProps = { buttonsVertical };
+  const styleProps = { classes: classesProp };
 
-  const classes = useClasses({ ...props, styleProps, name: 'WuiDialog' });
+  const classes = useClasses(styleProps);
 
   return (
     <React.Fragment>
@@ -219,6 +100,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
         autoFocus={false}
         visible={visible}
         theme={theme}
+        className={css(classes.root, className)}
         BackdropProps={{ transitionDuration, ...ModalProps.BackdropProps }}
         {...ModalProps}
       >
@@ -229,74 +111,17 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
           role="presentation"
           {...TranstionComponentProps}
         >
-          <DialogContentRoot className={classes.root} theme={theme} {...rest}>
-            <DialogContentBody theme={theme} className={classes.body}>
-              {title && (
-                <Typography
-                  variant="subtitle1"
-                  align="center"
-                  noWrap
-                  gutterBottom={!!text || !!content}
-                  className={classes.title}
-                  theme={theme}
-                  {...titleTypographyProps}
-                >
-                  {title}
-                </Typography>
-              )}
-
-              {text && (
-                <Typography
-                  variant="body1"
-                  align="center"
-                  className={classes.text}
-                  theme={theme}
-                  gutterBottom
-                  {...textTypographyProps}
-                >
-                  {text}
-                </Typography>
-              )}
-
-              {content}
-            </DialogContentBody>
-
-            {buttons.length > 0 && (
-              <DialogButtonGroup
-                styleProps={styleProps}
-                theme={theme}
-                className={classes.buttonGroup}
-              >
-                {buttons.map((props, index) => {
-                  const {
-                    className,
-                    children,
-                    onClick,
-                    text,
-                    primary = false,
-                    ...rest
-                  } = props;
-
-                  return (
-                    <DialogButton
-                      autofocus={false}
-                      key={index}
-                      theme={theme}
-                      className={css({ primary }, classes.button, className)}
-                      styleProps={{ ...styleProps, primary }}
-                      onClick={createChainedFunction(
-                        onClick,
-                        toogleVisibleIfUncontroled
-                      )}
-                      {...rest}
-                    >
-                      {text || children}
-                    </DialogButton>
-                  );
-                })}
-              </DialogButtonGroup>
-            )}
-          </DialogContentRoot>
+          <DialogContent
+            {...rest}
+            buttonsVertical={buttonsVertical}
+            buttons={buttons.map((props) => ({
+              ...props,
+              onClick: createChainedFunction(
+                props.onClick,
+                toogleVisibleIfUncontroled
+              )
+            }))}
+          ></DialogContent>
         </TranstionComponent>
       </DialogRoot>
     </React.Fragment>

@@ -151,3 +151,22 @@ export function arraysEqual<T>(array1: T[], array2: T[]): boolean {
   }
   return true;
 }
+
+/**
+ * It accepts two arrays, one of property identifiers and one of corresponding values.
+ * @param props
+ * @param values
+ * @returns
+ */
+export function zipObject<K extends string | number | symbol, V>(
+  props: ArrayLike<K>,
+  values: ArrayLike<V>
+): { [k in K]: V } {
+  const result: any = {};
+
+  Object.keys(props).forEach((_, index) => {
+    result[props[index]] = values[index];
+  });
+
+  return result;
+}

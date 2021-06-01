@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { useEnhancedEffect, useForkRef, setRef } from '@wonder-ui/hooks';
+import { getDocument, setRef } from '@wonder-ui/utils';
+import { useEnhancedEffect, useForkRef } from '@wonder-ui/hooks';
 
 export type Container = HTMLElement | null | (() => HTMLElement | null);
 
@@ -8,29 +9,25 @@ export function getContainer(container?: Container) {
   return typeof container === 'function' ? container() : container;
 }
 
-export interface PortalProps<
-  Children = (React.ReactElement & React.RefAttributes<any>) | null
-> {
-  /**
-   * children
-   */
-  children: Children;
+export interface PortalProps {
+  children: React.ReactElement;
   container?: Container;
   disablePortal?: boolean;
-  ref?: React.Ref<Children>;
+  ref?: React.Ref<HTMLElement | null>;
 }
 
 const Portal: React.FC<PortalProps> = React.forwardRef((props, ref) => {
   const { children, container, disablePortal = false } = props;
   const [mountNode, setMountNode] = React.useState<HTMLElement | null>(null);
   const handleRef = useForkRef(
+    //@ts-expect-error
     React.isValidElement(children) ? children.ref : null,
     ref
   );
 
   useEnhancedEffect(() => {
     if (!disablePortal) {
-      setMountNode(getContainer(container) || document.body);
+      setMountNode(getContainer(container) || getDocument().body);
     }
   }, [container, disablePortal]);
 
@@ -38,7 +35,7 @@ const Portal: React.FC<PortalProps> = React.forwardRef((props, ref) => {
     if (mountNode && !disablePortal) {
       setRef(ref, mountNode);
       return () => {
-        setRef(ref, null);
+        setRef<HTMLElement | null>(ref, null);
       };
     }
 

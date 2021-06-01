@@ -1,11 +1,10 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
-import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import { BaseProps, PickStyleProps, ClassNameMap } from '../styles/types';
+import useThemeProps from '../styles/useThemeProps';
+import { toggleClasses, ToggleStyleProps, useClasses } from './ToggleClasses';
 import { useControlled, useEventCallback } from '@wonder-ui/hooks';
-
-export interface ToggleProps extends BaseProps {
+export interface ToggleProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'size' | 'onChange'> {
   /**
    * @description checked
    */
@@ -13,12 +12,16 @@ export interface ToggleProps extends BaseProps {
   /**
    * css api
    */
-  classes?: ClassNameMap<'root' | 'input' | 'icon'>;
+  classes?: Partial<typeof toggleClasses>;
   /**
    * @description color
    * @default primary
    */
   color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
+  /**
+   * @ignore
+   */
+  component?: React.ElementType;
   /**
    * @description default checked
    */
@@ -70,12 +73,16 @@ export interface ToggleProps extends BaseProps {
    * input value
    */
   value?: any;
+  /**
+   * @ignore
+   */
+  ref: React.Ref<any>;
 }
 
 const ToggleRoot = styled('label', {
   name: 'WuiSwitch',
   slot: 'Root'
-})<PickStyleProps<ToggleProps, 'disabled'>>(({ styleProps }) => ({
+})({
   alignSelf: 'center',
   boxSizing: 'border-box',
   display: 'inline-block',
@@ -85,10 +92,10 @@ const ToggleRoot = styled('label', {
   verticalAlign: 'middle',
   zIndex: 0,
   cursor: 'pointer',
-  ...(styleProps.disabled && {
+  [`&.${toggleClasses.disabled}`]: {
     pointerEvents: 'none'
-  })
-}));
+  }
+});
 
 const ToggleInput = styled('input', { name: 'WuiSwitch', slot: 'Input' })({
   display: 'none'
@@ -97,8 +104,8 @@ const ToggleInput = styled('input', { name: 'WuiSwitch', slot: 'Input' })({
 const ToggleIcon = styled('span', {
   name: 'WuiSwitch',
   slot: 'Icon'
-})<PickStyleProps<ToggleProps, 'color' | 'checked' | 'disabled' | 'size'>>(
-  ({ theme, styleProps }) => {
+})<{ styleProps: ToggleStyleProps }>(
+  ({ theme }) => {
     return {
       margin: 0,
       padding: 0,
@@ -106,9 +113,7 @@ const ToggleIcon = styled('span', {
       appearance: 'none',
       border: 'none',
       position: 'relative',
-      transition: theme.transitions.create(['background-color'], {
-        duration: theme.transitions.duration.area.small
-      }),
+      transition: theme.transitions.create(['background-color']),
       boxSizing: 'border-box',
       display: 'block',
       '&:before': {
@@ -136,22 +141,16 @@ const ToggleIcon = styled('span', {
         zIndex: 2
       },
 
-      ...(styleProps.disabled && {
-        opacity: 0.5
-      })
+      [`.${toggleClasses.disabled} > &`]: {
+        opacity: 0.3
+      }
     };
   },
   ({ theme, styleProps }) => {
     const { switchWidth, switchHeight } = {
-      medium: {
-        switchWidth: 52,
-        switchHeight: 32
-      },
-      small: {
-        switchWidth: 40,
-        switchHeight: 20
-      }
-    }[styleProps.size];
+      medium: { switchWidth: 52, switchHeight: 32 },
+      small: { switchWidth: 40, switchHeight: 20 }
+    }[styleProps.size!];
 
     const switchBorderColor = theme.palette.divider,
       switchHandleColor = '#fff',
@@ -176,7 +175,7 @@ const ToggleIcon = styled('span', {
         backgroundColor: switchHandleColor
       },
 
-      ...(styleProps.checked && {
+      [`.${toggleClasses.checked} > &`]: {
         backgroundColor: switchActiveColor,
         '&:before': {
           transform: 'scale(0)',
@@ -192,7 +191,7 @@ const ToggleIcon = styled('span', {
           borderRadius: switchHeight - 4,
           backgroundColor: switchHandleColor
         }
-      })
+      }
     };
   }
 );
@@ -233,8 +232,8 @@ const Toggle: React.FC<ToggleProps> = React.forwardRef((inProps, ref) => {
     }
   });
 
-  const styleProps = { size, color, disabled, checked: !!checked };
-  const classes = useClasses({ ...props, styleProps, name: 'WuiToggle' });
+  const styleProps = { ...props, size, color, disabled, checked };
+  const classes = useClasses(styleProps);
 
   return (
     <ToggleRoot
@@ -242,7 +241,6 @@ const Toggle: React.FC<ToggleProps> = React.forwardRef((inProps, ref) => {
       className={classes.root}
       htmlFor={id}
       onClick={onClick}
-      styleProps={styleProps}
       ref={ref}
       {...rest}
     >

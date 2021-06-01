@@ -3,9 +3,9 @@ import Transition, {
   BaseTransitionProps,
   TransitionTimeout
 } from '../Transition';
-import { reflow, getTransitionProps } from '../Transition/utils';
-import { duration } from '../styles/transitions';
 import useTheme from '../styles/useTheme';
+import { duration } from '../styles/transitions';
+import { getTransitionProps, reflow } from '../Transition/utils';
 import { useForkRef } from '@wonder-ui/hooks';
 
 const styles = {

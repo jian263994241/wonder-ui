@@ -14,7 +14,9 @@ export default function Example() {
 
   return (
     <div>
-      <Button onClick={() => toggle()}>Toggle</Button>
+      <Button variant="contained" onClick={() => toggle()}>
+        Toggle
+      </Button>
 
       <div css={{ backgroundColor: 'grey' }}>
         {visible && (

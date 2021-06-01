@@ -25,7 +25,7 @@ export default function Example() {
         }
       ]}
     >
-      <Button>垂直按钮</Button>
+      <Button variant="contained">垂直按钮</Button>
     </Dialog>
   );
 }

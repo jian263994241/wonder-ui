@@ -9,7 +9,7 @@ import { jsx, LinearProgress, Space } from '@wonder-ui/core';
 export default function Example() {
   return (
     <Space direction="vertical">
-      <LinearProgress value={20} color="primary" animated />
+      <LinearProgress value={80} color="primary" animated />
     </Space>
   );
 }

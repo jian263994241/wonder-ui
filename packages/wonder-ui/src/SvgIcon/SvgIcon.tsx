@@ -2,29 +2,21 @@ import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import { keyframes } from '@wonder-ui/styled';
 import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
-import type { BaseProps, PickStyleProps } from '../styles/types';
+import { css } from '@wonder-ui/utils';
+import { svgIconClasses, useClasses } from './SvgIconClasses';
 
-export interface SvgIconProps extends BaseProps {
-  /**
-   * @description size
-   * @default medium
-   */
-  size?: 'inherit' | 'large' | 'medium' | 'small';
-  /**
-   * @description spin animate
-   * @default false
-   */
+export interface SvgIconProps
+  extends Omit<React.HTMLProps<SVGSVGElement>, 'as' | 'ref'> {
+  children?: React.ReactNode;
+  classes?: Partial<typeof svgIconClasses>;
+  color?: 'action' | 'disabled' | 'error' | 'inherit' | 'primary' | 'secondary';
+  component?: React.ElementType;
+  crossOrigin?: 'anonymous' | 'use-credentials' | '';
+  fontSize?: 'inherit' | 'large' | 'medium' | 'small';
+  htmlColor?: string;
   spin?: boolean;
-  /**
-   * @description viewBox
-   * @default '0 0 16 16'
-   */
-  viewBox?: string;
-  /**
-   * @description title
-   */
   titleAccess?: string;
+  viewBox?: string;
 }
 
 const spin = keyframes({
@@ -33,56 +25,77 @@ const spin = keyframes({
   }
 });
 
-const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })<
-  PickStyleProps<SvgIconProps, 'size' | 'spin'>
->(({ theme, styleProps }) => ({
-  userSelect: 'none',
-  width: '1em',
-  height: '1em',
-  display: 'inline-block',
-  fill: 'currentColor',
-  flexShrink: 0,
-  verticalAlign: -1,
-  transition: theme.transitions.create('fill', {
-    duration: theme.transitions.duration.shorter
-  }),
-  ...(styleProps.spin && {
-    animation: `${spin} 1s steps(12, end) infinite`
-  }),
-  fontSize: {
-    inherit: 'inherit',
-    small: theme.typography.pxToRem(20),
-    medium: theme.typography.pxToRem(24),
-    large: theme.typography.pxToRem(35)
-  }[styleProps.size]
-}));
+const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })(
+  ({ theme }) => ({
+    userSelect: 'none',
+    width: '1em',
+    height: '1em',
+    display: 'inline-block',
+    fill: 'currentColor',
+    flexShrink: 0,
+    fontSize: 'inherit',
+    verticalAlign: -1,
+    transition: theme.transitions.create('fill', {
+      duration: theme.transitions.duration.shorter
+    }),
+    [`&.${svgIconClasses.colorPrimary}`]: {
+      color: theme.palette.primary.main
+    },
+    [`&.${svgIconClasses.colorSecondary}`]: {
+      color: theme.palette.secondary.main
+    },
+    [`&.${svgIconClasses.colorAction}`]: {
+      color: theme.palette.action.active
+    },
+    [`&.${svgIconClasses.colorError}`]: {
+      color: theme.palette.error.main
+    },
+    [`&.${svgIconClasses.colorDisabled}`]: {
+      color: theme.palette.action.disabled
+    },
+    [`&.${svgIconClasses.fontSizeSmall}`]: {
+      fontSize: theme.typography.pxToRem(20)
+    },
+    [`&.${svgIconClasses.fontSizeMedium}`]: {
+      fontSize: theme.typography.pxToRem(24)
+    },
+    [`&.${svgIconClasses.fontSizeLarge}`]: {
+      fontSize: theme.typography.pxToRem(35)
+    },
+    [`&.${svgIconClasses.spin}`]: {
+      animation: `${spin} 1s steps(12, end) infinite`
+    }
+  })
+);
 
-const SvgIcon: React.FC<SvgIconProps> = React.forwardRef((inProps, ref) => {
+const SvgIcon = React.forwardRef<Element, SvgIconProps>((inProps, ref) => {
   const props = useThemeProps({ name: 'WuiSvgIcon', props: inProps });
   const {
     children,
     className,
+    color = 'inherit',
     component = 'svg',
-    size = 'small',
+    fontSize = 'small',
+    htmlColor,
     spin = false,
     titleAccess,
     viewBox = '0 0 16 16',
     ...rest
   } = props;
 
-  const styleProps = { size, spin };
+  const styleProps = { ...props, color, fontSize, spin };
 
-  const classes = useClasses({ ...props, styleProps, name: 'WuiSvgIcon' });
+  const classes = useClasses(styleProps);
 
   return (
     <SvgIconRoot
       aria-hidden={titleAccess ? undefined : true}
       as={component}
-      className={classes.root}
+      className={css(classes.root, className)}
+      color={htmlColor}
       focusable="false"
-      ref={ref}
+      ref={ref as React.Ref<SVGSVGElement>}
       role={titleAccess ? 'img' : undefined}
-      styleProps={styleProps}
       viewBox={viewBox}
       {...rest}
     >

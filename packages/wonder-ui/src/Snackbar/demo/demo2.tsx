@@ -28,6 +28,7 @@ export default function Example() {
     <div>
       <Space wrap>
         <Button
+          variant="contained"
           onClick={handleClick({
             vertical: 'top',
             horizontal: 'left'
@@ -36,6 +37,7 @@ export default function Example() {
           左上
         </Button>
         <Button
+          variant="contained"
           onClick={handleClick({
             vertical: 'top',
             horizontal: 'center'
@@ -44,6 +46,7 @@ export default function Example() {
           中上
         </Button>
         <Button
+          variant="contained"
           onClick={handleClick({
             vertical: 'top',
             horizontal: 'right'
@@ -52,6 +55,7 @@ export default function Example() {
           右上
         </Button>
         <Button
+          variant="contained"
           onClick={handleClick({
             vertical: 'bottom',
             horizontal: 'right'
@@ -60,6 +64,7 @@ export default function Example() {
           右下
         </Button>
         <Button
+          variant="contained"
           onClick={handleClick({
             vertical: 'bottom',
             horizontal: 'center'
@@ -68,6 +73,7 @@ export default function Example() {
           中下
         </Button>
         <Button
+          variant="contained"
           onClick={handleClick({
             vertical: 'bottom',
             horizontal: 'left'
@@ -76,6 +82,7 @@ export default function Example() {
           左下
         </Button>
         <Button
+          variant="contained"
           onClick={handleClick({
             vertical: 'center',
             horizontal: 'center'

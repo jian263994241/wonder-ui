@@ -9,24 +9,14 @@ import { jsx, Badge, Space } from '@wonder-ui/core';
 export default function Example() {
   return (
     <Space wrap>
-      <Badge color="primary" rounded>
-        primary
-      </Badge>
-      <Badge color="secondary" rounded>
-        secondary
-      </Badge>
-      <Badge color="success" rounded>
-        success
-      </Badge>
-      <Badge color="danger" rounded>
-        danger
-      </Badge>
-      <Badge color="warning" rounded>
-        warning
-      </Badge>
-      <Badge color="info" rounded>
-        info
-      </Badge>
+      <Badge color="primary" text="primary" rounded />
+      <Badge color="secondary" text="secondary" rounded />
+      <Badge color="success" text="success" rounded />
+      <Badge color="danger" text="danger" rounded />
+      <Badge color="warning" text="warning" rounded />
+      <Badge color="info" text="info" rounded />
+      <Badge color="light" text="light" rounded />
+      <Badge color="dark" text="dark" rounded />
     </Space>
   );
 }

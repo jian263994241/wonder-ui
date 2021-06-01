@@ -4,9 +4,9 @@ import ButtonBase from '../ButtonBase';
 import IconButton from '../IconButton';
 import Slider, { Settings } from 'react-slick';
 import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
+import { swipeClasses, useClasses } from './SwipeClasses';
 
 const SwipeRoot = styled(Slider, {
   name: 'WuiSwipe',
@@ -109,14 +109,18 @@ const SwipeArrowButton = styled(IconButton, {
   slot: 'Arrow',
   shouldForwardProp: (prop: string) =>
     prop !== 'currentSlide' && prop !== 'slideCount' && prop !== 'next'
-})<{ next?: boolean }>(({ next, theme }) => ({
+})({
   position: 'absolute',
   top: '50%',
   zIndex: 1,
-  color: theme.palette.common.white,
   transform: 'translateY(-50%)',
-  ...(next ? { right: 0 } : { left: 0 })
-}));
+  [`&.${swipeClasses.nextArrow}`]: {
+    right: 0
+  },
+  [`&.${swipeClasses.prevArrow}`]: {
+    left: 0
+  }
+});
 
 const SwipeDot = styled(ButtonBase, { name: 'WuiSwipe', slot: 'Dot' })(
   ({ theme }) => ({
@@ -137,11 +141,17 @@ const SwipeDot = styled(ButtonBase, { name: 'WuiSwipe', slot: 'Dot' })(
 );
 
 export interface SwipeProps extends Settings {
+  classes?: Partial<typeof swipeClasses>;
   ref?: React.Ref<Slider>;
 }
 
 const Swipe: React.FC<SwipeProps> = React.forwardRef((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiSwipe' });
+
+  const classes = useClasses(props);
+
+  console.log(classes.nextArrow);
+
   const {
     arrows = false,
     customPaging = (index) => <SwipeDot key={index} />,
@@ -150,19 +160,27 @@ const Swipe: React.FC<SwipeProps> = React.forwardRef((inProps, ref) => {
     dots = false,
     infinite = false,
     prevArrow = (
-      <SwipeArrowButton size="small">
+      <SwipeArrowButton
+        size="small"
+        color="light"
+        classes={{ root: classes.prevArrow }}
+        disableRipple
+      >
         <ArrowForward direction="left" />
       </SwipeArrowButton>
     ),
     nextArrow = (
-      <SwipeArrowButton next size="small">
+      <SwipeArrowButton
+        size="small"
+        color="light"
+        classes={{ root: classes.nextArrow }}
+        disableRipple
+      >
         <ArrowForward direction="right" />
       </SwipeArrowButton>
     ),
     ...rest
   } = props;
-
-  const classes = useClasses({ ...props, name: 'WuiSwipe' });
 
   return (
     <SwipeRoot

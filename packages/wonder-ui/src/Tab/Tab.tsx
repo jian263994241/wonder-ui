@@ -3,10 +3,13 @@ import ButtonBase from '../ButtonBase';
 import styled from '../styles/styled';
 import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import { BaseProps, ClassNameMap } from '../styles/types';
 
-export interface TabProps extends BaseProps {
-  classes?: ClassNameMap<'root' | 'inner'>;
+export interface TabProps
+  extends Omit<
+    React.HTMLProps<HTMLElement>,
+    'as' | 'label' | 'onChange' | 'type'
+  > {
+  classes?: any;
   disabled?: boolean;
   fullWidth?: boolean;
   icon?: React.ElementType;
@@ -18,6 +21,8 @@ export interface TabProps extends BaseProps {
   selected?: boolean;
   textColor?: 'inherit' | 'primary' | 'secondary';
   value?: any;
+  selectionFollowsFocus?: boolean;
+  ref?: React.Ref<any>;
 }
 
 type StyleProps = {
@@ -101,7 +106,7 @@ const TabInner = styled('span', {
   flexDirection: 'column'
 });
 
-const Tab: React.FC<TabProps> = React.forwardRef((inProps, ref) => {
+const Tab = React.forwardRef<HTMLElement, TabProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'MuiTab' });
   const {
     children,
@@ -159,13 +164,13 @@ const Tab: React.FC<TabProps> = React.forwardRef((inProps, ref) => {
       disabled={disabled}
       styleProps={styleProps}
       tabIndex={selected ? 0 : -1}
-      disabledTouchFeedback={selected}
+      disableRipple={selected}
       onClick={handleClick}
       onFocus={handleFocus}
       {...rest}
       ref={ref}
     >
-      <TabInner className={classes.inner}>{children || [icon, label]}</TabInner>
+      <TabInner>{children || [icon, label]}</TabInner>
       {indicator}
     </TabRoot>
   );

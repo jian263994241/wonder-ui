@@ -12,6 +12,7 @@ export default withDialog(function Example(props) {
   return (
     <div>
       <Button
+        variant="contained"
         onClick={() => {
           dialog.toast('一条通知信息');
           dialog.toast('一条通知信息.');

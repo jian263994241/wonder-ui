@@ -42,7 +42,7 @@ export default function useClasses<
     mapObject(styleProps, (value, key) => {
       if (isObject(value)) {
         return mapObject(value, (value, key) => {
-          return makeClassName(key, value);
+          return makeClassName(key as string, value);
         });
       } else {
         return makeClassName(key, value);

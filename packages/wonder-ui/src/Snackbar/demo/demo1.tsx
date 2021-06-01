@@ -12,7 +12,9 @@ export default function Example() {
 
   return (
     <div>
-      <Button onClick={() => toggle()}>简单的消息条</Button>
+      <Button variant="contained" onClick={() => toggle()}>
+        简单的消息条
+      </Button>
       <Snackbar
         visible={visible}
         message="简单的消息条"

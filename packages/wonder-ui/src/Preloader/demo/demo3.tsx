@@ -4,15 +4,19 @@
  */
 
 /** @jsx jsx */
-import { jsx, Button, Preloader } from '@wonder-ui/core';
+import { jsx, Button, showPreloader, hidePreloader } from '@wonder-ui/core';
 
 export default function Example() {
   const open = () => {
-    Preloader.show();
+    showPreloader();
     setTimeout(() => {
-      Preloader.hide();
+      hidePreloader();
     }, 2000);
   };
 
-  return <Button onClick={() => open()}>Open</Button>;
+  return (
+    <Button variant="contained" onClick={() => open()}>
+      Open
+    </Button>
+  );
 }

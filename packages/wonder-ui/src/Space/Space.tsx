@@ -1,38 +1,46 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
-import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { BaseProps, ClassNameMap, PickStyleProps } from '../styles/types';
+import useThemeProps from '../styles/useThemeProps';
+import { spaceClasses, SpaceStyleProps, useClasses } from './SpaceClasses';
 
 type SpaceSize = 'small' | 'medium' | 'large' | number;
-export interface SpaceProps extends BaseProps {
+export interface SpaceProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'size' | 'wrap'> {
   /**
-   * @description flex alignItems
+   * Flex alignItems
    * @default center
    */
   align?: 'start' | 'end' | 'center' | 'baseline' | 'stretch';
   /**
-   * @description css api
+   * Css api
    */
-  classes?: ClassNameMap<'root' | 'item'>;
+  classes?: Partial<typeof spaceClasses>;
   /**
-   * @description direction
+   * @ignore
+   */
+  component?: React.ElementType;
+  /**
+   * Direction
    * @default horizontal
    */
   direction?: 'horizontal' | 'vertical';
   /**
-   * @description gutter size
+   * Gutter size
    * @default medium
    */
   size?: SpaceSize | [SpaceSize, SpaceSize];
   /**
-   * @description split node
+   * Split node
    */
   split?: React.ReactNode;
   /**
-   * @description wrap
+   * Wrap
    */
   wrap?: boolean;
+  /**
+   * @ignore
+   */
+  ref?: React.Ref<any>;
 }
 
 function getNumberSize(theme: any, size: SpaceSize) {
@@ -67,9 +75,9 @@ function getSize(
   ];
 }
 
-export const SpaceRoot = styled('div', { name: 'WuiSpace', slot: 'Root' })<
-  PickStyleProps<SpaceProps, 'align' | 'size' | 'wrap' | 'direction'>
->(({ theme, styleProps }) => {
+export const SpaceRoot = styled('div', { name: 'WuiSpace', slot: 'Root' })<{
+  styleProps: SpaceStyleProps;
+}>(({ theme, styleProps }) => {
   const [, verticalSize] = getSize(theme, styleProps);
 
   return {
@@ -86,7 +94,7 @@ export const SpaceRoot = styled('div', { name: 'WuiSpace', slot: 'Root' })<
       flexDirection: 'column',
       width: '100%'
     }),
-
+    //@ts-expect-error
     alignItems: {
       center: 'center',
       start: 'flex-start',
@@ -97,9 +105,9 @@ export const SpaceRoot = styled('div', { name: 'WuiSpace', slot: 'Root' })<
   };
 });
 
-const SpaceItem = styled('div', { name: 'WuiSpace', slot: 'Item' })<
-  PickStyleProps<SpaceProps, 'align' | 'size' | 'wrap' | 'direction'>
->(({ theme, styleProps }) => {
+const SpaceItem = styled('div', { name: 'WuiSpace', slot: 'Item' })<{
+  styleProps: SpaceStyleProps;
+}>(({ theme, styleProps }) => {
   const [horizontalSize, verticalSize] = getSize(theme, styleProps);
 
   return {
@@ -125,7 +133,7 @@ const SpaceItem = styled('div', { name: 'WuiSpace', slot: 'Item' })<
   };
 });
 
-const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
+const Space = React.forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiSpace' });
   const {
     align = 'center',
@@ -143,23 +151,20 @@ const Space: React.FC<SpaceProps> = React.forwardRef((inProps, ref) => {
 
   const childrenArray = React.Children.toArray(children);
   const styleProps = {
+    ...props,
     size,
     wrap,
     align,
     direction
   };
 
-  const classes = useClasses({
-    ...props,
-    styleProps,
-    name: 'WuiSpace'
-  });
+  const classes = useClasses(styleProps);
 
   return (
     <SpaceRoot
       as={component}
       className={classes.root}
-      ref={ref}
+      ref={ref as React.Ref<HTMLDivElement>}
       styleProps={styleProps}
       theme={theme}
       {...rest}

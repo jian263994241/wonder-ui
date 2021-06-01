@@ -4,8 +4,7 @@
  */
 
 /** @jsx jsx */
-import * as React from 'react';
-import { jsx, Typography, WhiteSpace, styled } from '@wonder-ui/core';
+import { jsx, WhiteSpace, styled } from '@wonder-ui/core';
 
 const Block = styled('div')({
   background: '#0092ff',
@@ -24,9 +23,9 @@ export default function Example() {
       <Block>default size md</Block>
       <WhiteSpace />
       <Block>size sm</Block>
-      <WhiteSpace size="sm" />
+      <WhiteSpace size="small" />
       <Block>size lg</Block>
-      <WhiteSpace size="lg" />
+      <WhiteSpace size="large" />
       <Block />
     </div>
   );

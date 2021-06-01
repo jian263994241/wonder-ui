@@ -20,9 +20,15 @@ export default function Example() {
   return (
     <div>
       <Space>
-        <Button onClick={() => setVisible(true)}>Open</Button>
-        <Button onClick={() => setVisible(false)}>Close</Button>
-        <Button onClick={() => setVisible(!visible)}>Toggle</Button>
+        <Button variant="contained" onClick={() => setVisible(true)}>
+          Open
+        </Button>
+        <Button variant="contained" onClick={() => setVisible(false)}>
+          Close
+        </Button>
+        <Button variant="contained" onClick={() => setVisible(!visible)}>
+          Toggle
+        </Button>
       </Space>
       <WhiteSpace />
       <Collapse in={visible} collapsedSize={30}>

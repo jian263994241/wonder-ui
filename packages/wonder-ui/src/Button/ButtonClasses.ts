@@ -11,14 +11,32 @@ export const buttonClasses = generateUtilityClasses('WuiButton', [
   'textInherit',
   'textPrimary',
   'textSecondary',
+  'textSuccess',
+  'textDanger',
+  'textWarning',
+  'textInfo',
+  'textLight',
+  'textDark',
   'outlined',
   'outlinedInherit',
   'outlinedPrimary',
   'outlinedSecondary',
+  'outlinedSuccess',
+  'outlinedDanger',
+  'outlinedWarning',
+  'outlinedInfo',
+  'outlinedLight',
+  'outlinedDark',
   'contained',
   'containedInherit',
   'containedPrimary',
   'containedSecondary',
+  'containedSuccess',
+  'containedDanger',
+  'containedWarning',
+  'containedInfo',
+  'containedLight',
+  'containedDark',
   'disableElevation',
   'focusVisible',
   'disabled',
@@ -58,7 +76,7 @@ export interface ButtonStyleProps {
     | 'light'
     | 'dark';
   disableElevation: boolean;
-  edge?: 'start' | 'end';
+  edge?: 'start' | 'end' | null;
   fullWidth: boolean;
   shape: 'default' | 'round' | 'square';
   size: 'small' | 'medium' | 'large';

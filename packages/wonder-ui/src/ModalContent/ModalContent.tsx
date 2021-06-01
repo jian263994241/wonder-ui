@@ -1,14 +1,14 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
-import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
-import type { BaseProps, PickStyleProps } from '../styles/types';
-import Typography, { TypographyProps } from '../Typography';
 import Button, { ButtonProps } from '../Button';
 import CloseButton from '../CloseButton';
 import Space from '../Space';
+import styled from '../styles/styled';
+import Typography, { TypographyProps } from '../Typography';
+import useThemeProps from '../styles/useThemeProps';
+import { modalContentClasses, useClasses } from './ModalContentClasses';
 
-export interface ModalContentProps extends BaseProps {
+export interface ModalContentProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
   /**
    * Cancel button props
    */
@@ -21,6 +21,10 @@ export interface ModalContentProps extends BaseProps {
    * Align center
    */
   centered?: boolean;
+  /**
+   * Css api
+   */
+  classes?: Partial<typeof modalContentClasses>;
   /**
    * Children
    */
@@ -66,7 +70,7 @@ export interface ModalContentProps extends BaseProps {
 const ModalContentRoot = styled('div', {
   name: 'ModalContent',
   slot: 'Root'
-})<PickStyleProps<ModalContentProps, 'centered'>>(({ theme, styleProps }) => ({
+})(({ theme }) => ({
   boxSizing: 'border-box',
   outline: 0,
   position: 'relative',
@@ -76,12 +80,13 @@ const ModalContentRoot = styled('div', {
   borderRadius: 2,
   boxShadow: theme.shadows[5],
   width: 580,
-  ...(styleProps.centered && {
+  [`&.${modalContentClasses.centered}`]: {
     display: 'block',
     textAlign: 'left',
     top: '50%',
     transform: 'translateY(-50%)'
-  }),
+  },
+
   [theme.breakpoints.down('sm')]: {
     width: `calc(100vw - 16px)`,
     margin: '8px auto'
@@ -91,10 +96,10 @@ const ModalContentRoot = styled('div', {
 const ModalContentBody = styled('div', {
   name: 'ModalContent',
   slot: 'Body'
-})(() => ({
+})({
   padding: 24,
   wordWrap: 'break-word'
-}));
+});
 
 const ModalContentHeader = styled('div', {
   name: 'ModalContent',
@@ -113,7 +118,7 @@ const ModalContentHeader = styled('div', {
 const ModalContentFooter = styled('div', {
   name: 'ModalContent',
   slot: 'Footer'
-})(() => ({
+})({
   padding: '10px 16px',
   textAlign: 'right',
   borderTop: 'thin solid #f0f0f0',
@@ -121,9 +126,9 @@ const ModalContentFooter = styled('div', {
   '&:empty': {
     display: 'none'
   }
-}));
+});
 
-const ModalContent: React.FC<ModalContentProps> = React.forwardRef(
+const ModalContent = React.forwardRef<HTMLElement, ModalContentProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'ModalContent' });
     const {
@@ -144,39 +149,44 @@ const ModalContent: React.FC<ModalContentProps> = React.forwardRef(
       ...rest
     } = props;
 
-    const styleProps = { centered };
+    const styleProps = { ...props, centered };
 
-    const classes = useClasses({ ...props, styleProps, name: 'ModalContent' });
+    const classes = useClasses(styleProps);
 
     return (
       <ModalContentRoot
-        styleProps={styleProps}
         className={classes.root}
-        ref={ref}
+        ref={ref as React.Ref<HTMLDivElement>}
         {...rest}
       >
         {onClose && (
           <CloseButton
             size="medium"
             onClick={onClose}
+            classes={{ root: classes.close }}
             style={{ position: 'absolute', right: 0, top: 0 }}
           />
         )}
 
-        <ModalContentHeader>
+        <ModalContentHeader className={classes.header}>
           {header
             ? header
             : title && (
-                <Typography variant="subtitle1" {...titleTypographyProps}>
+                <Typography
+                  className={classes.title}
+                  variant="subtitle1"
+                  {...titleTypographyProps}
+                >
                   {title}
                 </Typography>
               )}
         </ModalContentHeader>
-        <ModalContentBody>{children}</ModalContentBody>
-        <ModalContentFooter>
-          {footer
-            ? footer
-            : (onCancel || onOk) && (
+        <ModalContentBody className={classes.body}>{children}</ModalContentBody>
+
+        {footer
+          ? footer
+          : (onCancel || onOk) && (
+              <ModalContentFooter className={classes.footer}>
                 <Space>
                   {onCancel && (
                     <Button
@@ -188,13 +198,17 @@ const ModalContent: React.FC<ModalContentProps> = React.forwardRef(
                     </Button>
                   )}
                   {onOk && (
-                    <Button onClick={onOk} {...okButtonProps}>
+                    <Button
+                      onClick={onOk}
+                      variant="contained"
+                      {...okButtonProps}
+                    >
                       {okText}
                     </Button>
                   )}
                 </Space>
-              )}
-        </ModalContentFooter>
+              </ModalContentFooter>
+            )}
       </ModalContentRoot>
     );
   }

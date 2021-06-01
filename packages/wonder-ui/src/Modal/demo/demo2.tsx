@@ -12,9 +12,10 @@ import {
   styled,
   Typography,
   WhiteSpace,
-  Space
+  Space,
+  withDialog
 } from '@wonder-ui/core';
-import { useToggle } from '@wonder-ui/hooks';
+import { useBoolean } from '@wonder-ui/hooks';
 
 const Demo = styled('div')`
   position: absolute;
@@ -29,16 +30,18 @@ const Demo = styled('div')`
   padding: 32px;
 `;
 
-export default function Example() {
-  const [visible, { toggle }] = useToggle();
+export default withDialog(function Example(props) {
+  const [visible, { toggle, setTrue, setFalse }] = useBoolean();
 
   return (
     <div>
-      <Button onClick={() => toggle()}>Open</Button>
+      <Button variant="contained" onClick={() => setTrue()}>
+        Open
+      </Button>
 
       <Modal
         visible={visible}
-        onClose={() => toggle()}
+        onClose={() => setFalse()}
         BackdropProps={{ transitionDuration: 400 }}
       >
         <Fade timeout={400}>
@@ -53,8 +56,15 @@ export default function Example() {
             </Typography>
             <WhiteSpace />
             <Space>
-              <Button onClick={() => toggle()}>确定</Button>
-              <Button onClick={() => toggle()} color="secondary">
+              <Button
+                variant="contained"
+                onClick={() =>
+                  props.dialog.alert({ text: 'Dialog alert message' })
+                }
+              >
+                确定
+              </Button>
+              <Button onClick={() => setFalse()} color="secondary">
                 取消
               </Button>
             </Space>
@@ -63,4 +73,4 @@ export default function Example() {
       </Modal>
     </div>
   );
-}
+});

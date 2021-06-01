@@ -21,7 +21,7 @@ export interface ButtonBaseActions {
  * Button props
  */
 export interface ButtonBaseProps
-  extends Omit<React.HTMLProps<HTMLButtonElement>, 'ref' | 'as'> {
+  extends Omit<React.HTMLProps<HTMLButtonElement>, 'ref' | 'as' | 'size'> {
   LinkComponent?: React.ElementType;
   TouchRippleProps?: Partial<TouchRippleProps>;
   actionRef?: React.Ref<ButtonBaseActions>;
@@ -94,7 +94,6 @@ const ButtonBase = React.forwardRef<HTMLElement, ButtonBaseProps>(
       disableTouchRipple = false,
       focusRipple = false,
       focusVisibleClassName,
-      theme,
       onMouseDown,
       onContextMenu,
       onDragLeave,

@@ -20,7 +20,9 @@ export default function Example() {
 
   return (
     <div>
-      <Button onClick={() => toggle()}>Show Backdrop</Button>
+      <Button onClick={() => toggle()} variant="contained">
+        Show Backdrop
+      </Button>
 
       <Backdrop
         visible={visible}

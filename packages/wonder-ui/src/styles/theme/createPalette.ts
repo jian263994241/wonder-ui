@@ -169,7 +169,7 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
       dark: red[700]
     },
     warning = {
-      light: orange[600],
+      light: orange[500],
       dark: orange[700]
     },
     info = {

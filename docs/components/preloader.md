@@ -17,8 +17,10 @@
 
 组件提供了两个全局方法, 方便调用:
 
-- Preloader.show(props);
-- Preloader.hide();
+`import { showPreloader, hidePreloader } from '@wonder-ui/core'`
+
+- showPreloader(props);
+- hidePreloader();
 
 <code src="../../packages/wonder-ui/src/Preloader/demo/demo3.tsx"></code>
 

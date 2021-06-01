@@ -1,12 +1,13 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import type { BaseProps, PickStyleProps } from '../styles/types';
 import { alpha } from '../styles/colorManipulator';
-import { useForkRef, useControlled } from '@wonder-ui/hooks';
+import { capitalize, css, generateUtilityStyles } from '@wonder-ui/utils';
+import { checkboxClasses, useClasses } from './CheckboxClasses';
+import { useControlled, useForkRef } from '@wonder-ui/hooks';
 
-export interface CheckboxProps extends BaseProps {
+export interface CheckboxProps
+  extends Omit<React.HTMLProps<HTMLInputElement>, 'as' | 'ref'> {
   /**
    * @description shape
    * @default false
@@ -16,7 +17,15 @@ export interface CheckboxProps extends BaseProps {
    * @description color
    * @default primary
    */
-  color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
+  color?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'info'
+    | 'light'
+    | 'dark';
   /**
    * @description indeterminate
    * @default false
@@ -24,120 +33,145 @@ export interface CheckboxProps extends BaseProps {
   indeterminate?: boolean;
 }
 
-const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })<
-  PickStyleProps<CheckboxProps, 'circle' | 'color'>
->(({ theme, styleProps }) => ({
-  appearance: 'none',
-  colorAdjust: 'exact',
-  width: styleProps.circle ? '1.3em' : '1em',
-  height: styleProps.circle ? '1.3em' : '1em',
-  fontSize: 'inherit',
-  verticalAlign: -1,
-  backgroundColor: theme.palette.background.paper,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'contain',
-  borderWidth: 1,
-  borderStyle: 'solid',
-  borderColor: theme.palette.divider,
-  borderRadius: styleProps.circle ? '50%' : '.25em',
-  transition: theme.transitions.create(
-    ['border-color', 'background-color', 'box-shadow', 'opacity'],
-    {
-      duration: theme.transitions.duration.shortest
-    }
-  ),
-  '&:disabled': {
-    pointerEvents: 'none',
-    filter: 'none',
-    opacity: 0.5
-  },
-  '&:checked': {
-    borderColor: theme.palette[styleProps.color || 'primary'].main,
-    backgroundColor: theme.palette[styleProps.color || 'primary'].main,
-    backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
-      '<svg xmlns="http://www.w3.org/2000/svg" fill="#fff"  viewBox="0 0 16 16" ><path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"></path></svg>'
-    )}")`
-  },
-  '&:indeterminate': {
-    borderColor: theme.palette[styleProps.color || 'primary'].main,
-    backgroundColor: theme.palette[styleProps.color || 'primary'].main,
-    backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
-      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 10h8"/></svg>'
-    )}")`
-  },
-  '&:focus': {
+const colors = [
+  'primary',
+  'secondary',
+  'success',
+  'danger',
+  'warning',
+  'info',
+  'light',
+  'dark'
+];
+
+const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })(
+  ({ theme }) => ({
+    appearance: 'none',
+    colorAdjust: 'exact',
+    width: '1em',
+    height: '1em',
+    fontSize: 'inherit',
+    verticalAlign: -1,
     outline: 0,
-    boxShadow: `0 0 0 0.25rem ${alpha(
-      theme.palette[styleProps.color || 'primary'].main,
-      0.25
-    )}`
-  },
-  'label > & + *': {
-    marginLeft: '.3em'
-  }
-}));
-
-const Checkbox: React.FC<CheckboxProps> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiCheckbox' });
-
-  const {
-    checked: checkedProp,
-    circle = false,
-    className,
-    color = 'primary',
-    defaultChecked: defaultCheckedProp = false,
-    disabled,
-    indeterminate = false,
-    onChange,
-    ...rest
-  } = props;
-  const [checked, setChecked] = useControlled({
-    value: checkedProp,
-    defaultValue: defaultCheckedProp
-  });
-
-  const rootRef = React.useRef<HTMLInputElement>(null);
-  const hadnleRef = useForkRef(rootRef, ref);
-
-  const styleProps = { color, circle };
-
-  const classes = useClasses({
-    ...props,
-    styleProps: { ...styleProps, checked, disabled, indeterminate },
-    name: 'WuiCheckbox'
-  });
-
-  React.useEffect(() => {
-    if (rootRef.current) {
-      rootRef.current.indeterminate = checked ? false : indeterminate;
-    }
-  }, [indeterminate, checked]);
-
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
-    (e) => {
-      const input = e.target;
-
-      setChecked(input.checked);
-      if (onChange) {
-        onChange(e);
-      }
+    backgroundColor: theme.palette.background.paper,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'contain',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: theme.palette.divider,
+    borderRadius: '.25em',
+    transition: theme.transitions.create(
+      ['border-color', 'background-color', 'box-shadow', 'opacity'],
+      { duration: theme.transitions.duration.shortest }
+    ),
+    '&:disabled': {
+      pointerEvents: 'none',
+      filter: 'none',
+      opacity: 0.5
     },
-    [onChange, indeterminate]
-  );
+    [`&.${checkboxClasses.circle}`]: {
+      width: '1.3em',
+      height: '1.3em',
+      borderRadius: '50%'
+    },
+    'label > & + *': {
+      marginLeft: '.3em'
+    },
+    ...generateUtilityStyles(
+      colors,
+      (styles, color: NonNullable<CheckboxProps['color']>) => {
+        const colorName = 'color' + capitalize(color);
+        //@ts-expect-error
+        styles[`&.${checkboxClasses[colorName]}`] = {
+          '&:checked': {
+            borderColor: theme.palette[color!].main,
+            backgroundColor: theme.palette[color!].main,
+            backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
+              `<svg xmlns="http://www.w3.org/2000/svg" fill="${
+                theme.palette[color!].contrastText
+              }"  viewBox="0 0 16 16" ><path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"></path></svg>`
+            )}")`
+          },
+          '&:indeterminate': {
+            borderColor: theme.palette[color!].main,
+            backgroundColor: theme.palette[color!].main,
+            backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="none" stroke="${
+                theme.palette[color!].contrastText
+              }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 10h8"/></svg>`
+            )}")`
+          },
+          '&:focus': {
+            boxShadow: `0 0 0 0.25rem ${alpha(
+              theme.palette[color!].main,
+              0.25
+            )}`
+          }
+        };
+      }
+    )
+  })
+);
 
-  return (
-    <CheckboxRoot
-      checked={checked}
-      className={classes.root}
-      disabled={disabled}
-      onChange={handleChange}
-      ref={hadnleRef}
-      styleProps={styleProps}
-      type="checkbox"
-      {...rest}
-    />
-  );
-});
+const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiCheckbox' });
+
+    const {
+      checked: checkedProp,
+      circle = false,
+      className,
+      color = 'primary',
+      defaultChecked: defaultCheckedProp = false,
+      disabled,
+      indeterminate = false,
+      onChange,
+      ...rest
+    } = props;
+
+    const [checked, setChecked] = useControlled({
+      value: checkedProp,
+      defaultValue: defaultCheckedProp
+    });
+
+    const rootRef = React.useRef<HTMLInputElement>(null);
+    const hadnleRef = useForkRef(rootRef, ref);
+
+    const styleProps = { ...props, color, circle };
+
+    const classes = useClasses(styleProps);
+
+    React.useEffect(() => {
+      if (rootRef.current) {
+        rootRef.current.indeterminate = checked ? false : indeterminate;
+      }
+    }, [indeterminate, checked]);
+
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
+      (e) => {
+        const input = e.target;
+
+        setChecked(input.checked);
+        if (onChange) {
+          onChange(e);
+        }
+      },
+      [onChange, indeterminate]
+    );
+
+    return (
+      <CheckboxRoot
+        checked={checked}
+        className={css(classes.root, className)}
+        disabled={disabled}
+        onChange={handleChange}
+        ref={hadnleRef}
+        type="checkbox"
+        {...rest}
+      />
+    );
+  }
+);
 
 export default Checkbox;

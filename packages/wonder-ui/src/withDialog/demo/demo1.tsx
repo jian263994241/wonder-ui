@@ -12,6 +12,7 @@ export default withDialog(function Example(props) {
   return (
     <div>
       <Button
+        variant="contained"
         onClick={() => {
           dialog.alert({ title: '标题', text: 'dialog 1' });
           dialog.alert({ title: '标题', text: 'dialog 2' });

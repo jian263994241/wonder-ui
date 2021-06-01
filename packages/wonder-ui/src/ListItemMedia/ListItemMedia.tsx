@@ -1,26 +1,20 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import type { RestProps } from '../styles/types';
+import { css, globalClasses } from '@wonder-ui/utils';
+import { listItemMediaClasses, useClasses } from './ListItemMediaClasses';
 
-export interface ListItemMediaProps {
-  children?: React.ReactNode;
-  className?: string;
+export interface ListItemMediaProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
+  classes?: Partial<typeof listItemMediaClasses>;
   component?: React.ElementType;
-  disabled?: boolean;
   ref?: React.Ref<any>;
-  style?: React.CSSProperties;
 }
-
-type StyleProps = {
-  styleProps: Partial<ListItemMediaProps>;
-};
 
 const ListItemMediaRoot = styled('div', {
   name: 'WuiListItemMedia',
   slot: 'Root'
-})<StyleProps>(({ theme, styleProps }) => ({
+})(({ theme }) => ({
   userSelect: 'none',
   display: 'flex',
   flexShrink: 0,
@@ -29,35 +23,30 @@ const ListItemMediaRoot = styled('div', {
   boxSizing: 'border-box',
   padding: '10px 0',
   marginRight: theme.spacing(2),
-  ...(styleProps.disabled && {
+
+  [`.${globalClasses.disabled} &`]: {
     opacity: theme.palette.action.disabledOpacity
-  })
+  }
 }));
 
-const ListItemMedia: React.FC<
-  ListItemMediaProps & RestProps
-> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiListItemMedia' });
-  const { children, component, className, disabled = false, ...rest } = props;
+const ListItemMedia = React.forwardRef<HTMLElement, ListItemMediaProps>(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiListItemMedia' });
+    const { children, component, className, ...rest } = props;
 
-  const styleProps = { disabled };
-  const classes = useClasses({
-    ...props,
-    styleProps,
-    name: 'WuiListItemMedia'
-  });
+    const classes = useClasses(props);
 
-  return (
-    <ListItemMediaRoot
-      as={component}
-      className={classes.root}
-      styleProps={styleProps}
-      ref={ref}
-      {...rest}
-    >
-      {children}
-    </ListItemMediaRoot>
-  );
-});
+    return (
+      <ListItemMediaRoot
+        as={component}
+        className={css(classes.root, className)}
+        ref={ref as React.Ref<HTMLDivElement>}
+        {...rest}
+      >
+        {children}
+      </ListItemMediaRoot>
+    );
+  }
+);
 
 export default ListItemMedia;

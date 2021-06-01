@@ -14,10 +14,6 @@
 <code src="../../packages/wonder-ui/src/Toggle/demo/demo2.tsx"></code>
 
 
-### 自定义切换值
-
-<code src="../../packages/wonder-ui/src/Toggle/demo/demo3.tsx"></code>
-
 ### 自定义切换图标
 
 <code src="../../packages/wonder-ui/src/Toggle/demo/demo4.tsx"></code>

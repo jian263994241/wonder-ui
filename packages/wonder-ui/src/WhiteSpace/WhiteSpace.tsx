@@ -1,51 +1,61 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
-import useClasses from '../styles/useClasses';
 import styled from '../styles/styled';
-import type { BaseProps, PickStyleProps } from '../styles/types';
+import useThemeProps from '../styles/useThemeProps';
+import { css } from '@wonder-ui/utils';
+import { useClasses, whiteSpaceClasses } from './WhiteSpaceClasses';
 
-export interface WhiteSpaceProps extends BaseProps {
+export interface WhiteSpaceProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'size'> {
+  /**
+   * Css api
+   */
+  classes?: Partial<typeof whiteSpaceClasses>;
+  /**
+   * @ignore
+   */
+  component?: React.ElementType;
   /**
    * @description 尺寸
-   * @default md
+   * @default medium
    */
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'small' | 'medium' | 'large';
+  /**
+   * @ignore
+   */
+  ref?: React.Ref<any>;
 }
 
 const WhiteSpaceRoot = styled('div', {
   name: 'WuiWhiteSpace',
   slot: 'Root'
-})<PickStyleProps<WhiteSpaceProps, 'size'>>(({ theme, styleProps }) => ({
+})(({ theme }) => ({
   width: '100%',
   boxSizing: 'border-box',
-  height: theme.spacing(
-    {
-      sm: 1,
-      md: 2,
-      lg: 3
-    }[styleProps.size]
-  )
+  [`&.${whiteSpaceClasses.sizeSmall}`]: {
+    height: theme.spacing(1)
+  },
+  [`&.${whiteSpaceClasses.sizeMedium}`]: {
+    height: theme.spacing(2)
+  },
+  [`&.${whiteSpaceClasses.sizeLarge}`]: {
+    height: theme.spacing(3)
+  }
 }));
 
-const WhiteSpace: React.FC<WhiteSpaceProps> = React.forwardRef(
+const WhiteSpace = React.forwardRef<HTMLElement, WhiteSpaceProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiWhiteSpace' });
-    const { size = 'md', children, className, component, ...rest } = props;
+    const { size = 'medium', children, className, component, ...rest } = props;
 
-    const styleProps = { size };
+    const styleProps = { ...props, size };
 
-    const classes = useClasses({
-      ...props,
-      styleProps,
-      name: 'WuiWhiteSpace'
-    });
+    const classes = useClasses(styleProps);
 
     return (
       <WhiteSpaceRoot
         as={component}
-        className={classes.root}
-        styleProps={styleProps}
-        ref={ref}
+        className={css(classes.root, className)}
+        ref={ref as React.Ref<HTMLDivElement>}
         {...rest}
       >
         {children}

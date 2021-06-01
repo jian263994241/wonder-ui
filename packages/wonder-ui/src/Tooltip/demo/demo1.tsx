@@ -4,17 +4,20 @@
  */
 
 /** @jsx jsx */
-import { jsx, Button, Space, Tooltip } from '@wonder-ui/core';
+import { jsx, Button, Space, Tooltip, Typography } from '@wonder-ui/core';
 
 export default function Example() {
   return (
     <Space>
       <Tooltip title="Button tooltip text">
-        <Button>按钮提示</Button>
+        <Button variant="contained">按钮提示</Button>
       </Tooltip>
-
       <Tooltip title="Button tooltip text" arrow placement="auto">
-        <Button>按钮提示(arrow)</Button>
+        <Button variant="contained">按钮提示(arrow)</Button>
+      </Tooltip>
+      ,
+      <Tooltip title="Tooltip text" arrow>
+        <Typography>tooltip?</Typography>
       </Tooltip>
     </Space>
   );

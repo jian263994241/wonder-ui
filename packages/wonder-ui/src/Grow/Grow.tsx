@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Transition, {
   BaseTransitionProps,
-  TransitionTimeout,
-  TransitionProps
+  TransitionProps,
+  TransitionTimeout
 } from '../Transition';
 import useTheme from '../styles/useTheme';
+import { getTransitionProps, reflow } from '../Transition/utils';
 import { useForkRef } from '@wonder-ui/hooks';
-import { reflow, getTransitionProps } from '../Transition/utils';
 
 function getScale(value: number) {
   return `scale(${value}, ${value ** 2})`;

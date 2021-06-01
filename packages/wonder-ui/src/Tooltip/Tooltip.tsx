@@ -1,33 +1,28 @@
-import { useForkRef, useTouchFeedback } from '@wonder-ui/hooks';
-import { getDevice } from '@wonder-ui/utils';
 import * as React from 'react';
 import Grow from '../Grow';
 import Popper, { PopperProps } from '../Popper';
-import { alpha } from '../styles/colorManipulator';
 import styled from '../styles/styled';
-import { ClassNameMap, RestProps } from '../styles/types';
-import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
+import { alpha } from '../styles/colorManipulator';
+import { css } from '@wonder-ui/utils';
+import { getDevice } from '@wonder-ui/utils';
+import { tooltipClasses, useClasses } from './TooltipClasses';
+import { useForkRef, useTouchFeedback } from '@wonder-ui/hooks';
 
 function round(value: number) {
   return Math.round(value * 1e5) / 1e5;
 }
 
-export interface TooltipProps {
+export interface TooltipProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'title'> {
   arrow?: boolean;
-  className?: string;
-  classes?: ClassNameMap<'root' | 'tooltip' | 'arrow'>;
-  style?: React.CSSProperties;
+  classes?: Partial<typeof tooltipClasses>;
   children: React.ReactElement & React.RefAttributes<React.ReactElement>;
   placement?: PopperProps['placement'];
-  ref?: React.Ref<any>;
   title?: React.ReactNode;
   visible?: boolean;
+  ref?: React.Ref<any>;
 }
-
-type StyleProps = {
-  styleProps: Partial<TooltipProps>;
-};
 
 const TooltipRoot = styled(Popper, {
   name: 'WuiTooltip',
@@ -40,7 +35,7 @@ const TooltipRoot = styled(Popper, {
 const TooltipTooltip = styled('div', {
   name: 'WuiTooltip',
   slot: 'Tooltip'
-})<StyleProps>(({ theme, styleProps }) => ({
+})(({ theme }) => ({
   backgroundColor: alpha(theme.palette.colors.grey[700], 0.92),
   borderRadius: theme.shape.borderRadius,
   color: theme.palette.common.white,
@@ -53,7 +48,7 @@ const TooltipTooltip = styled('div', {
   margin: 2,
   wordWrap: 'break-word',
 
-  ...(styleProps.arrow && {
+  [`&.${tooltipClasses.withArrow}`]: {
     position: 'relative',
     margin: 0,
     [`&[data-popper-placement*="left"]`]: {
@@ -72,13 +67,13 @@ const TooltipTooltip = styled('div', {
       transformOrigin: 'center top',
       marginTop: '8px'
     }
-  })
+  }
 }));
 
 const TooltipArrow = styled('div', {
   name: 'WuiTooltip',
   slot: 'Arrow'
-})<StyleProps>(({ theme }) => ({
+})(({ theme }) => ({
   /* Styles applied to the arrow element. */
   overflow: 'hidden',
   position: 'absolute',
@@ -131,87 +126,82 @@ const TooltipArrow = styled('div', {
   }
 }));
 
-const Tooltip: React.FC<TooltipProps & RestProps> = React.forwardRef(
-  (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiTooltip' });
-    const {
-      arrow = false,
-      children,
-      placement = 'top',
-      title,
-      theme,
-      visible: visibleProp,
-      onOpen,
-      onClose,
-      ...rest
-    } = props;
+const Tooltip = React.forwardRef<HTMLElement, TooltipProps>((inProps, ref) => {
+  const props = useThemeProps({ props: inProps, name: 'WuiTooltip' });
+  const {
+    arrow = false,
+    className,
+    children,
+    placement = 'top',
+    title,
+    theme,
+    visible: visibleProp,
+    ...rest
+  } = props;
 
-    const { current: device } = React.useRef(getDevice());
+  const { current: device } = React.useRef(getDevice());
 
-    const referenceElementRef = React.useRef<HTMLDivElement>(null);
-    const handleReferenceElementRef = useForkRef(
-      referenceElementRef,
-      children.ref
-    );
+  const referenceElementRef = React.useRef<HTMLDivElement>(null);
+  const handleReferenceElementRef = useForkRef(
+    referenceElementRef,
+    children.ref
+  );
 
-    const { current: referenceElement } = referenceElementRef;
+  const { current: referenceElement } = referenceElementRef;
 
-    const [visible, handleEvents] = useTouchFeedback({
-      ...children.props,
-      type: device.desktop ? 'hover' : 'touch'
-    });
+  const [visible, handleEvents] = useTouchFeedback({
+    ...children.props,
+    type: device.desktop ? 'hover' : 'touch'
+  });
 
-    const styleProps = { arrow, placement };
-    const classes = useClasses({ ...props, styleProps, name: 'WuiTooltip' });
+  const styleProps = { ...props, arrow, placement };
+  const classes = useClasses(styleProps);
 
-    return (
-      <React.Fragment>
-        {children &&
-          React.cloneElement(children, {
-            ref: handleReferenceElementRef,
-            ...handleEvents
-          })}
+  return (
+    <React.Fragment>
+      {children &&
+        React.cloneElement(children, {
+          ref: handleReferenceElementRef,
+          ...handleEvents
+        })}
 
-        <TooltipRoot
-          anchorEl={referenceElement}
-          className={classes.root}
-          placement={placement}
-          ref={ref}
-          role="tooltip"
-          theme={theme}
-          transition
-          visible={visible}
-          {...rest}
-        >
-          {({ TransitionProps, attributes, styles }) => (
-            <Grow
-              timeout={theme.transitions.duration.shorter}
-              {...TransitionProps}
+      <TooltipRoot
+        anchorEl={referenceElement}
+        className={css(classes.root, className)}
+        placement={placement}
+        ref={ref}
+        role="tooltip"
+        theme={theme}
+        transition
+        visible={visible}
+        {...rest}
+      >
+        {({ TransitionProps, attributes, styles }) => (
+          <Grow
+            timeout={theme.transitions.duration.shorter}
+            {...TransitionProps}
+          >
+            <TooltipTooltip
+              className={classes.tooltip}
+              theme={theme}
+              {...attributes.popper}
             >
-              <TooltipTooltip
-                styleProps={styleProps}
-                className={classes.tooltip}
-                theme={theme}
-                {...attributes.popper}
-              >
-                {title}
-                {arrow ? (
-                  <TooltipArrow
-                    data-popper-arrow
-                    className={classes.arrow}
-                    styleProps={styleProps}
-                    style={styles.arrow}
-                    theme={theme}
-                    {...attributes.popper}
-                  />
-                ) : null}
-              </TooltipTooltip>
-            </Grow>
-          )}
-        </TooltipRoot>
-      </React.Fragment>
-    );
-  }
-);
+              {title}
+              {arrow ? (
+                <TooltipArrow
+                  data-popper-arrow
+                  className={classes.arrow}
+                  style={styles.arrow}
+                  theme={theme}
+                  {...attributes.popper}
+                />
+              ) : null}
+            </TooltipTooltip>
+          </Grow>
+        )}
+      </TooltipRoot>
+    </React.Fragment>
+  );
+});
 
 export default Tooltip;

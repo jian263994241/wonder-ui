@@ -1,32 +1,31 @@
 import * as React from 'react';
-import ReactDOM from 'react-dom';
-import useThemeProps from '../styles/useThemeProps';
-import styled from '../styles/styled';
-import { BaseProps, PickStyleProps } from '../styles/types';
 import CircularProgress from '../CircularProgress';
-import Typography from '../Typography';
-import Modal, { ModalProps } from '../Modal';
-import WhiteSpace from '../WhiteSpace';
-import { useControlled } from '@wonder-ui/hooks';
-import { createChainedFunction, isPromise } from '@wonder-ui/utils';
 import Fade from '../Fade';
-import { emphasize, darken } from '../styles/colorManipulator';
+import Modal, { ModalProps } from '../Modal';
+import ReactDOM from 'react-dom';
+import styled from '../styles/styled';
+import Typography from '../Typography';
+import useThemeProps from '../styles/useThemeProps';
+import WhiteSpace from '../WhiteSpace';
+import { createChainedFunction, isPromise } from '@wonder-ui/utils';
+import { emphasize } from '../styles/colorManipulator';
+import { useControlled } from '@wonder-ui/hooks';
 
-export interface PreloaderProps extends BaseProps {
+export interface PreloaderProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
   /**
    *  Trigger Element
    */
   children?: React.ReactElement;
   /**
+   * @ignore
+   */
+  component?: React.ElementType;
+  /**
    * ModalProps
    * @default false
    */
   ModalProps?: Partial<ModalProps>;
-  /**
-   * Vertical middle fix top length
-   * @default 0
-   */
-  middleLength?: number;
   /**
    * Async callback
    */
@@ -39,11 +38,14 @@ export interface PreloaderProps extends BaseProps {
    * visible
    */
   visible?: boolean;
+  /**@ignore */
+  ref?: React.Ref<any>;
 }
 
 const PreloaderRoot = styled(Modal, {
   name: 'WuiPreloader',
-  slot: 'Root'
+  slot: 'Root',
+  shouldForwardProp: () => true
 })<ModalProps>(({ theme }) => ({
   zIndex: theme.zIndex.dialog + 5
 }));
@@ -51,14 +53,14 @@ const PreloaderRoot = styled(Modal, {
 const PreloaderInner = styled('div', {
   name: 'WuiPreloader',
   slot: 'Inner'
-})<PickStyleProps<PreloaderProps, 'middleLength'>>(({ theme, styleProps }) => {
+})<any>(({ theme }) => {
   const emphasis = theme.palette.mode === 'light' ? 0.75 : 0.98;
   const backgroundColor = emphasize(theme.palette.background.default, emphasis);
 
   return {
     boxSizing: 'border-box',
     position: 'fixed',
-    top: `calc(50% + ${styleProps.middleLength}px)`,
+    top: `calc(50% + var(--modal-middle-offset, 0px))`,
     left: '50%',
     transform: 'translate3d(-50%, -50%, 0)',
     contain: 'content',
@@ -79,94 +81,93 @@ export type PreloaderActions = {
   hide: () => void;
 };
 
-const Preloader: React.FC<PreloaderProps> &
-  Partial<PreloaderActions> = React.forwardRef((inProps, ref) => {
-  const {
-    children,
-    component,
-    ModalProps = {},
-    theme,
-    visible: visibleProp,
-    middleLength = 0,
-    text,
-    onLoad,
-    ...rest
-  } = useThemeProps({
-    props: inProps,
-    name: 'WuiPreloader'
-  });
+const Preloader = React.forwardRef<HTMLElement, PreloaderProps>(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiPreloader' });
+    const {
+      children,
+      component,
+      ModalProps = {},
+      theme,
+      visible: visibleProp,
+      text,
+      onLoad,
+      ...rest
+    } = props;
 
-  const [visible, setVisibleOnControl] = useControlled({
-    defaultValue: false,
-    value: visibleProp
-  });
+    const [visible, setVisibleOnControl] = useControlled({
+      defaultValue: false,
+      value: visibleProp
+    });
 
-  const styleProps = { middleLength };
+    const styleProps = { ...props };
 
-  const handleClick = () => {
-    if (onLoad) {
-      setVisibleOnControl(true);
+    const handleClick = () => {
+      if (onLoad) {
+        setVisibleOnControl(true);
 
-      const called = onLoad();
+        const called = onLoad();
 
-      if (isPromise(called)) {
-        called
-          .then(() => {
-            setVisibleOnControl(false);
-          })
-          .catch(() => {
-            setVisibleOnControl(false);
-          });
+        if (isPromise(called)) {
+          called
+            .then(() => {
+              setVisibleOnControl(false);
+            })
+            .catch(() => {
+              setVisibleOnControl(false);
+            });
+        }
       }
-    }
-  };
+    };
 
-  return (
-    <React.Fragment>
-      {children &&
-        React.cloneElement(children, {
-          ...children.props,
-          onClick: createChainedFunction(handleClick, children.props.onClick)
-        })}
+    return (
+      <React.Fragment>
+        {children &&
+          React.cloneElement(children, {
+            ...children.props,
+            onClick: createChainedFunction(handleClick, children.props.onClick)
+          })}
 
-      <PreloaderRoot
-        component={component}
-        theme={theme}
-        ref={ref}
-        visible={visible}
-        disableScrollLock
-        disableFocusLock
-        BackdropProps={{ invisible: true }}
-        {...ModalProps}
-        {...rest}
-      >
-        <Fade>
-          <PreloaderInner styleProps={styleProps} theme={theme}>
-            <CircularProgress size={34} color="light" theme={theme} />
-            {text && (
-              <React.Fragment>
-                <WhiteSpace size="sm" />
-                <Typography theme={theme}>{text}</Typography>
-              </React.Fragment>
-            )}
-          </PreloaderInner>
-        </Fade>
-      </PreloaderRoot>
-    </React.Fragment>
-  );
-});
+        <PreloaderRoot
+          component={component}
+          theme={theme}
+          ref={ref}
+          visible={visible}
+          disableScrollLock
+          disableFocusLock
+          BackdropProps={{ invisible: true }}
+          {...ModalProps}
+          {...rest}
+        >
+          <Fade in={visible}>
+            <PreloaderInner styleProps={styleProps}>
+              <CircularProgress size={34} color="light" />
+              {text && (
+                <React.Fragment>
+                  <WhiteSpace size="small" />
+                  <Typography>{text}</Typography>
+                </React.Fragment>
+              )}
+            </PreloaderInner>
+          </Fade>
+        </PreloaderRoot>
+      </React.Fragment>
+    );
+  }
+);
 
 const container = document.createElement('div');
 
 let count = 0;
-Preloader.show = (props: PreloaderProps = {}) => {
+
+export const showPreloader = (props: PreloaderProps = {}) => {
   ++count;
   if (count <= 1) {
     ReactDOM.render(<Preloader visible {...props} />, container);
   }
 };
 
-Preloader.hide = () => {
+export const hidePreloader = () => {
   if (count > 0) {
     --count;
   }
@@ -175,4 +176,4 @@ Preloader.hide = () => {
   }
 };
 
-export default Preloader as React.FC<PreloaderProps> & PreloaderActions;
+export default Preloader;

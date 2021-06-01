@@ -6,8 +6,8 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| children | children | `ReactNode` |
-| color | 徽章颜色 | `'primary' \| 'secondary' \| 'success' \| 'danger' \| 'warning' \| 'info'` | primary
+| children | 角标附着容器 | `ReactNode` |
+| color | 徽章颜色 | `'primary' \| 'secondary' \| 'success' \| 'error' \| 'danger' \| 'warning' \| 'info'` \| 'light' \| 'dark' | primary
 | component | root element | `ElementType` | span
-| rounded | 圆角 | `boolean` | false
-| sup | 上角标 | `boolean` | false
+| rounded | 徽章圆角 | `boolean` | false
+| text | 徽章内容 | `ReactNode` |

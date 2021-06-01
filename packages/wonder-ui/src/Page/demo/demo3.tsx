@@ -18,7 +18,9 @@ export default function Example() {
   const [visible, setVisible] = React.useState(false);
   return (
     <div>
-      <Button onClick={() => setVisible(true)}>抽屉内的页面</Button>
+      <Button variant="contained" onClick={() => setVisible(true)}>
+        抽屉内的页面
+      </Button>
 
       <Drawer
         visible={visible}

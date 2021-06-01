@@ -16,7 +16,7 @@ const loadData = () =>
 export default function Example() {
   return (
     <Preloader onLoad={loadData}>
-      <Button>Open</Button>
+      <Button variant="contained">Open</Button>
     </Preloader>
   );
 }

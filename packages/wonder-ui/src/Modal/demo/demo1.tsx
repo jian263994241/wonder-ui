@@ -10,24 +10,26 @@ import {
   Fade,
   Modal,
   ModalContent,
-  Typography,
-  withDialog
+  Typography
 } from '@wonder-ui/core';
-import { useToggle } from '@wonder-ui/hooks';
+import { useBoolean } from '@wonder-ui/hooks';
 
-export default withDialog(function Example(props) {
-  const [visible, { toggle }] = useToggle();
+export default (function Example() {
+  const [visible, { setFalse, setTrue }] = useBoolean();
 
   return (
     <div>
-      <Button onClick={() => toggle()}>Open</Button>
+      <Button variant="contained" onClick={() => setTrue()}>
+        Open
+      </Button>
 
-      <Modal visible={visible} onClose={() => toggle()}>
+      <Modal visible={visible} onClose={() => setFalse()}>
         <Fade>
           <ModalContent
             title="Modal Title"
-            onOk={() => props.dialog.alert({ text: 'Dialog alert message' })}
-            onClose={() => toggle()}
+            onOk={() => setFalse()}
+            onClose={() => setFalse()}
+            onCancel={() => setFalse()}
           >
             <Typography>some contents...</Typography>
             <Typography>some contents...</Typography>

@@ -1,10 +1,11 @@
 /**
- * title: checkbox 按钮
+ * title: 多选按钮
  * desc: 改变`checked`prop设定激活状态
  */
 /** @jsx jsx */
-import { Button, ButtonGroup, jsx } from '@wonder-ui/core';
+import { Button, ButtonGroup, jsx, Divider } from '@wonder-ui/core';
 import { useSelections } from '@wonder-ui/hooks';
+import React from 'react';
 
 const list = [0, 1, 2];
 

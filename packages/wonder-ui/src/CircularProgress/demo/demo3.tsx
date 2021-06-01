@@ -28,6 +28,8 @@ export default function Example() {
       <CircularProgress variant="determinate" value={100} />
       <CircularProgress
         variant="determinate"
+        size={100}
+        thickness={1}
         value={count}
         label={`${count}%`}
       />

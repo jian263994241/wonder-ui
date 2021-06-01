@@ -7,12 +7,12 @@ export interface CloseButtonProps extends IconButtonProps {
   SvgIconProps?: Partial<SvgIconProps>;
 }
 
-const CloseButton: React.FC<CloseButtonProps> = React.forwardRef(
+const CloseButton = React.forwardRef<HTMLElement, CloseButtonProps>(
   (props, ref) => {
     const { SvgIconProps, ...rest } = props;
     return (
       <IconButton aria-label="Close" ref={ref} {...rest}>
-        <XIcon {...SvgIconProps} />
+        <XIcon fontSize="inherit" {...SvgIconProps} />
       </IconButton>
     );
   }

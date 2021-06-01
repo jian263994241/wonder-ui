@@ -14,7 +14,7 @@ export default function Example() {
 
   return (
     <div>
-      <Button ref={buttonRef} onClick={actions.setTrue}>
+      <Button variant="contained" ref={buttonRef} onClick={actions.setTrue}>
         弹出框
       </Button>
 

@@ -6,11 +6,6 @@
 /** @jsx jsx */
 import { jsx, Badge, Space, styled } from '@wonder-ui/core';
 
-const Wrapper = styled('div')`
-  display: inline-block;
-  position: relative;
-`;
-
 const Block = styled('div')`
   width: 42px;
   height: 42px;
@@ -23,16 +18,12 @@ const Block = styled('div')`
 export default function Example() {
   return (
     <Space wrap size="large">
-      <Wrapper>
+      <Badge color="danger">
         <Block></Block>
-        <Badge color="danger" sup></Badge>
-      </Wrapper>
-      <Wrapper>
+      </Badge>
+      <Badge color="danger" text="99+">
         <Block></Block>
-        <Badge color="danger" rounded sup>
-          +99
-        </Badge>
-      </Wrapper>
+      </Badge>
     </Space>
   );
 }

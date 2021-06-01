@@ -3,6 +3,7 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { buttonClasses } from '../Button/ButtonClasses';
 import { buttonGroupClasses, useClasses } from './ButtonGroupClasses';
+import { ButtonGroupContext } from './ButtonGroupContext';
 import { ButtonProps } from '../Button/Button';
 import { css } from '@wonder-ui/utils';
 
@@ -14,6 +15,7 @@ export interface ButtonGroupProps
   ButtonProps?: Partial<ButtonProps>;
   /** */
   component?: React.ElementType;
+
   /**
    * @description direction
    * @default horizontal
@@ -24,7 +26,7 @@ export interface ButtonGroupProps
 const ButtonGroupRoot = styled('div', {
   name: 'ButtonGroup',
   slot: 'Root'
-})(() => ({
+})(({ theme }) => ({
   position: 'relative',
   display: 'inline-flex',
 
@@ -44,8 +46,21 @@ const ButtonGroupRoot = styled('div', {
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0
     },
-    [`&>&:not(:first-of-type), &>.${buttonClasses.root}:not(:first-of-type)`]: {
-      marginTop: -1
+    [`& >.${buttonClasses.root} + .${buttonClasses.root}`]: {
+      borderTop: 0
+    },
+    [`& >.${buttonClasses.contained} + .${buttonClasses.contained}`]: {
+      borderLeft: 0,
+      '&:before': {
+        content: '""',
+        width: '100%',
+        height: 1,
+        backgroundColor: theme.palette.divider,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        transform: 'scaleY(0.5)'
+      }
     },
     [`&>.${buttonClasses.root}, &>&`]: {
       width: '100%'
@@ -60,8 +75,21 @@ const ButtonGroupRoot = styled('div', {
       borderTopLeftRadius: 0,
       borderBottomLeftRadius: 0
     },
-    [`&>&:not(:first-of-type), &>.${buttonClasses.root}:not(:first-of-type)`]: {
-      marginLeft: -1
+    [`& >.${buttonClasses.contained} + .${buttonClasses.contained}`]: {
+      borderLeft: 0,
+      '&:before': {
+        content: '""',
+        width: 1,
+        height: '100%',
+        backgroundColor: theme.palette.divider,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        transform: 'scaleX(0.5)'
+      }
+    },
+    [`& >.${buttonClasses.root} + .${buttonClasses.root}`]: {
+      borderLeft: 0
     }
   }
 }));
@@ -82,25 +110,17 @@ const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
     const classes = useClasses(styleProps);
 
     return (
-      <ButtonGroupRoot
-        as={component}
-        role="group"
-        className={css(classes.root, className)}
-        ref={ref}
-        {...rest}
-      >
-        {React.Children.toArray(children).map((node: any) => {
-          if (React.isValidElement<any>(node)) {
-            if ((node.type as any).displayName === 'WuiButton') {
-              return React.cloneElement(node, {
-                ...ButtonProps,
-                ...node.props
-              });
-            }
-          }
-          return node;
-        })}
-      </ButtonGroupRoot>
+      <ButtonGroupContext.Provider value={{ ButtonProps }}>
+        <ButtonGroupRoot
+          as={component}
+          role="group"
+          className={css(classes.root, className)}
+          ref={ref}
+          {...rest}
+        >
+          {children}
+        </ButtonGroupRoot>
+      </ButtonGroupContext.Provider>
     );
   }
 );

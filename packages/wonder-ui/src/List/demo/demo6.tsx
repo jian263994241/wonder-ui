@@ -32,10 +32,10 @@ export default function Example() {
             primary="Yellow Submarine"
             secondary={
               <React.Fragment>
-                <Typography variant="body2" color="primary">
+                <Typography variant="body2" color="textPrimary">
                   Beatles
                 </Typography>
-                <Typography variant="body2" lineClamp={2}>
+                <Typography variant="body2" lineClamp={2} color="textSecondary">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
                   sagittis tellus ut turpis condimentum, ut dignissim lacus
                   tincidunt. Cras dolor metus, ultrices condimentum sodales sit
@@ -58,7 +58,7 @@ export default function Example() {
           <ListItemText
             primary="Yellow Submarine"
             secondary={
-              <Typography variant="body2" lineClamp={2} color="secondary">
+              <Typography variant="body2" lineClamp={2} color="textSecondary">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
                 sagittis tellus ut turpis condimentum, ut dignissim lacus
                 tincidunt. Cras dolor metus, ultrices condimentum sodales sit

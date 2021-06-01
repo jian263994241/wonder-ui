@@ -11,6 +11,12 @@ export default function Example() {
     <Space>
       <CircularProgress color="primary" />
       <CircularProgress color="secondary" />
+      <CircularProgress color="success" />
+      <CircularProgress color="danger" />
+      <CircularProgress color="warning" />
+      <CircularProgress color="info" />
+      <CircularProgress color="light" />
+      <CircularProgress color="dark" />
     </Space>
   );
 }

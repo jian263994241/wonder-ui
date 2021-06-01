@@ -5,14 +5,14 @@ import ClickAwayListener, {
 import Grow from '../Grow';
 import SnackbarContent, { SnackbarContentProps } from '../SnackbarContent';
 import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import { BaseTransitionProps, TransitionTimeout } from '../Transition';
 import { css } from '@wonder-ui/utils';
+import { snackbarClasses, useClasses } from './SnackbarClasses';
 import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
-import type { BaseProps, PickStyleProps } from '../styles/types';
 
-export interface SnackbarProps extends BaseProps {
+export interface SnackbarProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'action'> {
   /**
    * @ignore
    */
@@ -32,7 +32,7 @@ export interface SnackbarProps extends BaseProps {
   /**
    * 操作区
    */
-  actions?: React.ReactNode;
+  action?: React.ReactNode;
   /**
    * 定位
    */
@@ -81,12 +81,14 @@ export interface SnackbarProps extends BaseProps {
    * 是否显示
    */
   visible?: boolean;
+  /**@ignore */
+  ref?: React.Ref<any>;
 }
 
 const SnackbarRoot = styled('div', {
   name: 'WuiSnackbar',
   slot: 'Root'
-})<PickStyleProps<SnackbarProps, 'anchorOrigin'>>(({ theme, styleProps }) => ({
+})(({ theme }) => ({
   zIndex: theme.zIndex.snackbar,
   position: 'fixed',
   display: 'flex',
@@ -94,205 +96,238 @@ const SnackbarRoot = styled('div', {
   right: 8,
   justifyContent: 'center',
   alignItems: 'center',
-  ...(styleProps.anchorOrigin.vertical === 'top' ? { top: 8 } : { bottom: 8 }),
-  ...(styleProps.anchorOrigin.horizontal === 'left' && {
+  [`&.${snackbarClasses.anchorTopLeft}`]: {
+    top: 8,
     justifyContent: 'flex-start'
-  }),
-  ...(styleProps.anchorOrigin.horizontal === 'right' && {
+  },
+  [`&.${snackbarClasses.anchorTopCenter}`]: {
+    top: 8
+  },
+  [`&.${snackbarClasses.anchorTopRight}`]: {
+    top: 8,
     justifyContent: 'flex-end'
-  }),
+  },
+  [`&.${snackbarClasses.anchorBottomLeft}`]: {
+    bottom: 8,
+    justifyContent: 'flex-start'
+  },
+  [`&.${snackbarClasses.anchorBottomCenter}`]: {
+    bottom: 8
+  },
+  [`&.${snackbarClasses.anchorBottomRight}`]: {
+    bottom: 8,
+    justifyContent: 'flex-end'
+  },
+  [`&.${snackbarClasses.anchorCenter}`]: {
+    left: '50%',
+    top: '50%',
+    bottom: 'auto',
+    right: 'auto',
+    transform: 'translate3d(-50%, -50%, 0)'
+  },
+
   [theme.breakpoints.up('sm')]: {
-    ...(styleProps.anchorOrigin.vertical === 'top'
-      ? { top: 24 }
-      : { bottom: 24 }),
-    ...(styleProps.anchorOrigin.horizontal === 'left' && {
+    [`&.${snackbarClasses.anchorTopLeft}`]: {
+      top: 24,
       left: 24,
       right: 'auto'
-    }),
-    ...(styleProps.anchorOrigin.horizontal === 'center' && {
+    },
+    [`&.${snackbarClasses.anchorTopCenter}`]: {
+      top: 24,
       left: '50%',
       right: 'auto',
       transform: 'translateX(-50%)'
-    }),
-    ...(styleProps.anchorOrigin.horizontal === 'right' && {
+    },
+    [`&.${snackbarClasses.anchorTopRight}`]: {
+      top: 24,
       right: 24,
       left: 'auto'
-    })
-  },
-  [theme.breakpoints.up('xs')]: {
-    ...(styleProps.anchorOrigin.vertical === 'center' &&
-      styleProps.anchorOrigin.horizontal === 'center' && {
-        left: '50%',
-        top: '50%',
-        bottom: 'auto',
-        right: 'auto',
-        transform: 'translate3d(-50%, -50%, 0)'
-      })
+    },
+    [`&.${snackbarClasses.anchorBottomLeft}`]: {
+      bottom: 24,
+      left: 24,
+      right: 'auto'
+    },
+    [`&.${snackbarClasses.anchorBottomCenter}`]: {
+      bottom: 24,
+      left: '50%',
+      right: 'auto',
+      transform: 'translateX(-50%)'
+    },
+    [`&.${snackbarClasses.anchorBottomRight}`]: {
+      bottom: 24,
+      right: 24,
+      left: 'auto'
+    }
   }
 }));
 
-const Snackbar: React.FC<SnackbarProps> = React.forwardRef((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiSnackbar' });
-  const {
-    action,
-    anchorOrigin: { vertical, horizontal } = {
-      vertical: 'bottom',
-      horizontal: 'left'
-    },
-    ClickAwayListenerProps,
-    ContentProps,
-    TransitionComponent = Grow,
-    TransitionProps: { onEnter, onExited, ...TransitionProps } = {},
-    autoHideDuration = null,
-    children,
-    className,
-    disableWindowBlurListener = false,
-    message,
-    onClose,
-    onMouseEnter,
-    onMouseLeave,
-    resumeHideDuration,
-    transitionDuration,
-    visible,
-    ...rest
-  } = props;
+const Snackbar = React.forwardRef<HTMLElement, SnackbarProps>(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiSnackbar' });
+    const {
+      action,
+      anchorOrigin: { vertical, horizontal } = {
+        vertical: 'bottom',
+        horizontal: 'left'
+      },
+      ClickAwayListenerProps,
+      ContentProps,
+      TransitionComponent = Grow,
+      TransitionProps: { onEnter, onExited, ...TransitionProps } = {},
+      autoHideDuration = null,
+      children,
+      className,
+      disableWindowBlurListener = false,
+      message,
+      onClose,
+      onMouseEnter,
+      onMouseLeave,
+      resumeHideDuration,
+      transitionDuration,
+      visible,
+      ...rest
+    } = props;
 
-  const nodeRef = React.useRef<HTMLElement>(null);
-  const handleRef = useForkRef(nodeRef, ref);
-  const timerAutoHide = React.useRef<any>();
-  const [exited, setExited] = React.useState(true);
+    const nodeRef = React.useRef<HTMLElement>(null);
+    const handleRef = useForkRef(nodeRef, ref);
+    const timerAutoHide = React.useRef<any>();
+    const [exited, setExited] = React.useState(true);
 
-  const styleProps = { anchorOrigin: { vertical, horizontal } };
-  const classes = useClasses({ ...props, styleProps, name: 'WuiSnackbar' });
+    const styleProps = { ...props, anchorOrigin: { vertical, horizontal } };
+    const classes = useClasses(styleProps);
 
-  const handleClose = useEventCallback((event, reason) => {
-    if (onClose) {
-      onClose(event, reason);
-    }
-  });
+    const handleClose = useEventCallback((event, reason) => {
+      if (onClose) {
+        onClose(event, reason);
+      }
+    });
 
-  const setAutoHideTimer = useEventCallback((autoHideDurationParam) => {
-    if (!onClose || autoHideDurationParam == null) {
-      return;
-    }
+    const setAutoHideTimer = useEventCallback((autoHideDurationParam) => {
+      if (!onClose || autoHideDurationParam == null) {
+        return;
+      }
 
-    clearTimeout(timerAutoHide.current);
-    timerAutoHide.current = setTimeout(() => {
-      handleClose(null, 'timeout');
-    }, autoHideDurationParam);
-  });
-
-  React.useEffect(() => {
-    if (visible) {
-      setAutoHideTimer(autoHideDuration);
-    }
-
-    return () => {
       clearTimeout(timerAutoHide.current);
-    };
-  }, [visible, autoHideDuration, setAutoHideTimer]);
+      timerAutoHide.current = setTimeout(() => {
+        handleClose(null, 'timeout');
+      }, autoHideDurationParam);
+    });
 
-  const handlePause = () => {
-    clearTimeout(timerAutoHide.current);
-  };
-
-  const handleResume = React.useCallback(() => {
-    if (autoHideDuration != null) {
-      setAutoHideTimer(
-        resumeHideDuration != null ? resumeHideDuration : autoHideDuration * 0.5
-      );
-    }
-  }, [autoHideDuration, resumeHideDuration, setAutoHideTimer]);
-
-  const handleMouseEnter = (event: any) => {
-    if (onMouseEnter) {
-      onMouseEnter(event);
-    }
-    handlePause();
-  };
-
-  const handleMouseLeave = (event: any) => {
-    if (onMouseLeave) {
-      onMouseLeave(event);
-    }
-    handleResume();
-  };
-
-  const handleExited = (node: any) => {
-    setExited(true);
-
-    if (onExited) {
-      onExited(node);
-    }
-  };
-
-  const handleEnter = (node: any, isAppearing: any) => {
-    setExited(false);
-
-    if (onEnter) {
-      onEnter(node, isAppearing);
-    }
-  };
-
-  React.useEffect(() => {
-    // TODO: window global should be refactored here
-    if (!disableWindowBlurListener && visible) {
-      window.addEventListener('focus', handleResume);
-      window.addEventListener('blur', handlePause);
+    React.useEffect(() => {
+      if (visible) {
+        setAutoHideTimer(autoHideDuration);
+      }
 
       return () => {
-        window.removeEventListener('focus', handleResume);
-        window.removeEventListener('blur', handlePause);
+        clearTimeout(timerAutoHide.current);
       };
+    }, [visible, autoHideDuration, setAutoHideTimer]);
+
+    const handlePause = () => {
+      clearTimeout(timerAutoHide.current);
+    };
+
+    const handleResume = React.useCallback(() => {
+      if (autoHideDuration != null) {
+        setAutoHideTimer(
+          resumeHideDuration != null
+            ? resumeHideDuration
+            : autoHideDuration * 0.5
+        );
+      }
+    }, [autoHideDuration, resumeHideDuration, setAutoHideTimer]);
+
+    const handleMouseEnter = (event: any) => {
+      if (onMouseEnter) {
+        onMouseEnter(event);
+      }
+      handlePause();
+    };
+
+    const handleMouseLeave = (event: any) => {
+      if (onMouseLeave) {
+        onMouseLeave(event);
+      }
+      handleResume();
+    };
+
+    const handleExited = (node: any) => {
+      setExited(true);
+
+      if (onExited) {
+        onExited(node);
+      }
+    };
+
+    const handleEnter = (node: any, isAppearing: any) => {
+      setExited(false);
+
+      if (onEnter) {
+        onEnter(node, isAppearing);
+      }
+    };
+
+    React.useEffect(() => {
+      // TODO: window global should be refactored here
+      if (!disableWindowBlurListener && visible) {
+        window.addEventListener('focus', handleResume);
+        window.addEventListener('blur', handlePause);
+
+        return () => {
+          window.removeEventListener('focus', handleResume);
+          window.removeEventListener('blur', handlePause);
+        };
+      }
+
+      return undefined;
+    }, [disableWindowBlurListener, handleResume, visible]);
+
+    const handleClickAway = (event: any) => {
+      if (onClose) {
+        onClose(event, 'clickaway');
+      }
+    };
+
+    if (!visible && exited) {
+      return null;
     }
 
-    return undefined;
-  }, [disableWindowBlurListener, handleResume, visible]);
-
-  const handleClickAway = (event: any) => {
-    if (onClose) {
-      onClose(event, 'clickaway');
-    }
-  };
-
-  if (!visible && exited) {
-    return null;
-  }
-
-  return (
-    <ClickAwayListener
-      onClickAway={handleClickAway}
-      {...ClickAwayListenerProps}
-    >
-      <SnackbarRoot
-        styleProps={styleProps}
-        className={css(classes.root, className)}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        ref={handleRef}
-        {...rest}
+    return (
+      <ClickAwayListener
+        onClickAway={handleClickAway}
+        {...ClickAwayListenerProps}
       >
-        <TransitionComponent
-          appear
-          in={visible}
-          direction={vertical === 'top' ? 'down' : 'up'}
-          timeout={transitionDuration}
-          onEnter={handleEnter}
-          onExited={handleExited}
-          {...TransitionProps}
+        <SnackbarRoot
+          className={css(classes.root, className)}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          ref={handleRef}
+          {...rest}
         >
-          {children || (
-            <SnackbarContent
-              message={message}
-              action={action}
-              center={vertical === 'center' && horizontal === 'center'}
-              {...ContentProps}
-            />
-          )}
-        </TransitionComponent>
-      </SnackbarRoot>
-    </ClickAwayListener>
-  );
-});
+          <TransitionComponent
+            appear
+            in={visible}
+            direction={vertical === 'top' ? 'down' : 'up'}
+            timeout={transitionDuration}
+            onEnter={handleEnter}
+            onExited={handleExited}
+            {...TransitionProps}
+          >
+            {children || (
+              <SnackbarContent
+                message={message}
+                action={action}
+                center={vertical === 'center' && horizontal === 'center'}
+                classes={{ root: classes.content }}
+                {...ContentProps}
+              />
+            )}
+          </TransitionComponent>
+        </SnackbarRoot>
+      </ClickAwayListener>
+    );
+  }
+);
 
 export default Snackbar;

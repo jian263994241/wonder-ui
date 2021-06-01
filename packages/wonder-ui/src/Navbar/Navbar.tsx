@@ -1,10 +1,9 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 import { emphasize } from '../styles/colorManipulator';
+import { navbarClasses, useClasses } from './NavbarClasses';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
-import type { BaseProps, ClassNameMap } from '../styles/types';
 
 const NavbarRoot = styled('div', {
   name: 'WuiNavbar',
@@ -120,11 +119,12 @@ const NavbarRight = styled('div', {
   marginLeft: 10
 });
 
-export interface NavbarProps extends BaseProps {
+export interface NavbarProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref' | 'title'> {
   /**
    * css api
    */
-  classes?: ClassNameMap<'root' | 'bg' | 'inner' | 'left' | 'right' | 'title'>;
+  classes?: Partial<typeof navbarClasses>;
   /**
    * 左边的内容
    */
@@ -141,9 +141,13 @@ export interface NavbarProps extends BaseProps {
    * 副标题
    */
   subTitle?: React.ReactNode;
+  /**
+   * @ignore
+   */
+  ref?: React.Ref<any>;
 }
 
-const Navbar: React.FC<NavbarProps> = React.forwardRef((inProps, ref) => {
+const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiNavbar' });
   const {
     children,
@@ -214,7 +218,7 @@ const Navbar: React.FC<NavbarProps> = React.forwardRef((inProps, ref) => {
     return titleLeft;
   }, [navbarInnerWidth2, titleWidth, leftWidth, rightWidth]);
 
-  const classes = useClasses({ ...props, name: 'WuiNavbar' });
+  const classes = useClasses(props);
 
   return (
     <NavbarRoot
@@ -223,7 +227,7 @@ const Navbar: React.FC<NavbarProps> = React.forwardRef((inProps, ref) => {
       className={classes.root}
       {...rest}
     >
-      <NavbarBg theme={theme} className={classes.bg} />
+      <NavbarBg theme={theme} className={classes.background} />
       <NavbarInner
         theme={theme}
         ref={navbarInnerNodeRef}

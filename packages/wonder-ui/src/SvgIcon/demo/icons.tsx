@@ -38,7 +38,7 @@ export default function Example() {
         return (
           <Col className="col" key={index}>
             <div className="icon">
-              <Icon key={index} size="large" />
+              <Icon key={index} fontSize="large" />
             </div>
             <Typography className="name" noWrap variant="body2">
               {Icon.displayName}

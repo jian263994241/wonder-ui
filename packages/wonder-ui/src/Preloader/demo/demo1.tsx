@@ -20,7 +20,9 @@ export default function Example() {
 
   return (
     <div>
-      <Button onClick={() => open()}>Open</Button>
+      <Button variant="contained" onClick={() => open()}>
+        Open
+      </Button>
       <Preloader visible={visible} text="加载中..." />
     </div>
   );

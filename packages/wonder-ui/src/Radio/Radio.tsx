@@ -1,9 +1,9 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
 import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
-import type { PickStyleProps } from '../styles/types';
+import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
+import { capitalize, css, generateUtilityStyles } from '@wonder-ui/utils';
+import { radioClasses, useClasses } from './RadioClasses';
 
 export interface RadioProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -11,73 +11,101 @@ export interface RadioProps
    * @description color
    * @default primary
    */
-  color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
+  color?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'info'
+    | 'light'
+    | 'dark';
   /**
-   * @description Ref
+   * @ignore
    */
-  ref?: React.Ref<HTMLInputElement>;
+  ref?: React.Ref<any>;
 }
 
-const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })<
-  PickStyleProps<RadioProps, 'color'>
->(({ theme, styleProps }) => ({
-  appearance: 'none',
-  colorAdjust: 'exact',
-  width: '1em',
-  height: '1em',
-  fontSize: 'inherit',
-  verticalAlign: -1,
-  backgroundColor: theme.palette.background.paper,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'contain',
-  borderWidth: 1,
-  borderStyle: 'solid',
-  borderColor: theme.palette.divider,
-  borderRadius: '50%',
-  transition: theme.transitions.create(
-    ['border-color', 'background-color', 'box-shadow', 'opacity'],
-    {
-      duration: theme.transitions.duration.shortest
-    }
-  ),
-  '&:disabled': {
-    pointerEvents: 'none',
-    filter: 'none',
-    opacity: 0.5
-  },
-  '&:checked': {
-    borderColor: theme.palette[styleProps.color || 'primary'].main,
-    backgroundColor: theme.palette[styleProps.color || 'primary'].main,
-    backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
-      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='#fff'/></svg>"
-    )}")`
-  },
-  '&:focus': {
-    outline: 0,
-    boxShadow: `0 0 0 0.25rem ${alpha(
-      theme.palette[styleProps.color || 'primary'].main,
-      0.25
-    )}`
-  },
-  'label > & + *': {
-    marginLeft: '.3em'
-  }
-}));
+const colors = [
+  'primary',
+  'secondary',
+  'success',
+  'danger',
+  'warning',
+  'info',
+  'light',
+  'dark'
+];
 
-const Radio: React.FC<RadioProps> = React.forwardRef((inProps, ref) => {
+const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })(
+  ({ theme }) => ({
+    appearance: 'none',
+    colorAdjust: 'exact',
+    width: '1em',
+    height: '1em',
+    fontSize: 'inherit',
+    verticalAlign: -1,
+    backgroundColor: theme.palette.background.paper,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'contain',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: theme.palette.divider,
+    borderRadius: '50%',
+    transition: theme.transitions.create(
+      ['border-color', 'background-color', 'box-shadow', 'opacity'],
+      {
+        duration: theme.transitions.duration.shortest
+      }
+    ),
+    '&:disabled': {
+      pointerEvents: 'none',
+      filter: 'none',
+      opacity: 0.5
+    },
+    'label > & + *': {
+      marginLeft: '.3em'
+    },
+    ...generateUtilityStyles(
+      colors,
+      (styles, color: NonNullable<RadioProps['color']>) => {
+        const colorName = 'color' + capitalize(color);
+        //@ts-expect-error
+        styles[`&.${radioClasses[colorName]}`] = {
+          '&:checked': {
+            borderColor: theme.palette[color!].main,
+            backgroundColor: theme.palette[color!].main,
+            backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
+              `<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='${
+                theme.palette[color!].contrastText
+              }'/></svg>`
+            )}")`
+          },
+          '&:focus': {
+            boxShadow: `0 0 0 0.25rem ${alpha(
+              theme.palette[color!].main,
+              0.25
+            )}`
+          }
+        };
+      }
+    )
+  })
+);
+
+const Radio = React.forwardRef<HTMLInputElement, RadioProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiRadio' });
   const { className, color = 'primary', ...rest } = props;
 
-  const styleProps = { color };
+  const styleProps = { ...props, color };
 
-  const classes = useClasses({ ...props, styleProps, name: 'WuiRadio' });
+  const classes = useClasses(styleProps);
 
   return (
     <RadioRoot
-      className={classes.root}
+      className={css(classes.root, className)}
       ref={ref}
-      styleProps={styleProps}
       type="radio"
       {...rest}
     />

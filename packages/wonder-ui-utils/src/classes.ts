@@ -1,4 +1,4 @@
-const globalPseudoClassesMapping: Record<string, string> = {
+export const globalClasses = {
   active: 'Wui-active',
   checked: 'Wui-checked',
   disabled: 'Wui-disabled',
@@ -8,13 +8,14 @@ const globalPseudoClassesMapping: Record<string, string> = {
   required: 'Wui-required',
   expanded: 'Wui-expanded',
   selected: 'Wui-selected'
-};
+} as const;
 
 export function generateUtilityClass(
   componentName: string,
   slot: string
 ): string {
-  const globalPseudoClass = globalPseudoClassesMapping[slot];
+  //@ts-expect-error
+  const globalPseudoClass = globalClasses[slot];
   return globalPseudoClass ? globalPseudoClass : `${componentName}-${slot}`;
 }
 
@@ -37,7 +38,7 @@ export function generateUtilityClasses<T extends string>(
 export function composeClasses<ClassKey extends string>(
   componentName: string,
   slots: Record<ClassKey, ReadonlyArray<string | false | undefined | null>>,
-  classes?: Record<string, string>
+  classes?: Partial<Record<string, string>>
 ): Record<ClassKey, string> {
   const output: Record<ClassKey, string> = {} as any;
 
@@ -51,7 +52,7 @@ export function composeClasses<ClassKey extends string>(
         .reduce((acc, key) => {
           if (key) {
             if (classes && classes[key]) {
-              acc.push(classes[key]);
+              acc.push(classes[key] as string);
             }
             acc.push(getUtilityClass(key));
           }
@@ -62,4 +63,22 @@ export function composeClasses<ClassKey extends string>(
   );
 
   return output;
+}
+
+/**
+ * const styles = generateUtilityStyles(['primary', 'secondary'], (styles, value)=> {
+ *  styles[`color-${value}`]: {...}
+ * })
+ */
+export function generateUtilityStyles<TResult extends Record<any, any>>(
+  names: any,
+  iteratee: (styles: TResult, value: any, index: number) => any
+): TResult {
+  const result = {} as Record<any, any>;
+
+  names.forEach((name: any, index: number) => {
+    return iteratee(result, name, index);
+  });
+
+  return result;
 }

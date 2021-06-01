@@ -9,8 +9,8 @@ export default function Example() {
   return (
     <Space>
       间距:
-      <Button>Button</Button>
-      <Button>Button</Button>
+      <Button variant="contained">Button</Button>
+      <Button variant="contained">Button</Button>
     </Space>
   );
 }

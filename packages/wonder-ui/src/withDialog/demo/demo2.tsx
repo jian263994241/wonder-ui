@@ -11,16 +11,21 @@ export default withDialog(function Example(props) {
   return (
     <Space wrap>
       <Button
+        variant="contained"
         onClick={() =>
           dialog.alert({ title: '提示', text: '内容, 内容, 内容...' })
         }
       >
         提示框
       </Button>
-      <Button onClick={() => dialog.alert({ text: '内容, 内容, 内容...' })}>
+      <Button
+        variant="contained"
+        onClick={() => dialog.alert({ text: '内容, 内容, 内容...' })}
+      >
         提示框 (无标题)
       </Button>
       <Button
+        variant="contained"
         onClick={() =>
           dialog.confirm({ title: '确认', text: '内容, 内容, 内容...' })
         }
@@ -28,6 +33,7 @@ export default withDialog(function Example(props) {
         确认框
       </Button>
       <Button
+        variant="contained"
         onClick={() =>
           dialog.custom({
             title: '操作',

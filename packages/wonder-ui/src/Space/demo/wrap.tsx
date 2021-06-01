@@ -10,7 +10,9 @@ export default function Example() {
     <Space wrap size={['small', 'large']}>
       {new Array(22).fill(null).map((_, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <Button key={index}>Button</Button>
+        <Button variant="contained" key={index}>
+          Button
+        </Button>
       ))}
     </Space>
   );

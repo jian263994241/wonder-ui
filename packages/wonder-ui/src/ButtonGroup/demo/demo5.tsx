@@ -1,5 +1,5 @@
 /**
- * title: radio 按钮
+ * title: 单选按钮
  * desc: 改变`checked`prop设定激活状态
  */
 /** @jsx jsx */

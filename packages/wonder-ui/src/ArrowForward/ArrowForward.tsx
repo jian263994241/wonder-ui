@@ -1,5 +1,4 @@
 import * as React from 'react';
-import useThemeProps from '../styles/useThemeProps';
 import SvgIcon, { SvgIconProps } from '../SvgIcon';
 
 export interface ArrowForwardProps extends SvgIconProps {
@@ -10,14 +9,12 @@ export interface ArrowForwardProps extends SvgIconProps {
   direction?: 'left' | 'right' | 'up' | 'down';
 }
 
-const ArrowForward: React.FC<ArrowForwardProps> = React.forwardRef(
-  (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiArrowForward' });
-
-    const { size, direction = 'right', ...rest } = props;
+const ArrowForward = React.forwardRef<Element, ArrowForwardProps>(
+  (props, ref) => {
+    const { direction = 'right', ...rest } = props;
 
     return (
-      <SvgIcon size={size} titleAccess="WuiArrowForward" ref={ref} {...rest}>
+      <SvgIcon titleAccess="WuiArrowForward" ref={ref} {...rest}>
         {direction === 'left' && (
           <path d="M11.354 1.646a.5.5 0 010 .708L5.707 8l5.647 5.646a.5.5 0 01-.708.708l-6-6a.5.5 0 010-.708l6-6a.5.5 0 01.708 0z" />
         )}

@@ -3,7 +3,7 @@
  * desc:
  */
 /** @jsx jsx */
-import { Button, ButtonGroup, jsx, Space, Divider } from '@wonder-ui/core';
+import { Button, ButtonGroup, jsx, Space } from '@wonder-ui/core';
 
 export default function Example() {
   return (
@@ -16,9 +16,7 @@ export default function Example() {
 
       <ButtonGroup direction="vertical" ButtonProps={{ variant: 'contained' }}>
         <Button>Button</Button>
-        <Divider />
         <Button>Button</Button>
-        <Divider />
         <Button>Button</Button>
       </ButtonGroup>
 

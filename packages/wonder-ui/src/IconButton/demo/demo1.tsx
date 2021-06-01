@@ -10,16 +10,16 @@ export default function Example() {
   return (
     <Space>
       <IconButton size="small">
-        <Trash size="small" />
+        <Trash fontSize="small" />
       </IconButton>
       <IconButton>
-        <Trash size="small" />
+        <Trash fontSize="small" />
       </IconButton>
       <IconButton>
-        <Trash size="medium" />
+        <Trash fontSize="medium" />
       </IconButton>
       <IconButton>
-        <Trash size="large" />
+        <Trash fontSize="large" />
       </IconButton>
     </Space>
   );

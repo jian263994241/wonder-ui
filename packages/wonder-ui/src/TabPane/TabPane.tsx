@@ -1,10 +1,9 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { BaseProps } from '../styles/types';
 import { useTabContext } from '../TabContext';
 
-export interface TabPaneProps extends BaseProps {
+export interface TabPaneProps extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
   /**
    * 激活内容
    */
@@ -30,6 +29,10 @@ export interface TabPaneProps extends BaseProps {
    * 值
    */
   value?: any;
+  /**
+   * @ignore
+   */
+  ref?: React.Ref<any>;
 }
 
 const TabPaneRoot = styled('div', {
@@ -45,7 +48,7 @@ const TabPaneRoot = styled('div', {
   listStyle: 'none'
 });
 
-const TabPane: React.FC<TabPaneProps> = React.forwardRef((inProps, ref) => {
+const TabPane = React.forwardRef<HTMLElement, TabPaneProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiTabPane' });
   const {
     active: activeProp = false,
@@ -80,7 +83,7 @@ const TabPane: React.FC<TabPaneProps> = React.forwardRef((inProps, ref) => {
       aria-hidden={!active}
       style={{ ...style, ...(!active ? inActiveStyle : {}) }}
       {...rest}
-      ref={ref}
+      ref={ref as React.Ref<HTMLDivElement>}
     >
       {(active || visited || forceRender) && children}
     </TabPaneRoot>

@@ -1,23 +1,15 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import Typography, { TypographyProps } from '../Typography';
-import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
-import type { RestProps, ClassNameMap } from '../styles/types';
+import { listItemTextClasses, useClasses } from './ListItemTextClasses';
 
-export interface ListItemTextProps {
+export interface ListItemTextProps
+  extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
   /**
-   * 内容
+   *  Css api
    */
-  children?: React.ReactNode;
-  /**
-   * @description Css api
-   */
-  classes?: ClassNameMap<'root' | 'primary' | 'secondary'>;
-  /**
-   * className
-   */
-  className?: string;
+  classes?: Partial<typeof listItemTextClasses>;
   /**
    * Root element
    */
@@ -44,13 +36,9 @@ export interface ListItemTextProps {
    */
   disableTypography?: boolean;
   /**
-   * ref
+   * @ignore
    */
   ref?: React.Ref<any>;
-  /**
-   * style
-   */
-  style?: React.CSSProperties;
 }
 
 const ListItemTextRoot = styled('div', {
@@ -64,7 +52,7 @@ const ListItemTextRoot = styled('div', {
   flex: '1 1 auto'
 }));
 
-const ListItemText: React.FC<ListItemTextProps & RestProps> = React.forwardRef(
+const ListItemText = React.forwardRef<HTMLElement, ListItemTextProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiListItemText' });
     const {
@@ -82,21 +70,17 @@ const ListItemText: React.FC<ListItemTextProps & RestProps> = React.forwardRef(
     let primary: any = primaryProp != null ? primaryProp : children;
     let secondary: any = secondaryProp;
 
-    const styleProps = {};
+    const styleProps = { ...props };
 
-    const classes = useClasses({
-      ...props,
-      styleProps,
-      name: 'WuiListItemText'
-    });
+    const classes = useClasses(styleProps);
 
     if (primary != null && primary.type !== Typography && !disableTypography) {
       primary = (
         <Typography
           variant="body1"
-          className={classes.primary}
+          classes={{ root: classes.textPrimary }}
           component="span"
-          color="primary"
+          color="textPrimary"
           {...primaryTypographyProps}
         >
           {primary}
@@ -113,8 +97,8 @@ const ListItemText: React.FC<ListItemTextProps & RestProps> = React.forwardRef(
         <Typography
           variant="body2"
           component="div"
-          className={classes.secondary}
-          color="secondary"
+          classes={{ root: classes.textSecondary }}
+          color="textSecondary"
           {...secondaryTypographyProps}
         >
           {secondary}
@@ -126,7 +110,7 @@ const ListItemText: React.FC<ListItemTextProps & RestProps> = React.forwardRef(
       <ListItemTextRoot
         as={component}
         className={classes.root}
-        ref={ref}
+        ref={ref as React.Ref<HTMLDivElement>}
         {...rest}
       >
         {primary}

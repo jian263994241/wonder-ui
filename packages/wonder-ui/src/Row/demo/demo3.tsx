@@ -4,37 +4,52 @@
  */
 
 /** @jsx jsx */
-import { jsx, Row, Col } from '@wonder-ui/core';
+import { jsx, Row, Col, styled } from '@wonder-ui/core';
+
+const Block = styled('div', { target: 'demo-block' })({
+  background: '#0092ff',
+  padding: 16,
+  color: '#fff',
+  textAlign: 'center'
+});
 
 export default function Example() {
   return (
     <div
       css={{
-        '.WuiContainer-root + .WuiContainer-root': {
-          marginTop: 1
-        },
-        '.WuiCol-root': {
-          background: '#0092ff',
-          paddingTop: 16,
-          paddingBottom: 16,
-          color: '#fff',
-          textAlign: 'center',
-          '&:nth-of-type(odd)': {
-            background: '#0586e9'
-          }
+        '.WuiCol-root:nth-of-type(odd) .demo-block': {
+          background: '#0586e9'
         }
       }}
     >
-      <Row rowCols={{ sm: 3, md: 4, lg: 5 }}>
-        <Col>1 of 3</Col>
-        <Col>2 of 3</Col>
-        <Col>3 of 3</Col>
+      <Row rowCols={{ sm: 2, md: 1, lg: 5 }}>
+        <Col>
+          <Block>1 of 4</Block>
+        </Col>
+        <Col>
+          <Block>2 of 4</Block>
+        </Col>
+        <Col>
+          <Block>3 of 4</Block>
+        </Col>
+        <Col>
+          <Block>4 of 4</Block>
+        </Col>
       </Row>
 
-      <Row rowCols={5}>
-        <Col cols={3}>1 of 4</Col>
-        <Col cols={{ sm: 6, md: 4, lg: 6 }}>2 of 3</Col>
-        <Col cols={3}>3 of 3</Col>
+      <Row>
+        <Col>
+          <Block>1 of 4</Block>
+        </Col>
+        <Col>
+          <Block>2 of 4</Block>
+        </Col>
+        <Col>
+          <Block>3 of 4</Block>
+        </Col>
+        <Col>
+          <Block>4 of 4</Block>
+        </Col>
       </Row>
     </div>
   );

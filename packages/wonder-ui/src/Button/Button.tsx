@@ -4,10 +4,9 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
 import { buttonClasses, ButtonStyleProps, useClasses } from './ButtonClasses';
+import { ButtonGroupContext } from '../ButtonGroup/ButtonGroupContext';
 import { css } from '@wonder-ui/utils';
-
-export interface ButtonProps
-  extends Omit<React.HTMLProps<HTMLButtonElement>, 'ref' | 'size' | 'as'> {
+export interface ButtonProps extends ButtonBaseProps {
   LinkComponent?: React.ElementType;
   children?: React.ReactNode;
   classes?: Partial<typeof buttonClasses>;
@@ -26,7 +25,7 @@ export interface ButtonProps
   disableFocusRipple?: boolean;
   disableRipple?: boolean;
   disabled?: boolean;
-  edge?: 'end' | 'start';
+  edge?: 'end' | 'start' | null;
   endIcon?: React.ReactNode;
   focusVisibleClassName?: string;
   fullWidth?: boolean;
@@ -49,6 +48,7 @@ export const ButtonRoot = styled(ButtonBase, {
       ...theme.typography.button,
       display: 'inline-flex',
       backgroundColor: 'transparent',
+      border: '1px solid transparent',
       ...(styleProps.shape === 'default' && {
         borderRadius: theme.shape.borderRadius
       }),
@@ -248,7 +248,11 @@ const ButtonEndIcon = styled('span', {
 }));
 
 const Button = React.forwardRef<HTMLElement, ButtonProps>((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiButton' });
+  const { ButtonProps } = React.useContext(ButtonGroupContext);
+  const props = useThemeProps({
+    props: { ...ButtonProps, ...inProps },
+    name: 'WuiButton'
+  });
   const {
     children,
     color = 'primary',
@@ -257,7 +261,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>((inProps, ref) => {
     disableFocusRipple = false,
     disableRipple = false,
     disabled = false,
-    edge,
+    edge = null,
     endIcon: endIconProp,
     focusVisibleClassName,
     fullWidth = false,

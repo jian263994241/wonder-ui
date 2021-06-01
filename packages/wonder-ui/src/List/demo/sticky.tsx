@@ -18,29 +18,32 @@ const dataList = Array(10).fill('');
 
 export default function Example() {
   return (
-    <Container size="sm">
-      <List
-        style={{
-          height: 400,
-          overflow: 'auto',
-          WebkitOverflowScrolling: 'touch',
-          backgroundColor: '#ccc'
-        }}
-      >
-        <ListHeader>sticky 0</ListHeader>
+    <Container
+      size="sm"
+      style={{
+        height: 400,
+        overflow: 'auto',
+        WebkitOverflowScrolling: 'touch'
+      }}
+    >
+      <List>
+        <ListHeader sticky>sticky 0</ListHeader>
         {dataList.map((item, index) => (
           <ListItem key={index}>
             <ListItemText>Item {index}</ListItemText>
           </ListItem>
         ))}
-        <ListHeader>sticky 1</ListHeader>
+      </List>
+      <List>
+        <ListHeader sticky>sticky 1</ListHeader>
         {dataList.map((item, index) => (
           <ListItem key={index}>
             <ListItemText>Item {index}</ListItemText>
           </ListItem>
         ))}
-
-        <ListHeader>sticky 2</ListHeader>
+      </List>
+      <List>
+        <ListHeader sticky>sticky 2</ListHeader>
         {dataList.map((item, index) => (
           <ListItem key={index}>
             <ListItemText>Item {index}</ListItemText>

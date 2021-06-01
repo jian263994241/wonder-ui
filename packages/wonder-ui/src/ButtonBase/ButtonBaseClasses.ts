@@ -17,15 +17,13 @@ export const useClasses = (styleProps: ButtonBaseStyleProps) => {
   const { disabled, focusVisible, focusVisibleClassName, classes } = styleProps;
 
   const slots = {
-    root: ['root', disabled && 'disabled', focusVisible && 'focusVisible']
+    root: [
+      'root',
+      disabled && 'disabled',
+      focusVisible && 'focusVisible',
+      focusVisible && focusVisibleClassName
+    ]
   };
 
-  const composedClasses = composeClasses('WuiButtonBase', slots, classes);
-
-  composedClasses.root = css(
-    composedClasses.root,
-    focusVisible && focusVisibleClassName
-  );
-
-  return composedClasses;
+  return composeClasses('WuiButtonBase', slots, classes);
 };

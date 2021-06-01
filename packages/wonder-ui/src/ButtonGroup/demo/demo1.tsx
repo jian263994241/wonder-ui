@@ -1,9 +1,9 @@
 /**
  * title: 基础用法
- * desc: 配合 `Divider` 分割
+ * desc:
  */
 /** @jsx jsx */
-import { Button, ButtonGroup, jsx, Divider, Space } from '@wonder-ui/core';
+import { Button, ButtonGroup, jsx, Space } from '@wonder-ui/core';
 
 export default function Example() {
   return (
@@ -11,14 +11,6 @@ export default function Example() {
       <ButtonGroup ButtonProps={{ variant: 'contained' }}>
         <Button>Button</Button>
         <Button>Button</Button>
-        <Button>Button</Button>
-      </ButtonGroup>
-
-      <ButtonGroup ButtonProps={{ variant: 'contained' }}>
-        <Button>Button</Button>
-        <Divider direction="vertical" flexItem />
-        <Button>Button</Button>
-        <Divider direction="vertical" flexItem />
         <Button>Button</Button>
       </ButtonGroup>
     </Space>
