@@ -24,6 +24,7 @@ export default function Example() {
     <Container size="sm">
       <DropdownMenu>
         <DropdownMenuItem
+          arrow
           overlay={
             <div>
               <List>
@@ -43,7 +44,8 @@ export default function Example() {
           全部商品
         </DropdownMenuItem>
         <DropdownMenuItem
-          overlay={
+          arrow
+          overlay={({ onClose }) => (
             <div>
               <List>
                 <ListItem divider>
@@ -61,12 +63,17 @@ export default function Example() {
               </List>
               <Divider />
               <div style={{ padding: 16 }}>
-                <Button variant="contained" fullWidth disableFocusRipple>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  disableFocusRipple
+                  onClick={onClose}
+                >
                   确 认
                 </Button>
               </div>
             </div>
-          }
+          )}
         >
           好评排序
         </DropdownMenuItem>

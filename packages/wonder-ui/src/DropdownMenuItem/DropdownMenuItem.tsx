@@ -24,7 +24,7 @@ const DropdownMenuItemTitle = styled('span', {
 })({
   position: 'relative',
   padding: '0 9px',
-  '&:after': {
+  [`&.${dropdownMenuItemClasses.withArrow}:after`]: {
     position: 'absolute',
     top: '50%',
     right: -4,
@@ -35,19 +35,28 @@ const DropdownMenuItemTitle = styled('span', {
     opacity: 0.8,
     content: '""'
   },
-  [`.${dropdownMenuItemClasses.active} > &:after`]: {
-    marginTop: -1,
-    transform: 'rotate(135deg)',
-    borderColor: 'transparent transparent currentColor currentColor'
-  }
+
+  [`.${dropdownMenuItemClasses.active} > &.${dropdownMenuItemClasses.withArrow}:after`]:
+    {
+      marginTop: -1,
+      transform: 'rotate(135deg)',
+      borderColor: 'transparent transparent currentColor currentColor'
+    }
 });
+
+export interface DropdownMenuItemActions {
+  onClose(): void;
+}
 
 export interface DropdownMenuItemProps extends ButtonBaseProps {
   active?: boolean;
+  arrow?: boolean;
   classes?: Partial<typeof dropdownMenuItemClasses>;
   component?: React.ElementType;
   disableRipple?: boolean;
-  overlay?: React.ReactNode;
+  overlay?:
+    | React.ReactNode
+    | ((actions: DropdownMenuItemActions) => React.ReactNode);
   ref?: React.Ref<any>;
 }
 
@@ -59,6 +68,7 @@ const DropdownMenuItem = React.forwardRef<HTMLElement, DropdownMenuItemProps>(
     });
     const {
       active = false,
+      arrow = false,
       children,
       className,
       component,
@@ -68,7 +78,7 @@ const DropdownMenuItem = React.forwardRef<HTMLElement, DropdownMenuItemProps>(
       ...rest
     } = props;
 
-    const styleProps = { ...props, active };
+    const styleProps = { ...props, active, arrow };
 
     const classes = useClasses(styleProps);
 

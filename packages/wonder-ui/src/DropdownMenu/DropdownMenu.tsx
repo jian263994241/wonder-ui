@@ -112,15 +112,19 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
       }
     }, [currentIndex]);
 
+    const onClose = () => {
+      setCurrent(-1);
+    };
+
     const handleClick = (index: number) => {
       manager.run((next) => {
         if (currentIndex === index) {
-          setCurrent(-1);
+          onClose();
         } else {
           setCurrent(index);
         }
 
-        setTimeout(next, defaultTimeout + 1);
+        setTimeout(next, defaultTimeout);
       });
     };
 
@@ -141,7 +145,9 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
                 allowScrollOnElement(node);
               }}
             >
-              {child.props.overlay}
+              {typeof child.props.overlay === 'function'
+                ? child.props.overlay({ onClose })
+                : child.props.overlay}
             </DropdownMenuItemOverlay>
           </Slide>
         );
@@ -173,8 +179,7 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
         <Backdrop
           classes={{ root: classes.backdrop }}
           visible={currentIndex != -1}
-          onClick={() => setCurrent(-1)}
-          // transitionDuration={defaultTimeout}
+          onClick={onClose}
         />
         <DropdownMenuItemOverlayWrapper
           className={classes.overlayWrapper}

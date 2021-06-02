@@ -16,10 +16,10 @@ export default function Example() {
   return (
     <Container size="sm">
       <DropdownMenu>
-        <DropdownMenuItem overlay={<div>全部商品 ... </div>}>
+        <DropdownMenuItem arrow overlay={<div>全部商品 ... </div>}>
           全部商品
         </DropdownMenuItem>
-        <DropdownMenuItem overlay={<div>好评排序 ...</div>}>
+        <DropdownMenuItem arrow overlay={<div>好评排序 ...</div>}>
           好评排序
         </DropdownMenuItem>
       </DropdownMenu>
