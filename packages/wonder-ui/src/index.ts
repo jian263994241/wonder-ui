@@ -49,6 +49,12 @@ export * from './Divider';
 export { default as Drawer } from './Drawer';
 export * from './Drawer';
 
+export { default as DropdownMenu } from './DropdownMenu';
+export * from './DropdownMenu';
+
+export { default as DropdownMenuItem } from './DropdownMenuItem';
+export * from './DropdownMenuItem';
+
 export { default as Fade } from './Fade';
 export * from './Fade';
 

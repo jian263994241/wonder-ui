@@ -76,7 +76,7 @@ export interface ToggleProps
   /**
    * @ignore
    */
-  ref: React.Ref<any>;
+  ref?: React.Ref<any>;
 }
 
 const ToggleRoot = styled('label', {

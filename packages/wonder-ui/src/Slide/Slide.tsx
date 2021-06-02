@@ -13,10 +13,7 @@ export interface SlideProps extends BaseTransitionProps<HTMLElement> {
   appear?: boolean;
   children: React.ReactElement & React.RefAttributes<React.ReactElement>;
   direction?: 'down' | 'left' | 'right' | 'up';
-  easing?: {
-    enter: string;
-    exit: string;
-  };
+  easing?: { enter: string; exit: string };
   in?: boolean;
   style?: React.CSSProperties;
   timeout?: TransitionTimeout;

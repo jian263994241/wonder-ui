@@ -1,5 +1,6 @@
 export const globalClasses = {
   active: 'Wui-active',
+  activeState: 'Wui-activeState',
   checked: 'Wui-checked',
   disabled: 'Wui-disabled',
   error: 'Wui-error',

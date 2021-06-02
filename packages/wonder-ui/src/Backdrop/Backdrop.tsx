@@ -13,6 +13,10 @@ export interface BackdropProps
    */
   children?: React.ReactNode;
   /**
+   * Css api
+   */
+  classes?: Partial<typeof backdropClasses>;
+  /**
    * Root
    */
   component?: React.ElementType;
