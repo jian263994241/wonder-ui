@@ -9,9 +9,8 @@ import {
   enableBodyScroll,
   StackManager
 } from '@wonder-ui/utils';
-import { createArray, createChainedFunction, css } from '@wonder-ui/utils';
+import { createChainedFunction, css } from '@wonder-ui/utils';
 import { dropdownMenuClasses, useClasses } from './DropdownMenuClasses';
-import { useSelections, useSize } from '@wonder-ui/hooks';
 
 const DropdownMenuRoot = styled('div', {
   name: 'WuiDropdownMenu',
@@ -83,13 +82,7 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
       ...rest
     } = props;
 
-    const childLength = React.Children.toArray(childrenProp).length;
-    const {
-      isSelected,
-      setSelected,
-      noneSelected,
-      unSelectAll
-    } = useSelections(createArray(childLength, (index) => index));
+    const [currentIndex, setCurrent] = React.useState<number>(-1);
 
     const [expanded, setExpanded] = React.useState(false);
 
@@ -112,26 +105,31 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
     );
 
     const handleExited = React.useCallback(() => {
-      if (noneSelected) {
+      if (currentIndex === -1) {
         setExpanded(false);
         enableBodyScroll();
         setWrapStyles({});
       }
-    }, [noneSelected]);
+    }, [currentIndex]);
 
-    const handleClick = React.useCallback((index: number) => {
+    const handleClick = (index: number) => {
       manager.run((next) => {
-        setSelected([index]);
+        if (currentIndex === index) {
+          setCurrent(-1);
+        } else {
+          setCurrent(index);
+        }
+
         setTimeout(next, defaultTimeout + 1);
       });
-    }, []);
+    };
 
     const overlays = React.Children.map(childrenProp, (child, index) => {
       if (React.isValidElement(child) && child.props.overlay) {
         return (
           <Slide
             direction="down"
-            in={isSelected(index)}
+            in={currentIndex === index}
             onEnter={handleEnter}
             onExited={handleExited}
             timeout={defaultTimeout}
@@ -154,7 +152,7 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
     const children = React.Children.map(childrenProp, (child, index) => {
       if (React.isValidElement(child)) {
         return React.cloneElement(child, {
-          active: isSelected(index),
+          active: currentIndex === index,
           onClick: createChainedFunction(
             () => handleClick(index),
             child.props.onClick
@@ -174,9 +172,9 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
         <DropdownMenuBar className={classes.bar}>{children}</DropdownMenuBar>
         <Backdrop
           classes={{ root: classes.backdrop }}
-          visible={!noneSelected}
-          onClick={unSelectAll}
-          transitionDuration={defaultTimeout}
+          visible={currentIndex != -1}
+          onClick={() => setCurrent(-1)}
+          // transitionDuration={defaultTimeout}
         />
         <DropdownMenuItemOverlayWrapper
           className={classes.overlayWrapper}
