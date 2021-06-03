@@ -15,3 +15,9 @@
 ### 可选择标签
 
 <code src="../../packages/wonder-ui/src/CheckableTag/demo/demo1.tsx"></code>
+
+## API
+
+<embed src="../../packages/wonder-ui/src/Tag/index.md"></embed>
+
+<embed src="../../packages/wonder-ui/src/CheckableTag/index.md"></embed>

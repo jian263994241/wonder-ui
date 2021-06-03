@@ -4,9 +4,8 @@
  */
 
 /** @jsx jsx */
-import { jsx, Space, Tag } from '@wonder-ui/core';
+import { jsx, Space, CheckableTag } from '@wonder-ui/core';
 import { useSelections } from '@wonder-ui/hooks';
-import CheckableTag from '../CheckableTag';
 
 const tags = ['Movies', 'Books', 'Music', 'Sports'];
 
