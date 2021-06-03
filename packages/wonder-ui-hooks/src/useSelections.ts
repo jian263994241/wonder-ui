@@ -3,19 +3,21 @@ import * as React from 'react';
 export function useSelections<T>(items: T[], defaultSelected: T[] = []) {
   const [selected, setSelected] = React.useState<T[]>(defaultSelected);
 
-  const selectedSet = React.useMemo(() => new Set<T>(selected), [selected]);
+  const selectedSet = React.useMemo(() => new Set<T>(selected), [items]);
 
   const singleActions = React.useMemo(() => {
     const isSelected = (item: T) => selectedSet.has(item);
 
     const select = (item: T) => {
       selectedSet.add(item);
-      return setSelected(Array.from(selectedSet));
+
+      return setSelected([...selectedSet]);
     };
 
     const unSelect = (item: T) => {
       selectedSet.delete(item);
-      return setSelected(Array.from(selectedSet));
+
+      return setSelected([...selectedSet]);
     };
 
     const toggle = (item: T) => {
@@ -34,14 +36,14 @@ export function useSelections<T>(items: T[], defaultSelected: T[] = []) {
       items.forEach((o) => {
         selectedSet.add(o);
       });
-      setSelected(Array.from(selectedSet));
+      setSelected([...selectedSet]);
     };
 
     const unSelectAll = () => {
       items.forEach((o) => {
         selectedSet.delete(o);
       });
-      setSelected(Array.from(selectedSet));
+      setSelected([...selectedSet]);
     };
 
     const noneSelected = items.every((o) => !selectedSet.has(o));
