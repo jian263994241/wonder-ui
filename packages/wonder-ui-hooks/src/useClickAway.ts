@@ -1,17 +1,14 @@
 import * as React from 'react';
 import { BasicTarget, getTargetElement } from './utils/dom';
-
-function ownerDocument(node: Node | undefined): Document {
-  return (node && node.ownerDocument) || document;
-}
+import { getDocument } from '@wonder-ui/utils';
 
 type EventType = MouseEvent | TouchEvent;
 
 const defaultEvent = 'click';
 
-export function useClickAway(
+export function useClickAway<T extends Element>(
   onClickAway: (event: EventType) => void,
-  target: BasicTarget | BasicTarget[],
+  target: BasicTarget<T> | BasicTarget<T>[],
   eventName: keyof HTMLElementEventMap = defaultEvent
 ) {
   const onClickAwayRef = React.useRef(onClickAway);
@@ -22,7 +19,7 @@ export function useClickAway(
       const targets = Array.isArray(target) ? target : [target];
       if (
         targets.some((targetItem) => {
-          const targetElement = getTargetElement<HTMLElement>(targetItem);
+          const targetElement = getTargetElement(targetItem);
 
           if (!targetElement) return false;
 
@@ -33,7 +30,7 @@ export function useClickAway(
             insideDOM = event.composedPath().indexOf(targetElement) > -1;
           } else {
             insideDOM =
-              !ownerDocument(targetElement).documentElement.contains(
+              !getDocument(targetElement).documentElement.contains(
                 event.target
               ) || targetElement.contains(event.target);
           }
