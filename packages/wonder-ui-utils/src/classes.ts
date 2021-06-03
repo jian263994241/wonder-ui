@@ -71,11 +71,11 @@ export function composeClasses<ClassKey extends string>(
  *  styles[`color-${value}`]: {...}
  * })
  */
-export function generateUtilityStyles<TResult extends Record<any, any>>(
-  names: any,
-  iteratee: (styles: TResult, value: any, index: number) => any
+export function generateUtilityStyles<T, TResult extends Record<string, any>>(
+  names: Array<T> | ReadonlyArray<T>,
+  iteratee: (styles: TResult, value: T, index: number) => void
 ): TResult {
-  const result = {} as Record<any, any>;
+  const result = {} as TResult;
 
   names.forEach((name: any, index: number) => {
     return iteratee(result, name, index);
