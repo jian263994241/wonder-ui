@@ -48,7 +48,7 @@ const colors = [
   'info',
   'light',
   'dark'
-];
+] as const;
 
 const BadgeContent = styled('span', { name: 'WuiBadge', slot: 'Content' })(
   ({ theme }) => {
@@ -64,17 +64,14 @@ const BadgeContent = styled('span', { name: 'WuiBadge', slot: 'Content' })(
       borderRadius: '.25rem',
       pointerEvents: 'none',
 
-      ...generateUtilityStyles(
-        colors,
-        (styles, color: NonNullable<BadgeProps['color']>) => {
-          const colorName = 'color' + capitalize(color);
-          //@ts-expect-error
-          styles[`.${badgeClasses[colorName]} > &`] = {
-            color: theme.palette[color].contrastText,
-            backgroundColor: theme.palette[color].main
-          };
-        }
-      ),
+      ...generateUtilityStyles(colors, (styles, color) => {
+        const colorName = 'color' + capitalize(color);
+        //@ts-expect-error
+        styles[`.${badgeClasses[colorName]} > &`] = {
+          color: theme.palette[color].contrastText,
+          backgroundColor: theme.palette[color].main
+        };
+      }),
 
       [`.${badgeClasses.rounded} > &`]: {
         borderRadius: '50rem'

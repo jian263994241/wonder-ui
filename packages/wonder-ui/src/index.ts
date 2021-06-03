@@ -16,6 +16,9 @@ export * from './ButtonBase';
 export { default as ButtonGroup } from './ButtonGroup';
 export * from './ButtonGroup';
 
+export { default as CheckableTag } from './CheckableTag';
+export * from './CheckableTag';
+
 export { default as Checkbox } from './Checkbox';
 export * from './Checkbox';
 
@@ -149,6 +152,9 @@ export * from './Tab';
 
 export { default as TabPane } from './TabPane';
 export * from './TabPane';
+
+export { default as Tag } from './Tag';
+export * from './Tag';
 
 export { default as Toggle } from './Toggle';
 export * from './Toggle';

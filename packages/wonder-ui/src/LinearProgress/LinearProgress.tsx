@@ -33,7 +33,14 @@ export interface LinearProgressProps
   value?: number;
 }
 
-const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
+const colors = [
+  'primary',
+  'secondary',
+  'success',
+  'danger',
+  'warning',
+  'info'
+] as const;
 
 const LinearProgressRoot = styled('div', {
   name: 'WuiLinearProgress',
@@ -90,16 +97,13 @@ const LinearProgressBar = styled('span', {
   }),
   position: 'relative',
   borderRadius: '.25rem',
-  ...generateUtilityStyles(
-    colors,
-    (styles, color: NonNullable<LinearProgressProps['color']>) => {
-      const colorName = 'color' + capitalize(color);
-      //@ts-expect-error
-      styles[`&.${linearProgressClasses[colorName]}`] = {
-        backgroundColor: theme.palette[color].main
-      };
-    }
-  ),
+  ...generateUtilityStyles(colors, (styles, color) => {
+    const colorName = 'color' + capitalize(color);
+    //@ts-expect-error
+    styles[`&.${linearProgressClasses[colorName]}`] = {
+      backgroundColor: theme.palette[color].main
+    };
+  }),
   [`&.${linearProgressClasses.animated}:before`]: {
     content: '""',
     position: 'absolute',

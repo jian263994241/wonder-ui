@@ -82,6 +82,7 @@ export default defineConfig({
           'components/list.md',
           'components/swipe.md',
           'components/tabs.md',
+          'components/tag.md',
           'components/tooltip.md'
         ]
       },

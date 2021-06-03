@@ -42,7 +42,7 @@ const colors = [
   'info',
   'light',
   'dark'
-];
+] as const;
 
 const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })(
   ({ theme }) => ({
@@ -78,39 +78,33 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })(
     'label > & + *': {
       marginLeft: '.3em'
     },
-    ...generateUtilityStyles(
-      colors,
-      (styles, color: NonNullable<CheckboxProps['color']>) => {
-        const colorName = 'color' + capitalize(color);
-        //@ts-expect-error
-        styles[`&.${checkboxClasses[colorName]}`] = {
-          '&:checked': {
-            borderColor: theme.palette[color!].main,
-            backgroundColor: theme.palette[color!].main,
-            backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
-              `<svg xmlns="http://www.w3.org/2000/svg" fill="${
-                theme.palette[color!].contrastText
-              }"  viewBox="0 0 16 16" ><path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"></path></svg>`
-            )}")`
-          },
-          '&:indeterminate': {
-            borderColor: theme.palette[color!].main,
-            backgroundColor: theme.palette[color!].main,
-            backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="none" stroke="${
-                theme.palette[color!].contrastText
-              }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 10h8"/></svg>`
-            )}")`
-          },
-          '&:focus': {
-            boxShadow: `0 0 0 0.25rem ${alpha(
-              theme.palette[color!].main,
-              0.25
-            )}`
-          }
-        };
-      }
-    )
+    ...generateUtilityStyles(colors, (styles, color) => {
+      const colorName = 'color' + capitalize(color);
+      //@ts-expect-error
+      styles[`&.${checkboxClasses[colorName]}`] = {
+        '&:checked': {
+          borderColor: theme.palette[color!].main,
+          backgroundColor: theme.palette[color!].main,
+          backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
+            `<svg xmlns="http://www.w3.org/2000/svg" fill="${
+              theme.palette[color!].contrastText
+            }"  viewBox="0 0 16 16" ><path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"></path></svg>`
+          )}")`
+        },
+        '&:indeterminate': {
+          borderColor: theme.palette[color!].main,
+          backgroundColor: theme.palette[color!].main,
+          backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
+            `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="none" stroke="${
+              theme.palette[color!].contrastText
+            }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 10h8"/></svg>`
+          )}")`
+        },
+        '&:focus': {
+          boxShadow: `0 0 0 0.25rem ${alpha(theme.palette[color!].main, 0.25)}`
+        }
+      };
+    })
   })
 );
 
@@ -148,17 +142,18 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
       }
     }, [indeterminate, checked]);
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
-      (e) => {
-        const input = e.target;
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> =
+      React.useCallback(
+        (e) => {
+          const input = e.target;
 
-        setChecked(input.checked);
-        if (onChange) {
-          onChange(e);
-        }
-      },
-      [onChange, indeterminate]
-    );
+          setChecked(input.checked);
+          if (onChange) {
+            onChange(e);
+          }
+        },
+        [onChange, indeterminate]
+      );
 
     return (
       <CheckboxRoot

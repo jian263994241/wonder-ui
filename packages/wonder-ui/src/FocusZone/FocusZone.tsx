@@ -432,9 +432,11 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
         : null;
 
       do {
-        element = (isForward
-          ? getNextElement(root, element)
-          : getPreviousElement(root, element)) as HTMLElement;
+        element = (
+          isForward
+            ? getNextElement(root, element)
+            : getPreviousElement(root, element)
+        ) as HTMLElement;
 
         if (isBidirectional) {
           if (element) {
@@ -1261,7 +1263,7 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
           const maybeElementToFocus =
             defaultTabbableElement &&
             typeof defaultTabbableElement === 'function' &&
-            defaultTabbableElement(rootRef.current);
+            defaultTabbableElement(rootRef.current!);
 
           // try to focus defaultTabbable element
           if (maybeElementToFocus && isElementTabbable(maybeElementToFocus)) {

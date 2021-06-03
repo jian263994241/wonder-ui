@@ -35,7 +35,7 @@ const colors = [
   'info',
   'light',
   'dark'
-];
+] as const;
 
 const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })(
   ({ theme }) => ({
@@ -67,30 +67,24 @@ const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })(
     'label > & + *': {
       marginLeft: '.3em'
     },
-    ...generateUtilityStyles(
-      colors,
-      (styles, color: NonNullable<RadioProps['color']>) => {
-        const colorName = 'color' + capitalize(color);
-        //@ts-expect-error
-        styles[`&.${radioClasses[colorName]}`] = {
-          '&:checked': {
-            borderColor: theme.palette[color!].main,
-            backgroundColor: theme.palette[color!].main,
-            backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
-              `<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='${
-                theme.palette[color!].contrastText
-              }'/></svg>`
-            )}")`
-          },
-          '&:focus': {
-            boxShadow: `0 0 0 0.25rem ${alpha(
-              theme.palette[color!].main,
-              0.25
-            )}`
-          }
-        };
-      }
-    )
+    ...generateUtilityStyles(colors, (styles, color) => {
+      const colorName = 'color' + capitalize(color);
+      //@ts-expect-error
+      styles[`&.${radioClasses[colorName]}`] = {
+        '&:checked': {
+          borderColor: theme.palette[color!].main,
+          backgroundColor: theme.palette[color!].main,
+          backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
+            `<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='${
+              theme.palette[color!].contrastText
+            }'/></svg>`
+          )}")`
+        },
+        '&:focus': {
+          boxShadow: `0 0 0 0.25rem ${alpha(theme.palette[color!].main, 0.25)}`
+        }
+      };
+    })
   })
 );
 
