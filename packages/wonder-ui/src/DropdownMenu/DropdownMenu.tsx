@@ -35,7 +35,11 @@ const DropdownMenuBar = styled('div', {
   color: theme.palette.text.primary,
   boxShadow: '0 2px 12px rgb(100 101 102 / 12%)',
   position: 'relative',
-  zIndex: 2
+  zIndex: 2,
+  [`&.${dropdownMenuClasses.widthAuto} > *`]: {
+    flex: '0 0 auto',
+    width: 'auto'
+  }
 }));
 
 const DropdownMenuItemOverlay = styled('div', {
@@ -66,6 +70,7 @@ export interface DropdownMenuProps
   classes?: Partial<typeof dropdownMenuClasses>;
   component?: React.ElementType;
   ref?: React.Ref<any>;
+  widthAuto?: boolean;
 }
 
 const manager = new StackManager();
@@ -79,6 +84,7 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
       component = 'div',
       className,
       children: childrenProp,
+      widthAuto = false,
       ...rest
     } = props;
 
@@ -88,7 +94,7 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
 
     const [wrapStyles, setWrapStyles] = React.useState({});
 
-    const styleProps = { ...props, expanded };
+    const styleProps = { ...props, expanded, widthAuto };
 
     const classes = useClasses(styleProps);
 

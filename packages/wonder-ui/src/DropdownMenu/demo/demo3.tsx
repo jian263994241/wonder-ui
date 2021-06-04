@@ -1,6 +1,6 @@
 /**
- * title: 基础用法
- * desc: 使用`overlay`自定义内容
+ * title: 自然宽度
+ * desc: 使用`widthAuto`设置自然宽度
  * background: '#f5f5f5'
  */
 
@@ -23,10 +23,9 @@ import {
 export default function Example() {
   return (
     <Container size="sm">
-      <DropdownMenu>
+      <DropdownMenu widthAuto>
         <DropdownMenuItem
           arrow
-          autoWidth
           overlay={
             <div>
               <List component="div">
@@ -56,7 +55,6 @@ export default function Example() {
         </DropdownMenuItem>
         <DropdownMenuItem
           arrow
-          autoWidth
           overlay={({ onClose }) => (
             <div>
               <List>
@@ -90,8 +88,8 @@ export default function Example() {
           好评排序
         </DropdownMenuItem>
 
-        <DropdownMenuItem autoWidth>销量</DropdownMenuItem>
-        <DropdownMenuItem autoWidth>口碑</DropdownMenuItem>
+        <DropdownMenuItem>销量</DropdownMenuItem>
+        <DropdownMenuItem>口碑</DropdownMenuItem>
       </DropdownMenu>
     </Container>
   );

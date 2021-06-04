@@ -8,5 +8,5 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| classes | css | `'root', 'expanded', 'bar', 'overlay', 'backdrop'` |
+| classes | css | `'root', 'expanded', 'widthAuto', 'bar', 'overlay', 'backdrop'` |
 

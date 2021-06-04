@@ -18,10 +18,6 @@ const DropdownMenuItemRoot = styled(ButtonBase, {
   paddingRight: 10,
   [`&.${dropdownMenuItemClasses.active}`]: {
     color: theme.palette.primary.main
-  },
-  [`&.${dropdownMenuItemClasses.autoWidth}`]: {
-    flex: '0 0 auto',
-    width: 'auto'
   }
 }));
 
@@ -61,7 +57,6 @@ export interface DropdownMenuItemActions {
 export interface DropdownMenuItemProps extends ButtonBaseProps {
   active?: boolean;
   arrow?: boolean;
-  autoWidth?: boolean;
   classes?: Partial<typeof dropdownMenuItemClasses>;
   component?: React.ElementType;
   disableRipple?: boolean;
@@ -80,7 +75,6 @@ const DropdownMenuItem = React.forwardRef<HTMLElement, DropdownMenuItemProps>(
     const {
       active = false,
       arrow = false,
-      autoWidth = false,
       children,
       className,
       component,
@@ -90,7 +84,7 @@ const DropdownMenuItem = React.forwardRef<HTMLElement, DropdownMenuItemProps>(
       ...rest
     } = props;
 
-    const styleProps = { ...props, active, arrow, autoWidth };
+    const styleProps = { ...props, active, arrow };
 
     const classes = useClasses(styleProps);
 
