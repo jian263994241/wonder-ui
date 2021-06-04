@@ -9,7 +9,8 @@ export const spaceClasses = generateUtilityClasses('WuiSpace', [
   'item',
   'vertical',
   'horizontal',
-  'wrap'
+  'wrap',
+  'block'
 ]);
 
 export interface SpaceStyleProps {

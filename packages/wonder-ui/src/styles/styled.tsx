@@ -1,5 +1,5 @@
-import styled, { CreateStyled, CSSObject } from '@wonder-ui/styled';
 import defaultTheme from './defaultTheme';
+import styled, { CreateStyled, CSSObject } from '@wonder-ui/styled';
 
 type Options = {
   name?: string;

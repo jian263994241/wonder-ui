@@ -18,13 +18,20 @@
 
 <code src="../../packages/wonder-ui/src/withDialog/demo/demo2.tsx"></code>
 
-### 提示栈
+### 提示栈 (alert, confirm, toast)
 
 <code src="../../packages/wonder-ui/src/withDialog/demo/demo1.tsx"></code>
+
+### 提示框布局
+
+提示框内容布局
+
+<code src="../../packages/wonder-ui/src/DialogContent/demo/demo1.tsx"></code>
 
 ## API
 
 <embed src="../../packages/wonder-ui/src/Dialog/index.md"></embed>
 
+<embed src="../../packages/wonder-ui/src/DialogContent/index.md"></embed>
 
 <embed src="../../packages/wonder-ui/src/withDialog/index.md"></embed>

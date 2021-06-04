@@ -12,6 +12,10 @@
 
 <code src="../../packages/wonder-ui/src/DropdownMenu/demo/demo2.tsx"></code>
 
+### DropdownMenu 布局
+
+<code src="../../packages/wonder-ui/src/DropdownMenu/demo/demo3.tsx"></code>
+
 ## API
 
 <embed src="../../packages/wonder-ui/src/DropdownMenu/index.md"></embed>

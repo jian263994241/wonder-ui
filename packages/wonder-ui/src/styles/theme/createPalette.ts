@@ -154,39 +154,39 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
   const {
     primary = {
       light: blue.A400,
-      dark: blue[900]
+      dark: blue[500]
     },
     secondary = {
       light: grey[600],
-      dark: grey[700]
+      dark: grey[400]
     },
     error = {
       light: red[600],
-      dark: red[700]
+      dark: red[400]
     },
     danger = {
       light: red[600],
-      dark: red[700]
+      dark: red[400]
     },
     warning = {
-      light: orange[500],
-      dark: orange[700]
+      light: orange[600],
+      dark: orange[400]
     },
     info = {
       light: lightBlue[600],
-      dark: lightBlue[700]
+      dark: lightBlue[400]
     },
     success = {
       light: green[600],
-      dark: green[700]
+      dark: green[400]
     },
     light: lightProp = {
-      light: grey[50],
-      dark: grey[300]
+      light: grey[100],
+      dark: common.white
     },
     dark: darkProp = {
-      light: grey[900],
-      dark: grey[800]
+      light: common.black,
+      dark: grey[900]
     },
     mode: modeProp,
     contrastThreshold = 3,

@@ -7,3 +7,7 @@
 ### 基本使用
 
 <code src="../../packages/wonder-ui/src/Tooltip/demo/demo1.tsx"></code>
+
+## API
+
+<embed src="../../packages/wonder-ui/src/Tooltip/index.md"></embed>

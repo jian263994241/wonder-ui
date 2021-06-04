@@ -71,8 +71,8 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })(
       opacity: 0.5
     },
     [`&.${checkboxClasses.circle}`]: {
-      width: '1.3em',
-      height: '1.3em',
+      width: '1.2em',
+      height: '1.2em',
       borderRadius: '50%'
     },
     'label > & + *': {
@@ -91,7 +91,7 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })(
             }"  viewBox="0 0 16 16" ><path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"></path></svg>`
           )}")`
         },
-        '&:indeterminate': {
+        [`&.${checkboxClasses.indeterminate}, &:indeterminate`]: {
           borderColor: theme.palette[color!].main,
           backgroundColor: theme.palette[color!].main,
           backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
@@ -132,15 +132,9 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     const rootRef = React.useRef<HTMLInputElement>(null);
     const hadnleRef = useForkRef(rootRef, ref);
 
-    const styleProps = { ...props, color, circle };
+    const styleProps = { ...props, color, circle, indeterminate };
 
     const classes = useClasses(styleProps);
-
-    React.useEffect(() => {
-      if (rootRef.current) {
-        rootRef.current.indeterminate = checked ? false : indeterminate;
-      }
-    }, [indeterminate, checked]);
 
     const handleChange: React.ChangeEventHandler<HTMLInputElement> =
       React.useCallback(

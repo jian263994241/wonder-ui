@@ -3,8 +3,11 @@ sidemenu: false
 ---
 ### Snackbar
 
+除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
+| classes | css | `'root', 'content', 'anchorTopLeft', 'anchorTopCenter', 'anchorTopRight', 'anchorBottomLeft', 'anchorBottomCenter', 'anchorBottomRight', 'anchorCenter'` |
 | TransitionComponent | 过渡动画组件 | `React.ComponentType<BaseTransitionProps>` | Grow
 | TransitionProps | 过渡动画组件属性 | `BaseTransitionProps` |
 | actions | 操作区 | `ReactNode` |

@@ -14,10 +14,8 @@ export default defineConfig({
     ]
   ],
 
-  alias: {
-    // '@wonder-ui/core': path.join(__dirname, './packages/wonder-ui/src')
-  },
-  // more config: https://d.umijs.org/config
+  alias: {},
+  // more config: https://d.umijs.org/zh-CN/config
   navs: {
     'zh-CN': [
       // null, // null 值代表保留约定式生成的导航，只做增量配置

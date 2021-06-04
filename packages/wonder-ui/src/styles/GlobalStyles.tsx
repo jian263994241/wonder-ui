@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { GlobalStyles } from '@wonder-ui/styled';
 import theme from './defaultTheme';
+import { GlobalStyles as GlobalStylesWithoutTheme } from '@wonder-ui/styled';
 
-const GlobalStylesWithDefault: React.FC<React.ComponentProps<
-  typeof GlobalStyles
->> = (props) => {
-  return <GlobalStyles defaultTheme={theme} {...props} />;
-};
+export type GlobalStylesProps = React.ComponentProps<
+  typeof GlobalStylesWithoutTheme
+>;
 
-export default GlobalStylesWithDefault;
+export function GlobalStyles(props: GlobalStylesProps): React.ReactElement {
+  return <GlobalStylesWithoutTheme defaultTheme={theme} {...props} />;
+}
+
+export default GlobalStyles;

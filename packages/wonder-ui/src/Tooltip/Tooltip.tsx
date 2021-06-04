@@ -20,7 +20,6 @@ export interface TooltipProps
   children: React.ReactElement & React.RefAttributes<React.ReactElement>;
   placement?: PopperProps['placement'];
   title?: React.ReactNode;
-  visible?: boolean;
   ref?: React.Ref<any>;
 }
 
@@ -135,7 +134,6 @@ const Tooltip = React.forwardRef<HTMLElement, TooltipProps>((inProps, ref) => {
     placement = 'top',
     title,
     theme,
-    visible: visibleProp,
     ...rest
   } = props;
 

@@ -58,7 +58,6 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
     buttons = [],
     children: childrenProp,
     className,
-    classes: classesProp,
     theme,
     ModalProps = {},
     visible: visibleProp = false,
@@ -83,7 +82,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
 
   const toogleVisibleIfUncontroled = () => setVisible(!visible);
 
-  const styleProps = { classes: classesProp };
+  const styleProps = { ...props };
 
   const classes = useClasses(styleProps);
 
@@ -113,6 +112,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
         >
           <DialogContent
             {...rest}
+            classes={{ root: classes.content }}
             buttonsVertical={buttonsVertical}
             buttons={buttons.map((props) => ({
               ...props,

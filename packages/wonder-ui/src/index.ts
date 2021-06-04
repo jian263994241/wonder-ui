@@ -172,12 +172,12 @@ export { default as withDialog } from './withDialog';
 
 export { default as styled } from './styles/styled';
 
-export { jsx } from '@wonder-ui/styled';
-
-export { default as GlobalStyles } from './styles/GlobalStyles';
-export { default as createTheme } from './styles/createTheme';
 export { default as defaultTheme } from './styles/defaultTheme';
 
-export * as colorManipulator from './styles/colorManipulator';
-export { default as useThemeProps } from './styles/useThemeProps';
-export { default as useTheme } from './styles/useTheme';
+export * from './styles/GlobalStyles';
+export * from './styles/colorManipulator';
+export * from './styles/createTheme';
+export * from './styles/useTheme';
+export * from './styles/useThemeProps';
+
+export { ThemeProvider, css, jsx, keyframes } from '@wonder-ui/styled';

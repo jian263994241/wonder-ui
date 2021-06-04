@@ -46,7 +46,7 @@ export interface Theme extends ThemeComponents {
   zIndex: typeof zIndex;
 }
 
-export default function createTheme(options: ThemeOptions = {}): Theme {
+export function createTheme(options: ThemeOptions = {}): Theme {
   const {
     breakpoints: breakpointsInput,
     direction = 'ltr',
@@ -71,3 +71,5 @@ export default function createTheme(options: ThemeOptions = {}): Theme {
     ...rest
   };
 }
+
+export default createTheme;

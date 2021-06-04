@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { ThemeContext } from '@wonder-ui/styled';
 import defaultTheme from './defaultTheme';
-import type { DefaultTheme } from './defaultTheme';
+import { ThemeContext } from '@wonder-ui/styled';
+import type { Theme } from './createTheme';
 
 function isEmpty(obj: object) {
   return Object.keys(obj).length === 0;
 }
 
-export default function useThemeWithDefaultTheme(): DefaultTheme {
-  const contextTheme = React.useContext(ThemeContext) as DefaultTheme;
-
+export function useTheme(): Theme {
+  //@ts-expect-error
+  const contextTheme = React.useContext<Theme>(ThemeContext);
   return isEmpty(contextTheme) ? defaultTheme : contextTheme;
 }
+
+export default useTheme;

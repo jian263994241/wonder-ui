@@ -4,12 +4,13 @@ sidemenu: false
 
 ### Toggle
 
+除了支持 `HTMLLabelElement` 所有属性, 还支持以下属性:
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
 | checked | checked | `boolean` | false
 | checkedIcon | checked icon | `ReactElement` |
-| classes | css api | `ClassNameMap<'root' \| 'input' \| 'icon'>` |
+| classes | css api | `'root', 'input', 'icon', 'disabled', 'checked', 'sizeMedium', 'sizeSmall'` |
 | color | color | `'primary' \| 'secondary' \| 'danger' \| 'warning' \| 'info'` | primary
 | component | root element | `ElementType` | div
 | defaultChecked | default checked | `boolean` |

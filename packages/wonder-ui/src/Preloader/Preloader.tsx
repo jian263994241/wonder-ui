@@ -141,7 +141,7 @@ const Preloader = React.forwardRef<HTMLElement, PreloaderProps>(
         >
           <Fade in={visible}>
             <PreloaderInner styleProps={styleProps}>
-              <CircularProgress size={34} color="light" />
+              <CircularProgress size={34} color={theme.palette.mode} />
               {text && (
                 <React.Fragment>
                   <WhiteSpace size="small" />

@@ -4,15 +4,13 @@ sidemenu: false
 
 ### Dialog
 
+除了支持 `DialogContent` 所有属性, 还支持以下属性:
+
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| children | Target element | `ReactElement` |
-| classes | Classes | `ClassNameMap< 'root' \| 'body' \| 'title' \| 'text' \| 'buttonGroup' \| 'button' >` |
-| visible | Visible | `boolean` |
-| title | Title | `ReactNode` |
-| titleTypographyProps | Title props | `TypographyProps` |
-| text | Text | `ReactNode` |
-| textTypographyProps | Text props | `TypographyProps` |
-| textAfter | Node | `ReactNode` |
-| buttons | Buttons | `DialogButtonProps[]` |
-| buttonsVertical | Buttons Vertical | `boolean` | false
+| children | target | `ReactElement` |
+| classes | css | `'root', 'content'` |
+| visible | 是否显示 | `boolean` |
+| TranstionComponent | 动画 | `ComponentType<BaseTransitionProps>` |
+| TranstionComponentProps | 动画属性 | `BaseTransitionProps` |
+| transitionDuration | 动画时长 | `number \| { appear?: number; enter?: number; exit?: number } \| null` | theme.duration.area.medium

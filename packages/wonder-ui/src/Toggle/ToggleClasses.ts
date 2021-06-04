@@ -6,6 +6,8 @@ import {
 
 export const toggleClasses = generateUtilityClasses('WuiToggle', [
   'root',
+  'input',
+  'icon',
   'disabled',
   'checked',
   'sizeMedium',

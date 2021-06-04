@@ -11,7 +11,7 @@ export default function Example() {
       <Button variant="contained" fullWidth>
         Block button
       </Button>
-      <WhiteSpace size="sm" />
+      <WhiteSpace size="small" />
       <Button variant="contained" fullWidth>
         Block button
       </Button>

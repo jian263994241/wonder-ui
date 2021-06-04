@@ -1,16 +1,17 @@
 import useTheme from './useTheme';
 import getThemeProps from './getThemeProps';
 import { Theme } from './createTheme';
+import React from 'react';
 
 type UseThemePropsParams<P> = {
   props: P;
   name: string;
 };
 
-export default function useThemeProps<P extends object = {}>({
-  props: inputProps,
-  name
-}: UseThemePropsParams<P>): P & { theme: Theme } {
+export function useThemeProps<P extends object>(
+  params: UseThemePropsParams<P>
+): P & { theme: Theme } {
+  const { props: inputProps, name } = params;
   const props = { ...inputProps };
 
   const contextTheme = useTheme();
@@ -24,3 +25,5 @@ export default function useThemeProps<P extends object = {}>({
     theme
   };
 }
+
+export default useThemeProps;

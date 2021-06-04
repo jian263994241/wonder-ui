@@ -50,7 +50,7 @@ export interface DialogButton extends ButtonBaseProps {
 export const DialogButton = styled(ButtonBase, {
   name: 'WuiDialogContent',
   slot: 'button',
-  shouldForwardProp: () => true
+  shouldForwardProp: (prop) => prop != 'primary'
 })<DialogButton>(({ theme, primary }) => ({
   ...theme.typography.button,
   width: '100%',
@@ -87,6 +87,7 @@ export interface DialogContentProps extends PaperProps {
   buttons?: Array<DialogButton>;
   classes?: Partial<typeof dialogContentClasses>;
   content?: React.ReactNode;
+  elevation?: number;
   text?: React.ReactNode;
   textTypographyProps?: TypographyProps;
   title?: React.ReactNode;
@@ -102,6 +103,7 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
       className,
       children,
       content,
+      elevation = 4,
       text,
       textTypographyProps,
       title,
@@ -117,7 +119,7 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
       <DialogContentRoot
         classes={{ root: classes.root }}
         className={className}
-        elevation={4}
+        elevation={elevation}
         ref={ref}
         {...rest}
       >

@@ -13,8 +13,15 @@ const DropdownMenuItemRoot = styled(ButtonBase, {
   flex: '1 1 0',
   maxWidth: '100%',
   textAlign: 'center',
+  boxSizing: 'border-box',
+  paddingLeft: 10,
+  paddingRight: 10,
   [`&.${dropdownMenuItemClasses.active}`]: {
     color: theme.palette.primary.main
+  },
+  [`&.${dropdownMenuItemClasses.autoWidth}`]: {
+    flex: '0 0 auto',
+    width: 'auto'
   }
 }));
 
@@ -23,7 +30,10 @@ const DropdownMenuItemTitle = styled('span', {
   slot: 'Title'
 })({
   position: 'relative',
-  padding: '0 9px',
+
+  [`&.${dropdownMenuItemClasses.withArrow}`]: {
+    paddingRight: 5
+  },
   [`&.${dropdownMenuItemClasses.withArrow}:after`]: {
     position: 'absolute',
     top: '50%',
@@ -51,6 +61,7 @@ export interface DropdownMenuItemActions {
 export interface DropdownMenuItemProps extends ButtonBaseProps {
   active?: boolean;
   arrow?: boolean;
+  autoWidth?: boolean;
   classes?: Partial<typeof dropdownMenuItemClasses>;
   component?: React.ElementType;
   disableRipple?: boolean;
@@ -69,6 +80,7 @@ const DropdownMenuItem = React.forwardRef<HTMLElement, DropdownMenuItemProps>(
     const {
       active = false,
       arrow = false,
+      autoWidth = false,
       children,
       className,
       component,
@@ -78,7 +90,7 @@ const DropdownMenuItem = React.forwardRef<HTMLElement, DropdownMenuItemProps>(
       ...rest
     } = props;
 
-    const styleProps = { ...props, active, arrow };
+    const styleProps = { ...props, active, arrow, autoWidth };
 
     const classes = useClasses(styleProps);
 

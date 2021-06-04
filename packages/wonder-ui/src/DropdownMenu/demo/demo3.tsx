@@ -26,6 +26,7 @@ export default function Example() {
       <DropdownMenu>
         <DropdownMenuItem
           arrow
+          autoWidth
           overlay={
             <div>
               <List component="div">
@@ -55,6 +56,7 @@ export default function Example() {
         </DropdownMenuItem>
         <DropdownMenuItem
           arrow
+          autoWidth
           overlay={({ onClose }) => (
             <div>
               <List>
@@ -87,6 +89,9 @@ export default function Example() {
         >
           好评排序
         </DropdownMenuItem>
+
+        <DropdownMenuItem autoWidth>销量</DropdownMenuItem>
+        <DropdownMenuItem autoWidth>口碑</DropdownMenuItem>
       </DropdownMenu>
     </Container>
   );

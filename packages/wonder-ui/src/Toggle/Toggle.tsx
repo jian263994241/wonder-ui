@@ -3,8 +3,9 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { toggleClasses, ToggleStyleProps, useClasses } from './ToggleClasses';
 import { useControlled, useEventCallback } from '@wonder-ui/hooks';
+import { css } from '@wonder-ui/utils';
 export interface ToggleProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'size' | 'onChange'> {
+  extends Omit<React.HTMLProps<HTMLLabelElement>, 'as' | 'size' | 'onChange'> {
   /**
    * @description checked
    */
@@ -123,9 +124,7 @@ const ToggleIcon = styled('span', {
         position: 'absolute',
         top: 2,
         transform: 'scale(1)',
-        transition: theme.transitions.create(['transform'], {
-          duration: theme.transitions.duration.area.small
-        }),
+        transition: theme.transitions.create(['transform']),
         zIndex: 1
       },
       '&:after': {
@@ -135,9 +134,7 @@ const ToggleIcon = styled('span', {
         position: 'absolute',
         top: 2,
         transform: 'translateX(0px)',
-        transition: theme.transitions.create(['transform'], {
-          duration: theme.transitions.duration.area.small
-        }),
+        transition: theme.transitions.create(['transform']),
         zIndex: 2
       },
 
@@ -196,7 +193,7 @@ const ToggleIcon = styled('span', {
   }
 );
 
-const Toggle: React.FC<ToggleProps> = React.forwardRef((inProps, ref) => {
+const Toggle = React.forwardRef<HTMLElement, ToggleProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiToggle' });
   const {
     checked: checkedProp,
@@ -238,10 +235,10 @@ const Toggle: React.FC<ToggleProps> = React.forwardRef((inProps, ref) => {
   return (
     <ToggleRoot
       as={component}
-      className={classes.root}
+      className={css(classes.root, className)}
       htmlFor={id}
       onClick={onClick}
-      ref={ref}
+      ref={ref as React.Ref<HTMLLabelElement>}
       {...rest}
     >
       <ToggleInput

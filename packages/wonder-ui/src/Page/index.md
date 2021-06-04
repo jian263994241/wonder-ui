@@ -4,11 +4,13 @@ sidemenu: false
 
 ### Page
 
+除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| NavbarProps | 导航栏属性 | `NavbarProps` |
+| [NavbarProps](./navbar#navbar) | 导航栏属性 | `NavbarProps` |
 | ToolbarProps | 工具栏属性 | `object` |
-| classes | css | `ClassNameMap<'root' \| 'content' \| 'navbar' \| 'toolbar'>` |
+| classes | css | `'root', 'content', 'navbar', 'toolbar'` |
 | contentRef | 内容Ref | `React.Ref<HTMLDivElement>` |
 | navbar | 导航栏 | `ReactElement` |
 | onBack | 返回按钮事件 | `() => void` |

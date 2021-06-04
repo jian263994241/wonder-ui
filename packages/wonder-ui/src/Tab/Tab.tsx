@@ -1,7 +1,6 @@
 import * as React from 'react';
 import ButtonBase from '../ButtonBase';
 import styled from '../styles/styled';
-import useClasses from '../styles/useClasses';
 import useThemeProps from '../styles/useThemeProps';
 
 export interface TabProps
@@ -134,7 +133,9 @@ const Tab = React.forwardRef<HTMLElement, TabProps>((inProps, ref) => {
     selected
   };
 
-  const classes = useClasses({ ...props, styleProps, name: 'WuiTab' });
+  // const classes = useClasses({ ...props, styleProps, name: 'WuiTab' });
+
+  const classes = {} as any;
 
   const handleClick = (event: any) => {
     if (!selected && onChange) {

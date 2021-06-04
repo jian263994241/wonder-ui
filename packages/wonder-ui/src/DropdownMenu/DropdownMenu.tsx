@@ -70,7 +70,7 @@ export interface DropdownMenuProps
 
 const manager = new StackManager();
 
-const defaultTimeout = 400;
+const defaultTimeout = 325;
 
 const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
   (inProps, ref) => {
@@ -111,6 +111,13 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
         setWrapStyles({});
       }
     }, [currentIndex]);
+
+    React.useEffect(
+      () => () => {
+        enableBodyScroll();
+      },
+      []
+    );
 
     const onClose = () => {
       setCurrent(-1);
@@ -159,10 +166,13 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
       if (React.isValidElement(child)) {
         return React.cloneElement(child, {
           active: currentIndex === index,
-          onClick: createChainedFunction(
-            () => handleClick(index),
-            child.props.onClick
-          )
+          onClick: createChainedFunction(() => {
+            if (child.props.overlay) {
+              handleClick(index);
+            } else {
+              handleClick(-1);
+            }
+          }, child.props.onClick)
         });
       }
       return null;

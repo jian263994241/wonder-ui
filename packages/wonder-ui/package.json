@@ -33,7 +33,7 @@
   "license": "MIT",
   "dependencies": {
     "@popperjs/core": "^2.9.0",
-    "@wonder-ui/hooks": "^1.0.3",
+    "@wonder-ui/hooks": "^1.0.4",
     "@wonder-ui/styled": "^1.0.7",
     "@wonder-ui/utils": "^2.1.4",
     "react-focus-lock": "^2.5.0",

@@ -19,13 +19,9 @@ import { useSelections } from '@wonder-ui/hooks';
 const dataList = [1, 2, 3];
 
 export default function Example() {
-  const {
-    allSelected,
-    isSelected,
-    noneSelected,
-    toggleAll,
-    toggle
-  } = useSelections(dataList);
+  const { allSelected, isSelected, toggleAll, toggle, partiallySelected } =
+    useSelections(dataList);
+
   return (
     <Container size="sm">
       <List component="div">
@@ -34,7 +30,7 @@ export default function Example() {
             <Checkbox
               circle
               name="demo-checkbox"
-              indeterminate={!allSelected && !noneSelected}
+              indeterminate={partiallySelected}
               checked={allSelected}
               onChange={() => toggleAll()}
             />

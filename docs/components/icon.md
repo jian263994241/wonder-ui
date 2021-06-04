@@ -6,7 +6,14 @@
 npm install @wonder-ui/icons
 ```
 
-## 使用
+
+## 代码演示
+
+### 基本使用
+
+<code src="../../packages/wonder-ui/src/SvgIcon/demo/default.tsx"></code>
+
+## 使用预置图标
 
 ``` tsx | pure
 import { Alarm } from '@wonder-ui/icons';
@@ -18,9 +25,7 @@ import { Alarm } from '@wonder-ui/icons';
 
 <code src="../../packages/wonder-ui/src/SvgIcon/demo/icons.tsx"></code>
 
-## 自定义 SVG 图标
 
-<code src="../../packages/wonder-ui/src/SvgIcon/demo/default.tsx"></code>
 
 
 ## API
