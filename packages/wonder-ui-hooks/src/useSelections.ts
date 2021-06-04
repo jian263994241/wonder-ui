@@ -62,7 +62,7 @@ export function useSelections<T>(items: T[], defaultSelected: T[] = []) {
       partiallySelected,
       toggleAll
     };
-  }, [selectedSet, items]);
+  }, [selectedSet, items, selected]);
 
   return {
     selected,
