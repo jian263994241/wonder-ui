@@ -5,7 +5,6 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
 import { css } from '@wonder-ui/utils';
-import { getDevice } from '@wonder-ui/utils';
 import { tooltipClasses, useClasses } from './TooltipClasses';
 import { useForkRef, useTouchFeedback } from '@wonder-ui/hooks';
 
@@ -18,6 +17,7 @@ export interface TooltipProps
   arrow?: boolean;
   classes?: Partial<typeof tooltipClasses>;
   children: React.ReactElement & React.RefAttributes<React.ReactElement>;
+  disabled?: boolean;
   placement?: PopperProps['placement'];
   title?: React.ReactNode;
   ref?: React.Ref<any>;
@@ -131,37 +131,27 @@ const Tooltip = React.forwardRef<HTMLElement, TooltipProps>((inProps, ref) => {
     arrow = false,
     className,
     children,
+    disabled,
     placement = 'top',
     title,
     theme,
     ...rest
   } = props;
 
-  const { current: device } = React.useRef(getDevice());
-
+  const { active, targetRef } = useTouchFeedback({ disabled });
   const referenceElementRef = React.useRef<HTMLDivElement>(null);
-  const handleReferenceElementRef = useForkRef(
-    referenceElementRef,
-    children.ref
-  );
+  //@ts-expect-error
+  const foreignRef = useForkRef(ref, children.ref);
+  const handleRef = useForkRef(referenceElementRef, targetRef, foreignRef);
 
   const { current: referenceElement } = referenceElementRef;
-
-  const [visible, handleEvents] = useTouchFeedback({
-    ...children.props,
-    type: device.desktop ? 'hover' : 'touch'
-  });
 
   const styleProps = { ...props, arrow, placement };
   const classes = useClasses(styleProps);
 
   return (
     <React.Fragment>
-      {children &&
-        React.cloneElement(children, {
-          ref: handleReferenceElementRef,
-          ...handleEvents
-        })}
+      {children && React.cloneElement(children, { ref: handleRef })}
 
       <TooltipRoot
         anchorEl={referenceElement}
@@ -171,7 +161,7 @@ const Tooltip = React.forwardRef<HTMLElement, TooltipProps>((inProps, ref) => {
         role="tooltip"
         theme={theme}
         transition
-        visible={visible}
+        visible={active}
         {...rest}
       >
         {({ TransitionProps, attributes, styles }) => (
