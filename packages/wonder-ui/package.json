@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/core",
-  "version": "2.0.0-11",
+  "version": "2.0.0-12",
   "description": "Wonder-UI react components",
   "source": "src/index.ts",
   "main": "dist/index.js",
