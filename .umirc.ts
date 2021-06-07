@@ -77,6 +77,7 @@ export default defineConfig({
           'components/badge.md',
           'components/collapse.md',
           'components/dropdownMenu.md',
+          'components/empty.md',
           'components/list.md',
           'components/swipe.md',
           'components/tabs.md',
