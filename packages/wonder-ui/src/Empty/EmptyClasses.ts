@@ -7,11 +7,11 @@ export const emptyClasses = generateUtilityClasses('WuiEmpty', [
   'description'
 ]);
 
-export interface StyleProps {
+export interface EmptyStyleProps {
   classes?: Partial<typeof emptyClasses>;
 }
 
-export const useClasses = (styleProps: StyleProps) => {
+export const useClasses = (styleProps: EmptyStyleProps) => {
   const { classes } = styleProps;
 
   const slots = {

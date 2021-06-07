@@ -79,6 +79,7 @@ export default defineConfig({
           'components/dropdownMenu.md',
           'components/empty.md',
           'components/list.md',
+          'components/skeleton.md',
           'components/swipe.md',
           'components/tabs.md',
           'components/tag.md',

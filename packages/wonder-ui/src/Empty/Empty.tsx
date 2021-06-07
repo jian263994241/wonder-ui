@@ -15,28 +15,28 @@ export interface EmptyProps extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
 const EmptyRoot = styled('div', {
   name: 'WuiEmpty',
   slot: 'Root'
-})({
+})(({ theme }) => ({
   textAlign: 'center',
-  margin: '0 8px',
+  margin: theme.spacing(0, 1),
   color: '#969799'
-});
+}));
 
 const EmptyFooter = styled('div', {
   name: 'WuiEmpty',
   slot: 'Footer'
-})({
-  marginTop: 12
-});
+})(({ theme }) => ({
+  marginTop: theme.spacing(2)
+}));
 
 const EmptyImage = styled('div', {
   name: 'WuiEmpty',
   slot: 'Image'
-})({
-  marginBottom: 8,
+})(({ theme }) => ({
+  marginBottom: theme.spacing(1),
   fontSize: '3.5em',
   lineHeight: 0,
   userSelect: 'none'
-});
+}));
 
 const EmptyDescription = styled('div', {
   name: 'WuiDescription',

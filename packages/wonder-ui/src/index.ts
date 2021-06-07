@@ -130,6 +130,9 @@ export * from './Radio';
 export { default as Row } from './Row';
 export * from './Row';
 
+export { default as Skeleton } from './Skeleton';
+export * from './Skeleton';
+
 export { default as Slide } from './Slide';
 export * from './Slide';
 
