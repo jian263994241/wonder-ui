@@ -41,7 +41,7 @@ const SkeletonContent = styled('div', {
   marginTop: theme.spacing(1)
 }));
 
-const commomBlockStyle = (theme: any) => ({
+const commomBlockStyles = (theme: any) => ({
   backgroundColor: emphasize(theme.palette.background.default, 0.08),
   borderRadius: theme.shape.borderRadius
 });
@@ -50,7 +50,7 @@ const SkeletonAvatar = styled('div', {
   name: 'WuiSkeleton',
   slot: 'Avatar'
 })(({ theme }) => ({
-  ...commomBlockStyle(theme),
+  ...commomBlockStyles(theme),
   flexShrink: 0,
   width: 32,
   height: 32,
@@ -65,7 +65,7 @@ const SkeletonTitle = styled('div', {
   name: 'WuiSkeleton',
   slot: 'Title'
 })(({ theme }) => ({
-  ...commomBlockStyle(theme),
+  ...commomBlockStyles(theme),
   width: '40%',
   height: 16,
   margin: 0
@@ -75,7 +75,7 @@ const SkeletonRow = styled('div', {
   name: 'WuiSkeleton',
   slot: 'Row'
 })(({ theme }) => ({
-  ...commomBlockStyle(theme),
+  ...commomBlockStyles(theme),
   width: '100%',
   height: 16,
   marginTop: 16,

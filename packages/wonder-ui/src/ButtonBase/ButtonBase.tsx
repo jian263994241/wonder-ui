@@ -352,7 +352,7 @@ const ButtonBase = React.forwardRef<HTMLElement, ButtonBaseProps>(
     return (
       <ButtonBaseRoot
         as={ComponentProp}
-        className={css(classes.root, className)}
+        className={css(className, classes.root)}
         onBlur={handleBlur}
         onClick={onClick}
         onContextMenu={handleContextMenu}
