@@ -41,7 +41,7 @@ export interface GrowProps extends BaseTransitionProps {
   /**
    * A single child content element.
    */
-  children: React.ReactElement & React.RefAttributes<React.ReactElement>;
+  children: React.ReactElement;
   /**
    * 显示隐藏内容
    */
@@ -80,7 +80,7 @@ const Grow: React.FC<GrowProps> = React.forwardRef((props, ref) => {
   const timer = React.useRef<any>();
   const autoTimeout = React.useRef<number>();
   const theme = useTheme();
-
+  //@ts-expect-error
   const handleRef = useForkRef(children.ref, ref);
 
   const handleEnter: TransitionProps['onEnter'] = (node, isAppearing) => {

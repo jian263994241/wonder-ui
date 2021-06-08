@@ -23,7 +23,7 @@ export interface FadeProps extends BaseTransitionProps<HTMLElement> {
   /**
    * @description children
    */
-  children: React.ReactElement & React.RefAttributes<React.ReactElement>;
+  children: React.ReactElement;
   /**
    * @description style
    */
@@ -47,6 +47,7 @@ const Fade: React.FC<FadeProps> = React.forwardRef((props, ref) => {
     ...rest
   } = props;
   const theme = useTheme();
+  //@ts-expect-error
   const handleRef = useForkRef(children.ref, ref);
 
   const handleEnter: FadeProps['onEnter'] = (node, isAppearing) => {

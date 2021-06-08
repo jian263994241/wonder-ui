@@ -8,6 +8,7 @@ import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
 import { groupBy } from '@wonder-ui/utils';
 import { listItemClasses, useClasses } from './ListItemClasses';
+import { css } from '@wonder-ui/utils';
 
 export interface ListItemProps
   extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'type'> {
@@ -36,9 +37,13 @@ export interface ListItemProps
    */
   divider?: boolean;
   /**
-   * disabled
+   * Disabled
    */
   disabled?: boolean;
+  /**
+   * Disabled ripple
+   */
+  disableRipple?: boolean;
   /**
    * 选中状态
    * @default false
@@ -63,10 +68,10 @@ type StyleProps = {
   styleProps: Partial<ListItemProps>;
 };
 
-const ListItemRoot = styled(ButtonBase, {
+const ListItemRoot = styled('li', {
   name: 'WuiListItem',
   slot: 'Root'
-})<StyleProps & ButtonBaseProps>(({ theme, styleProps }) => ({
+})<StyleProps>(({ theme, styleProps }) => ({
   overflow: 'hidden',
   position: 'relative',
   transition: 'background-color 200ms',
@@ -81,15 +86,7 @@ const ListItemRoot = styled(ButtonBase, {
   textDecoration: 'none',
   paddingLeft: theme.spacing(2),
   cursor: 'auto',
-  whiteSpace: 'unset',
-
-  ...(styleProps.disabled && {
-    pointerEvents: 'none'
-  }),
-
-  [`&:last-of-type > ${ListItemInner}`]: {
-    border: 'none'
-  }
+  whiteSpace: 'unset'
 }));
 
 const ListItemInner = styled('div', {
@@ -118,13 +115,13 @@ const ListItemInner = styled('div', {
 const ListItemBody = styled('div', {
   name: 'WuiListItem',
   slot: 'Body'
-})(() => ({
+})({
   display: 'flex',
   width: '100%',
   alignItems: 'inherit',
   boxSizing: 'border-box',
   color: 'inherit'
-}));
+});
 
 const ListItemArrow = styled(ArrowForward, {
   name: 'WuiListItem',
@@ -154,6 +151,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
       className,
       divider = false,
       disabled = false,
+      disableRipple = false,
       component = 'li',
       selected = false,
       ...rest
@@ -189,16 +187,27 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
       [children]
     );
 
+    let rootProps: any = {};
+
+    if (button) {
+      rootProps = {
+        as: ButtonBase,
+        component,
+        disableRipple,
+        disabled,
+        selected,
+        ...rest
+      };
+    }
+
     return (
       <ListItemRoot
-        component={component}
-        className={classes.root}
-        disableRipple={!button}
+        as={component}
+        className={css(classes.root, className)}
         styleProps={styleProps}
-        disabled={disabled}
-        selected={selected}
-        ref={ref}
+        ref={ref as React.Ref<any>}
         {...rest}
+        {...rootProps}
       >
         {childGroup.media &&
           childGroup.media.map((media: any) =>

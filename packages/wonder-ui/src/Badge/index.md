@@ -11,5 +11,6 @@ sidemenu: false
 | classes | css | `'root', 'content', 'rounded', 'withChildren', 'colorPrimary', 'colorSecondary', 'colorSuccess', 'colorError', 'colorDanger', 'colorWarning', 'colorInfo', 'colorLight', 'colorDark'` |
 | color | 颜色 | `'primary' \| 'secondary' \| 'success' \| 'error' \| 'danger' \| 'warning' \| 'info'` \| 'light' \| 'dark' | primary
 | component | 根节点 | `ElementType` | span
+| hideContent | 隐藏角标 | `boolean` | false
 | rounded | 圆角 | `boolean` | false
 | text | 内容 | `ReactNode` |

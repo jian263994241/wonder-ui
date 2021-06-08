@@ -48,7 +48,6 @@ const ListItemTextRoot = styled('div', {
   ...theme.typography.subtitle1,
   color: 'inherit',
   verticalAlign: 'middle',
-  userSelect: 'none',
   flex: '1 1 auto'
 }));
 

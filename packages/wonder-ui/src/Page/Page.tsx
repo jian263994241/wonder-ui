@@ -119,10 +119,8 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
     navbar ? navbar.ref : NavbarProps.ref
   );
   const toolbarRef = React.useRef<HTMLElement>(null);
-  const handleToolbarRef = useForkRef(
-    toolbarRef,
-    toolbar ? toolbar.ref : undefined
-  );
+  //@ts-expect-error
+  const handleToolbarRef = useForkRef(toolbarRef, toolbar.ref);
 
   const { height: navbarHeight = 0 } = useSize(navbarRef);
   const { height: toolbarHeight = 0 } = useSize(toolbarRef);

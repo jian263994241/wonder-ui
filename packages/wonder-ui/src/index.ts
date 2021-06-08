@@ -142,6 +142,9 @@ export * from './Snackbar';
 export { default as Space } from './Space';
 export * from './Space';
 
+export { default as Stepper } from './Stepper';
+export * from './Stepper';
+
 export { default as SvgIcon } from './SvgIcon';
 export * from './SvgIcon';
 

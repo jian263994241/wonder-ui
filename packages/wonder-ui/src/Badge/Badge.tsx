@@ -21,6 +21,11 @@ export interface BadgeProps
   /** component  */
   component?: React.ElementType;
   /**
+   * 隐藏角标
+   * @default false
+   */
+  hideContent?: boolean;
+  /**
    * @description 圆角徽章
    * @default false
    */
@@ -74,7 +79,7 @@ const BadgeContent = styled('span', { name: 'WuiBadge', slot: 'Content' })(
       }),
 
       [`.${badgeClasses.rounded} > &`]: {
-        borderRadius: '50rem'
+        borderRadius: '50%'
       },
 
       [`.${badgeClasses.withChildren} > &`]: {
@@ -101,6 +106,7 @@ const Badge = React.forwardRef<HTMLElement, BadgeProps>((inProps, ref) => {
     className,
     color = 'primary',
     component,
+    hideContent = false,
     rounded = false,
     text,
     ...rest
@@ -116,7 +122,10 @@ const Badge = React.forwardRef<HTMLElement, BadgeProps>((inProps, ref) => {
       ref={ref as React.Ref<HTMLDivElement>}
       {...rest}
     >
-      <BadgeContent className={classes.content}>{text}</BadgeContent>
+      {!hideContent && (
+        <BadgeContent className={classes.content}>{text}</BadgeContent>
+      )}
+
       {children}
     </BadgeRoot>
   );

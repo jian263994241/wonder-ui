@@ -22,7 +22,7 @@ export interface ClickAwayListenerProps {
   /**
    * The wrapped element.
    */
-  children: React.ReactElement & React.RefAttributes<React.ReactElement>;
+  children: React.ReactElement;
   /**
    * If `true`, the React tree is ignored and only the DOM tree is considered.
    * This prop changes how portaled elements are handled.
@@ -83,7 +83,7 @@ export default function ClickAwayListener(
       activatedRef.current = false;
     };
   }, []);
-
+  //@ts-expect-error
   const handleRef = useForkRef(children.ref, nodeRef);
 
   // The handler doesn't take event.defaultPrevented into account:

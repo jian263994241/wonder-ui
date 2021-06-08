@@ -68,6 +68,7 @@ export default defineConfig({
         children: [
           'components/checkbox.md',
           'components/radio.md',
+          'components/stepper.md',
           'components/toggle.md'
         ]
       },
