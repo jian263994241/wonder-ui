@@ -6,7 +6,6 @@ import { toString } from './toString';
  * @param str
  */
 
-export const capitalize = <T extends string>(string: T): Capitalize<T> => {
-  //@ts-expect-error
+export const capitalize = <T extends string>(string: T): string => {
   return upperFirst(toString(string).toLowerCase());
 };

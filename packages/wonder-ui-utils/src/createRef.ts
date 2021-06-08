@@ -9,7 +9,7 @@ export type IRefObject<T> =
  * @param ref
  * @param value
  */
-export function setRef<T>(ref: IRefObject<T> | null, value: T) {
+export function setRef<T>(ref: IRefObject<T> | null | undefined, value: T) {
   if (typeof ref === 'function') {
     ref(value);
   } else if (ref) {
