@@ -1,23 +1,23 @@
 import * as React from 'react';
-import useEventCallback from './useEventCallback';
+import { useConst } from './useConst';
 
 export interface ControlledOptions<T> {
-  defaultValue?: T;
+  defaultValue: T;
   value?: T;
 }
 
 export function useControlled<V>(options: ControlledOptions<V>) {
   const { defaultValue: defaultProp, value: controlled } = options;
-  const { current: isControlled } = React.useRef(controlled !== undefined);
+  const isControlled = useConst(controlled !== undefined);
 
-  const [valueState, setValue] = React.useState(defaultProp);
+  const [valueState, setValue] = React.useState<V>(defaultProp);
   const value = isControlled ? (controlled as V) : valueState;
 
-  const setValueIfUncontrolled = useEventCallback((newValue: V) => {
+  const setValueIfUncontrolled = (newValue: V) => {
     if (!isControlled) {
       setValue(newValue);
     }
-  });
+  };
 
   return [value, setValueIfUncontrolled] as const;
 }
