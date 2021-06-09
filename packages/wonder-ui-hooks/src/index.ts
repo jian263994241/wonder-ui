@@ -37,6 +37,7 @@ export * from './useSessionStorageState';
 export * from './useSet';
 export * from './useSetState';
 export * from './useSize';
+export * from './useSwipeable';
 export * from './useThrottle';
 export * from './useThrottleFn';
 export * from './useTimeout';
