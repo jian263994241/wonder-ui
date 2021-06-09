@@ -11,11 +11,11 @@ import { popupClasses, useClasses } from './PopupClasses';
 export interface PopupProps {
   ModalProps?: Partial<ModalProps>;
   PageProps?: Partial<PageProps>;
-  classes?: Partial<typeof popupClasses>;
   TransitionComponent?: React.ComponentType<BaseTransitionProps>;
   TransitionProps?: BaseTransitionProps;
   children?: React.ReactNode;
   className?: string;
+  classes?: Partial<typeof popupClasses>;
   onClose?: () => void;
   ref?: React.Ref<any>;
   title?: React.ReactNode;
@@ -59,6 +59,8 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((inProps, ref) => {
     title,
     onClose,
     TransitionComponent = Slide,
+    TransitionProps,
+    transitionDuration,
     ...rest
   } = props;
 
@@ -76,7 +78,11 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((inProps, ref) => {
       {...rest}
       classes={{ root: css(classes.root, className) }}
     >
-      <TransitionComponent direction="up">
+      <TransitionComponent
+        direction="up"
+        timeout={transitionDuration}
+        {...TransitionProps}
+      >
         <PopupPage
           showCloseButton
           title={title}
