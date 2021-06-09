@@ -151,7 +151,9 @@ export interface PopoverProps extends Omit<ModalProps, 'children'> {
    * 是否显示
    */
   visible?: boolean;
-
+  /**
+   * @ignore
+   */
   ref?: React.Ref<any>;
 }
 
@@ -361,6 +363,7 @@ const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
 
   return (
     <PopoverRoot
+      autoFocus
       BackdropProps={{ invisible: true }}
       container={container}
       visible={visible}

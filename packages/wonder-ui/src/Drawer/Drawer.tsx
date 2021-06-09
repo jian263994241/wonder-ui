@@ -237,6 +237,7 @@ const Drawer = React.forwardRef<HTMLElement, DrawerProps>((inProps, ref) => {
   // variant === temporary
   return (
     <DrawerRoot
+      autoFocus
       visible={visible}
       classes={{ root: css(classes.root, classes.modal, className) }}
       ref={ref}

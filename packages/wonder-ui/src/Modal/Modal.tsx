@@ -1,15 +1,19 @@
 import * as React from 'react';
+import * as ReactIs from 'react-is';
 import Backdrop, { BackdropProps } from '../Backdrop';
 import FocusLock from 'react-focus-lock';
 import ModalManager, { ariaHidden, Modal as ModalType } from './ModalManager';
 import Portal, { Container, getContainer } from '../Portal/Portal';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { createChainedFunction, getDocument } from '@wonder-ui/utils';
-import { css } from '@wonder-ui/utils';
+import { createChainedFunction, css, getDocument } from '@wonder-ui/utils';
 import { modalClasses, useClasses } from './ModalClasses';
 import { ReactFocusLockProps } from 'react-focus-lock/interfaces';
-import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
+import {
+  useEventCallback,
+  useEventListener,
+  useForkRef
+} from '@wonder-ui/hooks';
 
 // A modal manager used to track and manage the state of open Modals.
 // Modals don't open on the server so this won't conflict with concurrent requests.
@@ -19,8 +23,7 @@ function getHasTransition(props: React.PropsWithChildren<any>) {
   return props.children ? props.children.props.hasOwnProperty('in') : false;
 }
 
-export interface ModalProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
+export interface ModalProps {
   /**
    * AutoFocus
    */
@@ -33,7 +36,7 @@ export interface ModalProps
   /**
    * 子节点
    */
-  children: React.ReactElement;
+  children: React.ReactNode;
   /**
    * Css api
    */
@@ -46,6 +49,10 @@ export interface ModalProps
    * 容器 HTMLElement
    */
   container?: Container;
+  /**
+   * @ignore
+   */
+  className?: string;
   /**
    * 过渡后关闭
    * @default false
@@ -76,7 +83,7 @@ export interface ModalProps
    * FocusLock Props
    * @default {}
    */
-  FocusLockProps?: ReactFocusLockProps;
+  FocusLockProps?: Partial<ReactFocusLockProps>;
   /**
    * 隐藏Backdrop
    * @default false
@@ -119,6 +126,8 @@ export interface ModalProps
    * 过渡动画事件
    */
   onTransitionExited?(): void;
+  /**@ignore */
+  style?: React.CSSProperties;
   /**
    * 是否显示
    * @default false
@@ -126,23 +135,29 @@ export interface ModalProps
   visible?: boolean;
 }
 
-const ModalRoot = styled('div', {
+const ModalRoot = styled(FocusLock, {
   name: 'WuiModal',
-  slot: 'Root'
-})(({ theme }) => ({
-  position: 'fixed',
-  zIndex: theme.zIndex.modal,
-  right: 0,
-  bottom: 0,
-  top: 0,
-  left: 0,
-  overflow: 'auto',
-  outline: 0,
-  WebkitOverflowScrolling: 'touch',
-  [`&.${modalClasses.hidden}`]: {
-    visibility: 'hidden'
-  }
-}));
+  slot: 'Root',
+  shouldForwardProp: () => true
+})<ReactFocusLockProps & { style?: React.CSSProperties }>(
+  ({ theme, style }) => ({
+    position: 'fixed',
+    zIndex: theme.zIndex.modal,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    left: 0,
+    overflow: 'auto',
+    outline: 0,
+    WebkitOverflowScrolling: 'touch',
+    //Hack FocusLock has no style prop.
+    ...style,
+
+    [`&.${modalClasses.hidden}`]: {
+      visibility: 'hidden'
+    }
+  })
+);
 
 const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiModal' });
@@ -168,11 +183,9 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
     onKeyDown,
     onTransitionEnter,
     onTransitionExited,
-    visible = false,
-    ...rest
+    style,
+    visible = false
   } = props;
-
-  React.Children.only(children);
 
   const [exited, setExited] = React.useState(true);
   const modal = React.useRef<{
@@ -251,10 +264,6 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
     }
   }, [visible, handleClose, hasTransition, closeAfterTransition, handleOpen]);
 
-  if (!keepMounted && !visible && (!hasTransition || exited)) {
-    return null;
-  }
-
   const handleEnter = () => {
     setExited(false);
 
@@ -289,7 +298,7 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
+  const handleKeyDown = (event: any) => {
     if (onKeyDown) {
       onKeyDown(event);
     }
@@ -314,21 +323,48 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
     }
   };
 
+  const rootProps: Record<string, string> = {
+    role: 'presentation'
+  };
+
+  React.useEffect(() => {
+    const { current: node } = modalRef;
+
+    if (node) {
+      Object.keys(rootProps).forEach((key) => {
+        const prop = rootProps[key];
+        node.setAttribute(key, prop);
+      });
+    }
+  }, [exited]);
+
+  useEventListener(modalRef.current, 'keydown', handleKeyDown);
+
+  if (!keepMounted && !visible && (!hasTransition || exited)) {
+    return null;
+  }
+
   const styleProps = { ...props, visible, exited };
 
   const classes = useClasses(styleProps);
 
-  const childProps: any = {};
+  let _children = children;
 
-  const { tabIndex = '-1', onEnter, onExited } = children.props as any;
+  if (ReactIs.isElement(children)) {
+    const childProps: any = {};
 
-  childProps.tabIndex = tabIndex;
-  childProps['data-autofocus'] = autoFocus;
+    const { tabIndex = '-1', onEnter, onExited } = children.props as any;
 
-  if (hasTransition) {
-    childProps.in = visible;
-    childProps.onEnter = createChainedFunction(handleEnter, onEnter);
-    childProps.onExited = createChainedFunction(handleExited, onExited);
+    childProps.tabIndex = tabIndex;
+    childProps['data-autofocus'] = autoFocus;
+
+    if (hasTransition) {
+      childProps.in = visible;
+      childProps.onEnter = createChainedFunction(handleEnter, onEnter);
+      childProps.onExited = createChainedFunction(handleExited, onExited);
+    }
+
+    _children = React.cloneElement(children, childProps);
   }
 
   return (
@@ -338,28 +374,25 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
       ref={handlePortalRef}
     >
       <ModalRoot
-        role="presentation"
-        {...rest}
-        as={component}
-        className={css(classes.root, className)}
-        onKeyDown={handleKeyDown}
+        returnFocus
+        {...FocusLockProps}
         ref={handleRef}
+        as={component}
+        className={css(classes.root, className, FocusLockProps?.className)}
+        disabled={disableFocusLock}
+        noFocusGuards={disableFocusLock ? 'tail' : false}
+        autoFocus={autoFocus}
+        style={style}
       >
         {!hideBackdrop && (
           <Backdrop
             visible={visible}
             onClick={handleBackdropClick}
+            classes={{ root: classes.backdrop }}
             {...BackdropProps}
           />
         )}
-        <FocusLock
-          disabled={disableFocusLock}
-          noFocusGuards={disableFocusLock}
-          autoFocus={autoFocus}
-          {...FocusLockProps}
-        >
-          {children ? React.cloneElement(children, childProps) : null}
-        </FocusLock>
+        {_children}
       </ModalRoot>
     </Portal>
   );

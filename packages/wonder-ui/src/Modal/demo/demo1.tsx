@@ -23,7 +23,7 @@ export default (function Example() {
         Open
       </Button>
 
-      <Modal visible={visible} onClose={() => setFalse()}>
+      <Modal autoFocus visible={visible} onClose={() => setFalse()}>
         <Fade>
           <ModalContent
             title="Modal Title"

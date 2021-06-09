@@ -6,9 +6,9 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| autoFocus | Auto focus | `boolean` | false
 | BackdropProps | Backdrop Props | `BackdropProps` | {}
 | FocusLockProps | FocusLock Props | `ReactFocusLockProps` | {}
+| autoFocus | Auto focus | `boolean` | false
 | children | 子节点 | `ReactElement` |
 | closeAfterTransition | 过渡后关闭 | `boolean` | false
 | component | root element | `ElementType` | div

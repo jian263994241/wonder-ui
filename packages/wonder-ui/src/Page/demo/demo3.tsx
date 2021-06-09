@@ -28,7 +28,7 @@ export default function Example() {
         onClose={() => setVisible(false)}
       >
         <Page
-          style={{ width: '100%', height: 300, position: 'relative' }}
+          style={{ width: '100%', height: 300 }}
           title="标题"
           showCloseButton
           onClose={() => setVisible(false)}

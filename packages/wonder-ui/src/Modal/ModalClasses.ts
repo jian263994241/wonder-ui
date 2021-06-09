@@ -2,6 +2,7 @@ import { composeClasses, generateUtilityClasses } from '@wonder-ui/utils';
 
 export const modalClasses = generateUtilityClasses('WuiModal', [
   'root',
+  'backdrop',
   'hidden'
 ]);
 
@@ -15,7 +16,8 @@ export const useClasses = (styleProps: ModalStyleProps) => {
   const { classes, visible, exited } = styleProps;
 
   const slots = {
-    root: ['root', !visible && exited && 'hidden']
+    root: ['root', !visible && exited && 'hidden'],
+    backdrop: ['backdrop']
   };
   return composeClasses('WuiModal', slots, classes);
 };

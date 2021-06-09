@@ -22,9 +22,11 @@ export default function Example() {
         visible={visible}
         anchorEl={() => buttonRef.current}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        onClose={actions.setFalse}
+        onClose={() => actions.setFalse()}
       >
-        <div style={{ padding: 16 }}>气泡卡片内容...</div>
+        <div style={{ padding: 16 }}>
+          气泡卡片内容... <Button>更多</Button>
+        </div>
       </Popover>
     </div>
   );

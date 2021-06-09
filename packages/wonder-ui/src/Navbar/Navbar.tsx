@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { emphasize } from '../styles/colorManipulator';
+import { alpha } from '../styles/colorManipulator';
+import { css } from '@wonder-ui/utils';
 import { navbarClasses, useClasses } from './NavbarClasses';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
 
@@ -25,7 +26,7 @@ const NavbarRoot = styled('div', {
 
 const NavbarBg = styled('div', { name: 'WuiNavbar', slot: 'Bg' })(
   ({ theme }) => {
-    const backgroundColor = emphasize(theme.palette.background.default, 0.02);
+    const backgroundColor = alpha(theme.palette.background.default, 0.8);
     return {
       position: 'absolute',
       left: 0,
@@ -39,7 +40,8 @@ const NavbarBg = styled('div', { name: 'WuiNavbar', slot: 'Bg' })(
       borderWidth: 0,
       borderStyle: 'solid',
       borderColor: theme.palette.divider,
-      borderBottomWidth: 'thin'
+      borderBottomWidth: 'thin',
+      backdropFilter: 'saturate(180%) blur(20px)'
     };
   }
 );
@@ -224,7 +226,7 @@ const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
     <NavbarRoot
       theme={theme}
       ref={handleRef}
-      className={classes.root}
+      className={css(classes.root, className)}
       {...rest}
     >
       <NavbarBg theme={theme} className={classes.background} />

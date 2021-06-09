@@ -118,6 +118,9 @@ export * from './Popover';
 export { default as Popper } from './Popper';
 export * from './Popper';
 
+export { default as Popup } from './Popup';
+export * from './Popup';
+
 export { default as Portal } from './Portal';
 export * from './Portal';
 

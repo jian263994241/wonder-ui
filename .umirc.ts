@@ -93,7 +93,7 @@ export default defineConfig({
           'components/backdrop.md',
           'components/dialog.md',
           'components/drawer.md',
-
+          'components/popup.md',
           'components/preloader.md',
           'components/progress.md',
           'components/result.md',

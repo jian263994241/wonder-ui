@@ -14,13 +14,12 @@ const PageRoot = styled('div', {
   slot: 'Root'
 })(({ theme }) => ({
   boxSizing: 'border-box',
-  position: 'absolute',
-  left: 0,
-  top: 0,
+  position: 'relative',
   width: '100%',
   height: '100%',
   transform: 'none',
   zIndex: 1,
+  overflow: 'hidden',
   backgroundColor: theme.palette.background.default,
   '& .WuiNavbar-root': {
     position: 'absolute'
@@ -61,7 +60,7 @@ export interface PageProps
   /**
    * 导航栏
    */
-  navbar?: React.ReactElement & React.RefAttributes<React.ReactElement>;
+  navbar?: React.ReactElement;
   /**
    * 返回按钮事件
    */
@@ -114,13 +113,15 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
   const classes = useClasses({ ...props });
 
   const navbarRef = React.useRef<HTMLElement>(null);
+
   const handleNavbarRef = useForkRef(
     navbarRef,
+    //@ts-expect-error
     navbar ? navbar.ref : NavbarProps.ref
   );
   const toolbarRef = React.useRef<HTMLElement>(null);
   //@ts-expect-error
-  const handleToolbarRef = useForkRef(toolbarRef, toolbar.ref);
+  const handleToolbarRef = useForkRef(toolbarRef, toolbar?.ref);
 
   const { height: navbarHeight = 0 } = useSize(navbarRef);
   const { height: toolbarHeight = 0 } = useSize(toolbarRef);
@@ -168,7 +169,10 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
           right={barRight}
           left={barLeft}
           {...NavbarProps}
-          className={css(classes.navbar, NavbarProps.className)}
+          classes={{
+            ...NavbarProps.classes,
+            root: css(classes.navbar, NavbarProps.className)
+          }}
           ref={handleNavbarRef}
         />
       ) : null}

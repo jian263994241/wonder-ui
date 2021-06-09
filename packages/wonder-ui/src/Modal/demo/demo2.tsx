@@ -43,6 +43,7 @@ export default withDialog(function Example(props) {
         visible={visible}
         onClose={() => setFalse()}
         BackdropProps={{ transitionDuration: 400 }}
+        autoFocus
       >
         <Fade timeout={400}>
           <Demo>
