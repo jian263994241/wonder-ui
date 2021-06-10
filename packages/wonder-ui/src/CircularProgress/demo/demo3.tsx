@@ -20,7 +20,7 @@ export default function Example() {
   }, 800);
 
   return (
-    <Space>
+    <Space wrap>
       <CircularProgress variant="determinate" value={20} />
       <CircularProgress variant="determinate" value={40} />
       <CircularProgress variant="determinate" value={60} />
