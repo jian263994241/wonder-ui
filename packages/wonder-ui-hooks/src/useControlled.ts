@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useConst } from './useConst';
 
-export interface ControlledOptions<T> {
+export interface ControlledProps<T> {
   defaultValue: T;
   value?: T;
 }
 
-export function useControlled<V>(options: ControlledOptions<V>) {
-  const { defaultValue: defaultProp, value: controlled } = options;
+export function useControlled<V>(props: ControlledProps<V>) {
+  const { defaultValue: defaultProp, value: controlled } = props;
   const isControlled = useConst(controlled !== undefined);
 
   const [valueState, setValue] = React.useState<V>(defaultProp);
