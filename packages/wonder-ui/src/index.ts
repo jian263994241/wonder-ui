@@ -73,6 +73,9 @@ export * from './Grow';
 export { default as IconButton } from './IconButton';
 export * from './IconButton';
 
+export { default as InputBase } from './InputBase';
+export * from './InputBase';
+
 export { default as LinearProgress } from './LinearProgress';
 export * from './LinearProgress';
 
@@ -167,6 +170,9 @@ export * from './TabPane';
 
 export { default as Tag } from './Tag';
 export * from './Tag';
+
+export { default as TextareaAutosize } from './TextareaAutosize';
+export * from './TextareaAutosize';
 
 export { default as Toggle } from './Toggle';
 export * from './Toggle';
