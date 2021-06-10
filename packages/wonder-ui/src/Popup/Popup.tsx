@@ -41,10 +41,10 @@ const PopupPage = styled(Page, {
 })<PageProps>(({ theme }) => ({
   position: 'fixed',
   outline: 0,
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up('md')]: {
     borderRadius: theme.shape.borderRadius,
-    width: 576,
-    height: 600
+    width: 630,
+    maxHeight: 630
   }
 }));
 

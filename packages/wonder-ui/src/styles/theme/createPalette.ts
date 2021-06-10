@@ -7,7 +7,7 @@ import {
   green,
   grey,
   lightBlue,
-  orange,
+  yellow,
   red
 } from './colors';
 import { getDevice } from '@wonder-ui/utils';
@@ -154,35 +154,35 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
   const {
     primary = {
       light: blue.A400,
-      dark: blue[500]
+      dark: blue.A700
     },
     secondary = {
       light: grey[600],
-      dark: grey[400]
+      dark: grey[800]
     },
     error = {
-      light: red[600],
-      dark: red[400]
+      light: red[700],
+      dark: red[900]
     },
     danger = {
-      light: red[600],
-      dark: red[400]
+      light: red[700],
+      dark: red[900]
     },
     warning = {
-      light: orange[600],
-      dark: orange[400]
+      light: yellow[600],
+      dark: yellow[700]
     },
     info = {
-      light: lightBlue[600],
-      dark: lightBlue[400]
+      light: lightBlue[400],
+      dark: lightBlue[600]
     },
     success = {
-      light: green[600],
-      dark: green[400]
+      light: green[700],
+      dark: green[900]
     },
     light: lightProp = {
-      light: grey[100],
-      dark: common.white
+      light: grey[50],
+      dark: grey[100]
     },
     dark: darkProp = {
       light: common.black,
