@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 export function useSelections<T>(items: T[], defaultSelected: T[] = []) {
   const [selected, setSelected] = React.useState<T[]>(defaultSelected);
@@ -54,21 +54,28 @@ export function useSelections<T>(items: T[], defaultSelected: T[] = []) {
 
     const toggleAll = () => (allSelected ? unSelectAll() : selectAll());
 
+    const setSelected2 = (items: T[]) => {
+      unSelectAll();
+      items.forEach((o) => {
+        selectedSet.add(o);
+      });
+    };
+
     return {
+      setSelected: setSelected2,
       selectAll,
       unSelectAll,
       noneSelected,
       allSelected,
       partiallySelected,
-      toggleAll
+      toggleAll,
     };
   }, [selectedSet, items, selected]);
 
   return {
     selected,
-    setSelected,
     ...singleActions,
-    ...allActions
+    ...allActions,
   } as const;
 }
 
