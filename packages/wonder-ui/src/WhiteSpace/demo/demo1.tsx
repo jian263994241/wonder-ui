@@ -2,9 +2,7 @@
  * title: 基础用法
  * desc: 通过`size`来设置间隔大小
  */
-
-/** @jsx jsx */
-import { jsx, WhiteSpace, styled } from '@wonder-ui/core';
+import { WhiteSpace, styled } from '@wonder-ui/core';
 
 const Block = styled('div')({
   background: '#0092ff',
@@ -17,16 +15,14 @@ const Block = styled('div')({
   }
 });
 
-export default function Example() {
-  return (
-    <div>
-      <Block>default size md</Block>
-      <WhiteSpace />
-      <Block>size sm</Block>
-      <WhiteSpace size="small" />
-      <Block>size lg</Block>
-      <WhiteSpace size="large" />
-      <Block />
-    </div>
-  );
-}
+export default () => (
+  <div>
+    <Block>default size md</Block>
+    <WhiteSpace />
+    <Block>size sm</Block>
+    <WhiteSpace size="small" />
+    <Block>size lg</Block>
+    <WhiteSpace size="large" />
+    <Block />
+  </div>
+);

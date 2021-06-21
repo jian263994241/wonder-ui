@@ -7,27 +7,12 @@ import {
 export const radioClasses = generateUtilityClasses('WuiRadio', [
   'root',
   'colorPrimary',
-  'colorSecondary',
-  'colorSuccess',
-  'colorError',
-  'colorDanger',
-  'colorWarning',
-  'colorInfo',
-  'colorLight',
-  'colorDark'
+  'colorSecondary'
 ]);
 
 export interface RadioStyleProps {
   classes?: Partial<typeof radioClasses>;
-  color?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info'
-    | 'light'
-    | 'dark';
+  color?: 'primary' | 'secondary';
 }
 
 export const useClasses = (styleProps: RadioStyleProps) => {

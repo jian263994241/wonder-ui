@@ -1,10 +1,6 @@
 /**
  * title: 基础用法
  */
+import { Skeleton } from '@wonder-ui/core';
 
-/** @jsx jsx */
-import { jsx, Skeleton } from '@wonder-ui/core';
-
-export default function Example() {
-  return <Skeleton title />;
-}
+export default () => <Skeleton title />;

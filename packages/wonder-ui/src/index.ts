@@ -136,6 +136,9 @@ export * from './Radio';
 export { default as Row } from './Row';
 export * from './Row';
 
+export { default as SearchBox } from './SearchBox';
+export * from './SearchBox';
+
 export { default as Skeleton } from './Skeleton';
 export * from './Skeleton';
 
@@ -171,8 +174,8 @@ export * from './TabPane';
 export { default as Tag } from './Tag';
 export * from './Tag';
 
-export { default as TextareaAutosize } from './TextareaAutosize';
-export * from './TextareaAutosize';
+export { default as TextField } from './TextField';
+export * from './TextField';
 
 export { default as Toggle } from './Toggle';
 export * from './Toggle';
@@ -198,4 +201,4 @@ export * from './styles/createTheme';
 export * from './styles/useTheme';
 export * from './styles/useThemeProps';
 
-export { ThemeProvider, css, jsx, keyframes } from '@wonder-ui/styled';
+export { ThemeProvider, keyframes } from '@wonder-ui/styled';

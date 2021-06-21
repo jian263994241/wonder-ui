@@ -2,13 +2,11 @@
  * title: 定量环形进度
  * desc:
  */
-
-/** @jsx jsx */
 import * as React from 'react';
-import { jsx, Space, CircularProgress } from '@wonder-ui/core';
+import { Space, CircularProgress } from '@wonder-ui/core';
 import { useInterval } from '@wonder-ui/hooks';
 
-export default function Example() {
+export default () => {
   const [count, setCount] = React.useState(0);
 
   useInterval(() => {
@@ -20,7 +18,7 @@ export default function Example() {
   }, 800);
 
   return (
-    <Space wrap>
+    <Space>
       <CircularProgress variant="determinate" value={20} />
       <CircularProgress variant="determinate" value={40} />
       <CircularProgress variant="determinate" value={60} />
@@ -35,4 +33,4 @@ export default function Example() {
       />
     </Space>
   );
-}
+};

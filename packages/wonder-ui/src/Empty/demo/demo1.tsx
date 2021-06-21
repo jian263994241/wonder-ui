@@ -1,10 +1,6 @@
 /**
  * title: 基础用法
  */
+import { Empty } from '@wonder-ui/core';
 
-/** @jsx jsx */
-import { jsx, Empty } from '@wonder-ui/core';
-
-export default function Example() {
-  return <Empty />;
-}
+export default () => <Empty />;

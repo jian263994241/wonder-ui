@@ -2,11 +2,9 @@
  * title: 方法调用
  * desc: 调用`show`或`hide`
  */
+import { Button, showPreloader, hidePreloader } from '@wonder-ui/core';
 
-/** @jsx jsx */
-import { jsx, Button, showPreloader, hidePreloader } from '@wonder-ui/core';
-
-export default function Example() {
+export default () => {
   const open = () => {
     showPreloader();
     setTimeout(() => {
@@ -19,4 +17,4 @@ export default function Example() {
       Open
     </Button>
   );
-}
+};

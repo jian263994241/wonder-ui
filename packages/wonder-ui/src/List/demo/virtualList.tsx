@@ -3,15 +3,12 @@
  * desc:
  * background: '#f5f5f5'
  */
-
-/** @jsx jsx */
 import {
-  jsx,
+  Container,
   List,
   ListHeader,
   ListItem,
   ListItemText,
-  Container,
   Typography
 } from '@wonder-ui/core';
 import { useVirtualList } from '@wonder-ui/hooks';
@@ -19,7 +16,7 @@ import * as React from 'react';
 
 const dataList = Array(2000).fill('');
 
-export default function Example() {
+export default () => {
   const { list, containerProps, wrapperProps } = useVirtualList(dataList, {
     overscan: 15,
     itemHeight: 44
@@ -50,4 +47,4 @@ export default function Example() {
       </div>
     </Container>
   );
-}
+};

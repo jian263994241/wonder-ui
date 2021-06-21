@@ -45,6 +45,8 @@ export interface TypographyProps
    * @default 0
    */
   lineClamp?: number;
+  /** inline */
+  inline?: boolean;
   /**
    * @description 段落
    * @default false
@@ -67,8 +69,11 @@ export const TypographyRoot = styled('span', {
   slot: 'Root'
 })<{ styleProps: TypographyStyleProps }>(({ theme, styleProps }) => ({
   margin: 0,
-  ...theme.typography[styleProps.variant],
+  padding: 0,
+  display: 'block',
   textAlign: styleProps.align,
+  overflow: 'hidden',
+  ...theme.typography[styleProps.variant],
 
   [`&.${typographyClasses.colorPrimary}`]: {
     color: theme.palette.primary.main
@@ -85,15 +90,12 @@ export const TypographyRoot = styled('span', {
   [`&.${typographyClasses.colorError}`]: {
     color: theme.palette.error.main
   },
-
   [`&.${typographyClasses.lineClamp}`]: {
     display: '-webkit-box',
     WebkitBoxOrient: 'vertical',
-    WebkitLineClamp: styleProps.lineClamp,
-    overflow: 'hidden'
+    WebkitLineClamp: styleProps.lineClamp
   },
   [`&.${typographyClasses.noWrap}`]: {
-    overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap'
   },
@@ -102,6 +104,9 @@ export const TypographyRoot = styled('span', {
   },
   [`&.${typographyClasses.paragraph}`]: {
     marginBottom: 16
+  },
+  [`&.${typographyClasses.inline}`]: {
+    display: 'inline'
   }
 }));
 

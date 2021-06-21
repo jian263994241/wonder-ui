@@ -2,9 +2,7 @@
  * title: 基础消息条
  * desc: 一条基本的通知消息
  */
-
-/** @jsx jsx */
-import { jsx, Button, Snackbar } from '@wonder-ui/core';
+import { Button, Snackbar } from '@wonder-ui/core';
 import { useToggle } from '@wonder-ui/hooks';
 
 export default function Example() {

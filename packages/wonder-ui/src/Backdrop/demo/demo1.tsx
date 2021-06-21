@@ -3,18 +3,10 @@
  * desc:
  *
  */
-
-/** @jsx jsx */
-import {
-  jsx,
-  Button,
-  Backdrop,
-  useTheme,
-  CircularProgress
-} from '@wonder-ui/core';
+import { Button, Backdrop, CircularProgress, useTheme } from '@wonder-ui/core';
 import { useToggle } from '@wonder-ui/hooks';
 
-export default function Example() {
+export default () => {
   const theme = useTheme();
   const [visible, { toggle }] = useToggle();
 
@@ -27,13 +19,10 @@ export default function Example() {
       <Backdrop
         visible={visible}
         onClick={() => toggle()}
-        css={{
-          zIndex: theme.zIndex.fixed,
-          color: '#fff'
-        }}
+        style={{ zIndex: theme.zIndex.fixed }}
       >
-        <CircularProgress color="inherit" />
+        <CircularProgress color="light" />
       </Backdrop>
     </div>
   );
-}
+};

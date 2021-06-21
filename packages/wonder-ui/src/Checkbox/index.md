@@ -8,7 +8,7 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| classes | css | `'root', 'circle', 'colorPrimary', 'colorSecondary', 'colorSuccess', 'colorError', 'colorDanger', 'colorWarning', 'colorInfo', 'colorLight', 'colorDark'` |
+| classes | css | `'root', 'circle', 'colorPrimary', 'colorSecondary'` |
 | circle | 圆形 | `boolean` | false
-| color | 颜色 | `'primary' \| 'secondary' \| 'danger' \| 'warning' \| 'info'` | primary
+| color | 颜色 | `'primary' \| 'secondary'` | primary
 | indeterminate | 不明确的 | `boolean` | false

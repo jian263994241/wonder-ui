@@ -31,6 +31,7 @@ export const typographyClasses = generateUtilityClasses('WuiTypography', [
   'body1',
   'body2',
   'inherit',
+  'inline',
   'button',
   'caption',
   'overline',
@@ -60,6 +61,7 @@ export interface TypographyStyleProps {
     | 'textSecondary'
     | 'error';
   gutterBottom: boolean;
+  inline?: boolean;
   lineClamp?: number;
   noWrap: boolean;
   paragraph: boolean;
@@ -75,6 +77,7 @@ export const useClasses = (styleProps: TypographyStyleProps) => {
     paragraph,
     variant,
     lineClamp,
+    inline,
     classes
   } = styleProps;
 
@@ -82,11 +85,12 @@ export const useClasses = (styleProps: TypographyStyleProps) => {
     root: [
       'root',
       variant,
-      styleProps.align !== 'inherit' && `align${capitalize(align)}`,
-      styleProps.color !== 'inherit' && `color${upperFirst(color)}`,
+      align !== 'inherit' && `align${capitalize(align)}`,
+      color !== 'inherit' && `color${upperFirst(color)}`,
       gutterBottom && 'gutterBottom',
       noWrap && 'noWrap',
       paragraph && 'paragraph',
+      inline && 'inline',
       typeof lineClamp === 'number' && lineClamp !== 0 && 'lineClamp'
     ]
   };

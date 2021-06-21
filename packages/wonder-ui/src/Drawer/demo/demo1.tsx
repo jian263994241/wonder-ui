@@ -2,10 +2,7 @@
  * title: 基础抽屉
  * desc: 方向 `'down' | 'left' | 'right' | 'up'`
  */
-
-/** @jsx jsx */
 import {
-  jsx,
   Button,
   Drawer,
   DrawerProps,
@@ -18,7 +15,7 @@ import { useToggle } from '@wonder-ui/hooks';
 
 type Anchor = DrawerProps['anchor'];
 
-export default function Example() {
+export default () => {
   const [visible, { toggle: toggleVisible }] = useToggle(false);
   const [anchor, { toggle }] = useToggle<Anchor>('left');
 
@@ -74,4 +71,4 @@ export default function Example() {
       </Drawer>
     </div>
   );
-}
+};

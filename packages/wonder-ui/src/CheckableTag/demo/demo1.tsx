@@ -2,21 +2,18 @@
  * title: 可选择标签
  * desc: 可通过 CheckableTag 实现类似 Checkbox 的效果，点击切换选中效果
  */
-
-/** @jsx jsx */
-import { jsx, Space, CheckableTag } from '@wonder-ui/core';
+import { Space, CheckableTag } from '@wonder-ui/core';
 import { useSelections } from '@wonder-ui/hooks';
 
 const tags = ['Movies', 'Books', 'Music', 'Sports'];
 
-export default function Example() {
+export default () => {
   const { selected, unSelect, isSelected, select } = useSelections(tags);
 
   return (
-    <div>
-      <p>selected: {selected.join(',')}</p>
-
-      <Space wrap>
+    <Space direction="vertical">
+      <div>Selected: {selected.join(',')}</div>
+      <Space>
         <div>Categories:</div>
         {tags.map((tag, index) => (
           <CheckableTag
@@ -34,6 +31,6 @@ export default function Example() {
           </CheckableTag>
         ))}
       </Space>
-    </div>
+    </Space>
   );
-}
+};

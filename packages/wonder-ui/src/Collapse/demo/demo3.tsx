@@ -2,38 +2,35 @@
  * title: 水平方向折叠
  * desc: 通过 `direction=horizontal, collapsedSize` 改变折叠方向
  */
-
-/** @jsx jsx */
-import * as React from 'react';
 import {
-  jsx,
   Button,
   Space,
   Collapse,
   Typography,
   WhiteSpace
 } from '@wonder-ui/core';
+import { useBoolean } from '@wonder-ui/hooks';
 
-export default function Example() {
-  const [visible, setVisible] = React.useState(false);
+export default () => {
+  const [visible, { setTrue, setFalse, toggle }] = useBoolean(false);
 
   return (
     <div>
       <Space>
-        <Button variant="contained" onClick={() => setVisible(true)}>
+        <Button variant="contained" onClick={() => setTrue()}>
           Open
         </Button>
-        <Button variant="contained" onClick={() => setVisible(false)}>
+        <Button variant="contained" onClick={() => setFalse()}>
           Close
         </Button>
-        <Button variant="contained" onClick={() => setVisible(!visible)}>
+        <Button variant="contained" onClick={() => toggle()}>
           Toggle
         </Button>
       </Space>
       <WhiteSpace />
       <Collapse in={visible} direction="horizontal" timeout={500}>
         <div
-          css={{
+          style={{
             width: 300,
             padding: 16,
             boxSizing: 'border-box'
@@ -48,4 +45,4 @@ export default function Example() {
       </Collapse>
     </div>
   );
-}
+};

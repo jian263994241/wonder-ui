@@ -3,13 +3,9 @@
  * desc: 使用`Collapse`折叠列表
  * background: '#f5f5f5'
  */
-
-/** @jsx jsx */
 import {
   Collapse,
   Container,
-  Divider,
-  jsx,
   List,
   ListItemMedia,
   ListItem,
@@ -18,7 +14,7 @@ import {
 import { HeartFill } from '@wonder-ui/icons';
 import { useToggle } from '@wonder-ui/hooks';
 
-export default function Example() {
+export default () => {
   const [visible, { toggle }] = useToggle(true);
   return (
     <Container size="sm">
@@ -75,4 +71,4 @@ export default function Example() {
       </List>
     </Container>
   );
-}
+};

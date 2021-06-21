@@ -2,30 +2,26 @@
  * title: 垂直按钮
  * desc: 设置 `buttonsVertical` 按钮排列方向
  */
+import { Button, Dialog } from '@wonder-ui/core';
 
-/** @jsx jsx */
-import { jsx, Button, Dialog } from '@wonder-ui/core';
-
-export default function Example() {
-  return (
-    <Dialog
-      buttonsVertical
-      buttons={[
-        {
-          text: '标为未读',
-          onClick: () => {
-            console.log('标为未读');
-          }
-        },
-        {
-          text: '置顶聊天',
-          onClick: () => {
-            console.log('置顶聊天');
-          }
+export default () => (
+  <Dialog
+    buttonsVertical
+    buttons={[
+      {
+        text: '标为未读',
+        onClick: () => {
+          console.log('标为未读');
         }
-      ]}
-    >
-      <Button variant="contained">垂直按钮</Button>
-    </Dialog>
-  );
-}
+      },
+      {
+        text: '置顶聊天',
+        onClick: () => {
+          console.log('置顶聊天');
+        }
+      }
+    ]}
+  >
+    <Button variant="contained">垂直按钮</Button>
+  </Dialog>
+);

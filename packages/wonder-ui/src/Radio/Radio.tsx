@@ -11,31 +11,14 @@ export interface RadioProps
    * @description color
    * @default primary
    */
-  color?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info'
-    | 'light'
-    | 'dark';
+  color?: 'primary' | 'secondary';
   /**
    * @ignore
    */
   ref?: React.Ref<any>;
 }
 
-const colors = [
-  'primary',
-  'secondary',
-  'success',
-  'danger',
-  'warning',
-  'info',
-  'light',
-  'dark'
-] as const;
+const colors = ['primary', 'secondary'] as const;
 
 const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })(
   ({ theme }) => ({

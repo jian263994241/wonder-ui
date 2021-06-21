@@ -9,27 +9,12 @@ export const checkboxClasses = generateUtilityClasses('WuiCheckbox', [
   'circle',
   'indeterminate',
   'colorPrimary',
-  'colorSecondary',
-  'colorSuccess',
-  'colorError',
-  'colorDanger',
-  'colorWarning',
-  'colorInfo',
-  'colorLight',
-  'colorDark'
+  'colorSecondary'
 ]);
 
 export interface CheckboxStyleProps {
   classes?: Partial<typeof checkboxClasses>;
-  color?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info'
-    | 'light'
-    | 'dark';
+  color?: 'primary' | 'secondary';
   circle?: boolean;
   indeterminate?: boolean;
 }

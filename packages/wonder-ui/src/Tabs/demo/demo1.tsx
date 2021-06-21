@@ -3,10 +3,8 @@
  * desc: 使用`TabPane`切换内容
  *
  */
-/** @jsx jsx */
 import * as React from 'react';
 import {
-  jsx,
   TabContext,
   TabPane,
   Typography,
@@ -20,7 +18,7 @@ const Content = styled('div')`
   padding: 16px;
 `;
 
-export default function Example() {
+export default () => {
   const [value, setValue] = React.useState(1);
 
   return (
@@ -49,4 +47,4 @@ export default function Example() {
       </TabPane>
     </TabContext>
   );
-}
+};

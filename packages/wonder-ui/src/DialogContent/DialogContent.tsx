@@ -1,21 +1,22 @@
 import * as React from 'react';
+import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
+import Divider from '../Divider';
 import Paper, { PaperProps } from '../Paper';
 import styled from '../styles/styled';
 import Typography, { TypographyProps } from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { dialogContentClasses, useClasses } from './DialogContentClasses';
-import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 
 const DialogContentRoot = styled(Paper, {
   name: 'WuiDialogContent',
   slot: 'Root',
   shouldForwardProp: () => true
-})<PaperProps>({
-  // borderRadius: 12,
-  borderRadius: 8,
+})<PaperProps>(({ theme }) => ({
+  borderRadius: theme.shape.dialogRadius,
   width: 295,
-  userSelect: 'none'
-});
+  userSelect: 'none',
+  overflow: 'hidden'
+}));
 
 const DialogContentInner = styled('div', {
   name: 'WuiDialogContent',
@@ -60,25 +61,21 @@ export const DialogButton = styled(ButtonBase, {
   fontSize: theme.typography.pxToRem(16),
   textAlign: 'center',
   backgroundColor: 'transparent',
-  borderStyle: 'solid',
-  borderRightWidth: 'thin',
-  borderColor: theme.palette.divider,
+  border: 0,
+  // borderStyle: 'solid',
+  // borderRightWidth: 'thin',
+  // borderColor: theme.palette.divider,
   boxSizing: 'border-box',
   textOverflow: 'ellipsis',
   overflow: 'hidden',
+
   [`.${dialogContentClasses.buttonsVertical} > &`]: {
-    borderWidth: 0,
-    borderBottomWidth: 'thin',
-    flexShrink: 0
-  },
-  '&:hover': {
-    backgroundColor: 'rgba(0,0,0,0.03)',
-    '@media (hover: none)': {
-      backgroundColor: 'transparent'
-    }
+    // borderWidth: 0,
+    // borderBottomWidth: 'thin',
+    // flexShrink: 0
   },
   '&:last-child': {
-    borderWidth: 0
+    // borderWidth: 0
   }
 }));
 
@@ -103,7 +100,7 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
       className,
       children,
       content,
-      elevation = 4,
+      elevation = 0,
       text,
       textTypographyProps,
       title,
@@ -124,33 +121,36 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
         {...rest}
       >
         {(title || text || content) && (
-          <DialogContentInner className={classes.inner}>
-            {title && (
-              <Typography
-                variant="subtitle1"
-                align="center"
-                noWrap
-                gutterBottom={!!text || !!content}
-                classes={{ root: classes.title }}
-                {...titleTypographyProps}
-              >
-                {title}
-              </Typography>
-            )}
+          <React.Fragment>
+            <DialogContentInner className={classes.inner}>
+              {title && (
+                <Typography
+                  variant="subtitle1"
+                  align="center"
+                  noWrap
+                  gutterBottom={!!text || !!content}
+                  classes={{ root: classes.title }}
+                  {...titleTypographyProps}
+                >
+                  {title}
+                </Typography>
+              )}
 
-            {text && (
-              <Typography
-                variant="body1"
-                align="center"
-                classes={{ root: classes.text }}
-                gutterBottom
-                {...textTypographyProps}
-              >
-                {text}
-              </Typography>
-            )}
-            {content}
-          </DialogContentInner>
+              {text && (
+                <Typography
+                  variant="body1"
+                  align="center"
+                  classes={{ root: classes.text }}
+                  gutterBottom
+                  {...textTypographyProps}
+                >
+                  {text}
+                </Typography>
+              )}
+              {content}
+            </DialogContentInner>
+            {buttons.length > 0 && <Divider />}
+          </React.Fragment>
         )}
 
         {buttons.length > 0 && (
@@ -159,14 +159,21 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
               const { children, text, ...rest } = buttonProps;
 
               return (
-                <DialogButton
-                  focusRipple
-                  classes={{ root: classes.button }}
-                  key={index}
-                  {...rest}
-                >
-                  {text || children}
-                </DialogButton>
+                <React.Fragment key={index}>
+                  {index != 0 && (
+                    <Divider
+                      flexItem
+                      direction={buttonsVertical ? 'horizontal' : 'vertical'}
+                    />
+                  )}
+                  <DialogButton
+                    focusRipple
+                    classes={{ root: classes.button }}
+                    {...rest}
+                  >
+                    {text || children}
+                  </DialogButton>
+                </React.Fragment>
               );
             })}
           </DialogContentButtons>

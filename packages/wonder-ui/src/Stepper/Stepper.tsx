@@ -9,10 +9,11 @@ import { Theme } from '../styles/createTheme';
 import { useControlled } from '@wonder-ui/hooks';
 import numeral from 'numeral';
 import { emphasize } from '../styles/colorManipulator';
+import InputBase, { InputBaseProps, InputBaseAction } from '../InputBase';
 
 export interface StepperProps
   extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'children' | 'onChange'> {
-  InputProps?: Omit<React.HTMLProps<HTMLInputElement>, 'as'>;
+  InputProps?: Partial<InputBaseProps>;
   classes?: Partial<typeof stepperClasses>;
   defaultValue?: number | string;
   disableInput?: boolean;
@@ -98,7 +99,7 @@ const StepperPlus = styled(ButtonBase, {
   }
 }));
 
-const StepperInput = styled('input', {
+const StepperInput = styled(InputBase, {
   name: 'Stepper',
   slot: 'Input'
 })(({ theme }) => ({
@@ -121,14 +122,6 @@ const StepperInput = styled('input', {
 
   [`&.${stepperClasses.disableInput}`]: {
     pointerEvents: 'none'
-  },
-  /** hide arrows */
-  '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-    WebkitAppearance: 'none',
-    margin: 0
-  },
-  '&[type=number]': {
-    MozAppearance: 'textfield'
   }
 }));
 
@@ -157,6 +150,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
   const min = toNumber(minProp || 0);
   const step = toNumber(stepProp || 1);
   const defaultValue = toNumber(defaultValueProp || min);
+  const inputActionRef = React.useRef<InputBaseAction>(null);
 
   const isRange = (value: number) => {
     return value >= min && value <= max;
@@ -219,7 +213,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
 
   const handleFocus = React.useCallback((e) => {
     setTimeout(() => {
-      e.target.select();
+      inputActionRef.current?.select();
     }, 0);
 
     if (InputProps?.onFocus) {
@@ -255,6 +249,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
           type="number"
           role="spinbutton"
           inputMode="decimal"
+          actionRef={inputActionRef}
           {...InputProps}
           aria-valuemin={min}
           aria-valuenow={valueState}

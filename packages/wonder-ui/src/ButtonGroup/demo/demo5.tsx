@@ -2,13 +2,12 @@
  * title: 单选按钮
  * desc: 改变`checked`prop设定激活状态
  */
-/** @jsx jsx */
-import { Button, ButtonGroup, jsx } from '@wonder-ui/core';
+import { Button, ButtonGroup } from '@wonder-ui/core';
 import { useSelections } from '@wonder-ui/hooks';
 
 const list = [0, 1, 2];
 
-export default function Example() {
+export default () => {
   const { isSelected, setSelected } = useSelections(list, [0]);
 
   return (
@@ -24,4 +23,4 @@ export default function Example() {
       ))}
     </ButtonGroup>
   );
-}
+};

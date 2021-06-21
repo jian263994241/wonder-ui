@@ -2,19 +2,10 @@
  * title: 基本使用
  * desc: 使用 `Fade` 过渡效果
  */
-
-/** @jsx jsx */
-import {
-  jsx,
-  Button,
-  Fade,
-  Modal,
-  ModalContent,
-  Typography
-} from '@wonder-ui/core';
+import { Button, Fade, Modal, ModalContent, Typography } from '@wonder-ui/core';
 import { useBoolean } from '@wonder-ui/hooks';
 
-export default (function Example() {
+export default () => {
   const [visible, { setFalse, setTrue }] = useBoolean();
 
   return (
@@ -39,4 +30,4 @@ export default (function Example() {
       </Modal>
     </div>
   );
-});
+};

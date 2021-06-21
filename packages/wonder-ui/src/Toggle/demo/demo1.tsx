@@ -3,27 +3,26 @@
  * desc:
  *
  */
-/** @jsx jsx */
-import { jsx, Space, Toggle, WhiteSpace } from '@wonder-ui/core';
+import { Space, Toggle } from '@wonder-ui/core';
 
 export default function Example() {
   return (
-    <div>
-      <Space wrap>
+    <Space direction="vertical">
+      <Space>
         <Toggle defaultChecked />
         <Toggle defaultChecked color="secondary" />
         <Toggle defaultChecked color="danger" />
         <Toggle defaultChecked color="warning" />
         <Toggle defaultChecked color="info" />
       </Space>
-      <WhiteSpace />
-      <Space wrap>
+
+      <Space>
         <Toggle disabled defaultChecked />
         <Toggle disabled defaultChecked color="secondary" />
         <Toggle disabled defaultChecked color="danger" />
         <Toggle disabled defaultChecked color="warning" />
         <Toggle disabled defaultChecked color="info" />
       </Space>
-    </div>
+    </Space>
   );
 }

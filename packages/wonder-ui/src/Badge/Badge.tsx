@@ -79,7 +79,7 @@ const BadgeContent = styled('span', { name: 'WuiBadge', slot: 'Content' })(
       }),
 
       [`.${badgeClasses.rounded} > &`]: {
-        borderRadius: '50%'
+        borderRadius: '50rem'
       },
 
       [`.${badgeClasses.withChildren} > &`]: {

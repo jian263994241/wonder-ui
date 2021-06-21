@@ -3,16 +3,13 @@
  * desc: List inset 样式
  * background: '#f5f5f5'
  */
-
-/** @jsx jsx */
 import {
   Collapse,
-  jsx,
+  Container,
   List,
   ListItemMedia,
   ListItem,
   ListItemText,
-  Container,
   styled
 } from '@wonder-ui/core';
 import { HeartFill } from '@wonder-ui/icons';
@@ -24,7 +21,7 @@ const Wrapper = styled(Container)`
   padding: 30px 0;
 `;
 
-export default function Example() {
+export default () => {
   const [visible, { toggle }] = useToggle(true);
   return (
     <Wrapper size="sm">
@@ -81,4 +78,4 @@ export default function Example() {
       </List>
     </Wrapper>
   );
-}
+};

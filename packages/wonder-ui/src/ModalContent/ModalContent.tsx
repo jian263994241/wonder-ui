@@ -187,7 +187,7 @@ const ModalContent = React.forwardRef<HTMLElement, ModalContentProps>(
           ? footer
           : (onCancel || onOk) && (
               <ModalContentFooter className={classes.footer}>
-                <Space>
+                <Space horizontalAlign="end">
                   {onCancel && (
                     <Button
                       onClick={onCancel}

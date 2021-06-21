@@ -2,10 +2,7 @@
  * title: 自定义Modal内容
  * desc:
  */
-
-/** @jsx jsx */
 import {
-  jsx,
   Button,
   Fade,
   Modal,
@@ -30,8 +27,8 @@ const Demo = styled('div')`
   padding: 32px;
 `;
 
-export default withDialog(function Example(props) {
-  const [visible, { toggle, setTrue, setFalse }] = useBoolean();
+export default withDialog((props) => {
+  const [visible, { setTrue, setFalse }] = useBoolean();
 
   return (
     <div>

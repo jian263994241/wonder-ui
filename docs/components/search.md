@@ -6,4 +6,4 @@
 
 ### 基本使用
 
-<code src="../../packages/wonder-ui/src/Portal/demo/demo1.tsx"></code>
+<code src="../../packages/wonder-ui/src/SearchBox/demo/demo1.tsx"></code>

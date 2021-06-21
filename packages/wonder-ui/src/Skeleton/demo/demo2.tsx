@@ -1,16 +1,11 @@
 /**
  * title: 显示头像
  */
+import { Space, Skeleton } from '@wonder-ui/core';
 
-/** @jsx jsx */
-import { jsx, Skeleton, WhiteSpace } from '@wonder-ui/core';
-
-export default function Example() {
-  return (
-    <div>
-      <Skeleton avatar title />
-      <WhiteSpace />
-      <Skeleton avatar title />
-    </div>
-  );
-}
+export default () => (
+  <Space direction="vertical">
+    <Skeleton avatar title />
+    <Skeleton avatar title />
+  </Space>
+);

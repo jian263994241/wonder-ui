@@ -17,15 +17,8 @@ export interface CheckboxProps
    * @description color
    * @default primary
    */
-  color?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info'
-    | 'light'
-    | 'dark';
+  color?: 'primary' | 'secondary';
+
   /**
    * @description indeterminate
    * @default false
@@ -33,16 +26,7 @@ export interface CheckboxProps
   indeterminate?: boolean;
 }
 
-const colors = [
-  'primary',
-  'secondary',
-  'success',
-  'danger',
-  'warning',
-  'info',
-  'light',
-  'dark'
-] as const;
+const colors = ['primary', 'secondary'] as const;
 
 const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })(
   ({ theme }) => ({

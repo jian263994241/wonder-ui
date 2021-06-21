@@ -6,7 +6,7 @@ export type GlobalStylesProps = React.ComponentProps<
   typeof GlobalStylesWithoutTheme
 >;
 
-export function GlobalStyles(props: GlobalStylesProps): React.ReactElement {
+export function GlobalStyles(props: GlobalStylesProps): JSX.Element {
   return <GlobalStylesWithoutTheme defaultTheme={theme} {...props} />;
 }
 

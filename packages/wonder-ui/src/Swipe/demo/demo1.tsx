@@ -2,8 +2,7 @@
  * title: 基本用法
  * desc:
  */
-/** @jsx jsx */
-import { jsx, Swipe, styled, Container } from '@wonder-ui/core';
+import { Swipe, styled } from '@wonder-ui/core';
 
 const SwipeItem = styled('div')`
   color: #fff;
@@ -13,14 +12,10 @@ const SwipeItem = styled('div')`
   background-color: #39a9ed;
 `;
 
-export default function Example() {
-  return (
-    <Container>
-      <Swipe autoplay arrows dots infinite>
-        <SwipeItem>1</SwipeItem>
-        <SwipeItem>2</SwipeItem>
-        <SwipeItem>3</SwipeItem>
-      </Swipe>
-    </Container>
-  );
-}
+export default () => (
+  <Swipe autoplay arrows dots infinite>
+    <SwipeItem>1</SwipeItem>
+    <SwipeItem>2</SwipeItem>
+    <SwipeItem>3</SwipeItem>
+  </Swipe>
+);

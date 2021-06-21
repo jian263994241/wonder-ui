@@ -2,30 +2,37 @@
  * title: 标题
  * desc: html的所有标题 `h1`~`h6`
  */
-/** @jsx jsx */
-import { Typography, jsx } from '@wonder-ui/core';
+import { Typography } from '@wonder-ui/core';
 
-export default function Example() {
-  return (
-    <div>
-      <Typography variant="h1" gutterBottom>
-        h1.Wonder heading
-      </Typography>
-      <Typography variant="h2" gutterBottom>
-        h2.Wonder heading
-      </Typography>
-      <Typography variant="h3" gutterBottom>
-        h3.Wonder heading
-      </Typography>
-      <Typography variant="h4" gutterBottom>
-        h4.Wonder heading
-      </Typography>
-      <Typography variant="h5" gutterBottom>
-        h5.Wonder heading
-      </Typography>
-      <Typography variant="h6" gutterBottom>
-        h6.Wonder heading
-      </Typography>
-    </div>
-  );
-}
+export default () => (
+  <div>
+    <Typography variant="h1" gutterBottom>
+      h1.Heading
+    </Typography>
+    <Typography variant="h2" gutterBottom>
+      h2.Heading
+    </Typography>
+    <Typography variant="h3" gutterBottom>
+      h3.Heading
+    </Typography>
+    <Typography variant="h4" gutterBottom>
+      h4.Heading
+    </Typography>
+    <Typography variant="h5" gutterBottom>
+      h5.Heading
+    </Typography>
+    <Typography variant="h6" gutterBottom>
+      h6.Heading
+    </Typography>
+
+    <Typography variant="subtitle1">
+      subtitle1.Subtitle Subtitle Subtitle Subtitle
+    </Typography>
+    <Typography variant="subtitle2">
+      subtitle2.Subtitle Subtitle Subtitle Subtitle
+    </Typography>
+
+    <Typography variant="body1">body1.Text Text Text Text</Typography>
+    <Typography variant="body2">body2.Text Text Text Text</Typography>
+  </div>
+);

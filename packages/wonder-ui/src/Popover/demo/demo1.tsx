@@ -2,13 +2,11 @@
  * title: 基本使用
  * desc:
  */
-
-/** @jsx jsx */
 import * as React from 'react';
-import { jsx, Button, Popover } from '@wonder-ui/core';
+import { Button, Popover } from '@wonder-ui/core';
 import { useBoolean } from '@wonder-ui/hooks';
 
-export default function Example() {
+export default () => {
   const [visible, actions] = useBoolean(false);
   const buttonRef = React.useRef<HTMLElement>(null);
 
@@ -30,4 +28,4 @@ export default function Example() {
       </Popover>
     </div>
   );
-}
+};

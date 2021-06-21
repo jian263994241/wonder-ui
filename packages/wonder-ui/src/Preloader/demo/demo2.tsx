@@ -2,9 +2,7 @@
  * title: 异步使用
  * desc:
  */
-
-/** @jsx jsx */
-import { jsx, Button, Preloader } from '@wonder-ui/core';
+import { Button, Preloader } from '@wonder-ui/core';
 
 const loadData = () =>
   new Promise((resolve) => {
@@ -13,10 +11,8 @@ const loadData = () =>
     }, 2000);
   });
 
-export default function Example() {
-  return (
-    <Preloader onLoad={loadData}>
-      <Button variant="contained">Open</Button>
-    </Preloader>
-  );
-}
+export default () => (
+  <Preloader onLoad={loadData}>
+    <Button variant="contained">Open</Button>
+  </Preloader>
+);

@@ -4,12 +4,10 @@
             iPhone / iPod 和 iPad 上看起来有点不同的弹出窗口，iPhone
             它是全屏的。
  */
-
-/** @jsx jsx */
 import * as React from 'react';
-import { jsx, Button, Typography, Popup } from '@wonder-ui/core';
+import { Button, Popup, Typography } from '@wonder-ui/core';
 
-export default function Example() {
+export default () => {
   const [popVisible, setVisible] = React.useState(false);
   return (
     <div>
@@ -34,4 +32,4 @@ export default function Example() {
       </Popup>
     </div>
   );
-}
+};

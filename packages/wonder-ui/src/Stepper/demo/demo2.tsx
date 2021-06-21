@@ -1,22 +1,13 @@
 /**
  * title: 自定义
  */
-
-/** @jsx jsx */
 import * as React from 'react';
-import {
-  jsx,
-  defaultTheme,
-  Badge,
-  Stepper,
-  styled,
-  Space
-} from '@wonder-ui/core';
+import { Badge, Stepper, Space, styled } from '@wonder-ui/core';
 
 const UIStepper = styled(Stepper)`
   .WuiStepper-button {
     border-radius: 50%;
-    background-color: ${defaultTheme.palette.colors.blue.A400};
+    background-color: ${({ theme }) => theme.palette.colors.blue.A400};
     color: #fff;
   }
 
@@ -25,7 +16,7 @@ const UIStepper = styled(Stepper)`
   }
 `;
 
-export default function Example() {
+export default () => {
   const [value, setValue] = React.useState(0);
   const [value2, setValue2] = React.useState(0);
   return (
@@ -50,4 +41,4 @@ export default function Example() {
       </Badge>
     </Space>
   );
-}
+};

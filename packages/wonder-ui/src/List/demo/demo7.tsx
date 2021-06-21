@@ -1,29 +1,24 @@
 /**
  * background: '#f5f5f5'
  */
-
-/** @jsx jsx */
 import {
-  jsx,
+  Container,
   List,
   ListHeader,
   ListItem,
-  ListItemText,
-  Container
+  ListItemText
 } from '@wonder-ui/core';
 
-export default function Example() {
-  return (
-    <Container size="sm">
-      <List>
-        <ListHeader>Header</ListHeader>
-        <ListItem>
-          <ListItemText>Index</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemText>Index 2</ListItemText>
-        </ListItem>
-      </List>
-    </Container>
-  );
-}
+export default () => (
+  <Container size="sm">
+    <List>
+      <ListHeader>Header</ListHeader>
+      <ListItem>
+        <ListItemText>Index</ListItemText>
+      </ListItem>
+      <ListItem>
+        <ListItemText>Index 2</ListItemText>
+      </ListItem>
+    </List>
+  </Container>
+);

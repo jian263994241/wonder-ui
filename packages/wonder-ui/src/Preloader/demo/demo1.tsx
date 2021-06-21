@@ -2,12 +2,10 @@
  * title: 基础用法
  * desc:
  */
-
-/** @jsx jsx */
-import { jsx, Button, Preloader } from '@wonder-ui/core';
+import { Button, Preloader } from '@wonder-ui/core';
 import { useToggle } from '@wonder-ui/hooks';
 
-export default function Example() {
+export default () => {
   const [visible, { toggle }] = useToggle(false);
 
   const open = () => {
@@ -26,4 +24,4 @@ export default function Example() {
       <Preloader visible={visible} text="加载中..." />
     </div>
   );
-}
+};

@@ -3,15 +3,12 @@
  * desc:
  * background: '#f5f5f5'
  */
-
-/** @jsx jsx */
 import {
-  jsx,
+  Container,
+  CircularProgress,
   List,
   ListItem,
   ListItemText,
-  Container,
-  CircularProgress,
   styled
 } from '@wonder-ui/core';
 import { useDynamicList } from '@wonder-ui/hooks';
@@ -26,7 +23,7 @@ const Indicator = styled('div')`
 
 const dataList = Array(10).fill('');
 
-export default function Example() {
+export default () => {
   const { list, merge } = useDynamicList(dataList);
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
@@ -65,4 +62,4 @@ export default function Example() {
       </div>
     </Container>
   );
-}
+};

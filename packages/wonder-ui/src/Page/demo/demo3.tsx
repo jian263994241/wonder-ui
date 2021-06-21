@@ -2,36 +2,23 @@
  * title: 抽屉内的页面
  * desc:
  */
+import { Button, Container, Drawer, Page, Typography } from '@wonder-ui/core';
+import { useBoolean } from '@wonder-ui/hooks';
 
-/** @jsx jsx */
-import {
-  jsx,
-  Button,
-  Drawer,
-  Page,
-  Typography,
-  Container
-} from '@wonder-ui/core';
-import * as React from 'react';
-
-export default function Example() {
-  const [visible, setVisible] = React.useState(false);
+export default () => {
+  const [visible, { setTrue, setFalse }] = useBoolean(false);
   return (
     <div>
-      <Button variant="contained" onClick={() => setVisible(true)}>
+      <Button variant="contained" onClick={() => setTrue()}>
         抽屉内的页面
       </Button>
 
-      <Drawer
-        visible={visible}
-        anchor="bottom"
-        onClose={() => setVisible(false)}
-      >
+      <Drawer visible={visible} anchor="bottom" onClose={() => setFalse()}>
         <Page
           style={{ width: '100%', height: 300 }}
           title="标题"
           showCloseButton
-          onClose={() => setVisible(false)}
+          onClose={() => setFalse()}
         >
           <Container>
             <Typography gutterBottom>第一条</Typography>
@@ -55,4 +42,4 @@ export default function Example() {
       </Drawer>
     </div>
   );
-}
+};

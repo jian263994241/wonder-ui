@@ -2,11 +2,9 @@
  * title: 提示栈
  * desc: withDialog 提供 `alert`, `confirm`, `toast` 等静态方法
  */
+import { Button, withDialog } from '@wonder-ui/core';
 
-/** @jsx jsx */
-import { jsx, Button, withDialog } from '@wonder-ui/core';
-
-export default withDialog(function Example(props) {
+export default withDialog((props) => {
   const { dialog } = props;
 
   return (

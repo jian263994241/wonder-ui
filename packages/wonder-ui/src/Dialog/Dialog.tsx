@@ -56,7 +56,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
 
   const {
     buttons = [],
-    children: childrenProp,
+    children,
     className,
     theme,
     ModalProps = {},
@@ -68,8 +68,6 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
     transitionDuration = defaultTransitionDuration,
     ...rest
   } = props;
-
-  const children = childrenProp || ModalProps.children;
 
   if (children) {
     React.Children.only(children);
@@ -102,6 +100,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
         className={css(classes.root, className)}
         BackdropProps={{ transitionDuration, ...ModalProps.BackdropProps }}
         {...ModalProps}
+        ref={ref}
       >
         <TranstionComponent
           appear

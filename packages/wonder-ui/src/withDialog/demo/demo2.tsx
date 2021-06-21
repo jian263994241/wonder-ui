@@ -2,14 +2,12 @@
  * title: 提示框
  * desc: 各种信息提示框
  */
+import { Button, Space, withDialog } from '@wonder-ui/core';
 
-/** @jsx jsx */
-import { jsx, Button, Space, withDialog } from '@wonder-ui/core';
-
-export default withDialog(function Example(props) {
+export default withDialog((props) => {
   const { dialog } = props;
   return (
-    <Space wrap>
+    <Space>
       <Button
         variant="contained"
         onClick={() =>

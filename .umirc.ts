@@ -70,6 +70,7 @@ export default defineConfig({
           'components/radio.md',
           'components/search.md',
           'components/stepper.md',
+          'components/textfield.md',
           'components/toggle.md'
         ]
       },

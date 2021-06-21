@@ -3,10 +3,7 @@
  * desc:
  * background: '#f5f5f5'
  */
-
-/** @jsx jsx */
 import {
-  jsx,
   Container,
   Checkbox,
   List,
@@ -18,14 +15,14 @@ import { useSelections } from '@wonder-ui/hooks';
 
 const dataList = [1, 2, 3];
 
-export default function Example() {
+export default () => {
   const { allSelected, isSelected, toggleAll, toggle, partiallySelected } =
     useSelections(dataList);
 
   return (
     <Container size="sm">
       <List component="div">
-        <ListItem component="label" button>
+        <ListItem component="label">
           <ListItemMedia>
             <Checkbox
               circle
@@ -39,7 +36,7 @@ export default function Example() {
         </ListItem>
         <List component="div">
           {dataList.map((item, index) => (
-            <ListItem component="label" button key={index}>
+            <ListItem component="label" key={index}>
               <ListItemMedia>
                 <Checkbox
                   circle
@@ -56,4 +53,4 @@ export default function Example() {
       </List>
     </Container>
   );
-}
+};

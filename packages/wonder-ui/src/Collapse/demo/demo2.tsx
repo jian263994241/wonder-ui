@@ -2,31 +2,28 @@
  * title: 设置折叠高度
  * desc: 通过 `collapsedSize` 改变折叠高度
  */
-
-/** @jsx jsx */
-import * as React from 'react';
 import {
-  jsx,
   Button,
   Space,
   Collapse,
   Typography,
   WhiteSpace
 } from '@wonder-ui/core';
+import { useBoolean } from '@wonder-ui/hooks';
 
-export default function Example() {
-  const [visible, setVisible] = React.useState(false);
+export default () => {
+  const [visible, { setTrue, setFalse, toggle }] = useBoolean(false);
 
   return (
     <div>
       <Space>
-        <Button variant="contained" onClick={() => setVisible(true)}>
+        <Button variant="contained" onClick={() => setTrue()}>
           Open
         </Button>
-        <Button variant="contained" onClick={() => setVisible(false)}>
+        <Button variant="contained" onClick={() => setFalse()}>
           Close
         </Button>
-        <Button variant="contained" onClick={() => setVisible(!visible)}>
+        <Button variant="contained" onClick={() => toggle()}>
           Toggle
         </Button>
       </Space>
@@ -34,7 +31,7 @@ export default function Example() {
       <Collapse in={visible} collapsedSize={30}>
         <Typography paragraph>default view text</Typography>
         <div
-          css={{
+          style={{
             border: '1px solid #ccc',
             padding: 16,
             boxSizing: 'border-box'
@@ -49,4 +46,4 @@ export default function Example() {
       </Collapse>
     </div>
   );
-}
+};

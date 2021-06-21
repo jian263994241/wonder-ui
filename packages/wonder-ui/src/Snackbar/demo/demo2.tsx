@@ -2,19 +2,19 @@
  * title: 消息条的位置
  * desc: 通过指定 `anchorOrigin` 的属性，您可以控制消息条的位置
  */
-
-/** @jsx jsx */
 import * as React from 'react';
-import { jsx, Button, Snackbar, SnackbarProps, Space } from '@wonder-ui/core';
+import { Button, Snackbar, SnackbarProps, Space } from '@wonder-ui/core';
 
 export default function Example() {
   const [state, setState] = React.useState<Partial<SnackbarProps>>({
     visible: false,
-    vertical: 'top',
-    horizontal: 'center'
+    anchorOrigin: {
+      vertical: 'top',
+      horizontal: 'center'
+    }
   });
 
-  const { vertical, horizontal, visible } = state;
+  const { anchorOrigin = {}, visible } = state;
 
   const handleClick = (newState: any) => () => {
     setState({ visible: true, ...newState });
@@ -26,12 +26,14 @@ export default function Example() {
 
   return (
     <div>
-      <Space wrap>
+      <Space>
         <Button
           variant="contained"
           onClick={handleClick({
-            vertical: 'top',
-            horizontal: 'left'
+            anchorOrigin: {
+              vertical: 'top',
+              horizontal: 'left'
+            }
           })}
         >
           左上
@@ -39,8 +41,10 @@ export default function Example() {
         <Button
           variant="contained"
           onClick={handleClick({
-            vertical: 'top',
-            horizontal: 'center'
+            anchorOrigin: {
+              vertical: 'top',
+              horizontal: 'center'
+            }
           })}
         >
           中上
@@ -48,8 +52,10 @@ export default function Example() {
         <Button
           variant="contained"
           onClick={handleClick({
-            vertical: 'top',
-            horizontal: 'right'
+            anchorOrigin: {
+              vertical: 'top',
+              horizontal: 'right'
+            }
           })}
         >
           右上
@@ -57,8 +63,10 @@ export default function Example() {
         <Button
           variant="contained"
           onClick={handleClick({
-            vertical: 'bottom',
-            horizontal: 'right'
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'right'
+            }
           })}
         >
           右下
@@ -66,8 +74,10 @@ export default function Example() {
         <Button
           variant="contained"
           onClick={handleClick({
-            vertical: 'bottom',
-            horizontal: 'center'
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'center'
+            }
           })}
         >
           中下
@@ -75,8 +85,10 @@ export default function Example() {
         <Button
           variant="contained"
           onClick={handleClick({
-            vertical: 'bottom',
-            horizontal: 'left'
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'left'
+            }
           })}
         >
           左下
@@ -84,8 +96,10 @@ export default function Example() {
         <Button
           variant="contained"
           onClick={handleClick({
-            vertical: 'center',
-            horizontal: 'center'
+            anchorOrigin: {
+              vertical: 'center',
+              horizontal: 'center'
+            }
           })}
         >
           中
@@ -96,9 +110,9 @@ export default function Example() {
         visible={visible}
         message="简单的消息条"
         autoHideDuration={null}
-        anchorOrigin={{ vertical, horizontal }}
+        anchorOrigin={anchorOrigin}
         onClose={handleClose}
-        key={vertical + horizontal}
+        key={anchorOrigin.vertical + anchorOrigin.horizontal!}
       />
     </div>
   );

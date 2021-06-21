@@ -3,10 +3,8 @@
  * desc: 使用`TabPane`切换内容
  *
  */
-/** @jsx jsx */
 import * as React from 'react';
 import {
-  jsx,
   TabContext,
   TabPane,
   Button,
@@ -14,7 +12,7 @@ import {
   WhiteSpace
 } from '@wonder-ui/core';
 
-export default function Example() {
+export default () => {
   const [value, setValue] = React.useState(1);
 
   return (
@@ -38,4 +36,4 @@ export default function Example() {
       </TabContext>
     </div>
   );
-}
+};

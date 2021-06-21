@@ -2,21 +2,18 @@
  * title: 按钮形状
  * desc: 按钮分下面几种类型 `default`|`square`|`round`
  */
-/** @jsx jsx */
-import { Button, jsx, Space } from '@wonder-ui/core';
+import { Button, Space } from '@wonder-ui/core';
 
-export default function Example() {
-  return (
-    <Space>
-      <Button color="primary" variant="contained">
-        Default
-      </Button>
-      <Button color="primary" variant="contained" shape="square">
-        Square
-      </Button>
-      <Button color="primary" variant="contained" shape="round">
-        Round
-      </Button>
-    </Space>
-  );
-}
+export default () => (
+  <Space>
+    <Button color="primary" variant="contained">
+      Default
+    </Button>
+    <Button color="primary" variant="contained" shape="square">
+      Square
+    </Button>
+    <Button color="primary" variant="contained" shape="round">
+      Round
+    </Button>
+  </Space>
+);

@@ -17,6 +17,23 @@
 
 <code src="../../packages/wonder-ui/src/Space/demo/wrap.tsx"></code>
 
+### 水平方向-水平对齐
+
+<code src="../../packages/wonder-ui/src/Space/demo/horizontalAlign.tsx"></code>
+
+### 水平方向-垂直对齐
+
+<code src="../../packages/wonder-ui/src/Space/demo/verticalAlignments.tsx"></code>
+
+### 垂直方向-水平对齐
+
+<code src="../../packages/wonder-ui/src/Space/demo/verticalHorizontalAlign.tsx"></code>
+
+### 垂直方向-垂直对齐
+
+<code src="../../packages/wonder-ui/src/Space/demo/verticalVerticalAlignments.tsx"></code>
+
+
 ## API
 
 <embed src="../../packages/wonder-ui/src/Space/index.md"></embed>
