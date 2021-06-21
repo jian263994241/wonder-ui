@@ -1,4 +1,5 @@
 export * from './Async';
+export * from './CSSSupports';
 export * from './DelayedRender';
 export * from './EventGroup';
 export * from './IRectangle';
