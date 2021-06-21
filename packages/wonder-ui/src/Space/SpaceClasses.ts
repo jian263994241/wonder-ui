@@ -1,37 +1,25 @@
-import {
-  capitalize,
-  composeClasses,
-  generateUtilityClasses
-} from '@wonder-ui/utils';
+import { composeClasses, generateUtilityClasses } from '@wonder-ui/utils';
+import { SpaceStyleProps } from './SpaceTypes';
 
-export const spaceClasses = generateUtilityClasses('WuiSpace', [
+export const componentName = 'WuiSpace';
+
+export const spaceClasses = generateUtilityClasses(componentName, [
   'root',
   'item',
   'vertical',
   'horizontal',
-  'wrap',
-  'block'
+  'split',
+  'nowrap'
 ]);
 
-export interface SpaceStyleProps {
-  align?: any;
-  classes?: Partial<typeof spaceClasses>;
-  direction?: 'horizontal' | 'vertical';
-  wrap?: boolean;
-  size?: any;
-}
-
 export const useClasses = (styleProps: SpaceStyleProps) => {
-  const { classes, direction, wrap } = styleProps;
+  const { classes, direction, nowrap } = styleProps;
 
   const slots = {
-    root: [
-      'root',
-      direction && direction,
-      direction === 'horizontal' && wrap && 'wrap'
-    ],
-    item: ['item']
+    root: ['root', direction && direction, nowrap && 'nowrap'],
+    item: ['item'],
+    splitItem: ['item', 'split']
   };
 
-  return composeClasses('WuiSpace', slots, classes);
+  return composeClasses(componentName, slots, classes);
 };
