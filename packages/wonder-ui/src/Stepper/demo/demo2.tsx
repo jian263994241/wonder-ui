@@ -2,13 +2,17 @@
  * title: 自定义
  */
 import * as React from 'react';
-import { Badge, Stepper, Space, styled } from '@wonder-ui/core';
+import { Badge, Stepper, StepperProps, Space, styled } from '@wonder-ui/core';
 
-const UIStepper = styled(Stepper)`
+const getSize = (small?: boolean) => (small ? '20px' : '30px');
+
+const UIStepper = styled(Stepper)<StepperProps & { small?: boolean }>`
   .WuiStepper-button {
     border-radius: 50%;
     background-color: ${({ theme }) => theme.palette.colors.blue.A400};
     color: #fff;
+    width: ${({ small }) => getSize(small)};
+    height: ${({ small }) => getSize(small)};
   }
 
   .WuiStepper-input {
@@ -22,6 +26,7 @@ export default () => {
   return (
     <Space>
       <UIStepper
+        small
         value={value}
         hideInput={value === 0}
         hideMinusButton={value === 0}
