@@ -37,7 +37,7 @@ export default () => {
         hideInput={value === 0}
         hideMinusButton={value === 0}
         onChange={(val) => {
-          setValue(Number(val));
+          setValue(val);
         }}
       />
 
@@ -47,7 +47,7 @@ export default () => {
           hideInput
           hideMinusButton
           onChange={(val) => {
-            setValue2(Number(val));
+            setValue2(val);
           }}
         />
       </Badge>
@@ -59,7 +59,7 @@ export default () => {
           hideInput
           hideMinusButton
           onChange={(val) => {
-            setValue2(Number(val));
+            setValue2(val);
           }}
         />
       </Badge>

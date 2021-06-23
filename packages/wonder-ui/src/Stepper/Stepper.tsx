@@ -191,12 +191,12 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
   };
 
   const handleMinus = React.useCallback(() => {
-    const _value = numeral(value).subtract(step).value() || valueRef.current;
+    const _value = numeral(value).subtract(step).value() || min;
     setValue(_value);
   }, [value, step]);
 
   const handlePlus = React.useCallback(() => {
-    const _value = numeral(value).add(step).value() || valueRef.current;
+    const _value = numeral(value).add(step).value() || min;
 
     setValue(_value);
   }, [value, step]);
