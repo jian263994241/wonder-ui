@@ -2,8 +2,7 @@
  * title: 自定义
  */
 import * as React from 'react';
-import { Badge, Space, styled } from '@wonder-ui/core';
-import Stepper from '../Stepper';
+import { Badge, Space, Stepper, styled } from '@wonder-ui/core';
 
 const sizeValues = { sm: 20, md: 30, lg: 40 };
 
@@ -33,6 +32,7 @@ export default () => {
   return (
     <Space gap={20} direction="vertical">
       <UIStepper
+        size="sm"
         value={value}
         hideInput={value === 0}
         hideMinusButton={value === 0}

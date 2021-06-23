@@ -13,7 +13,6 @@ import InputBase, { InputBaseProps, InputBaseAction } from '../InputBase';
 export interface StepperProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   InputProps?: Partial<InputBaseProps>;
-  className?: string;
   classes?: Partial<typeof stepperClasses>;
   defaultValue?: number | string;
   disableInput?: boolean;
@@ -28,7 +27,6 @@ export interface StepperProps
   onChange?: (value: number) => void;
   ref?: React.Ref<HTMLDivElement>;
   step?: number | string;
-  style?: React.CSSProperties;
   value?: number | string;
 }
 
