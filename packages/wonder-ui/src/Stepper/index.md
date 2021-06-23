@@ -19,6 +19,6 @@ sidemenu: false
 | hidePlusButton | 隐藏加 | `boolean` | false
 | max | 最大值 | `number \| string` |
 | min | 最小值 | `number \| string` | 0
-| onChange | 事件 | `(value: string) => void` |
+| onChange | 事件 | `(value: number) => void` |
 | step | 步长 | `number \| string` | 1
 | value | 值 | `number \| string` | 0

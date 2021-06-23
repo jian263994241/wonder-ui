@@ -8,12 +8,12 @@ import { stepperClasses, useClasses } from './StepperClasses';
 import { Theme } from '../styles/createTheme';
 import { useControlled } from '@wonder-ui/hooks';
 import numeral from 'numeral';
-import { emphasize } from '../styles/colorManipulator';
 import InputBase, { InputBaseProps, InputBaseAction } from '../InputBase';
 
 export interface StepperProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'children' | 'onChange'> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   InputProps?: Partial<InputBaseProps>;
+  className?: string;
   classes?: Partial<typeof stepperClasses>;
   defaultValue?: number | string;
   disableInput?: boolean;
@@ -25,21 +25,24 @@ export interface StepperProps
   hidePlusButton?: boolean;
   max?: number | string;
   min?: number | string;
-  onChange?: (value: string) => void;
-  ref?: React.Ref<any>;
+  onChange?: (value: number) => void;
+  ref?: React.Ref<HTMLDivElement>;
   step?: number | string;
+  style?: React.CSSProperties;
   value?: number | string;
 }
+
+export interface StepperStyleProps extends StepperProps {}
 
 const StepperRoot = styled('div', {
   name: 'Stepper',
   slot: 'Root'
-})({
-  [`&.${stepperClasses.disabled}`]: {
+})<{ styleProps: StepperStyleProps }>(({ styleProps }) => ({
+  ...(styleProps.disabled && {
     opacity: 0.3,
     pointerEvents: 'none'
-  }
-});
+  })
+}));
 
 const commomButtonStyles = (theme: Theme): CSSObject => ({
   position: 'relative',
@@ -51,8 +54,12 @@ const commomButtonStyles = (theme: Theme): CSSObject => ({
   verticalAlign: 'middle',
   border: 0,
   backgroundColor: theme.palette.background.default,
+  opacity: 1,
+  transition: theme.transitions.create('opacity', {
+    duration: theme.transitions.duration.shortest
+  }),
   '&:active': {
-    backgroundColor: emphasize(theme.palette.background.default, 0.1)
+    opacity: 0.7
   },
   '&:before, &:after': {
     position: 'absolute',
@@ -69,23 +76,23 @@ const commomButtonStyles = (theme: Theme): CSSObject => ({
 const StepperMinus = styled(ButtonBase, {
   name: 'Stepper',
   slot: 'Minus'
-})(({ theme }) => ({
+})<{ styleProps: StepperStyleProps }>(({ theme, styleProps }) => ({
   ...commomButtonStyles(theme),
   borderTopLeftRadius: theme.shape.borderRadius,
   borderBottomLeftRadius: theme.shape.borderRadius,
   '&:after': {
     display: 'none'
   },
-  [`&.${stepperClasses.disableMinusButton}`]: {
+  ...(styleProps.disableMinusButton && {
     opacity: 0.5,
     pointerEvents: 'none'
-  }
+  })
 }));
 
 const StepperPlus = styled(ButtonBase, {
   name: 'Stepper',
   slot: 'Plus'
-})(({ theme }) => ({
+})<{ styleProps: StepperStyleProps }>(({ theme, styleProps }) => ({
   ...commomButtonStyles(theme),
   borderTopRightRadius: theme.shape.borderRadius,
   borderBottomRightRadius: theme.shape.borderRadius,
@@ -93,16 +100,16 @@ const StepperPlus = styled(ButtonBase, {
     height: '50%',
     width: 1
   },
-  [`&.${stepperClasses.disablePlusButton}`]: {
+  ...(styleProps.disablePlusButton && {
     opacity: 0.5,
     pointerEvents: 'none'
-  }
+  })
 }));
 
 const StepperInput = styled(InputBase, {
   name: 'Stepper',
   slot: 'Input'
-})(({ theme }) => ({
+})<{ styleProps: StepperStyleProps }>(({ theme, styleProps }) => ({
   boxSizing: 'border-box',
   width: 32,
   height: 28,
@@ -119,10 +126,9 @@ const StepperInput = styled(InputBase, {
   borderRadius: 0,
   appearance: 'none',
   outline: 0,
-
-  [`&.${stepperClasses.disableInput}`]: {
+  ...(styleProps.disableInput && {
     pointerEvents: 'none'
-  }
+  })
 }));
 
 const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
@@ -152,59 +158,62 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
   const defaultValue = toNumber(defaultValueProp || min);
   const inputActionRef = React.useRef<InputBaseAction>(null);
 
-  const isRange = (value: number) => {
-    return value >= min && value <= max;
-  };
-
   const format = (value: number) => numeral(value).format(`${step}`);
 
   const [valueState, setValueIfunControlled] = useControlled<any>({
     defaultValue: format(defaultValue),
     value: valueProp
   });
+  const valueRef = React.useRef<number>(valueState);
 
   const value = toNumber(valueState);
   const isMax = value === max;
   const isMin = value === min;
 
   const setValue = (value: number) => {
-    const _value = numeral(value).format(`${step}`);
+    let _value;
+
+    if (value >= min && value <= max) {
+      _value = value;
+    } else if (value >= max) {
+      _value = max;
+    } else {
+      _value = min;
+    }
+
+    valueRef.current = _value;
+
     setValueIfunControlled(_value);
+
     if (onChange) {
       onChange(_value);
     }
   };
 
   const handleMinus = React.useCallback(() => {
-    const _value = numeral(value).subtract(step).value() || 0;
-    if (isRange(_value)) {
-      setValue(_value);
-    }
+    const _value = numeral(value).subtract(step).value() || valueRef.current;
+    setValue(_value);
   }, [value, step]);
 
   const handlePlus = React.useCallback(() => {
-    const _value = numeral(value).add(step).value() || 0;
+    const _value = numeral(value).add(step).value() || valueRef.current;
 
-    if (isRange(_value)) {
-      setValue(_value);
-    }
+    setValue(_value);
   }, [value, step]);
 
-  const handleChange = React.useCallback((e) => {
-    const target = e.target as HTMLInputElement;
-    setValueIfunControlled(target.value);
-  }, []);
+  const handleChange = React.useCallback(
+    (e) => {
+      const target = e.target as HTMLInputElement;
+      setValueIfunControlled(target.value);
+    },
+    [disableInput]
+  );
 
   const handleBlur = React.useCallback((e) => {
     const target = e.target as HTMLInputElement;
-    const _value = numeral(target.value).value() || 0;
-    if (isRange(_value)) {
-      setValue(_value);
-    } else if (_value >= max) {
-      setValue(max);
-    } else {
-      setValue(min);
-    }
+    const _value = numeral(target.value).value() || valueRef.current;
+
+    setValue(_value);
 
     if (InputProps?.onBlur) {
       InputProps?.onBlur(e);
@@ -235,6 +244,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
     <StepperRoot
       className={css(classes.root, className)}
       ref={ref as React.Ref<HTMLDivElement>}
+      styleProps={styleProps}
       {...rest}
     >
       {!hideMinusButton && (
@@ -242,6 +252,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
           disableRipple
           className={classes.minus}
           onClick={handleMinus}
+          styleProps={styleProps}
         />
       )}
       {!hideInput && (
@@ -259,6 +270,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
           onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          styleProps={styleProps}
         />
       )}
       {!hidePlusButton && (
@@ -266,6 +278,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
           disableRipple
           className={classes.plus}
           onClick={handlePlus}
+          styleProps={styleProps}
         />
       )}
     </StepperRoot>
