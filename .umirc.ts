@@ -15,6 +15,44 @@ export default defineConfig({
   ],
 
   alias: {},
+
+  themeConfig: {
+    hd: {
+      rules: [{ maxWidth: 375, mode: 'vw', options: [30, 640] }]
+      // 更多 rule 配置访问 https://github.com/umijs/dumi/blob/master/packages/theme-mobile/src/typings/config.d.ts#L7
+    }
+  },
+
+  styles: [
+    `html, body, #root {
+      height: 100%;
+    }
+
+    .__dumi-default-previewer {
+      background-color: #f7f7fa!important;
+    }
+
+    html[data-prefers-color=dark] .__dumi-default-previewer {
+      background-color: #1d1d1d!important;
+    }
+
+    .__dumi-default-device {
+      top: 100px !important;
+      height: 580px !important;
+    }
+
+    .__dumi-default-device-status > span:first-of-type {
+      text-indent: -999em!important;
+    }
+
+    .__dumi-default-mobile-demo-layout, .__dumi-default-mobile-demo-layout>div {
+      height: 100%;
+      padding: 0 !important;
+    }
+
+    `
+  ],
+
   // more config: https://d.umijs.org/zh-CN/config
   navs: {
     'zh-CN': [

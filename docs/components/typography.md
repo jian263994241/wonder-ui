@@ -1,3 +1,7 @@
+---
+mobile: false
+---
+
 # Typography 排版
 
 文字格式: 标题, 段落, 文本 ...

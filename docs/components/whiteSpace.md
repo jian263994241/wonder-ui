@@ -1,3 +1,6 @@
+---
+mobile: false
+---
 # WhiteSpace 上下留白
 
 辅助布局, 用来设置行间距

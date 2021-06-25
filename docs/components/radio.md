@@ -1,3 +1,6 @@
+---
+mobile: false
+---
 # Radio 单选框
 
 单项选择

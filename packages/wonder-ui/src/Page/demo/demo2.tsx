@@ -2,27 +2,13 @@
  * title: 带导航栏的页面
  * desc:
  */
-import { Container, Page, Typography } from '@wonder-ui/core';
+import { Container, Page, Typography, WhiteSpace } from '@wonder-ui/core';
 
 export default () => (
-  <Page style={{ width: 320, height: 300 }} title="导航栏" showBackButton>
+  <Page title="导航栏" showBackButton>
+    <WhiteSpace />
     <Container>
-      <Typography gutterBottom>第一条</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
-      <Typography gutterBottom>默认一块可以滚动的区域</Typography>
+      <Typography gutterBottom>带导航栏的页面</Typography>
     </Container>
   </Page>
 );

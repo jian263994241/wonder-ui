@@ -1,12 +1,11 @@
 /**
  * title: 基础用法
  * desc: 使用`overlay`自定义内容
- * background: '#f5f5f5'
  */
-import { Container, DropdownMenu, DropdownMenuItem } from '@wonder-ui/core';
+import { DropdownMenu, DropdownMenuItem, Page } from '@wonder-ui/core';
 
 export default () => (
-  <Container size="sm">
+  <Page title="DropdownMenu">
     <DropdownMenu>
       <DropdownMenuItem arrow overlay={<div>全部商品 ... </div>}>
         全部商品
@@ -15,5 +14,5 @@ export default () => (
         好评排序
       </DropdownMenuItem>
     </DropdownMenu>
-  </Container>
+  </Page>
 );

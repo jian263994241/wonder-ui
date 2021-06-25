@@ -5,10 +5,10 @@
  */
 import {
   Button,
-  Container,
   Divider,
   DropdownMenu,
   DropdownMenuItem,
+  Page,
   Radio,
   List,
   ListItem,
@@ -18,7 +18,7 @@ import {
 } from '@wonder-ui/core';
 
 export default () => (
-  <Container size="sm">
+  <Page title="Auto width">
     <DropdownMenu widthAuto>
       <DropdownMenuItem
         arrow
@@ -87,5 +87,5 @@ export default () => (
       <DropdownMenuItem>销量</DropdownMenuItem>
       <DropdownMenuItem>口碑</DropdownMenuItem>
     </DropdownMenu>
-  </Container>
+  </Page>
 );

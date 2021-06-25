@@ -113,6 +113,7 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
             {...rest}
             classes={{ root: classes.content }}
             buttonsVertical={buttonsVertical}
+            style={{ marginLeft: 10, marginRight: 10 }}
             buttons={buttons.map((props) => ({
               ...props,
               onClick: createChainedFunction(

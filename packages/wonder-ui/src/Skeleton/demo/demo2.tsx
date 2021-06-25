@@ -1,11 +1,15 @@
 /**
  * title: 显示头像
  */
-import { Space, Skeleton } from '@wonder-ui/core';
+
+import { Page, Paper, Skeleton } from '@wonder-ui/core';
 
 export default () => (
-  <Space direction="vertical">
-    <Skeleton avatar title />
-    <Skeleton avatar title />
-  </Space>
+  <Page title="Skeleton with avatar">
+    <Paper style={{ padding: '20px 0' }}>
+      <Skeleton title avatar />
+      <Skeleton title avatar />
+      <Skeleton title avatar />
+    </Paper>
+  </Page>
 );

@@ -1,3 +1,7 @@
+---
+mobile: false
+---
+
 # Icon 图标
 
 矢量图标库。使用图标组件请先导入 `@wonder-ui/icons` :

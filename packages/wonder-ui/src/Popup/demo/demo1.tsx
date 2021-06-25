@@ -5,18 +5,28 @@
             它是全屏的。
  */
 import * as React from 'react';
-import { Button, Popup, Typography } from '@wonder-ui/core';
+import {
+  Button,
+  Container,
+  Page,
+  Popup,
+  Typography,
+  WhiteSpace
+} from '@wonder-ui/core';
 
 export default () => {
   const [popVisible, setVisible] = React.useState(false);
   return (
-    <div>
-      <Button variant="contained" onClick={() => setVisible(true)}>
-        打开弹窗
-      </Button>
+    <Page title="Popup">
+      <WhiteSpace />
+      <Container>
+        <Button variant="contained" onClick={() => setVisible(true)}>
+          打开弹窗
+        </Button>
+      </Container>
 
       <Popup
-        title="Popup"
+        title="Popup Title"
         visible={popVisible}
         onClose={() => setVisible(false)}
       >
@@ -30,6 +40,6 @@ export default () => {
           <Typography>...</Typography>
         </div>
       </Popup>
-    </div>
+    </Page>
   );
 };

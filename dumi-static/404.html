@@ -6,6 +6,36 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
     />
+    <style>
+      html,
+      body,
+      #root {
+        height: 100%;
+      }
+
+      .__dumi-default-previewer {
+        background-color: #f7f7fa !important;
+      }
+
+      html[data-prefers-color="dark"] .__dumi-default-previewer {
+        background-color: #1d1d1d !important;
+      }
+
+      .__dumi-default-device {
+        top: 100px !important;
+        height: 580px !important;
+      }
+
+      .__dumi-default-device-status > span:first-of-type {
+        text-indent: -999em !important;
+      }
+
+      .__dumi-default-mobile-demo-layout,
+      .__dumi-default-mobile-demo-layout > div {
+        height: 100%;
+        padding: 0 !important;
+      }
+    </style>
     <link rel="stylesheet" href="./umi.css" />
     <script>
       window.routerBase = "/";

@@ -1,3 +1,6 @@
+---
+mobile: false
+---
 # TextField 输入框
 
 基本的文字输入框

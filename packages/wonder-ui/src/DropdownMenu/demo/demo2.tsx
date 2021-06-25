@@ -1,14 +1,14 @@
 /**
- * title: 基础用法
+ * title: 定义内容
  * desc: 使用`overlay`自定义内容
  * background: '#f5f5f5'
  */
 import {
   Button,
-  Container,
   Divider,
   DropdownMenu,
   DropdownMenuItem,
+  Page,
   Radio,
   List,
   ListItem,
@@ -18,7 +18,7 @@ import {
 } from '@wonder-ui/core';
 
 export default () => (
-  <Container size="sm">
+  <Page title="With list">
     <DropdownMenu>
       <DropdownMenuItem
         arrow
@@ -84,5 +84,5 @@ export default () => (
         好评排序
       </DropdownMenuItem>
     </DropdownMenu>
-  </Container>
+  </Page>
 );

@@ -6,8 +6,8 @@ import Navbar, { NavbarProps } from '../Navbar';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { css } from '@wonder-ui/utils';
-import { useForkRef, useSize } from '@wonder-ui/hooks';
 import { pageClasses, useClasses } from './PageClasses';
+import { useForkRef, useSize } from '@wonder-ui/hooks';
 
 const PageRoot = styled('div', {
   name: 'WuiPage',
@@ -20,10 +20,7 @@ const PageRoot = styled('div', {
   transform: 'none',
   zIndex: 1,
   overflow: 'hidden',
-  backgroundColor: theme.palette.background.default,
-  '& .WuiNavbar-root': {
-    position: 'absolute'
-  }
+  backgroundColor: theme.palette.background.default
 }));
 
 const PageContent = styled('div', {
@@ -45,6 +42,10 @@ export interface PageProps
    * @ignore
    */
   ContentProps?: React.HTMLAttributes<HTMLDivElement>;
+  /**
+   * Content ref
+   */
+  ContentRef?: React.Ref<HTMLDivElement>;
   /**
    * 导航栏属性
    */
@@ -97,6 +98,7 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
     NavbarProps = {},
     ToolbarProps = {},
     ContentProps = {},
+    ContentRef,
     children,
     className,
     navbar = null,
@@ -168,6 +170,7 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
           subTitle={subTitle}
           right={barRight}
           left={barLeft}
+          fixed
           {...NavbarProps}
           classes={{
             ...NavbarProps.classes,
@@ -187,6 +190,8 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
       <PageContent
         {...ContentProps}
         className={css(classes.content, ContentProps.className)}
+        //@ts-expect-error
+        ref={useForkRef(ContentRef, ContentProps.ref)}
         style={{
           ...ContentProps.style,
           paddingTop: contentPaddingTop,

@@ -1,6 +1,14 @@
 /**
  * title: 基础用法
  */
-import { Skeleton } from '@wonder-ui/core';
+import { Page, Paper, Skeleton } from '@wonder-ui/core';
 
-export default () => <Skeleton title />;
+export default () => (
+  <Page title="Skeleton">
+    <Paper style={{ padding: '20px 0' }}>
+      <Skeleton title />
+      <Skeleton title />
+      <Skeleton title />
+    </Paper>
+  </Page>
+);

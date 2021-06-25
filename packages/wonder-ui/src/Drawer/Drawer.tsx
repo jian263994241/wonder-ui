@@ -6,9 +6,9 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { BaseTransitionProps, TransitionTimeout } from '../Transition';
 import { css } from '@wonder-ui/utils';
-import { DefaultTheme } from '../styles/defaultTheme';
 import { drawerClasses, useClasses } from './DrawerClasses';
 import { duration } from '../styles/transitions';
+import { Theme } from '../styles/createTheme';
 export interface DrawerProps
   extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
   /**
@@ -149,7 +149,7 @@ export function isHorizontal(anchor?: string): anchor is 'left' | 'right' {
 }
 
 export function getAnchor(
-  theme: DefaultTheme,
+  theme: Theme,
   anchor: NonNullable<DrawerProps['anchor']>
 ) {
   return theme.direction === 'rtl' && isHorizontal(anchor)

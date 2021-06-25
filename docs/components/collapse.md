@@ -1,3 +1,6 @@
+---
+mobile: false
+---
 # Collapse 折叠
 
 利用组件在项目中切换内容的可见性

@@ -68,6 +68,7 @@ const BadgeContent = styled('span', { name: 'WuiBadge', slot: 'Content' })(
       verticalAlign: 1,
       borderRadius: '.25rem',
       pointerEvents: 'none',
+      userSelect: 'none',
 
       ...generateUtilityStyles(colors, (styles, color) => {
         const colorName = 'color' + capitalize(color);

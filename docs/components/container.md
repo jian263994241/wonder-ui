@@ -1,3 +1,6 @@
+---
+mobile: false
+---
 # Container 容器
 
 Container 是最基本的布局元素，它包含，填充和对齐给定设备或视口中的内容。

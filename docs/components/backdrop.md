@@ -1,3 +1,7 @@
+---
+mobile: false
+---
+
 # Backdrop 背板
 
 背景暗化组件用于强调特定元素.

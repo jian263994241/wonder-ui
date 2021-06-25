@@ -1,3 +1,6 @@
+---
+mobile: false
+---
 # Badge 徽章
 
 小尺寸的标签

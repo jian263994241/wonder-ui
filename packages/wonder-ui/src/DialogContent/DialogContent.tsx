@@ -13,7 +13,8 @@ const DialogContentRoot = styled(Paper, {
   shouldForwardProp: () => true
 })<PaperProps>(({ theme }) => ({
   borderRadius: theme.shape.dialogRadius,
-  width: 295,
+  width: '100%',
+  maxWidth: 325,
   userSelect: 'none',
   overflow: 'hidden'
 }));
