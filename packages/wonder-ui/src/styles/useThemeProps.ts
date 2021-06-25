@@ -1,7 +1,6 @@
-import useTheme from './useTheme';
 import getThemeProps from './getThemeProps';
+import useTheme from './useTheme';
 import { Theme } from './createTheme';
-import React from 'react';
 
 type UseThemePropsParams<P> = {
   props: P;

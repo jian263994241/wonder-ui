@@ -1,11 +1,5 @@
-import createTheme, { Theme as DefaultTheme } from './createTheme';
+import createTheme from './createTheme';
 
-declare module '@wonder-ui/styled' {
-  export interface Theme extends DefaultTheme {}
-}
+let theme = createTheme();
 
-const theme: DefaultTheme = createTheme();
-
-export default theme;
-
-export type { DefaultTheme };
+export const getDefaultTheme = () => theme;

@@ -1,5 +1,10 @@
-import defaultTheme from './defaultTheme';
+import { getDefaultTheme } from './defaultTheme';
 import styled, { CreateStyled, CSSObject } from '@wonder-ui/styled';
+import { Theme as WuiTheme } from './createTheme';
+
+declare module '@wonder-ui/styled' {
+  export interface Theme extends WuiTheme {}
+}
 
 type Options = {
   name?: string;
@@ -69,7 +74,7 @@ const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
         ? (props: any) => {
             return stylesArg({
               ...props,
-              theme: isEmpty(props.theme) ? defaultTheme : props.theme
+              theme: isEmpty(props.theme) ? getDefaultTheme() : props.theme
             });
           }
         : stylesArg;
@@ -77,7 +82,7 @@ const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
 
     if (name && overridesResolver) {
       styleArgsWithDefaultTheme.push((props: any) => {
-        const theme = isEmpty(props.theme) ? defaultTheme : props.theme;
+        const theme = isEmpty(props.theme) ? getDefaultTheme() : props.theme;
         const styleOverrides = getStyleOverrides(name as string, theme);
 
         if (styleOverrides) {
