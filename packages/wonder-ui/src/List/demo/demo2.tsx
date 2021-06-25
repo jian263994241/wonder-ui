@@ -5,7 +5,7 @@
  */
 import {
   Collapse,
-  Container,
+  Page,
   List,
   ListItemMedia,
   ListItem,
@@ -17,7 +17,7 @@ import { useToggle } from '@wonder-ui/hooks';
 export default () => {
   const [visible, { toggle }] = useToggle(true);
   return (
-    <Container size="sm">
+    <Page title="Nested list">
       <List>
         <ListItem divider>
           <ListItemMedia>
@@ -69,6 +69,6 @@ export default () => {
           <ListItemText>Item 5</ListItemText>
         </ListItem>
       </List>
-    </Container>
+    </Page>
   );
 };

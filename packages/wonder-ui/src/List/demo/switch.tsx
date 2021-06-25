@@ -4,7 +4,7 @@
  * background: '#f5f5f5'
  */
 import {
-  Container,
+  Page,
   List,
   ListItem,
   ListHeader,
@@ -15,7 +15,7 @@ import {
 import { Wifi } from '@wonder-ui/icons';
 
 export default () => (
-  <Container size="sm">
+  <Page title="Switch">
     <List>
       <ListHeader>Settings</ListHeader>
       <ListItem>
@@ -33,5 +33,5 @@ export default () => (
         <Toggle />
       </ListItem>
     </List>
-  </Container>
+  </Page>
 );

@@ -4,7 +4,7 @@
  * background: '#f5f5f5'
  */
 import {
-  Container,
+  Page,
   List,
   ListItem,
   ListHeader,
@@ -14,14 +14,7 @@ import {
 const dataList = Array(10).fill('');
 
 export default () => (
-  <Container
-    size="sm"
-    style={{
-      height: 400,
-      overflow: 'auto',
-      WebkitOverflowScrolling: 'touch'
-    }}
-  >
+  <Page title="Sticky">
     <List>
       <ListHeader sticky>sticky 0</ListHeader>
       {dataList.map((item, index) => (
@@ -46,5 +39,5 @@ export default () => (
         </ListItem>
       ))}
     </List>
-  </Container>
+  </Page>
 );

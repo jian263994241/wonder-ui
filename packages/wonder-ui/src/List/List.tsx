@@ -4,30 +4,32 @@ import useThemeProps from '../styles/useThemeProps';
 import { css } from '@wonder-ui/utils';
 import { listClasses, useClasses } from './ListClasses';
 
-export interface ListProps extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
+export interface ListProps extends React.HTMLAttributes<HTMLElement> {
   component?: React.ElementType;
   inset?: boolean;
-  ref?: React.Ref<any>;
+  ref?: React.Ref<HTMLElement>;
 }
+
+export interface ListStyleProps extends ListProps {}
 
 const ListRoot = styled('ul', {
   name: 'WuiList',
   slot: 'Root'
-})(({ theme }) => ({
+})<{ styleProps: ListStyleProps }>(({ theme, styleProps }) => ({
   listStyle: 'none',
   margin: 0,
   padding: 0,
   position: 'relative',
   backgroundColor: theme.palette.background.paper,
 
-  [`&.${listClasses.inset}}`]: {
+  ...(styleProps.inset && {
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     borderRadius: 8,
     overflow: 'hidden'
-  },
+  }),
   /** 嵌套 */
-  [`.${listClasses.root} .${listClasses.root}`]: {
+  [`&.${listClasses.root} .${listClasses.root}`]: {
     paddingLeft: theme.spacing(2),
     backgroundColor: theme.palette.background.paper
   }
@@ -44,9 +46,10 @@ const List = React.forwardRef<HTMLElement, ListProps>((inProps, ref) => {
   return (
     <ListRoot
       className={css(classes.root, className)}
+      {...rest}
       as={component}
       ref={ref as React.Ref<HTMLUListElement>}
-      {...rest}
+      styleProps={styleProps}
     >
       {children}
     </ListRoot>

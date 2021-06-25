@@ -5,26 +5,21 @@
  */
 import {
   Collapse,
-  Container,
+  Page,
   List,
   ListItemMedia,
   ListItem,
   ListItemText,
-  styled
+  WhiteSpace
 } from '@wonder-ui/core';
 import { HeartFill } from '@wonder-ui/icons';
 import { useToggle } from '@wonder-ui/hooks';
 
-const Wrapper = styled(Container)`
-  background-color: rgb(239, 239, 244);
-  box-sizing: border-box;
-  padding: 30px 0;
-`;
-
 export default () => {
   const [visible, { toggle }] = useToggle(true);
   return (
-    <Wrapper size="sm">
+    <Page title="Inset">
+      <WhiteSpace />
       <List inset>
         <ListItem divider>
           <ListItemMedia>
@@ -72,10 +67,10 @@ export default () => {
         <ListItem divider>
           <ListItemText>Item 4</ListItemText>
         </ListItem>
-        <ListItem divider>
+        <ListItem>
           <ListItemText>Item 5</ListItemText>
         </ListItem>
       </List>
-    </Wrapper>
+    </Page>
   );
 };

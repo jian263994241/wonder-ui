@@ -4,7 +4,7 @@
  * background: '#f5f5f5'
  */
 import {
-  Container,
+  Page,
   CircularProgress,
   List,
   ListItem,
@@ -21,7 +21,7 @@ const Indicator = styled('div')`
   justify-content: center;
 `;
 
-const dataList = Array(10).fill('');
+const dataList = Array(12).fill('');
 
 export default () => {
   const { list, merge } = useDynamicList(dataList);
@@ -39,27 +39,23 @@ export default () => {
   };
 
   return (
-    <Container size="sm">
-      <div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        style={{
-          height: '300px',
-          overflow: 'auto',
-          WebkitOverflowScrolling: 'touch'
-        }}
-      >
-        <List>
-          {list.map((item, index) => (
-            <ListItem key={index}>
-              <ListItemText>Item {index}</ListItemText>
-            </ListItem>
-          ))}
-        </List>
-        <Indicator>
-          <CircularProgress size={22} />
-        </Indicator>
-      </div>
-    </Container>
+    <Page
+      title="Infinite scroll"
+      ContentRef={scrollRef}
+      ContentProps={{
+        onScroll: handleScroll
+      }}
+    >
+      <List>
+        {list.map((item, index) => (
+          <ListItem key={index}>
+            <ListItemText>Item {index}</ListItemText>
+          </ListItem>
+        ))}
+      </List>
+      <Indicator>
+        <CircularProgress size={22} />
+      </Indicator>
+    </Page>
   );
 };

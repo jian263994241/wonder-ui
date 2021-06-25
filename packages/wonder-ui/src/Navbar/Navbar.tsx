@@ -6,14 +6,48 @@ import { css } from '@wonder-ui/utils';
 import { navbarClasses, useClasses } from './NavbarClasses';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
 
+export interface NavbarProps
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
+  /**
+   * css api
+   */
+  classes?: Partial<typeof navbarClasses>;
+  /**
+   * Position fixed
+   */
+  fixed?: boolean;
+  /**
+   * 左边的内容
+   */
+  left?: React.ReactNode;
+  /**
+   * 右边的内容
+   */
+  right?: React.ReactNode;
+  /**
+   * 标题
+   */
+  title?: React.ReactNode;
+  /**
+   * 副标题
+   */
+  subTitle?: React.ReactNode;
+  /**
+   * @ignore
+   */
+  ref?: React.Ref<HTMLElement>;
+}
+
+export interface NavbarStyleProps extends NavbarProps {}
+
 const NavbarRoot = styled('div', {
   name: 'WuiNavbar',
   slot: 'Root'
-})(({ theme }) => ({
+})<{ styleProps: NavbarStyleProps }>(({ theme, styleProps }) => ({
   fontFamily: theme.typography.fontFamily,
   fontSize: theme.typography.pxToRem(17),
   color: theme.palette.text.primary,
-  position: 'relative',
+  position: styleProps.fixed ? 'fixed' : 'relative',
   width: '100%',
   zIndex: 99,
   left: 0,
@@ -26,7 +60,8 @@ const NavbarRoot = styled('div', {
 
 const NavbarBg = styled('div', { name: 'WuiNavbar', slot: 'Bg' })(
   ({ theme }) => {
-    const backgroundColor = alpha(theme.palette.background.default, 0.8);
+    const backgroundColor = theme.palette.background.paper;
+
     return {
       position: 'absolute',
       left: 0,
@@ -35,7 +70,7 @@ const NavbarBg = styled('div', { name: 'WuiNavbar', slot: 'Bg' })(
       height: '100%',
       pointerEvents: 'none',
       zIndex: 0,
-      background: backgroundColor,
+      background: alpha(backgroundColor, 0.85),
       transitionProperty: 'transform',
       borderWidth: 0,
       borderStyle: 'solid',
@@ -121,39 +156,12 @@ const NavbarRight = styled('div', {
   marginLeft: 10
 });
 
-export interface NavbarProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref' | 'title'> {
-  /**
-   * css api
-   */
-  classes?: Partial<typeof navbarClasses>;
-  /**
-   * 左边的内容
-   */
-  left?: React.ReactNode;
-  /**
-   * 右边的内容
-   */
-  right?: React.ReactNode;
-  /**
-   * 标题
-   */
-  title?: React.ReactNode;
-  /**
-   * 副标题
-   */
-  subTitle?: React.ReactNode;
-  /**
-   * @ignore
-   */
-  ref?: React.Ref<any>;
-}
-
 const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiNavbar' });
   const {
     children,
     className,
+    fixed = false,
     title,
     subTitle,
     left: barLeft,
@@ -220,14 +228,17 @@ const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
     return titleLeft;
   }, [navbarInnerWidth2, titleWidth, leftWidth, rightWidth]);
 
-  const classes = useClasses(props);
+  const styleProps = { ...props, fixed };
+
+  const classes = useClasses(styleProps);
 
   return (
     <NavbarRoot
       theme={theme}
-      ref={handleRef}
       className={css(classes.root, className)}
       {...rest}
+      styleProps={styleProps}
+      ref={handleRef}
     >
       <NavbarBg theme={theme} className={classes.background} />
       <NavbarInner

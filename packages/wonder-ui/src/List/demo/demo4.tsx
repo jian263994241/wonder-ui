@@ -5,7 +5,7 @@
  */
 import {
   Badge,
-  Container,
+  Page,
   List,
   ListHeader,
   ListItem,
@@ -16,7 +16,7 @@ import {
 import { InfoCircleFill, PersonCircle, TrashFill } from '@wonder-ui/icons';
 
 export default () => (
-  <Container size="sm">
+  <Page title="Layout">
     <List>
       <ListHeader>Simple List</ListHeader>
       <ListItem divider>
@@ -128,5 +128,5 @@ export default () => (
         <ListItemText primary={'Primary text'} secondary={'Secondary text'} />
       </ListItem>
     </List>
-  </Container>
+  </Page>
 );

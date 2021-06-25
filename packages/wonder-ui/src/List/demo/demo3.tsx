@@ -4,7 +4,7 @@
  * background: '#f5f5f5'
  */
 import {
-  Container,
+  Page,
   List,
   ListItemMedia,
   ListItem,
@@ -13,7 +13,7 @@ import {
 import { FileEarmarkFill } from '@wonder-ui/icons';
 
 export default () => (
-  <Container size="sm">
+  <Page title="List with icon">
     <List>
       <ListItem divider>
         <ListItemMedia>
@@ -28,5 +28,5 @@ export default () => (
         <ListItemText primary="Index 2" secondary="Jan 9, 2014" />
       </ListItem>
     </List>
-  </Container>
+  </Page>
 );

@@ -5,7 +5,7 @@
  */
 import * as React from 'react';
 import {
-  Container,
+  Page,
   List,
   ListItem,
   ListItemProps,
@@ -23,7 +23,7 @@ const ListItemLink: React.FC<LinkProps> = React.forwardRef((props, ref) => (
 ));
 
 export default () => (
-  <Container size="sm">
+  <Page title="Link">
     <List component="div">
       <ListItemLink href="#列表链接">
         <ListItemText>Link 1</ListItemText>
@@ -43,5 +43,5 @@ export default () => (
         <ListItemExtra>CEO</ListItemExtra>
       </ListItemLink>
     </List>
-  </Container>
+  </Page>
 );

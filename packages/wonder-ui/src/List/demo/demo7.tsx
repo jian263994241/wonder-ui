@@ -2,7 +2,7 @@
  * background: '#f5f5f5'
  */
 import {
-  Container,
+  Page,
   List,
   ListHeader,
   ListItem,
@@ -10,7 +10,7 @@ import {
 } from '@wonder-ui/core';
 
 export default () => (
-  <Container size="sm">
+  <Page>
     <List>
       <ListHeader>Header</ListHeader>
       <ListItem>
@@ -20,5 +20,5 @@ export default () => (
         <ListItemText>Index 2</ListItemText>
       </ListItem>
     </List>
-  </Container>
+  </Page>
 );

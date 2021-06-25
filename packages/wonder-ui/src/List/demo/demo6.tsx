@@ -5,7 +5,7 @@
  */
 import * as React from 'react';
 import {
-  Container,
+  Page,
   List,
   ListItem,
   ListItemText,
@@ -14,7 +14,7 @@ import {
 } from '@wonder-ui/core';
 
 export default () => (
-  <Container size="sm">
+  <Page title="Meida list">
     <List>
       <ListItem divider alignItems="flex-start">
         <ListItemMedia>
@@ -66,5 +66,5 @@ export default () => (
         />
       </ListItem>
     </List>
-  </Container>
+  </Page>
 );

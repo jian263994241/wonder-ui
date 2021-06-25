@@ -4,7 +4,7 @@
  * background: '#f5f5f5'
  */
 import {
-  Container,
+  Page,
   List,
   ListItem,
   ListHeader,
@@ -14,7 +14,7 @@ import {
 import { HouseFill, HeartFill } from '@wonder-ui/icons';
 
 export default () => (
-  <Container size="sm">
+  <Page title="Simple list">
     <List>
       <ListItem divider>
         <ListItemText>Item 1</ListItemText>
@@ -36,5 +36,5 @@ export default () => (
         <ListItemText>Item 4</ListItemText>
       </ListItem>
     </List>
-  </Container>
+  </Page>
 );

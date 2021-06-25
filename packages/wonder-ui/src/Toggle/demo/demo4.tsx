@@ -3,7 +3,7 @@
  * desc:
  *
  */
-import { Toggle, Space, useTheme } from '@wonder-ui/core';
+import { Container, Toggle, Space, useTheme } from '@wonder-ui/core';
 import {
   ToggleOff,
   ToggleOn,
@@ -16,22 +16,24 @@ import {
 export default () => {
   const theme = useTheme();
   return (
-    <Space>
-      <Toggle
-        style={{ color: theme.palette.colors.blue[300] }}
-        icon={<ToggleOff fontSize="large" />}
-        checkedIcon={<ToggleOn fontSize="large" />}
-      />
-      <Toggle
-        style={{ color: theme.palette.colors.pink[400] }}
-        icon={<CheckCircle />}
-        checkedIcon={<CheckCircleFill />}
-      />
-      <Toggle
-        style={{ color: theme.palette.colors.orange[600] }}
-        icon={<CheckSquare />}
-        checkedIcon={<CheckSquareFill />}
-      />
-    </Space>
+    <Container>
+      <Space>
+        <Toggle
+          style={{ color: theme.palette.colors.blue[300] }}
+          icon={<ToggleOff fontSize="large" />}
+          checkedIcon={<ToggleOn fontSize="large" />}
+        />
+        <Toggle
+          style={{ color: theme.palette.colors.pink[400] }}
+          icon={<CheckCircle />}
+          checkedIcon={<CheckCircleFill />}
+        />
+        <Toggle
+          style={{ color: theme.palette.colors.orange[600] }}
+          icon={<CheckSquare />}
+          checkedIcon={<CheckSquareFill />}
+        />
+      </Space>
+    </Container>
   );
 };

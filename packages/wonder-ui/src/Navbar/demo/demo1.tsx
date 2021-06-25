@@ -5,7 +5,7 @@
 import {
   ArrowForward,
   Button,
-  Container,
+  Page,
   CloseButton,
   IconButton,
   Navbar,
@@ -14,7 +14,7 @@ import {
 import { ThreeDotsVertical, Search } from '@wonder-ui/icons';
 
 export default () => (
-  <Container size="sm">
+  <Page title="Navbar">
     <Space direction="vertical">
       <Navbar right={<CloseButton edge="end" />} />
 
@@ -102,5 +102,5 @@ export default () => (
         }
       />
     </Space>
-  </Container>
+  </Page>
 );

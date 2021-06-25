@@ -1,6 +1,7 @@
 /**
  * title: 扩展SVG图标
  * desc: 用`SvgIcon`扩展, 只需要在子节点添加路径即可
+ *
  */
 import { SvgIcon, SvgIconProps, styled } from '@wonder-ui/core';
 
