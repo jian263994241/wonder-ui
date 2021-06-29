@@ -1,8 +1,8 @@
 import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import { css } from '@wonder-ui/utils';
-import { SpaceItem, SpaceRoot } from './SpaceStyled';
-import { useClasses, spaceClasses } from './SpaceClasses';
+import { SpaceItem, SpaceRoot, SpaceSplit } from './SpaceStyled';
+import { useClasses } from './SpaceClasses';
 import type { SpaceProps } from './SpaceTypes';
 
 const Space = React.forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
@@ -50,9 +50,15 @@ const Space = React.forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
       {childrenArray.map((child, index) => (
         <React.Fragment key={index}>
           {index != 0 && split && (
-            <SpaceItem className={classes.splitItem}>{split}</SpaceItem>
+            <SpaceSplit className={classes.split}>{split}</SpaceSplit>
           )}
-          <SpaceItem className={classes.item}>{child}</SpaceItem>
+          {React.isValidElement(child) ? (
+            React.cloneElement(child, {
+              className: css(child.props.className, classes.item)
+            })
+          ) : (
+            <SpaceItem className={classes.item}>{child}</SpaceItem>
+          )}
         </React.Fragment>
       ))}
     </SpaceRoot>

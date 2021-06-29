@@ -18,7 +18,7 @@ export const useClasses = (styleProps: SpaceStyleProps) => {
   const slots = {
     root: ['root', direction && direction, nowrap && 'nowrap'],
     item: ['item'],
-    splitItem: ['item', 'split']
+    split: ['split']
   };
 
   return composeClasses(componentName, slots, classes);

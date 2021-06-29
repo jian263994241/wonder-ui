@@ -45,6 +45,7 @@ export interface SpaceProps
    * Split node
    */
   split?: React.ReactNode;
+
   /**
    * Vertical align
    */

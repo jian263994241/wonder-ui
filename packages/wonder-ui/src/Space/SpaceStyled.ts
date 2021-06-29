@@ -1,7 +1,6 @@
 import styled from '../styles/styled';
 import { componentName } from './SpaceClasses';
-import { CSSSupports } from '@wonder-ui/utils';
-import { getSize } from './SpaceUtils';
+import { getSize, checkFlexGap } from './SpaceUtils';
 import type { SpaceStyleProps } from './SpaceTypes';
 
 const nameMap: { [key: string]: string } = {
@@ -9,7 +8,7 @@ const nameMap: { [key: string]: string } = {
   end: 'flex-end'
 };
 
-const supportGap = CSSSupports('gap', '10px');
+const supportGap = checkFlexGap();
 
 export const SpaceRoot = styled('div', { name: componentName, slot: 'Root' })<{
   styleProps: SpaceStyleProps;
@@ -22,6 +21,11 @@ export const SpaceRoot = styled('div', { name: componentName, slot: 'Root' })<{
     padding: 0,
     margin: 0,
     display: 'flex',
+
+    '& > *': {
+      flexShrink: 1,
+      textOverflow: 'ellipsis'
+    },
 
     flexWrap: styleProps.nowrap ? 'nowrap' : 'wrap',
     ...(styleProps.verticalAlign && {
@@ -69,10 +73,15 @@ export const SpaceRoot = styled('div', { name: componentName, slot: 'Root' })<{
   };
 });
 
-export const SpaceItem = styled('span', { name: componentName, slot: 'Item' })({
-  flexShrink: 1,
-  textOverflow: 'ellipsis',
-  '&:empty': {
-    display: 'none'
-  }
+export const SpaceSplit = styled('span', {
+  name: componentName,
+  slot: 'Split'
+})({
+  display: 'flex',
+  alignSelf: 'stretch',
+  alignItems: 'center'
 });
+
+export const SpaceItem = styled('span', { name: componentName, slot: 'Item' })(
+  {}
+);
