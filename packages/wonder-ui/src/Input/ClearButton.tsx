@@ -4,19 +4,21 @@ import useTheme from '../styles/useTheme';
 
 export default function (props: ButtonBaseProps) {
   const theme = useTheme();
+  const currentColor = theme.palette.colors.grey[300];
+  const contrastText = theme.palette.getContrastText(currentColor);
   return (
-    <ButtonBase {...props}>
+    <ButtonBase tabIndex={-1} disableRipple {...props}>
       <SvgIcon viewBox="0 0 28 28" fontSize="inherit">
-        <circle cx="14" cy="14" r="14" fill={theme.palette.light.main} />
+        <circle cx="14" cy="14" r="14" fill={currentColor} />
         <path
-          stroke={theme.palette.light.contrastText}
+          stroke={contrastText}
           strokeWidth="2"
           strokeMiterlimit="10"
           d="M8 8l12 12"
         />
         <path
           fill="none"
-          stroke={theme.palette.light.contrastText}
+          stroke={contrastText}
           strokeWidth="2"
           strokeMiterlimit="10"
           d="M20 8L8 20"

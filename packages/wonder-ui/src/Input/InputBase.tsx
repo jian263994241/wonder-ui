@@ -1,5 +1,6 @@
 import * as React from 'react';
 import ClearButton from './ClearButton';
+import RevealButton from './RevealButton';
 import styled from '../styles/styled';
 import TextareaAutosize from './TextareaAutosize';
 import useThemeProps from '../styles/useThemeProps';
@@ -7,7 +8,6 @@ import { alpha } from '../styles/colorManipulator';
 import { composeClasses, css, generateUtilityClasses } from '@wonder-ui/utils';
 import { InputFocusOptions, resolveOnChange, triggerFocus } from './inputUtils';
 import { useControlled, useForkRef } from '@wonder-ui/hooks';
-
 export interface InputAction {
   focus(option?: InputFocusOptions): void;
   blur(): void;
@@ -27,6 +27,7 @@ export const inputClasses = generateUtilityClasses(componentName, [
   'prefix',
   'suffix',
   'clearButton',
+  'revealButton',
   'borderless',
   'multiline',
   'disabled',
@@ -87,7 +88,8 @@ const useClasses = (styleProps: InputStyleProps) => {
     input: ['input'],
     prefix: ['prefix'],
     suffix: ['suffix'],
-    clearButton: ['clearButton']
+    clearButton: ['clearButton'],
+    revealButton: ['revealButton']
   };
 
   return composeClasses(componentName, slots, classes);
@@ -117,7 +119,8 @@ export const InputRoot = styled('div', {
 
   ...((!!styleProps.suffix ||
     !!styleProps.onRenderSuffix ||
-    styleProps.allowClear) && {
+    styleProps.allowClear ||
+    styleProps.type === 'password') && {
     paddingRight: 0
   }),
 
@@ -240,6 +243,14 @@ const InputClearButton = styled(ClearButton, {
   fontSize: 18
 });
 
+const InputRevealButton = styled(RevealButton, {
+  name: componentName,
+  slot: 'RevealButton'
+})({
+  flexShrink: 1,
+  fontSize: 14
+});
+
 const InputPrefix = styled('span', {
   name: componentName,
   slot: 'Prefix'
@@ -298,6 +309,7 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       onChange,
       parser,
       formatter,
+      type,
       ...rest
     } = props;
 
@@ -308,6 +320,8 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       value: valueProp,
       defaultValue
     });
+
+    const [isRevealingPassword, setRevealingPassword] = React.useState(false);
 
     let InputComponent: React.ElementType = 'input';
     let inputProps: Record<string, any> = {};
@@ -388,6 +402,13 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       resolveOnChange(inputRef.current!, e, onChange);
     }, []);
 
+    const handleReveal = React.useCallback(() => {
+      setRevealingPassword(!isRevealingPassword);
+      setTimeout(() => {
+        action.focus({ cursor: 'end' });
+      }, 0);
+    }, [isRevealingPassword]);
+
     return (
       <InputRoot
         className={css(className, classes.root)}
@@ -405,7 +426,7 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
 
         <InputInput
           autoComplete={autoComplete}
-          type="text"
+          type={isRevealingPassword ? 'text' : type}
           required={required}
           {...inputProps}
           {...rest}
@@ -419,12 +440,20 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
           onChange={handleChange}
         />
 
-        {(suffix || onRenderSuffix || allowClear) && (
+        {(suffix || onRenderSuffix || allowClear || type === 'password') && (
           <InputSuffix className={classes.suffix}>
             {allowClear && !!value && (
               <InputClearButton
                 className={classes.clearButton}
                 onClick={handleReset}
+              />
+            )}
+
+            {type === 'password' && (
+              <InputRevealButton
+                onClick={handleReveal}
+                visible={isRevealingPassword}
+                className={classes.revealButton}
               />
             )}
 
