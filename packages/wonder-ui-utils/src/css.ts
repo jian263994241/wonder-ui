@@ -1,3 +1,4 @@
+import { camelCase } from './string';
 /**
  * Dictionary of booleans.
  *
@@ -62,3 +63,23 @@ export function css(...args: ICssInput[]): string {
 
   return classes.join(' ');
 }
+
+/**
+ * css string to object
+ * @param css
+ * @returns
+ */
+export const convertCSS2JS = (css: string): object => {
+  let frameCSS = css.replace(/([\w-.]+)\s*:([^;]+);?/g, '$1:$2,');
+  frameCSS = frameCSS.replace(/,+$/, '');
+  let properties = frameCSS.split(', ');
+  let frameCSSObj = {};
+  properties.forEach(function (property: string) {
+    let cssProp = property.split(':');
+    let cssKey = camelCase(cssProp[0]);
+    let cssValue = cssProp[1].trim();
+    //@ts-expect-error
+    frameCSSObj[cssKey] = cssValue;
+  });
+  return frameCSSObj;
+};

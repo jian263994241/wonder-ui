@@ -43,6 +43,30 @@ export function find<T>(
 }
 
 /**
+ * Helper to find the all item within an array that satisfies the callback.
+ * @param array
+ * @param cb
+ * @returns array
+ */
+export function findAll<T>(
+  array: T[],
+  cb: (item: T, index: number) => boolean
+): T[] {
+  const result: T[] = [];
+  let index = 0;
+
+  while (index >= 0) {
+    index = findIndex(array, cb, index);
+    if (index > -1) {
+      result.push(array[index]);
+      index++;
+    }
+  }
+
+  return result;
+}
+
+/**
  * Creates an array of a given size and helper method to populate.
  *
  * @public
