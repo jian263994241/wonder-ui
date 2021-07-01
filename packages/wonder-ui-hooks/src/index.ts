@@ -5,6 +5,7 @@ export * from './useConst';
 export * from './useControlled';
 export * from './useCountDown';
 export * from './useCounter';
+export * from './useCursor';
 export * from './useDebounce';
 export * from './useDebounceFn';
 export * from './useDynamicList';
