@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { capitalize, css, generateUtilityStyles } from '@wonder-ui/utils';
-import InputBase from '../InputBase';
+import InputBase from '../Input';
 import ButtonBase from '../ButtonBase';
 
 export interface SearchBoxProps {}

@@ -6,7 +6,7 @@ import TouchRipple, {
 } from './TouchRipple';
 import useThemeProps from '../styles/useThemeProps';
 import { buttonBaseClasses, useClasses } from './ButtonBaseClasses';
-import { css } from '@wonder-ui/utils';
+import { css, forwardRef } from '@wonder-ui/utils';
 import {
   useEventCallback,
   useForkRef,
@@ -78,8 +78,8 @@ const ButtonBaseRoot = styled('button', {
   }
 });
 
-const ButtonBase = React.forwardRef<HTMLElement, ButtonBaseProps>(
-  (inProps, ref) => {
+const ButtonBase = forwardRef<HTMLElement, ButtonBaseProps>(
+  (inProps: ButtonBaseProps, ref: React.Ref<HTMLElement>) => {
     const props = useThemeProps({ props: inProps, name: 'WuiButtonBase' });
     const {
       TouchRippleProps,

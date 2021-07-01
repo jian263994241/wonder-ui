@@ -5,9 +5,10 @@ import IconButton from '../IconButton';
 import Navbar, { NavbarProps } from '../Navbar';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { css } from '@wonder-ui/utils';
+import { css, mergedRef } from '@wonder-ui/utils';
 import { pageClasses, useClasses } from './PageClasses';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
+import { navbarClasses } from '../Navbar/NavbarClasses';
 
 const PageRoot = styled('div', {
   name: 'WuiPage',
@@ -20,7 +21,10 @@ const PageRoot = styled('div', {
   transform: 'none',
   zIndex: 1,
   overflow: 'hidden',
-  backgroundColor: theme.palette.background.default
+  backgroundColor: theme.palette.background.default,
+  [`& > .${navbarClasses.root}`]: {
+    position: 'absolute'
+  }
 }));
 
 const PageContent = styled('div', {
@@ -170,7 +174,6 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
           subTitle={subTitle}
           right={barRight}
           left={barLeft}
-          fixed
           {...NavbarProps}
           classes={{
             ...NavbarProps.classes,
@@ -191,7 +194,7 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
         {...ContentProps}
         className={css(classes.content, ContentProps.className)}
         //@ts-expect-error
-        ref={useForkRef(ContentRef, ContentProps.ref)}
+        ref={mergedRef(ContentRef, ContentProps.ref)}
         style={{
           ...ContentProps.style,
           paddingTop: contentPaddingTop,

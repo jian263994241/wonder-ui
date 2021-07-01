@@ -2,11 +2,10 @@ import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import { keyframes } from '@wonder-ui/styled';
 import styled from '../styles/styled';
-import { css } from '@wonder-ui/utils';
+import { css, forwardRef } from '@wonder-ui/utils';
 import { svgIconClasses, useClasses } from './SvgIconClasses';
 
-export interface SvgIconProps
-  extends Omit<React.HTMLProps<SVGSVGElement>, 'as' | 'ref'> {
+export interface SvgIconProps extends React.SVGAttributes<SVGSVGElement> {
   children?: React.ReactNode;
   classes?: Partial<typeof svgIconClasses>;
   color?: 'action' | 'disabled' | 'error' | 'inherit' | 'primary' | 'secondary';
@@ -35,9 +34,11 @@ const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })(
     flexShrink: 0,
     fontSize: 'inherit',
     verticalAlign: -1,
+    WebkitTapHighlightColor: 'transparent',
     transition: theme.transitions.create('fill', {
       duration: theme.transitions.duration.shorter
     }),
+    color: 'currentColor',
     [`&.${svgIconClasses.colorPrimary}`]: {
       color: theme.palette.primary.main
     },
@@ -68,14 +69,14 @@ const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })(
   })
 );
 
-const SvgIcon = React.forwardRef<Element, SvgIconProps>((inProps, ref) => {
+const SvgIcon = forwardRef<Element, SvgIconProps>((inProps, ref) => {
   const props = useThemeProps({ name: 'WuiSvgIcon', props: inProps });
   const {
     children,
     className,
     color = 'inherit',
     component = 'svg',
-    fontSize = 'small',
+    fontSize = 'inherit',
     htmlColor,
     spin = false,
     titleAccess,

@@ -76,6 +76,10 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((inProps, ref) => {
       ref={ref}
       {...ModalProps}
       {...rest}
+      BackdropProps={{
+        transitionDuration: { enter: 375, exit: 0 },
+        ...ModalProps?.BackdropProps
+      }}
       classes={{ root: css(classes.root, className) }}
     >
       <TransitionComponent

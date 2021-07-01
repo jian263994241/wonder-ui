@@ -3,17 +3,19 @@
  * desc:
  *
  */
-import { Radio, Space, Typography } from '@wonder-ui/core';
+import { Radio, Space } from '@wonder-ui/core';
 
 export default () => (
-  <Space>
-    <Typography component="label">
+  <Space direction="vertical">
+    <Space>
       <Radio name="radio-demo" />
-      <span>Primary</span>
-    </Typography>
-    <Typography component="label">
       <Radio name="radio-demo" color="secondary" />
-      <span>Secondary</span>
-    </Typography>
+    </Space>
+    <Space>
+      <Radio name="radio-demo">Primary</Radio>
+      <Radio name="radio-demo" color="secondary">
+        Secondary
+      </Radio>
+    </Space>
   </Space>
 );

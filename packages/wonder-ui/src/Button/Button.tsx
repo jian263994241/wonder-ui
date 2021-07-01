@@ -5,7 +5,7 @@ import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
 import { buttonClasses, ButtonStyleProps, useClasses } from './ButtonClasses';
 import { ButtonGroupContext } from '../ButtonGroup/ButtonGroupContext';
-import { css } from '@wonder-ui/utils';
+import { css, forwardRef } from '@wonder-ui/utils';
 export interface ButtonProps extends ButtonBaseProps {
   LinkComponent?: React.ElementType;
   children?: React.ReactNode;
@@ -247,7 +247,7 @@ const ButtonEndIcon = styled('span', {
   ...commonIconStyles(styleProps)
 }));
 
-const Button = React.forwardRef<HTMLElement, ButtonProps>((inProps, ref) => {
+const Button = forwardRef<HTMLElement, ButtonProps>((inProps, ref) => {
   const { ButtonProps } = React.useContext(ButtonGroupContext);
   const props = useThemeProps({
     props: { ...ButtonProps, ...inProps },

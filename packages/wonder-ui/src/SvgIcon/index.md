@@ -10,7 +10,7 @@ sidemenu: false
 | --- | --- | --- | ---
 | classes | 样式名 | `'root', 'spin', 'colorPrimary', 'colorSecondary', 'colorAction', 'colorError', 'colorDisabled', 'fontSizeInherit', 'fontSizeSmall', 'fontSizeMedium', 'fontSizeLarge'` |
 | component | 根节点 | `ElementType` | svg
-| size | 尺寸 | `'inherit' \| 'large' \| 'medium' \| 'small'` | medium
+| fontSize | 尺寸 | `'inherit' \| 'large' \| 'medium' \| 'small'` | inherit
 | spin | 旋转动画 | `boolean` |
 | titleAccess | 标题 | `string` |
 | viewBox | viewBox | `string` | '0 0 16 16'

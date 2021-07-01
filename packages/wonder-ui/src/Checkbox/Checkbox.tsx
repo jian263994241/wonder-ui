@@ -7,7 +7,7 @@ import { checkboxClasses, useClasses } from './CheckboxClasses';
 import { useControlled, useForkRef } from '@wonder-ui/hooks';
 
 export interface CheckboxProps
-  extends Omit<React.HTMLProps<HTMLInputElement>, 'as' | 'ref'> {
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   /**
    * @description shape
    * @default false
@@ -24,18 +24,33 @@ export interface CheckboxProps
    * @default false
    */
   indeterminate?: boolean;
+  /**
+   * @ignore
+   */
+  ref?: React.Ref<HTMLInputElement>;
 }
 
 const colors = ['primary', 'secondary'] as const;
 
+const CheckboxWrapper = styled('label', {
+  name: 'WuiCheckbox',
+  slot: 'Wrapper'
+})({
+  [`& > .${checkboxClasses.root} + span`]: {
+    marginLeft: '0.3em'
+  }
+});
+
 const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })(
   ({ theme }) => ({
     appearance: 'none',
+    padding: 0,
+    margin: 0,
     colorAdjust: 'exact',
     width: '1em',
     height: '1em',
     fontSize: 'inherit',
-    verticalAlign: -1,
+    verticalAlign: 'middle',
     outline: 0,
     backgroundColor: theme.palette.background.paper,
     backgroundPosition: 'center',
@@ -59,9 +74,7 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })(
       height: '1.2em',
       borderRadius: '50%'
     },
-    'label > & + *': {
-      marginLeft: '.3em'
-    },
+
     ...generateUtilityStyles(colors, (styles, color) => {
       const colorName = 'color' + capitalize(color);
       //@ts-expect-error
@@ -97,6 +110,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     const props = useThemeProps({ props: inProps, name: 'WuiCheckbox' });
 
     const {
+      children,
       checked: checkedProp,
       circle = false,
       className,
@@ -133,7 +147,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         [onChange, indeterminate]
       );
 
-    return (
+    const checkboxRendered = (
       <CheckboxRoot
         checked={checked}
         className={css(classes.root, className)}
@@ -144,6 +158,17 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         {...rest}
       />
     );
+
+    if (children) {
+      return (
+        <CheckboxWrapper className={classes.wrapper}>
+          {checkboxRendered}
+          <span>{children}</span>
+        </CheckboxWrapper>
+      );
+    }
+
+    return checkboxRendered;
   }
 );
 

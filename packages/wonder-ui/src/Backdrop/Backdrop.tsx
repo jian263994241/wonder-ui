@@ -2,10 +2,15 @@ import * as React from 'react';
 import Fade from '../Fade';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
+import { composeClasses, css, generateUtilityClasses } from '@wonder-ui/utils';
 import { TransitionProps } from '../Transition';
 import { useForkRef } from '@wonder-ui/hooks';
-import { useClasses, backdropClasses } from './BackdropClasses';
-import { css } from '@wonder-ui/utils';
+
+export const backdropClasses = generateUtilityClasses('WuiBackdrop', [
+  'root',
+  'invisible'
+]);
+
 export interface BackdropProps
   extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
   /**
@@ -35,6 +40,18 @@ export interface BackdropProps
    */
   transitionDuration?: TransitionProps['timeout'];
 }
+
+export interface BackdropStyleProps extends BackdropProps {}
+
+export const useClasses = (styleProps: BackdropStyleProps) => {
+  const { invisible, classes } = styleProps;
+
+  const slots = {
+    root: ['root', invisible && 'invisible']
+  };
+
+  return composeClasses('WuiBackdrop', slots, classes);
+};
 
 const BackdropRoot = styled('div', { name: 'WuiBackdrop', slot: 'Root' })({
   zIndex: -1,

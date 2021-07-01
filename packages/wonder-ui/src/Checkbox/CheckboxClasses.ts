@@ -6,6 +6,7 @@ import {
 
 export const checkboxClasses = generateUtilityClasses('WuiCheckbox', [
   'root',
+  'wrapper',
   'circle',
   'indeterminate',
   'colorPrimary',
@@ -28,7 +29,8 @@ export const useClasses = (styleProps: CheckboxStyleProps) => {
       circle && 'circle',
       color && `color${capitalize(color)}`,
       indeterminate && 'indeterminate'
-    ]
+    ],
+    wrapper: ['wrapper']
   };
 
   return composeClasses('WuiCheckbox', slots, classes);

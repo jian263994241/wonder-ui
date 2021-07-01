@@ -3,8 +3,8 @@ import Grow from '../Grow';
 import Popper, { PopperProps } from '../Popper';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { alpha } from '../styles/colorManipulator';
 import { css } from '@wonder-ui/utils';
+import { emphasize } from '../styles/colorManipulator';
 import { tooltipClasses, useClasses } from './TooltipClasses';
 import { useForkRef, useTouchFeedback } from '@wonder-ui/hooks';
 
@@ -34,52 +34,62 @@ const TooltipRoot = styled(Popper, {
 const TooltipTooltip = styled('div', {
   name: 'WuiTooltip',
   slot: 'Tooltip'
-})(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.colors.grey[700], 0.92),
-  borderRadius: theme.shape.borderRadius,
-  color: theme.palette.common.white,
-  fontFamily: theme.typography.fontFamily,
-  fontWeight: theme.typography.fontWeightRegular,
-  lineHeight: `${round(16 / 12)}em`,
-  padding: '4px 8px',
-  fontSize: theme.typography.pxToRem(12),
-  maxWidth: 300,
-  margin: 2,
-  wordWrap: 'break-word',
+})(({ theme }) => {
+  const emphasis = theme.palette.mode === 'light' ? 0.75 : 0.98;
+  const backgroundColor = emphasize(theme.palette.background.default, emphasis);
 
-  [`&.${tooltipClasses.withArrow}`]: {
-    position: 'relative',
-    margin: 0,
-    [`&[data-popper-placement*="left"]`]: {
-      transformOrigin: 'right center',
-      marginRight: '8px'
-    },
-    [`&[data-popper-placement*="right"]`]: {
-      transformOrigin: 'left center',
-      marginLeft: '8px'
-    },
-    [`&[data-popper-placement*="top"]`]: {
-      transformOrigin: 'center bottom',
-      marginBottom: '8px'
-    },
-    [`&[data-popper-placement*="bottom"]`]: {
-      transformOrigin: 'center top',
-      marginTop: '8px'
+  return {
+    backgroundColor: backgroundColor,
+    borderRadius: theme.shape.borderRadius,
+    color: theme.palette.common.white,
+    fontFamily: theme.typography.fontFamily,
+    fontWeight: theme.typography.fontWeightRegular,
+    lineHeight: `${round(16 / 12)}em`,
+    padding: 8,
+    fontSize: theme.typography.pxToRem(12),
+    maxWidth: 300,
+    margin: 2,
+    wordWrap: 'break-word',
+
+    [`&.${tooltipClasses.withArrow}`]: {
+      position: 'relative',
+      margin: 0,
+
+      [`& > .${tooltipClasses.arrow}`]: {
+        color: backgroundColor
+      },
+
+      [`&[data-popper-placement*="left"]`]: {
+        transformOrigin: 'right center',
+        marginRight: 8
+      },
+      [`&[data-popper-placement*="right"]`]: {
+        transformOrigin: 'left center',
+        marginLeft: 8
+      },
+      [`&[data-popper-placement*="top"]`]: {
+        transformOrigin: 'center bottom',
+        marginBottom: 8
+      },
+      [`&[data-popper-placement*="bottom"]`]: {
+        transformOrigin: 'center top',
+        marginTop: 8
+      }
     }
-  }
-}));
+  };
+});
 
 const TooltipArrow = styled('div', {
   name: 'WuiTooltip',
   slot: 'Arrow'
-})(({ theme }) => ({
+})({
   /* Styles applied to the arrow element. */
   overflow: 'hidden',
   position: 'absolute',
   width: '1em',
   height: '0.71em' /* = width / sqrt(2) = (length of the hypotenuse) */,
   boxSizing: 'border-box',
-  color: alpha(theme.palette.colors.grey[700], 0.9),
+
   '&::before': {
     content: '""',
     margin: 'auto',
@@ -123,7 +133,7 @@ const TooltipArrow = styled('div', {
       transformOrigin: '0 0'
     }
   }
-}));
+});
 
 const Tooltip = React.forwardRef<HTMLElement, TooltipProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiTooltip' });

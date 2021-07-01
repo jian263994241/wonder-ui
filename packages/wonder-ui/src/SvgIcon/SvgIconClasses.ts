@@ -26,13 +26,14 @@ export interface SvgIconStyleProps {
 }
 
 export const useClasses = (styleProps: SvgIconStyleProps) => {
-  const { color, fontSize, classes } = styleProps;
+  const { color, fontSize, classes, spin } = styleProps;
 
   const slots = {
     root: [
       'root',
       `fontSize${capitalize(fontSize)}`,
-      color && color !== 'inherit' && `color${capitalize(color)}`
+      color && color !== 'inherit' && `color${capitalize(color)}`,
+      spin && 'spin'
     ]
   };
 

@@ -23,36 +23,6 @@ export default defineConfig({
     }
   },
 
-  styles: [
-    `html, body, #root {
-      height: 100%;
-    }
-
-    .__dumi-default-previewer {
-      background-color: #f7f7fa!important;
-    }
-
-    html[data-prefers-color=dark] .__dumi-default-previewer {
-      background-color: #1d1d1d!important;
-    }
-
-    .__dumi-default-device {
-      top: 100px !important;
-      height: 580px !important;
-    }
-
-    .__dumi-default-device-status > span:first-of-type {
-      text-indent: -999em!important;
-    }
-
-    .__dumi-default-mobile-demo-layout, .__dumi-default-mobile-demo-layout>div {
-      height: 100%;
-      padding: 0 !important;
-    }
-
-    `
-  ],
-
   // more config: https://d.umijs.org/zh-CN/config
   navs: {
     'zh-CN': [
@@ -105,8 +75,11 @@ export default defineConfig({
         title: '数据录入',
         children: [
           'components/checkbox.md',
+          'components/input.md',
+          'components/inputNumber.md',
           'components/radio.md',
           'components/search.md',
+          'components/stepButton.md',
           'components/stepper.md',
           'components/textfield.md',
           'components/toggle.md'
@@ -157,5 +130,26 @@ export default defineConfig({
         children: []
       }
     ]
-  }
+  },
+  styles: [
+    `html, body, #root {
+      height: 100%;
+    }
+
+    .__dumi-default-device {
+      top: 100px !important;
+      height: 580px !important;
+    }
+
+    .__dumi-default-device-status > span:first-of-type {
+      text-indent: -999em!important;
+    }
+
+    .__dumi-default-mobile-demo-layout, .__dumi-default-mobile-demo-layout>div {
+      height: 100%;
+      padding: 0 !important;
+    }
+
+    `
+  ]
 });

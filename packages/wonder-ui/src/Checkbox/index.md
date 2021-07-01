@@ -11,4 +11,5 @@ sidemenu: false
 | classes | css | `'root', 'circle', 'colorPrimary', 'colorSecondary'` |
 | circle | 圆形 | `boolean` | false
 | color | 颜色 | `'primary' \| 'secondary'` | primary
+| children | 标签 | `ReactNode` |
 | indeterminate | 不明确的 | `boolean` | false

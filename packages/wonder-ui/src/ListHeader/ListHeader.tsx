@@ -22,7 +22,7 @@ const ListHeaderRoot = styled('li', {
     backgroundColor: theme.palette.background.default,
     width: '100%',
     boxSizing: 'border-box',
-    color: theme.palette.text.hint,
+    color: theme.palette.text.secondary,
     padding: theme.spacing(1, 2),
     display: 'flex',
     justifyContent: 'start',

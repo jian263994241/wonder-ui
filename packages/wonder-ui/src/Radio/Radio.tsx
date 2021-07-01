@@ -15,19 +15,30 @@ export interface RadioProps
   /**
    * @ignore
    */
-  ref?: React.Ref<any>;
+  ref?: React.Ref<HTMLInputElement>;
 }
 
 const colors = ['primary', 'secondary'] as const;
 
+const RadioWrapper = styled('label', {
+  name: 'WuiCheckbox',
+  slot: 'Wrapper'
+})({
+  [`& > .${radioClasses.root} + span`]: {
+    marginLeft: '0.3em'
+  }
+});
+
 const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })(
   ({ theme }) => ({
     appearance: 'none',
+    margin: 0,
+    padding: 0,
     colorAdjust: 'exact',
     width: '1em',
     height: '1em',
     fontSize: 'inherit',
-    verticalAlign: -1,
+    verticalAlign: 'middle',
     backgroundColor: theme.palette.background.paper,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -73,13 +84,13 @@ const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })(
 
 const Radio = React.forwardRef<HTMLInputElement, RadioProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiRadio' });
-  const { className, color = 'primary', ...rest } = props;
+  const { className, children, color = 'primary', ...rest } = props;
 
   const styleProps = { ...props, color };
 
   const classes = useClasses(styleProps);
 
-  return (
+  const radioRendered = (
     <RadioRoot
       className={css(classes.root, className)}
       ref={ref}
@@ -87,6 +98,17 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>((inProps, ref) => {
       {...rest}
     />
   );
+
+  if (children) {
+    return (
+      <RadioWrapper className={classes.wrapper}>
+        {radioRendered}
+        <span>{children}</span>
+      </RadioWrapper>
+    );
+  }
+
+  return radioRendered;
 });
 
 export default Radio;

@@ -1,3 +1,6 @@
+---
+mobile: false
+---
 # Toggle 开关
 
 开关选择器。

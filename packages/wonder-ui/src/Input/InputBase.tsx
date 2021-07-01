@@ -7,7 +7,8 @@ import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
 import { composeClasses, css, generateUtilityClasses } from '@wonder-ui/utils';
 import { InputFocusOptions, resolveOnChange, triggerFocus } from './inputUtils';
-import { useControlled, useForkRef } from '@wonder-ui/hooks';
+import { useControlled, useForkRef, useEventCallback } from '@wonder-ui/hooks';
+
 export interface InputAction {
   focus(option?: InputFocusOptions): void;
   blur(): void;
@@ -54,6 +55,7 @@ export interface InputProps
   suffix?: React.ReactNode;
   onRenderPrefix?(props: InputProps): React.ReactNode;
   onRenderSuffix?(props: InputProps): React.ReactNode;
+  onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;
   /** Transform `display value` to value */
   parser?: (displayValue: any) => any;
   /** Transform `value` to display value show in input */
@@ -137,16 +139,15 @@ export const InputRoot = styled('div', {
           borderColor: alpha(theme.palette.primary.main, 0.9),
           boxShadow: `0 0 0 3px ${alpha(theme.palette.primary.main, 0.18)}`
         })
-      }),
+      })
+  }),
+  ...(styleProps.readOnly && {
+    cursor: 'default'
+  }),
 
-    ...(styleProps.readOnly && {
-      cursor: 'default'
-    }),
-
-    ...(styleProps.disabled && {
-      cursor: 'not-allowed',
-      color: theme.palette.text.disabled
-    })
+  ...(styleProps.disabled && {
+    cursor: 'not-allowed',
+    color: theme.palette.text.disabled
   })
 }));
 
@@ -288,28 +289,34 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       autoComplete = 'off',
       borderless = false,
       className,
-      style,
+      defaultValue = '',
       disabled = false,
       disabledActiveStyle = false,
-      multiline = false,
+      formatter,
       maxRows,
       minRows = 2,
-      resizable = false,
-      readOnly = false,
-      required,
-      prefix,
-      suffix,
+      multiline = false,
       onBlur,
+      onChange,
       onClick,
       onFocus,
+      onKeyDown,
+      onKeyUp,
+      onPressEnter,
+      onCompositionStart,
+      onCompositionEnd,
       onRenderPrefix,
       onRenderSuffix,
-      value: valueProp,
-      defaultValue = '',
-      onChange,
       parser,
-      formatter,
+      prefix,
+      readOnly = false,
+      required,
+      resizable = false,
+      style,
+      suffix,
+      tabIndex,
       type,
+      value: valueProp,
       ...rest
     } = props;
 
@@ -365,49 +372,58 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
 
     React.useImperativeHandle(actionRef, () => action, [inputRef]);
 
-    const handleChange = React.useCallback((e) => {
+    const handleChange = useEventCallback((e) => {
       const _value =
         formatter && parser ? parser(e.target.value) : e.target.value;
 
       setValueIfunControlled(_value);
       resolveOnChange(inputRef.current!, e, onChange, _value);
-    }, []);
+    });
 
-    const handleFocus = React.useCallback((event) => {
+    const handleFocus = useEventCallback((event) => {
       setFocused(true);
 
       if (onFocus) {
         onFocus(event);
       }
-    }, []);
+    });
 
-    const handleBlur = React.useCallback((event) => {
+    const handleBlur = useEventCallback((event) => {
       setFocused(false);
 
       if (onBlur) {
         onBlur(event);
       }
-    }, []);
+    });
 
-    const handleClick = React.useCallback((event) => {
+    const handleClick = useEventCallback((event) => {
       action.focus();
       if (onClick) {
         onClick(event);
       }
-    }, []);
+    });
 
-    const handleReset = React.useCallback((e) => {
+    const handleKeyDown = useEventCallback((event) => {
+      if (onPressEnter && event.keyCode === 13) {
+        onPressEnter(event);
+      }
+      if (onKeyDown) {
+        onKeyDown(event);
+      }
+    });
+
+    const handleReset = useEventCallback((e) => {
       setValueIfunControlled('');
       action.focus();
       resolveOnChange(inputRef.current!, e, onChange);
-    }, []);
+    });
 
-    const handleReveal = React.useCallback(() => {
+    const handleReveal = useEventCallback(() => {
       setRevealingPassword(!isRevealingPassword);
       setTimeout(() => {
         action.focus({ cursor: 'end' });
       }, 0);
-    }, [isRevealingPassword]);
+    });
 
     return (
       <InputRoot
@@ -417,6 +433,11 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
         onClick={handleClick}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
+        onKeyUp={onKeyUp}
+        onCompositionStart={onCompositionStart}
+        onCompositionEnd={onCompositionEnd}
+        tabIndex={disabledActiveStyle ? -1 : tabIndex}
       >
         {(prefix || onRenderPrefix) && (
           <InputPrefix className={classes.prefix}>

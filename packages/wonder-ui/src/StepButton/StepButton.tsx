@@ -1,6 +1,12 @@
 import * as React from 'react';
-import { forwardRef } from '@wonder-ui/utils';
-
+import styled from '../styles/styled';
+import useThemeProps from '../styles/useThemeProps';
+import {
+  css,
+  forwardRef,
+  generateUtilityClasses,
+  getDevice
+} from '@wonder-ui/utils';
 /**
  * When click and hold on a button - the speed of auto changing the value.
  */
@@ -16,19 +22,42 @@ export interface StepButtonProps {
   className?: string;
   component?: React.ElementType;
   delay?: number;
+  disabled?: boolean;
   interval?: number;
   onStep?(): void;
   style?: React.CSSProperties;
 }
 
-const StepButton = forwardRef<HTMLElement, StepButtonProps>((props, ref) => {
+export interface StepButtonStyleProps extends StepButtonProps {}
+
+const componentName = 'WuiStepButton';
+
+const stepButtonClasses = generateUtilityClasses(componentName, ['root']);
+
+const StepButtonRoot = styled('span', { name: componentName, slot: 'Root' })<{
+  styleProps: StepButtonStyleProps;
+}>(({ styleProps }) => ({
+  touchAction: 'manipulation',
+  userSelect: 'none',
+
+  ...(styleProps.disabled && {
+    pointerEvents: 'none'
+  })
+}));
+
+const StepButton = forwardRef<HTMLElement, StepButtonProps>((inProps, ref) => {
+  const props = useThemeProps({ props: inProps, name: componentName });
   const {
-    component: Comp = 'span',
+    className,
+    component = 'span',
     delay = STEP_DELAY,
+    disabled = false,
     interval = STEP_INTERVAL,
     onStep,
     ...rest
   } = props;
+
+  const { current: device } = React.useRef(getDevice());
 
   const stepTimeoutRef = React.useRef<any>();
 
@@ -36,7 +65,7 @@ const StepButton = forwardRef<HTMLElement, StepButtonProps>((props, ref) => {
   onStepRef.current = onStep;
 
   // We will interval update step when hold mouse down
-  const onStepMouseDown = (e: React.MouseEvent) => {
+  const onStepMouseDown = (e: any) => {
     e.preventDefault();
 
     if (onStepRef.current) {
@@ -62,14 +91,30 @@ const StepButton = forwardRef<HTMLElement, StepButtonProps>((props, ref) => {
 
   React.useEffect(() => onStopStep, []);
 
+  const handleProps = device.desktop
+    ? {
+        onMouseUp: onStopStep,
+        onMouseLeave: onStopStep,
+        onMouseDown: onStepMouseDown
+      }
+    : {
+        onTouchEnd: onStopStep,
+        onTouchCancel: onStopStep,
+        onTouchMove: onStopStep,
+        onTouchStart: onStepMouseDown
+      };
+
+  const styleProps = { ...props, disabled };
+
   return (
-    <Comp
-      unselectable="no"
+    <StepButtonRoot
+      aria-disabled={disabled}
+      as={component}
       role="button"
+      className={css(className, stepButtonClasses.root)}
       {...rest}
-      onMouseUp={onStopStep}
-      onMouseLeave={onStopStep}
-      onMouseDown={onStepMouseDown}
+      {...handleProps}
+      styleProps={styleProps}
       ref={ref as React.Ref<HTMLElement>}
     />
   );

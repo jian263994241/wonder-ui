@@ -7,6 +7,6 @@ import { TextField } from '@wonder-ui/core';
 
 export default () => (
   <div>
-    <TextField />
+    <TextField style={{ width: 400 }} />
   </div>
 );

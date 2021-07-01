@@ -1,5 +1,10 @@
 import * as React from 'react';
-import ButtonBase from '../ButtonBase';
+import InputNumber, {
+  InputNumberAction,
+  InputNumberProps
+} from '../InputNumber';
+import numeral from 'numeral';
+import StepButton from '../StepButton';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { css, toNumber } from '@wonder-ui/utils';
@@ -7,12 +12,10 @@ import { CSSObject } from '@wonder-ui/styled';
 import { stepperClasses, useClasses } from './StepperClasses';
 import { Theme } from '../styles/createTheme';
 import { useControlled } from '@wonder-ui/hooks';
-import numeral from 'numeral';
-import InputBase, { InputBaseProps, InputBaseAction } from '../InputBase';
 
 export interface StepperProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
-  InputProps?: Partial<InputBaseProps>;
+  InputNumberProps?: Partial<InputNumberProps>;
   classes?: Partial<typeof stepperClasses>;
   defaultValue?: number | string;
   disableInput?: boolean;
@@ -36,6 +39,7 @@ const StepperRoot = styled('div', {
   name: 'Stepper',
   slot: 'Root'
 })<{ styleProps: StepperStyleProps }>(({ styleProps }) => ({
+  display: 'inline-flex',
   ...(styleProps.disabled && {
     opacity: 0.3,
     pointerEvents: 'none'
@@ -43,6 +47,7 @@ const StepperRoot = styled('div', {
 }));
 
 const commomButtonStyles = (theme: Theme): CSSObject => ({
+  display: 'inline-block',
   position: 'relative',
   boxSizing: 'border-box',
   width: 28,
@@ -71,7 +76,7 @@ const commomButtonStyles = (theme: Theme): CSSObject => ({
   }
 });
 
-const StepperMinus = styled(ButtonBase, {
+const StepperMinus = styled(StepButton, {
   name: 'Stepper',
   slot: 'Minus'
 })<{ styleProps: StepperStyleProps }>(({ theme, styleProps }) => ({
@@ -87,7 +92,7 @@ const StepperMinus = styled(ButtonBase, {
   })
 }));
 
-const StepperPlus = styled(ButtonBase, {
+const StepperPlus = styled(StepButton, {
   name: 'Stepper',
   slot: 'Plus'
 })<{ styleProps: StepperStyleProps }>(({ theme, styleProps }) => ({
@@ -104,9 +109,9 @@ const StepperPlus = styled(ButtonBase, {
   })
 }));
 
-const StepperInput = styled(InputBase, {
+const StepperInputNumber = styled(InputNumber, {
   name: 'Stepper',
-  slot: 'Input'
+  slot: 'InputNumber'
 })<{ styleProps: StepperStyleProps }>(({ theme, styleProps }) => ({
   boxSizing: 'border-box',
   width: 32,
@@ -132,7 +137,7 @@ const StepperInput = styled(InputBase, {
 const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiStepper' });
   const {
-    InputProps,
+    InputNumberProps,
     className,
     defaultValue: defaultValueProp,
     disableInput = false,
@@ -142,98 +147,27 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
     hideInput = false,
     hideMinusButton = false,
     hidePlusButton = false,
-    max: maxProp,
-    min: minProp,
+    max,
+    min = 0,
     onChange,
-    step: stepProp,
-    value: valueProp,
+    step,
+    value,
+    defaultValue = min,
     ...rest
   } = props;
 
-  const max = toNumber(maxProp || Infinity);
-  const min = toNumber(minProp || 0);
-  const step = toNumber(stepProp || 1);
-  const defaultValue = toNumber(defaultValueProp || min);
-  const inputActionRef = React.useRef<InputBaseAction>(null);
+  const inputActionRef = React.useRef<InputNumberAction>(null);
 
-  const format = (value: number) => numeral(value).format(`${step}`);
+  const handleMinus = () => inputActionRef.current?.onInternalStep(false);
 
-  const [valueState, setValueIfunControlled] = useControlled<any>({
-    defaultValue: format(defaultValue),
-    value: valueProp
-  });
-  const valueRef = React.useRef<number>(valueState);
-
-  const value = toNumber(valueState);
-  const isMax = value === max;
-  const isMin = value === min;
-
-  const setValue = (value: number) => {
-    let _value;
-
-    if (value >= min && value <= max) {
-      _value = value;
-    } else if (value >= max) {
-      _value = max;
-    } else {
-      _value = min;
-    }
-
-    valueRef.current = _value;
-
-    setValueIfunControlled(_value);
-
-    if (onChange) {
-      onChange(_value);
-    }
-  };
-
-  const handleMinus = React.useCallback(() => {
-    const _value = numeral(value).subtract(step).value() || min;
-    setValue(_value);
-  }, [value, step]);
-
-  const handlePlus = React.useCallback(() => {
-    const _value = numeral(value).add(step).value() || min;
-
-    setValue(_value);
-  }, [value, step]);
-
-  const handleChange = React.useCallback(
-    (e) => {
-      const target = e.target as HTMLInputElement;
-      setValueIfunControlled(target.value);
-    },
-    [disableInput]
-  );
-
-  const handleBlur = React.useCallback((e) => {
-    const target = e.target as HTMLInputElement;
-    const _value = numeral(target.value).value() || valueRef.current;
-
-    setValue(_value);
-
-    if (InputProps?.onBlur) {
-      InputProps?.onBlur(e);
-    }
-  }, []);
-
-  const handleFocus = React.useCallback((e) => {
-    setTimeout(() => {
-      inputActionRef.current?.select();
-    }, 0);
-
-    if (InputProps?.onFocus) {
-      InputProps?.onFocus(e);
-    }
-  }, []);
+  const handlePlus = () => inputActionRef.current?.onInternalStep(true);
 
   const styleProps = {
     ...props,
     disabled,
     disableInput,
-    disableMinusButton: disableMinusButton || isMin,
-    disablePlusButton: disablePlusButton || isMax
+    disableMinusButton: disableMinusButton,
+    disablePlusButton: disablePlusButton
   };
 
   const classes = useClasses(styleProps);
@@ -247,35 +181,36 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
     >
       {!hideMinusButton && (
         <StepperMinus
-          disableRipple
           className={classes.minus}
-          onClick={handleMinus}
+          onStep={handleMinus}
           styleProps={styleProps}
         />
       )}
-      {!hideInput && (
-        <StepperInput
-          type="number"
-          role="spinbutton"
-          inputMode="decimal"
-          actionRef={inputActionRef}
-          {...InputProps}
-          aria-valuemin={min}
-          aria-valuenow={valueState}
-          aria-valuemax={max}
-          className={css(classes.input, InputProps?.className)}
-          value={valueState}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          styleProps={styleProps}
-        />
-      )}
+      <StepperInputNumber
+        type="number"
+        role="spinbutton"
+        inputMode="decimal"
+        actionRef={inputActionRef}
+        {...InputNumberProps}
+        style={{
+          ...InputNumberProps?.style,
+          ...(hideInput && { display: 'none' })
+        }}
+        className={css(classes.input, InputNumberProps?.className)}
+        styleProps={styleProps}
+        disableStepHandler
+        value={value}
+        defaultValue={defaultValue}
+        onChange={onChange}
+        disabledActiveStyle
+        step={step}
+        min={min}
+        max={max}
+      />
       {!hidePlusButton && (
         <StepperPlus
-          disableRipple
           className={classes.plus}
-          onClick={handlePlus}
+          onStep={handlePlus}
           styleProps={styleProps}
         />
       )}
@@ -284,3 +219,8 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
 });
 
 export default Stepper;
+
+export interface ControlledProps<T> {
+  defaultValue: T;
+  value?: T;
+}

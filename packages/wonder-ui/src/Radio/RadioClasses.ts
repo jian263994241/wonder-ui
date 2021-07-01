@@ -6,6 +6,7 @@ import {
 
 export const radioClasses = generateUtilityClasses('WuiRadio', [
   'root',
+  'wrapper',
   'colorPrimary',
   'colorSecondary'
 ]);
@@ -19,7 +20,8 @@ export const useClasses = (styleProps: RadioStyleProps) => {
   const { classes, color } = styleProps;
 
   const slots = {
-    root: ['root', color && `color${capitalize(color)}`]
+    root: ['root', color && `color${capitalize(color)}`],
+    wrapper: ['wrapper']
   };
   return composeClasses('WuiRadio', slots, classes);
 };

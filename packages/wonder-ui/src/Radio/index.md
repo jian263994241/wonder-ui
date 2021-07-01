@@ -10,4 +10,4 @@ sidemenu: false
 | --- | --- | --- | ---
 | classes | css | `'root', 'colorPrimary', 'colorSecondary'` |
 | color | color | `'primary' \| 'secondary'` | primary
-
+| children | 标签 | `ReactNode` |

@@ -4,15 +4,44 @@
  */
 
 import * as icons from '@wonder-ui/icons';
+import { Search } from '@wonder-ui/icons';
 import * as React from 'react';
 import SourceCode from 'dumi-theme-default/src/builtins/SourceCode';
-import { Col, InputBase, Popover, Row, styled } from '@wonder-ui/core';
-import { DelayedRender } from '@wonder-ui/utils';
-import { useBoolean } from '@wonder-ui/hooks';
+import {
+  Button,
+  ButtonGroup,
+  Col,
+  Empty,
+  Input,
+  Popover,
+  Row,
+  Space,
+  TabContext,
+  TabPane,
+  styled
+} from '@wonder-ui/core';
+import { DelayedRender, findAll } from '@wonder-ui/utils';
+import { useDebounce, useToggle, useInViewport } from '@wonder-ui/hooks';
+
+const { outlinedIcons, filledIcons } = (() => {
+  const outlinedIcons: string[] = [],
+    filledIcons: string[] = [];
+
+  Object.keys(icons).forEach((iconName) => {
+    if (iconName.match(/Fill/g)) {
+      filledIcons.push(iconName);
+    } else {
+      outlinedIcons.push(iconName);
+    }
+  });
+
+  return { outlinedIcons, filledIcons };
+})();
 
 const StyledRow = styled(Row)({
   '.col': {
-    textAlign: 'center'
+    textAlign: 'center',
+    height: 125
   },
   '.icon': {
     cursor: 'pointer',
@@ -35,67 +64,173 @@ const StyledRow = styled(Row)({
   }
 });
 
-const IconItem: React.FC<any> = ({ Icon }) => {
-  const [visible, actions] = useBoolean(false);
-  const [anchorPosition, setAnchorPosition] = React.useState<{
-    top: number;
-    left: number;
-  }>({ top: 0, left: 0 });
-  const actionRef = React.useRef<any>();
+const IconItem: React.FC<any> = ({ Icon, onOpen }) => {
+  const rootRef = React.useRef<any>();
+  const inViewPort = useInViewport(rootRef);
 
   const clickHandler = React.useCallback((e) => {
-    setAnchorPosition({
-      top: e.clientY,
-      left: e.clientX
+    onOpen({
+      anchorPosition: {
+        top: e.clientY,
+        left: e.clientX
+      },
+      displayName: Icon.displayName
     });
-
-    actions.setTrue();
   }, []);
 
   return (
-    <React.Fragment>
-      <Col className="col">
-        <div className="icon" onClick={clickHandler}>
-          <Icon fontSize="large" />
-        </div>
-        <InputBase
-          className="name"
-          value={Icon.displayName}
-          actionRef={actionRef}
-          onClick={() => {
-            actionRef.current.focus({ cursor: 'all' });
-          }}
-          readOnly
-          borderless
-        />
-      </Col>
-      <Popover
-        visible={visible}
-        anchorReference="anchorPosition"
-        anchorPosition={anchorPosition}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        onClose={() => actions.setFalse()}
-      >
-        <SourceCode
-          lang="tsx"
-          code={`import { ${Icon.displayName} } from '@wonder-ui/icons'  `}
-        />
-      </Popover>
-    </React.Fragment>
+    <Col className="col" ref={rootRef}>
+      {inViewPort && (
+        <React.Fragment>
+          <div className="icon" onClick={clickHandler}>
+            <Icon fontSize="large" />
+          </div>
+          <div className="name">{Icon.displayName}</div>
+        </React.Fragment>
+      )}
+    </Col>
   );
 };
 
 export default () => {
+  const [tabIndex, { toggle }] = useToggle(0, [0, 1]);
+  const [popoverState, setPopoverState] = React.useState<any>({});
+  const [_searchText, setSearchText] = React.useState<string>();
+  const [searchResult, setSearchResult] = React.useState<Array<string>>([]);
+
+  const searchText = useDebounce(_searchText, 500);
+
+  const handleOpen = (state: any) => {
+    setPopoverState(state);
+
+    setTimeout(() => {
+      setPopoverState((prev: any) => ({
+        ...prev,
+        visible: true
+      }));
+    }, 0);
+  };
+
+  const handleChange = (e: any) => {
+    const value = e.target.value;
+
+    setSearchText(value);
+  };
+
+  const searching = searchText && searchText != '';
+
+  React.useEffect(() => {
+    const iconSource = tabIndex === 0 ? outlinedIcons : filledIcons;
+
+    if (searchText && searching) {
+      const result = findAll(iconSource, (item) => {
+        return !!item
+          .toLocaleLowerCase()
+          .match(new RegExp(searchText.toLocaleLowerCase()));
+      });
+
+      setSearchResult(result);
+    }
+  }, [searching, searchText, tabIndex]);
+
   return (
-    <StyledRow rowCols={{ xs: 2, sm: 3, md: 4 }} gutter={[2, 2]}>
-      {(Object.keys(icons) as Array<keyof typeof icons>).map((key, index) => {
-        const Icon = icons[key];
-        return (
-          <DelayedRender key={key}>
-            <IconItem Icon={Icon} />
-          </DelayedRender>
-        );
-      })}
-    </StyledRow>
+    <React.Fragment>
+      <Space direction="vertical" gap={20}>
+        <Space verticalAlign="stretch">
+          <ButtonGroup ButtonProps={{ variant: 'outlined' }}>
+            <Button
+              variant={tabIndex === 0 ? 'contained' : 'outlined'}
+              onClick={() => toggle(0)}
+            >
+              Outlined
+            </Button>
+            <Button
+              variant={tabIndex === 1 ? 'contained' : 'outlined'}
+              onClick={() => toggle(1)}
+            >
+              Filled
+            </Button>
+          </ButtonGroup>
+
+          <Input
+            allowClear
+            style={{ height: '100%' }}
+            placeholder="搜索图标"
+            prefix={<Search color="action" />}
+            onChange={handleChange}
+            value={searchText}
+          />
+        </Space>
+
+        {searching &&
+          (searchResult && searchResult.length > 0 ? (
+            <StyledRow rowCols={{ xs: 2, sm: 3, md: 4 }} gutter={[2, 2]}>
+              {searchResult.map((key, index) => {
+                //@ts-expect-error
+                const Icon = icons[key];
+                return <IconItem Icon={Icon} key={key} onOpen={handleOpen} />;
+              })}
+            </StyledRow>
+          ) : (
+            <Empty />
+          ))}
+
+        <div
+          style={{
+            display: searching ? 'none' : 'block'
+          }}
+        >
+          <TabContext value={tabIndex}>
+            <TabPane value={0}>
+              <StyledRow rowCols={{ xs: 2, sm: 3, md: 4 }} gutter={[2, 2]}>
+                {outlinedIcons.map((key, index) => {
+                  //@ts-expect-error
+                  const Icon = icons[key];
+                  return (
+                    <DelayedRender key={key}>
+                      <IconItem Icon={Icon} key={key} onOpen={handleOpen} />
+                    </DelayedRender>
+                  );
+                })}
+              </StyledRow>
+            </TabPane>
+            <TabPane value={1}>
+              <DelayedRender>
+                <StyledRow rowCols={{ xs: 2, sm: 3, md: 4 }} gutter={[2, 2]}>
+                  {filledIcons.map((key, index) => {
+                    //@ts-expect-error
+                    const Icon = icons[key];
+                    return (
+                      <DelayedRender key={key}>
+                        <IconItem Icon={Icon} key={key} onOpen={handleOpen} />
+                      </DelayedRender>
+                    );
+                  })}
+                </StyledRow>
+              </DelayedRender>
+            </TabPane>
+          </TabContext>
+        </div>
+      </Space>
+      <Popover
+        visible={popoverState.visible}
+        anchorReference="anchorPosition"
+        anchorPosition={popoverState.anchorPosition}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        onClose={() => {
+          setPopoverState((prev: any) => ({
+            ...prev,
+            visible: false
+          }));
+        }}
+      >
+        <SourceCode
+          lang="tsx"
+          code={`import { ${popoverState.displayName} } from '@wonder-ui/icons';
+
+<${popoverState.displayName} fontSize="inherit" /> `}
+        />
+      </Popover>
+    </React.Fragment>
   );
 };

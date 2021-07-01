@@ -22,7 +22,16 @@ export default () => {
 
       <Input readOnly disabledActiveStyle placeholder="Basic readOnly" />
 
+      <Input
+        readOnly
+        disabledActiveStyle
+        borderless
+        placeholder="Basic readOnly"
+      />
+
       <Input disabled placeholder="Basic disabled" />
+
+      <Input disabled borderless placeholder="Basic disabled" />
     </Space>
   );
 };

@@ -1,5 +1,6 @@
 /**
  * title: 自定义
+ *
  */
 import * as React from 'react';
 import { Badge, Space, Stepper, styled } from '@wonder-ui/core';
@@ -14,6 +15,9 @@ const UIStepper = styled(Stepper)<{ size?: SizeKey }>`
     background-color: ${({ theme }) => theme.palette.primary.main};
     color: #fff;
     width: ${({ size = 'md' }) => sizeValues[size] + 'px'};
+    height: ${({ size = 'md' }) => sizeValues[size] + 'px'};
+  }
+  .WuiStepper-input {
     height: ${({ size = 'md' }) => sizeValues[size] + 'px'};
   }
 

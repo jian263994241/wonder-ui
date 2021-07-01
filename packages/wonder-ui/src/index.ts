@@ -73,8 +73,11 @@ export * from './Grow';
 export { default as IconButton } from './IconButton';
 export * from './IconButton';
 
-export { default as InputBase } from './InputBase';
-export * from './InputBase';
+export { default as Input } from './Input';
+export * from './Input';
+
+export { default as InputNumber } from './InputNumber';
+export * from './InputNumber';
 
 export { default as LinearProgress } from './LinearProgress';
 export * from './LinearProgress';
@@ -151,6 +154,9 @@ export * from './Snackbar';
 export { default as Space } from './Space';
 export * from './Space';
 
+export { default as StepButton } from './StepButton';
+export * from './StepButton';
+
 export { default as Stepper } from './Stepper';
 export * from './Stepper';
 
@@ -193,12 +199,10 @@ export { default as withDialog } from './withDialog';
 
 export { default as styled } from './styles/styled';
 
-export { default as defaultTheme } from './styles/defaultTheme';
-
 export * from './styles/GlobalStyles';
 export * from './styles/colorManipulator';
 export * from './styles/createTheme';
 export * from './styles/useTheme';
 export * from './styles/useThemeProps';
 
-export { ThemeProvider, keyframes } from '@wonder-ui/styled';
+export { ThemeProvider, css, keyframes } from '@wonder-ui/styled';

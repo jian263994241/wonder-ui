@@ -52,13 +52,7 @@ const Space = React.forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
           {index != 0 && split && (
             <SpaceSplit className={classes.split}>{split}</SpaceSplit>
           )}
-          {React.isValidElement(child) ? (
-            React.cloneElement(child, {
-              className: css(child.props.className, classes.item)
-            })
-          ) : (
-            <SpaceItem className={classes.item}>{child}</SpaceItem>
-          )}
+          <SpaceItem className={classes.item}>{child}</SpaceItem>
         </React.Fragment>
       ))}
     </SpaceRoot>
