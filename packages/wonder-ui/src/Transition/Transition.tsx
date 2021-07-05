@@ -86,10 +86,10 @@ export interface BaseTransitionProps<
    * component after it finishes exiting.
    */
   unmountOnExit?: boolean;
-  // /**
-  //  * any
-  //  */
-  // [prop: string]: any;
+  /**
+   * any
+   */
+  [prop: string]: any;
 }
 
 export type TransitionTimeout =

@@ -106,11 +106,11 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
           appear
           in={visible}
           timeout={transitionDuration}
-          role="presentation"
           {...TranstionComponentProps}
         >
           <DialogContent
             {...rest}
+            role="presentation"
             classes={{ root: classes.content }}
             buttonsVertical={buttonsVertical}
             style={{ marginLeft: 10, marginRight: 10 }}
