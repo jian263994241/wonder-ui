@@ -8,6 +8,7 @@ export * from './useCounter';
 export * from './useCursor';
 export * from './useDebounce';
 export * from './useDebounceFn';
+export * from './useDocumentVisibility';
 export * from './useDynamicList';
 export * from './useEnhancedEffect';
 export * from './useEventCallback';
