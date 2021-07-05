@@ -1,5 +1,5 @@
 import { StackManager } from './StackManager';
-import { isPromise } from './is';
+import { isPromise } from './validate';
 
 /**
  * Safe chained function

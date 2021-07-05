@@ -1,8 +1,10 @@
 import { createStyleStore } from './createStyleStore';
 import { EventGroup } from './EventGroup';
+import { getDevice } from './device';
 import { getDocument } from './dom/getDocument';
 import { getWindow } from './dom/getWindow';
 import { hasVerticalOverflow } from './overflow';
+import { isWindow } from './validate';
 
 let _scrollbarWidth: number;
 let _bodyScrollDisabledCount = 0;
@@ -301,4 +303,73 @@ export function findScrollableParent(
   }
 
   return el;
+}
+
+/**
+ * scrollTop
+ */
+
+export type ScrollElement = Element | Window;
+
+export function getScrollTop(el: Element | Window): number {
+  const top = 'scrollTop' in el ? el.scrollTop : el.pageYOffset;
+
+  // iOS scroll bounce cause minus scrollTop
+  return Math.max(top, 0);
+}
+
+export function setScrollTop(el: ScrollElement, value: number) {
+  if ('scrollTop' in el) {
+    el.scrollTop = value;
+  } else {
+    el.scrollTo(el.scrollX, value);
+  }
+}
+
+export function getRootScrollTop(): number {
+  return (
+    window.pageYOffset ||
+    document.documentElement.scrollTop ||
+    document.body.scrollTop ||
+    0
+  );
+}
+
+export function setRootScrollTop(value: number) {
+  setScrollTop(window, value);
+  setScrollTop(document.body, value);
+}
+
+// get distance from element top to page top or scroller top
+export function getElementTop(el: ScrollElement, scroller?: ScrollElement) {
+  if (isWindow(el)) {
+    return 0;
+  }
+
+  const scrollTop = scroller ? getScrollTop(scroller) : getRootScrollTop();
+  return el.getBoundingClientRect().top + scrollTop;
+}
+
+export function getVisibleHeight(el: ScrollElement) {
+  if (isWindow(el)) {
+    return el.innerHeight;
+  }
+  return el.getBoundingClientRect().height;
+}
+
+export function getVisibleTop(el: ScrollElement) {
+  if (isWindow(el)) {
+    return 0;
+  }
+  return el.getBoundingClientRect().top;
+}
+
+const device = getDevice();
+
+// hack for iOS12 page scroll
+// see: https://developers.weixin.qq.com/community/develop/doc/00044ae90742f8c82fb78fcae56800
+export function resetScroll() {
+  if (device.ios) {
+    setRootScrollTop(getRootScrollTop());
+  }
 }

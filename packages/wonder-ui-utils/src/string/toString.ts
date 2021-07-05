@@ -1,4 +1,4 @@
-import { isSymbol, isObject } from '../is';
+import { isSymbol, isObject } from '../validate';
 
 /** Used as references for various `Number` constants. */
 const INFINITY = 1 / 0;

@@ -1,4 +1,4 @@
-import { isObject } from '../is';
+import { isObject } from '../validate';
 
 export function on<IEvent extends Event>(
   element: Element | Window | Document,

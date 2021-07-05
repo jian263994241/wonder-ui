@@ -1,4 +1,4 @@
-import { isObject } from './is';
+import { isObject } from './validate';
 
 /**
  * Creates a debounced function that delays invoking `func` until after `wait`

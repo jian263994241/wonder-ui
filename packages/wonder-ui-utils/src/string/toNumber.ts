@@ -1,4 +1,4 @@
-import { isSymbol, isObject } from '../is';
+import { isSymbol, isObject } from '../validate';
 
 /** Used as references for various `Number` constants. */
 const NAN = 0 / 0;

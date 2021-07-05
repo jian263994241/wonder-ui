@@ -1,4 +1,4 @@
-import { getWindow, getDocument } from 'ssr-window';
+import { getWindow, getDocument } from './dom';
 
 interface Supoort {
   touch: boolean;

@@ -54,3 +54,29 @@ export function isSymbol(value: any): value is symbol {
     (type === 'object' && value != null && getTag(value) == '[object Symbol]')
   );
 }
+
+export function isNumeric(val: string | number): val is string {
+  return typeof val === 'number' || /^\d+(\.\d+)?$/.test(val);
+}
+
+export function isDef<T>(val: T): val is NonNullable<T> {
+  return val !== undefined && val !== null;
+}
+
+export function isDate(val: unknown): val is Date {
+  return (
+    Object.prototype.toString.call(val) === '[object Date]' &&
+    !Number.isNaN((val as Date).getTime())
+  );
+}
+
+export function isMobile(value: string): boolean {
+  value = value.replace(/[^-|\d]/g, '');
+  return (
+    /^((\+86)|(86))?(1)\d{10}$/.test(value) || /^0[0-9-]{10,13}$/.test(value)
+  );
+}
+
+export function isWindow(val: unknown): val is Window {
+  return val === window;
+}

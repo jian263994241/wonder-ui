@@ -1,4 +1,4 @@
-import { isPromise } from './is';
+import { isPromise } from './validate';
 
 type Fn = (...args: any[]) => any;
 
