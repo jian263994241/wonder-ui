@@ -158,7 +158,7 @@ export const InputInput = styled('input', {
   const light = theme.palette.mode === 'light';
   const placeholder = {
     color: 'currentColor',
-    opacity: light ? 0.42 : 0.5,
+    opacity: light ? 0.38 : 0.5,
     transition: theme.transitions.create('opacity', {
       duration: theme.transitions.duration.shorter
     })

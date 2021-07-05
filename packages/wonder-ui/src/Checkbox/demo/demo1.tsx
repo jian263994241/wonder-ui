@@ -17,8 +17,11 @@ export default () => (
       <Checkbox defaultChecked color="primary">
         checkbox 1
       </Checkbox>
-      <Checkbox defaultChecked color="primary">
+      <Checkbox color="primary" disabled>
         checkbox 2
+      </Checkbox>
+      <Checkbox defaultChecked color="primary" disabled>
+        checkbox 3
       </Checkbox>
     </Space>
   </Space>

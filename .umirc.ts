@@ -60,6 +60,7 @@ export default defineConfig({
           'components/grid.md',
           'components/page.md',
           'components/space.md',
+          'components/sticky.md',
           'components/whiteSpace.md'
         ]
       },
@@ -67,6 +68,7 @@ export default defineConfig({
         title: '导航',
         children: [
           'components/dropdown.md',
+          'components/dropdownMenu.md',
           'components/navbar.md',
           'components/steps.md'
         ]
@@ -90,7 +92,6 @@ export default defineConfig({
         children: [
           'components/badge.md',
           'components/collapse.md',
-          'components/dropdownMenu.md',
           'components/empty.md',
           'components/list.md',
           'components/skeleton.md',

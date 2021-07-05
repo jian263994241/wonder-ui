@@ -86,10 +86,10 @@ export interface BaseTransitionProps<
    * component after it finishes exiting.
    */
   unmountOnExit?: boolean;
-  /**
-   * any
-   */
-  [prop: string]: any;
+  // /**
+  //  * any
+  //  */
+  // [prop: string]: any;
 }
 
 export type TransitionTimeout =
@@ -136,22 +136,21 @@ const Transtion: React.FC<TransitionProps> = React.forwardRef((props, ref) => {
   const nodeRef = React.useRef<any>(null);
   const handleRef = useForkRef(nodeRef, ref);
 
-  const normalizedTransitionCallback = (
-    callback?: (...args: any[]) => void
-  ) => (maybeIsAppearing?: boolean) => {
-    if (callback) {
-      const node = nodeRef.current;
+  const normalizedTransitionCallback =
+    (callback?: (...args: any[]) => void) => (maybeIsAppearing?: boolean) => {
+      if (callback) {
+        const node = nodeRef.current;
 
-      if (node && callback) {
-        // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
-        if (maybeIsAppearing === undefined) {
-          callback(node);
-        } else {
-          callback(node, maybeIsAppearing);
+        if (node && callback) {
+          // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
+          if (maybeIsAppearing === undefined) {
+            callback(node);
+          } else {
+            callback(node, maybeIsAppearing);
+          }
         }
       }
-    }
-  };
+    };
 
   const handleEnter = normalizedTransitionCallback(onEnter);
   const handleEntering = normalizedTransitionCallback(onEntering);

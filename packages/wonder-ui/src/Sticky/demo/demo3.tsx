@@ -20,7 +20,7 @@ export default () => {
         setContainer(node);
       }}
     >
-      <Sticky container={container} offsetTop={64}>
+      <Sticky container={container} offsetTop={64} zIndex={30}>
         <Button variant="contained">指定容器</Button>
       </Sticky>
     </Box>

@@ -1,16 +1,19 @@
 import * as React from 'react';
 import Backdrop from '../Backdrop';
-import Slide from '../Slide';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import {
   allowScrollOnElement,
+  createChainedFunction,
+  css,
   disableBodyScroll,
   enableBodyScroll,
-  StackManager
+  getRect,
+  IRectangle
 } from '@wonder-ui/utils';
-import { createChainedFunction, css } from '@wonder-ui/utils';
 import { dropdownMenuClasses, useClasses } from './DropdownMenuClasses';
+import { useForkRef } from '@wonder-ui/hooks';
+import Collapse from '../Collapse';
 
 const DropdownMenuRoot = styled('div', {
   name: 'WuiDropdownMenu',
@@ -42,14 +45,21 @@ const DropdownMenuBar = styled('div', {
   }
 }));
 
-const DropdownMenuItemOverlay = styled('div', {
+const DropdownMenuItemOverlay = styled(Collapse, {
   name: 'WuiDropdownMenuItem',
   slot: 'Overlay',
   shouldForwardProp: () => true
-})(({ theme }) => ({
+})(({ theme, in: inProp }) => ({
   backgroundColor: theme.palette.background.paper,
   width: '100%',
-  position: 'absolute'
+  position: 'absolute',
+  ...(inProp
+    ? {
+        zIndex: 2
+      }
+    : {
+        zIndex: 1
+      })
 }));
 
 const DropdownMenuItemOverlayWrapper = styled('div', {
@@ -61,21 +71,17 @@ const DropdownMenuItemOverlayWrapper = styled('div', {
   right: 0,
   top: '100%',
   height: 0,
-  zIndex: 1,
-  overflow: 'hidden'
+  zIndex: 1
+  // overflow: 'hidden'
 });
 
 export interface DropdownMenuProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
+  extends React.HTMLAttributes<HTMLDivElement> {
   classes?: Partial<typeof dropdownMenuClasses>;
   component?: React.ElementType;
   ref?: React.Ref<any>;
   widthAuto?: boolean;
 }
-
-const manager = new StackManager();
-
-const defaultTimeout = 325;
 
 const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
   (inProps, ref) => {
@@ -88,11 +94,14 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
       ...rest
     } = props;
 
+    const rootRef = React.useRef<HTMLDivElement>(null);
+    const handleRef = useForkRef(rootRef, ref);
+
     const [currentIndex, setCurrent] = React.useState<number>(-1);
 
     const [expanded, setExpanded] = React.useState(false);
 
-    const [wrapStyles, setWrapStyles] = React.useState({});
+    const [backdropStyle, setBackdropStyle] = React.useState({});
 
     const styleProps = { ...props, expanded, widthAuto };
 
@@ -100,7 +109,9 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
 
     const handleEnter = React.useCallback(
       (node) => {
-        setWrapStyles({ height: node.scrollHeight });
+        const rootRect = getRect(rootRef.current!) as IRectangle;
+
+        setBackdropStyle({ top: rootRect.top });
 
         if (!expanded) {
           setExpanded(true);
@@ -114,7 +125,6 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
       if (currentIndex === -1) {
         setExpanded(false);
         enableBodyScroll();
-        setWrapStyles({});
       }
     }, [currentIndex]);
 
@@ -130,39 +140,31 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
     };
 
     const handleClick = (index: number) => {
-      manager.run((next) => {
-        if (currentIndex === index) {
-          onClose();
-        } else {
-          setCurrent(index);
-        }
-
-        setTimeout(next, defaultTimeout);
-      });
+      if (currentIndex === index) {
+        onClose();
+      } else {
+        setCurrent(index);
+      }
     };
 
     const overlays = React.Children.map(childrenProp, (child, index) => {
       if (React.isValidElement(child) && child.props.overlay) {
         return (
-          <Slide
-            direction="down"
+          <DropdownMenuItemOverlay
+            className={classes.overlay}
+            key={index}
+            ref={(node) => {
+              allowScrollOnElement(node);
+            }}
             in={currentIndex === index}
             onEnter={handleEnter}
             onExited={handleExited}
-            timeout={defaultTimeout}
+            timeout="auto"
           >
-            <DropdownMenuItemOverlay
-              className={classes.overlay}
-              key={index}
-              ref={(node) => {
-                allowScrollOnElement(node);
-              }}
-            >
-              {typeof child.props.overlay === 'function'
-                ? child.props.overlay({ onClose })
-                : child.props.overlay}
-            </DropdownMenuItemOverlay>
-          </Slide>
+            {typeof child.props.overlay === 'function'
+              ? child.props.overlay({ onClose })
+              : child.props.overlay}
+          </DropdownMenuItemOverlay>
         );
       }
       return null;
@@ -188,19 +190,18 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
       <DropdownMenuRoot
         as={component}
         className={css(classes.root, className)}
-        ref={ref as React.Ref<HTMLDivElement>}
+        ref={handleRef}
         {...rest}
       >
         <DropdownMenuBar className={classes.bar}>{children}</DropdownMenuBar>
-        <Backdrop
-          classes={{ root: classes.backdrop }}
-          visible={currentIndex != -1}
-          onClick={onClose}
-        />
-        <DropdownMenuItemOverlayWrapper
-          className={classes.overlayWrapper}
-          style={wrapStyles}
-        >
+
+        <DropdownMenuItemOverlayWrapper className={classes.overlayWrapper}>
+          <Backdrop
+            classes={{ root: classes.backdrop }}
+            visible={currentIndex != -1}
+            onClick={onClose}
+            style={backdropStyle}
+          />
           {overlays}
         </DropdownMenuItemOverlayWrapper>
       </DropdownMenuRoot>

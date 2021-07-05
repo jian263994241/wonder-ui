@@ -105,7 +105,7 @@ export const light = {
     // The color of a disabled action.
     disabled: 'rgba(0, 0, 0, 0.26)',
     // The color of a disabled action.
-    disabledOpacity: 0.08,
+    disabledOpacity: 0.26,
     // The background color of a disabled action.
     disabledBackground: 'rgba(0, 0, 0, 0.12)',
     focus: 'rgba(0, 0, 0, 0.12)',

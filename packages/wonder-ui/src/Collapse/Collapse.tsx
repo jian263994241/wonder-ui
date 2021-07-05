@@ -18,12 +18,14 @@ import { reflow } from '../Transition/utils';
 const defaultTimeout = duration.area.medium;
 
 export interface CollapseProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'>,
+  extends React.HTMLAttributes<HTMLElement>,
     BaseTransitionProps {
   /**
    * Css api
    */
   classes?: Partial<typeof collapseClasses>;
+
+  component?: React.ElementType;
   /**
    * 折叠尺寸
    * @default 0

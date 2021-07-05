@@ -5,6 +5,7 @@ import { alpha } from '../styles/colorManipulator';
 import { css } from '@wonder-ui/utils';
 import { navbarClasses, useClasses } from './NavbarClasses';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
+import { searchbarClasses } from '../Searchbar';
 
 export interface NavbarProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
@@ -43,20 +44,30 @@ export interface NavbarStyleProps extends NavbarProps {}
 const NavbarRoot = styled('div', {
   name: 'WuiNavbar',
   slot: 'Root'
-})<{ styleProps: NavbarStyleProps }>(({ theme, styleProps }) => ({
-  fontFamily: theme.typography.fontFamily,
-  fontSize: theme.typography.pxToRem(17),
-  color: theme.palette.text.primary,
-  position: styleProps.fixed ? 'fixed' : 'relative',
-  width: '100%',
-  zIndex: 99,
-  left: 0,
-  right: 0,
-  boxSizing: 'border-box',
-  margin: 0,
-  height: `calc(${theme.shape.navbarHeight}px + env(safe-area-inset-top))`,
-  userSelect: 'none'
-}));
+})<{ styleProps: NavbarStyleProps }>(({ theme, styleProps }) => {
+  const height = `calc(${theme.shape.navbarHeight}px + env(safe-area-inset-top))`;
+
+  return {
+    fontFamily: theme.typography.fontFamily,
+    fontSize: theme.typography.pxToRem(17),
+    color: theme.palette.text.primary,
+    position: styleProps.fixed ? 'fixed' : 'relative',
+    width: '100%',
+    zIndex: 99,
+    left: 0,
+    right: 0,
+    boxSizing: 'border-box',
+    margin: 0,
+    paddingTop: 'env(safe-area-inset-top)',
+    userSelect: 'none',
+    [`& .${searchbarClasses.root}`]: {
+      marginTop: -1
+    },
+    [`& .${searchbarClasses.bg}`]: {
+      display: 'none'
+    }
+  };
+});
 
 const NavbarBg = styled('div', { name: 'WuiNavbar', slot: 'Bg' })(
   ({ theme }) => {
@@ -85,18 +96,18 @@ const NavbarInner = styled('div', {
   name: 'WuiNavbar',
   slot: 'Inner'
 })({
-  position: 'absolute',
+  position: 'relative',
   left: 0,
   bottom: 0,
   width: '100%',
-  height: '100%',
+  height: 44,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   boxSizing: 'border-box',
   transform: 'translate3d(0,0,0)',
   padding:
-    'env(safe-area-inset-top) calc(12px + env(safe-area-inset-right)) 0 calc(12px + env(safe-area-inset-left))',
+    'env(safe-area-inset-top) calc(10px + env(safe-area-inset-right)) 0 calc(10px + env(safe-area-inset-left))',
   zIndex: 10
 });
 
@@ -269,8 +280,8 @@ const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
             {barRight}
           </NavbarRight>
         )}
-        {children}
       </NavbarInner>
+      {children}
     </NavbarRoot>
   );
 });

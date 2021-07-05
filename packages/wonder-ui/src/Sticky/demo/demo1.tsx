@@ -5,7 +5,7 @@
 import { Button, Sticky } from '@wonder-ui/core';
 
 export default () => (
-  <Sticky>
+  <Sticky offsetTop={50}>
     <Button variant="contained">基础用法</Button>
   </Sticky>
 );

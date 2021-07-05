@@ -36,6 +36,7 @@ const PageContent = styled('div', {
   height: '100%',
   position: 'relative',
   zIndex: 1,
+  WebkitOverflowScrolling: 'touch',
   paddingTop: 'env(safe-area-inset-top)',
   paddingBottom: 'env(safe-area-inset-bottom)'
 });

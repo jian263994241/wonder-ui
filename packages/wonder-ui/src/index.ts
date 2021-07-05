@@ -139,8 +139,8 @@ export * from './Radio';
 export { default as Row } from './Row';
 export * from './Row';
 
-export { default as SearchBox } from './SearchBox';
-export * from './SearchBox';
+export { default as Searchbar } from './Searchbar';
+export * from './Searchbar';
 
 export { default as Skeleton } from './Skeleton';
 export * from './Skeleton';
@@ -159,6 +159,9 @@ export * from './StepButton';
 
 export { default as Stepper } from './Stepper';
 export * from './Stepper';
+
+export { default as Sticky } from './Sticky';
+export * from './Sticky';
 
 export { default as SvgIcon } from './SvgIcon';
 export * from './SvgIcon';
