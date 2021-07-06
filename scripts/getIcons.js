@@ -47,7 +47,6 @@ function createIconFiles(symbolTag) {
     const filename = path.join(targetDir, name + '.tsx');
 
     let output = `
-      import * as React from 'react';
       import create from './_createSvgIcon';
 
       export default create(
