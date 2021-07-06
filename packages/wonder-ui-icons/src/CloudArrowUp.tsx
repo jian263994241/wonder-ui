@@ -1,4 +1,3 @@
-import * as React from 'react';
 import create from './_createSvgIcon';
 
 export default create(
