@@ -4,6 +4,9 @@ export * from './ArrowForward';
 export { default as Backdrop } from './Backdrop';
 export * from './Backdrop';
 
+export { default as BackTop } from './BackTop';
+export * from './BackTop';
+
 export { default as Badge } from './Badge';
 export * from './Badge';
 

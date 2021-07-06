@@ -23757,6 +23757,19 @@
           r['Space'],
           { direction: 'vertical' },
           '\u6309\u94ae\u548c\u56fe\u6807:',
+          o['createElement'](r['Searchbar'], {
+            placeholder: '\u8bf7\u8f93\u5165\u5546\u54c1\u540d\u5b57',
+            barRight: o['createElement'](
+              r['Space'],
+              { nowrap: !0, style: { marginLeft: 10 } },
+              o['createElement'](l['Share'], null),
+              o['createElement'](l['ArrowClockwise'], null),
+            ),
+            barLeft: o['createElement'](r['ArrowForward'], {
+              direction: 'left',
+              style: { marginRight: 10 },
+            }),
+          }),
         ),
         o['createElement'](
           r['Drawer'],
@@ -39853,7 +39866,7 @@
       Ue =
         "import { Page, Searchbar, Space, WhiteSpace } from '@wonder-ui/core';\nimport * as React from 'react';\n\nexport default () => {\n  const [value, setValue] = React.useState('');\n\n  return (\n    <Page\n      title=\"\u641c\u7d22\"\n      NavbarProps={{\n        children: (\n          <Searchbar\n            placeholder=\"\u8bf7\u8f93\u5165\u641c\u7d22\u5173\u952e\u5b57\"\n            allowCancel\n            value={value}\n            onChange={(e) => {\n              setValue(e.target.value);\n            }}\n            onCencel={() => {\n              setValue('');\n            }}\n          />\n        )\n      }}\n    >\n      <WhiteSpace />\n      <Space direction=\"vertical\">\u57fa\u7840\u7528\u6cd5:</Space>\n    </Page>\n  );\n};",
       qe =
-        'import {\n  Page,\n  Searchbar,\n  WhiteSpace,\n  Button,\n  Space,\n  Drawer\n} from \'@wonder-ui/core\';\nimport { Person } from \'@wonder-ui/icons\';\nimport * as React from \'react\';\n\nexport default () => {\n  const [DrawerVisible, setDrawerVisible] = React.useState(false);\n\n  return (\n    <Page\n      title="\u641c\u7d22"\n      NavbarProps={{\n        children: (\n          <Searchbar\n            icon={<Person />}\n            placeholder="\u8bf7\u8f93\u5165\u540d\u5b57"\n            barRight={\n              <Button\n                style={{ whiteSpace: \'nowrap\', marginRight: -12 }}\n                onClick={() => {\n                  setDrawerVisible(true);\n                }}\n              >\n                \u7b5b\u9009\n              </Button>\n            }\n          />\n        )\n      }}\n    >\n      <WhiteSpace />\n      <Space direction="vertical">\u6309\u94ae\u548c\u56fe\u6807:</Space>\n\n      <Drawer\n        anchor="right"\n        visible={DrawerVisible}\n        onClose={() => {\n          setDrawerVisible(false);\n        }}\n      >\n        <Page title="\u7b5b\u9009" style={{ width: 200 }}>\n          12313\n        </Page>\n      </Drawer>\n    </Page>\n  );\n};',
+        'import {\n  ArrowForward,\n  Page,\n  Searchbar,\n  WhiteSpace,\n  Button,\n  Space,\n  Drawer\n} from \'@wonder-ui/core\';\nimport { Person, Share, ArrowClockwise } from \'@wonder-ui/icons\';\nimport * as React from \'react\';\n\nexport default () => {\n  const [DrawerVisible, setDrawerVisible] = React.useState(false);\n\n  return (\n    <Page\n      title="\u641c\u7d22"\n      NavbarProps={{\n        children: (\n          <Searchbar\n            icon={<Person />}\n            placeholder="\u8bf7\u8f93\u5165\u540d\u5b57"\n            barRight={\n              <Button\n                style={{ whiteSpace: \'nowrap\', marginRight: -12 }}\n                onClick={() => {\n                  setDrawerVisible(true);\n                }}\n              >\n                \u7b5b\u9009\n              </Button>\n            }\n          />\n        )\n      }}\n    >\n      <WhiteSpace />\n      <Space direction="vertical">\n        \u6309\u94ae\u548c\u56fe\u6807:\n        <Searchbar\n          placeholder="\u8bf7\u8f93\u5165\u5546\u54c1\u540d\u5b57"\n          barRight={\n            <Space nowrap style={{ marginLeft: 10 }}>\n              <Share />\n              <ArrowClockwise />\n            </Space>\n          }\n          barLeft={\n            <ArrowForward direction="left" style={{ marginRight: 10 }} />\n          }\n        />\n      </Space>\n\n      <Drawer\n        anchor="right"\n        visible={DrawerVisible}\n        onClose={() => {\n          setDrawerVisible(false);\n        }}\n      >\n        <Page title="\u7b5b\u9009" style={{ width: 200 }}>\n          12313\n        </Page>\n      </Drawer>\n    </Page>\n  );\n};',
       Ge =
         "import { Page, Paper, Skeleton } from '@wonder-ui/core';\n\nexport default () => (\n  <Page title=\"Skeleton\">\n    <Paper style={{ padding: '20px 0' }}>\n      <Skeleton title />\n      <Skeleton title />\n      <Skeleton title />\n    </Paper>\n  </Page>\n);",
       $e =
