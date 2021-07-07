@@ -9,7 +9,7 @@ import {
   on,
   setScrollTop
 } from '@wonder-ui/utils';
-import { useForkRef, useEventCallback } from '@wonder-ui/hooks';
+import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
 
 const componentName = 'WuiBackTop';
 
@@ -92,7 +92,8 @@ const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
   }, []);
 
   const handleScroll = useEventCallback((e) => {
-    const scrollTop = getScrollTop(e.target);
+    const scrollTop = getScrollTop(scrollContainer);
+
     if (scrollTop >= visibilityHeight) {
       !visible && setVisible(true);
     } else {

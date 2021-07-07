@@ -1,7 +1,7 @@
 /**
- * title: 基本使用
+ * title: 在Page内使用
  * desc:
- *
+ * iframe: true
  */
 import { Page, BackTop, Button, Container, Typography } from '@wonder-ui/core';
 
