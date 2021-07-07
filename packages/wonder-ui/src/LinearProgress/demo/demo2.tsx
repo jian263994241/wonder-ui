@@ -4,4 +4,6 @@
  */
 import { LinearProgress } from '@wonder-ui/core';
 
-export default () => <LinearProgress value={80} color="primary" animated />;
+export default () => (
+  <LinearProgress variant="determinate" value={80} color="primary" animated />
+);

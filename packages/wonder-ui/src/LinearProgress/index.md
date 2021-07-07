@@ -8,7 +8,14 @@ sidemenu: false
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| animated | 条纹动画 | `boolean` |
-| classes | css | `'root', 'inner', 'bar', 'info', 'animated', 'colorPrimary', 'colorSecondary', 'colorSuccess', 'colorError', 'colorDanger', 'colorWarning', 'colorInfo'` |
-| color | 颜色 | `'primary' \| 'secondary' \| 'success' \| 'error' \| 'danger' \| 'warning' \| 'info'` | primary
-| value | 值 | `number` |
+| animated | 条纹动画 | boolean |
+| classes | css |  |
+| color | 颜色 | 'primary' \| 'secondary' \| 'success' \| 'error' \| 'danger' \| 'warning' \| 'info' | primary
+| value | 值 | number |
+| variant | 类型 | 'determinate' \| 'indeterminate' | indeterminate
+
+### LinearProgress classes
+
+```
+'root', 'inner', 'bar', 'info', 'animated', 'colorPrimary', 'colorSecondary', 'colorSuccess', 'colorError', 'colorDanger', 'colorWarning', 'colorInfo'
+```

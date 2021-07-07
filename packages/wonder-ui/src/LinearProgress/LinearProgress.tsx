@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { capitalize, css, generateUtilityStyles } from '@wonder-ui/utils';
+import { css, forwardRef } from '@wonder-ui/utils';
 import { keyframes } from '@wonder-ui/styled';
+import { alpha } from '../styles/colorManipulator';
 import { linearProgressClasses, useClasses } from './LinearProgressClasses';
 
 const progressActiveKeyframes = keyframes`
@@ -11,8 +12,12 @@ const progressActiveKeyframes = keyframes`
   to{width:100%;opacity:0}
 `;
 
-export interface LinearProgressProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
+const indeterminateKeyframes = keyframes`
+0% { left: -30%; }
+100% { left: 100%; }
+`;
+
+export interface LinearProgressProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * 动画
    * @default false
@@ -28,19 +33,18 @@ export interface LinearProgressProps
    */
   color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
   /**
+   * @ignore
+   */
+  component?: React.ElementType;
+  /**
    * 值 0-100
    */
   value?: number;
+  /**
+   * 类型
+   */
+  variant?: 'determinate' | 'indeterminate';
 }
-
-const colors = [
-  'primary',
-  'secondary',
-  'success',
-  'danger',
-  'warning',
-  'info'
-] as const;
 
 const LinearProgressRoot = styled('div', {
   name: 'WuiLinearProgress',
@@ -74,8 +78,9 @@ const LinearProgressInner = styled('div', {
   slot: 'Inner'
 })({
   display: 'flex',
+  alignItems: 'center',
   width: '100%',
-  height: 8,
+  height: 3,
   overflow: 'hidden',
   backgroundColor: '#e9ecef',
   borderRadius: '.25rem'
@@ -84,12 +89,10 @@ const LinearProgressInner = styled('div', {
 const LinearProgressBar = styled('span', {
   name: 'WuiLinearProgress',
   slot: 'Bar'
-})(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
+})<{ styleProps: LinearProgressProps }>(({ theme, styleProps }) => ({
+  alignSelf: 'stretch',
+  width: 0,
   overflow: 'hidden',
-  color: '#fff',
   textAlign: 'center',
   whiteSpace: 'nowrap',
   transition: theme.transitions.create('width', {
@@ -97,12 +100,16 @@ const LinearProgressBar = styled('span', {
   }),
   position: 'relative',
   borderRadius: '.25rem',
-  ...generateUtilityStyles(colors, (styles, color) => {
-    const colorName = 'color' + capitalize(color);
-    //@ts-expect-error
-    styles[`&.${linearProgressClasses[colorName]}`] = {
-      backgroundColor: theme.palette[color].main
-    };
+  backgroundColor: theme.palette[styleProps.color!]?.main,
+  ...(styleProps.variant === 'indeterminate' && {
+    minWidth: '33%',
+    background: `linear-gradient(to right, rgb(237, 235, 233) 0%, ${
+      theme.palette[styleProps.color!]?.main
+    } 50%, ${alpha(
+      theme.palette[styleProps.color!]?.contrastText,
+      0.18
+    )} 100%)`,
+    animation: `3s ease 0s infinite normal none running ${indeterminateKeyframes}`
   }),
   [`&.${linearProgressClasses.animated}:before`]: {
     content: '""',
@@ -123,24 +130,27 @@ const LinearProgressBar = styled('span', {
   }
 }));
 
-const LinearProgress = React.forwardRef<HTMLElement, LinearProgressProps>(
+const LinearProgress = forwardRef<HTMLElement, LinearProgressProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiLinearProgress' });
     const {
       animated = false,
       className,
       color = 'primary',
+      component,
       value = 0,
+      variant = 'indeterminate',
       children,
       ...rest
     } = props;
 
-    const styleProps = { ...props, animated, color };
+    const styleProps = { ...props, animated, color, variant };
 
     const classes = useClasses(styleProps);
 
     return (
       <LinearProgressRoot
+        as={component}
         role="progressbar"
         className={css(classes.root, className)}
         ref={ref as React.Ref<HTMLDivElement>}
@@ -149,7 +159,10 @@ const LinearProgress = React.forwardRef<HTMLElement, LinearProgressProps>(
         <LinearProgressInner className={classes.inner}>
           <LinearProgressBar
             className={classes.bar}
-            style={{ width: `${value}%` }}
+            styleProps={styleProps}
+            style={
+              variant === 'determinate' ? { width: `${value}%` } : undefined
+            }
           />
         </LinearProgressInner>
         {children && (
