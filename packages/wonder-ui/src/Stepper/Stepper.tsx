@@ -3,15 +3,13 @@ import InputNumber, {
   InputNumberAction,
   InputNumberProps
 } from '../InputNumber';
-import numeral from 'numeral';
 import StepButton from '../StepButton';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { css, toNumber } from '@wonder-ui/utils';
+import { css } from '@wonder-ui/utils';
 import { CSSObject } from '@wonder-ui/styled';
 import { stepperClasses, useClasses } from './StepperClasses';
 import { Theme } from '../styles/createTheme';
-import { useControlled } from '@wonder-ui/hooks';
 
 export interface StepperProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
