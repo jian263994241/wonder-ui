@@ -20,7 +20,7 @@ import {
   TabPane,
   styled
 } from '@wonder-ui/core';
-import { DelayedRender, findAll } from '@wonder-ui/utils';
+import { findAll } from '@wonder-ui/utils';
 import { useDebounce, useToggle, useInViewport } from '@wonder-ui/hooks';
 
 const { outlinedIcons, filledIcons } = (() => {
@@ -66,7 +66,15 @@ const StyledRow = styled(Row)({
 
 const IconItem: React.FC<any> = ({ Icon, onOpen }) => {
   const rootRef = React.useRef<any>();
-  const inViewPort = useInViewport(rootRef);
+  const _visible = useInViewport(rootRef);
+
+  const [visible, setVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    if (_visible) {
+      setVisible(true);
+    }
+  }, [_visible]);
 
   const clickHandler = React.useCallback((e) => {
     onOpen({
@@ -80,13 +88,13 @@ const IconItem: React.FC<any> = ({ Icon, onOpen }) => {
 
   return (
     <Col className="col" ref={rootRef}>
-      {inViewPort && (
-        <React.Fragment>
+      {visible && (
+        <>
           <div className="icon" onClick={clickHandler}>
             <Icon fontSize="large" />
           </div>
           <div className="name">{Icon.displayName}</div>
-        </React.Fragment>
+        </>
       )}
     </Col>
   );
@@ -186,28 +194,18 @@ export default () => {
                 {outlinedIcons.map((key, index) => {
                   //@ts-expect-error
                   const Icon = icons[key];
-                  return (
-                    <DelayedRender key={key}>
-                      <IconItem Icon={Icon} key={key} onOpen={handleOpen} />
-                    </DelayedRender>
-                  );
+                  return <IconItem Icon={Icon} key={key} onOpen={handleOpen} />;
                 })}
               </StyledRow>
             </TabPane>
             <TabPane value={1}>
-              <DelayedRender>
-                <StyledRow rowCols={{ xs: 2, sm: 3, md: 4 }} gutter={[2, 2]}>
-                  {filledIcons.map((key, index) => {
-                    //@ts-expect-error
-                    const Icon = icons[key];
-                    return (
-                      <DelayedRender key={key}>
-                        <IconItem Icon={Icon} key={key} onOpen={handleOpen} />
-                      </DelayedRender>
-                    );
-                  })}
-                </StyledRow>
-              </DelayedRender>
+              <StyledRow rowCols={{ xs: 2, sm: 3, md: 4 }} gutter={[2, 2]}>
+                {filledIcons.map((key, index) => {
+                  //@ts-expect-error
+                  const Icon = icons[key];
+                  return <IconItem Icon={Icon} key={key} onOpen={handleOpen} />;
+                })}
+              </StyledRow>
             </TabPane>
           </TabContext>
         </div>

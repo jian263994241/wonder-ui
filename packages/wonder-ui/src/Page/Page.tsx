@@ -30,7 +30,8 @@ const PageRoot = styled('div', {
 const PageContent = styled('div', {
   name: 'WuiPage',
   slot: 'Content'
-})({
+})(({ theme }) => ({
+  ...theme.typography.body1,
   overflow: 'auto',
   boxSizing: 'border-box',
   height: '100%',
@@ -39,7 +40,7 @@ const PageContent = styled('div', {
   WebkitOverflowScrolling: 'touch',
   paddingTop: 'env(safe-area-inset-top)',
   paddingBottom: 'env(safe-area-inset-bottom)'
-});
+}));
 
 export interface PageProps
   extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref' | 'title'> {

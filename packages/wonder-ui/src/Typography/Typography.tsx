@@ -73,6 +73,7 @@ export const TypographyRoot = styled('span', {
   display: 'block',
   textAlign: styleProps.align,
   overflow: 'hidden',
+  wordBreak: 'break-word',
   ...theme.typography[styleProps.variant],
 
   [`&.${typographyClasses.colorPrimary}`]: {

@@ -12,6 +12,7 @@ const DialogContentRoot = styled(Paper, {
   slot: 'Root',
   shouldForwardProp: () => true
 })<PaperProps>(({ theme }) => ({
+  ...theme.typography.body2,
   borderRadius: theme.shape.dialogRadius,
   width: '100%',
   maxWidth: 325,

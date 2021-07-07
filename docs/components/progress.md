@@ -12,6 +12,7 @@ mobile: false
 <code src="../../packages/wonder-ui/src/CircularProgress/demo/demo2.tsx"></code>
 <code src="../../packages/wonder-ui/src/CircularProgress/demo/demo3.tsx"></code>
 
+<code src="../../packages/wonder-ui/src/LinearProgress/demo/demo4.tsx"></code>
 <code src="../../packages/wonder-ui/src/LinearProgress/demo/demo1.tsx"></code>
 <code src="../../packages/wonder-ui/src/LinearProgress/demo/demo2.tsx"></code>
 <code src="../../packages/wonder-ui/src/LinearProgress/demo/demo3.tsx"></code>

@@ -54,13 +54,14 @@ const useClasses = (styleProps: StickyStyleProps) => {
 const StickyRoot = styled('div', { name: componentName, slot: 'Root' })({});
 const StickyInner = styled('div', { name: componentName, slot: 'Inner' })<{
   styleProps: StickyStyleProps;
-}>(({ styleProps }) => ({
+}>(({ styleProps, theme }) => ({
   width: '100%',
   height: '100%',
   display: 'inherit',
 
   ...(styleProps.fixed && {
-    position: 'fixed'
+    position: 'fixed',
+    zIndex: theme.zIndex.fixed
   })
 }));
 
@@ -70,7 +71,7 @@ const Sticky = forwardRef<HTMLDivElement, StickyProps>((inProps, ref) => {
     offsetTop = 0,
     offsetBottom = 0,
     position = 'top',
-    zIndex = 999,
+    zIndex,
     children,
     className,
     component,

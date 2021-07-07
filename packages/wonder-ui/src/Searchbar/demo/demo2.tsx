@@ -4,6 +4,7 @@
  *
  */
 import {
+  ArrowForward,
   Page,
   Searchbar,
   WhiteSpace,
@@ -11,7 +12,7 @@ import {
   Space,
   Drawer
 } from '@wonder-ui/core';
-import { Person } from '@wonder-ui/icons';
+import { Person, Share, ArrowClockwise } from '@wonder-ui/icons';
 import * as React from 'react';
 
 export default () => {
@@ -40,7 +41,21 @@ export default () => {
       }}
     >
       <WhiteSpace />
-      <Space direction="vertical">按钮和图标:</Space>
+      <Space direction="vertical">
+        按钮和图标:
+        <Searchbar
+          placeholder="请输入商品名字"
+          barRight={
+            <Space nowrap style={{ marginLeft: 10 }}>
+              <Share />
+              <ArrowClockwise />
+            </Space>
+          }
+          barLeft={
+            <ArrowForward direction="left" style={{ marginRight: 10 }} />
+          }
+        />
+      </Space>
 
       <Drawer
         anchor="right"

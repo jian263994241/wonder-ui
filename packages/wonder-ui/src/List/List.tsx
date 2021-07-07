@@ -16,6 +16,7 @@ const ListRoot = styled('ul', {
   name: 'WuiList',
   slot: 'Root'
 })<{ styleProps: ListStyleProps }>(({ theme, styleProps }) => ({
+  ...theme.typography.body1,
   listStyle: 'none',
   margin: 0,
   padding: 0,
