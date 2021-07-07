@@ -5,14 +5,15 @@ import { SvgIconProps } from '../SvgIcon';
 
 export interface CloseButtonProps extends IconButtonProps {
   SvgIconProps?: Partial<SvgIconProps>;
+  fontSize?: SvgIconProps['fontSize'];
 }
 
 const CloseButton = React.forwardRef<HTMLElement, CloseButtonProps>(
   (props, ref) => {
-    const { SvgIconProps, ...rest } = props;
+    const { SvgIconProps, fontSize = 'inherit', ...rest } = props;
     return (
       <IconButton aria-label="Close" ref={ref} {...rest}>
-        <XIcon fontSize="inherit" {...SvgIconProps} />
+        <XIcon fontSize={fontSize} {...SvgIconProps} />
       </IconButton>
     );
   }

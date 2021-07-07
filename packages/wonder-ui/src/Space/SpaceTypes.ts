@@ -28,6 +28,10 @@ export interface SpaceProps
    */
   direction?: 'horizontal' | 'vertical';
   /**
+   * @ignore
+   */
+  itemWrap?: boolean;
+  /**
    * Defines the spacing between Space items.
    * @default medium
    */
