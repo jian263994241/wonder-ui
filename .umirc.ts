@@ -74,7 +74,7 @@ export default defineConfig({
         ]
       },
       {
-        title: '数据录入',
+        title: '录入',
         children: [
           'components/checkbox.md',
           'components/input.md',
@@ -88,12 +88,15 @@ export default defineConfig({
         ]
       },
       {
-        title: '数据展示',
+        title: '展示',
         children: [
+          'components/backtop.md',
           'components/badge.md',
           'components/collapse.md',
+          'components/countdown.md',
           'components/empty.md',
           'components/list.md',
+          'components/noticebar.md',
           'components/skeleton.md',
           'components/swipe.md',
           'components/tabs.md',
@@ -102,7 +105,7 @@ export default defineConfig({
         ]
       },
       {
-        title: '用户反馈',
+        title: '反馈',
         children: [
           'components/backdrop.md',
           'components/dialog.md',
