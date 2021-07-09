@@ -1,14 +1,8 @@
 /**
- * title: 基础用法
+ * title: 基本使用
  * desc:
  */
-import {
-  Button,
-  Container,
-  Page,
-  Preloader,
-  WhiteSpace
-} from '@wonder-ui/core';
+import { Button, Container, Preloader } from '@wonder-ui/core';
 import { useToggle } from '@wonder-ui/hooks';
 
 export default () => {
@@ -23,15 +17,11 @@ export default () => {
   };
 
   return (
-    <Page title="Preloader">
-      <WhiteSpace />
-      <Container>
-        <Button variant="contained" onClick={() => open()}>
-          Open
-        </Button>
-      </Container>
-
+    <Container>
+      <Button variant="contained" onClick={() => open()}>
+        Open
+      </Button>
       <Preloader visible={visible} text="加载中..." />
-    </Page>
+    </Container>
   );
 };

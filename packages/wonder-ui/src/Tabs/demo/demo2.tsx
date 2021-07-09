@@ -1,5 +1,5 @@
 /**
- * title: 基础选项卡
+ * title: 基本使用
  * desc: 使用`TabPane`切换内容
  *
  */

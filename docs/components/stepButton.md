@@ -10,7 +10,7 @@ mobile: false
 ## 代码演示
 
 
-### 基础用法
+### 基本使用
 
 <code src="../../packages/wonder-ui/src/StepButton/demo/demo1.tsx"></code>
 

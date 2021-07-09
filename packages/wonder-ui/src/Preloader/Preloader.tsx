@@ -1,6 +1,5 @@
 import * as React from 'react';
 import CircularProgress from '../CircularProgress';
-import Fade from '../Fade';
 import Modal, { ModalProps } from '../Modal';
 import ReactDOM from 'react-dom';
 import styled from '../styles/styled';
@@ -11,21 +10,20 @@ import { createChainedFunction, isPromise } from '@wonder-ui/utils';
 import { emphasize } from '../styles/colorManipulator';
 import { useControlled } from '@wonder-ui/hooks';
 
-export interface PreloaderProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
-  /**
-   *  Trigger Element
-   */
-  children?: React.ReactElement;
-  /**
-   * @ignore
-   */
-  component?: React.ElementType;
+export interface PreloaderProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * ModalProps
    * @default false
    */
   ModalProps?: Partial<ModalProps>;
+  /**
+   *  Trigger Element
+   */
+  children?: React.ReactElement;
+  /**
+   * Indicator
+   */
+  indicator?: React.ReactNode;
   /**
    * Async callback
    */
@@ -85,9 +83,9 @@ const Preloader = React.forwardRef<HTMLElement, PreloaderProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiPreloader' });
     const {
-      children,
-      component,
       ModalProps = {},
+      children,
+      indicator,
       theme,
       visible: visibleProp,
       text,
@@ -129,7 +127,6 @@ const Preloader = React.forwardRef<HTMLElement, PreloaderProps>(
           })}
 
         <PreloaderRoot
-          component={component}
           theme={theme}
           ref={ref}
           visible={visible}
@@ -139,17 +136,20 @@ const Preloader = React.forwardRef<HTMLElement, PreloaderProps>(
           {...ModalProps}
           {...rest}
         >
-          <Fade in={visible}>
-            <PreloaderInner styleProps={styleProps}>
+          <PreloaderInner styleProps={styleProps}>
+            {indicator ? (
+              indicator
+            ) : (
               <CircularProgress size={34} color={theme.palette.mode} />
-              {text && (
-                <React.Fragment>
-                  <WhiteSpace size="small" />
-                  <Typography>{text}</Typography>
-                </React.Fragment>
-              )}
-            </PreloaderInner>
-          </Fade>
+            )}
+
+            {text && (
+              <React.Fragment>
+                <WhiteSpace size="small" />
+                <Typography>{text}</Typography>
+              </React.Fragment>
+            )}
+          </PreloaderInner>
         </PreloaderRoot>
       </React.Fragment>
     );

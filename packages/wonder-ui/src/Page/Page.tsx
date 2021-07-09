@@ -101,9 +101,9 @@ export interface PageProps
 const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiPage' });
   const {
-    NavbarProps = {},
-    ToolbarProps = {},
-    ContentProps = {},
+    NavbarProps,
+    ToolbarProps,
+    ContentProps,
     ContentRef,
     children,
     className,
@@ -125,7 +125,7 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
   const handleNavbarRef = useForkRef(
     navbarRef,
     //@ts-expect-error
-    navbar ? navbar.ref : NavbarProps.ref
+    navbar ? navbar.ref : NavbarProps?.ref
   );
   const toolbarRef = React.useRef<HTMLElement>(null);
   //@ts-expect-error
@@ -163,14 +163,11 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
           className: css(
             navbar.props.className,
             classes.navbar,
-            NavbarProps.className
+            NavbarProps?.className
           ),
           ref: handleNavbarRef
         })
-      ) : title ||
-        barRight ||
-        barLeft ||
-        Object.keys(NavbarProps).length > 0 ? (
+      ) : title || barRight || barLeft ? (
         <Navbar
           title={title}
           subTitle={subTitle}
@@ -178,8 +175,8 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
           left={barLeft}
           {...NavbarProps}
           classes={{
-            ...NavbarProps.classes,
-            root: css(classes.navbar, NavbarProps.className)
+            ...NavbarProps?.classes,
+            root: css(classes.navbar, NavbarProps?.className)
           }}
           ref={handleNavbarRef}
         />
@@ -194,11 +191,11 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
 
       <PageContent
         {...ContentProps}
-        className={css(classes.content, ContentProps.className)}
+        className={css(classes.content, ContentProps?.className)}
         //@ts-expect-error
-        ref={mergedRef(ContentRef, ContentProps.ref)}
+        ref={mergedRef(ContentRef, ContentProps?.ref)}
         style={{
-          ...ContentProps.style,
+          ...ContentProps?.style,
           paddingTop: contentPaddingTop,
           paddingBottom: contentPaddingBottom
         }}

@@ -76,6 +76,7 @@ export default defineConfig({
       {
         title: '录入',
         children: [
+          'components/checkableGroup.md',
           'components/checkbox.md',
           'components/input.md',
           'components/inputNumber.md',
@@ -97,6 +98,7 @@ export default defineConfig({
           'components/empty.md',
           'components/list.md',
           'components/noticebar.md',
+          'components/pullRefresh.md',
           'components/skeleton.md',
           'components/swipe.md',
           'components/tabs.md',

@@ -1,5 +1,5 @@
 /**
- * title: 基础消息条
+ * title: 基本使用
  * desc: 一条基本的通知消息
  */
 import { Button, Snackbar } from '@wonder-ui/core';

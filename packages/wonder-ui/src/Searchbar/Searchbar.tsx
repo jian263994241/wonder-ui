@@ -13,6 +13,7 @@ import {
 } from '@wonder-ui/utils';
 import {
   useDebounce,
+  useControlled,
   useEventCallback,
   useForkRef,
   useSize
@@ -29,19 +30,59 @@ export const searchbarClasses = generateUtilityClasses(componentName, [
 ]);
 
 export interface SearchbarProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * Input props
+   */
   InputProps?: InputProps;
-  classes?: Partial<typeof searchbarClasses>;
-  icon?: React.ReactNode;
-  placeholder?: string;
-  cancelText?: string;
+  /**
+   * Show cancel button
+   * @default false
+   */
   allowCancel?: boolean;
+  /**
+   * Custom input left node
+   */
   barLeft?: React.ReactNode;
+  /**
+   * Cutsom input right node
+   */
   barRight?: React.ReactNode;
-  textAlignCenter?: boolean;
-  onCencel?(): void;
-  onChange?: InputProps['onChange'];
-  value?: InputProps['value'];
+  /**
+   * Cancel button text
+   */
+  cancelText?: string;
+  /**
+   * @ignore
+   */
+  classes?: Partial<typeof searchbarClasses>;
+  /**
+   * Input default value
+   */
   defaultValue?: InputProps['defaultValue'];
+  /**
+   * Allway show Cancel button
+   */
+  fixCancelButton?: boolean;
+  /**
+   * Input prefix icon
+   */
+  icon?: React.ReactNode;
+  /**
+   * Event callback
+   */
+  onCencel?(): void;
+  /**
+   * Event callback
+   */
+  onChange?: InputProps['onChange'];
+  /**
+   * Input placeholder
+   */
+  placeholder?: string;
+  /**
+   * Input value
+   */
+  value?: InputProps['value'];
 }
 
 export interface SearchbarStyleProps extends SearchbarProps {}
@@ -139,6 +180,7 @@ const Searchbar = forwardRef<HTMLElement, SearchbarProps>((inProps, ref) => {
     InputProps,
     className,
     cancelText = '取消',
+    fixCancelButton = false,
     children,
     onCencel,
     allowCancel = false,
@@ -149,16 +191,25 @@ const Searchbar = forwardRef<HTMLElement, SearchbarProps>((inProps, ref) => {
     onFocus,
     onBlur,
     onChange,
-    value,
+    value: valueProp,
     defaultValue,
     ...rest
   } = props;
 
+  const [value, setValueIfUncontrolled] = useControlled({
+    value: valueProp,
+    defaultValue
+  });
   const [focus, setFocus] = React.useState(false);
   const cancelButtonRef = React.useRef<HTMLDivElement>(null);
   const cancelButtonSize = useSize(cancelButtonRef);
   const actionRef = React.useRef<InputAction>();
   const handleActionRef = useForkRef(actionRef, InputProps?.actionRef);
+
+  const handleChange = useEventCallback((e) => {
+    setValueIfUncontrolled(e.target.value);
+    onChange?.(e);
+  });
 
   const handleFocus = useEventCallback((e) => {
     setFocus(true);
@@ -178,12 +229,17 @@ const Searchbar = forwardRef<HTMLElement, SearchbarProps>((inProps, ref) => {
   const focus2 = useDebounce(focus);
 
   React.useEffect(() => {
+    if (fixCancelButton) {
+      setCancalVisible(true);
+      return;
+    }
+
     if (focus2) {
       setCancalVisible(true);
-    } else {
+    } else if (!value) {
       setCancalVisible(false);
     }
-  }, [focus2]);
+  }, [focus2, value, fixCancelButton]);
 
   return (
     <SearchbarRoot
@@ -207,8 +263,7 @@ const Searchbar = forwardRef<HTMLElement, SearchbarProps>((inProps, ref) => {
           onBlur={handleBlur}
           actionRef={handleActionRef}
           value={value}
-          onChange={onChange}
-          defaultValue={defaultValue}
+          onChange={handleChange}
         />
         {allowCancel && !barRight && (
           <SearchbarCancelButton

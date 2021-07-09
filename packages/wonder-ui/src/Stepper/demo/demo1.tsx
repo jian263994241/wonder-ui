@@ -1,5 +1,5 @@
 /**
- * title: 基础用法
+ * title: 基本使用
  * background: '#f5f5f5'
  */
 import {

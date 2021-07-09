@@ -1,5 +1,5 @@
 /**
- * title: 基础用法
+ * title: 基本使用
  * desc: 通过`size`来设置间隔大小
  */
 import { WhiteSpace, styled } from '@wonder-ui/core';

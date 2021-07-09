@@ -2,14 +2,12 @@ import * as React from 'react';
 import Fade from '../Fade';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
+import { forwardRef, getScrollTop, on, setScrollTop } from '@wonder-ui/utils';
 import {
-  forwardRef,
-  getScrollParent,
-  getScrollTop,
-  on,
-  setScrollTop
-} from '@wonder-ui/utils';
-import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
+  useEventCallback,
+  useForkRef,
+  useScrollParent
+} from '@wonder-ui/hooks';
 
 const componentName = 'WuiBackTop';
 
@@ -81,18 +79,12 @@ const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
 
   const rootRef = React.useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(rootRef, ref);
-
-  const [scrollContainer, setScrollContainer] = React.useState<any>(null);
-
-  React.useEffect(() => {
-    const { current: root } = rootRef;
-    if (root) {
-      setScrollContainer(getScrollParent(root));
-    }
-  }, []);
+  const scrollElementRef = useScrollParent(rootRef);
 
   const handleScroll = useEventCallback((e) => {
-    const scrollTop = getScrollTop(scrollContainer);
+    const { current: scrollElement } = scrollElementRef;
+
+    const scrollTop = getScrollTop(scrollElement!);
 
     if (scrollTop >= visibilityHeight) {
       !visible && setVisible(true);
@@ -102,7 +94,9 @@ const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
   });
 
   const handleClick = useEventCallback((e) => {
-    scrollTo(scrollContainer, 0, duration);
+    const { current: scrollElement } = scrollElementRef;
+
+    scrollTo(scrollElement!, 0, duration);
 
     if (onClick) {
       onClick(e);
@@ -111,11 +105,12 @@ const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
 
   React.useEffect(() => {
     const { current: root } = rootRef;
+    const { current: scrollElement } = scrollElementRef;
 
-    if (root && scrollContainer) {
-      return on(scrollContainer, 'scroll', handleScroll);
+    if (root && scrollElement) {
+      return on(scrollElement, 'scroll', handleScroll);
     }
-  }, [scrollContainer]);
+  }, []);
 
   return (
     <Fade in={visible}>

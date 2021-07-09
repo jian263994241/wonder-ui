@@ -1,5 +1,5 @@
 /**
- * title: 基础用法
+ * title: 基本使用
  * desc: 通过改变 `visible` 显示或隐藏内容
  */
 import {

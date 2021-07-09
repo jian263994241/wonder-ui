@@ -2,13 +2,7 @@
  * title: 异步使用
  * desc:
  */
-import {
-  Button,
-  Container,
-  Page,
-  Preloader,
-  WhiteSpace
-} from '@wonder-ui/core';
+import { Button, Preloader } from '@wonder-ui/core';
 
 const loadData = () =>
   new Promise((resolve) => {
@@ -18,13 +12,7 @@ const loadData = () =>
   });
 
 export default () => (
-  <Page title="Preloader">
-    <WhiteSpace />
-
-    <Container>
-      <Preloader onLoad={loadData}>
-        <Button variant="contained">Onload</Button>
-      </Preloader>
-    </Container>
-  </Page>
+  <Preloader onLoad={loadData}>
+    <Button variant="contained">Onload</Button>
+  </Preloader>
 );

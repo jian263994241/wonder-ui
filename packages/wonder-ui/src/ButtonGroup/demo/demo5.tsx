@@ -2,25 +2,30 @@
  * title: 单选按钮
  * desc: 改变`checked`prop设定激活状态
  */
-import { Button, ButtonGroup } from '@wonder-ui/core';
-import { useToggle } from '@wonder-ui/hooks';
+import { Button, ButtonGroup, CheckableGroup } from '@wonder-ui/core';
 
-const list = [0, 1, 2];
+const options = [
+  { label: 'Apple', value: 'Apple' },
+  { label: 'Pear', value: 'Pear' },
+  { label: 'Orange', value: 'Orange', disabled: true }
+];
 
-export default () => {
-  const [value, { toggle }] = useToggle(0, list);
-
-  return (
-    <ButtonGroup ButtonProps={{ variant: 'outlined' }}>
-      {list.map((item, index) => (
+export default () => (
+  <ButtonGroup ButtonProps={{ variant: 'outlined' }}>
+    <CheckableGroup
+      exclusive //是否单选
+      options={options}
+      defaultValue="Apple"
+      renderItem={({ emitOnChange, checked, data, key }) => (
         <Button
-          key={index}
-          variant={value === item ? 'contained' : 'outlined'}
-          onClick={() => toggle(item)}
+          key={key}
+          variant={checked ? 'contained' : 'outlined'}
+          onClick={emitOnChange}
+          disabled={data.disabled}
         >
-          Button-{index}
+          {data.label}
         </Button>
-      ))}
-    </ButtonGroup>
-  );
-};
+      )}
+    />
+  </ButtonGroup>
+);

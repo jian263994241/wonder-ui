@@ -380,7 +380,7 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
         as={component}
         className={css(classes.root, className, FocusLockProps?.className)}
         disabled={disableFocusLock}
-        noFocusGuards={disableFocusLock ? 'tail' : false}
+        // noFocusGuards={disableFocusLock ? 'tail' : false}
         autoFocus={autoFocus}
         style={style}
       >

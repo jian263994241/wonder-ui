@@ -55,7 +55,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "@types/numeral": "^2.0.1",
     "@types/react-is": "^17.0.0",
     "@types/react-slick": "^0.23.4",
     "@types/react-transition-group": "^4.4.1"

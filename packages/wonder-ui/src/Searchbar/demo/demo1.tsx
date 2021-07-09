@@ -29,7 +29,7 @@ export default () => {
       }}
     >
       <WhiteSpace />
-      <Space direction="vertical">基础用法:</Space>
+      <Space direction="vertical">基本使用:</Space>
     </Page>
   );
 };

@@ -1,5 +1,5 @@
 /**
- * title: 基础用法
+ * title: 基本使用
  */
 import { Page, Paper, Skeleton } from '@wonder-ui/core';
 

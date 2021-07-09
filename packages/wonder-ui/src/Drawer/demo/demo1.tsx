@@ -1,5 +1,5 @@
 /**
- * title: 基础抽屉
+ * title: 基本使用
  * desc: 方向 `'down' | 'left' | 'right' | 'up'`
  */
 import {

@@ -370,7 +370,7 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       }
     };
 
-    React.useImperativeHandle(actionRef, () => action, [inputRef]);
+    React.useImperativeHandle(actionRef, () => action, [inputRef, value]);
 
     const handleChange = useEventCallback((e) => {
       const _value =

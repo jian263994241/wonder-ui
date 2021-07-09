@@ -9,7 +9,7 @@ Container 是最基本的布局元素，它包含，填充和对齐给定设备�
 
 ## 代码演示
 
-### 基础使用
+### 基本使用
 
 ```typescript
 <Container size="sm">内容</Container>

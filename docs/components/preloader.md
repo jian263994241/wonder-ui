@@ -1,3 +1,6 @@
+---
+mobile: false
+---
 # Preloader 指示器
 
 异步等待指示器
@@ -21,6 +24,10 @@
 - hidePreloader();
 
 <code src="../../packages/wonder-ui/src/Preloader/demo/demo3.tsx"></code>
+
+### 替换图标
+
+<code src="../../packages/wonder-ui/src/Preloader/demo/demo4.tsx"></code>
 
 
 ## API

@@ -3,25 +3,29 @@
  * desc: 改变`checked`prop设定激活状态
  */
 
-import { Button, ButtonGroup } from '@wonder-ui/core';
-import { useSelections } from '@wonder-ui/hooks';
+import { Button, ButtonGroup, CheckableGroup } from '@wonder-ui/core';
 
-const list = [0, 1, 2];
+const options = [
+  { label: 'Apple', value: 'Apple' },
+  { label: 'Pear', value: 'Pear' },
+  { label: 'Orange', value: 'Orange', disabled: false }
+];
 
-export default () => {
-  const { isSelected, toggle } = useSelections(list, [0]);
-
-  return (
-    <ButtonGroup ButtonProps={{ variant: 'outlined' }}>
-      {list.map((item, index) => (
+export default () => (
+  <ButtonGroup ButtonProps={{ variant: 'outlined' }}>
+    <CheckableGroup
+      options={options}
+      defaultValue={['Apple']}
+      renderItem={({ emitOnChange, checked, data, key }) => (
         <Button
-          key={index}
-          variant={isSelected(item) ? 'contained' : 'outlined'}
-          onClick={() => toggle(item)}
+          key={key}
+          variant={checked ? 'contained' : 'outlined'}
+          onClick={emitOnChange}
+          disabled={data.disabled}
         >
-          Button-{index}
+          {data.label}
         </Button>
-      ))}
-    </ButtonGroup>
-  );
-};
+      )}
+    />
+  </ButtonGroup>
+);

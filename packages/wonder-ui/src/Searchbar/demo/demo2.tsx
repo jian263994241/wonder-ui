@@ -44,6 +44,11 @@ export default () => {
       <Space direction="vertical">
         按钮和图标:
         <Searchbar
+          InputProps={{
+            readOnly: true,
+            onClick: () => alert('Input click'),
+            style: { color: 'green' }
+          }}
           placeholder="请输入商品名字"
           barRight={
             <Space nowrap style={{ marginLeft: 10 }}>
