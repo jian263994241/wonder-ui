@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useUnmountedRef from './useUnmountedRef';
+import { useUnmountedRef } from './useUnmountedRef';
 
 export function useSafeState<S>(
   initialState: S | (() => S)

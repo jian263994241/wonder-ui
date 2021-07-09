@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useSafeState } from './useSafeState';
 
 type Subscriber = () => void;
 
@@ -60,7 +61,7 @@ export function useResponsive() {
     window.addEventListener('resize', handleResize);
     listening = true;
   }
-  const [state, setState] = React.useState<ResponsiveInfo>(info);
+  const [state, setState] = useSafeState<ResponsiveInfo>(info);
 
   React.useEffect(() => {
     if (!windowExists) return;

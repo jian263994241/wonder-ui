@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useEventCallback from './useEventCallback';
+import { useEventCallback } from './useEventCallback';
 import { useAsync } from './useAsync';
 
 export function useThrottleFn<F extends (...args: any[]) => any>(

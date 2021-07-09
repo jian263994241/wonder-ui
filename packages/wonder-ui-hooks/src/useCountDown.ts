@@ -1,6 +1,7 @@
 import * as React from 'react';
 import dayjs from 'dayjs';
-import useEventCallback from './useEventCallback';
+import { useEventCallback } from './useEventCallback';
+import { useSafeState } from './useSafeState';
 
 export type TDate = Date | number | string | undefined;
 
@@ -44,8 +45,8 @@ export function useCountDown(options?: CountDownOptions) {
   const { targetDate = Date.now(), interval = 1000, onEnd = () => 0 } =
     options || {};
 
-  const [target, setTargetDate] = React.useState<TDate>(targetDate);
-  const [timeLeft, setTimeLeft] = React.useState(() => calcLeft(target));
+  const [target, setTargetDate] = useSafeState<TDate>(targetDate);
+  const [timeLeft, setTimeLeft] = useSafeState(() => calcLeft(target));
 
   const onEndPersistFn = useEventCallback(() => {
     onEnd();

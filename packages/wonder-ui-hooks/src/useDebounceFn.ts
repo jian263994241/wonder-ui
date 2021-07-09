@@ -1,6 +1,6 @@
 import * as React from 'react';
-import useEventCallback from './useEventCallback';
 import { useAsync } from './useAsync';
+import { useEventCallback } from './useEventCallback';
 
 export function useDebounceFn<F extends (...args: any[]) => any>(
   fn: F,

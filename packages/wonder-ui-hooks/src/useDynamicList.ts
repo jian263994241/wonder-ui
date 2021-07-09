@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useEventCallback from './useEventCallback';
+import { useEventCallback } from './useEventCallback';
 
 export function useDynamicList<T>(initialValue: T[]) {
   const counterRef = React.useRef(-1);

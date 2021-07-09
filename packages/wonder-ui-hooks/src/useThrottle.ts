@@ -1,9 +1,10 @@
 import * as React from 'react';
-import useThrottleFn from './useThrottleFn';
-import useEnhancedEffect from './useEnhancedEffect';
+import { useEnhancedEffect } from './useEnhancedEffect';
+import { useSafeState } from './useSafeState';
+import { useThrottleFn } from './useThrottleFn';
 
 export function useThrottle<T>(value: T, wait: number = 166) {
-  const [throttled, setThrottled] = React.useState(value);
+  const [throttled, setThrottled] = useSafeState(value);
 
   const run = useThrottleFn(() => {
     setThrottled(value);

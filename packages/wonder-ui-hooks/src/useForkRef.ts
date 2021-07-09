@@ -1,6 +1,6 @@
-import useEventCallback from './useEventCallback';
-import { setRef } from '@wonder-ui/utils';
 import React from 'react';
+import { setRef } from '@wonder-ui/utils';
+import { useEventCallback } from './useEventCallback';
 
 export function useForkRef<T>(
   ...refs: (React.Ref<T> | null | undefined)[]

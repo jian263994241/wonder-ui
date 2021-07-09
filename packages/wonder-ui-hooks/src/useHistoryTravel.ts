@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useEventCallback from './useEventCallback';
+import { useEventCallback } from './useEventCallback';
 
 interface IData<T> {
   present?: T;

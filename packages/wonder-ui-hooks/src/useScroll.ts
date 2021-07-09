@@ -1,8 +1,8 @@
 import * as React from 'react';
-import useEventCallback from './useEventCallback';
-import useEnhancedEffect from './useEnhancedEffect';
 import { BasicTarget, getTargetElement } from './utils/dom';
-
+import { useEnhancedEffect } from './useEnhancedEffect';
+import { useEventCallback } from './useEventCallback';
+import { useSafeState } from './useSafeState';
 interface Position {
   left: number;
   top: number;
@@ -15,7 +15,7 @@ export function useScroll(
   target?: Target,
   shouldUpdate: ScrollListenController = () => true
 ): Position {
-  const [position, setPosition] = React.useState<Position>({
+  const [position, setPosition] = useSafeState<Position>({
     left: NaN,
     top: NaN
   });

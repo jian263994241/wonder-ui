@@ -14,7 +14,6 @@ import {
   SwipeablePropsWithDefaultOptions,
   SwipeableState,
   SwipeCallback,
-  TapCallback,
   UP,
   Vector2
 } from './useSwipeable.types';

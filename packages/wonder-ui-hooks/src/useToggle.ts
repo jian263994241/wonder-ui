@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useSafeState } from './useSafeState';
 
 type IState = string | number | boolean | undefined;
 
@@ -21,7 +22,7 @@ export function useToggle<D extends IState = IState, R extends IState = IState>(
   defaultValue: D = false as D,
   reverseValue?: R
 ) {
-  const [state, setState] = React.useState<D | R>(defaultValue);
+  const [state, setState] = useSafeState<D | R>(defaultValue);
 
   const actions = React.useMemo(() => {
     const reverseValueOrigin = (reverseValue === undefined

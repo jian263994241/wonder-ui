@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BasicTarget, getTargetElement } from './utils/dom';
-import useEventCallback from './useEventCallback';
+import { useEventCallback } from './useEventCallback';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = KeyboardEvent['code'] | KeyboardEvent['key'];

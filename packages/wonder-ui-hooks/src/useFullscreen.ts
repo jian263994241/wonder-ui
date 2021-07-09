@@ -1,7 +1,8 @@
 import * as React from 'react';
 import screenfull from 'screenfull';
-import useUnmount from './useUnmount';
 import { BasicTarget, getTargetElement } from './utils/dom';
+import { useSafeState } from './useSafeState';
+import { useUnmount } from './useUnmount';
 
 interface Options {
   onExitFull?: () => void;
@@ -17,7 +18,7 @@ export const useFullscreen = (target: BasicTarget, options?: Options) => {
   const onFullRef = React.useRef(onFull);
   onFullRef.current = onFull;
 
-  const [state, setState] = React.useState(false);
+  const [state, setState] = useSafeState(false);
 
   const onChange = React.useCallback(() => {
     if (screenfull.isEnabled) {

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import useSize from './useSize';
-import useEnhancedEffect from './useEnhancedEffect';
+import { useSize } from './useSize';
+import { useEnhancedEffect } from './useEnhancedEffect';
 
 interface OptionType {
   itemHeight: number | ((index: number) => number);

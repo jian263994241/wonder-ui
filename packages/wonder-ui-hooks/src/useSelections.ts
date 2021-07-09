@@ -1,7 +1,8 @@
-import * as React from "react";
+import * as React from 'react';
+import { useSafeState } from './useSafeState';
 
 export function useSelections<T>(items: T[], defaultSelected: T[] = []) {
-  const [selected, setSelected] = React.useState<T[]>(defaultSelected);
+  const [selected, setSelected] = useSafeState<T[]>(defaultSelected);
 
   const selectedSet = React.useMemo(() => new Set<T>(selected), [items]);
 
@@ -68,14 +69,14 @@ export function useSelections<T>(items: T[], defaultSelected: T[] = []) {
       noneSelected,
       allSelected,
       partiallySelected,
-      toggleAll,
+      toggleAll
     };
   }, [selectedSet, items, selected]);
 
   return {
     selected,
     ...singleActions,
-    ...allActions,
+    ...allActions
   } as const;
 }
 

@@ -8,10 +8,7 @@ import { on } from '@wonder-ui/utils';
  * @param callback - The handler for the event
  * @param useCapture - Whether or not to attach the handler for the capture phase
  */
-export function useEventListener<
-  TElement extends Element,
-  IEvent extends Event
->(
+export function useEventListener<TElement extends Element, IEvent>(
   element:
     | React.RefObject<TElement | undefined | null>
     | TElement
@@ -21,7 +18,7 @@ export function useEventListener<
     | null,
   eventName: string,
   callback: (event: IEvent) => void,
-  useCapture?: boolean
+  useCapture?: boolean | AddEventListenerOptions
 ) {
   // Use a ref for the callback to prevent repeatedly attaching/unattaching callbacks that are unstable across renders
   const callbackRef = React.useRef(callback);
@@ -37,6 +34,7 @@ export function useEventListener<
     const dispose = on(
       actualElement,
       eventName,
+      //@ts-expect-error
       (event: IEvent) => callbackRef.current(event),
       useCapture
     );

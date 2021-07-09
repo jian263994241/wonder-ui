@@ -1,5 +1,5 @@
-import * as React from 'react';
-import useEventCallback from './useEventCallback';
+import { useEventCallback } from './useEventCallback';
+import { useSafeState } from './useSafeState';
 
 interface EventTarget {
   target: {
@@ -21,7 +21,7 @@ export function useEventTarget<T>(options?: Options<T>) {
     transformer = (a: any) => a,
     getValueFromEvent = defaultGetValueFromEvent
   } = options || {};
-  const [value, setValue] = React.useState<T | undefined>(initialValue);
+  const [value, setValue] = useSafeState<T | undefined>(initialValue);
 
   const reset = useEventCallback(() => setValue(initialValue));
 

@@ -1,6 +1,7 @@
-import 'intersection-observer';
 import * as React from 'react';
-import { getTargetElement, BasicTarget } from './utils/dom';
+import { BasicTarget, getTargetElement } from './utils/dom';
+import { useSafeState } from './useSafeState';
+import 'intersection-observer';
 
 type InViewport = boolean | undefined;
 
@@ -30,7 +31,7 @@ function isInViewPort(el: HTMLElement): InViewport {
 }
 
 export function useInViewport(target: BasicTarget): InViewport {
-  const [inViewPort, setInViewport] = React.useState<InViewport>(() => {
+  const [inViewPort, setInViewport] = useSafeState<InViewport>(() => {
     const el = getTargetElement(target);
 
     return isInViewPort(el as HTMLElement);

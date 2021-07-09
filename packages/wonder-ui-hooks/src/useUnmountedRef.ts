@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useUnmount from './useUnmount';
+import { useUnmount } from './useUnmount';
 
 export const useUnmountedRef = () => {
   const unmountedRef = React.useRef(false);

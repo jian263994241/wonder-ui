@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { useSafeState } from './useSafeState';
 import { getDocument } from '@wonder-ui/utils';
 import { useEventListener } from './useEventListener';
-
 export interface CursorState {
   screenX: number;
   screenY: number;
@@ -21,7 +21,7 @@ const initState: CursorState = {
 };
 
 export const useMouse = () => {
-  const [state, setState] = React.useState(initState);
+  const [state, setState] = useSafeState(initState);
 
   useEventListener(getDocument(), 'mousemove', (event: MouseEvent) => {
     const { screenX, screenY, clientX, clientY, pageX, pageY } = event;

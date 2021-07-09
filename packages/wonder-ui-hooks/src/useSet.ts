@@ -1,5 +1,6 @@
 import * as React from 'react';
-import useEventCallback from './useEventCallback';
+import { useEventCallback } from './useEventCallback';
+import { useSafeState } from './useSafeState';
 
 function useSet<K>(initialValue?: Iterable<K>) {
   const initialSet = React.useMemo<Set<K>>(
@@ -9,7 +10,7 @@ function useSet<K>(initialValue?: Iterable<K>) {
       >,
     []
   );
-  const [set, setSet] = React.useState(initialSet);
+  const [set, setSet] = useSafeState(initialSet);
 
   const stableActions = React.useMemo(
     () => ({

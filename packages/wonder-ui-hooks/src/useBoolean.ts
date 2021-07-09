@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useToggle from './useToggle';
+import { useSafeState } from './useSafeState';
 
 interface Actions {
   setTrue: () => void;
@@ -8,7 +8,7 @@ interface Actions {
 }
 
 export function useBoolean(defaultValue = false): [boolean, Actions] {
-  const [state, setState] = React.useState(defaultValue);
+  const [state, setState] = useSafeState(defaultValue);
 
   const toggle = React.useCallback(() => {
     setState(!state);

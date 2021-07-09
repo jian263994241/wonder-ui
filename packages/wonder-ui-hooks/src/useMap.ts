@@ -1,5 +1,6 @@
 import * as React from 'react';
-import useEventCallback from './useEventCallback';
+import { useEventCallback } from './useEventCallback';
+import { useSafeState } from './useSafeState';
 
 export function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
   const initialMap = React.useMemo<Map<K, T>>(
@@ -10,7 +11,7 @@ export function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
       >,
     []
   );
-  const [map, setMap] = React.useState(initialMap);
+  const [map, setMap] = useSafeState(initialMap);
 
   const stableActions = React.useMemo(
     () => ({

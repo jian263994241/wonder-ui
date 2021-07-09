@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useSafeState } from './useSafeState';
 
 export function useCounter(
   initialValue: number = 0,
@@ -17,7 +18,7 @@ export function useCounter(
     return initialValue;
   }, []);
 
-  const [current, setCurrent] = React.useState(init);
+  const [current, setCurrent] = useSafeState(init);
 
   const actions = React.useMemo(() => {
     const setValue = (value: number | ((c: number) => number)) => {

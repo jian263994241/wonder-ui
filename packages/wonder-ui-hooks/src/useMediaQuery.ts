@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useEnhancedEffect from './useEnhancedEffect';
+import { useEnhancedEffect } from './useEnhancedEffect';
 
 type Options = {
   defaultMatches?: boolean;
