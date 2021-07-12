@@ -1,21 +1,52 @@
 import * as React from 'react';
+import CircularProgress from '../CircularProgress';
+import Space from '../Space';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { forwardRef, getScrollTop } from '@wonder-ui/utils';
-import CircularProgress from '../CircularProgress';
 import {
+  forwardRef,
+  getScrollTop,
+  generateUtilityClasses,
+  composeClasses,
+  css
+} from '@wonder-ui/utils';
+import {
+  useEventCallback,
+  useEventListener,
   useForkRef,
   useReactive,
   useScrollParent,
-  useEventCallback,
-  useEventListener,
   useTouch
 } from '@wonder-ui/hooks';
-import Space from '../Space';
 
 const componentName = 'WuiPullToRefresh';
 
 const DEFAULT_HEAD_HEIGHT = 50;
+
+const pullRefreshClasses = generateUtilityClasses(componentName, [
+  'root',
+  'track',
+  'indicator',
+  'text',
+  'normal',
+  'loading',
+  'loosing',
+  'pulling',
+  'success'
+]);
+
+const useClasses = (styleProps: PullRefreshStyleProps) => {
+  const { classes, status } = styleProps;
+
+  const slots = {
+    root: ['root'],
+    track: ['track'],
+    indicator: ['indicator', status && status],
+    text: ['text']
+  };
+
+  return composeClasses(componentName, slots, classes);
+};
 
 export type PullRefreshStatus =
   | 'normal'
@@ -25,7 +56,7 @@ export type PullRefreshStatus =
   | 'success';
 
 export interface PullRefreshProps extends React.HTMLAttributes<HTMLDivElement> {
-  direction?: 'down' | 'up';
+  classes?: Partial<typeof pullRefreshClasses>;
   refreshing?: boolean;
   onRefresh?: () => void;
   headHeight?: number;
@@ -43,6 +74,10 @@ export interface PullRefreshProps extends React.HTMLAttributes<HTMLDivElement> {
       (props: { distance: number }) => React.ReactElement
     >
   >;
+}
+
+interface PullRefreshStyleProps extends PullRefreshProps {
+  status?: PullRefreshStatus;
 }
 
 const PullRefreshRoot = styled('div', { name: componentName, slot: 'Root' })({
@@ -85,8 +120,8 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: componentName });
     const {
-      direction = 'down',
       children,
+      className,
       headHeight = DEFAULT_HEAD_HEIGHT,
       disabled = false,
       pullDistance: pullDistanceProp,
@@ -113,6 +148,10 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
       distance: 0,
       duration: 0
     });
+
+    const styleProps = { ...props, status: state.status };
+
+    const classes = useClasses(styleProps);
 
     const getHeadStyle = () => {
       if (headHeight !== DEFAULT_HEAD_HEIGHT) {
@@ -179,14 +218,19 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
 
       if (['pulling', 'loosing', 'success'].includes(status)) {
         nodes.push(
-          <div className={'text'} key="text">
+          <div className={classes.text} key="text">
             {getStatusText()}
           </div>
         );
       }
       if (status === 'loading') {
         nodes.push(
-          <Space key="loading" gap={4} horizontalAlign="center">
+          <Space
+            key="loading"
+            gap={4}
+            className={classes.text}
+            horizontalAlign="center"
+          >
             <CircularProgress size={16} /> {getStatusText()}
           </Space>
         );
@@ -273,15 +317,23 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
     };
 
     return (
-      <PullRefreshRoot ref={handleRef} {...rest}>
+      <PullRefreshRoot
+        ref={handleRef}
+        className={css(classes.root, className)}
+        {...rest}
+      >
         <PullRefreshTrack
           ref={trackRef}
           style={trackStyle}
+          className={classes.track}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
           onTouchCancel={onTouchEnd}
         >
-          <PullRefreshIndicator style={getHeadStyle()}>
+          <PullRefreshIndicator
+            className={classes.indicator}
+            style={getHeadStyle()}
+          >
             {renderStatus()}
           </PullRefreshIndicator>
           {children}
