@@ -219,7 +219,7 @@ function calcDevice({ userAgent }: { userAgent?: string } = {}): Device {
   const DARK = '(prefers-color-scheme: dark)';
   const LIGHT = '(prefers-color-scheme: light)';
   device.prefersColorScheme = function prefersColorTheme() {
-    let theme;
+    let theme = 'light';
     const doc = getDocument();
 
     if (window.matchMedia && window.matchMedia(LIGHT).matches) {
