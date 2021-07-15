@@ -3,7 +3,7 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { useMount, useEventCallback } from '@wonder-ui/hooks';
 
-export interface TabsProps extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
+export interface TabsProps extends React.HTMLAttributes<HTMLElement> {
   // centered?: boolean;
   // fixed?: boolean;
   // hideScrollbar?: boolean;

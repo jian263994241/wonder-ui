@@ -8,7 +8,6 @@ import {
   List,
   ListItem,
   ListHeader,
-  ListItemMedia,
   ListItemText,
   Toggle
 } from '@wonder-ui/core';
@@ -18,19 +17,11 @@ export default () => (
   <Page title="Switch">
     <List>
       <ListHeader>Settings</ListHeader>
-      <ListItem>
-        <ListItemMedia>
-          <Wifi />
-        </ListItemMedia>
+      <ListItem divider media={<Wifi />} extra={<Toggle />}>
         <ListItemText>Wi-Fi</ListItemText>
-        <Toggle />
       </ListItem>
-      <ListItem>
-        <ListItemMedia>
-          <Wifi />
-        </ListItemMedia>
+      <ListItem media={<Wifi />} extra={<Toggle />}>
         <ListItemText>Wi-Fi 2</ListItemText>
-        <Toggle />
       </ListItem>
     </List>
   </Page>

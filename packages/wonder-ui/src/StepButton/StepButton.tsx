@@ -30,11 +30,11 @@ export interface StepButtonProps {
 
 export interface StepButtonStyleProps extends StepButtonProps {}
 
-const componentName = 'WuiStepButton';
+const COMPONENT_NAME = 'WuiStepButton';
 
-const stepButtonClasses = generateUtilityClasses(componentName, ['root']);
+const stepButtonClasses = generateUtilityClasses(COMPONENT_NAME, ['root']);
 
-const StepButtonRoot = styled('span', { name: componentName, slot: 'Root' })<{
+const StepButtonRoot = styled('span', { name: COMPONENT_NAME, slot: 'Root' })<{
   styleProps: StepButtonStyleProps;
 }>(({ styleProps }) => ({
   touchAction: 'manipulation',
@@ -46,7 +46,7 @@ const StepButtonRoot = styled('span', { name: componentName, slot: 'Root' })<{
 }));
 
 const StepButton = forwardRef<HTMLElement, StepButtonProps>((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: componentName });
+  const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
     className,
     component = 'span',
@@ -66,8 +66,6 @@ const StepButton = forwardRef<HTMLElement, StepButtonProps>((inProps, ref) => {
 
   // We will interval update step when hold mouse down
   const onStepMouseDown = (e: any) => {
-    e.preventDefault();
-
     if (onStepRef.current) {
       onStepRef.current();
     }

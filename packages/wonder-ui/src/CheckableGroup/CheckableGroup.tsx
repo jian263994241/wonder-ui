@@ -56,8 +56,6 @@ export default function CheckableGroup(props: CheckableGroupProps) {
 
     let newValue;
 
-    console.log(value, index, itemValue);
-
     if (value && !Array.isArray(value)) {
       return warn('CheckableGroup: Value must be array when exclusive=false');
     }

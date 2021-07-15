@@ -6,7 +6,7 @@ import { checkableTagClasses, useClasses } from './CheckableTagClasses';
 import { useControlled } from '@wonder-ui/hooks';
 
 export interface CheckableTagProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'onChange'> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   classes?: Partial<typeof checkableTagClasses>;
   checked?: boolean;
   defaultChecked?: boolean;

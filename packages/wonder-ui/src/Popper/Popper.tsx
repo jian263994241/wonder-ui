@@ -32,9 +32,9 @@ type VariationPlacement =
 type Placement = AutoPlacement | BasePlacement | VariationPlacement;
 
 function getAnchorEl(anchorEl?: AnchorEl) {
-  return (typeof anchorEl === 'function'
-    ? anchorEl()
-    : anchorEl) as HTMLElement;
+  return (
+    typeof anchorEl === 'function' ? anchorEl() : anchorEl
+  ) as HTMLElement;
 }
 
 function flipPlacement(placement: Placement, theme: any) {
@@ -60,7 +60,7 @@ function flipPlacement(placement: Placement, theme: any) {
 
 export interface PopperProps<
   TModifier extends Partial<Modifier<any, any>> = Partial<Modifier<any, any>>
-> extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
+> extends React.HTMLAttributes<HTMLElement> {
   anchorEl: AnchorEl;
   children: (childProps: {
     placement: Placement;

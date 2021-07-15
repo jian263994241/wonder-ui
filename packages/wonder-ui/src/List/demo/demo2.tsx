@@ -3,14 +3,7 @@
  * desc: 使用`Collapse`折叠列表
  * background: '#f5f5f5'
  */
-import {
-  Collapse,
-  Page,
-  List,
-  ListItemMedia,
-  ListItem,
-  ListItemText
-} from '@wonder-ui/core';
+import { Collapse, Page, List, ListItem, ListItemText } from '@wonder-ui/core';
 import { HeartFill } from '@wonder-ui/icons';
 import { useToggle } from '@wonder-ui/hooks';
 
@@ -19,16 +12,10 @@ export default () => {
   return (
     <Page title="Nested list">
       <List>
-        <ListItem divider>
-          <ListItemMedia>
-            <HeartFill />
-          </ListItemMedia>
+        <ListItem divider media={<HeartFill />}>
           <ListItemText>Item 1</ListItemText>
         </ListItem>
-        <ListItem divider>
-          <ListItemMedia>
-            <HeartFill />
-          </ListItemMedia>
+        <ListItem divider media={<HeartFill />}>
           <ListItemText>Item 2</ListItemText>
         </ListItem>
 
@@ -43,16 +30,10 @@ export default () => {
 
         <Collapse in={visible}>
           <List>
-            <ListItem divider>
-              <ListItemMedia>
-                <HeartFill />
-              </ListItemMedia>
+            <ListItem divider media={<HeartFill />}>
               <ListItemText>Item 1</ListItemText>
             </ListItem>
-            <ListItem divider>
-              <ListItemMedia>
-                <HeartFill />
-              </ListItemMedia>
+            <ListItem divider media={<HeartFill />}>
               <ListItemText>Item 2</ListItemText>
             </ListItem>
 

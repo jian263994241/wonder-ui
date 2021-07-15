@@ -7,7 +7,7 @@ import { keyframes } from '@wonder-ui/styled';
 import { emphasize } from '../styles/colorManipulator';
 
 export interface SkeletonProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'title'> {
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   avatar?: boolean;
   avatarRound?: boolean;
   classes?: Partial<typeof skeletonClasses>;

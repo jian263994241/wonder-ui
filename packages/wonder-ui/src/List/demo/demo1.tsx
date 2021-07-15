@@ -9,30 +9,34 @@ import {
   ListItem,
   ListHeader,
   ListItemText,
-  ListItemMedia
+  Divider,
+  WhiteSpace
 } from '@wonder-ui/core';
 import { HouseFill, HeartFill } from '@wonder-ui/icons';
 
 export default () => (
   <Page title="Simple list">
     <List>
-      <ListItem divider>
+      <ListHeader>列表</ListHeader>
+      <ListItem>
         <ListItemText>Item 1</ListItemText>
       </ListItem>
-      <ListItem divider>
+
+      <Divider component="li" />
+
+      <ListItem>
         <ListItemText>Item 2</ListItemText>
       </ListItem>
-      <ListHeader />
-      <ListItem divider>
-        <ListItemMedia>
-          <HouseFill />
-        </ListItemMedia>
+
+      <WhiteSpace component="li" />
+
+      <ListItem>
         <ListItemText>Item 3</ListItemText>
       </ListItem>
-      <ListItem divider>
-        <ListItemMedia>
-          <HeartFill />
-        </ListItemMedia>
+
+      <Divider component="li" />
+
+      <ListItem>
         <ListItemText>Item 4</ListItemText>
       </ListItem>
     </List>

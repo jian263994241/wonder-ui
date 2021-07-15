@@ -8,7 +8,6 @@ import {
   Checkbox,
   List,
   ListItem,
-  ListItemMedia,
   ListItemText
 } from '@wonder-ui/core';
 import { useSelections } from '@wonder-ui/hooks';
@@ -22,8 +21,9 @@ export default () => {
   return (
     <Container size="sm">
       <List component="div">
-        <ListItem component="label">
-          <ListItemMedia>
+        <ListItem
+          component="label"
+          media={
             <Checkbox
               circle
               name="demo-checkbox"
@@ -31,13 +31,16 @@ export default () => {
               checked={allSelected}
               onChange={() => toggleAll()}
             />
-          </ListItemMedia>
+          }
+        >
           <ListItemText>Movies</ListItemText>
         </ListItem>
         <List component="div">
           {dataList.map((item, index) => (
-            <ListItem component="label" key={index}>
-              <ListItemMedia>
+            <ListItem
+              component="label"
+              key={index}
+              media={
                 <Checkbox
                   circle
                   name="demo-checkbox"
@@ -45,7 +48,8 @@ export default () => {
                   checked={isSelected(item)}
                   onChange={() => toggle(item)}
                 />
-              </ListItemMedia>
+              }
+            >
               <ListItemText secondary="Click me!" primary={`Movie ${item}`} />
             </ListItem>
           ))}

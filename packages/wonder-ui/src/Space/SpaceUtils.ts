@@ -1,5 +1,7 @@
-import { SpaceProps, SpaceSize } from './SpaceTypes';
 import { Theme } from '../styles/createTheme';
+
+export type SpaceSize = 'small' | 'medium' | 'large' | number;
+export type Gap = SpaceSize | [SpaceSize, SpaceSize];
 
 function _getSizeValue(size: SpaceSize, theme: Theme) {
   const sizeConfig = {
@@ -11,7 +13,7 @@ function _getSizeValue(size: SpaceSize, theme: Theme) {
   return typeof size != 'number' ? sizeConfig[size] : size || 0;
 }
 
-export function getSize(size: SpaceProps['gap'], theme: Theme) {
+export function getSize(size: Gap, theme: Theme) {
   //@ts-expect-error
   if (!size || size === '') {
     return {

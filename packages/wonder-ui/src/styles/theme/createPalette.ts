@@ -85,7 +85,7 @@ const darkenCoefficient = 0.08;
 export const light = {
   text: {
     primary: 'rgba(0, 0, 0, 0.87)',
-    secondary: 'rgba(0, 0, 0, 0.6)',
+    secondary: 'rgba(0, 0, 0, 0.45)',
     disabled: 'rgba(0, 0, 0, 0.38)'
   },
   divider: 'rgba(0, 0, 0, 0.12)',
@@ -117,7 +117,7 @@ export const light = {
 export const dark = {
   text: {
     primary: 'rgba(255, 255, 255, 0.85)',
-    secondary: 'rgba(255, 255, 255, 0.7)',
+    secondary: 'rgba(255, 255, 255, 0.65)',
     disabled: 'rgba(255, 255, 255, 0.5)',
     icon: 'rgba(255, 255, 255, 0.5)'
   },

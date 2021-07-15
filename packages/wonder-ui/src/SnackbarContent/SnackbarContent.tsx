@@ -5,7 +5,7 @@ import useThemeProps from '../styles/useThemeProps';
 import { emphasize } from '../styles/colorManipulator';
 import { snackbarContentClasses, useClasses } from './SnackbarContentClasses';
 export interface SnackbarContentProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'action'> {
+  extends React.HTMLAttributes<HTMLElement> {
   /**
    * 操作区
    */

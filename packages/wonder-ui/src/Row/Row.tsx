@@ -6,8 +6,7 @@ import { css } from '@wonder-ui/utils';
 import { makeGridColumns } from './mixins';
 import { rowClasses, RowStyleProps, useClasses } from './RowClasses';
 
-export interface RowProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
+export interface RowProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
   classes?: Partial<typeof rowClasses>;
   component?: React.ElementType;

@@ -1,11 +1,12 @@
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 import SvgIcon from '../SvgIcon';
 import useTheme from '../styles/useTheme';
+import { emphasize } from '../styles/colorManipulator';
 
 export default function (props: ButtonBaseProps) {
   const theme = useTheme();
-  const currentColor = theme.palette.colors.grey[300];
-  const contrastText = theme.palette.getContrastText(currentColor);
+  const currentColor = emphasize(theme.palette.light.main, 0.6);
+  const contrastText = theme.palette.light.main;
   return (
     <ButtonBase tabIndex={-1} disableRipple {...props}>
       <SvgIcon viewBox="0 0 28 28" fontSize="inherit">

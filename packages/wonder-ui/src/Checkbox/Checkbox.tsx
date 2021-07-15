@@ -36,11 +36,21 @@ const CheckboxWrapper = styled('label', {
   name: 'WuiCheckbox',
   slot: 'Wrapper'
 })<{ styleProps: CheckboxStyleProps }>(({ theme, styleProps }) => ({
+  display: 'inline-flex',
+  alignItems: 'baseline',
+  cursor: 'pointer',
   ...(styleProps.disabled && {
-    color: theme.palette.action.disabled
+    color: theme.palette.action.disabled,
+    cursor: 'not-allowed'
   }),
+
+  [`& > .${checkboxClasses.root}`]: {
+    top: '.2em'
+  },
+
   [`& > .${checkboxClasses.root} + span`]: {
-    marginLeft: '0.3em'
+    paddingLeft: 8,
+    paddingRight: 8
   }
 }));
 
@@ -54,8 +64,8 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })<{
   width: '1em',
   height: '1em',
   fontSize: 'inherit',
-  verticalAlign: 'middle',
   outline: 0,
+  position: 'relative',
   backgroundColor: theme.palette.background.paper,
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',

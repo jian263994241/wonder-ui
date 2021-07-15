@@ -9,7 +9,7 @@ import {
   useScrollParent
 } from '@wonder-ui/hooks';
 
-const componentName = 'WuiBackTop';
+const COMPONENT_NAME = 'WuiBackTop';
 
 export interface BackTopProps extends React.HTMLAttributes<HTMLDivElement> {
   duration?: number;
@@ -46,7 +46,7 @@ function scrollTo(element: Element | Window, to: number, duration: number) {
 }
 
 const BackTopRoot = styled('div', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Root'
 })(({ theme }) => ({
   position: 'fixed',
@@ -67,7 +67,7 @@ const BackTopRoot = styled('div', {
 }));
 
 const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: componentName });
+  const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
     children,
     duration = 450,

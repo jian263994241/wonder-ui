@@ -6,23 +6,15 @@
 import { Checkbox, Space } from '@wonder-ui/core';
 
 export default () => (
-  <Space direction="vertical" gap={[5, 20]}>
-    <Space>
-      <Checkbox defaultChecked color="primary" />
-      <Checkbox defaultChecked color="secondary" />
-      <Checkbox disabled defaultChecked color="primary" />
-      <Checkbox disabled defaultChecked color="secondary" />
-    </Space>
-    <Space direction="vertical">
-      <Checkbox defaultChecked color="primary">
-        checkbox 1
-      </Checkbox>
-      <Checkbox color="primary" disabled>
-        checkbox 2
-      </Checkbox>
-      <Checkbox defaultChecked color="primary" disabled>
-        checkbox 3
-      </Checkbox>
-    </Space>
+  <Space direction="vertical">
+    <Checkbox defaultChecked color="primary">
+      Nickname is required
+    </Checkbox>
+    <Checkbox color="primary" disabled>
+      Nickname is required
+    </Checkbox>
+    <Checkbox defaultChecked color="primary" disabled>
+      Nickname is required
+    </Checkbox>
   </Space>
 );

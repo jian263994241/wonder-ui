@@ -19,9 +19,9 @@ import {
   useSize
 } from '@wonder-ui/hooks';
 
-const componentName = 'WuiSearchbar';
+const COMPONENT_NAME = 'WuiSearchbar';
 
-export const searchbarClasses = generateUtilityClasses(componentName, [
+export const searchbarClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'input',
   'bg',
@@ -97,11 +97,11 @@ const useClasses = (styleProps: SearchbarStyleProps) => {
     inner: ['inner']
   };
 
-  return composeClasses(componentName, slots, classes);
+  return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
 const SearchbarRoot = styled('div', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Root'
 })({
   width: '100%',
@@ -154,7 +154,7 @@ const SearchbarBg = styled('div', { name: 'WuiNavbar', slot: 'Bg' })(
 );
 
 const SearchbarInput = styled(Input, {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Input'
 })<{ styleProps: SearchbarStyleProps }>(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -162,7 +162,7 @@ const SearchbarInput = styled(Input, {
 }));
 
 const SearchbarCancelButton = styled(ButtonBase, {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Button'
 })<{ styleProps: SearchbarStyleProps }>(({ theme }) => ({
   whiteSpace: 'nowrap',
@@ -175,7 +175,7 @@ const SearchbarCancelButton = styled(ButtonBase, {
 }));
 
 const Searchbar = forwardRef<HTMLElement, SearchbarProps>((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: componentName });
+  const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
     InputProps,
     className,

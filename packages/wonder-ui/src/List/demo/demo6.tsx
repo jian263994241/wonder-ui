@@ -9,21 +9,31 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemMedia,
-  Typography
+  Typography,
+  IconButton
 } from '@wonder-ui/core';
+import { InfoCircle } from '@wonder-ui/icons';
 
 export default () => (
   <Page title="Meida list">
     <List>
-      <ListItem divider alignItems="flex-start">
-        <ListItemMedia>
+      <ListItem
+        divider
+        alignItems="flex-start"
+        arrow="horizontal"
+        extra={
+          <IconButton size="small">
+            <InfoCircle />
+          </IconButton>
+        }
+        media={
           <img
             width="70"
             src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg"
             alt=""
           />
-        </ListItemMedia>
+        }
+      >
         <ListItemText
           primary="Yellow Submarine"
           secondary={
@@ -43,18 +53,21 @@ export default () => (
           }
         />
       </ListItem>
-      <ListItem divider alignItems="flex-start">
-        <ListItemMedia>
+      <ListItem
+        arrow="horizontal"
+        extra={<InfoCircle />}
+        media={
           <img
             width="70"
             src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg"
             alt=""
           />
-        </ListItemMedia>
+        }
+      >
         <ListItemText
           primary="Yellow Submarine"
           secondary={
-            <Typography variant="body2" lineClamp={2} color="textSecondary">
+            <Typography variant="body2" lineClamp={4} color="textSecondary">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
               sagittis tellus ut turpis condimentum, ut dignissim lacus
               tincidunt. Cras dolor metus, ultrices condimentum sodales sit

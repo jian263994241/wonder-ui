@@ -11,8 +11,7 @@ import { css } from '@wonder-ui/utils';
 import { snackbarClasses, useClasses } from './SnackbarClasses';
 import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
 
-export interface SnackbarProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'action'> {
+export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * @ignore
    */

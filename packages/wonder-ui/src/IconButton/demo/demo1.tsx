@@ -6,18 +6,23 @@ import { IconButton, Space } from '@wonder-ui/core';
 import { Trash } from '@wonder-ui/icons';
 
 export default () => (
-  <Space>
-    <IconButton size="small">
-      <Trash fontSize="small" />
-    </IconButton>
-    <IconButton>
-      <Trash fontSize="small" />
-    </IconButton>
-    <IconButton>
-      <Trash fontSize="medium" />
-    </IconButton>
-    <IconButton>
-      <Trash fontSize="large" />
-    </IconButton>
+  <Space direction="vertical">
+    <Space>
+      <IconButton size="small">
+        <Trash />
+      </IconButton>
+      <IconButton size="medium">
+        <Trash />
+      </IconButton>
+    </Space>
+
+    <Space>
+      <IconButton size="small" color="primary">
+        <Trash />
+      </IconButton>
+      <IconButton size="medium" color="primary">
+        <Trash />
+      </IconButton>
+    </Space>
   </Space>
 );

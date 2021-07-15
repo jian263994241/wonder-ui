@@ -9,8 +9,6 @@ import {
   List,
   ListHeader,
   ListItem,
-  ListItemExtra,
-  ListItemMedia,
   ListItemText
 } from '@wonder-ui/core';
 import { InfoCircleFill, PersonCircle, TrashFill } from '@wonder-ui/icons';
@@ -32,73 +30,57 @@ export default () => (
 
     <List>
       <ListHeader>Data list, with icons</ListHeader>
-      <ListItem divider>
-        <ListItemMedia>
-          <PersonCircle />
-        </ListItemMedia>
+      <ListItem divider media={<PersonCircle />} extra={<span>CEO</span>}>
         <ListItemText>Item 1</ListItemText>
-        <ListItemExtra>CEO</ListItemExtra>
       </ListItem>
-      <ListItem divider>
-        <ListItemMedia>
-          <PersonCircle />
-        </ListItemMedia>
+      <ListItem
+        divider
+        media={<PersonCircle />}
+        extra={<Badge color="secondary" text="5" />}
+      >
         <ListItemText>Item 2</ListItemText>
-        <ListItemExtra>
-          <Badge color="secondary" text="5" />
-        </ListItemExtra>
       </ListItem>
-      <ListItem divider>
-        <ListItemMedia>
-          <PersonCircle />
-        </ListItemMedia>
+      <ListItem
+        divider
+        media={<PersonCircle />}
+        extra={<Badge color="secondary" text="5" />}
+      >
         <ListItemText>Item 3</ListItemText>
-        <ListItemExtra>
-          <Badge color="secondary" text="5" />
-        </ListItemExtra>
       </ListItem>
     </List>
 
     <List>
       <ListHeader>Data list, with button</ListHeader>
-      <ListItem divider>
-        <ListItemMedia>
-          <PersonCircle />
-        </ListItemMedia>
+      <ListItem
+        divider
+        media={<PersonCircle />}
+        extra={<InfoCircleFill fontSize="inherit" />}
+      >
         <ListItemText>Item 1</ListItemText>
-        <ListItemExtra>
-          <InfoCircleFill fontSize="inherit" />
-        </ListItemExtra>
       </ListItem>
-      <ListItem divider>
-        <ListItemMedia>
-          <PersonCircle />
-        </ListItemMedia>
+      <ListItem
+        divider
+        media={<PersonCircle />}
+        extra={<InfoCircleFill fontSize="inherit" />}
+      >
         <ListItemText>Item 2</ListItemText>
-        <ListItemExtra>
-          <InfoCircleFill fontSize="inherit" />
-        </ListItemExtra>
       </ListItem>
-      <ListItem divider>
-        <ListItemMedia>
-          <PersonCircle />
-        </ListItemMedia>
+      <ListItem
+        divider
+        media={<PersonCircle />}
+        extra={<TrashFill fontSize="inherit" />}
+      >
         <ListItemText>Item 3</ListItemText>
-        <ListItemExtra>
-          <TrashFill fontSize="inherit" />
-        </ListItemExtra>
       </ListItem>
     </List>
 
     <List>
       <ListHeader>Links</ListHeader>
-      <ListItem button divider arrow="horizontal">
+      <ListItem button divider arrow="horizontal" extra={<span>CEO</span>}>
         <ListItemText>Item 1</ListItemText>
-        <ListItemExtra>CEO</ListItemExtra>
       </ListItem>
-      <ListItem button divider arrow="horizontal">
+      <ListItem button divider arrow="horizontal" extra={<span>CEO</span>}>
         <ListItemText>Item 2</ListItemText>
-        <ListItemExtra>CEO</ListItemExtra>
       </ListItem>
       <ListItem button divider arrow="horizontal">
         <ListItemText>Item 3</ListItemText>
@@ -107,24 +89,25 @@ export default () => (
 
     <List>
       <ListHeader>Links, Secondary text</ListHeader>
-      <ListItem button divider arrow="horizontal">
-        <ListItemMedia>
-          <PersonCircle />
-        </ListItemMedia>
+      <ListItem
+        button
+        divider
+        arrow="horizontal"
+        media={<PersonCircle />}
+        extra={<span>CEO</span>}
+      >
         <ListItemText primary={'Primary text'} secondary={'Secondary text'} />
-        <ListItemExtra>CEO</ListItemExtra>
       </ListItem>
-      <ListItem button divider arrow="horizontal">
-        <ListItemMedia>
-          <PersonCircle />
-        </ListItemMedia>
+      <ListItem
+        button
+        divider
+        arrow="horizontal"
+        media={<PersonCircle />}
+        extra={<span>CEO</span>}
+      >
         <ListItemText primary={'Primary text'} secondary={'Secondary text'} />
-        <ListItemExtra>CEO</ListItemExtra>
       </ListItem>
-      <ListItem button divider arrow="horizontal">
-        <ListItemMedia>
-          <PersonCircle />
-        </ListItemMedia>
+      <ListItem button arrow="horizontal" media={<PersonCircle />}>
         <ListItemText primary={'Primary text'} secondary={'Secondary text'} />
       </ListItem>
     </List>

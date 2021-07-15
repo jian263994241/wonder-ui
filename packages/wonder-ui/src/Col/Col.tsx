@@ -5,8 +5,7 @@ import { ColsType, ResponsiveValue } from '../Row/share';
 import { css } from '@wonder-ui/utils';
 import { useClasses } from './ColClasses';
 
-export interface ColProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
+export interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
   /** 占位格 */
   col?: ResponsiveValue<ColsType>;
   /** as  */

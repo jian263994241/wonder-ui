@@ -5,7 +5,7 @@ import EmptyIconDefault from './EmptyIconDefault';
 import { emptyClasses, useClasses } from './EmptyClasses';
 import { css } from '@wonder-ui/utils';
 
-export interface EmptyProps extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
+export interface EmptyProps extends React.HTMLAttributes<HTMLDivElement> {
   classes?: Partial<typeof emptyClasses>;
   image?: React.ReactElement;
   description?: React.ReactNode;

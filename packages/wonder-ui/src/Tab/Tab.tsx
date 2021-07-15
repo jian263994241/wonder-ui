@@ -4,10 +4,7 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 
 export interface TabProps
-  extends Omit<
-    React.HTMLProps<HTMLElement>,
-    'as' | 'label' | 'onChange' | 'type'
-  > {
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> {
   classes?: any;
   disabled?: boolean;
   fullWidth?: boolean;

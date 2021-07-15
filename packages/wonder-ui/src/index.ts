@@ -88,6 +88,9 @@ export * from './Input';
 export { default as InputNumber } from './InputNumber';
 export * from './InputNumber';
 
+export { default as Label } from './Label';
+export * from './Label';
+
 export { default as LinearProgress } from './LinearProgress';
 export * from './LinearProgress';
 
@@ -97,14 +100,11 @@ export * from './List';
 export { default as ListHeader } from './ListHeader';
 export * from './ListHeader';
 
+export { default as ListInputItem } from './ListInputItem';
+export * from './ListInputItem';
+
 export { default as ListItem } from './ListItem';
 export * from './ListItem';
-
-export { default as ListItemExtra } from './ListItemExtra';
-export * from './ListItemExtra';
-
-export { default as ListItemMedia } from './ListItemMedia';
-export * from './ListItemMedia';
 
 export { default as ListItemText } from './ListItemText';
 export * from './ListItemText';

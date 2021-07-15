@@ -12,10 +12,6 @@ export interface RadioProps
    * @default primary
    */
   color?: 'primary' | 'secondary';
-  /**
-   * @ignore
-   */
-  ref?: React.Ref<HTMLInputElement>;
 }
 
 export interface RadioStyleProps extends RadioProps {}
@@ -24,12 +20,21 @@ const RadioWrapper = styled('label', {
   name: 'WuiCheckbox',
   slot: 'Wrapper'
 })<{ styleProps: RadioStyleProps }>(({ theme, styleProps }) => ({
+  display: 'inline-flex',
+  alignItems: 'baseline',
+  cursor: 'pointer',
   ...(styleProps.disabled && {
-    color: theme.palette.action.disabled
+    color: theme.palette.action.disabled,
+    cursor: 'not-allowed'
   }),
 
+  [`& > .${radioClasses.root}`]: {
+    top: '.2em'
+  },
+
   [`& > .${radioClasses.root} + span`]: {
-    marginLeft: '0.3em'
+    paddingLeft: 8,
+    paddingRight: 8
   }
 }));
 
@@ -52,6 +57,7 @@ const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })<{
   borderStyle: 'solid',
   borderColor: theme.palette.divider,
   borderRadius: '50%',
+  position: 'relative',
   transition: theme.transitions.create(
     ['border-color', 'background-color', 'box-shadow', 'opacity'],
     {

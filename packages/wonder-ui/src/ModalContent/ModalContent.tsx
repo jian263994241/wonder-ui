@@ -7,8 +7,7 @@ import Typography, { TypographyProps } from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { modalContentClasses, useClasses } from './ModalContentClasses';
 
-export interface ModalContentProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
+export interface ModalContentProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Cancel button props
    */

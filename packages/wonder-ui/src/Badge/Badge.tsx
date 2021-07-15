@@ -3,8 +3,7 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { useClasses, badgeClasses } from './BadgeClasses';
 import { css, generateUtilityStyles, capitalize } from '@wonder-ui/utils';
-export interface BadgeProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
+export interface BadgeProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * @description 徽章颜色
    * @default primary

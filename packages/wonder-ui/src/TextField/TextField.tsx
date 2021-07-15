@@ -4,9 +4,9 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { css, composeClasses, generateUtilityClasses } from '@wonder-ui/utils';
 
-const componentName = 'WuiTextField';
+const COMPONENT_NAME = 'WuiTextField';
 
-export const textFieldClasses = generateUtilityClasses(componentName, [
+export const textFieldClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'wrapper',
   'label',
@@ -85,11 +85,11 @@ const useClasses = (styleProps: TextFieldStyleProps) => {
     description: ['description']
   };
 
-  return composeClasses(componentName, slots, classes);
+  return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
 const TextFieldRoot = styled('div', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Root'
 })({
   position: 'relative',
@@ -99,45 +99,45 @@ const TextFieldRoot = styled('div', {
 });
 
 const TextFieldWrapper = styled('div', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Wrapper'
 })({});
 
 const TextFieldInput = styled(InputBase, {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Input'
 })({
   height: 32
 });
 
 const TextFieldPrefix = styled('span', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Prefix'
 })({});
 
 const TextFieldSuffix = styled('span', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Suffix'
 })({});
 
 const TextFieldLabel = styled('div', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Label'
 })({});
 
 const TextFieldDescription = styled('div', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Description'
 })({});
 
 const TextFieldErrorMessage = styled('div', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'ErrorMessage'
 })({});
 
 const TextField = React.forwardRef<HTMLDivElement, TextFieldProps>(
   (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: componentName });
+    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
       ariaLabel,
       ariaLabelledBy,

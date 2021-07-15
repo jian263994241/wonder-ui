@@ -7,7 +7,6 @@ import {
   Collapse,
   Page,
   List,
-  ListItemMedia,
   ListItem,
   ListItemText,
   WhiteSpace
@@ -21,16 +20,10 @@ export default () => {
     <Page title="Inset">
       <WhiteSpace />
       <List inset>
-        <ListItem divider>
-          <ListItemMedia>
-            <HeartFill />
-          </ListItemMedia>
+        <ListItem divider media={<HeartFill />}>
           <ListItemText>Item 1</ListItemText>
         </ListItem>
-        <ListItem divider>
-          <ListItemMedia>
-            <HeartFill />
-          </ListItemMedia>
+        <ListItem divider media={<HeartFill />}>
           <ListItemText>Item 2</ListItemText>
         </ListItem>
 
@@ -45,16 +38,10 @@ export default () => {
 
         <Collapse in={visible}>
           <List>
-            <ListItem divider>
-              <ListItemMedia>
-                <HeartFill />
-              </ListItemMedia>
+            <ListItem divider media={<HeartFill />}>
               <ListItemText>Item 1</ListItemText>
             </ListItem>
-            <ListItem divider>
-              <ListItemMedia>
-                <HeartFill />
-              </ListItemMedia>
+            <ListItem divider media={<HeartFill />}>
               <ListItemText>Item 2</ListItemText>
             </ListItem>
 

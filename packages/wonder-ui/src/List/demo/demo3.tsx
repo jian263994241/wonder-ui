@@ -1,12 +1,12 @@
 /**
  * title: 文件夹列表
- * desc: 使用 `ListItemMedia` 用来放Icon和图片
+ * desc:
  * background: '#f5f5f5'
  */
 import {
   Page,
   List,
-  ListItemMedia,
+  ListHeader,
   ListItem,
   ListItemText
 } from '@wonder-ui/core';
@@ -15,17 +15,15 @@ import { FileEarmarkFill } from '@wonder-ui/icons';
 export default () => (
   <Page title="List with icon">
     <List>
-      <ListItem divider>
-        <ListItemMedia>
-          <FileEarmarkFill />
-        </ListItemMedia>
+      <ListHeader>文件夹</ListHeader>
+      <ListItem divider media={<FileEarmarkFill />}>
         <ListItemText primary="Index" secondary="Jan 9, 2014" />
       </ListItem>
-      <ListItem divider>
-        <ListItemMedia>
-          <FileEarmarkFill />
-        </ListItemMedia>
+      <ListItem divider media={<FileEarmarkFill />}>
         <ListItemText primary="Index 2" secondary="Jan 9, 2014" />
+      </ListItem>
+      <ListItem media={<FileEarmarkFill />}>
+        <ListItemText primary="Index 3" secondary="Jan 9, 2014" />
       </ListItem>
     </List>
   </Page>

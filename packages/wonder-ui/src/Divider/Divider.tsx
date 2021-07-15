@@ -2,11 +2,58 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { css } from '@wonder-ui/utils';
-import { dividerClasses, useClasses } from './DividerClasses';
+import { composeClasses, css, generateUtilityClasses } from '@wonder-ui/utils';
 
-export interface DividerProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
+const COMPONENT_NAME = 'WuiDivider';
+
+export const dividerClasses = generateUtilityClasses(COMPONENT_NAME, [
+  'root',
+  'absolute',
+  'inset',
+  'middle',
+  'flexItem',
+  'light',
+  'vertical',
+  'withChildren',
+  'withChildrenVertical',
+  'textAlignRight',
+  'textAlignLeft',
+  'wrapper',
+  'wrapperVertical'
+]);
+
+const useClasses = (styleProps: DividerStyleProps) => {
+  const {
+    absolute,
+    children,
+    classes,
+    flexItem,
+    light,
+    direction,
+    textAlign,
+    variant
+  } = styleProps;
+
+  const slots = {
+    root: [
+      'root',
+      absolute && 'absolute',
+      variant,
+      light && 'light',
+      direction === 'vertical' && 'vertical',
+      flexItem && 'flexItem',
+      !!children && 'withChildren',
+      !!children && direction === 'vertical' && 'withChildrenVertical',
+      textAlign === 'right' && direction !== 'vertical' && 'textAlignRight',
+      textAlign === 'left' && direction !== 'vertical' && 'textAlignLeft'
+    ],
+    wrapper: ['wrapper', direction === 'vertical' && 'wrapperVertical']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
+
+export interface DividerProps {
   /**
    * 定位方式
    * @default false
@@ -45,9 +92,23 @@ export interface DividerProps
    * @default center
    */
   textAlign?: 'center' | 'left' | 'right';
+  /**
+   * @ignore
+   */
+  className?: string;
+  /**
+   * @ignore
+   */
+  style?: React.CSSProperties;
+  /**
+   * 内容
+   */
+  children?: React.ReactNode;
 }
 
-const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })(
+interface DividerStyleProps extends DividerProps {}
+
+const DividerRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })(
   ({ theme }) => {
     return {
       margin: 0, // Reset browser default style.
@@ -129,22 +190,23 @@ const DividerRoot = styled('div', { name: 'WuiDivider', slot: 'Root' })(
   }
 );
 
-const DividerWrapper = styled('span', { name: 'WuiDivider', slot: 'Wrapper' })(
-  ({ theme }) => {
-    return {
-      display: 'inline-block',
-      paddingLeft: theme.spacing(1.2),
-      paddingRight: theme.spacing(1.2),
-      [`&.${dividerClasses.wrapperVertical}`]: {
-        paddingTop: theme.spacing(1.2),
-        paddingBottom: theme.spacing(1.2)
-      }
-    };
-  }
-);
+const DividerWrapper = styled('span', {
+  name: COMPONENT_NAME,
+  slot: 'Wrapper'
+})(({ theme }) => {
+  return {
+    display: 'inline-block',
+    paddingLeft: theme.spacing(1.2),
+    paddingRight: theme.spacing(1.2),
+    [`&.${dividerClasses.wrapperVertical}`]: {
+      paddingTop: theme.spacing(1.2),
+      paddingBottom: theme.spacing(1.2)
+    }
+  };
+});
 
 const Divider = React.forwardRef<HTMLElement, DividerProps>((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiDivider' });
+  const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
     absolute = false,
     children,

@@ -14,9 +14,9 @@ import Space from '../Space';
 import Fade from '../Fade';
 import { useEventCallback } from '@wonder-ui/hooks';
 
-const componentName = 'NoticeBar';
+const COMPONENT_NAME = 'NoticeBar';
 
-export const noticebarClasses = generateUtilityClasses(componentName, [
+export const noticebarClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'text',
   'icon',
@@ -46,7 +46,7 @@ const useClasses = (styleProps: NoticebarProps) => {
     close: ['close'],
     acionts: ['actions']
   };
-  return composeClasses(componentName, slots, classes);
+  return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
 export interface NoticebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -60,7 +60,7 @@ export interface NoticebarProps extends React.HTMLAttributes<HTMLDivElement> {
   wrap?: boolean;
 }
 
-const NoticebarRoot = styled('div', { name: componentName, slot: 'Root' })<{
+const NoticebarRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
   styleProps: NoticebarProps;
 }>(({ theme, styleProps }) => {
   const color = theme.palette[styleProps.type || 'warning'].main;
@@ -80,16 +80,17 @@ const NoticebarRoot = styled('div', { name: componentName, slot: 'Root' })<{
   };
 });
 
-const NoticebarIcon = styled(Typography, { name: componentName, slot: 'Icon' })(
-  {
-    alignSelf: 'flex-start',
-    padding: '9px 10px 0 16px',
-    flexShrink: 0
-  }
-);
+const NoticebarIcon = styled(Typography, {
+  name: COMPONENT_NAME,
+  slot: 'Icon'
+})({
+  alignSelf: 'flex-start',
+  padding: '9px 10px 0 16px',
+  flexShrink: 0
+});
 
 const NoticebarText = styled(Typography, {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Text'
 })<{
   styleProps: NoticebarProps;
@@ -107,7 +108,7 @@ const NoticebarText = styled(Typography, {
 }));
 
 const NoticebarActions = styled(Space, {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Actions'
 })({
   flexShrink: 0
@@ -115,7 +116,7 @@ const NoticebarActions = styled(Space, {
 
 const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
   (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: componentName });
+    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
       actions,
       closable = false,

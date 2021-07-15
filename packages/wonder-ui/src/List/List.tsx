@@ -21,7 +21,7 @@ const ListRoot = styled('ul', {
   margin: 0,
   padding: 0,
   position: 'relative',
-  backgroundColor: theme.palette.background.paper,
+  // backgroundColor: theme.palette.background.paper,
 
   ...(styleProps.inset && {
     marginLeft: theme.spacing(2),

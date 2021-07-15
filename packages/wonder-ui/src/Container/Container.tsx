@@ -8,8 +8,7 @@ import {
 } from './ContainerClasses';
 import { css } from '@wonder-ui/utils';
 
-export interface ContainerProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'size' | 'ref'> {
+export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   classes?: Partial<typeof containerClasses>;
   component?: React.ElementType;
   /**

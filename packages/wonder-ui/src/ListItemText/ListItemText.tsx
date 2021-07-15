@@ -2,10 +2,10 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import Typography, { TypographyProps } from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
+import { forwardRef } from '@wonder-ui/utils';
 import { listItemTextClasses, useClasses } from './ListItemTextClasses';
 
-export interface ListItemTextProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
+export interface ListItemTextProps extends React.HTMLAttributes<HTMLElement> {
   /**
    *  Css api
    */
@@ -47,11 +47,12 @@ const ListItemTextRoot = styled('div', {
 })(({ theme }) => ({
   ...theme.typography.subtitle1,
   color: 'inherit',
-  verticalAlign: 'middle',
-  flex: '1 1 auto'
+  flex: '1 1 auto',
+  paddingTop: theme.spacing(1),
+  paddingBottom: theme.spacing(1)
 }));
 
-const ListItemText = React.forwardRef<HTMLElement, ListItemTextProps>(
+const ListItemText = forwardRef<HTMLElement, ListItemTextProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiListItemText' });
     const {

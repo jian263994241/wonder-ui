@@ -2,7 +2,7 @@ import * as React from 'react';
 import { css } from '@wonder-ui/utils';
 import { useEventCallback, useEnhancedEffect } from '@wonder-ui/hooks';
 
-export interface RippleProps extends React.HTMLProps<HTMLSpanElement> {
+export interface RippleProps extends React.HTMLAttributes<HTMLSpanElement> {
   classes: Record<
     | 'ripple'
     | 'rippleVisible'

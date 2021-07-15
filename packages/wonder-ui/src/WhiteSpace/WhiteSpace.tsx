@@ -4,8 +4,7 @@ import useThemeProps from '../styles/useThemeProps';
 import { css } from '@wonder-ui/utils';
 import { useClasses, whiteSpaceClasses } from './WhiteSpaceClasses';
 
-export interface WhiteSpaceProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'size'> {
+export interface WhiteSpaceProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Css api
    */

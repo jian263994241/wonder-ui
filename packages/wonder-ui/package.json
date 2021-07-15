@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/core",
-  "version": "2.0.0-21",
+  "version": "2.0.0-22",
   "description": "Wonder-UI react components",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -35,7 +35,7 @@
     "@popperjs/core": "^2.9.0",
     "@wonder-ui/hooks": "^1.1.4",
     "@wonder-ui/styled": "^1.0.7",
-    "@wonder-ui/utils": "^2.1.9",
+    "@wonder-ui/utils": "^2.1.10",
     "react-focus-lock": "^2.5.0",
     "react-is": "^17.0.2",
     "react-slick": "^0.28.1",

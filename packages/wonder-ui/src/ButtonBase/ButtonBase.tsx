@@ -21,7 +21,7 @@ export interface ButtonBaseActions {
  * Button props
  */
 export interface ButtonBaseProps
-  extends Omit<React.HTMLProps<HTMLButtonElement>, 'ref' | 'as' | 'size'> {
+  extends React.HTMLAttributes<HTMLButtonElement> {
   LinkComponent?: React.ElementType;
   TouchRippleProps?: Partial<TouchRippleProps>;
   actionRef?: React.Ref<ButtonBaseActions>;

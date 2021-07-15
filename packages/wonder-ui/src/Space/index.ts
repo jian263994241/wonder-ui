@@ -1,3 +1,2 @@
-export { default } from './Space';
-export { SpaceItem } from './SpaceStyled';
-export * from './SpaceTypes';
+export { default, SpaceItem } from './Space';
+export type { SpaceProps } from './Space';

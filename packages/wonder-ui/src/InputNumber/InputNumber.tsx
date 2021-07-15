@@ -39,9 +39,9 @@ const getDecimalIfValidate = (value: ValueType) => {
   return decimal.isInvalidate() ? null : decimal;
 };
 
-const componentName = 'WuiInputNumber';
+const COMPONENT_NAME = 'WuiInputNumber';
 
-export const inputNumberClasses = generateUtilityClasses(componentName, [
+export const inputNumberClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'notNumber',
   'outOfRange'
@@ -120,11 +120,11 @@ const useClasses = (styleProps: InputNumberStyleProps) => {
     root: ['root', notNumber && 'notNumber', outOfRange && 'outOfRange']
   };
 
-  return composeClasses(componentName, slots, classes);
+  return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
 const InputNumberRoot = styled(Input, {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Root',
   shouldForwardProp: () => true
 })<{
@@ -141,7 +141,7 @@ const InputNumberRoot = styled(Input, {
 }));
 
 const InputNumberStepHandler = styled('span', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Handler'
 })(({ theme }) => ({
   display: 'flex',
@@ -149,11 +149,12 @@ const InputNumberStepHandler = styled('span', {
   width: 22,
   height: '100%',
   borderLeft: 'thin solid',
-  borderColor: theme.palette.divider
+  borderColor: theme.palette.divider,
+  marginRight: -8
 }));
 
 const InputNumberStepHandlerUp = styled(StepButton, {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'HandlerUp'
 })(({ theme }) => ({
   display: 'block',
@@ -166,7 +167,7 @@ const InputNumberStepHandlerUp = styled(StepButton, {
 }));
 
 const InputNumberStepHandlerDown = styled(StepButton, {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'HandlerDown'
 })({
   display: 'block',

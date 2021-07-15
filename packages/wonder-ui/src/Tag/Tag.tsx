@@ -6,7 +6,7 @@ import { alpha } from '../styles/colorManipulator';
 import { capitalize, css, generateUtilityStyles } from '@wonder-ui/utils';
 import { tagClasses, useClasses } from './TagClasses';
 
-export interface TagProps extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
+export interface TagProps extends React.HTMLAttributes<HTMLElement> {
   classes?: Partial<typeof tagClasses>;
   color?:
     | 'default'

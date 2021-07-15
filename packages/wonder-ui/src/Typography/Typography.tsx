@@ -9,8 +9,7 @@ import {
   useClasses
 } from './TypographyClasses';
 
-export interface TypographyProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
+export interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * @description 对齐
    * @default inherit

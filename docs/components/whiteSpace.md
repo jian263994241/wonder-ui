@@ -1,6 +1,4 @@
----
-mobile: false
----
+
 # WhiteSpace 上下留白
 
 辅助布局, 用来设置行间距
@@ -9,9 +7,11 @@ mobile: false
 
 ### 基本使用
 
-主要用在移动端设置块状间距的辅助组件
-
 <code src="../../packages/wonder-ui/src/WhiteSpace/demo/demo1.tsx"></code>
+
+### 和 List 一起使用
+
+<code src="../../packages/wonder-ui/src/WhiteSpace/demo/demo2.tsx"></code>
 
 ## API
 

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { debounce, getWindow } from '@wonder-ui/utils';
 import { useEnhancedEffect, useForkRef } from '@wonder-ui/hooks';
+import styled from '../styles/styled';
 
 function getStyleValue(computedStyle: Record<string, any>, property: string) {
   return parseInt(computedStyle[property], 10) || 0;
@@ -29,11 +30,39 @@ export interface TextareaAutosizeProps
   minRows?: number;
 }
 
+const COMPONENT_NAME = 'WuiTextareaAutosize';
+
+const TextareaAutosizeRoot = styled('span', {
+  name: COMPONENT_NAME,
+  slot: 'Root'
+})({
+  display: 'inline-flex',
+  alignItems: 'center',
+  paddingTop: 4,
+  '& > textarea': {
+    border: 0,
+    resize: 'inherit',
+    width: 'inherit',
+    outline: 'inherit',
+    lineHeight: 'inherit',
+    font: 'inherit',
+    fontSize: 'inherit'
+  }
+});
+
 const TextareaAutosize = React.forwardRef<
   HTMLTextAreaElement,
   TextareaAutosizeProps
 >((props, ref) => {
-  const { onChange, value, maxRows, minRows = 1, style, ...rest } = props;
+  const {
+    onChange,
+    value,
+    maxRows,
+    minRows = 1,
+    className,
+    style,
+    ...rest
+  } = props;
 
   const { current: isControlled } = React.useRef(value != null);
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
@@ -151,7 +180,7 @@ const TextareaAutosize = React.forwardRef<
   };
 
   return (
-    <React.Fragment>
+    <TextareaAutosizeRoot className={className} style={style}>
       <textarea
         value={value}
         onChange={handleChange}
@@ -162,8 +191,7 @@ const TextareaAutosize = React.forwardRef<
           height: state.outerHeightStyle,
           // Need a large enough different to allow scrolling.
           // This prevents infinite rendering loop.
-          overflow: state.overflow ? 'hidden' : undefined,
-          ...style
+          overflow: state.overflow ? 'hidden' : undefined
         }}
         {...rest}
       />
@@ -173,9 +201,9 @@ const TextareaAutosize = React.forwardRef<
         readOnly
         ref={shadowRef}
         tabIndex={-1}
-        style={{ ...styles.shadow, ...style }}
+        style={styles.shadow}
       />
-    </React.Fragment>
+    </TextareaAutosizeRoot>
   );
 });
 

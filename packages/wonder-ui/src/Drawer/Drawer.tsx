@@ -9,8 +9,7 @@ import { css } from '@wonder-ui/utils';
 import { drawerClasses, useClasses } from './DrawerClasses';
 import { duration } from '../styles/transitions';
 import { Theme } from '../styles/createTheme';
-export interface DrawerProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
+export interface DrawerProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * 出现的位置
    * @default left

@@ -1,17 +1,13 @@
 import * as React from 'react';
-import ArrowForward, { ArrowForwardProps } from '../ArrowForward';
-import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
-import ListItemExtra from '../ListItemExtra';
-import ListItemMedia from '../ListItemMedia';
+import ArrowForward from '../ArrowForward';
+import ButtonBase from '../ButtonBase';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { groupBy } from '@wonder-ui/utils';
+import { css, forwardRef } from '@wonder-ui/utils';
 import { listItemClasses, useClasses } from './ListItemClasses';
-import { css } from '@wonder-ui/utils';
 
-export interface ListItemProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'type'> {
+export interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
   /**
    * 水平对齐
    */
@@ -20,6 +16,7 @@ export interface ListItemProps
    * arrow
    */
   arrow?: 'empty' | 'horizontal' | 'vertical' | 'vertical-up';
+
   /**
    * 内容
    */
@@ -58,20 +55,17 @@ export interface ListItemProps
    * HTML Attributes
    */
   className?: string;
-  /**
-   * ref
-   */
-  ref?: React.Ref<any>;
+
+  media?: React.ReactNode;
+  extra?: React.ReactNode;
 }
 
-type StyleProps = {
-  styleProps: Partial<ListItemProps>;
-};
+interface ListItemStyleProps extends ListItemProps {}
 
 const ListItemRoot = styled('li', {
   name: 'WuiListItem',
   slot: 'Root'
-})<StyleProps>(({ theme, styleProps }) => ({
+})<{ styleProps: ListItemStyleProps }>(({ theme, styleProps }) => ({
   overflow: 'hidden',
   position: 'relative',
   transition: 'background-color 200ms',
@@ -86,13 +80,16 @@ const ListItemRoot = styled('li', {
   textDecoration: 'none',
   paddingLeft: theme.spacing(2),
   cursor: 'auto',
-  whiteSpace: 'unset'
+  whiteSpace: 'unset',
+  ...(styleProps.button && {
+    cursor: 'pointer'
+  })
 }));
 
 const ListItemInner = styled('div', {
   name: 'WuiListItem',
   slot: 'Inner'
-})<StyleProps>(({ theme, styleProps }) => ({
+})<{ styleProps: ListItemStyleProps }>(({ theme, styleProps }) => ({
   width: '100%',
   minHeight: 44,
   display: 'flex',
@@ -100,7 +97,7 @@ const ListItemInner = styled('div', {
   alignSelf: 'stretch',
   color: 'inherit',
   boxSizing: 'border-box',
-  padding: theme.spacing(1, 1.5, 1, 0),
+  paddingRight: 12,
   ...(styleProps.divider && {
     borderWidth: 0,
     borderStyle: 'solid',
@@ -118,19 +115,59 @@ const ListItemBody = styled('div', {
 })({
   display: 'flex',
   width: '100%',
-  alignItems: 'inherit',
   boxSizing: 'border-box',
   color: 'inherit'
 });
 
-const ListItemArrow = styled(ArrowForward, {
+const ListItemArrow = styled('span', {
   name: 'WuiListItem',
   slot: 'Arrow'
-})<ArrowForwardProps>(({ theme }) => ({
+})(({ theme }) => ({
   color: alpha(theme.palette.text.primary, 0.3),
-  alignItems: 'inherit',
   pointerEvents: 'none',
-  fontSize: 15
+  width: 8,
+  height: 18,
+  display: 'flex',
+  alignItems: 'center',
+
+  margin: theme.spacing(1, 0, 1, 0.5),
+  '& > svg': {
+    display: 'block',
+    fontSize: theme.typography.pxToRem(14)
+  }
+}));
+
+export const ListItemMedia = styled('div', {
+  name: 'WuiListItem',
+  slot: 'Media'
+})(({ theme }) => ({
+  userSelect: 'none',
+  display: 'flex',
+  flexShrink: 0,
+  flexWrap: 'nowrap',
+  alignItems: 'center',
+  boxSizing: 'border-box',
+  paddingTop: theme.spacing(1),
+  paddingBottom: theme.spacing(1),
+  marginRight: theme.spacing(2),
+  minHeight: 44,
+
+  [`.${listItemClasses.disabled} &`]: {
+    opacity: theme.palette.action.disabledOpacity
+  }
+}));
+
+export const ListItemExtra = styled('span', {
+  name: 'WuiListItem',
+  slot: 'Extra'
+})(({ theme }) => ({
+  ...theme.typography.body1,
+  color: theme.palette.text.secondary,
+  flexShrink: 0,
+  display: 'flex',
+  verticalAlign: 'middle',
+  userSelect: 'none',
+  padding: theme.spacing(1, 0, 1, 1)
 }));
 
 const direction = {
@@ -139,95 +176,77 @@ const direction = {
   'vertical-up': 'up'
 } as const;
 
-const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
-  (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiListItem' });
+const ListItem = forwardRef<HTMLElement, ListItemProps>((inProps, ref) => {
+  const props = useThemeProps({ props: inProps, name: 'WuiListItem' });
 
-    const {
-      alignItems = 'center',
-      arrow = 'empty',
-      button = false,
-      children,
-      className,
-      divider = false,
-      disabled = false,
-      disableRipple = false,
-      component = 'li',
-      selected = false,
-      ...rest
-    } = props;
+  const {
+    alignItems = 'center',
+    arrow = 'empty',
+    button = false,
+    children,
+    className,
+    divider = false,
+    disabled = false,
+    disableRipple = false,
+    component = 'li',
+    selected = false,
+    extra,
+    media,
+    ...rest
+  } = props;
 
-    const styleProps = {
-      ...props,
-      alignItems,
-      button,
-      divider,
+  const styleProps = {
+    ...props,
+    alignItems,
+    button,
+    divider,
+    disabled,
+    selected
+  };
+
+  const classes = useClasses(styleProps);
+
+  let rootProps: any = {};
+
+  if (button) {
+    rootProps = {
+      as: ButtonBase,
+      component,
+      disableRipple,
       disabled,
-      selected
+      selected,
+      ...rest
     };
-
-    const classes = useClasses(styleProps);
-
-    const childGroup = React.useMemo(
-      () =>
-        groupBy(React.Children.toArray(children), (child) => {
-          if (React.isValidElement(child)) {
-            if (child.type === ListItemMedia) {
-              return 'media';
-            }
-
-            if (child.type === ListItemExtra) {
-              return 'extra';
-            }
-
-            return 'body';
-          }
-          return 'body';
-        }),
-      [children]
-    );
-
-    let rootProps: any = {};
-
-    if (button) {
-      rootProps = {
-        as: ButtonBase,
-        component,
-        disableRipple,
-        disabled,
-        selected,
-        ...rest
-      };
-    }
-
-    return (
-      <ListItemRoot
-        as={component}
-        className={css(classes.root, className)}
-        styleProps={styleProps}
-        ref={ref as React.Ref<any>}
-        {...rest}
-        {...rootProps}
-      >
-        {childGroup.media &&
-          childGroup.media.map((media: any) =>
-            React.cloneElement(media, { disabled })
-          )}
-        <ListItemInner styleProps={styleProps} className={classes.inner}>
-          <ListItemBody className={classes.body}>
-            {childGroup.body}
-          </ListItemBody>
-          {childGroup.extra}
-          {arrow && arrow != 'empty' && (
-            <ListItemArrow
-              className={classes.arrow}
-              direction={direction[arrow]}
-            />
-          )}
-        </ListItemInner>
-      </ListItemRoot>
-    );
   }
-);
+
+  return (
+    <ListItemRoot
+      as={component}
+      className={css(classes.root, className)}
+      styleProps={styleProps}
+      ref={ref as React.Ref<any>}
+      {...rest}
+      {...rootProps}
+    >
+      {media && (
+        <ListItemMedia className={classes.media}>{media}</ListItemMedia>
+      )}
+
+      <ListItemInner styleProps={styleProps} className={classes.inner}>
+        <ListItemBody className={classes.body}>{children}</ListItemBody>
+
+        {extra && (
+          <ListItemExtra className={classes.extra}>{extra}</ListItemExtra>
+        )}
+
+        {arrow && arrow != 'empty' && (
+          <ListItemArrow className={classes.arrow}>
+            <ArrowForward direction={direction[arrow]} />
+          </ListItemArrow>
+        )}
+      </ListItemInner>
+    </ListItemRoot>
+  );
+});
 
 export default ListItem;

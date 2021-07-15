@@ -7,8 +7,7 @@ import { ButtonGroupContext } from './ButtonGroupContext';
 import { ButtonProps } from '../Button/Button';
 import { css } from '@wonder-ui/utils';
 
-export interface ButtonGroupProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref'> {
+export interface ButtonGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Button Props
    */
@@ -38,14 +37,16 @@ const ButtonGroupRoot = styled('div', {
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    [`&>&:not(:last-child)> .${buttonClasses.root}, &>.${buttonClasses.root}:not(:last-child)`]: {
-      borderBottomRightRadius: 0,
-      borderBottomLeftRadius: 0
-    },
-    [`&>&:not(:first-of-type)>.${buttonClasses.root}, &>.${buttonClasses.root}~.${buttonClasses.root}`]: {
-      borderTopLeftRadius: 0,
-      borderTopRightRadius: 0
-    },
+    [`&>&:not(:last-child)> .${buttonClasses.root}, &>.${buttonClasses.root}:not(:last-child)`]:
+      {
+        borderBottomRightRadius: 0,
+        borderBottomLeftRadius: 0
+      },
+    [`&>&:not(:first-of-type)>.${buttonClasses.root}, &>.${buttonClasses.root}~.${buttonClasses.root}`]:
+      {
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0
+      },
     [`& >.${buttonClasses.root} + .${buttonClasses.root}`]: {
       borderTop: 0
     },
@@ -67,14 +68,16 @@ const ButtonGroupRoot = styled('div', {
     }
   },
   [`&.${buttonGroupClasses.directionHorizontal}`]: {
-    [`&>&:not(:last-child)>.${buttonClasses.root}, &>.${buttonClasses.root}:not(:last-child)`]: {
-      borderTopRightRadius: 0,
-      borderBottomRightRadius: 0
-    },
-    [`&>&:not(:first-of-type)>.${buttonClasses.root}, &>.${buttonClasses.root}:nth-of-type(n+3), &>:not(.${buttonClasses.root}-check)+.${buttonClasses.root}`]: {
-      borderTopLeftRadius: 0,
-      borderBottomLeftRadius: 0
-    },
+    [`&>&:not(:last-child)>.${buttonClasses.root}, &>.${buttonClasses.root}:not(:last-child)`]:
+      {
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0
+      },
+    [`&>&:not(:first-of-type)>.${buttonClasses.root}, &>.${buttonClasses.root}:nth-of-type(n+3), &>:not(.${buttonClasses.root}-check)+.${buttonClasses.root}`]:
+      {
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0
+      },
     [`& >.${buttonClasses.contained} + .${buttonClasses.contained}`]: {
       borderLeft: 0,
       '&:before': {

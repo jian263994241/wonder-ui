@@ -5,7 +5,7 @@ import { toggleClasses, ToggleStyleProps, useClasses } from './ToggleClasses';
 import { useControlled, useEventCallback } from '@wonder-ui/hooks';
 import { css } from '@wonder-ui/utils';
 export interface ToggleProps
-  extends Omit<React.HTMLProps<HTMLLabelElement>, 'as' | 'size' | 'onChange'> {
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> {
   /**
    * @description checked
    */

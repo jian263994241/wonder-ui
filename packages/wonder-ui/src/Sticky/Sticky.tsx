@@ -17,9 +17,9 @@ import {
 } from '@wonder-ui/hooks';
 import styled from '../styles/styled';
 
-const componentName = 'WuiSticky';
+const COMPONENT_NAME = 'WuiSticky';
 
-const stickyClasses = generateUtilityClasses(componentName, [
+const stickyClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'inner',
   'fixed'
@@ -48,11 +48,11 @@ const useClasses = (styleProps: StickyStyleProps) => {
     inner: ['inner']
   };
 
-  return composeClasses(componentName, slots);
+  return composeClasses(COMPONENT_NAME, slots);
 };
 
-const StickyRoot = styled('div', { name: componentName, slot: 'Root' })({});
-const StickyInner = styled('div', { name: componentName, slot: 'Inner' })<{
+const StickyRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })({});
+const StickyInner = styled('div', { name: COMPONENT_NAME, slot: 'Inner' })<{
   styleProps: StickyStyleProps;
 }>(({ styleProps, theme }) => ({
   width: '100%',

@@ -13,7 +13,7 @@ function round(value: number) {
 }
 
 export interface TooltipProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'title'> {
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   arrow?: boolean;
   classes?: Partial<typeof tooltipClasses>;
   children: React.ReactElement & React.RefAttributes<React.ReactElement>;

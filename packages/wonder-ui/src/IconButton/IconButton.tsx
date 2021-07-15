@@ -4,11 +4,43 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
 import {
-  iconButtonClasses,
-  IconButtonStyleProps,
-  useClasses
-} from './IconButtonClasses';
-import { css } from '@wonder-ui/utils';
+  capitalize,
+  composeClasses,
+  css,
+  forwardRef,
+  generateUtilityClasses
+} from '@wonder-ui/utils';
+
+const iconButtonClasses = generateUtilityClasses('WuiIconButton', [
+  'root',
+  'disabled',
+  'colorInherit',
+  'colorPrimary',
+  'colorSecondary',
+  'colorLight',
+  'edgeStart',
+  'edgeEnd',
+  'sizeSmall',
+  'sizeMedium',
+  'label'
+]);
+
+const useClasses = (styleProps: IconButtonStyleProps) => {
+  const { classes, disabled, color, edge, size } = styleProps;
+
+  const slots = {
+    root: [
+      'root',
+      disabled && 'disabled',
+      color !== 'default' && color && `color${capitalize(color)}`,
+      edge && `edge${capitalize(edge)}`,
+      size && `size${capitalize(size)}`
+    ],
+    label: ['label']
+  };
+
+  return composeClasses('WuiIconButton', slots, classes);
+};
 
 export interface IconButtonProps extends ButtonBaseProps {
   classes?: Partial<typeof iconButtonClasses>;
@@ -19,6 +51,8 @@ export interface IconButtonProps extends ButtonBaseProps {
   edge?: 'end' | 'start' | null;
   size?: 'medium' | 'small';
 }
+
+interface IconButtonStyleProps extends IconButtonProps {}
 
 const IconButtonRoot = styled(ButtonBase, {
   name: 'WuiIconButton',
@@ -35,6 +69,7 @@ const IconButtonRoot = styled(ButtonBase, {
   transition: theme.transitions.create(['background-color', 'opacity'], {
     duration: theme.transitions.duration.shortest
   }),
+  fontSize: 'inherit',
   '&:hover': {
     color: alpha(theme.palette.action.active, 0.38),
 
@@ -98,7 +133,7 @@ const IconButtonRoot = styled(ButtonBase, {
   },
   [`&.${iconButtonClasses.sizeSmall}`]: {
     padding: 3,
-    fontSize: theme.typography.pxToRem(18)
+    fontSize: theme.typography.pxToRem(16)
   },
   [`&.${iconButtonClasses.disabled}`]: {
     backgroundColor: 'transparent',
@@ -116,39 +151,37 @@ const IconButtonLabel = styled('span', {
   justifyContent: 'inherit'
 });
 
-const IconButton = React.forwardRef<HTMLElement, IconButtonProps>(
-  (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiIconButton' });
+const IconButton = forwardRef<HTMLElement, IconButtonProps>((inProps, ref) => {
+  const props = useThemeProps({ props: inProps, name: 'WuiIconButton' });
 
-    const {
-      edge = null,
-      children,
-      className,
-      classes: classesProp,
-      color = 'default',
-      disabled = false,
-      size = 'medium',
-      ...rest
-    } = props;
+  const {
+    edge = null,
+    children,
+    className,
+    classes: classesProp,
+    color = 'default',
+    disabled = false,
+    size = 'medium',
+    ...rest
+  } = props;
 
-    const styleProps = { ...props, color, disabled, edge, size };
+  const styleProps = { ...props, color, disabled, edge, size };
 
-    const classes = useClasses(styleProps);
+  const classes = useClasses(styleProps);
 
-    return (
-      <IconButtonRoot
-        centerRipple
-        disabled={disabled}
-        focusRipple
-        styleProps={styleProps}
-        ref={ref}
-        {...rest}
-        classes={{ root: css(classes.root, className) }}
-      >
-        <IconButtonLabel className={classes.label}>{children}</IconButtonLabel>
-      </IconButtonRoot>
-    );
-  }
-);
+  return (
+    <IconButtonRoot
+      centerRipple
+      disabled={disabled}
+      focusRipple
+      styleProps={styleProps}
+      ref={ref}
+      {...rest}
+      classes={{ root: css(classes.root, className) }}
+    >
+      <IconButtonLabel className={classes.label}>{children}</IconButtonLabel>
+    </IconButtonRoot>
+  );
+});
 
 export default IconButton;

@@ -4,21 +4,26 @@ export const listItemClasses = generateUtilityClasses('WuiListItem', [
   'root',
   'inner',
   'body',
-  'arrow'
+  'arrow',
+  'disabled',
+  'media',
+  'extra'
 ]);
 
-export interface ListItemMediaStyleProps {
+export interface ListItemStyleProps {
   classes?: Partial<typeof listItemClasses>;
 }
 
-export const useClasses = (styleProps: ListItemMediaStyleProps) => {
+export const useClasses = (styleProps: ListItemStyleProps) => {
   const { classes } = styleProps;
 
   const slots = {
     root: ['root'],
     inner: ['inner'],
     body: ['body'],
-    arrow: ['arrow']
+    arrow: ['arrow'],
+    media: ['media'],
+    extra: ['extra']
   };
 
   return composeClasses('WuiListItem', slots, classes);

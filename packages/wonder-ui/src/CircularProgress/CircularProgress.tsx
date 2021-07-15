@@ -32,7 +32,7 @@ const circularDashKeyframe = keyframes`
 `;
 
 export interface CircularProgressProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref' | 'label'> {
+  extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Css api
    */

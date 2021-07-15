@@ -18,7 +18,7 @@ export default defineConfig({
 
   themeConfig: {
     hd: {
-      rules: [{ maxWidth: 375, mode: 'vw', options: [30, 640] }]
+      rules: [{ maxWidth: 380, mode: 'vw', options: [32, 760] }]
       // 更多 rule 配置访问 https://github.com/umijs/dumi/blob/master/packages/theme-mobile/src/typings/config.d.ts#L7
     }
   },
@@ -80,6 +80,7 @@ export default defineConfig({
           'components/checkbox.md',
           'components/input.md',
           'components/inputNumber.md',
+          'components/listInputItem.md',
           'components/radio.md',
           'components/search.md',
           'components/stepButton.md',
@@ -96,6 +97,7 @@ export default defineConfig({
           'components/collapse.md',
           'components/countdown.md',
           'components/empty.md',
+          'components/label.md',
           'components/list.md',
           'components/noticebar.md',
           'components/pullRefresh.md',

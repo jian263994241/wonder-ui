@@ -150,8 +150,6 @@ const Swipe: React.FC<SwipeProps> = React.forwardRef((inProps, ref) => {
 
   const classes = useClasses(props);
 
-  console.log(classes.nextArrow);
-
   const {
     arrows = false,
     customPaging = (index) => <SwipeDot key={index} />,

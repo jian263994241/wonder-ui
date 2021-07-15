@@ -43,7 +43,7 @@ const PageContent = styled('div', {
 }));
 
 export interface PageProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as' | 'ref' | 'title'> {
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   /**
    * @ignore
    */

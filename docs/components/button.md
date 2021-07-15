@@ -54,5 +54,6 @@ mobile: false
 
 <embed src="../../packages/wonder-ui/src/Button/index.md"></embed>
 
+<embed src="../../packages/wonder-ui/src/IconButton/index.md"></embed>
 
 <embed src="../../packages/wonder-ui/src/ButtonBase/index.md"></embed>

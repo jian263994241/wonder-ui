@@ -20,9 +20,9 @@ export interface InputAction {
   ): void;
 }
 
-const componentName = 'WuiInput';
+const COMPONENT_NAME = 'WuiInput';
 
-export const inputClasses = generateUtilityClasses(componentName, [
+export const inputClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'input',
   'prefix',
@@ -43,6 +43,7 @@ export interface InputProps
   allowClear?: boolean;
   borderless?: boolean;
   classes?: Partial<typeof inputClasses>;
+  component?: React.ElementType;
   disabled?: boolean;
   disabledActiveStyle?: boolean;
   multiline?: boolean;
@@ -94,11 +95,11 @@ const useClasses = (styleProps: InputStyleProps) => {
     revealButton: ['revealButton']
   };
 
-  return composeClasses(componentName, slots, classes);
+  return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
 export const InputRoot = styled('div', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Root'
 })<{ styleProps: InputStyleProps }>(({ theme, styleProps }) => ({
   font: 'inherit',
@@ -113,18 +114,8 @@ export const InputRoot = styled('div', {
   WebkitTapHighlightColor: 'transparent',
   width: '100%',
   height: styleProps.multiline ? 'auto' : 32,
-  padding: '0 8px',
+  padding: '0px 8px',
   margin: 0,
-  ...((!!styleProps.prefix || !!styleProps.onRenderPrefix) && {
-    paddingLeft: 0
-  }),
-
-  ...((!!styleProps.suffix ||
-    !!styleProps.onRenderSuffix ||
-    styleProps.allowClear ||
-    styleProps.type === 'password') && {
-    paddingRight: 0
-  }),
 
   transition: theme.transitions.create(['border-color', 'box-shadow']),
 
@@ -152,7 +143,7 @@ export const InputRoot = styled('div', {
 }));
 
 export const InputInput = styled('input', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Input'
 })<{ styleProps: InputStyleProps }>(({ theme, styleProps }) => {
   const light = theme.palette.mode === 'light';
@@ -181,6 +172,7 @@ export const InputInput = styled('input', {
     width: '100%',
     minWidth: 0,
     maxHeight: '100%',
+
     margin: '4px 0',
     padding: 0,
     top: !!styleProps.multiline ? -1 : 0,
@@ -237,15 +229,15 @@ export const InputInput = styled('input', {
 });
 
 const InputClearButton = styled(ClearButton, {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'ClearButton'
 })({
   flexShrink: 1,
-  fontSize: 18
+  fontSize: 15
 });
 
 const InputRevealButton = styled(RevealButton, {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'RevealButton'
 })({
   flexShrink: 1,
@@ -253,13 +245,12 @@ const InputRevealButton = styled(RevealButton, {
 });
 
 const InputPrefix = styled('span', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Prefix'
 })({
   display: 'flex',
   alignItems: 'center',
   flexShrink: 0,
-  paddingLeft: 8,
   paddingRight: 4,
   '& > * +  *': {
     marginLeft: 4
@@ -267,13 +258,12 @@ const InputPrefix = styled('span', {
 });
 
 const InputSuffix = styled('span', {
-  name: componentName,
+  name: COMPONENT_NAME,
   slot: 'Suffix'
 })({
   display: 'flex',
   alignItems: 'center',
   flexShrink: 0,
-  paddingRight: 8,
   paddingLeft: 4,
   '& > * +  *': {
     marginLeft: 4
@@ -282,13 +272,14 @@ const InputSuffix = styled('span', {
 
 const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
   (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: componentName });
+    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
       actionRef,
       allowClear = false,
       autoComplete = 'off',
       borderless = false,
       className,
+      component,
       defaultValue = '',
       disabled = false,
       disabledActiveStyle = false,
@@ -397,7 +388,12 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
     });
 
     const handleClick = useEventCallback((event) => {
-      action.focus();
+      if (readOnly) {
+        action.blur();
+      } else {
+        action.focus();
+      }
+
       if (onClick) {
         onClick(event);
       }
@@ -427,6 +423,7 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <InputRoot
+        as={component}
         className={css(className, classes.root)}
         style={style}
         styleProps={styleProps}

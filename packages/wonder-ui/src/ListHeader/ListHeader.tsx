@@ -4,8 +4,7 @@ import useThemeProps from '../styles/useThemeProps';
 import { css } from '@wonder-ui/utils';
 import { listHeaderClasses, useClasses } from './ListHeaderClasses';
 
-export interface ListHeaderProps
-  extends Omit<React.HTMLProps<HTMLElement>, 'as'> {
+export interface ListHeaderProps extends React.HTMLAttributes<HTMLLIElement> {
   classes?: Partial<typeof listHeaderClasses>;
   component?: React.ElementType;
   disableSticky?: boolean;

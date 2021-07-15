@@ -8,7 +8,6 @@ import {
   Checkbox,
   List,
   ListItem,
-  ListItemMedia,
   ListItemText,
   ListHeader
 } from '@wonder-ui/core';
@@ -20,10 +19,11 @@ export default () => (
     <List component="div">
       <ListHeader>样式1</ListHeader>
       {dataList.map((item, index) => (
-        <ListItem component="label" key={index}>
-          <ListItemMedia>
-            <Checkbox circle name="demo-checkbox1" />
-          </ListItemMedia>
+        <ListItem
+          component="label"
+          key={index}
+          media={<Checkbox circle name="demo-checkbox1" />}
+        >
           <ListItemText>Movie {item}</ListItemText>
         </ListItem>
       ))}
@@ -41,10 +41,11 @@ export default () => (
     <List component="div">
       <ListHeader>样式3</ListHeader>
       {dataList.map((item, index) => (
-        <ListItem component="label" key={index}>
-          <ListItemMedia>
-            <Checkbox name="demo-checkbox3" />
-          </ListItemMedia>
+        <ListItem
+          component="label"
+          key={index}
+          media={<Checkbox name="demo-checkbox3" />}
+        >
           <ListItemText>Movie {item}</ListItemText>
         </ListItem>
       ))}

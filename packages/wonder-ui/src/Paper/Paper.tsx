@@ -16,10 +16,7 @@ const getOverlayAlpha = (elevation: number): number => {
 };
 
 export interface PaperProps
-  extends Omit<
-    React.HTMLProps<HTMLElement>,
-    'as' | 'ref' | 'content' | 'title'
-  > {
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   classes?: Partial<typeof paperClasses>;
   component?: React.ElementType;
   elevation?: number;
