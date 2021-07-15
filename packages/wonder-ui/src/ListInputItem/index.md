@@ -29,3 +29,10 @@ sidemenu: false
 | suffix | 后图标 | ReactNode |
 | type | 类型 | string | text
 | value | 值 | any |
+
+
+### ListInputItem classes
+
+```
+'root', 'label', 'inputWrap', 'input', 'description', 'errorMessage', 'disabled', 'readOnly'
+```
