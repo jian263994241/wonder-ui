@@ -1,3 +1,6 @@
+export { default as ActivityIndicator } from './ActivityIndicator';
+export * from './ActivityIndicator';
+
 export { default as ArrowForward } from './ArrowForward';
 export * from './ArrowForward';
 

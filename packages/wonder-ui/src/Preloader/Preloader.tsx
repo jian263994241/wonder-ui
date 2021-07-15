@@ -1,14 +1,12 @@
 import * as React from 'react';
-import CircularProgress from '../CircularProgress';
 import Modal, { ModalProps } from '../Modal';
 import ReactDOM from 'react-dom';
 import styled from '../styles/styled';
-import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
-import WhiteSpace from '../WhiteSpace';
 import { createChainedFunction, isPromise } from '@wonder-ui/utils';
 import { emphasize } from '../styles/colorManipulator';
 import { useControlled } from '@wonder-ui/hooks';
+import ActivityIndicator from '../ActivityIndicator';
 
 export interface PreloaderProps extends React.HTMLAttributes<HTMLElement> {
   /**
@@ -28,16 +26,23 @@ export interface PreloaderProps extends React.HTMLAttributes<HTMLElement> {
    * Async callback
    */
   onLoad?: () => Promise<any>;
+
   /**
    * Show text
    */
   text?: string;
   /**
+   * ActivityIndicator type
+   */
+  type?: 'spinner' | 'circular';
+  /**
    * visible
    */
   visible?: boolean;
-  /**@ignore */
-  ref?: React.Ref<any>;
+  /**
+   * ActivityIndicator vertical
+   */
+  vertical?: boolean;
 }
 
 const PreloaderRoot = styled(Modal, {
@@ -90,6 +95,8 @@ const Preloader = React.forwardRef<HTMLElement, PreloaderProps>(
       visible: visibleProp,
       text,
       onLoad,
+      type,
+      vertical = true,
       ...rest
     } = props;
 
@@ -140,14 +147,13 @@ const Preloader = React.forwardRef<HTMLElement, PreloaderProps>(
             {indicator ? (
               indicator
             ) : (
-              <CircularProgress size={34} color={theme.palette.mode} />
-            )}
-
-            {text && (
-              <React.Fragment>
-                <WhiteSpace size="small" />
-                <Typography>{text}</Typography>
-              </React.Fragment>
+              <ActivityIndicator
+                vertical={vertical}
+                type={type}
+                iconSize="large"
+                color={theme.palette.mode}
+                text={text}
+              />
             )}
           </PreloaderInner>
         </PreloaderRoot>

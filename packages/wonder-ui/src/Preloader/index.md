@@ -13,6 +13,9 @@ sidemenu: false
 | onLoad | 异步事件 | `() => Promise<any>` |
 | text | 禁用portal | `string` |
 | visible | 显示 | `boolean` |
+| indicator | 指示器 | ReactNode |
+| vertical | 垂直显示 | boolean | true
+| type | ActivityIndicator type | 'spinner' \| 'circular' |
 
 ### 全局
 

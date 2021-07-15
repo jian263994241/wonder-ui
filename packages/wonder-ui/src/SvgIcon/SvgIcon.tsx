@@ -55,7 +55,7 @@ const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })(
       color: theme.palette.action.disabled
     },
     [`&.${svgIconClasses.fontSizeSmall}`]: {
-      fontSize: theme.typography.pxToRem(20)
+      fontSize: theme.typography.pxToRem(16)
     },
     [`&.${svgIconClasses.fontSizeMedium}`]: {
       fontSize: theme.typography.pxToRem(24)

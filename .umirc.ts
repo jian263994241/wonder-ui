@@ -111,6 +111,7 @@ export default defineConfig({
       {
         title: '反馈',
         children: [
+          'components/activityIndicator.md',
           'components/backdrop.md',
           'components/dialog.md',
           'components/drawer.md',

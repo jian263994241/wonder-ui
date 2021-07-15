@@ -146,7 +146,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
     return (
       <TypographyRoot
         as={_component}
-        className={css(classes.root, className)}
+        className={css(className, classes.root)}
         ref={ref}
         styleProps={styleProps}
         {...rest}

@@ -6,22 +6,49 @@ import {
   Button,
   showPreloader,
   hidePreloader,
-  Indicator
+  Space,
+  LinearProgress,
+  Typography,
+  WhiteSpace
 } from '@wonder-ui/core';
 
 export default () => {
-  const open = () => {
-    showPreloader({
-      indicator: <Indicator fontSize="medium" />
-    });
+  const open = (type: 'spinner' | 'circular' | 'custom') => {
+    if (type === 'spinner' || type === 'circular') {
+      showPreloader({
+        type,
+        text: `type - ${type}`
+      });
+    } else {
+      showPreloader({
+        indicator: (
+          <div style={{ width: 200, paddingTop: 20 }}>
+            <LinearProgress />
+            <WhiteSpace />
+            <Typography>加载中...</Typography>
+          </div>
+        )
+      });
+    }
+
     setTimeout(() => {
       hidePreloader();
     }, 2000);
   };
 
   return (
-    <Button variant="contained" onClick={() => open()}>
-      Open
-    </Button>
+    <Space>
+      <Button variant="contained" onClick={() => open('spinner')}>
+        Open(spinner)
+      </Button>
+
+      <Button variant="contained" onClick={() => open('circular')}>
+        Open(circular)
+      </Button>
+
+      <Button variant="contained" onClick={() => open('custom')}>
+        Open(custom)
+      </Button>
+    </Space>
   );
 };
