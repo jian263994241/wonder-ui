@@ -81,11 +81,11 @@ export default defineConfig({
           'components/input.md',
           'components/inputNumber.md',
           'components/listInputItem.md',
+          'components/picker.md',
           'components/radio.md',
           'components/search.md',
           'components/stepButton.md',
           'components/stepper.md',
-          'components/textfield.md',
           'components/toggle.md'
         ]
       },
