@@ -36,3 +36,4 @@ export * from './validate';
 export * from './warn';
 export * from './withProps';
 export * from './style';
+export * from './number';

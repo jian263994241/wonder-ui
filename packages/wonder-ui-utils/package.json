@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/utils",
-  "version": "2.1.10",
+  "version": "2.1.11",
   "description": "Wonder-UI utils",
   "source": "src/index.ts",
   "main": "dist/index.js",

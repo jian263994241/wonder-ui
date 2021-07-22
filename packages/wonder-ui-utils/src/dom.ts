@@ -3,6 +3,7 @@
 export * from './dom/IVirtualElement';
 export * from './dom/elementContains';
 export * from './dom/elementContainsAttribute';
+export * from './dom/events';
 export * from './dom/findElementRecursive';
 export * from './dom/getChildren';
 export * from './dom/getDocument';

@@ -1,4 +1,6 @@
 export * from './object/assign';
+export * from './object/deepAssign';
+export * from './object/deepClone';
 export * from './object/mapKeys';
 export * from './object/mapObject';
 export * from './object/mapValues';
