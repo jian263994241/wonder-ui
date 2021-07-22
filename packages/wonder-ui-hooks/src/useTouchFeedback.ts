@@ -2,6 +2,7 @@ import * as React from 'react';
 import { findIndex, getSupport, on } from '@wonder-ui/utils';
 import { useEnhancedEffect } from './useEnhancedEffect';
 import { useEventCallback } from './useEventCallback';
+import { useSafeState } from './useSafeState';
 
 type HandleEvents =
   | 'onTouchStart'
@@ -53,7 +54,7 @@ export function useTouchFeedback<T extends Element>(
     return typeProp;
   }, [typeProp]);
 
-  const [active, setActive] = React.useState(false);
+  const [active, setActive] = useSafeState(false);
 
   const triggerEvent = useEventCallback(
     (eventType: HandleEvents, isActive: boolean, event: any) => {

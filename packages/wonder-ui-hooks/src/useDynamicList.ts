@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useEventCallback } from './useEventCallback';
+import { useSafeState } from './useSafeState';
 
 export function useDynamicList<T>(initialValue: T[]) {
   const counterRef = React.useRef(-1);
@@ -12,7 +13,7 @@ export function useDynamicList<T>(initialValue: T[]) {
     keyList.current.splice(index, 0, counterRef.current);
   });
 
-  const [list, setList] = React.useState(() => {
+  const [list, setList] = useSafeState(() => {
     (initialValue || []).forEach((_, index) => {
       setKey(index);
     });

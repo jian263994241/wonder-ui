@@ -1,4 +1,4 @@
-import { useConst } from './useConst';
+import * as React from 'react';
 import { useSafeState } from './useSafeState';
 export interface ControlledProps<T> {
   defaultValue: T;
@@ -7,7 +7,7 @@ export interface ControlledProps<T> {
 
 export function useControlled<V>(props: ControlledProps<V>) {
   const { defaultValue: defaultProp, value: controlled } = props;
-  const isControlled = useConst(controlled !== undefined);
+  const { current: isControlled } = React.useRef(controlled !== undefined);
 
   const [valueState, setValue] = useSafeState<V>(defaultProp);
   const value = isControlled ? (controlled as V) : valueState;

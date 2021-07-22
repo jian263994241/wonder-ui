@@ -1,7 +1,7 @@
 import * as React from 'react';
-import useEventCallback from '../useEventCallback';
-import useUpdateEffect from '../useUpdateEffect';
-
+import { useEventCallback } from '../useEventCallback';
+import { useUpdateEffect } from '../useUpdateEffect';
+import { useSafeState } from '../useSafeState';
 export interface IFuncUpdater<T> {
   (previousState?: T): T;
 }
@@ -25,7 +25,7 @@ export function createUseStorageState(nullishStorage: Storage | null) {
     defaultValue?: T | IFuncUpdater<T>
   ): StorageStateResult<T> {
     const storage = nullishStorage as Storage;
-    const [state, setState] = React.useState<T | undefined>(() =>
+    const [state, setState] = useSafeState<T | undefined>(() =>
       getStoredValue()
     );
     useUpdateEffect(() => {

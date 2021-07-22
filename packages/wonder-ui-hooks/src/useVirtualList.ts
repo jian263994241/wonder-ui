@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSize } from './useSize';
 import { useEnhancedEffect } from './useEnhancedEffect';
-
+import { useSafeState } from './useSafeState';
 interface OptionType {
   itemHeight: number | ((index: number) => number);
   overscan?: number;
@@ -10,7 +10,7 @@ interface OptionType {
 export function useVirtualList<T = any>(list: T[], options: OptionType) {
   const containerRef = React.useRef<HTMLElement | null>();
   const size = useSize(containerRef as React.MutableRefObject<HTMLElement>);
-  const [state, setState] = React.useState({ start: 0, end: 10 });
+  const [state, setState] = useSafeState({ start: 0, end: 10 });
   const { itemHeight, overscan = 5 } = options;
 
   if (!itemHeight) {
@@ -96,9 +96,10 @@ export function useVirtualList<T = any>(list: T[], options: OptionType) {
     }
   };
 
-  const offsetTop = React.useMemo(() => getDistanceTop(state.start), [
-    state.start
-  ]);
+  const offsetTop = React.useMemo(
+    () => getDistanceTop(state.start),
+    [state.start]
+  );
 
   return {
     list: list.slice(state.start, state.end).map((ele, index) => ({

@@ -33,13 +33,13 @@ export function useTouch() {
     direction.current = undefined;
   };
 
-  const start = (event: React.TouchEvent) => {
+  const start = (event: TouchEvent | React.TouchEvent) => {
     reset();
     startX.current = event.touches[0].clientX;
     startY.current = event.touches[0].clientY;
   };
 
-  const move = (event: React.TouchEvent) => {
+  const move = (event: TouchEvent | React.TouchEvent) => {
     const touch = event.touches[0];
     // Fix: Safari back will set clientX to negative number
     deltaX.current = touch.clientX < 0 ? 0 : touch.clientX - startX.current;

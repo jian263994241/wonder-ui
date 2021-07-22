@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useEventCallback } from './useEventCallback';
+import { useSafeState } from './useSafeState';
 
 interface IData<T> {
   present?: T;
@@ -31,7 +32,7 @@ const split = <T>(step: number, targetArr: T[]) => {
 };
 
 export function useHistoryTravel<T>(initialValue?: T) {
-  const [history, setHistory] = React.useState<IData<T | undefined>>({
+  const [history, setHistory] = useSafeState<IData<T | undefined>>({
     present: initialValue,
     past: [],
     future: []

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { parse, stringify } from 'querystringify';
-
+import { useSafeState } from './useSafeState';
 interface Options {
   navigateMode?: 'push' | 'replace';
 }
@@ -36,7 +36,7 @@ export const useUrlState = <S extends UrlState = UrlState>(
   const { navigateMode = 'push' } = options || {};
 
   const { search = '', urlArray } = getSearch();
-  const [, update] = React.useState(false);
+  const [, update] = useSafeState(false);
 
   const initialStateRef = React.useRef(
     typeof initialState === 'function'

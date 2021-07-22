@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useEnhancedEffect } from './useEnhancedEffect';
+import { useSafeState } from './useSafeState';
 
 type Options = {
   defaultMatches?: boolean;
@@ -25,7 +26,7 @@ export function useMediaQuery(queryInput: string, otpions: Options = {}) {
     ssrMatchMedia = null
   } = otpions;
 
-  const [match, setMatch] = React.useState(() => {
+  const [match, setMatch] = useSafeState(() => {
     if (noSsr && matchMedia) {
       return matchMedia(query).matches;
     }
