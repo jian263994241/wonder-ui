@@ -16,7 +16,8 @@ import {
   useControlled,
   useEventCallback,
   useForkRef,
-  useSize
+  useSize,
+  useSafeState
 } from '@wonder-ui/hooks';
 
 const COMPONENT_NAME = 'WuiSearchbar';
@@ -200,7 +201,7 @@ const Searchbar = forwardRef<HTMLElement, SearchbarProps>((inProps, ref) => {
     value: valueProp,
     defaultValue
   });
-  const [focus, setFocus] = React.useState(false);
+  const [focus, setFocus] = useSafeState(false);
   const cancelButtonRef = React.useRef<HTMLDivElement>(null);
   const cancelButtonSize = useSize(cancelButtonRef);
   const actionRef = React.useRef<InputAction>();
@@ -225,7 +226,7 @@ const Searchbar = forwardRef<HTMLElement, SearchbarProps>((inProps, ref) => {
 
   const classes = useClasses(styleProps);
 
-  const [cancalVisible, setCancalVisible] = React.useState(false);
+  const [cancalVisible, setCancalVisible] = useSafeState(false);
   const focus2 = useDebounce(focus);
 
   React.useEffect(() => {

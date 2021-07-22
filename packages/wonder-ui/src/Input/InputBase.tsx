@@ -7,7 +7,12 @@ import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
 import { composeClasses, css, generateUtilityClasses } from '@wonder-ui/utils';
 import { InputFocusOptions, resolveOnChange, triggerFocus } from './inputUtils';
-import { useControlled, useForkRef, useEventCallback } from '@wonder-ui/hooks';
+import {
+  useControlled,
+  useForkRef,
+  useEventCallback,
+  useSafeState
+} from '@wonder-ui/hooks';
 
 export interface InputAction {
   focus(option?: InputFocusOptions): void;
@@ -172,7 +177,7 @@ export const InputInput = styled('input', {
     width: '100%',
     minWidth: 0,
     maxHeight: '100%',
-
+    lineHeight: 'inherit',
     margin: '4px 0',
     padding: 0,
     top: !!styleProps.multiline ? -1 : 0,
@@ -313,13 +318,13 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
 
     const inputRef = React.useRef<HTMLInputElement>(null);
     const handleRef = useForkRef(inputRef, ref);
-    const [focused, setFocused] = React.useState(false);
+    const [focused, setFocused] = useSafeState(false);
     const [value, setValueIfunControlled] = useControlled({
       value: valueProp,
       defaultValue
     });
 
-    const [isRevealingPassword, setRevealingPassword] = React.useState(false);
+    const [isRevealingPassword, setRevealingPassword] = useSafeState(false);
 
     let InputComponent: React.ElementType = 'input';
     let inputProps: Record<string, any> = {};

@@ -136,7 +136,8 @@ const ListInputItemLabel = styled(Label, {
   name: COMPONENT_NAME,
   slot: 'Label'
 })({
-  height: 44
+  height: 44,
+  alignSelf: 'flex-start'
 });
 
 const ListInputItemInputWrap = styled('span', {
@@ -144,8 +145,9 @@ const ListInputItemInputWrap = styled('span', {
   slot: 'InputWrap'
 })({
   width: '100%',
-  paddingTop: 8,
-  paddingBottom: 8
+  display: 'flex',
+  paddingTop: 6,
+  paddingBottom: 6
 });
 
 const ListInputItemInput = styled(InputBase, {

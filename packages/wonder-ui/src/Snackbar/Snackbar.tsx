@@ -9,7 +9,7 @@ import useThemeProps from '../styles/useThemeProps';
 import { BaseTransitionProps, TransitionTimeout } from '../Transition';
 import { css } from '@wonder-ui/utils';
 import { snackbarClasses, useClasses } from './SnackbarClasses';
-import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
+import { useEventCallback, useForkRef, useSafeState } from '@wonder-ui/hooks';
 
 export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
   /**
@@ -191,7 +191,7 @@ const Snackbar = React.forwardRef<HTMLElement, SnackbarProps>(
     const nodeRef = React.useRef<HTMLElement>(null);
     const handleRef = useForkRef(nodeRef, ref);
     const timerAutoHide = React.useRef<any>();
-    const [exited, setExited] = React.useState(true);
+    const [exited, setExited] = useSafeState(true);
 
     const styleProps = { ...props, anchorOrigin: { vertical, horizontal } };
     const classes = useClasses(styleProps);

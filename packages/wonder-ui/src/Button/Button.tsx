@@ -48,7 +48,7 @@ export const ButtonRoot = styled(ButtonBase, {
       ...theme.typography.button,
       display: 'inline-flex',
       backgroundColor: 'transparent',
-      border: '1px solid transparent',
+      border: 'thin solid transparent',
       ...(styleProps.shape === 'default' && {
         borderRadius: theme.shape.borderRadius
       }),
@@ -65,7 +65,7 @@ export const ButtonRoot = styled(ButtonBase, {
 
       ...(styleProps.color !== 'inherit' &&
         styleProps.variant === 'contained' && {
-          border: '1px solid',
+          border: 'thin solid',
           borderColor: 'transparent',
           color: theme.palette[styleProps.color].contrastText,
           backgroundColor: theme.palette[styleProps.color].main
@@ -75,7 +75,7 @@ export const ButtonRoot = styled(ButtonBase, {
         styleProps.variant === 'outlined' && {
           color: theme.palette[styleProps.color].main,
           backgroundColor: 'transparent',
-          border: '1px solid',
+          border: 'thin solid',
           borderColor: theme.palette[styleProps.color].main,
           '&.active': {
             color: theme.palette[styleProps.color].contrastText,
@@ -106,7 +106,7 @@ export const ButtonRoot = styled(ButtonBase, {
           }),
         ...(styleProps.variant === 'outlined' &&
           styleProps.color !== 'inherit' && {
-            border: `1px solid ${theme.palette[styleProps.color].main}`,
+            border: `thin solid ${theme.palette[styleProps.color].main}`,
             backgroundColor: alpha(
               theme.palette[styleProps.color].main,
               theme.palette.action.hoverOpacity
@@ -147,11 +147,11 @@ export const ButtonRoot = styled(ButtonBase, {
       [`&.${buttonClasses.disabled}`]: {
         color: theme.palette.action.disabled,
         ...(styleProps.variant === 'outlined' && {
-          border: `1px solid ${theme.palette.action.disabledBackground}`
+          border: `thin solid ${theme.palette.action.disabledBackground}`
         }),
         ...(styleProps.variant === 'outlined' &&
           styleProps.color === 'secondary' && {
-            border: `1px solid ${theme.palette.action.disabled}`
+            border: `thin solid ${theme.palette.action.disabled}`
           }),
         ...(styleProps.variant === 'contained' && {
           color: theme.palette.action.disabled,

@@ -6,7 +6,7 @@ import { css } from '@wonder-ui/utils';
 import { keyframes } from '@wonder-ui/styled';
 import { touchRippleClasses, TouchRippleClasses } from './TouchRippleClasses';
 import { TransitionGroup } from 'react-transition-group';
-import { useForkRef } from '@wonder-ui/hooks';
+import { useForkRef, useSafeState } from '@wonder-ui/hooks';
 
 const DURATION = 550;
 export const DELAY_RIPPLE = 80;
@@ -128,7 +128,7 @@ const TouchRipple: React.FC<TouchRippleProps> = React.forwardRef(
       ...rest
     } = props;
 
-    const [ripples, setRipples] = React.useState<Array<React.ReactNode>>([]);
+    const [ripples, setRipples] = useSafeState<Array<React.ReactNode>>([]);
     const nextKey = React.useRef(0);
     const rippleCallback = React.useRef<Function | null>(null);
 

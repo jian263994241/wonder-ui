@@ -1,12 +1,13 @@
 import * as React from 'react';
 import styled from '../styles/styled';
+import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
 import { css } from '@wonder-ui/utils';
 import { navbarClasses, useClasses } from './NavbarClasses';
-import { useForkRef, useSize } from '@wonder-ui/hooks';
 import { searchbarClasses } from '../Searchbar';
-
+import { useForkRef, useSize } from '@wonder-ui/hooks';
+import { buttonClasses } from '../Button/ButtonClasses';
 export interface NavbarProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   /**
@@ -45,8 +46,6 @@ const NavbarRoot = styled('div', {
   name: 'WuiNavbar',
   slot: 'Root'
 })<{ styleProps: NavbarStyleProps }>(({ theme, styleProps }) => {
-  const height = `calc(${theme.shape.navbarHeight}px + env(safe-area-inset-top))`;
-
   return {
     fontFamily: theme.typography.fontFamily,
     fontSize: theme.typography.pxToRem(17),
@@ -107,18 +106,15 @@ const NavbarInner = styled('div', {
   boxSizing: 'border-box',
   transform: 'translate3d(0,0,0)',
   padding:
-    'env(safe-area-inset-top) calc(10px + env(safe-area-inset-right)) 0 calc(10px + env(safe-area-inset-left))',
+    'env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left)',
   zIndex: 10
 });
 
-const NavbarTitle = styled('div', {
+const NavbarTitle = styled(Typography, {
   name: 'WuiNavbar',
   slot: 'Title'
 })({
   position: 'relative',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
   flexShrink: 10,
   fontWeight: 600,
   display: 'inline-block',
@@ -129,7 +125,7 @@ const NavbarTitle = styled('div', {
   paddingRight: 16
 });
 
-const NavbarSubTitle = styled('div', {
+const NavbarSubTitle = styled('span', {
   name: 'WuiNavbar',
   slot: 'SubTitle'
 })({
@@ -141,30 +137,38 @@ const NavbarSubTitle = styled('div', {
   color: 'rgba(0, 0, 0, 0.6)'
 });
 
-const NavbarLeft = styled('div', {
+const NavbarLeft = styled('span', {
   name: 'WuiNavbar',
   slot: 'Left'
 })({
   position: 'relative',
+  alignSelf: 'stretch',
   zIndex: 10,
   flexShrink: 0,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  marginRight: 10
+  marginRight: 10,
+  [`& .${buttonClasses.root}`]: {
+    alignSelf: 'stretch'
+  }
 });
 
-const NavbarRight = styled('div', {
+const NavbarRight = styled('span', {
   name: 'WuiNavbar',
   slot: 'Right'
 })({
   position: 'relative',
+  alignSelf: 'stretch',
   zIndex: 10,
   flexShrink: 0,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  marginLeft: 10
+  marginLeft: 10,
+  [`& .${buttonClasses.root}`]: {
+    alignSelf: 'stretch'
+  }
 });
 
 const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
@@ -263,13 +267,19 @@ const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
           </NavbarLeft>
         )}
         <NavbarTitle
+          noWrap
+          component="span"
           theme={theme}
           ref={titleNodeRef}
           style={{ left: titleLeft }}
           className={classes.title}
         >
           {title}
-          {subTitle && <NavbarSubTitle>{subTitle}</NavbarSubTitle>}
+          {subTitle && (
+            <NavbarSubTitle className={classes.subTitle}>
+              {subTitle}
+            </NavbarSubTitle>
+          )}
         </NavbarTitle>
         {barRight && (
           <NavbarRight

@@ -6,7 +6,8 @@ import { forwardRef, getScrollTop, on, setScrollTop } from '@wonder-ui/utils';
 import {
   useEventCallback,
   useForkRef,
-  useScrollParent
+  useScrollParent,
+  useSafeState
 } from '@wonder-ui/hooks';
 
 const COMPONENT_NAME = 'WuiBackTop';
@@ -75,7 +76,7 @@ const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
     onClick,
     ...rest
   } = props;
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = useSafeState(false);
 
   const rootRef = React.useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(rootRef, ref);

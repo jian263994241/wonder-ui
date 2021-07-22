@@ -10,6 +10,10 @@ const CustomStepButton = styled(StepButton)`
   padding: 5px 8px;
   background: blue;
   color: #fff;
+
+  &.Wui-disabled {
+    background: grey;
+  }
 `;
 
 export default () => {
@@ -24,6 +28,8 @@ export default () => {
       <MyStepButton variant="contained">按钮 2</MyStepButton>
 
       <CustomStepButton>自定义</CustomStepButton>
+
+      <CustomStepButton disabled>disabled</CustomStepButton>
     </Space>
   );
 };

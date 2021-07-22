@@ -40,7 +40,9 @@ interface LabelStyleProps extends LabelProps {
 const LabelRoot = styled('label', { name: COMPONENT_NAME, slot: 'Root' })<{
   styleProps: LabelStyleProps;
 }>(({ styleProps, theme }) => ({
-  ...theme.typography.body2,
+  font: 'inherit',
+  lineHeight: 'inherit',
+  boxSizing: 'border-box',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   display: 'flex',

@@ -226,7 +226,7 @@ export default () => {
           lang="tsx"
           code={`import { ${popoverState.displayName} } from '@wonder-ui/icons';
 
-<${popoverState.displayName} fontSize="inherit" /> `}
+<${popoverState.displayName} /> `}
         />
       </Popover>
     </React.Fragment>

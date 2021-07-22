@@ -136,6 +136,9 @@ export * from './Page';
 export { default as Paper } from './Paper';
 export * from './Paper';
 
+export { default as Picker } from './Picker';
+export * from './Picker';
+
 export { default as Popover } from './Popover';
 export * from './Popover';
 

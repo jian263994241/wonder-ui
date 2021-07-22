@@ -20,7 +20,12 @@ import {
   num2str,
   validateNumber
 } from './utils/numberUtil';
-import { useCursor, useEventCallback, useUpdateEffect } from '@wonder-ui/hooks';
+import {
+  useCursor,
+  useEventCallback,
+  useUpdateEffect,
+  useSafeState
+} from '@wonder-ui/hooks';
 // https://github.com/react-component/input-number/blob/master/src/InputNumber.tsx
 
 /**
@@ -215,14 +220,14 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
     const inputRef = React.useRef<HTMLInputElement>(null);
     const inputActionRef = React.useRef<InputAction>(null);
 
-    const [focus, setFocus] = React.useState(false);
+    const [focus, setFocus] = useSafeState(false);
 
     const userTypingRef = React.useRef(false);
     const compositionRef = React.useRef(false);
 
     // ============================ Value =============================
     // Real value control
-    const [decimalValue, setDecimalValue] = React.useState<DecimalClass>(() =>
+    const [decimalValue, setDecimalValue] = useSafeState<DecimalClass>(() =>
       getMiniDecimal(value ?? defaultValue!)
     );
 
@@ -323,7 +328,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
      *  2. User typing with format (not precision)
      *  3. Blur or Enter trigger revalidate
      */
-    const [inputValue, setInternalInputValue] = React.useState<string | number>(
+    const [inputValue, setInternalInputValue] = useSafeState<string | number>(
       () => {
         const initValue = defaultValue ?? value!;
         if (

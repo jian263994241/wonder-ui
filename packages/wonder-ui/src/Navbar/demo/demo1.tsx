@@ -25,11 +25,11 @@ export default () => {
       }}
     >
       <Space direction="vertical" nowrap>
-        <Navbar right={<CloseButton edge="end" />} />
+        <Navbar right={<CloseButton />} />
 
         <Navbar
           left={
-            <IconButton edge="start">
+            <IconButton>
               <ArrowForward direction="left" />
             </IconButton>
           }
@@ -40,7 +40,7 @@ export default () => {
         <Navbar
           title="超长的导航栏, 超长的导航栏, 超长的导航栏, 超长的导航栏, 超长的导航栏, 超长的导航栏"
           left={
-            <IconButton edge="start">
+            <IconButton>
               <ArrowForward direction="left" />
             </IconButton>
           }
@@ -49,12 +49,12 @@ export default () => {
         <Navbar
           title="导航栏"
           left={
-            <IconButton edge="start">
+            <IconButton>
               <ArrowForward direction="left" />
             </IconButton>
           }
           right={
-            <IconButton edge="end">
+            <IconButton>
               <ThreeDotsVertical />
             </IconButton>
           }
@@ -63,7 +63,7 @@ export default () => {
         <Navbar
           title="导航栏"
           left={
-            <IconButton edge="start">
+            <IconButton>
               <ArrowForward direction="left" />
             </IconButton>
           }
@@ -72,18 +72,14 @@ export default () => {
               <IconButton>
                 <Search />
               </IconButton>
-              <IconButton edge="end">
+              <IconButton>
                 <ThreeDotsVertical />
               </IconButton>
             </div>
           }
         />
 
-        <Navbar
-          title="导航栏"
-          subTitle="副标题"
-          right={<CloseButton edge="end" />}
-        />
+        <Navbar title="导航栏" subTitle="副标题" right={<CloseButton />} />
 
         <Navbar
           title="导航栏"
@@ -92,23 +88,11 @@ export default () => {
             <Button
               startIcon={<ArrowForward direction="left" />}
               variant="text"
-              edge="start"
-              disableRipple
-              style={{ height: 44 }}
             >
               返回
             </Button>
           }
-          right={
-            <Button
-              variant="text"
-              edge="end"
-              disableRipple
-              style={{ height: 44 }}
-            >
-              关闭
-            </Button>
-          }
+          right={<Button variant="text">关闭</Button>}
         />
       </Space>
     </Container>

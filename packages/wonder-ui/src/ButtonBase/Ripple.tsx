@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { css } from '@wonder-ui/utils';
-import { useEventCallback, useEnhancedEffect } from '@wonder-ui/hooks';
+import {
+  useEventCallback,
+  useEnhancedEffect,
+  useSafeState
+} from '@wonder-ui/hooks';
 
 export interface RippleProps extends React.HTMLAttributes<HTMLSpanElement> {
   classes: Record<
@@ -33,7 +37,7 @@ const Ripple = React.forwardRef<HTMLSpanElement, RippleProps>((props, ref) => {
     onExited = () => {},
     timeout
   } = props;
-  const [leaving, setLeaving] = React.useState(false);
+  const [leaving, setLeaving] = useSafeState(false);
 
   const rippleClassName = css(
     className,

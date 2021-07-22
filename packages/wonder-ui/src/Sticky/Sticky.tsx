@@ -13,7 +13,8 @@ import {
 import {
   useDocumentVisibility,
   useEventCallback,
-  useForkRef
+  useForkRef,
+  useSafeState
 } from '@wonder-ui/hooks';
 import styled from '../styles/styled';
 
@@ -80,7 +81,7 @@ const Sticky = forwardRef<HTMLDivElement, StickyProps>((inProps, ref) => {
     ...rest
   } = props;
 
-  const [state, setState] = React.useState({
+  const [state, setState] = useSafeState({
     fixed: false,
     width: 0, // root width
     height: 0, // root height

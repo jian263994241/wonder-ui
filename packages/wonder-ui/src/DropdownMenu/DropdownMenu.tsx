@@ -12,7 +12,7 @@ import {
   IRectangle
 } from '@wonder-ui/utils';
 import { dropdownMenuClasses, useClasses } from './DropdownMenuClasses';
-import { useForkRef } from '@wonder-ui/hooks';
+import { useForkRef, useSafeState } from '@wonder-ui/hooks';
 import Collapse from '../Collapse';
 
 const DropdownMenuRoot = styled('div', {
@@ -97,11 +97,11 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
     const rootRef = React.useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(rootRef, ref);
 
-    const [currentIndex, setCurrent] = React.useState<number>(-1);
+    const [currentIndex, setCurrent] = useSafeState<number>(-1);
 
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = useSafeState(false);
 
-    const [backdropStyle, setBackdropStyle] = React.useState({});
+    const [backdropStyle, setBackdropStyle] = useSafeState({});
 
     const styleProps = { ...props, expanded, widthAuto };
 

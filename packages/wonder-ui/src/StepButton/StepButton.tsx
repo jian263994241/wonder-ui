@@ -5,7 +5,8 @@ import {
   css,
   forwardRef,
   generateUtilityClasses,
-  getDevice
+  getDevice,
+  composeClasses
 } from '@wonder-ui/utils';
 /**
  * When click and hold on a button - the speed of auto changing the value.
@@ -18,6 +19,7 @@ const STEP_INTERVAL = 200;
 const STEP_DELAY = 600;
 
 export interface StepButtonProps {
+  classes?: Partial<typeof stepButtonClasses>;
   children?: React.ReactNode;
   className?: string;
   component?: React.ElementType;
@@ -28,14 +30,25 @@ export interface StepButtonProps {
   style?: React.CSSProperties;
 }
 
-export interface StepButtonStyleProps extends StepButtonProps {}
-
 const COMPONENT_NAME = 'WuiStepButton';
 
-const stepButtonClasses = generateUtilityClasses(COMPONENT_NAME, ['root']);
+const stepButtonClasses = generateUtilityClasses(COMPONENT_NAME, [
+  'root',
+  'disabled'
+]);
+
+const useClasses = (styleProps: StepButtonProps) => {
+  const { classes, disabled } = styleProps;
+
+  const slots = {
+    root: ['root', disabled && 'disabled']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
 
 const StepButtonRoot = styled('span', { name: COMPONENT_NAME, slot: 'Root' })<{
-  styleProps: StepButtonStyleProps;
+  styleProps: StepButtonProps;
 }>(({ styleProps }) => ({
   touchAction: 'manipulation',
   userSelect: 'none',
@@ -60,6 +73,8 @@ const StepButton = forwardRef<HTMLElement, StepButtonProps>((inProps, ref) => {
   const { current: device } = React.useRef(getDevice());
 
   const stepTimeoutRef = React.useRef<any>();
+
+  const classes = useClasses(props);
 
   const onStepRef = React.useRef<StepButtonProps['onStep']>();
   onStepRef.current = onStep;
@@ -109,7 +124,7 @@ const StepButton = forwardRef<HTMLElement, StepButtonProps>((inProps, ref) => {
       aria-disabled={disabled}
       as={component}
       role="button"
-      className={css(className, stepButtonClasses.root)}
+      className={css(className, classes.root)}
       {...rest}
       {...handleProps}
       styleProps={styleProps}

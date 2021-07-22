@@ -12,7 +12,8 @@ import { ReactFocusLockProps } from 'react-focus-lock/interfaces';
 import {
   useEventCallback,
   useEventListener,
-  useForkRef
+  useForkRef,
+  useSafeState
 } from '@wonder-ui/hooks';
 
 // A modal manager used to track and manage the state of open Modals.
@@ -187,7 +188,7 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
     visible = false
   } = props;
 
-  const [exited, setExited] = React.useState(true);
+  const [exited, setExited] = useSafeState(true);
   const modal = React.useRef<{
     modalRef?: Element | null;
     mount?: Element | null;
@@ -216,9 +217,10 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
     }
   };
 
-  const isTopModal = React.useCallback(() => manager.isTopModal(getModal()), [
-    manager
-  ]);
+  const isTopModal = React.useCallback(
+    () => manager.isTopModal(getModal()),
+    [manager]
+  );
 
   const handlePortalRef = useEventCallback((node) => {
     mountNodeRef.current = node;

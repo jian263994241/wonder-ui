@@ -14,7 +14,8 @@ import { TransitionProps } from '../Transition';
 import {
   useEnhancedEffect,
   useForceUpdate,
-  useForkRef
+  useForkRef,
+  useSafeState
 } from '@wonder-ui/hooks';
 
 type AnchorEl = HTMLElement | null | (() => HTMLElement | null);
@@ -117,10 +118,10 @@ const Popper = React.forwardRef<HTMLElement, PopperProps>((inProps, ref) => {
     []
   );
 
-  const [exited, setExited] = React.useState(true);
+  const [exited, setExited] = useSafeState(true);
 
   const rtlPlacement = flipPlacement(initialPlacement, theme);
-  const [placement, setPlacement] = React.useState(rtlPlacement);
+  const [placement, setPlacement] = useSafeState(rtlPlacement);
 
   React.useEffect(() => {
     if (popperRef.current) {

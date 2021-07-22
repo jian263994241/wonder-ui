@@ -19,11 +19,11 @@ import {
   useTouch
 } from '@wonder-ui/hooks';
 
-const COMPONENT_NAME = 'WuiPullToRefresh';
+const componentName = 'WuiPullToRefresh';
 
 const DEFAULT_HEAD_HEIGHT = 50;
 
-const pullRefreshClasses = generateUtilityClasses(COMPONENT_NAME, [
+const pullRefreshClasses = generateUtilityClasses(componentName, [
   'root',
   'track',
   'indicator',
@@ -45,7 +45,7 @@ const useClasses = (styleProps: PullRefreshStyleProps) => {
     text: ['text']
   };
 
-  return composeClasses(COMPONENT_NAME, slots, classes);
+  return composeClasses(componentName, slots, classes);
 };
 
 export type PullRefreshStatus =
@@ -80,7 +80,7 @@ interface PullRefreshStyleProps extends PullRefreshProps {
   status?: PullRefreshStatus;
 }
 
-const PullRefreshRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })({
+const PullRefreshRoot = styled('div', { name: componentName, slot: 'Root' })({
   overflow: 'hidden',
   userSelect: 'none',
   display: 'flex',
@@ -89,7 +89,7 @@ const PullRefreshRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })({
   minHeight: '100%'
 });
 
-const PullRefreshTrack = styled('div', { name: COMPONENT_NAME, slot: 'Track' })(
+const PullRefreshTrack = styled('div', { name: componentName, slot: 'Track' })(
   ({ theme }) => ({
     touchAction: 'none',
     position: 'relative',
@@ -101,7 +101,7 @@ const PullRefreshTrack = styled('div', { name: COMPONENT_NAME, slot: 'Track' })(
 );
 
 const PullRefreshIndicator = styled('div', {
-  name: COMPONENT_NAME,
+  name: componentName,
   slot: 'Indicator'
 })(({ theme }) => ({
   ...theme.typography.body2,
@@ -118,7 +118,7 @@ const PullRefreshIndicator = styled('div', {
 
 const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
   (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
+    const props = useThemeProps({ props: inProps, name: componentName });
     const {
       children,
       className,

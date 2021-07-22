@@ -12,7 +12,7 @@ import CloseButton from '../CloseButton';
 import Typography from '../Typography';
 import Space from '../Space';
 import Fade from '../Fade';
-import { useEventCallback } from '@wonder-ui/hooks';
+import { useEventCallback, useSafeState } from '@wonder-ui/hooks';
 
 const COMPONENT_NAME = 'NoticeBar';
 
@@ -130,7 +130,7 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
       ...rest
     } = props;
 
-    const [visible, setVisible] = React.useState(true);
+    const [visible, setVisible] = useSafeState(true);
 
     const styleProps = { ...props, closable, type, scrollable, wrap };
     const classes = useClasses(styleProps);

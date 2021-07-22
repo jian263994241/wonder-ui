@@ -10,7 +10,8 @@ import { css, forwardRef } from '@wonder-ui/utils';
 import {
   useEventCallback,
   useForkRef,
-  useIsFocusVisible
+  useIsFocusVisible,
+  useSafeState
 } from '@wonder-ui/hooks';
 
 export interface ButtonBaseActions {
@@ -123,7 +124,7 @@ const ButtonBase = forwardRef<HTMLElement, ButtonBaseProps>(
       ref: focusVisibleRef
     } = useIsFocusVisible();
 
-    const [focusVisible, setFocusVisible] = React.useState(false);
+    const [focusVisible, setFocusVisible] = useSafeState(false);
 
     React.useEffect(() => {
       isFocusVisibleRef.current = focusVisible;
@@ -327,7 +328,7 @@ const ButtonBase = forwardRef<HTMLElement, ButtonBaseProps>(
     const handleOwnRef = useForkRef(focusVisibleRef, buttonRef);
     const handleRef = useForkRef(ref, handleOwnRef);
 
-    const [mountedState, setMountedState] = React.useState(false);
+    const [mountedState, setMountedState] = useSafeState(false);
 
     React.useEffect(() => {
       setMountedState(true);

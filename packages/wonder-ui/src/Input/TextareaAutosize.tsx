@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { debounce, getWindow } from '@wonder-ui/utils';
-import { useEnhancedEffect, useForkRef } from '@wonder-ui/hooks';
+import { useEnhancedEffect, useForkRef, useSafeState } from '@wonder-ui/hooks';
 import styled from '../styles/styled';
 
 function getStyleValue(computedStyle: Record<string, any>, property: string) {
@@ -69,7 +69,7 @@ const TextareaAutosize = React.forwardRef<
   const handleRef = useForkRef(ref, inputRef);
   const shadowRef = React.useRef<HTMLTextAreaElement>(null);
   const renders = React.useRef(0);
-  const [state, setState] = React.useState<{
+  const [state, setState] = useSafeState<{
     outerHeightStyle?: number;
     overflow?: boolean;
   }>({});

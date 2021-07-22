@@ -6,9 +6,9 @@ import Navbar, { NavbarProps } from '../Navbar';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { css, mergedRef } from '@wonder-ui/utils';
+import { navbarClasses } from '../Navbar/NavbarClasses';
 import { pageClasses, useClasses } from './PageClasses';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
-import { navbarClasses } from '../Navbar/NavbarClasses';
 
 const PageRoot = styled('div', {
   name: 'WuiPage',
@@ -20,7 +20,6 @@ const PageRoot = styled('div', {
   height: '100%',
   transform: 'none',
   zIndex: 1,
-  overflow: 'hidden',
   backgroundColor: theme.palette.background.default,
   [`& > .${navbarClasses.root}`]: {
     position: 'absolute'
@@ -32,9 +31,10 @@ const PageContent = styled('div', {
   slot: 'Content'
 })(({ theme }) => ({
   ...theme.typography.body1,
-  overflow: 'auto',
+  overflowY: 'auto',
   boxSizing: 'border-box',
   height: '100%',
+  width: '100%',
   position: 'relative',
   zIndex: 1,
   WebkitOverflowScrolling: 'touch',
@@ -142,14 +142,18 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
     return `calc(${toolbarHeight}px + env(safe-area-inset-bottom))`;
   }, [toolbarHeight]);
 
-  const barLeft = showBackButton ? (
-    <IconButton edge="start" disableRipple onClick={onBack}>
-      <ArrowForward fontSize="inherit" direction="left" />
-    </IconButton>
-  ) : null;
-  const barRight = showCloseButton ? (
-    <CloseButton disableRipple edge="end" onClick={onClose} />
-  ) : null;
+  const barLeft =
+    showBackButton || showCloseButton ? (
+      <React.Fragment>
+        {showBackButton && (
+          <IconButton disableRipple onClick={onBack}>
+            <ArrowForward fontSize="inherit" direction="left" />
+          </IconButton>
+        )}
+
+        {showCloseButton && <CloseButton disableRipple onClick={onClose} />}
+      </React.Fragment>
+    ) : null;
 
   return (
     <PageRoot
@@ -167,11 +171,10 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
           ),
           ref: handleNavbarRef
         })
-      ) : title || barRight || barLeft ? (
+      ) : title || barLeft ? (
         <Navbar
           title={title}
           subTitle={subTitle}
-          right={barRight}
           left={barLeft}
           {...NavbarProps}
           classes={{

@@ -108,8 +108,8 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })<{
     opacity: theme.palette.action.disabledOpacity
   },
   [`&.${checkboxClasses.circle}`]: {
-    width: '1.2em',
-    height: '1.2em',
+    width: 20,
+    height: 20,
     borderRadius: '50%'
   }
 }));

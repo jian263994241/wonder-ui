@@ -16,9 +16,11 @@ function isValueSelected(value: any, candidate: any[]) {
 
 type TValue = any | any[];
 
+type ItemObjectOption = { value: TValue; [k: string]: any };
+
 interface CheckableGroupItemProps {
   checked: boolean;
-  data: { value: TValue; [k: string]: any };
+  data: ItemObjectOption;
   emitOnChange(): void;
   key: number;
 }
@@ -27,7 +29,7 @@ export interface CheckableGroupProps {
   defaultValue?: TValue;
   exclusive?: boolean;
   onChange?(value: TValue): void;
-  options?: { value: TValue; [k: string]: any }[];
+  options?: ItemObjectOption[];
   renderItem?(props: CheckableGroupItemProps): React.ReactNode;
   value?: TValue;
 }
@@ -77,27 +79,25 @@ export default function CheckableGroup(props: CheckableGroupProps) {
   const handleExclusiveChange = useEventCallback((itemValue) => {
     const newValue = value === itemValue ? value : itemValue;
     setValueIfunContralled(newValue);
+
     if (onChange) {
       onChange(newValue);
     }
   });
 
   if (typeof renderItem === 'function') {
-    return (
-      <React.Fragment>
-        {options.map((dataItem, index) => {
-          const dataValue = dataItem.value || dataItem;
-          return renderItem({
-            data: dataItem,
-            key: index,
-            checked: isValueSelected(dataValue, value),
-            emitOnChange: exclusive
-              ? handleExclusiveChange.bind(null, dataValue)
-              : handleChange.bind(null, dataValue)
-          });
-        })}
-      </React.Fragment>
-    );
+    return options.map((dataItem, index) => {
+      const dataValue = dataItem.value || dataItem;
+
+      return renderItem({
+        data: dataItem,
+        key: index,
+        checked: isValueSelected(dataValue, value),
+        emitOnChange: exclusive
+          ? handleExclusiveChange.bind(null, dataValue)
+          : handleChange.bind(null, dataValue)
+      });
+    });
   }
 
   return null;

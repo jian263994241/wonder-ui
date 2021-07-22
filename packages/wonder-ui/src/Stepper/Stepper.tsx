@@ -10,6 +10,7 @@ import { css } from '@wonder-ui/utils';
 import { CSSObject } from '@wonder-ui/styled';
 import { stepperClasses, useClasses } from './StepperClasses';
 import { Theme } from '../styles/createTheme';
+import { useSafeState } from '@wonder-ui/hooks';
 
 export interface StepperProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
@@ -145,7 +146,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
     hideInput = false,
     hideMinusButton = false,
     hidePlusButton = false,
-    max,
+    max = Infinity,
     min = 0,
     onChange,
     step,
@@ -160,12 +161,20 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
 
   const handlePlus = () => inputActionRef.current?.onInternalStep(true);
 
+  const [innerValue, setInnerValue] = useSafeState(value ?? defaultValue);
+
+  const handleChange: InputNumberProps['onChange'] = (value) => {
+    setInnerValue(value);
+
+    onChange?.(value);
+  };
+
   const styleProps = {
     ...props,
     disabled,
     disableInput,
-    disableMinusButton: disableMinusButton,
-    disablePlusButton: disablePlusButton
+    disableMinusButton: disableMinusButton || innerValue <= min,
+    disablePlusButton: disablePlusButton || innerValue >= max
   };
 
   const classes = useClasses(styleProps);
@@ -190,6 +199,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
         inputMode="decimal"
         actionRef={inputActionRef}
         {...InputNumberProps}
+        onChange={handleChange}
         style={{
           ...InputNumberProps?.style,
           ...(hideInput && { display: 'none' })
@@ -199,7 +209,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
         disableStepHandler
         value={value}
         defaultValue={defaultValue}
-        onChange={onChange}
+        // onChange={onChange}
         disabledActiveStyle
         step={step}
         min={min}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { getDocument, setRef } from '@wonder-ui/utils';
-import { useEnhancedEffect, useForkRef } from '@wonder-ui/hooks';
+import { useEnhancedEffect, useForkRef, useSafeState } from '@wonder-ui/hooks';
 
 export type Container = HTMLElement | null | (() => HTMLElement | null);
 
@@ -18,7 +18,7 @@ export interface PortalProps {
 
 const Portal: React.FC<PortalProps> = React.forwardRef((props, ref) => {
   const { children, container, disablePortal = false } = props;
-  const [mountNode, setMountNode] = React.useState<HTMLElement | null>(null);
+  const [mountNode, setMountNode] = useSafeState<HTMLElement | null>(null);
   const handleRef = useForkRef(
     //@ts-expect-error
     React.isValidElement(children) ? children.ref : null,
@@ -53,7 +53,5 @@ const Portal: React.FC<PortalProps> = React.forwardRef((props, ref) => {
 
   return mountNode ? ReactDOM.createPortal(children, mountNode) : mountNode;
 });
-
-Portal.displayName = 'Portal';
 
 export default Portal;

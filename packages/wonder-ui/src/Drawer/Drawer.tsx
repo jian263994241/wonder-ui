@@ -9,6 +9,7 @@ import { css } from '@wonder-ui/utils';
 import { drawerClasses, useClasses } from './DrawerClasses';
 import { duration } from '../styles/transitions';
 import { Theme } from '../styles/createTheme';
+
 export interface DrawerProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * 出现的位置
@@ -35,7 +36,7 @@ export interface DrawerProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * PaperProps
    */
-  PaperProps?: PaperProps;
+  PaperProps?: Partial<PaperProps>;
   /**
    * @ignore
    */
@@ -55,7 +56,7 @@ export interface DrawerProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Modal props
    */
-  ModalProps?: ModalProps;
+  ModalProps?: Partial<ModalProps>;
 }
 
 const DrawerRoot = styled(Modal, {
@@ -171,6 +172,7 @@ const Drawer = React.forwardRef<HTMLElement, DrawerProps>((inProps, ref) => {
     variant = 'temporary',
     visible = false,
     transitionDuration = defaultTransitionDuration,
+    ModalProps,
     ...rest
   } = props;
 
@@ -241,6 +243,7 @@ const Drawer = React.forwardRef<HTMLElement, DrawerProps>((inProps, ref) => {
       classes={{ root: css(classes.root, classes.modal, className) }}
       ref={ref}
       {...rest}
+      {...ModalProps}
     >
       {slidingDrawer}
     </DrawerRoot>
