@@ -41,11 +41,11 @@ const EmptyImage = styled('div', {
 const EmptyDescription = styled('div', {
   name: 'WuiDescription',
   slot: 'Description'
-})({
-  fontSize: 14,
+})(({ theme }) => ({
+  fontSize: theme.typography.pxToRem(14),
   lineHeight: 1.5,
   userSelect: 'none'
-});
+}));
 
 const Empty = React.forwardRef<HTMLElement, EmptyProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiEmpty' });

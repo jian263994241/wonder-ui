@@ -52,9 +52,9 @@ const SkeletonAvatar = styled('div', {
 })(({ theme }) => ({
   ...commomBlockStyles(theme),
   flexShrink: 0,
-  width: 32,
-  height: 32,
-  marginRight: 16,
+  width: theme.typography.pxToRem(32),
+  height: theme.typography.pxToRem(32),
+  marginRight: theme.spacing(2),
 
   [`&.${skeletonClasses.avatarRound}`]: {
     borderRadius: '50%'
@@ -67,7 +67,7 @@ const SkeletonTitle = styled('div', {
 })(({ theme }) => ({
   ...commomBlockStyles(theme),
   width: '40%',
-  height: 16,
+  height: theme.typography.pxToRem(16),
   margin: 0
 }));
 
@@ -77,11 +77,11 @@ const SkeletonRow = styled('div', {
 })(({ theme }) => ({
   ...commomBlockStyles(theme),
   width: '100%',
-  height: 16,
-  marginTop: 16,
+  height: theme.typography.pxToRem(16),
+  marginTop: theme.typography.pxToRem(16),
 
   '& + &': {
-    marginTop: 12
+    marginTop: theme.typography.pxToRem(12)
   },
   '&:last-of-type': {
     width: '60%'

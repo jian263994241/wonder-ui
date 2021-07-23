@@ -155,20 +155,20 @@ const ToggleIcon = styled('span', {
       switchActiveColor = theme.palette[styleProps.color || 'primary'].main;
 
     return {
-      width: switchWidth,
-      height: switchHeight,
-      borderRadius: switchHeight,
+      width: theme.typography.pxToRem(switchWidth),
+      height: theme.typography.pxToRem(switchHeight),
+      borderRadius: theme.typography.pxToRem(switchHeight),
       backgroundColor: switchBorderColor,
       '&:before': {
-        width: switchWidth - 4,
-        height: switchHeight - 4,
-        borderRadius: switchHeight,
+        width: theme.typography.pxToRem(switchWidth - 4),
+        height: theme.typography.pxToRem(switchHeight - 4),
+        borderRadius: theme.typography.pxToRem(switchHeight),
         backgroundColor: switchInactiveColor
       },
       '&:after': {
-        width: switchHeight - 4,
-        height: switchHeight - 4,
-        borderRadius: switchHeight - 4,
+        width: theme.typography.pxToRem(switchHeight - 4),
+        height: theme.typography.pxToRem(switchHeight - 4),
+        borderRadius: theme.typography.pxToRem(switchHeight - 4),
         backgroundColor: switchHandleColor
       },
 
@@ -176,16 +176,18 @@ const ToggleIcon = styled('span', {
         backgroundColor: switchActiveColor,
         '&:before': {
           transform: 'scale(0)',
-          width: switchWidth - 4,
-          height: switchHeight - 4,
-          borderRadius: switchHeight,
+          width: theme.typography.pxToRem(switchWidth - 4),
+          height: theme.typography.pxToRem(switchHeight - 4),
+          borderRadius: theme.typography.pxToRem(switchHeight),
           backgroundColor: switchInactiveColor
         },
         '&:after': {
-          transform: `translateX(${switchWidth - switchHeight}px)`,
-          width: switchHeight - 4,
-          height: switchHeight - 4,
-          borderRadius: switchHeight - 4,
+          transform: `translateX(${theme.typography.pxToRem(
+            switchWidth - switchHeight
+          )})`,
+          width: theme.typography.pxToRem(switchHeight - 4),
+          height: theme.typography.pxToRem(switchHeight - 4),
+          borderRadius: theme.typography.pxToRem(switchHeight - 4),
           backgroundColor: switchHandleColor
         }
       }

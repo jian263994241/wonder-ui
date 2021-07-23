@@ -39,7 +39,7 @@ const PaperRoot = styled('div', {
   },
 
   [`&.${paperClasses.outlined}`]: {
-    border: `1px solid ${theme.palette.divider}`
+    border: `thin solid ${theme.palette.divider}`
   },
 
   [`&.${paperClasses.elevation}`]: {

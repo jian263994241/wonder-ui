@@ -12,11 +12,11 @@ sidemenu: false
 | subTitle | 顶部栏标题 |	string	| -
 | confirmText	| 确认按钮文字 |	string	| 确认
 | cancelText	| 取消按钮文字 |	string	| 取消
-| drawer | 抽屉 | boolean | false
 | textKey	| 选项对象中，选项文字对应的键名 |	string|	text
 | loading	| 是否显示加载状态	 | boolean	| false
 | readOnly | 是否为只读状态，只读状态下无法切换选项 |	boolean	| false
-| showNavbar	| 是否显示顶部栏	 | boolean |	false
+| showNavbar	| 是否显示顶部栏	 | boolean |	true
+| navbarPosition | 顶部栏位置，可选值为bottom | top\|bottom | top
 | defaultIndex	| 单列选择时，默认选中项的索引 |	number | 	0
 | itemHeight	| 选项高度，支持 px	 | number	| 44
 | visibleItemCount	| 可见的选项个数 |	number |	6

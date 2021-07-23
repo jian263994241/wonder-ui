@@ -14,8 +14,8 @@ const DropdownMenuItemRoot = styled(ButtonBase, {
   maxWidth: '100%',
   textAlign: 'center',
   boxSizing: 'border-box',
-  paddingLeft: 10,
-  paddingRight: 10,
+  paddingLeft: theme.spacing(1),
+  paddingRight: theme.spacing(1),
   [`&.${dropdownMenuItemClasses.active}`]: {
     color: theme.palette.primary.main
   }
@@ -24,16 +24,16 @@ const DropdownMenuItemRoot = styled(ButtonBase, {
 const DropdownMenuItemTitle = styled('span', {
   name: 'WuiDropdownMenuItem',
   slot: 'Title'
-})({
+})(({ theme }) => ({
   position: 'relative',
 
   [`&.${dropdownMenuItemClasses.withArrow}`]: {
-    paddingRight: 5
+    paddingRight: theme.spacing(0.5)
   },
   [`&.${dropdownMenuItemClasses.withArrow}:after`]: {
     position: 'absolute',
     top: '50%',
-    right: -4,
+    right: -theme.spacing(0.5),
     marginTop: -5,
     border: '3px solid',
     borderColor: 'transparent transparent #dcdee0 #dcdee0',
@@ -48,7 +48,7 @@ const DropdownMenuItemTitle = styled('span', {
       transform: 'rotate(135deg)',
       borderColor: 'transparent transparent currentColor currentColor'
     }
-});
+}));
 
 export interface DropdownMenuItemActions {
   onClose(): void;

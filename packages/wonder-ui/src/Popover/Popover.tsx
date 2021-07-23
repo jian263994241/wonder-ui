@@ -44,9 +44,9 @@ export function getOffsetLeft(rect: Rect, horizontal: Horizontal) {
 }
 
 function getAnchorEl(anchorEl?: AnchorEl) {
-  return (typeof anchorEl === 'function'
-    ? anchorEl()
-    : anchorEl) as HTMLElement;
+  return (
+    typeof anchorEl === 'function' ? anchorEl() : anchorEl
+  ) as HTMLElement;
 }
 
 function getTransformOriginValue(transformOrigin: TransformOrigin) {
@@ -65,7 +65,7 @@ const PopoverPaper = styled(Paper, {
   name: 'WuiPopover',
   slot: 'Paper',
   shouldForwardProp: () => true
-})<PaperProps>({
+})<PaperProps>(({ theme }) => ({
   position: 'absolute',
   overflowY: 'auto',
   overflowX: 'hidden',
@@ -73,11 +73,11 @@ const PopoverPaper = styled(Paper, {
   // It's most likely on issue on userland.
   minWidth: 16,
   minHeight: 16,
-  maxWidth: 'calc(100% - 32px)',
-  maxHeight: 'calc(100% - 32px)',
+  maxWidth: `calc(100% - ${theme.spacing(4)})`,
+  maxHeight: `calc(100% - ${theme.spacing(4)})`,
   // We disable the focus ring for mouse, touch and keyboard users.
   outline: 0
-});
+}));
 
 export interface PopoverProps extends Omit<ModalProps, 'children'> {
   /**

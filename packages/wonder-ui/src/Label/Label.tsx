@@ -46,7 +46,7 @@ const LabelRoot = styled('label', { name: COMPONENT_NAME, slot: 'Root' })<{
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   display: 'flex',
-  alignItems: 'center',
+  // alignItems: 'center',
   flexShrink: 0,
   justifyContent: {
     left: 'flex-start',

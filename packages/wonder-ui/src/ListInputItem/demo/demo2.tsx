@@ -36,7 +36,7 @@ export default withDialog((props) => (
         <Row style={{ width: '100%' }}>
           <Col col={3}>
             <Label
-              style={{ width: '100%', height: 36 }}
+              style={{ width: '100%', paddingTop: 6 }}
               required
               colon
               labelAlign="right"

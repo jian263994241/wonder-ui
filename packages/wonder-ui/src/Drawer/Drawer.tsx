@@ -57,6 +57,10 @@ export interface DrawerProps extends React.HTMLAttributes<HTMLDivElement> {
    * Modal props
    */
   ModalProps?: Partial<ModalProps>;
+  /**
+   *
+   */
+  keepMounted?: ModalProps['keepMounted'];
 }
 
 const DrawerRoot = styled(Modal, {
@@ -172,6 +176,7 @@ const Drawer = React.forwardRef<HTMLElement, DrawerProps>((inProps, ref) => {
     variant = 'temporary',
     visible = false,
     transitionDuration = defaultTransitionDuration,
+    keepMounted = false,
     ModalProps,
     ...rest
   } = props;
@@ -242,6 +247,7 @@ const Drawer = React.forwardRef<HTMLElement, DrawerProps>((inProps, ref) => {
       visible={visible}
       classes={{ root: css(classes.root, classes.modal, className) }}
       ref={ref}
+      keepMounted={keepMounted}
       {...rest}
       {...ModalProps}
     >

@@ -83,21 +83,22 @@ const NoticebarRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
 const NoticebarIcon = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Icon'
-})({
+})(({ theme }) => ({
   alignSelf: 'flex-start',
-  padding: '9px 10px 0 16px',
+  padding: theme.spacing(1, 1, 0, 2),
+  marginTop: 1,
   flexShrink: 0
-});
+}));
 
 const NoticebarText = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Text'
 })<{
   styleProps: NoticebarProps;
-}>(({ styleProps }) => ({
+}>(({ styleProps, theme }) => ({
   width: '99%',
   boxSizing: 'border-box',
-  padding: '8px 16px',
+  padding: theme.spacing(1, 2),
   alignSelf: 'center',
   ...(!!styleProps.icon && {
     paddingLeft: 0

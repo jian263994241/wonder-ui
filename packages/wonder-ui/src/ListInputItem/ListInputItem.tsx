@@ -135,20 +135,20 @@ const ListInputItemRoot = styled(ListItem, {
 const ListInputItemLabel = styled(Label, {
   name: COMPONENT_NAME,
   slot: 'Label'
-})({
-  height: 44,
+})(({ theme }) => ({
+  height: theme.typography.pxToRem(44),
+  paddingTop: theme.typography.pxToRem(10),
   alignSelf: 'flex-start'
-});
+}));
 
 const ListInputItemInputWrap = styled('span', {
   name: COMPONENT_NAME,
   slot: 'InputWrap'
-})({
+})(({ theme }) => ({
   width: '100%',
-  display: 'flex',
-  paddingTop: 6,
-  paddingBottom: 6
-});
+  paddingTop: theme.typography.pxToRem(6),
+  paddingBottom: theme.typography.pxToRem(6)
+}));
 
 const ListInputItemInput = styled(InputBase, {
   name: COMPONENT_NAME,
@@ -235,6 +235,7 @@ const ListInputItem = forwardRef<HTMLLIElement, ListInputItemProps>(
             component="span"
             multiline={multiline}
             className={css(classes.input, InputProps?.className)}
+            error={!!errorMessage}
             {...inputProps}
           />
           {description && !errorMessage && (

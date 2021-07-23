@@ -49,8 +49,8 @@ const CheckboxWrapper = styled('label', {
   },
 
   [`& > .${checkboxClasses.root} + span`]: {
-    paddingLeft: 8,
-    paddingRight: 8
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1)
   }
 }));
 

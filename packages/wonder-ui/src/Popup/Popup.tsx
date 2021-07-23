@@ -21,6 +21,7 @@ export interface PopupProps {
   title?: React.ReactNode;
   transitionDuration?: TransitionTimeout;
   visible?: boolean;
+  keepMounted?: ModalProps['keepMounted'];
 }
 
 const PopupRoot = styled(Modal, {
@@ -61,6 +62,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((inProps, ref) => {
     TransitionComponent = Slide,
     TransitionProps,
     transitionDuration,
+    keepMounted = false,
     ...rest
   } = props;
 
@@ -74,6 +76,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((inProps, ref) => {
       visible={visible}
       onClose={onClose}
       ref={ref}
+      keepMounted={keepMounted}
       {...ModalProps}
       {...rest}
       BackdropProps={{

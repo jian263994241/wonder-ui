@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 export interface TypographyOptions {
   fontFamily?: string;
   fontSize?: number;

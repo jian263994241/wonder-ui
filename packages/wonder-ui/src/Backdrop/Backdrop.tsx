@@ -107,7 +107,13 @@ const Backdrop = forwardRef<HTMLElement, BackdropProps>((inProps, ref) => {
   }, []);
 
   return (
-    <Fade in={visible} timeout={transitionDuration} ref={handleRef} {...rest}>
+    <Fade
+      in={visible}
+      timeout={transitionDuration}
+      ref={handleRef}
+      mountOnEnter
+      {...rest}
+    >
       <BackdropRoot as={component} className={css(classes.root, className)}>
         {children}
       </BackdropRoot>

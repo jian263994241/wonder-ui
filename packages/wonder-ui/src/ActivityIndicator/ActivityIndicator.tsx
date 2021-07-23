@@ -108,10 +108,9 @@ const ActivityIndicatorIcon = styled('span', {
 })<{ styleProps: ActivityIndicatorStyleProps }>(({ theme, styleProps }) => ({
   display: 'block',
   fontSize: theme.typography.pxToRem(SIZE[styleProps.iconSize!]),
-  ...(styleProps.color &&
-    styleProps.color != 'inherit' && {
-      color: theme.palette[styleProps.color].dark
-    }),
+  ...(styleProps.color != 'inherit' && {
+    color: theme.palette[styleProps.color!]?.dark
+  }),
   '& > *': {
     display: 'block'
   }

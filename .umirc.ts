@@ -18,7 +18,7 @@ export default defineConfig({
 
   themeConfig: {
     hd: {
-      rules: [{ maxWidth: 380, mode: 'vw', options: [32, 760] }]
+      rules: [{ maxWidth: 320, mode: 'vw', options: [32, 640] }]
       // 更多 rule 配置访问 https://github.com/umijs/dumi/blob/master/packages/theme-mobile/src/typings/config.d.ts#L7
     }
   },

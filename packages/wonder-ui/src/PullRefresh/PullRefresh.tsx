@@ -108,7 +108,7 @@ const PullRefreshIndicator = styled('div', {
   position: 'absolute',
   left: 0,
   width: '100%',
-  height: 50,
+  height: DEFAULT_HEAD_HEIGHT,
   overflow: 'hidden',
   transform: 'translateY(-100%)',
   display: 'flex',

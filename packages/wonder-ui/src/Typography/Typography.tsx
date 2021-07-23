@@ -103,7 +103,7 @@ export const TypographyRoot = styled('span', {
     marginBottom: '0.35em'
   },
   [`&.${typographyClasses.paragraph}`]: {
-    marginBottom: 16
+    marginBottom: theme.spacing(2)
   },
   [`&.${typographyClasses.inline}`]: {
     display: 'inline'

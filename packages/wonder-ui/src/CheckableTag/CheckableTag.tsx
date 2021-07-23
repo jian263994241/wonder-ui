@@ -22,11 +22,11 @@ const CheckableTagRoot = styled('span', {
   boxSizing: 'border-box',
   listStyle: 'none',
   display: 'inline-block',
-  padding: '0 7px',
+  padding: theme.spacing(0, 1),
   borderRadius: theme.shape.borderRadius,
   color: theme.palette.text.primary,
   border: '1px solid',
-  borderColor: 'transparent',
+  borderColor: theme.palette.divider,
   backgroundColor: 'transparent',
   userSelect: 'none',
   verticalAlign: 'middle',
@@ -43,7 +43,7 @@ const CheckableTagRoot = styled('span', {
     color: theme.palette.primary.contrastText
   },
   '& + &': {
-    marginLeft: 3
+    marginLeft: theme.spacing(0.5)
   }
 }));
 

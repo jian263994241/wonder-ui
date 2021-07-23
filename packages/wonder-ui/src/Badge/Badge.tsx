@@ -43,61 +43,43 @@ const BadgeRoot = styled('div', {
   position: 'relative'
 });
 
-const colors = [
-  'primary',
-  'secondary',
-  'success',
-  'danger',
-  'warning',
-  'info',
-  'light',
-  'dark'
-] as const;
+const BadgeContent = styled('span', { name: 'WuiBadge', slot: 'Content' })<{
+  styleProps: BadgeProps;
+}>(({ theme, styleProps }) => {
+  return {
+    display: 'block',
+    padding: '0.25em 0.55em',
+    fontSize: '.75em',
+    fontWeight: 400,
+    lineHeight: 1,
+    textAlign: 'center',
+    whiteSpace: 'nowrap',
+    verticalAlign: 1,
+    borderRadius: '.25rem',
+    pointerEvents: 'none',
+    userSelect: 'none',
+    color: theme.palette[styleProps.color!]?.contrastText,
+    backgroundColor: theme.palette[styleProps.color!]?.main,
 
-const BadgeContent = styled('span', { name: 'WuiBadge', slot: 'Content' })(
-  ({ theme }) => {
-    return {
-      display: 'block',
-      padding: '0.25em 0.55em',
-      fontSize: '.75em',
-      fontWeight: 500,
-      lineHeight: 1,
-      textAlign: 'center',
-      whiteSpace: 'nowrap',
-      verticalAlign: 1,
-      borderRadius: '.25rem',
-      pointerEvents: 'none',
-      userSelect: 'none',
+    [`.${badgeClasses.rounded} > &`]: {
+      borderRadius: '50rem'
+    },
 
-      ...generateUtilityStyles(colors, (styles, color) => {
-        const colorName = 'color' + capitalize(color);
-        //@ts-expect-error
-        styles[`.${badgeClasses[colorName]} > &`] = {
-          color: theme.palette[color].contrastText,
-          backgroundColor: theme.palette[color].main
-        };
-      }),
-
-      [`.${badgeClasses.rounded} > &`]: {
-        borderRadius: '50rem'
-      },
-
-      [`.${badgeClasses.withChildren} > &`]: {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        transform: 'translate(50%,-50%)',
-        transformOrigin: '100% 0',
-        borderRadius: '50rem',
-        zIndex: 99
-      },
-      '&:empty': {
-        padding: '0.225rem',
-        borderRadius: '50%'
-      }
-    };
-  }
-);
+    [`.${badgeClasses.withChildren} > &`]: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      transform: 'translate(50%,-50%)',
+      transformOrigin: '100% 0',
+      borderRadius: '50rem',
+      zIndex: 99
+    },
+    '&:empty': {
+      padding: '0.225rem',
+      borderRadius: '50%'
+    }
+  };
+});
 
 const Badge = React.forwardRef<HTMLElement, BadgeProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiBadge' });
@@ -123,7 +105,9 @@ const Badge = React.forwardRef<HTMLElement, BadgeProps>((inProps, ref) => {
       {...rest}
     >
       {!hideContent && (
-        <BadgeContent className={classes.content}>{text}</BadgeContent>
+        <BadgeContent className={classes.content} styleProps={styleProps}>
+          {text}
+        </BadgeContent>
       )}
 
       {children}

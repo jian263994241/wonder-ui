@@ -1,12 +1,12 @@
 import * as React from 'react';
 import ActivityIndicator from '../ActivityIndicator';
+import Backdrop from '../Backdrop';
 import Button from '../Button';
 import Column, {
   PickerColumnAction,
   PickerObjectColumn,
   PickerOption
 } from './PickerColumn';
-import Drawer, { DrawerProps } from '../Drawer';
 import Navbar, { NavbarProps } from '../Navbar';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
@@ -19,6 +19,7 @@ import {
   preventDefault
 } from '@wonder-ui/utils';
 import {
+  useDebounceFn,
   useEventCallback,
   useEventListener,
   useSafeState
@@ -111,7 +112,7 @@ const PickerIndicator = styled('div', {
   pointerEvents: 'none'
 }));
 
-const PickerLoading = styled('div', {
+const PickerLoading = styled(Backdrop, {
   name: COMPONENT_NAME,
   slot: 'Loading'
 })(({ theme }) => ({
@@ -138,7 +139,7 @@ export type PickerAction = {
   setColumnIndex(columnIndex: number, optionIndex: number): void;
   getColumnValues(index: number): PickerOption[] | undefined;
   setColumnValues(index: number, options: PickerOption[]): void;
-  confirm(value: PickerOption, columnIndex: number | number[]): void;
+  confirm(): void;
 };
 
 export interface PickerProps {
@@ -149,7 +150,6 @@ export interface PickerProps {
   classes?: Partial<typeof pickerClasses>;
 
   drawer?: boolean;
-  DrawerProps?: DrawerProps;
 
   itemHeight?: number;
 
@@ -166,6 +166,8 @@ export interface PickerProps {
 
   showNavbar?: boolean;
 
+  navbarPosition?: 'top' | 'bottom';
+
   NavbarProps?: Partial<NavbarProps>;
 
   title?: string;
@@ -173,7 +175,6 @@ export interface PickerProps {
   cancelText?: string;
   confirmText?: string;
 
-  visible?: boolean;
   loading?: boolean;
 
   onChange?(value: PickerOption | PickerOption[], columnIndex: number): void;
@@ -190,9 +191,7 @@ export interface PickerProps {
 const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
-    DrawerProps,
     NavbarProps,
-    drawer = false,
     actionRef,
     className,
     style,
@@ -206,12 +205,12 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     readOnly = false,
     loading = false,
     visibleItemCount = 6,
-    showNavbar = false,
+    showNavbar = true,
+    navbarPosition = 'top',
     title,
     subTitle,
     cancelText = '取消',
     confirmText = '确定',
-    visible,
     onChange,
     onConfirm,
     onCancel
@@ -222,7 +221,8 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     readOnly,
     loading,
     swipeDuration,
-    showNavbar
+    showNavbar,
+    navbarPosition
   };
 
   const [formattedColumns, setFormattedColumns] = useSafeState<
@@ -298,7 +298,7 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     const indexes = getIndexes();
 
     for (let i = 0; i <= columnIndex; i++) {
-      cursor = cursor[childrenKey][indexes[i]];
+      cursor = cursor[childrenKey]?.[indexes[i]];
       if (!cursor) {
         break;
       }
@@ -461,6 +461,26 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     );
   };
 
+  const renderNavbar = () =>
+    showNavbar ? (
+      <Navbar
+        title={title}
+        subTitle={subTitle}
+        left={
+          <Button variant="text" onClick={cancel}>
+            {cancelText}
+          </Button>
+        }
+        right={
+          <Button variant="text" onClick={confirm}>
+            {confirmText}
+          </Button>
+        }
+        {...NavbarProps}
+        className={css(classes.navbar, NavbarProps?.className)}
+      />
+    ) : null;
+
   React.useImperativeHandle(
     actionRef,
     () => ({
@@ -479,55 +499,19 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     [columns]
   );
 
-  const renderPicker = () => (
+  return (
     <PickerRoot
       ref={ref}
       className={css(classes.root, className)}
       style={style}
     >
-      {showNavbar && (
-        <Navbar
-          title={title}
-          subTitle={subTitle}
-          left={
-            <Button variant="text" onClick={cancel}>
-              {cancelText}
-            </Button>
-          }
-          right={
-            <Button variant="text" onClick={confirm}>
-              {confirmText}
-            </Button>
-          }
-          {...NavbarProps}
-          className={css(classes.navbar, NavbarProps?.className)}
-        />
-      )}
-      {loading && (
-        <PickerLoading className={classes.loading}>
-          <ActivityIndicator color="primary" iconSize="medium" />
-        </PickerLoading>
-      )}
+      {navbarPosition === 'top' && renderNavbar()}
+      <PickerLoading visible={loading} className={classes.loading}>
+        <ActivityIndicator color="primary" iconSize="medium" />
+      </PickerLoading>
       {renderColumns()}
+      {navbarPosition === 'bottom' && renderNavbar()}
     </PickerRoot>
-  );
-
-  return drawer ? (
-    <Drawer
-      anchor="bottom"
-      onClose={cancel}
-      ModalProps={{
-        keepMounted: true,
-        ...DrawerProps?.ModalProps
-      }}
-      {...DrawerProps}
-      className={css(classes.drawer, DrawerProps?.className)}
-      visible={visible}
-    >
-      {renderPicker()}
-    </Drawer>
-  ) : (
-    renderPicker()
   );
 });
 

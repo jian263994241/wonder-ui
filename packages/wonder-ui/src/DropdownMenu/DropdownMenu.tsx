@@ -33,7 +33,7 @@ const DropdownMenuBar = styled('div', {
   boxSizing: 'border-box',
   display: 'flex',
   flexWrap: 'nowrap',
-  height: 48,
+  height: theme.typography.pxToRem(48),
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   boxShadow: '0 2px 12px rgb(100 101 102 / 12%)',

@@ -45,7 +45,7 @@ const TooltipTooltip = styled('div', {
     fontFamily: theme.typography.fontFamily,
     fontWeight: theme.typography.fontWeightRegular,
     lineHeight: `${round(16 / 12)}em`,
-    padding: 8,
+    padding: theme.spacing(1),
     fontSize: theme.typography.pxToRem(12),
     maxWidth: 300,
     margin: 2,
@@ -61,19 +61,19 @@ const TooltipTooltip = styled('div', {
 
       [`&[data-popper-placement*="left"]`]: {
         transformOrigin: 'right center',
-        marginRight: 8
+        marginRight: theme.spacing(1)
       },
       [`&[data-popper-placement*="right"]`]: {
         transformOrigin: 'left center',
-        marginLeft: 8
+        marginLeft: theme.spacing(1)
       },
       [`&[data-popper-placement*="top"]`]: {
         transformOrigin: 'center bottom',
-        marginBottom: 8
+        marginBottom: theme.spacing(1)
       },
       [`&[data-popper-placement*="bottom"]`]: {
         transformOrigin: 'center top',
-        marginTop: 8
+        marginTop: theme.spacing(1)
       }
     }
   };

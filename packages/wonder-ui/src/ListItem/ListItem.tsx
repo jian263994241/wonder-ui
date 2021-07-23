@@ -91,7 +91,7 @@ const ListItemInner = styled('div', {
   slot: 'Inner'
 })<{ styleProps: ListItemStyleProps }>(({ theme, styleProps }) => ({
   width: '100%',
-  minHeight: 44,
+  minHeight: theme.typography.pxToRem(44),
   display: 'flex',
   alignItems: 'inherit',
   alignSelf: 'stretch',
@@ -150,7 +150,7 @@ export const ListItemMedia = styled('div', {
   paddingTop: theme.spacing(1),
   paddingBottom: theme.spacing(1),
   marginRight: theme.spacing(2),
-  minHeight: 44,
+  minHeight: theme.typography.pxToRem(44),
 
   [`.${listItemClasses.disabled} &`]: {
     opacity: theme.palette.action.disabledOpacity

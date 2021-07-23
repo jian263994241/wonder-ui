@@ -39,7 +39,8 @@ export const inputClasses = generateUtilityClasses(COMPONENT_NAME, [
   'disabled',
   'focused',
   'resizable',
-  'readonly'
+  'readonly',
+  'hasError'
 ]);
 
 export interface InputProps
@@ -51,6 +52,7 @@ export interface InputProps
   component?: React.ElementType;
   disabled?: boolean;
   disabledActiveStyle?: boolean;
+  error?: boolean;
   multiline?: boolean;
   maxRows?: number;
   minRows?: number;
@@ -80,7 +82,8 @@ const useClasses = (styleProps: InputStyleProps) => {
     focused,
     multiline,
     resizable,
-    readOnly
+    readOnly,
+    error
   } = styleProps;
 
   const slots = {
@@ -91,7 +94,8 @@ const useClasses = (styleProps: InputStyleProps) => {
       multiline && resizable && 'resizable',
       borderless && 'borderless',
       readOnly && 'readonly',
-      focused && 'focused'
+      focused && 'focused',
+      error && 'hasError'
     ],
     input: ['input'],
     prefix: ['prefix'],
@@ -118,8 +122,8 @@ export const InputRoot = styled('div', {
   overflow: 'hidden',
   WebkitTapHighlightColor: 'transparent',
   width: '100%',
-  height: styleProps.multiline ? 'auto' : 32,
-  padding: '0px 8px',
+  height: styleProps.multiline ? 'auto' : theme.typography.pxToRem(32),
+  padding: theme.spacing(0, 1),
   margin: 0,
 
   transition: theme.transitions.create(['border-color', 'box-shadow']),
@@ -128,6 +132,10 @@ export const InputRoot = styled('div', {
     border: 'thin solid',
     borderColor: theme.palette.divider,
     borderRadius: theme.shape.borderRadius,
+
+    ...(styleProps.error && {
+      borderColor: theme.palette.error.main
+    }),
 
     ...(!styleProps.disabled &&
       !styleProps.disabledActiveStyle && {
@@ -157,6 +165,11 @@ export const InputInput = styled('input', {
     opacity: light ? 0.38 : 0.5,
     transition: theme.transitions.create('opacity', {
       duration: theme.transitions.duration.shorter
+    }),
+
+    ...(styleProps.error && {
+      color: theme.palette.error.main,
+      opacity: 1
     })
   };
 
@@ -164,6 +177,9 @@ export const InputInput = styled('input', {
     font: 'inherit',
     letterSpacing: 'inherit',
     color: 'currentColor',
+    ...(styleProps.error && {
+      color: theme.palette.error.main
+    }),
     cursor: 'inherit',
     textAlign: 'inherit',
     background: 'inherit',
@@ -178,7 +194,7 @@ export const InputInput = styled('input', {
     minWidth: 0,
     maxHeight: '100%',
     lineHeight: 'inherit',
-    margin: '4px 0',
+    margin: theme.spacing(0.5, 0),
     padding: 0,
     top: !!styleProps.multiline ? -1 : 0,
 
@@ -236,44 +252,44 @@ export const InputInput = styled('input', {
 const InputClearButton = styled(ClearButton, {
   name: COMPONENT_NAME,
   slot: 'ClearButton'
-})({
+})(({ theme }) => ({
   flexShrink: 1,
-  fontSize: 15
-});
+  fontSize: theme.typography.pxToRem(15)
+}));
 
 const InputRevealButton = styled(RevealButton, {
   name: COMPONENT_NAME,
   slot: 'RevealButton'
-})({
+})(({ theme }) => ({
   flexShrink: 1,
-  fontSize: 14
-});
+  fontSize: theme.typography.pxToRem(14)
+}));
 
 const InputPrefix = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Prefix'
-})({
+})(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   flexShrink: 0,
-  paddingRight: 4,
+  paddingRight: theme.spacing(0.5),
   '& > * +  *': {
-    marginLeft: 4
+    marginLeft: theme.spacing(0.5)
   }
-});
+}));
 
 const InputSuffix = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Suffix'
-})({
+})(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   flexShrink: 0,
-  paddingLeft: 4,
+  paddingLeft: theme.spacing(0.5),
   '& > * +  *': {
-    marginLeft: 4
+    marginLeft: theme.spacing(0.5)
   }
-});
+}));
 
 const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
   (inProps, ref) => {
@@ -288,6 +304,7 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       defaultValue = '',
       disabled = false,
       disabledActiveStyle = false,
+      error = false,
       formatter,
       maxRows,
       minRows = 2,
@@ -342,7 +359,8 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       resizable,
       borderless,
       readOnly,
-      focused
+      focused,
+      error
     };
 
     const classes = useClasses(styleProps);

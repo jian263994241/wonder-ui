@@ -104,12 +104,12 @@ const useClasses = (styleProps: SearchbarStyleProps) => {
 const SearchbarRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})({
+})(({ theme }) => ({
   width: '100%',
-  height: 44,
+  height: theme.typography.pxToRem(44),
   position: 'relative',
   boxSizing: 'border-box'
-});
+}));
 
 const SearchbarInner = styled('div', {
   name: 'WuiNavbar',

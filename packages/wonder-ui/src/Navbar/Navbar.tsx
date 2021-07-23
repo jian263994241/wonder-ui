@@ -94,12 +94,12 @@ const NavbarBg = styled('div', { name: 'WuiNavbar', slot: 'Bg' })(
 const NavbarInner = styled('div', {
   name: 'WuiNavbar',
   slot: 'Inner'
-})({
+})(({ theme }) => ({
   position: 'relative',
   left: 0,
   bottom: 0,
   width: '100%',
-  height: 44,
+  height: theme.typography.pxToRem(44),
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -108,39 +108,40 @@ const NavbarInner = styled('div', {
   padding:
     'env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left)',
   zIndex: 10
-});
+}));
 
 const NavbarTitle = styled(Typography, {
   name: 'WuiNavbar',
   slot: 'Title'
-})({
+})(({ theme }) => ({
   position: 'relative',
   flexShrink: 10,
-  fontWeight: 600,
+  fontWeight: 500,
   display: 'inline-block',
   lineHeight: 1.2,
   textAlign: 'center',
   fontSize: 'inherit',
-  paddingLeft: 16,
-  paddingRight: 16
-});
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
+  color: theme.palette.text.primary
+}));
 
 const NavbarSubTitle = styled('span', {
   name: 'WuiNavbar',
   slot: 'SubTitle'
-})({
+})(({ theme }) => ({
   display: 'block',
   fontSize: '0.65em',
   fontWeight: 400,
   textAlign: 'center',
   lineHeight: 1,
-  color: 'rgba(0, 0, 0, 0.6)'
-});
+  color: theme.palette.text.secondary
+}));
 
 const NavbarLeft = styled('span', {
   name: 'WuiNavbar',
   slot: 'Left'
-})({
+})(({ theme }) => ({
   position: 'relative',
   alignSelf: 'stretch',
   zIndex: 10,
@@ -148,16 +149,16 @@ const NavbarLeft = styled('span', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  marginRight: 10,
+  marginRight: theme.spacing(1),
   [`& .${buttonClasses.root}`]: {
     alignSelf: 'stretch'
   }
-});
+}));
 
 const NavbarRight = styled('span', {
   name: 'WuiNavbar',
   slot: 'Right'
-})({
+})(({ theme }) => ({
   position: 'relative',
   alignSelf: 'stretch',
   zIndex: 10,
@@ -165,11 +166,11 @@ const NavbarRight = styled('span', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  marginLeft: 10,
+  marginLeft: theme.spacing(1),
   [`& .${buttonClasses.root}`]: {
     alignSelf: 'stretch'
   }
-});
+}));
 
 const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiNavbar' });

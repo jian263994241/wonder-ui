@@ -5,15 +5,16 @@ import getMiniDecimal, {
   toFixed,
   ValueType
 } from './utils/MiniDecimal';
-import Input, { inputClasses, InputProps, InputAction } from '../Input';
+import Input, { InputAction, inputClasses, InputProps } from '../Input';
 import StepButton from '../StepButton';
 import styled from '../styles/styled';
 import {
+  composeClasses,
   css,
-  generateUtilityClasses,
-  mergedRef,
   forwardRef,
-  composeClasses
+  generateUtilityClasses,
+  globalClasses,
+  mergedRef
 } from '@wonder-ui/utils';
 import {
   getNumberPrecision,
@@ -23,8 +24,8 @@ import {
 import {
   useCursor,
   useEventCallback,
-  useUpdateEffect,
-  useSafeState
+  useSafeState,
+  useUpdateEffect
 } from '@wonder-ui/hooks';
 // https://github.com/react-component/input-number/blob/master/src/InputNumber.tsx
 
@@ -48,6 +49,9 @@ const COMPONENT_NAME = 'WuiInputNumber';
 
 export const inputNumberClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
+  'stepHandler',
+  'stepHandlerUp',
+  'stepHandlerDown',
   'notNumber',
   'outOfRange'
 ]);
@@ -122,7 +126,10 @@ export interface InputNumberStyleProps extends InputNumberProps {
 const useClasses = (styleProps: InputNumberStyleProps) => {
   const { classes, notNumber, outOfRange } = styleProps;
   const slots = {
-    root: ['root', notNumber && 'notNumber', outOfRange && 'outOfRange']
+    root: ['root', notNumber && 'notNumber', outOfRange && 'outOfRange'],
+    stepHandler: ['stepHandler'],
+    stepHandlerUp: ['stepHandlerUp'],
+    stepHandlerDown: ['stepHandlerDown']
   };
 
   return composeClasses(COMPONENT_NAME, slots, classes);
@@ -151,11 +158,12 @@ const InputNumberStepHandler = styled('span', {
 })(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  width: 22,
+  width: 18,
   height: '100%',
+  fontSize: 12,
   borderLeft: 'thin solid',
   borderColor: theme.palette.divider,
-  marginRight: -8
+  marginRight: -theme.spacing(1)
 }));
 
 const InputNumberStepHandlerUp = styled(StepButton, {
@@ -168,19 +176,25 @@ const InputNumberStepHandlerUp = styled(StepButton, {
   textAlign: 'center',
   borderBottom: 'thin solid',
   borderColor: theme.palette.divider,
-  fontSize: '0.8em'
+  [`&.${globalClasses.disabled}`]: {
+    color: theme.palette.action.disabled,
+    cursor: 'not-allowed'
+  }
 }));
 
 const InputNumberStepHandlerDown = styled(StepButton, {
   name: COMPONENT_NAME,
   slot: 'HandlerDown'
-})({
+})(({ theme }) => ({
   display: 'block',
   width: '100%',
   height: '50%',
   textAlign: 'center',
-  fontSize: '0.8em'
-});
+  [`&.${globalClasses.disabled}`]: {
+    color: theme.palette.action.disabled,
+    cursor: 'not-allowed'
+  }
+}));
 
 const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
   (props, ref) => {
@@ -686,10 +700,11 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
             <React.Fragment>
               {suffix}
               {
-                <InputNumberStepHandler>
+                <InputNumberStepHandler className={classes.stepHandler}>
                   {upHandler || (
                     <InputNumberStepHandlerUp
                       disabled={upDisabled}
+                      className={classes.stepHandlerUp}
                       onStep={() => onInternalStep(true, true)}
                     >
                       <ArrowForward fontSize="inherit" direction="up" />
@@ -699,6 +714,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
                   {downHandler || (
                     <InputNumberStepHandlerDown
                       disabled={downDisabled}
+                      className={classes.stepHandlerDown}
                       onStep={() => onInternalStep(false, true)}
                     >
                       <ArrowForward fontSize="inherit" direction="down" />

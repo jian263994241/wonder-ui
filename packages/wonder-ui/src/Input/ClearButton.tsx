@@ -5,7 +5,7 @@ import { emphasize } from '../styles/colorManipulator';
 
 export default function (props: ButtonBaseProps) {
   const theme = useTheme();
-  const currentColor = emphasize(theme.palette.light.main, 0.6);
+  const currentColor = emphasize(theme.palette.light.main, 0.3);
   const contrastText = theme.palette.light.main;
   return (
     <ButtonBase tabIndex={-1} disableRipple {...props}>

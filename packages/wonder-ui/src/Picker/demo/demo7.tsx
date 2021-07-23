@@ -3,6 +3,7 @@
  * desc: 在实际场景中，Picker 通常作为用于辅助表单填写，可以搭配 `Drawer` 实现该效果
  */
 import {
+  Drawer,
   Picker,
   PickerProps,
   Page,
@@ -14,9 +15,7 @@ import { useReactive } from '@wonder-ui/hooks';
 
 const props: PickerProps = {
   columns: ['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华', '衢州'],
-  defaultIndex: 2,
-  drawer: true,
-  showNavbar: true
+  defaultIndex: 2
 };
 
 export default () => {
@@ -37,17 +36,25 @@ export default () => {
           }}
         />
       </List>
-      <Picker
+      <Drawer
+        keepMounted
+        anchor="bottom"
         visible={state.visible}
-        onConfirm={(value: string) => {
-          state.visible = false;
-          state.value = value;
-        }}
-        onCancel={() => {
+        onClose={() => {
           state.visible = false;
         }}
-        {...props}
-      />
+      >
+        <Picker
+          onConfirm={(value: string) => {
+            state.visible = false;
+            state.value = value;
+          }}
+          onCancel={() => {
+            state.visible = false;
+          }}
+          {...props}
+        />
+      </Drawer>
     </Page>
   );
 };
