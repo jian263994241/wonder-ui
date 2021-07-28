@@ -3,10 +3,9 @@ import { toString } from './toString';
 
 /**
  * 首字母大写, 拼接className用
- * @param str
+ * @param string
  */
 
-export const capitalize = <T extends string>(string: T): Capitalize<T> => {
-  //@ts-expect-error
+export const capitalize = <T extends string>(string: T): string => {
   return upperFirst(toString(string).toLowerCase());
 };

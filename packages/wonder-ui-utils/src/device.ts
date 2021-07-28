@@ -1,5 +1,5 @@
-import { getWindow, getDocument } from './dom';
-
+import { getDocument } from './dom/getDocument';
+import { getWindow } from './dom/getWindow';
 interface Supoort {
   touch: boolean;
   pointerEvents: boolean;

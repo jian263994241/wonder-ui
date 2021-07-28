@@ -15,6 +15,6 @@ export * from './dom/getWindow';
 export * from './dom/isVirtualElement';
 export * from './dom/on';
 export * from './dom/portalContainsElement';
-export * from './dom/raiseClick';
 export * from './dom/setPortalAttribute';
 export * from './dom/setVirtualParent';
+export * from './dom/nextTick';

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { getDocument } from './getDocument';
 
 export function stopPropagation(event: Event | React.BaseSyntheticEvent) {
   event.stopPropagation();
@@ -18,8 +19,27 @@ export function preventDefault(
   }
 }
 
+export function createEvent(): Event {
+  let event;
+  if (typeof Event === 'function') {
+    // Chrome, Opera, Firefox
+    event = new Event('Event');
+  } else {
+    // IE
+    event = getDocument().createEvent('HTMLEvents');
+  }
+  return event;
+}
+
 export function trigger(target: Element, type: string) {
-  const inputEvent = document.createEvent('HTMLEvents');
-  inputEvent.initEvent(type, true, true);
-  target.dispatchEvent(inputEvent);
+  const event = createEvent();
+
+  event.initEvent(type, true, true);
+
+  target.dispatchEvent(event);
+}
+
+/** Raises a click event. */
+export function raiseClick(target: Element): void {
+  trigger(target, 'click');
 }

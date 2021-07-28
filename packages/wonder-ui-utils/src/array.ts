@@ -75,12 +75,12 @@ export function findAll<T>(
  */
 export function createArray<T>(
   size: number,
-  getItem: (index: number) => T
+  iteratee: (index: number) => T
 ): T[] {
   let array: T[] = [];
 
   for (let i = 0; i < size; i++) {
-    array.push(getItem(i));
+    array.push(iteratee(i));
   }
 
   return array;
