@@ -78,6 +78,7 @@ export default defineConfig({
         children: [
           'components/checkableGroup.md',
           'components/checkbox.md',
+          'components/datePicker.md',
           'components/input.md',
           'components/inputNumber.md',
           'components/listInputItem.md',

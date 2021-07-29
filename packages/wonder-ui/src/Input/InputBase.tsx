@@ -5,12 +5,17 @@ import styled from '../styles/styled';
 import TextareaAutosize from './TextareaAutosize';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { composeClasses, css, generateUtilityClasses } from '@wonder-ui/utils';
+import {
+  composeClasses,
+  css,
+  generateUtilityClasses,
+  nextTick
+} from '@wonder-ui/utils';
 import { InputFocusOptions, resolveOnChange, triggerFocus } from './inputUtils';
 import {
   useControlled,
-  useForkRef,
   useEventCallback,
+  useForkRef,
   useSafeState
 } from '@wonder-ui/hooks';
 
@@ -438,10 +443,9 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
     });
 
     const handleReveal = useEventCallback(() => {
-      setRevealingPassword(!isRevealingPassword);
-      setTimeout(() => {
+      setRevealingPassword(!isRevealingPassword, () => {
         action.focus({ cursor: 'end' });
-      }, 0);
+      });
     });
 
     return (

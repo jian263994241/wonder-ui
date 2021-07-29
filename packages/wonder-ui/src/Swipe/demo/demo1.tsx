@@ -13,7 +13,7 @@ const SwipeItem = styled('div')`
 `;
 
 export default () => (
-  <Swipe autoplay arrows dots infinite>
+  <Swipe autoplay arrows dots infinite resistance>
     <SwipeItem>1</SwipeItem>
     <SwipeItem>2</SwipeItem>
     <SwipeItem>3</SwipeItem>

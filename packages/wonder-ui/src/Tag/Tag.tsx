@@ -48,11 +48,11 @@ const TagRoot = styled('span', {
   ...(styleProps.color &&
     styleProps.color != 'default' && {
       color: theme.palette[styleProps.color]?.main,
-      borderColor: theme.palette[styleProps.color].main,
-      backgroundColor: alpha(theme.palette[styleProps.color].main, 0.15),
+      borderColor: theme.palette[styleProps.color]?.main,
+      backgroundColor: alpha(theme.palette[styleProps.color]?.main, 0.15),
       [`&.${tagClasses.contained}`]: {
-        color: theme.palette[styleProps.color].contrastText,
-        backgroundColor: theme.palette[styleProps.color].main
+        color: theme.palette[styleProps.color]?.contrastText,
+        backgroundColor: theme.palette[styleProps.color]?.main
       }
     })
 }));

@@ -149,8 +149,6 @@ export interface PickerProps {
   style?: React.CSSProperties;
   classes?: Partial<typeof pickerClasses>;
 
-  drawer?: boolean;
-
   itemHeight?: number;
 
   textKey?: string;
@@ -325,8 +323,10 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
   // set column value by index
   const setColumnValue = (index: number, value: string | number) => {
     const column = getChild(index);
+
     if (column) {
       column.setValue(value);
+
       if (dataType === 'cascade') {
         onCascadeChange(index);
       }

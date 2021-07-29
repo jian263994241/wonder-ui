@@ -13,3 +13,4 @@ sidemenu: false
 | children | 锚节点 | ReactElement |
 | placement | 位置 | `'top' \| 'bottom' \| 'right' \| 'left' \| 'auto' \| 'auto-start' \| 'auto-end' \| 'top-start' \| 'top-end' \| 'bottom-start' \| 'bottom-end' \| 'right-start' \| 'right-end' \| 'left-start' \| 'left-end'` | top
 | title | 标题 | `ReactNode` |
+| triggerType | 触发类型 | 'touch' \| 'hover' \| 'focus' | focus

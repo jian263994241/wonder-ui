@@ -191,6 +191,7 @@ const PickerColumn = React.forwardRef<HTMLDivElement, PickerColumnProps>(
       index = adjustIndex(index) || 0;
 
       const offset = -index * itemHeight;
+
       const trigger = () => {
         if (index !== state.index) {
           state.index = index;
@@ -202,7 +203,7 @@ const PickerColumn = React.forwardRef<HTMLDivElement, PickerColumnProps>(
       };
 
       // trigger the change event after transitionend when moving
-      if (moving && offset !== state.offset) {
+      if (moving.current && offset !== state.offset) {
         transitionEndTrigger.current = trigger;
       } else {
         trigger();
@@ -266,7 +267,7 @@ const PickerColumn = React.forwardRef<HTMLDivElement, PickerColumnProps>(
 
       touch.start(event);
 
-      if (moving) {
+      if (moving.current) {
         const translateY = getElementTranslateY(wrapper.current!);
 
         state.offset = Math.min(0, translateY - baseOffset());
@@ -370,6 +371,7 @@ const PickerColumn = React.forwardRef<HTMLDivElement, PickerColumnProps>(
 
     const setValue = (value: string | number) => {
       const { options } = state;
+
       for (let i = 0; i < options.length; i++) {
         if (getOptionText(options[i]) === value) {
           return setIndex(i);

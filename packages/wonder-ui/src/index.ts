@@ -52,6 +52,9 @@ export * from './Container';
 export { default as CountDown } from './CountDown';
 export * from './CountDown';
 
+export { default as DatePicker } from './DatePicker';
+export * from './DatePicker';
+
 export { default as Dialog } from './Dialog';
 export * from './Dialog';
 
@@ -207,8 +210,8 @@ export * from './TabPane';
 export { default as Tag } from './Tag';
 export * from './Tag';
 
-export { default as TextField } from './TextField';
-export * from './TextField';
+export { default as TimePicker } from './TimePicker';
+export * from './TimePicker';
 
 export { default as Toggle } from './Toggle';
 export * from './Toggle';

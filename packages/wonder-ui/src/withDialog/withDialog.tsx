@@ -5,9 +5,7 @@ import Snackbar, { SnackbarProps } from '../Snackbar';
 import { createChainedFunction, hoistStatics } from '@wonder-ui/utils';
 import { useSafeState } from '@wonder-ui/hooks';
 
-const StackContext = React.createContext({
-  manager: new Manager()
-});
+const defaultManager = new Manager();
 
 interface Dialogs {
   custom: (props: DialogProps) => void;
@@ -48,9 +46,11 @@ export default function withDialog<P>(
     }
   >
 ) {
+  const ComponentMemo = React.memo(Component) as React.ComponentType<any>;
+
   const returnComponent = React.forwardRef<React.ComponentType<P>, P>(
     (props, ref) => {
-      const { manager } = React.useContext(StackContext);
+      const manager = defaultManager;
       const [dialogProps, setDialogProps] = useSafeState<DialogProps>({});
       const [toastProps, setToastProps] = useSafeState<SnackbarProps>({});
 
@@ -80,7 +80,7 @@ export default function withDialog<P>(
         });
       };
 
-      const dialog: Dialogs = {
+      const dialogRef = React.useRef<Dialogs>({
         custom: makeDialog,
         alert: (props = {}) => {
           const { okText = '确定', onOk, ...rest } = props;
@@ -148,11 +148,11 @@ export default function withDialog<P>(
             });
           }
         }
-      };
+      });
 
       return (
         <React.Fragment>
-          <Component {...props} dialog={dialog} ref={ref} />
+          <ComponentMemo {...props} dialog={dialogRef.current} ref={ref} />
           <Dialog visible={false} {...dialogProps} />
           <Snackbar visible={false} {...toastProps} />
         </React.Fragment>

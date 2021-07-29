@@ -21,6 +21,7 @@ export interface TooltipProps
   placement?: PopperProps['placement'];
   title?: React.ReactNode;
   ref?: React.Ref<any>;
+  triggerType?: 'touch' | 'hover' | 'focus';
 }
 
 const TooltipRoot = styled(Popper, {
@@ -145,10 +146,14 @@ const Tooltip = React.forwardRef<HTMLElement, TooltipProps>((inProps, ref) => {
     placement = 'top',
     title,
     theme,
+    triggerType = 'focus',
     ...rest
   } = props;
 
-  const { active, targetRef } = useTouchFeedback({ disabled });
+  const { active, targetRef } = useTouchFeedback({
+    disabled,
+    type: triggerType
+  });
   const referenceElementRef = React.useRef<HTMLDivElement>(null);
   //@ts-expect-error
   const foreignRef = useForkRef(ref, children.ref);
