@@ -1,158 +1,62 @@
 import * as React from 'react';
-import { findIndex, getSupport, on } from '@wonder-ui/utils';
-import { useEnhancedEffect } from './useEnhancedEffect';
-import { useEventCallback } from './useEventCallback';
-import { useSafeState } from './useSafeState';
+import { BasicTarget } from './utils/dom';
+import { getSupport } from '@wonder-ui/utils';
+import { useBoolean } from './useBoolean';
+import { useClickAway } from './useClickAway';
+import { useConst } from './useConst';
+import { useEventListener } from './useEventListener';
 
-type HandleEvents =
-  | 'onTouchStart'
-  | 'onTouchMove'
-  | 'onTouchEnd'
-  | 'onTouchCancel'
-  | 'onMouseDown'
-  | 'onMouseUp'
-  | 'onMouseEnter'
-  | 'onMouseLeave';
-
-const triggerEventList = {
-  touch: [
-    'onTouchStart',
-    'onTouchMove',
-    'onTouchEnd',
-    'onTouchCancel',
-    'onMouseDown',
-    'onMouseUp',
-    'onMouseLeave'
-  ],
-  hover: ['onMouseEnter', 'onMouseLeave']
-};
-
-type EventHandler = <Ev extends Event>(e: Ev) => void;
-
-export interface TouchFeedbackOptions {
-  /**
-   * 禁用
-   */
-  disabled?: boolean;
-  /**
-   * 触发类型
-   */
-  type?: 'touch' | 'hover' | 'auto';
-}
+const evOptions = { passive: true };
 
 export function useTouchFeedback<T extends Element>(
-  options: TouchFeedbackOptions
+  options: {
+    /**
+     * 禁用
+     */
+    disabled?: boolean;
+    /**
+     * 触发类型
+     */
+    type?: 'touch' | 'hover' | 'focus';
+    /**
+     * Focus node
+     */
+    focusElement?: BasicTarget<Element>;
+  } = {}
 ) {
-  const { disabled = false, type: typeProp = 'auto', ...eventsProp } = options;
+  const { disabled = false, type = 'focus', focusElement } = options;
+
   const targetRef = React.useRef<T>(null);
-  const type = React.useMemo(() => {
-    const support = getSupport();
+  const support = useConst(() => getSupport());
+  const [active, { setTrue, setFalse }] = useBoolean(false);
 
-    if (!typeProp || typeProp === 'auto') {
-      return support.touch ? 'touch' : 'hover';
-    }
-    return typeProp;
-  }, [typeProp]);
+  const touchstart = support.touch ? 'touchstart' : 'mousedown';
+  const touchmove = support.touch ? 'touchmove' : '';
+  const touchend = support.touch ? 'touchend' : 'mouseup';
+  const touchcancel = support.touch ? 'touchend' : 'mouseleave';
 
-  const [active, setActive] = useSafeState(false);
-
-  const triggerEvent = useEventCallback(
-    (eventType: HandleEvents, isActive: boolean, event: any) => {
-      //@ts-expect-error
-      const handleInProp = eventsProp[eventType];
-
-      if (handleInProp) {
-        handleInProp(event);
-      }
-
-      if (disabled) {
-        if (active) {
-          setActive(false);
-        }
-        return;
-      }
-
-      const eventList = triggerEventList[type];
-
-      if (findIndex(eventList, (n) => n === eventType) > -1) {
-        if (isActive !== active) {
-          setActive(isActive);
-        }
-      }
-    }
-  );
-
-  const onTouchStart: EventHandler = (e) => {
-    triggerEvent('onTouchStart', true, e);
+  const addEvent = (eventName: string, callback: () => void) => {
+    useEventListener(targetRef, eventName, callback, { passive: true });
   };
 
-  const onTouchMove: EventHandler = (e) => {
-    triggerEvent('onTouchMove', false, e);
-  };
+  if (type === 'hover') {
+    addEvent('mouseenter', setTrue);
+    addEvent('mouseleave', setFalse);
+  }
 
-  const onTouchEnd: EventHandler = (e) => {
-    triggerEvent('onTouchEnd', false, e);
-  };
+  if (type === 'touch') {
+    addEvent(touchstart, setTrue);
+    addEvent(touchmove, setFalse);
+    addEvent(touchend, setFalse);
+    addEvent(touchcancel, setFalse);
+  }
 
-  const onTouchCancel: EventHandler = (e) => {
-    triggerEvent('onTouchCancel', false, e);
-  };
+  if (type === 'focus') {
+    addEvent(touchstart, setTrue);
+    useClickAway(setFalse, [targetRef, focusElement], touchstart);
+  }
 
-  const onMouseDown: EventHandler = (e) => {
-    // pc simulate mobile
-    triggerEvent('onMouseDown', true, e);
-  };
-
-  const onMouseUp: EventHandler = (e) => {
-    triggerEvent('onMouseUp', false, e);
-  };
-
-  const onMouseLeave: EventHandler = (e) => {
-    triggerEvent('onMouseLeave', false, e);
-  };
-
-  const onMouseEnter: EventHandler = (e) => {
-    triggerEvent('onMouseEnter', true, e);
-  };
-
-  useEnhancedEffect(() => {
-    const { current: target } = targetRef;
-    const evOptions = { passive: true };
-
-    if (target && type === 'hover') {
-      const unMouseEnter = on(target, 'mouseenter', onMouseEnter, evOptions);
-      const unMouseLeave = on(target, 'mouseleave', onMouseLeave, evOptions);
-
-      return () => {
-        unMouseEnter();
-        unMouseLeave();
-      };
-    }
-
-    if (target && type === 'touch') {
-      // pc simulate mobile
-      const unMouseLeave = on(target, 'mouseleave', onMouseLeave, evOptions);
-      const unMouseDown = on(target, 'mousedown', onMouseDown, evOptions);
-      const unMouseUp = on(target, 'mouseup', onMouseUp, evOptions);
-      //touch
-      const unTouchstart = on(target, 'touchstart', onTouchStart, evOptions);
-      const unTouchMove = on(target, 'touchmove', onTouchMove, evOptions);
-      const unTouchEnd = on(target, 'touchend', onTouchEnd, evOptions);
-      const unTouchCancel = on(target, 'touchcancel', onTouchCancel, evOptions);
-
-      return () => {
-        unMouseLeave();
-        unMouseDown();
-        unMouseUp();
-        unTouchstart();
-        unTouchMove();
-        unTouchEnd();
-        unTouchCancel();
-      };
-    }
-  }, [targetRef]);
-
-  return { targetRef, active };
+  return { targetRef, active: disabled ? false : active };
 }
 
 export default useTouchFeedback;
