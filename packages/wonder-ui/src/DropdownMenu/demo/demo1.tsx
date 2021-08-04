@@ -1,7 +1,3 @@
-/**
- * title: 基本使用
- * desc: 使用`overlay`自定义内容
- */
 import { DropdownMenu, DropdownMenuItem, Page, Space } from '@wonder-ui/core';
 
 export default () => (

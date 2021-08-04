@@ -1,15 +1,25 @@
 ---
-sidemenu: false
+mobile: true
+toc: menu
+nav:
+  path: /components
+group:
+  path: /nav
+  title: 导航
+  order: 2
 ---
 
-### Navbar
+# Navbar 导航栏
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+提供左中右三块区域, 用于提供标题\关闭\返回等操作功能
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| classes | css api | `'root', 'inner', 'background', 'title', 'subTitle', 'left', 'right'` |
-| left | 左边的内容 | `ReactNode` |
-| right | 右边的内容 | `ReactNode` |
-| title | 标题 | `ReactNode` |
-| subTitle | 副标题 | `ReactNode` |
+## 代码演示
+
+### 基本使用
+
+Page组件内已包含Navbar
+
+<code src="./demo/demo1.tsx"></code>
+
+<API src="./Navbar.tsx" props="left|right|title|subTitle"></API>
+

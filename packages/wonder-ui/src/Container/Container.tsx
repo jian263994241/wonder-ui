@@ -9,7 +9,13 @@ import {
 import { css } from '@wonder-ui/utils';
 
 export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * Css api
+   */
   classes?: Partial<typeof containerClasses>;
+  /**
+   * 节点
+   */
   component?: React.ElementType;
   /**
    * 边距

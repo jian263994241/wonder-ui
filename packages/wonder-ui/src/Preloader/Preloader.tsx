@@ -15,32 +15,32 @@ export interface PreloaderProps extends React.HTMLAttributes<HTMLElement> {
    */
   ModalProps?: Partial<ModalProps>;
   /**
-   *  Trigger Element
+   *  触发节点
    */
-  children?: React.ReactElement;
+  children?: JSX.Element;
   /**
-   * Indicator
+   * 自定义指示器图标
    */
   indicator?: React.ReactNode;
   /**
-   * Async callback
+   * 异步回调
    */
   onLoad?: () => Promise<any>;
-
   /**
-   * Show text
+   * 文字
    */
   text?: string;
   /**
-   * ActivityIndicator type
+   * 指示器类型
+   * @default circular
    */
   type?: 'spinner' | 'circular';
   /**
-   * visible
+   * 是否显示
    */
   visible?: boolean;
   /**
-   * ActivityIndicator vertical
+   * 垂直排列
    */
   vertical?: boolean;
 }

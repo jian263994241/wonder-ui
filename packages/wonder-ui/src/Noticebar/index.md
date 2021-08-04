@@ -1,22 +1,22 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-display
+  title: 数据展示
+  order: 4
 ---
+# Noticebar 通知栏
 
-### Noticebar
+在导航栏下方，一般用作系统提醒、活动提醒等通知。
 
+## 代码演示
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| actions | 操作区域 | ReactNode |
-| classes | | |
-| closable | 可关闭的 | boolean | false
-| icon | 图标 | ReactNode |
-| scrollable | 滚动 | boolean | false
-| type | 类型 | 'success' \| 'info' \| 'warning' \| 'error' | info
-| wrap | 换行 | boolean | false
+### 基本使用
 
-### Noticebar classes
+<code src="./demo/demo1.tsx"></code>
 
-```
-'root', 'text', 'icon', 'actions', 'close', 'closable', 'scrollable', 'typeSuccess', 'typeInfo', 'typeWarning', 'typeError', 'wrap'
-```
+<API src="./Noticebar.tsx" props="actions|closable|icon|scrollable|type|wrap|onClose"></API>
+

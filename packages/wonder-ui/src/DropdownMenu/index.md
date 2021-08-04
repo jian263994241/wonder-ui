@@ -1,12 +1,36 @@
 ---
-sidemenu: false
+mobile: true
+toc: menu
+nav:
+  path: /components
+group:
+  path: /nav
+  title: 导航
+  order: 2
 ---
 
-### DropdownMenu
+# DropdownMenu 下拉菜单
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+向下弹出的菜单列表。
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| classes | css | `'root', 'expanded', 'widthAuto', 'bar', 'overlay', 'backdrop'` |
+## 代码演示
 
+### 基本使用
+
+使用`overlay`自定义内容
+
+<code src="./demo/demo1.tsx"></code>
+
+### 和列表使用
+
+<code src="./demo/demo2.tsx"></code>
+
+### 布局
+
+使用`widthAuto`设置自然宽度
+
+<code src="./demo/demo3.tsx"></code>
+
+<API src="./DropdownMenu.tsx" props="className|style|widthAuto"></API>
+
+<API src="../DropdownMenuItem/DropdownMenuItem.tsx" props="active|arrow|children|disableRipple|overlay"></API>

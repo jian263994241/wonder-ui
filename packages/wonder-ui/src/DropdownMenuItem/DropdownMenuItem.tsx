@@ -33,7 +33,7 @@ const DropdownMenuItemTitle = styled('span', {
   [`&.${dropdownMenuItemClasses.withArrow}:after`]: {
     position: 'absolute',
     top: '50%',
-    right: -theme.spacing(0.5),
+    right: '-0.5em',
     marginTop: -5,
     border: '3px solid',
     borderColor: 'transparent transparent #dcdee0 #dcdee0',
@@ -55,15 +55,31 @@ export interface DropdownMenuItemActions {
 }
 
 export interface DropdownMenuItemProps extends ButtonBaseProps {
+  /**
+   * 激活
+   */
   active?: boolean;
+  /**
+   * 显示箭头
+   */
   arrow?: boolean;
   classes?: Partial<typeof dropdownMenuItemClasses>;
+  /**
+   * 按钮内容
+   */
+  children?: React.ReactNode;
+
   component?: React.ElementType;
+  /**
+   * 禁用波纹
+   */
   disableRipple?: boolean;
+  /**
+   * 浮层
+   */
   overlay?:
     | React.ReactNode
     | ((actions: DropdownMenuItemActions) => React.ReactNode);
-  ref?: React.Ref<any>;
 }
 
 const DropdownMenuItem = React.forwardRef<HTMLElement, DropdownMenuItemProps>(

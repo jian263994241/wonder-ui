@@ -1,29 +1,76 @@
 ---
-sidemenu: false
+mobile: true
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-input
+  title: 数据录入
+  order: 3
 ---
 
-### Picker Props
+# Picker 选择器
+
+提供多个选项集合供用户选择，支持单列选择和多列级联。
+
+## 代码演示
 
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| columns	| 对象数组，配置每一列显示的数据 |	Column[]|	[]
-| title	| 顶部栏标题 |	string	| -
-| subTitle | 顶部栏标题 |	string	| -
-| confirmText	| 确认按钮文字 |	string	| 确认
-| cancelText	| 取消按钮文字 |	string	| 取消
-| textKey	| 选项对象中，选项文字对应的键名 |	string|	text
-| loading	| 是否显示加载状态	 | boolean	| false
-| readOnly | 是否为只读状态，只读状态下无法切换选项 |	boolean	| false
-| showNavbar	| 是否显示顶部栏	 | boolean |	true
-| navbarPosition | 顶部栏位置，可选值为bottom | top\|bottom | top
-| defaultIndex	| 单列选择时，默认选中项的索引 |	number | 	0
-| itemHeight	| 选项高度，支持 px	 | number	| 44
-| visibleItemCount	| 可见的选项个数 |	number |	6
-| visible | 抽屉显示隐藏,抽屉时可用 | boolean | false
-| swipeDuration	| 快速滑动时惯性滚动的时长，单位 ms	 | number	| 600
+### 基本使用
 
-### Column 数据结构
+单列选择时，可以通过 `defaultIndex` 属性设置初始选中项的索引
+
+<code src="./demo/demo1.tsx"></code>
+
+
+### 多列选择
+
+属性 `columns` 可以通过对象数组的形式配置多列选择，对象中可以配置选项数据、初始选中项等
+
+<code src="./demo/demo2.tsx"></code>
+
+### 级联选择
+
+级联选择的数据嵌套深度需要保持一致，如果部分选项没有子选项，可以使用空字符串进行占位
+
+
+<code src="./demo/demo3.tsx"></code>
+
+### 禁用选项
+
+选项可以为对象结构，通过设置 `disabled` 来禁用该选项。
+
+<code src="./demo/demo4.tsx"></code>
+
+### 动态设置选项
+
+通过 actionRef 上的实例方法可以更灵活地控制选择器，比如使用 setColumnValues 方法实现多列联动。
+
+<code src="./demo/demo5.tsx"></code>
+
+### 加载状态
+
+若选择器数据是异步获取的，可以通过 loading 属性显示加载提示。
+
+<code src="./demo/demo6.tsx"></code>
+
+### 搭配抽屉使用
+
+在实际场景中，Picker 通常作为用于辅助表单填写，可以搭配 `Drawer` 实现该效果
+
+<code src="./demo/demo7.tsx"></code>
+
+### 地址选择器
+
+使用`lcn`创建组件数据
+
+<code src="./demo/demo8.tsx"></code>
+
+<API src="./Picker.tsx" props="actionRef|columns|title|subTitle|confirmText|cancelText|textKey|childrenKey|loading|readOnly|showNavbar|navbarPosition|defaultIndex|itemHeight|visibleItemCount|visible|swipeDuration|onChange|onConfirm"></API>
+
+
+
+## Column 数据结构
 
 当传入多列数据时，`columns` 为一个对象数组，数组中的每一个对象配置每一列:
 
@@ -34,7 +81,7 @@ sidemenu: false
 | className | 为对应列添加额外的类名 | string
 | children | 级联选项 | Column
 
-### Picker 方法
+## 内置方法
 
 通过 `actionRef` 可以获取到 Picker 内置方法
 
@@ -52,8 +99,3 @@ sidemenu: false
 | setColumnValues	| 设置对应列中所有选项 |	columnIndex, values	| -
 | confirm	| 停止惯性滚动并触发 confirm 事件 |	-	| -
 
-### Picker classes
-
-```
-'root', 'drawser', 'columns', 'mask', 'indicator', 'cloumnRoot', 'cloumnInner', 'cloumnItem', 'loading', 'readOnly', 'showNavbar', 'navbar', 'drawer'
-```

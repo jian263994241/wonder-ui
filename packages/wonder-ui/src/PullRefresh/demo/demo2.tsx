@@ -1,7 +1,3 @@
-/**
- * title: 自定义提示
- * desc:
- */
 import { Page, PullRefresh, WhiteSpace, Container } from '@wonder-ui/core';
 import * as React from 'react';
 

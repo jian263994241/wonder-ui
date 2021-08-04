@@ -60,7 +60,7 @@ export interface DividerProps {
    */
   absolute?: boolean;
   /**
-   * Component as
+   * 节点
    */
   component?: React.ElementType;
   /**

@@ -2,7 +2,7 @@
  * title: 水平方向-垂直对齐
  * desc:
  */
-import { Space, SpaceItem, styled } from '@wonder-ui/core';
+import { Space, styled } from '@wonder-ui/core';
 
 const SpaceDemo = styled(Space)`
   background: #eee;
@@ -21,7 +21,7 @@ const Box = styled('div')`
 
 export default () => (
   <Space direction="vertical">
-    <SpaceItem>Top:</SpaceItem>
+    <div>Top:</div>
     <SpaceDemo verticalAlign="start">
       <Box>1</Box>
       <Box>2</Box>

@@ -7,7 +7,9 @@ import { listHeaderClasses, useClasses } from './ListHeaderClasses';
 export interface ListHeaderProps extends React.HTMLAttributes<HTMLLIElement> {
   classes?: Partial<typeof listHeaderClasses>;
   component?: React.ElementType;
-  disableSticky?: boolean;
+  /**
+   * 设置position: sticky
+   */
   sticky?: boolean;
   ref?: React.Ref<any>;
 }
@@ -42,14 +44,7 @@ const ListHeaderRoot = styled('li', {
 const ListHeader = React.forwardRef<HTMLElement, ListHeaderProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiListHeader' });
-    const {
-      children,
-      component,
-      className,
-      sticky = false,
-      disableSticky = false,
-      ...rest
-    } = props;
+    const { children, component, className, sticky = false, ...rest } = props;
 
     const styleProps = { ...props, sticky };
 

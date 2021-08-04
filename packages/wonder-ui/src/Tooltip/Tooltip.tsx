@@ -14,13 +14,48 @@ function round(value: number) {
 
 export interface TooltipProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
+  /**
+   * 显示箭头
+   * @default false
+   */
   arrow?: boolean;
   classes?: Partial<typeof tooltipClasses>;
-  children: React.ReactElement & React.RefAttributes<React.ReactElement>;
+  /**
+   * 锚节点
+   */
+  children: JSX.Element;
+  /**
+   * 禁用
+   */
   disabled?: boolean;
-  placement?: PopperProps['placement'];
+  /**
+   * 出现位置
+   * @default top
+   */
+  placement?:
+    | 'top'
+    | 'bottom'
+    | 'right'
+    | 'left'
+    | 'auto'
+    | 'auto-start'
+    | 'auto-end'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right-start'
+    | 'right-end'
+    | 'left-start'
+    | 'left-end';
+  /**
+   * 标题
+   */
   title?: React.ReactNode;
-  ref?: React.Ref<any>;
+  /**
+   * 触发类型
+   * @default focus
+   */
   triggerType?: 'touch' | 'hover' | 'focus';
 }
 

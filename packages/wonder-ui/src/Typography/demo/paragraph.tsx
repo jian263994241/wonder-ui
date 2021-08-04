@@ -1,7 +1,3 @@
-/**
- * title: 段落
- * desc: 文字其他属性 `noWrap`, `paragraph`, `gutterBottom`, `align`
- */
 import { Typography } from '@wonder-ui/core';
 
 export default function Example() {

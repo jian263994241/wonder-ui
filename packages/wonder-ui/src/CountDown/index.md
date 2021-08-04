@@ -1,19 +1,29 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-display
+  title: 数据展示
+  order: 4
 ---
+# CountDown 倒计时
 
-### CountDown
+用于实时展示倒计时数值，支持毫秒精度。
+
+## 代码演示
+
+### 基本使用
+
+<code src="./demo/demo1.tsx"></code>
+
+### 手动控制状态
+
+<code src="./demo/demo2.tsx"></code>
 
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| children | 内容 | (data: { countdown: number; formattedRes: FormattedRes; setTargetDate: React.Dispatch\<React.SetStateAction\<TDate\>\>; }) => ReactElement |
-| targetDate | 未来时间 | `TDate` |
-| interval | 变化时间间隔（毫秒） | number | 1000
-| onEnd | 结束后的回调函数 | () => void |
-
-
-### CountDown types
+## 类型
 
 ```ts
 type TDate = Date | number | string | undefined;
@@ -26,3 +36,6 @@ interface FormattedRes {
   milliseconds: number;
 }
 ```
+
+<API src="./CountDown.tsx" props="children|targetDate|interval|onEnd"></API>
+

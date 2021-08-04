@@ -1,7 +1,3 @@
-/**
- * title: 选择时间
- * desc:
- */
 import { TimePicker, TimePickerProps, withDialog } from '@wonder-ui/core';
 import dayjs from 'dayjs';
 

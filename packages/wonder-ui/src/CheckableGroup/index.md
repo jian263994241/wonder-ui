@@ -1,20 +1,27 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-input
+  title: 数据录入
+  order: 3
 ---
 
-### CheckableGroup
+# CheckableGroup 可选项
 
+控制`单选`, `多选`逻辑, 自定义UI
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| defaultValue | 默认值 | `TValue` |
-| exclusive | 单选 | boolean | false
-| onChange | 回调 | (value: `TValue`): void |
-| options | 配置选项 | { value: `TValue`; [k: string]: any }[] |
-| renderItem | 渲染项 | (props: `CheckableGroupItemProps`): ReactNode |
-| value | 值 | `TValue` |
+### 按钮选项组
 
-### CheckableGroup types
+<code src="../ButtonGroup/demo/demo4.tsx"></code>
+
+### 单选选项组
+
+<code src="../ButtonGroup/demo/demo5.tsx"></code>
+
+## 类型
 
 ```ts
 type TValue = any | any[];
@@ -26,3 +33,8 @@ interface CheckableGroupItemProps {
   key: number;
 }
 ```
+
+<API src="./CheckableGroup.tsx" props="defaultValue|exclusive|onChange|options|onRenderItem|value"></API>
+
+
+

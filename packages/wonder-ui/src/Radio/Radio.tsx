@@ -8,10 +8,14 @@ import { css } from '@wonder-ui/utils';
 export interface RadioProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   /**
-   * @description color
+   * @description 颜色
    * @default primary
    */
   color?: 'primary' | 'secondary';
+  /**
+   * 标签
+   */
+  children?: React.ReactNode;
 }
 
 export interface RadioStyleProps extends RadioProps {}

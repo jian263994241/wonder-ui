@@ -57,17 +57,57 @@ export type PullRefreshStatus =
 
 export interface PullRefreshProps extends React.HTMLAttributes<HTMLDivElement> {
   classes?: Partial<typeof pullRefreshClasses>;
+  /**
+   * 是否处于加载中状态
+   */
   refreshing?: boolean;
+  /**
+   * 下拉刷新时触发
+   */
   onRefresh?: () => void;
+  /**
+   * 顶部内容高度
+   * @default 50
+   */
   headHeight?: number;
+  /**
+   * 触发下拉刷新的距离
+   * @default 与headHeight一致
+   */
   pullDistance?: number;
+  /**
+   * 禁用下拉刷新
+   */
   disabled?: boolean;
+  /**
+   * 刷新成功提示展示时长(ms)
+   * @default 500
+   */
   successDuration?: number;
+  /**
+   * 动画时长
+   * @default 300
+   */
   animationDuration?: number;
+  /**
+   * 刷新成功提示文案
+   */
   successText?: string;
+  /**
+   * 下拉过程提示文案
+   */
   pullingText?: string;
+  /**
+   * 释放过程提示文案
+   */
   loosingText?: string;
+  /**
+   * 加载过程提示文案
+   */
   loadingText?: string;
+  /**
+   * 自定义节点
+   */
   slots?: Partial<
     Record<
       PullRefreshStatus,

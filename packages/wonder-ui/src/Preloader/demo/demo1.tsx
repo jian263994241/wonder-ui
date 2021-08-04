@@ -1,7 +1,3 @@
-/**
- * title: 基本使用
- * desc:
- */
 import { Button, Container, Preloader } from '@wonder-ui/core';
 import { useToggle } from '@wonder-ui/hooks';
 

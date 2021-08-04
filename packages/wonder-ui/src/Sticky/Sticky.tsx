@@ -30,11 +30,27 @@ export type StickyPosition = 'top' | 'bottom';
 
 export interface StickyProps extends React.HTMLAttributes<HTMLDivElement> {
   classes?: Partial<typeof stickyClasses>;
+  /**
+   * 容器
+   */
   container?: HTMLElement | null;
   component?: React.ElementType;
+  /**
+   * 固定位置
+   */
   offsetBottom?: number;
+  /**
+   * 固定位置
+   */
   offsetTop?: number;
+  /**
+   * 固定
+   */
   position?: StickyPosition;
+  /**
+   * z-index
+   * @default 999
+   */
   zIndex?: number;
 }
 

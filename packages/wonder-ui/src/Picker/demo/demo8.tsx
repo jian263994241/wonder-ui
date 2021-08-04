@@ -1,7 +1,3 @@
-/**
- * title: 地址选择器
- * desc: 使用`lcn`创建组件数据
- */
 import {
   Picker,
   PickerAction,

@@ -50,13 +50,35 @@ const useClasses = (styleProps: NoticebarProps) => {
 };
 
 export interface NoticebarProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * 操作区域
+   */
   actions?: React.ReactNode;
   classes?: Partial<typeof noticebarClasses>;
+  /**
+   * 可关闭的
+   */
   closable?: boolean;
+  /**
+   * 图标
+   */
   icon?: React.ReactNode;
+  /**
+   * 关闭时回调
+   */
   onClose?(): void;
+  /**
+   * 滚动
+   */
   scrollable?: boolean;
+  /**
+   * 类型
+   * @default info
+   */
   type?: 'success' | 'info' | 'warning' | 'error';
+  /**
+   * 换行
+   */
   wrap?: boolean;
 }
 

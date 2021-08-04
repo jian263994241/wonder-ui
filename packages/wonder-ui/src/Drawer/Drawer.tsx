@@ -50,7 +50,7 @@ export interface DrawerProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   TransitionProps?: BaseTransitionProps;
   /**
-   * onClose
+   * 关闭时触发事件
    */
   onClose?: ModalProps['onClose'];
   /**
@@ -58,7 +58,7 @@ export interface DrawerProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   ModalProps?: Partial<ModalProps>;
   /**
-   *
+   * 保持节点存在
    */
   keepMounted?: ModalProps['keepMounted'];
 }
@@ -148,14 +148,11 @@ const oppositeDirection = {
   bottom: 'up'
 } as const;
 
-export function isHorizontal(anchor?: string): anchor is 'left' | 'right' {
+function isHorizontal(anchor?: string): anchor is 'left' | 'right' {
   return ['left', 'right'].indexOf(anchor || '') !== -1;
 }
 
-export function getAnchor(
-  theme: Theme,
-  anchor: NonNullable<DrawerProps['anchor']>
-) {
+function getAnchor(theme: Theme, anchor: NonNullable<DrawerProps['anchor']>) {
   return theme.direction === 'rtl' && isHorizontal(anchor)
     ? oppositeDirection[anchor]
     : anchor;

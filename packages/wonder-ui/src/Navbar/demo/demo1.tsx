@@ -1,29 +1,17 @@
-/**
- * title: 基本使用
- * desc: Page组件内已包含Navbar
- */
 import {
   ArrowForward,
   Button,
-  Container,
   CloseButton,
   IconButton,
   Navbar,
-  Space,
-  useTheme
+  Page,
+  Space
 } from '@wonder-ui/core';
-import { ThreeDotsVertical, Search } from '@wonder-ui/icons';
+import { Search, ThreeDotsVertical } from '@wonder-ui/icons';
 
 export default () => {
-  const theme = useTheme();
   return (
-    <Container
-      size="sm"
-      style={{
-        backgroundColor: theme.palette.background.default,
-        padding: 20
-      }}
-    >
+    <Page>
       <Space direction="vertical" nowrap>
         <Navbar right={<CloseButton />} />
 
@@ -95,6 +83,6 @@ export default () => {
           right={<Button variant="text">关闭</Button>}
         />
       </Space>
-    </Container>
+    </Page>
   );
 };

@@ -30,24 +30,24 @@ export interface BackdropProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   component?: React.ElementType;
   /**
-   * Transparent background
+   * 透明
    * @default false
    */
   invisible?: boolean;
   /**
-   * Show or hide
+   * 是否显示
    * @default false
    */
   visible: boolean;
   /**
-   * The duration for the transition, in milliseconds.
+   * 过渡时间(ms)
    */
   transitionDuration?: TransitionProps['timeout'];
 }
 
 export interface BackdropStyleProps extends BackdropProps {}
 
-export const useClasses = (styleProps: BackdropStyleProps) => {
+const useClasses = (styleProps: BackdropStyleProps) => {
   const { invisible, classes } = styleProps;
 
   const slots = {
@@ -76,7 +76,6 @@ const BackdropRoot = styled('div', { name: 'WuiBackdrop', slot: 'Root' })({
 
 const Backdrop = forwardRef<HTMLElement, BackdropProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiBackdrop' });
-
   const {
     children,
     className,

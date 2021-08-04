@@ -1,7 +1,3 @@
-/**
- * title: 异步使用
- * desc:
- */
 import { Button, Preloader } from '@wonder-ui/core';
 
 const loadData = () =>

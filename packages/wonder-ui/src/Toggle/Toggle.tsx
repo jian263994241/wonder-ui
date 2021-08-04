@@ -7,7 +7,7 @@ import { css } from '@wonder-ui/utils';
 export interface ToggleProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> {
   /**
-   * @description checked
+   * checked
    */
   checked?: boolean;
   /**
@@ -15,7 +15,7 @@ export interface ToggleProps
    */
   classes?: Partial<typeof toggleClasses>;
   /**
-   * @description color
+   * color
    * @default primary
    */
   color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
@@ -24,60 +24,56 @@ export interface ToggleProps
    */
   component?: React.ElementType;
   /**
-   * @description default checked
+   * default checked
    */
   defaultChecked?: boolean;
   /**
-   * @description disabled
+   * disabled
    * @default false
    */
   disabled?: boolean;
   /**
-   * @description checked icon
+   * checked icon
    */
-  checkedIcon?: React.ReactElement;
+  checkedIcon?: JSX.Element;
   /**
-   * @description icon
+   * icon
    */
-  icon?: React.ReactElement;
+  icon?: JSX.Element;
   /**
-   * @description id
+   * id
    */
   id?: string;
   /**
-   * @description input props
+   * input props
    * @default {}
    */
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   /**
-   * @description input ref
+   * input ref
    */
   inputRef?: React.Ref<HTMLInputElement>;
   /**
-   * @description onChange event
+   * onChange event
    */
   onChange?: (checked: boolean) => void;
   /**
-   * @description root element click event
+   * root element click event
    */
   onClick?: React.MouseEventHandler<HTMLLabelElement>;
   /**
-   * @description input required
+   * input required
    */
   required?: boolean;
   /**
-   * @description size
-   * @description medium
+   * size
+   * @default medium
    */
   size?: 'medium' | 'small';
   /**
    * input value
    */
   value?: any;
-  /**
-   * @ignore
-   */
-  ref?: React.Ref<any>;
 }
 
 const ToggleRoot = styled('label', {

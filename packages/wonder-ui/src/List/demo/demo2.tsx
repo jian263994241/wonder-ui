@@ -1,8 +1,3 @@
-/**
- * title: 嵌套列表
- * desc: 使用`Collapse`折叠列表
- * background: '#f5f5f5'
- */
 import { Collapse, Page, List, ListItem, ListItemText } from '@wonder-ui/core';
 import { HeartFill } from '@wonder-ui/icons';
 import { useToggle } from '@wonder-ui/hooks';

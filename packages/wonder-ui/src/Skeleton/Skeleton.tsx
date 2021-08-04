@@ -8,11 +8,23 @@ import { emphasize } from '../styles/colorManipulator';
 
 export interface SkeletonProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
+  /**
+   * 头像
+   */
   avatar?: boolean;
+  /**
+   * 圆形头像
+   */
   avatarRound?: boolean;
   classes?: Partial<typeof skeletonClasses>;
-  ref?: React.Ref<any>;
+  /**
+   * 行数
+   * @default 3
+   */
   row?: number;
+  /**
+   * 显示标题
+   */
   title?: boolean;
 }
 
@@ -28,7 +40,7 @@ const SkeletonRoot = styled('div', {
 })(({ theme }) => ({
   display: 'flex',
   width: '100%',
-  padding: theme.spacing(0, 2),
+  padding: theme.spacing(1, 2),
   boxSizing: 'border-box',
   animation: `${skeletonBlink} 1.2s ease-in-out infinite`
 }));

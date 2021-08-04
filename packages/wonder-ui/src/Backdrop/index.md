@@ -1,14 +1,22 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /fb
+  title: 反馈
+  order: 5
 ---
+# Backdrop 背板
 
-### Backdrop
+背景暗化组件用于强调特定元素.
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+## 代码演示
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| classes | css | `'root', 'invisible'` |
-| component | 根节点 | `ElementType` | div
-| invisible | 透明 | `boolean` | false
-| visible | 是否显示 | `boolean` | false
+### 基本使用
+
+<code src="./demo/demo1.tsx"></code>
+
+<API src="./Backdrop.tsx" props="invisible|visible|transitionDuration"></API>
+

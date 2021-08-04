@@ -6,6 +6,10 @@ import { listClasses, useClasses } from './ListClasses';
 
 export interface ListProps extends React.HTMLAttributes<HTMLElement> {
   component?: React.ElementType;
+  /**
+   * 内嵌样式
+   * @default false
+   */
   inset?: boolean;
   ref?: React.Ref<HTMLElement>;
 }

@@ -1,24 +1,32 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-input
+  title: 数据录入
+  order: 3
 ---
+# Toggle 开关
 
-### Toggle
+开关选择器。
 
-除了支持 `HTMLLabelElement` 所有属性, 还支持以下属性:
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| checked | checked | `boolean` | false
-| checkedIcon | checked icon | `ReactElement` |
-| classes | css api | `'root', 'input', 'icon', 'disabled', 'checked', 'sizeMedium', 'sizeSmall'` |
-| color | color | `'primary' \| 'secondary' \| 'danger' \| 'warning' \| 'info'` | primary
-| component | root element | `ElementType` | div
-| defaultChecked | default checked | `boolean` |
-| disabled | disabled | `boolean` | false
-| icon | icon | `ReactElement` |
-| id |  | `string` |
-| inputProps | input props | `InputHTMLAttributes` | {}
-| inputRef | input ref | `Ref` |
-| onChange | onChange event | `(checked: boolean) => void` |
-| required | input required | `boolean` |
-| size | size | `'medium' \| 'small'` | medium
+## 代码演示
+
+### 基本使用
+
+<code src="./demo/demo1.tsx"></code>
+
+### 尺寸
+
+<code src="./demo/demo2.tsx"></code>
+
+
+### 自定义切换图标
+
+<code src="./demo/demo4.tsx"></code>
+
+<API src="./Toggle.tsx" props="checked|checkedIcon|color|defaultChecked|disabled|icon|inputProps|inputRef|onChange|required|size"></API>
+

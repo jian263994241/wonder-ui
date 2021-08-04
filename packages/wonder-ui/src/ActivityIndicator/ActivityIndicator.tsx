@@ -59,6 +59,10 @@ const SIZE = {
 } as const;
 
 export interface ActivityIndicatorProps {
+  /**
+   * 按钮颜色
+   * @default inherit
+   */
   color?:
     | 'inherit'
     | 'primary'
@@ -71,10 +75,26 @@ export interface ActivityIndicatorProps {
     | 'dark';
   classes?: Partial<typeof activityIndicatorClasses>;
   className?: string;
+  /**
+   * 图标尺寸
+   * @default small
+   */
   iconSize?: 'small' | 'medium' | 'large';
   style?: React.CSSProperties;
+  /**
+   * 文字
+   *
+   */
   text?: string;
+  /**
+   * 类型
+   * @default circular
+   */
   type?: 'spinner' | 'circular';
+  /**
+   * 垂直布局
+   * @default false
+   */
   vertical?: boolean;
 }
 

@@ -1,7 +1,3 @@
-/**
- * title: 水平分割线
- * desc: 默认为水平分割线，可在中间加入文字。
- */
 import { Divider, Space, Typography } from '@wonder-ui/core';
 
 export default () => (

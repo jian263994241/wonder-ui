@@ -1,38 +1,31 @@
 ---
-sidemenu: false
+mobile: true
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-input
+  title: 数据录入
+  order: 3
 ---
 
+# ListInputItem 列表输入框
 
-### ListInputItem
+表单中的输入框组件。
 
+## 代码演示
 
+### 基本使用
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| InputProps | Input props | [InputProps](input#input) |
-| allowClear | 显示清除按钮 | boolean | false
-| defaultValue | 默认值 | any |
-| description | 提示信息 | ReactNode |
-| disabled | 禁用 | boolean |
-| divider | 分割线 | boolean |
-| errorMessage | 错误提示信息 | ReactNode |
-| label | 标签文字 | ReactNode |
-| labelAlign | 标签对齐 | 'left' \| 'right' | left
-| labelWidth | 标签宽度 | number | 6
-| maxLength | 输入字段长度 | number |
-| multiline | 多行输入框 | boolean | false
-| onChange | 事件 | InputProps['onChange'] |
-| placeholder | Input placeholder | string |
-| prefix | 前图标 | ReactNode |
-| readOnly | 只读 | boolean |
-| required | 必填 | boolean |
-| suffix | 后图标 | ReactNode |
-| type | 类型 | string | text
-| value | 值 | any |
+<code src="./demo/demo1.tsx"></code>
+
+### 自定义
+
+利用 `ListItem`, `Input`, `Label` 实现一个 `ListInputItem`
+
+<code src="./demo/demo2.tsx"></code>
 
 
-### ListInputItem classes
+<API src="./ListInputItem.tsx" props="InputProps|allowClear|defaultValue|description|disabled|divider|errorMessage|label|labelAlign|labelWidth|maxLength|multiline|onChange|placeholder|prefix|readOnly|required|suffix|type|value"></API>
 
-```
-'root', 'label', 'inputWrap', 'input', 'description', 'errorMessage', 'disabled', 'readOnly'
-```
+

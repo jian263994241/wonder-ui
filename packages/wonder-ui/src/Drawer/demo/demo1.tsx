@@ -1,7 +1,3 @@
-/**
- * title: 基本使用
- * desc: 方向 `'down' | 'left' | 'right' | 'up'`
- */
 import {
   Button,
   Drawer,
@@ -9,7 +5,7 @@ import {
   Page,
   Space,
   Typography,
-  isHorizontal
+  WhiteSpace
 } from '@wonder-ui/core';
 import { useToggle } from '@wonder-ui/hooks';
 
@@ -25,7 +21,8 @@ export default () => {
   };
 
   return (
-    <div>
+    <Page title="Drawer">
+      <WhiteSpace />
       <Space>
         <Button variant="contained" onClick={() => open('left')}>
           左
@@ -46,8 +43,8 @@ export default () => {
           title="Basic Drawer"
           style={{
             position: 'relative',
-            ...(isHorizontal(anchor)
-              ? { width: 300, height: '100%' }
+            ...(['left', 'right'].indexOf(anchor || '') !== -1
+              ? { width: 260, height: '100%' }
               : { width: '100%', height: 200 })
           }}
           showCloseButton
@@ -69,6 +66,6 @@ export default () => {
           </div>
         </Page>
       </Drawer>
-    </div>
+    </Page>
   );
 };

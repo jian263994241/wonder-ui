@@ -1,8 +1,3 @@
-/**
- * title: Dialog layout
- * desc:
- *
- */
 import { Page, Space, DialogContent, WhiteSpace } from '@wonder-ui/core';
 
 export default () => (

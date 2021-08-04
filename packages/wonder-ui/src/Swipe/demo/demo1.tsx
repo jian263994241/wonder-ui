@@ -1,7 +1,3 @@
-/**
- * title: 基本用法
- * desc:
- */
 import { Swipe, styled } from '@wonder-ui/core';
 
 const SwipeItem = styled('div')`

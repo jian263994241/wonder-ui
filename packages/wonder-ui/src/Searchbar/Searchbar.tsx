@@ -32,24 +32,24 @@ export const searchbarClasses = generateUtilityClasses(COMPONENT_NAME, [
 
 export interface SearchbarProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
-   * Input props
+   * Input属性
    */
   InputProps?: InputProps;
   /**
-   * Show cancel button
+   * 取消按钮
    * @default false
    */
   allowCancel?: boolean;
   /**
-   * Custom input left node
+   * 定义左边区域
    */
   barLeft?: React.ReactNode;
   /**
-   * Cutsom input right node
+   * 定义右边区域
    */
   barRight?: React.ReactNode;
   /**
-   * Cancel button text
+   * 取消按钮文本
    */
   cancelText?: string;
   /**
@@ -57,23 +57,23 @@ export interface SearchbarProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   classes?: Partial<typeof searchbarClasses>;
   /**
-   * Input default value
+   * 初始值
    */
   defaultValue?: InputProps['defaultValue'];
   /**
-   * Allway show Cancel button
+   * 取消按钮一直存在
    */
   fixCancelButton?: boolean;
   /**
-   * Input prefix icon
+   * 图标
    */
   icon?: React.ReactNode;
   /**
-   * Event callback
+   * 回调
    */
   onCencel?(): void;
   /**
-   * Event callback
+   * 回调
    */
   onChange?: InputProps['onChange'];
   /**
@@ -81,7 +81,7 @@ export interface SearchbarProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   placeholder?: string;
   /**
-   * Input value
+   * 当前值
    */
   value?: InputProps['value'];
 }

@@ -1,7 +1,3 @@
-/**
- * title: 和文字一起使用
- * desc:
- */
 import { Badge, Typography } from '@wonder-ui/core';
 
 export default () => (

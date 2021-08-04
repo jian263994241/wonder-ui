@@ -1,7 +1,3 @@
-/**
- * title: 抽屉内的页面
- * desc:
- */
 import {
   Button,
   Container,

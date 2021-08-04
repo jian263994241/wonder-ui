@@ -1,27 +1,43 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /layout
+  title: 布局
+  order: 1
 ---
 
-### Divider
+# Divider 分隔线
 
+分隔线是对列表和布局中的内容进行分组的一条细线。
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| absolute | 绝对定位	 | boolean | false
-| classes | 样式名 |  |
-| className | 样式名 | |
-| component | 根节点 | ElementType | hr
-| children | 内容 | ReactNode |
-| direction | 方向	 | 'horizontal' \| 'vertical' | horizontal
-| flexItem | flex子节点	 | boolean | false
-| light | 明亮	 | boolean | false
-| textAlign | 文字对齐	 | 'center' \| 'left' \| 'right' | center
-| variant | 类型	 | 'inset' \| 'middle' \| 'fullWidth' | fullWidth
-| style | 样式 | CSSProperties |
+## 代码演示
 
+### 水平分割线
 
-### Divider classes
+默认为水平分割线，可在中间加入文字。
 
-```
-'root', 'absolute', 'inset', 'middle', 'flexItem', 'light', 'vertical', 'withChildren', 'withChildrenVertical', 'textAlignRight', 'textAlignLeft', 'wrapper', 'wrapperVertical'
-```
+<code src="./demo/horizontal.tsx"></code>
+
+### 水平文字分割线
+
+分割线中带有文字，可以用 `textAlign` 指定文字位置。
+
+<code src="./demo/horizontal-title.tsx"></code>
+
+### 垂直文字分割线
+
+分割线中带有文字。
+
+<code src="./demo/vertical-title.tsx"></code>
+
+### 行内分割文字
+
+使用 `direction="vertical"`设置为行内的垂直分割线。
+
+<code src="./demo/vertical.tsx"></code>
+
+<API src="./Divider.tsx" props="absolute|classes|component|children|direction|flexItem|light|textAlign|variant"></API>
+

@@ -4,14 +4,26 @@ import { useCountDown } from '@wonder-ui/hooks';
 type TDate = Date | number | string | undefined;
 
 export interface CountDownProps {
+  /**
+   * 未来时间
+   */
   targetDate?: TDate;
+  /**
+   * 变化时间间隔（ms）
+   */
   interval?: number;
+  /**
+   * 结束后的回调
+   */
   onEnd?: () => void;
-  children?: (data: {
+  /**
+   * 渲染方法
+   */
+  children: (data: {
     countdown: number;
     formattedRes: FormattedRes;
     setTargetDate: React.Dispatch<React.SetStateAction<TDate>>;
-  }) => React.ReactElement;
+  }) => JSX.Element;
 }
 
 interface FormattedRes {

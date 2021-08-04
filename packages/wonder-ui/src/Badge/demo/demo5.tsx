@@ -1,7 +1,3 @@
-/**
- * title: 角标
- * desc:
- */
 import { Badge, Space, styled } from '@wonder-ui/core';
 
 const Block = styled('div')`

@@ -1,22 +1,36 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-display
+  title: 数据展示
+  order: 4
 ---
+# Collapse 折叠
 
-### Collapse
+利用组件在项目中切换内容的可见性
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+## 代码演示
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| classes | css | `'root', 'horizontal', 'vertical', 'hidden', 'visible'` |
-| collapsedSize | 折叠尺寸 | `string \| number` | 0
-| component | 根节点 | `ElementType` | div
-| direction | 方向 | `'horizontal' \| 'vertical'` | vertical
-| in | 显示隐藏 | `boolean` | false
-| onEnter | 事件 | `(node: HTMLElement, appearing: boolean) => void` |
-| onEntered | 事件 | `(node: HTMLElement, appearing: boolean) => void` |
-| onEntering | 事件 | `(node: HTMLElement, appearing: boolean) => void` |
-| onExit | 事件 | `(node: HTMLElement) => void` |
-| onExited | 事件 | `(node: HTMLElement) => void` |
-| onExiting | 事件 | `(node: HTMLElement) => void` |
-| timeout | 动画时间 | `'atuo' \| number \| { appear?: number; enter?: number; exit?: number }` | atuo
+### 基本使用
+
+通过改变 `visible` 显示或隐藏内容
+
+<code src="./demo/demo1.tsx"></code>
+
+### 设置折叠高度
+
+通过 `collapsedSize` 改变折叠高度
+
+<code src="./demo/demo2.tsx"></code>
+
+### 水平方向折叠
+
+通过 `direction=horizontal, collapsedSize` 改变折叠方向
+
+<code src="./demo/demo3.tsx"></code>
+
+<API src="./Collapse.tsx" props="collapsedSize|direction|in|onEnter|onEntered|onEntering|onExit|onExited|onExiting|timeout|className|style"></API>
+

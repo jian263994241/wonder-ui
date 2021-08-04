@@ -1,13 +1,23 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-input
+  title: 数据录入
+  order: 3
 ---
 
-### Radio
+# Radio 单选框
 
-除了支持 `HTMLInputElement` 所有属性, 还支持以下属性:
+单项选择
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| classes | css | `'root', 'colorPrimary', 'colorSecondary'` |
-| color | color | `'primary' \| 'secondary'` | primary
-| children | 标签 | `ReactNode` |
+## 代码演示
+
+### 基本的选择框
+
+<code src="./demo/demo1.tsx"></code>
+
+
+<API src="./Radio.tsx" props="color|children|value|onChange|defaultValue|className|style"></API>

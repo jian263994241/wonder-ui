@@ -1,7 +1,3 @@
-/**
- * title: 级联选择
- * desc: 使用 `columns` 的 `children` 字段可以实现选项级联的效果
- */
 import { Picker, PickerProps } from '@wonder-ui/core';
 
 const props: PickerProps = {

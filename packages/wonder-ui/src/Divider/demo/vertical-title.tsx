@@ -1,7 +1,3 @@
-/**
- * title: 带文字的垂直分割线
- * desc: 分割线中带有文字。
- */
 import { Typography, Divider } from '@wonder-ui/core';
 
 export default () => (

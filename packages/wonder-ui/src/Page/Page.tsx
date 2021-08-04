@@ -65,9 +65,9 @@ export interface PageProps
    */
   classes?: Partial<typeof pageClasses>;
   /**
-   * 导航栏
+   * 自定义导航栏
    */
-  navbar?: React.ReactElement;
+  navbar?: JSX.Element;
   /**
    * 返回按钮事件
    */
@@ -78,10 +78,12 @@ export interface PageProps
   onClose?: () => void;
   /**
    * 显示返回按钮
+   * @default false
    */
   showBackButton?: boolean;
   /**
    * 显示关闭按钮
+   * @default false
    */
   showCloseButton?: boolean;
   /**
@@ -93,9 +95,9 @@ export interface PageProps
    */
   title?: React.ReactNode;
   /**
-   * 工具栏
+   * 自定义工具栏
    */
-  toolbar?: React.ReactElement & React.RefAttributes<React.ReactElement>;
+  toolbar?: JSX.Element;
 }
 
 const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {

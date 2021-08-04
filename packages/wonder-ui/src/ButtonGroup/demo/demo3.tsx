@@ -1,7 +1,3 @@
-/**
- * title: 垂直按钮组
- * desc:
- */
 import { Button, ButtonGroup, Space } from '@wonder-ui/core';
 
 export default () => (

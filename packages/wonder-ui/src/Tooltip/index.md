@@ -1,16 +1,22 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-display
+  title: 数据展示
+  order: 4
 ---
+# Tooltip 工具提示
 
-### Tooltip
+鼠标悬停，聚焦或者轻触一个元素时，工具提示组件会显示一段提示文本。
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+## 代码演示
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| arrow | 显示箭头 | `boolean` | false
-| classes | css | `'root', 'tooltip', 'arrow', 'withArrow'` |
-| children | 锚节点 | ReactElement |
-| placement | 位置 | `'top' \| 'bottom' \| 'right' \| 'left' \| 'auto' \| 'auto-start' \| 'auto-end' \| 'top-start' \| 'top-end' \| 'bottom-start' \| 'bottom-end' \| 'right-start' \| 'right-end' \| 'left-start' \| 'left-end'` | top
-| title | 标题 | `ReactNode` |
-| triggerType | 触发类型 | 'touch' \| 'hover' \| 'focus' | focus
+### 基本使用
+
+<code src="./demo/demo1.tsx"></code>
+
+<API src="./Tooltip.tsx" props="arrow|children|placement|title|triggerType"></API>
+

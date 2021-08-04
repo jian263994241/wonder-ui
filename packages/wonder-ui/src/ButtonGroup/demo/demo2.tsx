@@ -1,7 +1,3 @@
-/**
- * title: 空心按钮
- * desc:
- */
 import { Button, ButtonGroup } from '@wonder-ui/core';
 
 export default () => (

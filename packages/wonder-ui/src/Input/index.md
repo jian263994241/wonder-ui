@@ -1,32 +1,57 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-input
+  title: 数据录入
+  order: 3
 ---
 
+# Input 输入框
 
-### Input
+基本的文字输入框
 
+## 代码演示
 
+### 基本使用
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| actionRef | `InputAction` | Ref\<InputAction\> |
-| allowClear | 可以点击清除图标删除内容 | boolean | -
-| borderless | 去除边框 | boolean | true
-| defaultValue | 输入框默认内容 | string | -
-| disabled | 是否禁用状态，默认为 false | boolean | false
-| maxLength | 最大长度 | number | -
-| prefix | 带有前缀图标的 input | ReactNode | -
-| suffix | 带有后缀图标的 input | ReactNode | -
-| type | 声明 input 类型，同原生 input 标签的 type 属性，见：[MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/input#属性) | string | text
-| multiline | 多行, 代替 `textarea` | boolean | false
-| maxRows | 多行时的最大行数 | number |
-| minRows | 多行时的最小行数 | number |  1
-| value | 输入框内容 | string | -
-| onChange | 输入框内容变化时的回调 | function(e) | -
-| onPressEnter | 按下回车的回调 | function(e) | -
+<code src="./demo/demo1.tsx"></code>
 
+### 带移除图标
 
-### Input Actions
+<code src="./demo/demo2.tsx"></code>
+
+### 前缀和后缀
+
+<code src="./demo/demo3.tsx"></code>
+
+### 无边框输入框
+
+<code src="./demo/demo4.tsx"></code>
+
+### 限制输入长度
+
+<code src="./demo/demo5.tsx"></code>
+
+### 多行输入
+
+<code src="./demo/demo6.tsx"></code>
+
+### 格式化显示
+
+<code src="./demo/demo7.tsx"></code>
+
+### 聚焦
+
+<code src="./demo/demo8.tsx"></code>
+
+### 密码框
+
+<code src="./demo/demo9.tsx"></code>
+
+## 类型
 
 ```typescript
 export interface InputFocusOptions extends FocusOptions {
@@ -44,10 +69,10 @@ export interface InputAction {
 }
 ```
 
-### Input Classes
+<API src="./InputBase.tsx" props="actionRef|allowClear|borderless|defaultValue|disabled|maxLength|prefix|suffix|type|multiline|maxRows|minRows|value|onChange|onPressEnter|onRenderPrefix|onRenderSuffix|parser|formatter"></API>
 
-```
-'root', 'input', 'prefix', 'suffix', 'clearButton', 'revealButton', 'borderless', 'multiline', 'disabled', 'focused', 'resizable', 'readonly'
-```
+
+
+
 
 

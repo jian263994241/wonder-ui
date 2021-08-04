@@ -1,7 +1,3 @@
-/**
- * title: 水平方向折叠
- * desc: 通过 `direction=horizontal, collapsedSize` 改变折叠方向
- */
 import {
   Button,
   Space,

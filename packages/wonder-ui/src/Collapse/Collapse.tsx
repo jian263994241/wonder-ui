@@ -17,9 +17,7 @@ import { reflow } from '../Transition/utils';
 
 const defaultTimeout = duration.area.medium;
 
-export interface CollapseProps
-  extends React.HTMLAttributes<HTMLElement>,
-    BaseTransitionProps {
+export interface CollapseProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Css api
    */
@@ -32,7 +30,7 @@ export interface CollapseProps
    */
   collapsedSize?: string | number;
   /**
-   * Transition duration ms
+   * 动画时间 ms
    * @default 300
    */
   timeout?: 'auto' | TransitionTimeout;
@@ -41,6 +39,18 @@ export interface CollapseProps
    * @default vertical
    */
   direction?: 'horizontal' | 'vertical';
+  /**
+   * 显示隐藏
+   * @default false
+   */
+  in?: boolean;
+
+  onEnter?: BaseTransitionProps['onEnter'];
+  onEntered?: BaseTransitionProps['onEntered'];
+  onEntering?: BaseTransitionProps['onEntering'];
+  onExit?: BaseTransitionProps['onExit'];
+  onExited?: BaseTransitionProps['onExited'];
+  onExiting?: BaseTransitionProps['onExiting'];
 }
 
 const CollapseRoot = styled('div', {
@@ -135,7 +145,10 @@ const Collapse = React.forwardRef<HTMLElement, CollapseProps>(
       return transitionDuration;
     };
 
-    const handleEntering: CollapseProps['onEntering'] = (node, isAppearing) => {
+    const handleEntering: BaseTransitionProps['onEntering'] = (
+      node,
+      isAppearing
+    ) => {
       node.style[dimension] = collapsedSize;
       node.style[dimension] = node[scrollSize] + 'px';
 
@@ -146,14 +159,17 @@ const Collapse = React.forwardRef<HTMLElement, CollapseProps>(
       }
     };
 
-    const handleEntered: CollapseProps['onEntered'] = (node, isAppearing) => {
+    const handleEntered: BaseTransitionProps['onEntered'] = (
+      node,
+      isAppearing
+    ) => {
       node.style[dimension] = collapsedSize != '0px' ? 'auto' : '';
       if (onEntered) {
         onEntered(node, isAppearing);
       }
     };
 
-    const handleExit: CollapseProps['onExit'] = (node) => {
+    const handleExit: BaseTransitionProps['onExit'] = (node) => {
       node.style[dimension] = node.getBoundingClientRect()[dimension] + 'px';
       reflow(node);
       if (onExit) {
@@ -161,7 +177,7 @@ const Collapse = React.forwardRef<HTMLElement, CollapseProps>(
       }
     };
 
-    const handleExiting: CollapseProps['onExiting'] = (node) => {
+    const handleExiting: BaseTransitionProps['onExiting'] = (node) => {
       node.style[dimension] = collapsedSize;
       node.style.transitionDuration = getTransitionDuration(node) + 'ms';
       if (onExiting) {
@@ -169,14 +185,17 @@ const Collapse = React.forwardRef<HTMLElement, CollapseProps>(
       }
     };
 
-    const handleExited: CollapseProps['onExited'] = (node) => {
+    const handleExited: BaseTransitionProps['onExited'] = (node) => {
       node.style[dimension] = collapsedSize != '0px' ? collapsedSize : '';
       if (onExited) {
         onExited(node);
       }
     };
 
-    const addEndListener: CollapseProps['addEndListener'] = (node, next) => {
+    const addEndListener: BaseTransitionProps['addEndListener'] = (
+      node,
+      next
+    ) => {
       if (timeout === 'auto') {
         timer.current = setTimeout(next, getTransitionDuration(node));
       }

@@ -9,25 +9,21 @@ import { useControlled, useForkRef } from '@wonder-ui/hooks';
 export interface CheckboxProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   /**
-   * @description shape
+   * @description 圆形
    * @default false
    */
   circle?: boolean;
   /**
-   * @description color
+   * @description 颜色
    * @default primary
    */
   color?: 'primary' | 'secondary';
 
   /**
-   * @description indeterminate
+   * @description 不明确的
    * @default false
    */
   indeterminate?: boolean;
-  /**
-   * @ignore
-   */
-  ref?: React.Ref<HTMLInputElement>;
 }
 
 export interface CheckboxStyleProps extends CheckboxProps {}

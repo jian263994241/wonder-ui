@@ -1,7 +1,3 @@
-/**
- * title: 带导航栏的页面
- * desc:
- */
 import { Container, Page, Typography, WhiteSpace } from '@wonder-ui/core';
 
 export default () => (

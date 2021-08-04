@@ -14,7 +14,7 @@ export interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
   offset?: ResponsiveValue<number>;
 }
 
-export const ColRoot = styled('div', { name: 'WuiCol', slot: 'Root' })({
+const ColRoot = styled('div', { name: 'WuiCol', slot: 'Root' })({
   flex: '1 0 0%'
 });
 

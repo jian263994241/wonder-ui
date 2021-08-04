@@ -1,7 +1,3 @@
-/**
- * title: 垂直按钮
- * desc: 设置 `buttonsVertical` 按钮排列方向
- */
 import { Button, Container, Dialog, Page, WhiteSpace } from '@wonder-ui/core';
 
 export default () => (

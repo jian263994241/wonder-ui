@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Picker, { PickerAction, PickerProps } from '../Picker';
+import useThemeProps from '../styles/useThemeProps';
 import {
   clamp,
   createArray,
@@ -17,15 +18,47 @@ import {
 
 type ColumnType = 'year' | 'month' | 'day' | 'hour' | 'minute';
 
+const COMPONENT_NAME = 'WuiDatePicker';
+
 export interface DatePickerProps extends Omit<PickerProps, 'columns'> {
+  /**
+   * 类型
+   * @default datetime
+   */
   type?: 'date' | 'datetime' | 'datehour' | 'month-day' | 'year-month';
+  /**
+   * 当前时间
+   */
   currentDate?: Date;
+  /**
+   * 可选的最小时间，精确到分钟
+   * @default 10年前
+   */
   minDate?: Date;
+  /**
+   * 可选的最大时间，精确到分钟
+   * @default 10年后
+   */
   maxDate?: Date;
+  /**
+   * 选项过滤函数
+   */
   filter?(type: ColumnType, values: string[]): string[];
+  /**
+   * 选项格式化函数
+   */
   formatter?(type: ColumnType, value: string): string;
+  /**
+   * 当值变化时触发的事件
+   */
   onChange?(value: Date): void;
+  /**
+   * 点击完成按钮时触发的事件
+   */
   onConfirm?(value: Date): void;
+  /**
+   * 点击取消按钮时触发的事件
+   */
   onCancel?(): void;
 }
 
@@ -35,7 +68,8 @@ const diffYear = 10;
 const defaultFormatter = (type: ColumnType, value: string) => value;
 
 const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>(
-  (props, ref) => {
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
       actionRef: actionRefProp,
       filter,

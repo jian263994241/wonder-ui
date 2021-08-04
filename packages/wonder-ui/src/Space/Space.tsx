@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { checkFlexGap, getSize, SpaceSize, Gap } from './SpaceUtils';
+import { checkFlexGap, getSize, Gap } from './SpaceUtils';
 import {
   composeClasses,
   css,
@@ -48,25 +48,25 @@ export interface SpaceProps extends React.HTMLAttributes<HTMLElement> {
    */
   classes?: Partial<typeof spaceClasses>;
   /**
-   * @ignore
+   * 节点
    */
   component?: React.ElementType;
   /**
-   * Direction
+   * 方向
    * @default horizontal
    */
   direction?: 'horizontal' | 'vertical';
   /**
-   * @ignore
+   * SpaceItem 包裹
    */
   itemWrap?: boolean;
   /**
-   * Defines the spacing between Space items.
+   * 间距
    * @default medium
    */
   gap?: Gap;
   /**
-   * Horizontal align
+   * 水平对齐
    */
   horizontalAlign?: Alignment;
   /**
@@ -75,19 +75,20 @@ export interface SpaceProps extends React.HTMLAttributes<HTMLElement> {
    */
   reversed?: boolean;
   /**
-   * Split node
+   * 分隔符
    */
   split?: React.ReactNode;
   /**
-   * Vertical align
+   * 垂直对齐
    */
   verticalAlign?: Alignment;
   /**
-   * height 100%
+   * 100%高度
    */
   verticalFill?: boolean;
   /**
-   * Wrap
+   * 不换行
+   * @default false
    */
   nowrap?: boolean;
 }
@@ -173,9 +174,7 @@ const SpaceSplit = styled('span', {
   alignItems: 'center'
 });
 
-export const SpaceItem = styled('span', { name: COMPONENT_NAME, slot: 'Item' })(
-  {}
-);
+const SpaceItem = styled('span', { name: COMPONENT_NAME, slot: 'Item' })({});
 
 const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });

@@ -2,7 +2,7 @@
  * title: 显示头像
  */
 
-import { Page, Paper, Skeleton } from '@wonder-ui/core';
+import { Page, Paper, Skeleton, Divider } from '@wonder-ui/core';
 
 export default () => (
   <Page title="Skeleton with avatar">

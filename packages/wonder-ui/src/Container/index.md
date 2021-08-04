@@ -1,14 +1,39 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /layout
+  title: 布局
+  order: 1
 ---
 
-### Container
+# Container 容器
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+Container 是最基本的布局元素，它包含，填充和对齐给定设备或视口中的内容。
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| classes | 样式名 | `'root', 'sizeSm', 'sizeMd', 'sizeLg', 'sizeXl'` |
-| component | 根节点 | `ElementType` | div
-| gutter | 间距	 | `number` | 2
-| size | 最大宽度	 | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'xxl' \| 'fluid'` | fluid
+在使用我们的默认网格系统时是必需的。 容器用于在其中容纳，填充和（有时）使内容居中。 尽管可以嵌套容器，但是大多数布局都不需要嵌套容器。 `Row`内已用`Container`包含。
+
+## 代码演示
+
+### 基本使用
+
+```typescript
+<Container size="sm">内容</Container>
+
+```
+
+## 响应式宽度
+
+| - | Extra small (<576px) | Small (≥576px) | Medium (≥768px) | Large (≥992px) | X-Large (≥1200px)
+| --- | --- | --- | --- | --- | ---
+| sm	| 100%	| 576px | 576px	| 576px	| 576px
+| md	| 100%	| 100%	| 768px | 768px	| 768px
+| lg	| 100%	| 100%	| 100% | 992px | 992px
+| xl	| 100%	| 100%	| 100% | 100%	| 1200px
+| fluid	| 100% | 100% |	100% | 100%	|100%
+
+
+<API src="./Container.tsx" props="classes|component|gutter|size"></API>
+

@@ -1,8 +1,3 @@
-/**
- * title: 列表链接
- * desc: 渲染为A标签
- * background: '#f5f5f5'
- */
 import { Page, List, ListItem, ListItemText } from '@wonder-ui/core';
 
 const ListItemLink = ListItem.withComponent('a');

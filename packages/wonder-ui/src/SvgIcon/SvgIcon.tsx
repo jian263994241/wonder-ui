@@ -7,14 +7,40 @@ import { svgIconClasses, useClasses } from './SvgIconClasses';
 
 export interface SvgIconProps extends React.SVGAttributes<SVGSVGElement> {
   children?: React.ReactNode;
+  /**
+   * Css api
+   */
   classes?: Partial<typeof svgIconClasses>;
+  /**
+   * 颜色
+   * @default inherit
+   */
   color?: 'action' | 'disabled' | 'error' | 'inherit' | 'primary' | 'secondary';
+  /**
+   * 节点
+   * @default svg
+   */
   component?: React.ElementType;
   crossOrigin?: 'anonymous' | 'use-credentials' | '';
+  /**
+   * 预置尺寸
+   * @default inherit
+   */
   fontSize?: 'inherit' | 'large' | 'medium' | 'small';
   htmlColor?: string;
+  /**
+   * 旋转动画
+   * @default false
+   */
   spin?: boolean;
+  /**
+   * title
+   */
   titleAccess?: string;
+  /**
+   * viewBox
+   * @default `0 0 16 16`
+   */
   viewBox?: string;
 }
 

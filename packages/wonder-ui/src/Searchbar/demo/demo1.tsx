@@ -1,8 +1,3 @@
-/**
- * title: 基本的搜索框
- * desc:
- *
- */
 import { Page, Searchbar, Space, WhiteSpace } from '@wonder-ui/core';
 import * as React from 'react';
 

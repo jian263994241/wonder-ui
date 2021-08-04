@@ -1,15 +1,32 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-input
+  title: 数据录入
+  order: 3
 ---
+# Checkbox 选择框
 
-### Checkbox
+通过多选框组件进行一项或者多项选择
 
-除了支持 `HTMLInputElement` 所有属性, 还支持以下属性:
+## 代码演示
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| classes | css | `'root', 'circle', 'colorPrimary', 'colorSecondary'` |
-| circle | 圆形 | `boolean` | false
-| color | 颜色 | `'primary' \| 'secondary'` | primary
-| children | 标签 | `ReactNode` |
-| indeterminate | 不明确的 | `boolean` | false
+### 基本的选择框
+
+<code src="./demo/demo1.tsx"></code>
+
+### 不确定的状态
+
+<code src="./demo/demo2.tsx"></code>
+
+### 选择列表
+
+<code src="./demo/demo3.tsx"></code>
+
+
+<API src="./Checkbox.tsx" props="circle|color|children|indeterminate|checked|onChange|defaultChecked"></API>
+
+

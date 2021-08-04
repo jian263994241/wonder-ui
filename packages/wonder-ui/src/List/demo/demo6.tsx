@@ -1,8 +1,3 @@
-/**
- * title: 对齐列表项
- * desc: 将 `alignItems` 属性值设置为 "flex-start"
- * background: '#f5f5f5'
- */
 import * as React from 'react';
 import {
   Page,

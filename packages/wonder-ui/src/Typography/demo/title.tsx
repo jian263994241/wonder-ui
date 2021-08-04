@@ -1,7 +1,3 @@
-/**
- * title: 标题
- * desc: html的所有标题 `h1`~`h6`
- */
 import { Typography } from '@wonder-ui/core';
 
 export default () => (

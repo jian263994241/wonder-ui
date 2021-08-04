@@ -26,11 +26,29 @@ interface CheckableGroupItemProps {
 }
 
 export interface CheckableGroupProps {
+  /**
+   * 默认值
+   */
   defaultValue?: TValue;
+  /**
+   * 单选
+   */
   exclusive?: boolean;
+  /**
+   * 值改变时回调
+   */
   onChange?(value: TValue): void;
+  /**
+   * 配置选项
+   */
   options?: ItemObjectOption[];
-  renderItem?(props: CheckableGroupItemProps): React.ReactNode;
+  /**
+   * 渲染项
+   */
+  onRenderItem?(props: CheckableGroupItemProps): React.ReactNode;
+  /**
+   * 值
+   */
   value?: TValue;
 }
 
@@ -43,7 +61,7 @@ export default function CheckableGroup(props: CheckableGroupProps) {
     options = [],
     exclusive = false,
     onChange,
-    renderItem,
+    onRenderItem,
     value: valueProp,
     defaultValue
   } = props;
@@ -85,19 +103,23 @@ export default function CheckableGroup(props: CheckableGroupProps) {
     }
   });
 
-  if (typeof renderItem === 'function') {
-    return options.map((dataItem, index) => {
-      const dataValue = dataItem.value || dataItem;
+  if (typeof onRenderItem === 'function') {
+    return (
+      <React.Fragment>
+        {options.map((dataItem, index) => {
+          const dataValue = dataItem.value || dataItem;
 
-      return renderItem({
-        data: dataItem,
-        key: index,
-        checked: isValueSelected(dataValue, value),
-        emitOnChange: exclusive
-          ? handleExclusiveChange.bind(null, dataValue)
-          : handleChange.bind(null, dataValue)
-      });
-    });
+          return onRenderItem({
+            data: dataItem,
+            key: index,
+            checked: isValueSelected(dataValue, value),
+            emitOnChange: exclusive
+              ? handleExclusiveChange.bind(null, dataValue)
+              : handleChange.bind(null, dataValue)
+          });
+        })}
+      </React.Fragment>
+    );
   }
 
   return null;

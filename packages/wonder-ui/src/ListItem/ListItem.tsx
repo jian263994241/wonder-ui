@@ -13,10 +13,9 @@ export interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
    */
   alignItems?: 'flex-start' | 'center';
   /**
-   * arrow
+   * 箭头
    */
   arrow?: 'empty' | 'horizontal' | 'vertical' | 'vertical-up';
-
   /**
    * 内容
    */
@@ -30,7 +29,7 @@ export interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
    */
   component?: React.ElementType;
   /**
-   * divider
+   * 分割线
    */
   divider?: boolean;
   /**
@@ -52,11 +51,12 @@ export interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
    */
   button?: boolean;
   /**
-   * HTML Attributes
+   * 前面的类容
    */
-  className?: string;
-
   media?: React.ReactNode;
+  /**
+   * 额外的类容
+   */
   extra?: React.ReactNode;
 }
 
@@ -137,7 +137,7 @@ const ListItemArrow = styled('span', {
   }
 }));
 
-export const ListItemMedia = styled('div', {
+const ListItemMedia = styled('div', {
   name: 'WuiListItem',
   slot: 'Media'
 })(({ theme }) => ({
@@ -157,7 +157,7 @@ export const ListItemMedia = styled('div', {
   }
 }));
 
-export const ListItemExtra = styled('span', {
+const ListItemExtra = styled('span', {
   name: 'WuiListItem',
   slot: 'Extra'
 })(({ theme }) => ({

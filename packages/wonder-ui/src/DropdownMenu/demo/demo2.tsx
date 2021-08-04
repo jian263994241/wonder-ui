@@ -1,8 +1,3 @@
-/**
- * title: 定义内容
- * desc: 使用`overlay`自定义内容
- * background: '#f5f5f5'
- */
 import {
   Button,
   Divider,
@@ -13,7 +8,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemExtra,
   Toggle
 } from '@wonder-ui/core';
 
@@ -25,23 +19,26 @@ export default () => (
         overlay={
           <div>
             <List component="div">
-              <ListItem divider component="label">
+              <ListItem
+                divider
+                component="label"
+                extra={<Radio name="DropdownMenu1" />}
+              >
                 <ListItemText>全部商品</ListItemText>
-                <ListItemExtra>
-                  <Radio name="DropdownMenu1" />
-                </ListItemExtra>
               </ListItem>
-              <ListItem divider component="label">
+              <ListItem
+                divider
+                component="label"
+                extra={<Radio name="DropdownMenu1" />}
+              >
                 <ListItemText>新款商品</ListItemText>
-                <ListItemExtra>
-                  <Radio name="DropdownMenu1" />
-                </ListItemExtra>
               </ListItem>
-              <ListItem divider component="label">
+              <ListItem
+                divider
+                component="label"
+                extra={<Radio name="DropdownMenu1" />}
+              >
                 <ListItemText>活动商品</ListItemText>
-                <ListItemExtra>
-                  <Radio name="DropdownMenu1" />
-                </ListItemExtra>
               </ListItem>
             </List>
           </div>
@@ -54,17 +51,11 @@ export default () => (
         overlay={({ onClose }) => (
           <div>
             <List>
-              <ListItem divider>
+              <ListItem divider extra={<Toggle />}>
                 <ListItemText>包邮</ListItemText>
-                <ListItemExtra>
-                  <Toggle />
-                </ListItemExtra>
               </ListItem>
-              <ListItem>
+              <ListItem extra={<Toggle defaultChecked />}>
                 <ListItemText>团购</ListItemText>
-                <ListItemExtra>
-                  <Toggle defaultChecked />
-                </ListItemExtra>
               </ListItem>
             </List>
             <Divider />

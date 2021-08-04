@@ -22,6 +22,9 @@ export * from './ButtonBase';
 export { default as ButtonGroup } from './ButtonGroup';
 export * from './ButtonGroup';
 
+export { default as Cascader } from './Cascader';
+export * from './Cascader';
+
 export { default as CheckableGroup } from './CheckableGroup';
 export * from './CheckableGroup';
 

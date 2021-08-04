@@ -1,16 +1,43 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-display
+  title: 数据展示
+  order: 4
 ---
+# Badge 徽章
 
-### Badge
+小尺寸的标签
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+## 代码演示
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| classes | css | `'root', 'content', 'rounded', 'withChildren', 'colorPrimary', 'colorSecondary', 'colorSuccess', 'colorError', 'colorDanger', 'colorWarning', 'colorInfo', 'colorLight', 'colorDark'` |
-| color | 颜色 | `'primary' \| 'secondary' \| 'success' \| 'error' \| 'danger' \| 'warning' \| 'info'` \| 'light' \| 'dark' | primary
-| component | 根节点 | `ElementType` | span
-| hideContent | 隐藏角标 | `boolean` | false
-| rounded | 圆角 | `boolean` | false
-| text | 内容 | `ReactNode` |
+### 和文字一起使用
+
+<code src="./demo/demo1.tsx"></code>
+
+### 和按钮一起使用
+
+<code src="./demo/demo2.tsx"></code>
+
+### 背景颜色
+
+通过改变 `color` 徽记背景
+
+<code src="./demo/demo3.tsx"></code>
+
+### 圆角徽章
+
+设置 `rounded=true`
+
+<code src="./demo/demo4.tsx"></code>
+
+### 角标
+
+<code src="./demo/demo5.tsx"></code>
+
+
+<API src="./Badge.tsx" props="color|hideContent|rounded|text"></API>
+

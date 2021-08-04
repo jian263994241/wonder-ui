@@ -1,7 +1,3 @@
-/**
- * title: 自定义
- *
- */
 import * as React from 'react';
 import { Badge, Space, Stepper, styled } from '@wonder-ui/core';
 

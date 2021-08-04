@@ -14,7 +14,7 @@ export interface RowProps extends React.HTMLAttributes<HTMLElement> {
   rowCols?: ResponsiveValue<ColsType>;
 }
 
-export const RowRoot = styled('div', {
+const RowRoot = styled('div', {
   name: 'WuiRow',
   slot: 'Root'
 })<{ styleProps: RowStyleProps }>(({ theme, styleProps }) => {

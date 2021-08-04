@@ -11,16 +11,52 @@ import {
 
 type ColumnType = 'hour' | 'minute';
 
+const COMPONENT_NAME = 'WuiTimePicker';
+
 export interface TimePickerProps extends Omit<PickerProps, 'columns'> {
+  /**
+   * 当前时间
+   */
   currentTime?: string;
+  /**
+   * 最小小时
+   * @default 0
+   */
   minHour?: number;
+  /**
+   * 最大小时
+   * @default 23
+   */
   maxHour?: number;
+  /**
+   * 最小分钟
+   * @default 0
+   */
   minMinute?: number;
+  /**
+   * 最大分钟
+   * @default 59
+   */
   maxMinute?: number;
+  /**
+   * 选项过滤函数
+   */
   filter?(type: ColumnType, values: string[]): string[];
+  /**
+   * 选项格式化函数
+   */
   formatter?(type: ColumnType, value: string): string;
+  /**
+   * 当值变化时触发的事件
+   */
   onChange?(value: string): void;
+  /**
+   * 点击完成按钮时触发的事件
+   */
   onConfirm?(value: string): void;
+  /**
+   * 点击取消按钮时触发的事件
+   */
   onCancel?(): void;
 }
 
@@ -28,7 +64,7 @@ const defaultFormatter = (type: ColumnType, value: string) => value;
 
 const TimePicker = React.forwardRef<HTMLDivElement, TimePickerProps>(
   (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiTimePicker' });
+    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
       actionRef: actionRefProp,
       filter,

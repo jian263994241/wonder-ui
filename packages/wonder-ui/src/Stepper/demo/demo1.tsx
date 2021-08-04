@@ -1,65 +1,32 @@
-/**
- * title: 基本使用
- * background: '#f5f5f5'
- */
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemExtra,
-  Page,
-  Stepper
-} from '@wonder-ui/core';
+import { List, ListItem, ListItemText, Page, Stepper } from '@wonder-ui/core';
 
 export default () => (
-  <List>
-    <ListItem divider>
-      <ListItemText>默认</ListItemText>
-      <ListItemExtra>
-        <Stepper />
-      </ListItemExtra>
-    </ListItem>
-    <ListItem divider>
-      <ListItemText>步长设置</ListItemText>
-      <ListItemExtra>
-        <Stepper step={3} />
-      </ListItemExtra>
-    </ListItem>
-    <ListItem divider>
-      <ListItemText>限制输入范围</ListItemText>
-      <ListItemExtra>
-        <Stepper min={1} max={8} />
-      </ListItemExtra>
-    </ListItem>
-    <ListItem divider>
-      <ListItemText>限制输入整数</ListItemText>
-      <ListItemExtra>
-        <Stepper step={1} min={1} />
-      </ListItemExtra>
-    </ListItem>
-    <ListItem divider>
-      <ListItemText>禁用状态</ListItemText>
-      <ListItemExtra>
-        <Stepper disabled />
-      </ListItemExtra>
-    </ListItem>
-    <ListItem divider>
-      <ListItemText>禁用输入框</ListItemText>
-      <ListItemExtra>
-        <Stepper disableInput />
-      </ListItemExtra>
-    </ListItem>
-    <ListItem divider>
-      <ListItemText>固定小数位数</ListItemText>
-      <ListItemExtra>
-        <Stepper step={0.1} min={1} />
-      </ListItemExtra>
-    </ListItem>
-    <ListItem divider>
-      <ListItemText>隐藏输入框</ListItemText>
-      <ListItemExtra>
-        <Stepper hideInput />
-      </ListItemExtra>
-    </ListItem>
-  </List>
+  <Page title="Stepper">
+    <List>
+      <ListItem divider extra={<Stepper />}>
+        <ListItemText>默认</ListItemText>
+      </ListItem>
+      <ListItem divider extra={<Stepper step={3} />}>
+        <ListItemText>步长设置</ListItemText>
+      </ListItem>
+      <ListItem divider extra={<Stepper min={1} max={8} />}>
+        <ListItemText>限制输入范围</ListItemText>
+      </ListItem>
+      <ListItem divider extra={<Stepper step={1} min={1} />}>
+        <ListItemText>限制输入整数</ListItemText>
+      </ListItem>
+      <ListItem divider extra={<Stepper disabled />}>
+        <ListItemText>禁用状态</ListItemText>
+      </ListItem>
+      <ListItem divider extra={<Stepper disableInput />}>
+        <ListItemText>禁用输入框</ListItemText>
+      </ListItem>
+      <ListItem divider extra={<Stepper step={0.1} min={1} />}>
+        <ListItemText>固定小数位数</ListItemText>
+      </ListItem>
+      <ListItem extra={<Stepper hideInput />}>
+        <ListItemText>隐藏输入框</ListItemText>
+      </ListItem>
+    </List>
+  </Page>
 );

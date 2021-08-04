@@ -1,7 +1,3 @@
-/**
- * title: 动态设置选项
- * desc: 通过 actionRef 上的实例方法可以更灵活地控制选择器，比如使用 setColumnValues 方法实现多列联动。
- */
 import * as React from 'react';
 import { Picker, PickerProps, PickerAction } from '@wonder-ui/core';
 

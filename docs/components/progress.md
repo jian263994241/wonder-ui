@@ -1,5 +1,12 @@
 ---
 mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /fb
+  title: 反馈
+  order: 5
 ---
 
 # Progress 进度条

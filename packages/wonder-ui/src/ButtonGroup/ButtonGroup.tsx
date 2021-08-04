@@ -1,22 +1,22 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { buttonClasses } from '../Button/ButtonClasses';
+import { buttonClasses, ButtonProps } from '../Button';
 import { buttonGroupClasses, useClasses } from './ButtonGroupClasses';
 import { ButtonGroupContext } from './ButtonGroupContext';
-import { ButtonProps } from '../Button/Button';
 import { css } from '@wonder-ui/utils';
 
 export interface ButtonGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
-   * Button Props
+   * 按钮属性 [ButtonProps](#/components/general/button#api)
    */
   ButtonProps?: Partial<ButtonProps>;
-  /** */
-  component?: React.ElementType;
-
   /**
-   * @description direction
+   * 节点
+   */
+  component?: React.ElementType;
+  /**
+   * 方向
    * @default horizontal
    */
   direction?: 'horizontal' | 'vertical';

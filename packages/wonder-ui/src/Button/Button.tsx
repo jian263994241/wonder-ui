@@ -3,43 +3,109 @@ import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { buttonClasses, ButtonStyleProps, useClasses } from './ButtonClasses';
+import { ButtonClasses, ButtonProps } from './ButtonTypes';
 import { ButtonGroupContext } from '../ButtonGroup/ButtonGroupContext';
-import { css, forwardRef } from '@wonder-ui/utils';
-export interface ButtonProps extends ButtonBaseProps {
-  LinkComponent?: React.ElementType;
-  children?: React.ReactNode;
-  classes?: Partial<typeof buttonClasses>;
-  color?:
-    | 'inherit'
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info'
-    | 'light'
-    | 'dark';
-  component?: React.ElementType;
-  disableElevation?: boolean;
-  disableFocusRipple?: boolean;
-  disableRipple?: boolean;
-  disabled?: boolean;
-  edge?: 'end' | 'start' | null;
-  endIcon?: React.ReactNode;
-  focusVisibleClassName?: string;
-  fullWidth?: boolean;
-  href?: string;
-  shape?: 'default' | 'round' | 'square';
-  size?: 'small' | 'medium' | 'large';
-  startIcon?: React.ReactNode;
-  to?: string | object;
-  type?: 'button' | 'reset' | 'submit';
-  variant?: 'text' | 'outlined' | 'contained';
-}
+import {
+  capitalize,
+  composeClasses,
+  css,
+  forwardRef,
+  generateUtilityClasses
+} from '@wonder-ui/utils';
 
-export const ButtonRoot = styled(ButtonBase, {
-  name: 'WuiButton',
+const COMPONENT_NAME = 'WuiButton';
+
+export const buttonClasses: ButtonClasses = generateUtilityClasses(
+  COMPONENT_NAME,
+  [
+    'root',
+    'label',
+    'text',
+    'textInherit',
+    'textPrimary',
+    'textSecondary',
+    'textSuccess',
+    'textDanger',
+    'textWarning',
+    'textInfo',
+    'textLight',
+    'textDark',
+    'outlined',
+    'outlinedInherit',
+    'outlinedPrimary',
+    'outlinedSecondary',
+    'outlinedSuccess',
+    'outlinedDanger',
+    'outlinedWarning',
+    'outlinedInfo',
+    'outlinedLight',
+    'outlinedDark',
+    'contained',
+    'containedInherit',
+    'containedPrimary',
+    'containedSecondary',
+    'containedSuccess',
+    'containedDanger',
+    'containedWarning',
+    'containedInfo',
+    'containedLight',
+    'containedDark',
+    'focusVisible',
+    'disabled',
+    'colorInherit',
+    'textSizeSmall',
+    'textSizeMedium',
+    'textSizeLarge',
+    'outlinedSizeSmall',
+    'outlinedSizeMedium',
+    'outlinedSizeLarge',
+    'containedSizeSmall',
+    'containedSizeMedium',
+    'containedSizeLarge',
+    'sizeMedium',
+    'sizeSmall',
+    'sizeLarge',
+    'fullWidth',
+    'startIcon',
+    'endIcon',
+    'edgeStart',
+    'edgeEnd',
+    'iconSizeSmall',
+    'iconSizeMedium',
+    'iconSizeLarge'
+  ]
+);
+
+type ButtonStyleProps = ButtonProps &
+  Required<Pick<ButtonProps, 'color' | 'size' | 'shape'>>;
+
+const useClasses = (styleProps: ButtonStyleProps) => {
+  const { color, edge, fullWidth, shape, size, variant, classes } = styleProps;
+  const slots = {
+    root: [
+      'root',
+      variant,
+      `${variant}${capitalize(color)}`,
+      `size${capitalize(size)}`,
+      `${variant}Size${capitalize(size)}`,
+      `shape${capitalize(shape)}`,
+      edge && `edge${capitalize(edge)}`,
+      color === 'inherit' && 'colorInherit',
+      fullWidth && 'fullWidth'
+    ],
+    label: ['label'],
+    startIcon: ['startIcon', `iconSize${capitalize(size)}`],
+    endIcon: ['endIcon', `iconSize${capitalize(size)}`]
+  };
+
+  return {
+    ...classes,
+    ...composeClasses(COMPONENT_NAME, slots, classes)
+  };
+};
+
+const ButtonRoot = styled(ButtonBase, {
+  name: COMPONENT_NAME,
   slot: 'Root',
   shouldForwardProp: () => true
 })<ButtonBaseProps & { styleProps: ButtonStyleProps }>(
@@ -194,7 +260,7 @@ export const ButtonRoot = styled(ButtonBase, {
 );
 
 const ButtonLabel = styled('span', {
-  name: 'WuiButton',
+  name: COMPONENT_NAME,
   slot: 'Label'
 })({
   width: '100%',
@@ -222,7 +288,7 @@ const commonIconStyles = (styleProps: ButtonStyleProps) => ({
 });
 
 const ButtonStartIcon = styled('span', {
-  name: 'WuiButton',
+  name: COMPONENT_NAME,
   slot: 'StartIcon'
 })<{ styleProps: ButtonStyleProps }>(({ styleProps }) => ({
   display: 'inherit',
@@ -235,7 +301,7 @@ const ButtonStartIcon = styled('span', {
 }));
 
 const ButtonEndIcon = styled('span', {
-  name: 'WuiButton',
+  name: COMPONENT_NAME,
   slot: 'EndIcon'
 })<{ styleProps: ButtonStyleProps }>(({ styleProps }) => ({
   display: 'inherit',
@@ -251,13 +317,12 @@ const Button = forwardRef<HTMLElement, ButtonProps>((inProps, ref) => {
   const { ButtonProps } = React.useContext(ButtonGroupContext);
   const props = useThemeProps({
     props: { ...ButtonProps, ...inProps },
-    name: 'WuiButton'
+    name: COMPONENT_NAME
   });
   const {
     children,
     color = 'primary',
     component = 'button',
-    disableElevation = false,
     disableFocusRipple = false,
     disableRipple = false,
     disabled = false,
@@ -277,7 +342,6 @@ const Button = forwardRef<HTMLElement, ButtonProps>((inProps, ref) => {
     color,
     component,
     disabled,
-    disableElevation,
     disableFocusRipple,
     fullWidth,
     shape,
@@ -319,7 +383,5 @@ const Button = forwardRef<HTMLElement, ButtonProps>((inProps, ref) => {
     </ButtonRoot>
   );
 });
-
-Button.displayName = 'WuiButton';
 
 export default Button;

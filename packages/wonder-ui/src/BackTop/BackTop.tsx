@@ -6,15 +6,35 @@ import { forwardRef, getScrollTop, on, setScrollTop } from '@wonder-ui/utils';
 import {
   useEventCallback,
   useForkRef,
-  useScrollParent,
-  useSafeState
+  useSafeState,
+  useScrollParent
 } from '@wonder-ui/hooks';
 
 const COMPONENT_NAME = 'WuiBackTop';
 
-export interface BackTopProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface BackTopProps {
+  /**
+   * 额外的 CSS className
+   */
+  className?: string;
+  /**
+   * 回到顶部所需时间（ms）
+   * @default 450
+   */
   duration?: number;
+  /**
+   * 额外的样式
+   */
+  style?: React.CSSProperties;
+  /**
+   * 滚动高度达到此参数值才出现
+   * @default 400
+   */
   visibilityHeight?: number;
+  /**
+   * 点击事件
+   */
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 function scrollTo(element: Element | Window, to: number, duration: number) {

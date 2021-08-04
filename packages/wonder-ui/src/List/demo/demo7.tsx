@@ -1,6 +1,3 @@
-/**
- * background: '#f5f5f5'
- */
 import {
   Page,
   List,

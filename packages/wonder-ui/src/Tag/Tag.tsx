@@ -8,6 +8,10 @@ import { tagClasses, useClasses } from './TagClasses';
 
 export interface TagProps extends React.HTMLAttributes<HTMLElement> {
   classes?: Partial<typeof tagClasses>;
+  /**
+   * 颜色
+   * @default default
+   */
   color?:
     | 'default'
     | 'primary'
@@ -18,10 +22,20 @@ export interface TagProps extends React.HTMLAttributes<HTMLElement> {
     | 'info'
     | 'light'
     | 'dark';
+  /**
+   * 类型
+   * @default outlined
+   */
   variant?: 'outlined' | 'contained';
+  /**
+   * 可关闭
+   * @default false
+   */
   closable?: boolean;
+  /**
+   * 关闭时调用
+   */
   onClose?: () => void;
-  ref?: React.Ref<any>;
 }
 
 const TagRoot = styled('span', {

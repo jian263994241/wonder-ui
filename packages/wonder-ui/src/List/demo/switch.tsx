@@ -1,8 +1,3 @@
-/**
- * title: Switch 开关
- * desc: 该开关作用为一个辅助操作和一个单独的目标。
- * background: '#f5f5f5'
- */
 import {
   Page,
   List,

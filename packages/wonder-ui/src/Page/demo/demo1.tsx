@@ -1,7 +1,3 @@
-/**
- * title: 基本使用
- * desc: 默认一块可以滚动的区域
- */
 import { Page, Paper, Space, WhiteSpace, styled } from '@wonder-ui/core';
 
 const Block = styled(Paper)`

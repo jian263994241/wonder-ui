@@ -1,29 +1,34 @@
 ---
-sidemenu: false
+mobile: true
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-display
+  title: 数据展示
+  order: 4
 ---
+# PullRefresh 拉动刷新
+
+通过触发，立刻加载内容。
+
+## 代码演示
+
+### 基本使用
+
+<code src="./demo/demo1.tsx"></code>
+
+
+### 自定义提示
+
+<code src="./demo/demo2.tsx"></code>
+
+
+<API src="./PullRefresh.tsx" props="refreshing|pullingText|loosingText|loadingText|successText|successDuration|animationDuration|headHeight|pullDistance|disabled|onRefresh|slots"></API>
 
 
 
-### PullToRefresh
-
-
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| refreshing | 是否处于加载中状态 | boolean | -
-| pullingText | 下拉过程提示文案 | string | -
-| loosingText | 释放过程提示文案	| string | -
-| loadingText | 加载过程提示文案	| string | -
-| successText | 刷新成功提示文案 | string | -
-| successDuration | 刷新成功提示展示时长(ms) | number | 500
-| animationDuration | 动画时长	| number | 300
-| headHeight | 顶部内容高度 | number | 50
-| pullDistance | 触发下拉刷新的距离 | number | 与 `headHeight` 一致
-| disabled | 是否禁用下拉刷新 | boolean | false
-| onRefresh | 下拉刷新时触发 | () => void | -
-| slots | 自定义内容 | ||
-
-
-### PullToRefresh slots
+## Slots
 
 | 参数	|说明	|参数
 | --- | --- | ---
@@ -34,8 +39,4 @@ loading	|加载过程中顶部内容|	{ distance: 当前下拉距离 }
 success	|刷新成功提示内容|	-
 
 
-### PullToRefresh classes
 
-```
-'root', 'track', 'indicator', 'text', 'normal', 'loading', 'loosing', 'pulling', 'success'
-```

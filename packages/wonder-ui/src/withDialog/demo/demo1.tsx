@@ -1,7 +1,3 @@
-/**
- * title: 提示栈
- * desc: withDialog 提供 `alert`, `confirm`, `toast` 等静态方法
- */
 import {
   Button,
   Container,

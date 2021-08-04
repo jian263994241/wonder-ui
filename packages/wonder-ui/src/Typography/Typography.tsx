@@ -63,7 +63,7 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: keyof typeof defaultVariantMapping;
 }
 
-export const TypographyRoot = styled('span', {
+const TypographyRoot = styled('span', {
   name: 'WuiTypography',
   slot: 'Root'
 })<{ styleProps: TypographyStyleProps }>(({ theme, styleProps }) => ({

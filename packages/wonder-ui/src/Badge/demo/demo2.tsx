@@ -1,7 +1,3 @@
-/**
- * title: 和按钮一起使用
- * desc:
- */
 import { Badge, Button } from '@wonder-ui/core';
 
 export default () => (

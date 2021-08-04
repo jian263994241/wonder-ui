@@ -45,6 +45,7 @@ export interface ListInputItemProps
   InputProps?: InputProps;
   /**
    * 显示清除按钮
+   * @default false
    */
   allowClear?: InputProps['allowClear'];
   /**
@@ -52,7 +53,7 @@ export interface ListInputItemProps
    */
   classes?: Partial<typeof listInputItemClasses>;
   /**
-   * 默认值
+   * 初始值
    */
   defaultValue?: InputProps['defaultValue'];
   /**
@@ -81,6 +82,7 @@ export interface ListInputItemProps
   labelAlign?: 'left' | 'right';
   /**
    * 标签宽度
+   * @default 6
    */
   labelWidth?: number;
   /**
@@ -89,6 +91,7 @@ export interface ListInputItemProps
   maxLength?: InputProps['maxLength'];
   /**
    * 多行输入框
+   * @default false
    */
   multiline?: InputProps['multiline'];
   /**
@@ -120,7 +123,7 @@ export interface ListInputItemProps
    */
   type?: InputProps['type'];
   /**
-   * 值
+   * 当前值
    */
   value?: InputProps['value'];
 }

@@ -1,8 +1,3 @@
-/**
- * title: 基本使用
- * desc: 使用 buttons 定义按钮
- *
- */
 import {
   Button,
   Container,

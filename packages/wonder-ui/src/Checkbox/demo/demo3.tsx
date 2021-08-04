@@ -1,6 +1,4 @@
 /**
- * title: 选择列表
- * desc:
  * background: '#f5f5f5'
  */
 import {
@@ -31,9 +29,12 @@ export default () => (
     <List component="div">
       <ListHeader>样式2</ListHeader>
       {dataList.map((item, index) => (
-        <ListItem component="label" key={index}>
+        <ListItem
+          component="label"
+          key={index}
+          extra={<Checkbox circle name="demo-checkbox2" />}
+        >
           <ListItemText>Movie {item}</ListItemText>
-          <Checkbox circle name="demo-checkbox2" />
         </ListItem>
       ))}
     </List>
@@ -54,9 +55,12 @@ export default () => (
     <List component="div">
       <ListHeader>样式4</ListHeader>
       {dataList.map((item, index) => (
-        <ListItem component="label" key={index}>
+        <ListItem
+          component="label"
+          key={index}
+          extra={<Checkbox name="demo-checkbox4" />}
+        >
           <ListItemText>Movie {item}</ListItemText>
-          <Checkbox name="demo-checkbox4" />
         </ListItem>
       ))}
     </List>

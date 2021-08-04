@@ -1,25 +1,24 @@
 ---
-sidemenu: false
+mobile: true
+toc: menu
+nav:
+  path: /components
+group:
+  path: /fb
+  title: 反馈
+  order: 5
 ---
+# Drawer 抽屉
 
-### Drawer
+屏幕边缘滑出的浮层面板。
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+## 代码演示
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| anchor | 出现的位置 | 'bottom' \| 'left' \| 'right' \| 'top' | left
-| classes | css | Recard<DrawerClasses, string>  |
-| elevation | 阴影 | number | 16
-| variant | 类型 | 'permanent' \| 'persistent' \| 'temporary' | temporary
-| visible | 是否显示 | boolean |
-| onClose | 事件 | () => void |
-| keepMounted | 保持节点存在 | boolean | false
-| ModalProps | modal props | [ModalProps](modal#modal) |
+### 基本使用
 
-### Drawer classes
+方向 `down` | `left` | `right` | `up`
 
+<code src="./demo/demo1.tsx"></code>
 
-```
-'root', 'permanent', 'persistent', 'temporary', 'anchorTop', 'anchorBottom', 'anchorLeft', 'anchorRight', 'temporaryAnchorTop', 'temporaryAnchorBottom', 'temporaryAnchorLeft', 'temporaryAnchorRight'
-```
+<API src="./Drawer.tsx" props="ModalProps|anchor|elevation|variant|visible|onClose|keepMounted"></API>
+

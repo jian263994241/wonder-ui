@@ -1,7 +1,3 @@
-/**
- * title: 加载状态
- * desc: 若选择器数据是异步获取的，可以通过 loading 属性显示加载提示。
- */
 import { Picker, PickerProps } from '@wonder-ui/core';
 
 const props: PickerProps = {

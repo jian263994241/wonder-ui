@@ -1,7 +1,3 @@
-/**
- * title: 搭配抽屉使用
- * desc: 在实际场景中，Picker 通常作为用于辅助表单填写，可以搭配 `Drawer` 实现该效果
- */
 import {
   Drawer,
   Picker,

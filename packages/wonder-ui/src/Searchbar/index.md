@@ -1,28 +1,28 @@
 ---
-sidemenu: false
+mobile: true
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-input
+  title: 数据录入
+  order: 3
 ---
 
-### Searchbar
+# Searchbar 搜索栏
 
-除了支持 `HTMLDivElement` 所有属性, 还支持以下属性:
+用于搜索场景的输入框组件。
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| InputProps | input属性 | [InputProps](input#input) |
-| allowCancel | 取消按钮 | boolean | false
-| barLeft | 定义左边区域 | ReactNode |
-| barRight | 定义右边区域 | ReactNode |
-| cancelText | 取消按钮文本 | string |
-| defaultValue | 默认值 | |
-| fixCancelButton | 取消按钮一直存在 | boolean | false
-| icon | 图标 | ReactNode |
-| onCencel | 回调 | (): void |
-| onChange | 回调 | InputProps['onChange'] |
-| placeholder | | string |
-| value | | |
+## 代码演示
 
-### Searchbar classes
+### 基本使用
 
-```
-'root', 'input', 'bg', 'inner', 'cancel'
-```
+<code src="./demo/demo1.tsx"></code>
+
+### 定义按钮和图标
+
+<code src="./demo/demo2.tsx"></code>
+
+<API src="./Searchbar.tsx" props="InputProps|allowCancel|barLeft|barRight|cancelText|defaultValue|fixCancelButton|icon|onCencel|onChange|placeholder|value"></API>
+
+

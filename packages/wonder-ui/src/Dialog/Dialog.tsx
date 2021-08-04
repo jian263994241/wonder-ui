@@ -10,14 +10,16 @@ import { dialogClasses, useClasses } from './DialogClasses';
 import { duration } from '../styles/transitions';
 import { useControlled } from '@wonder-ui/hooks';
 
-export interface DialogProps extends Omit<DialogContentProps, 'classes'> {
+export interface DialogProps
+  extends Omit<DialogContentProps, 'classes' | 'children'> {
   classes?: Partial<typeof dialogClasses>;
   /**
-   * Target element
+   * 触发节点
    */
-  children?: React.ReactElement;
+  children?: JSX.Element;
   /**
-   * Visible
+   * 是否显示, 受控组件
+   * @default false
    */
   visible?: boolean;
   /**
@@ -29,7 +31,7 @@ export interface DialogProps extends Omit<DialogContentProps, 'classes'> {
    */
   TranstionComponentProps?: BaseTransitionProps;
   /**
-   * Transtion timeout
+   * 过渡动画时长(ms)
    */
   transitionDuration?: TransitionTimeout;
   /**

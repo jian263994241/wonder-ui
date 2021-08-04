@@ -13,14 +13,32 @@ export interface PopupProps {
   PageProps?: Partial<PageProps>;
   TransitionComponent?: React.ComponentType<BaseTransitionProps>;
   TransitionProps?: BaseTransitionProps;
+  /**
+   * 内容
+   */
   children?: React.ReactNode;
   className?: string;
   classes?: Partial<typeof popupClasses>;
+  /**
+   * 关闭时触发事件
+   */
   onClose?: () => void;
-  ref?: React.Ref<any>;
+  /**
+   * 标题
+   */
   title?: React.ReactNode;
+  /**
+   * 过渡时长(ms)
+   */
   transitionDuration?: TransitionTimeout;
+  /**
+   * 显示隐藏
+   * @default false
+   */
   visible?: boolean;
+  /**
+   * 保持节点
+   */
   keepMounted?: ModalProps['keepMounted'];
 }
 

@@ -1,8 +1,3 @@
-/**
- * title: 虚拟列表
- * desc:
- * background: '#f5f5f5'
- */
 import {
   Container,
   Page,

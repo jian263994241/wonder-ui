@@ -1,7 +1,37 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /fb
+  title: 反馈
+  order: 5
 ---
-### Snackbar
+# Snackbar 消息条
+
+展示操作反馈信息。 提供成功、警告和错误等简短的通知信息。
+
+
+## 代码演示
+
+### 基本使用
+
+
+<code src="./demo/demo1.tsx"></code>
+
+### 消息条的位置
+
+<code src="./demo/demo2.tsx"></code>
+
+### Toast（提示）
+
+使用消息条（Snackbar）来显示一个带警告提示组件的 toast
+
+<code src="../withDialog/demo/demo3.tsx"></code>
+
+
+## API
 
 除了支持 `HTMLElement` 所有属性, 还支持以下属性:
 

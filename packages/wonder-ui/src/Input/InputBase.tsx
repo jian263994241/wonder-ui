@@ -50,25 +50,88 @@ export const inputClasses = generateUtilityClasses(COMPONENT_NAME, [
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size'> {
-  actionRef?: React.Ref<InputAction | undefined>;
+  /**
+   * 内置方法
+   */
+  actionRef?: React.Ref<InputAction | null>;
+  /**
+   * 清除图标
+   */
   allowClear?: boolean;
+  /**
+   * 去除边框
+   */
   borderless?: boolean;
   classes?: Partial<typeof inputClasses>;
   component?: React.ElementType;
+  /**
+   * 禁用
+   */
   disabled?: boolean;
+  /**
+   * 禁用激活样式
+   */
   disabledActiveStyle?: boolean;
+  /**
+   * 最大长度
+   */
+  maxLength?: number;
+  /**
+   * 错误状态
+   */
   error?: boolean;
+  /**
+   * 多行
+   */
   multiline?: boolean;
+  /**
+   * 多行时的最大行数
+   */
   maxRows?: number;
+  /**
+   * 多行时的最小行数
+   */
   minRows?: number;
+  /**
+   * 前缀图标的
+   */
   prefix?: React.ReactNode;
+  /**
+   * 只读
+   */
   readOnly?: boolean;
-  ref?: React.Ref<HTMLInputElement>;
+  /**
+   * @ignore
+   */
   resizable?: boolean;
+  /**
+   * 后缀图标
+   */
   suffix?: React.ReactNode;
+  /**
+   * 前缀图标的
+   */
   onRenderPrefix?(props: InputProps): React.ReactNode;
+  /**
+   * 后缀图标
+   */
   onRenderSuffix?(props: InputProps): React.ReactNode;
+  /**
+   * 按下回车的回调
+   */
   onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;
+  /**
+   * 输入框内容变化时的回调
+   */
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  /**
+   * 输入框内容
+   */
+  value?: string | ReadonlyArray<string> | number;
+  /**
+   * 输入框默认内容
+   */
+  defaultValue?: string | ReadonlyArray<string> | number;
   /** Transform `display value` to value */
   parser?: (displayValue: any) => any;
   /** Transform `value` to display value show in input */
@@ -112,7 +175,7 @@ const useClasses = (styleProps: InputStyleProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-export const InputRoot = styled('div', {
+const InputRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })<{ styleProps: InputStyleProps }>(({ theme, styleProps }) => ({
@@ -160,7 +223,7 @@ export const InputRoot = styled('div', {
   })
 }));
 
-export const InputInput = styled('input', {
+const InputInput = styled('input', {
   name: COMPONENT_NAME,
   slot: 'Input'
 })<{ styleProps: InputStyleProps }>(({ theme, styleProps }) => {

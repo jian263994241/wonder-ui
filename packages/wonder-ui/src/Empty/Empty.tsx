@@ -1,16 +1,10 @@
 import * as React from 'react';
+import EmptyIconDefault from './EmptyIconDefault';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import EmptyIconDefault from './EmptyIconDefault';
-import { emptyClasses, useClasses } from './EmptyClasses';
-import { css } from '@wonder-ui/utils';
-
-export interface EmptyProps extends React.HTMLAttributes<HTMLDivElement> {
-  classes?: Partial<typeof emptyClasses>;
-  image?: React.ReactElement;
-  description?: React.ReactNode;
-  ref?: React.Ref<any>;
-}
+import { css, forwardRef } from '@wonder-ui/utils';
+import { EmptyProps } from './EmptyTypes';
+import { useClasses } from './EmptyClasses';
 
 const EmptyRoot = styled('div', {
   name: 'WuiEmpty',
@@ -18,7 +12,7 @@ const EmptyRoot = styled('div', {
 })(({ theme }) => ({
   textAlign: 'center',
   margin: theme.spacing(0, 1),
-  color: '#969799'
+  color: theme.palette.text.secondary
 }));
 
 const EmptyFooter = styled('div', {
@@ -47,10 +41,19 @@ const EmptyDescription = styled('div', {
   userSelect: 'none'
 }));
 
-const Empty = React.forwardRef<HTMLElement, EmptyProps>((inProps, ref) => {
+/**
+ * Empty
+ */
+const Empty = forwardRef<HTMLElement, EmptyProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiEmpty' });
 
-  const { className, children, image, description = '暂无数据' } = props;
+  const {
+    className,
+    children,
+    image,
+    description = '暂无数据',
+    ...rest
+  } = props;
 
   const styleProps = props;
 
@@ -60,6 +63,7 @@ const Empty = React.forwardRef<HTMLElement, EmptyProps>((inProps, ref) => {
     <EmptyRoot
       ref={ref as React.Ref<HTMLDivElement>}
       className={css(classes.root, className)}
+      {...rest}
     >
       <EmptyImage className={classes.image}>
         {image || <EmptyIconDefault fontSize="inherit" color="inherit" />}

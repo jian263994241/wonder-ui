@@ -1,22 +1,37 @@
 ---
-sidemenu: false
+mobile: true
+toc: menu
+nav:
+  path: /components
+group:
+  path: /layout
+  title: 布局
+  order: 1
 ---
 
-### Page
+# Page 页面
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+带导航条,可以滚动的区域
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| [NavbarProps](./navbar#navbar) | 导航栏属性 | `NavbarProps` |
-| ToolbarProps | 工具栏属性 | `object` |
-| classes | css | `'root', 'content', 'navbar', 'toolbar'` |
-| contentRef | 内容Ref | `React.Ref<HTMLDivElement>` |
-| navbar | 导航栏 | `ReactElement` |
-| onBack | 返回按钮事件 | `() => void` |
-| onClose | 关闭按钮事件 | `() => void` |
-| showBackButton | 显示返回按钮 | `boolean` | fasle
-| showCloseButton | 显示关闭按钮 | `boolean` | fasle
-| subTitle | 副标题属性 | `ReactNode` |
-| title | 标题属性 | `ReactNode` |
-| toolbar | 工具栏属性 | `ReactElement` |
+## 代码演示
+
+
+### 基本使用
+
+默认一块可以滚动的区域
+
+<code src="./demo/demo1.tsx"></code>
+
+### 带导航栏的页面
+
+带导航栏的页面
+
+<code src="./demo/demo2.tsx"></code>
+
+### 抽屉内的页面
+
+<code src="./demo/demo3.tsx"></code>
+
+
+<API src="./Page.tsx" props="NavbarProps|ToolbarProps|classes|contentRef|navbar|onBack|onClose|showBackButton|showCloseButton|subTitle|title|toolbar"></API>
+

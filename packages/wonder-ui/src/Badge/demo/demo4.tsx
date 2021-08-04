@@ -1,7 +1,3 @@
-/**
- * title: 圆角徽章
- * desc: 设置 `rounded=true`
- */
 import { Badge, Space } from '@wonder-ui/core';
 
 export default () => (

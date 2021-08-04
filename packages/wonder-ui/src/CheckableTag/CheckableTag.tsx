@@ -8,10 +8,18 @@ import { useControlled } from '@wonder-ui/hooks';
 export interface CheckableTagProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   classes?: Partial<typeof checkableTagClasses>;
+  /**
+   * 选中
+   */
   checked?: boolean;
+  /**
+   * 初始选中
+   */
   defaultChecked?: boolean;
+  /**
+   * 值改变时回调
+   */
   onChange?: (checked: boolean) => void;
-  ref?: React.Ref<any>;
 }
 
 const CheckableTagRoot = styled('span', {

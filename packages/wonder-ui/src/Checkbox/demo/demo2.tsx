@@ -1,6 +1,4 @@
 /**
- * title: 不确定的状态
- * desc:
  * background: '#f5f5f5'
  */
 import {

@@ -82,14 +82,39 @@ export const DialogButton = styled(ButtonBase, {
 }));
 
 export interface DialogContentProps extends PaperProps {
+  /**
+   * 按钮垂直排列
+   */
   buttonsVertical?: boolean;
+  /**
+   * 按钮
+   */
   buttons?: Array<DialogButton>;
   classes?: Partial<typeof dialogContentClasses>;
+  /**
+   * 文字后的节点
+   */
   content?: React.ReactNode;
+  /**
+   * 阴影
+   * @default 4
+   */
   elevation?: number;
+  /**
+   * 标题下的文字
+   */
   text?: React.ReactNode;
+  /**
+   * 文字属性
+   */
   textTypographyProps?: TypographyProps;
+  /**
+   * 标题
+   */
   title?: React.ReactNode;
+  /**
+   * 文字属性
+   */
   titleTypographyProps?: TypographyProps;
 }
 

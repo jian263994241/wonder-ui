@@ -1,20 +1,32 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /general
+  title: 通用
+  order: 0
 ---
 
-### Typography
+# Typography 排版
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+文字格式: 标题, 段落, 文本 ...
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| align | 对齐 | `CSS.Properties['textAlign']` | inherit
-| children | children | `ReactNode` |
-| color | 颜色 | `'inherit' \| 'primary' \| 'secondary' \| 'hint'` | inherit
-| component | root element | `ElementType` | span
-| gutterBottom | 增加间距 | `boolean` | false
-| lineClamp | 显示行数 | `number` |
-| noWrap | 不换行 | `boolean` | false
-| paragraph | 段落 | `boolean` | false
-| variant | 样式类型 | `'h1'\| 'h2'\| 'h3'\| 'h4'\| 'h5'\| 'h6'\| 'subtitle1'\| 'subtitle2'\| 'body1'\| 'body2'` | body1
+## 代码演示
+
+### 标题
+
+html的所有标题 `h1`~`h6`
+
+<code src="./demo/title.tsx"></code>
+
+### 文字排版
+
+文字其他属性 `noWrap`, `paragraph`, `gutterBottom`, `align`
+
+<code src="./demo/paragraph.tsx"></code>
+
+<API src="./Typography.tsx" props="align|children|color|component|gutterBottom|lineClamp|noWrap|paragraph|variant"></API>
+
 

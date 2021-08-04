@@ -1,19 +1,33 @@
 ---
-sidemenu: false
+mobile: true
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-input
+  title: 数据录入
+  order: 3
 ---
 
-### DatePicker Props
+# DatePicker 时间选择器
 
-除了支持 [PickerProps](picker#picker) 所有属性, 还支持以下属性:
+时间选择器，支持日期、年月、时分等维度，通常与弹出层组件配合使用
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| type | 类型 | 'date' \| 'datetime' \| 'datehour' \| 'month-day' \| 'year-month' | datetime
-| minDate | 可选的最小时间，精确到分钟 | Date | 十年前
-| maxDate | 可选的最大时间，精确到分钟 | Date | 十年后
-| currentDate | 当前时间 | Date |
-| filter | 选项过滤函数	 | (type, vals) => vals	 |
-| formatter | 选项格式化函数	 | (type, val) => val |
-| onChange | 当值变化时触发的事件 | (value: Date) => void |
-| onConfirm | 点击完成按钮时触发的事件 | (value: Date) => void |
-| onCancel | 点击取消按钮时触发的事件 | () => void |
+
+### 基本使用
+
+<code src="./demo/demo1.tsx"></code>
+
+### 选择年月日
+
+通过 type 属性来定义需要选择的时间类型，type 为 date 表示选择年月日。通过 minDate 和 maxDate 属性可以确定可选的时间范围。
+
+<code src="./demo/demo2.tsx"></code>
+
+### 选择时间
+
+<code src="../TimePicker/demo/demo1.tsx"></code>
+
+<API src="./DatePicker.tsx" props="type|currentDate|minDate|maxDate|filter|formatter|onChange|onConfirm|onCancel"></API>
+
+<API src="../TimePicker/TimePicker.tsx" props="type|currentTime|minHour|maxHour|minMinute|maxMinute|filter|formatter|onChange|onConfirm|onCancel"></API>

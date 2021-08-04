@@ -1,26 +1,61 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /layout
+  title: 布局
+  order: 1
 ---
 
-### Space
+# Space 间距
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+设置组件之间的水平间距或垂直间距。
+
+## 代码演示
+
+
+### 基本使用
+
+<code src="./demo/demo1.tsx"></code>
+
+### 设置分隔符
+
+<code src="./demo/spaceSplit.tsx"></code>
+
+### 行间距
+
+<code src="./demo/wrap.tsx"></code>
+
+### 水平方向-水平对齐
+
+<code src="./demo/horizontalAlign.tsx"></code>
+
+### 水平方向-垂直对齐
+
+<code src="./demo/verticalAlignments.tsx"></code>
+
+### 垂直方向-水平对齐
+
+<code src="./demo/verticalHorizontalAlign.tsx"></code>
+
+### 垂直方向-垂直对齐
+
+<code src="./demo/verticalVerticalAlignments.tsx"></code>
+
+
+
+## 类型
 
 ```typescript
+type SpaceSize = 'small' | 'medium' | 'large' | number;
+type Gap = SpaceSize | [SpaceSize, SpaceSize];
 type Alignment = 'start' | 'end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'baseline' | 'stretch';
 type SpaceSize = 'small' | 'medium' | 'large' | number;
 ```
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| classes | css | `'root', 'item', 'vertical', 'horizontal', 'wrap', 'block'` |
-| component | 根节点 | `ElementType` | div
-| direction | 方向 | `'vertical' \| 'horizontal'` | horizontal
-| gap | 间距	| `SpaceSize \| [SpaceSize, SpaceSize]` | medium
-| horizontalAlign | 对齐 | `Alignment` |
-| nowrap | 不换行 | `boolean` | false
-| split | 分隔符	| `ReactNode` |
-| verticalAlign | 对齐	 | `Alignment` | center
+<API src="./Space.tsx" props="classes|component|direction|gap|horizontalAlign|nowrap|split|verticalAlign|itemWrap"></API>
 
 
 

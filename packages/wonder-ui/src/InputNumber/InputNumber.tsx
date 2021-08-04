@@ -73,45 +73,89 @@ export interface InputNumberProps
     | 'parser'
     | 'actionRef'
   > {
+  /**
+   * 内置方法
+   */
   actionRef?: React.Ref<InputNumberAction | null>;
-
   classes?: Partial<typeof inputClasses & typeof inputNumberClasses>;
-  /** value will show as string */
+  /**
+   * 字符值模式，开启后支持高精度小数。同时 onChange 将返回 string 类型
+   * @default false
+   */
   stringMode?: boolean;
-
+  /**
+   * 隐藏stepbar
+   */
   disableStepHandler?: boolean;
-
+  /**
+   * 初始值
+   */
   defaultValue?: ValueType;
+  /**
+   * 当前值
+   */
   value?: ValueType;
-
   className?: string;
   style?: React.CSSProperties;
+  /**
+   * 最小值
+   */
   min?: ValueType;
+  /**
+   * 最大值
+   */
   max?: ValueType;
+  /**
+   * 每次改变步数，可以为小数
+   * @default 1
+   */
   step?: ValueType;
   tabIndex?: number;
-
-  // Customize handler node
+  /**
+   * 自定义handler节点
+   */
   upHandler?: React.ReactNode;
+  /**
+   * 自定义handler节点
+   */
   downHandler?: React.ReactNode;
+  /**
+   * 键盘控制
+   * @default true
+   */
   keyboard?: boolean;
-
-  /** Parse display value to validate number */
+  /**
+   * 指定从 formatter 里转换回数字的方式，和 formatter 搭配使用
+   */
   parser?: (displayValue: string | undefined) => ValueType;
   /** Transform `value` to display value show in input */
   formatter?: (
     value: any,
     info: { userTyping: boolean; input: string }
   ) => string;
-  /** Syntactic sugar of `formatter`. Config precision of display. */
+  /**
+   * 数值精度，配置 formatter 时会以 formatter 为准
+   */
   precision?: number;
-  /** Syntactic sugar of `formatter`. Config decimal separator of display. */
+  /**
+   * `formatter` 的语法糖。配置显示的十进制分隔符
+   */
   decimalSeparator?: string;
-
+  /**
+   * 输入回调
+   */
   onInput?: (text: string) => void;
+  /**
+   * 变化回调
+   */
   onChange?: (value: any) => void;
+  /**
+   * 按下回车的回调
+   */
   onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;
-
+  /**
+   * 点击上下箭头的回调
+   */
   onStep?: (
     value: any,
     info: { offset: ValueType; type: 'up' | 'down' }

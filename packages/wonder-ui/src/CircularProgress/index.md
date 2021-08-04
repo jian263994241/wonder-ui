@@ -17,8 +17,4 @@ sidemenu: false
 | value | 值 | number |
 | variant | 类型 | 'determinate' \| 'indeterminate' | indeterminate
 
-### CircularProgress classes
 
-```
-'root', 'circle', 'label', 'svg', 'determinate', 'indeterminate', 'withChildren', 'colorInherit', 'colorPrimary', 'colorSecondary', 'colorSuccess', 'colorError', 'colorDanger', 'colorWarning', 'colorInfo', 'colorLight', 'colorDark'
-```

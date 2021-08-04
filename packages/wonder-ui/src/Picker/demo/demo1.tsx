@@ -1,7 +1,3 @@
-/**
- * title: 基本使用
- * desc: 单列选择时，可以通过 `defaultIndex` 属性设置初始选中项的索引
- */
 import { Picker, PickerProps } from '@wonder-ui/core';
 
 const props: PickerProps = {

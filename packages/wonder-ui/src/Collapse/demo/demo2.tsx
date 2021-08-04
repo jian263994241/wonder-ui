@@ -1,7 +1,3 @@
-/**
- * title: 设置折叠高度
- * desc: 通过 `collapsedSize` 改变折叠高度
- */
 import {
   Button,
   Space,

@@ -14,8 +14,4 @@ sidemenu: false
 | value | 值 | number |
 | variant | 类型 | 'determinate' \| 'indeterminate' | indeterminate
 
-### LinearProgress classes
 
-```
-'root', 'inner', 'bar', 'info', 'animated', 'colorPrimary', 'colorSecondary', 'colorSuccess', 'colorError', 'colorDanger', 'colorWarning', 'colorInfo'
-```

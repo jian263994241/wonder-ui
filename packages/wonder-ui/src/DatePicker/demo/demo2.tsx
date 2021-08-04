@@ -1,7 +1,3 @@
-/**
- * title: 选择年月日
- * desc: 通过 type 属性来定义需要选择的时间类型，type 为 date 表示选择年月日。通过 minDate 和 maxDate 属性可以确定可选的时间范围。
- */
 import { DatePicker, withDialog } from '@wonder-ui/core';
 import dayjs from 'dayjs';
 

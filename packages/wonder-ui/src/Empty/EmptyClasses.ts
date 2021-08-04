@@ -1,17 +1,14 @@
 import { composeClasses, generateUtilityClasses } from '@wonder-ui/utils';
+import { EmptyClasses, EmptyProps } from './EmptyTypes';
 
-export const emptyClasses = generateUtilityClasses('WuiEmpty', [
+export const emptyClasses: EmptyClasses = generateUtilityClasses('WuiEmpty', [
   'root',
   'footer',
   'image',
   'description'
 ]);
 
-export interface EmptyStyleProps {
-  classes?: Partial<typeof emptyClasses>;
-}
-
-export const useClasses = (styleProps: EmptyStyleProps) => {
+export const useClasses = (styleProps: EmptyProps) => {
   const { classes } = styleProps;
 
   const slots = {

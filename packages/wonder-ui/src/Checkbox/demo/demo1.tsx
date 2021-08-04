@@ -1,8 +1,3 @@
-/**
- * title: 基本的选择框
- * desc:
- *
- */
 import { Checkbox, Space } from '@wonder-ui/core';
 
 export default () => (

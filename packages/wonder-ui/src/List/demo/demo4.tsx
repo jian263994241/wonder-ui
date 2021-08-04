@@ -1,8 +1,3 @@
-/**
- * title: 交互式
- * desc: 一些常见交互样式
- * background: '#f5f5f5'
- */
 import {
   Badge,
   Page,

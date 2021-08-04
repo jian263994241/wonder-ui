@@ -1,8 +1,29 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /utils
+  title: 辅助
+  order: 5
 ---
 
-### Popover
+# Popover 气泡卡片
+
+点击/鼠标移入元素，弹出气泡式的卡片浮层。
+
+
+## 代码演示
+
+### 基本使用
+
+
+<code src="./demo/demo1.tsx"></code>
+
+
+
+## API
 
 继承 [ModalProps](modal#modal) 的全部属性:
 

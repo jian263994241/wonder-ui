@@ -1,7 +1,3 @@
-/**
- * title: 带文字的水平分割线
- * desc: 分割线中带有文字，可以用 `textAlign` 指定文字位置。
- */
 import { Divider, Space, Typography } from '@wonder-ui/core';
 
 export default () => (

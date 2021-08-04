@@ -10,25 +10,68 @@ import { css } from '@wonder-ui/utils';
 import { CSSObject } from '@wonder-ui/styled';
 import { stepperClasses, useClasses } from './StepperClasses';
 import { Theme } from '../styles/createTheme';
-import { useSafeState, useControlled } from '@wonder-ui/hooks';
+import { useControlled } from '@wonder-ui/hooks';
 
 export interface StepperProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  /**
+   * InputNumber 属性
+   */
   InputNumberProps?: Partial<InputNumberProps>;
   classes?: Partial<typeof stepperClasses>;
+  /**
+   * 初始值
+   */
   defaultValue?: number | string;
+  /**
+   * 禁用输入框
+   */
   disableInput?: boolean;
+  /**
+   * 禁用减
+   */
   disableMinusButton?: boolean;
+  /**
+   * 禁用加
+   */
   disablePlusButton?: boolean;
+  /**
+   * 禁用
+   */
   disabled?: boolean;
+  /**
+   * 隐藏输入框
+   */
   hideInput?: boolean;
+  /**
+   * 隐藏减
+   */
   hideMinusButton?: boolean;
+  /**
+   * 隐藏加
+   */
   hidePlusButton?: boolean;
+  /**
+   * 最大值
+   */
   max?: number | string;
+  /**
+   * 最小值
+   * @default 0
+   */
   min?: number | string;
+  /**
+   * 值改变的时候回调
+   */
   onChange?: (value: number) => void;
-  ref?: React.Ref<HTMLDivElement>;
+  /**
+   * 步长
+   * @default 1
+   */
   step?: number | string;
+  /**
+   * 当前值
+   */
   value?: number | string;
 }
 
@@ -149,7 +192,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
     max = Infinity,
     min = 0,
     onChange,
-    step,
+    step = 1,
     value: valueProp,
     defaultValue = min,
     ...rest
@@ -230,8 +273,3 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
 });
 
 export default Stepper;
-
-export interface ControlledProps<T> {
-  defaultValue: T;
-  value?: T;
-}

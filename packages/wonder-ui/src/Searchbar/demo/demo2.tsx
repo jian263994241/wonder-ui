@@ -1,8 +1,3 @@
-/**
- * title: 按钮和图标
- * desc:
- *
- */
 import {
   ArrowForward,
   Page,

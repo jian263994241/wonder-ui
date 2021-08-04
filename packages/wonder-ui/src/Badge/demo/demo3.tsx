@@ -1,7 +1,3 @@
-/**
- * title: 背景颜色
- * desc: 通过改变 `color` 徽记背景
- */
 import { Badge, Space } from '@wonder-ui/core';
 
 export default () => (

@@ -6,8 +6,6 @@ import { useClickAway } from './useClickAway';
 import { useConst } from './useConst';
 import { useEventListener } from './useEventListener';
 
-const evOptions = { passive: true };
-
 export function useTouchFeedback<T extends Element>(
   options: {
     /**
@@ -21,10 +19,10 @@ export function useTouchFeedback<T extends Element>(
     /**
      * Focus node
      */
-    focusElement?: BasicTarget<Element>;
+    focusElements?: BasicTarget<Element>[];
   } = {}
 ) {
-  const { disabled = false, type = 'focus', focusElement } = options;
+  const { disabled = false, type = 'focus', focusElements = [] } = options;
 
   const targetRef = React.useRef<T>(null);
   const support = useConst(() => getSupport());
@@ -53,7 +51,7 @@ export function useTouchFeedback<T extends Element>(
 
   if (type === 'focus') {
     addEvent(touchstart, setTrue);
-    useClickAway(setFalse, [targetRef, focusElement], touchstart);
+    useClickAway(setFalse, focusElements.concat(targetRef), touchstart);
   }
 
   return { targetRef, active: disabled ? false : active };

@@ -1,7 +1,3 @@
-/**
- * title: 单选按钮
- * desc: 改变`checked`prop设定激活状态
- */
 import { Button, ButtonGroup, CheckableGroup } from '@wonder-ui/core';
 
 const options = [
@@ -16,7 +12,7 @@ export default () => (
       exclusive //是否单选
       options={options}
       defaultValue="Apple"
-      renderItem={({ emitOnChange, checked, data, key }) => (
+      onRenderItem={({ emitOnChange, checked, data, key }) => (
         <Button
           key={key}
           variant={checked ? 'contained' : 'outlined'}

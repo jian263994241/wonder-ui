@@ -1,8 +1,3 @@
-/**
- * title: 文件夹列表
- * desc:
- * background: '#f5f5f5'
- */
 import {
   Page,
   List,

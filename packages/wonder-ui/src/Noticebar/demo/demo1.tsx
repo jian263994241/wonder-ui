@@ -1,7 +1,3 @@
-/**
- * title: 基本使用
- * desc:
- */
 import { Noticebar, Space, ArrowForward, IconButton } from '@wonder-ui/core';
 import { InfoCircle, CheckCircle, ExclamationCircle } from '@wonder-ui/icons';
 

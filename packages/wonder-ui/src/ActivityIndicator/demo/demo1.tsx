@@ -1,6 +1,3 @@
-/**
- * title: 基本使用
- */
 import { ActivityIndicator, Space, Label } from '@wonder-ui/core';
 
 export default () => (

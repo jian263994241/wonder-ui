@@ -1,7 +1,3 @@
-/**
- * title: 基本使用
- * desc:
- */
 import { DatePicker, withDialog } from '@wonder-ui/core';
 import dayjs from 'dayjs';
 

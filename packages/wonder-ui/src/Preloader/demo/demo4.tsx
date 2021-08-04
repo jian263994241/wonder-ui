@@ -1,7 +1,3 @@
-/**
- * title: 替换图标
- * desc:
- */
 import {
   Button,
   showPreloader,

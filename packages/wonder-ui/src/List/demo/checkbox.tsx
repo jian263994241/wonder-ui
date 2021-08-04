@@ -1,8 +1,3 @@
-/**
- * title: Checkbox
- * desc:
- * background: '#f5f5f5'
- */
 import {
   Checkbox,
   Page,

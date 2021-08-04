@@ -1,12 +1,30 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-display
+  title: 数据展示
+  order: 4
 ---
 
-### BackTop
+# BackTop 回到顶部
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+返回页面顶部的操作按钮。
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| duration | 回到顶部所需时间（ms） | number | 450
-| visibilityHeight | 滚动高度达到此参数值才出现 BackTop | number | 400
+## 代码使用
+
+### 基本使用
+
+组件会自动查找父级的滚动容器.
+
+<code src="./demo/basic.tsx" iframe="true"></code>
+
+### 自定义
+
+通过改变`children`自定义按钮样式
+
+<code src="./demo/customize.tsx"></code>
+
+<API src="./BackTop.tsx" props="className|duration|style|visibilityHeight|onClick"></API>

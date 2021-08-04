@@ -1,7 +1,3 @@
-/**
- * title: 基本使用
- * desc:
- */
 import { Button, Space, Tooltip, Typography } from '@wonder-ui/core';
 
 export default () => (

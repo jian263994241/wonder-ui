@@ -1,8 +1,3 @@
-/**
- * title: 简易列表
- * desc: 可以设置一个空的`ListHeader`做间隔符
- * background: '#f5f5f5'
- */
 import {
   Page,
   List,
@@ -12,7 +7,6 @@ import {
   Divider,
   WhiteSpace
 } from '@wonder-ui/core';
-import { HouseFill, HeartFill } from '@wonder-ui/icons';
 
 export default () => (
   <Page title="Simple list">

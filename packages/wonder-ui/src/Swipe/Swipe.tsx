@@ -60,28 +60,66 @@ interface SwipeAction {
 }
 
 export interface SwipeProps {
+  /**
+   * 内置方法
+   */
   actionRef?: React.Ref<SwipeAction | null>;
-
+  /**
+   * 显示箭头
+   * @default false
+   */
   arrows?: boolean;
   classes?: Partial<typeof swipeClasses>;
   className?: string;
+  /**
+   * 内容
+   */
   children?: React.ReactNode;
+  /**
+   * 显示指示点
+   */
   dots?: boolean;
   style?: React.CSSProperties;
 
   animateHeight?: boolean;
   animateTransitions?: boolean;
+  /**
+   * 滑动方向
+   */
   axis?: 'x' | 'x-reverse' | 'y' | 'y-reverse';
   containerStyle?: React.CSSProperties;
+  /**
+   * 启用/禁用滑动以更改幻灯片
+   */
   disabled?: boolean;
+  /**
+   * 禁用按需或逐步加载图像或渲染组件
+   */
   disableLazyLoading?: boolean;
+  /**
+   * 启用鼠标事件
+   */
   enableMouseEvents?: boolean;
-  hysteresis?: number;
-  ignoreNativeScroll?: boolean;
 
+  hysteresis?: number;
+
+  ignoreNativeScroll?: boolean;
+  /**
+   * 第一张幻灯片的索引
+   * @default 0
+   */
   initialSlide?: number;
+  /**
+   * 索引更改回调
+   */
   onChangeIndex?: OnChangeIndexCallback;
+  /**
+   * 滑动切换时由组件调用
+   */
   onSwitching?: OnSwitchingCallback;
+  /**
+   * 动画停止时触发的回调
+   */
   onTransitionEnd?: OnTransitionEndCallback;
   resistance?: boolean;
   slideStyle?: React.CSSProperties;
@@ -90,22 +128,41 @@ export interface SwipeProps {
   threshold?: number;
 
   //WithAutoPlayProps
-  autoplay?: boolean;
-  direction?: 'incremental' | 'decremental';
-  interval?: number;
-  //
-  infinite?: boolean;
 
+  /**
+   * 自动滚动
+   */
+  autoplay?: boolean;
+  /**
+   * 自动增加/减少
+   */
+  direction?: 'incremental' | 'decremental';
+  /**
+   * 自动时间间隔(ms)
+   * @default 3000
+   */
+  interval?: number;
+  /**
+   * 无限滑动
+   */
+  infinite?: boolean;
+  /**
+   * 自定义点模板
+   */
   onRenderDots?(
     activeSlideNumber: number,
     action: SwipeAction
   ): React.ReactNode;
-
+  /**
+   * 自定义箭头模板
+   */
   onRenderPrevArrow?(
     activeSlideNumber: number,
     action: SwipeAction
   ): React.ReactNode;
-
+  /**
+   * 自定义箭头模板
+   */
   onRenderNextArrow?(
     activeSlideNumber: number,
     action: SwipeAction

@@ -1,15 +1,26 @@
 ---
-sidemenu: false
+mobile: true
+toc: menu
+nav:
+  path: /components
+group:
+  path: /data-display
+  title: 数据展示
+  order: 4
 ---
-### Skeleton
+# Skeleton 骨架屏
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+在需要等待加载内容的位置提供一个占位图形组合。
 
+## 代码演示
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| avatar | 头像 | `boolean` | false
-| avatarRound | 圆形头像 | `boolean` | true
-| classes | css | `'root', 'avatar', 'avatarRound', 'content', 'title', 'row'` |
-| row | 行数 | `number` | 3
-| title | 显示标题 | `boolean` | false
+### 基本使用
+
+<code src="./demo/demo1.tsx"></code>
+
+### 显示头像
+
+<code src="./demo/demo2.tsx"></code>
+
+<API src="./Skeleton.tsx" props="avatar|avatarRound|row|title"></API>
+

@@ -1,19 +1,22 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /fb
+  title: 反馈
+  order: 5
 ---
+# ActivityIndicator 指示器
 
-### ActivityIndicator
+活动指示器, 用于表示加载中的过渡状态
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| color | 按钮颜色 | 'inherit' \| 'primary' \| 'secondary' \| 'success' \| 'danger' \| 'warning' \| 'info' | inherit
-| iconSize | 图标尺寸 | 'small' \| 'medium' \| 'large' |
-| text | 文案 | string |
-| type | 类型 | 'spinner' \| 'circular' |
-| vertical | 垂直 | boolean | false
+## 代码演示
 
-### ActivityIndicator classes
+### 基本使用
 
-```
-'root', 'icon', 'text', 'vertical', 'spinner', 'circular', 'iconSizeSmall', 'iconSizeMedium', 'iconSizeLarge', 'colorInherit', 'colorPrimary', 'colorSecondary', 'colorSuccess', 'colorDanger', 'colorWarning', 'colorInfo', 'colorLight', 'colorDark'
-```
+<code src="./demo/demo1.tsx"></code>
+
+<API src="./ActivityIndicator.tsx" props="color|iconSize|text|type|vertical"></API>
+

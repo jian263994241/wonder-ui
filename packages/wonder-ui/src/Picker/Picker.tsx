@@ -16,10 +16,10 @@ import {
   css,
   generateUtilityClasses,
   isObject,
-  preventDefault
+  preventDefault,
+  unitToPx
 } from '@wonder-ui/utils';
 import {
-  useDebounceFn,
   useEventCallback,
   useEventListener,
   useSafeState
@@ -143,43 +143,101 @@ export type PickerAction = {
 };
 
 export interface PickerProps {
+  /**
+   * 内置方法
+   */
   actionRef?: React.Ref<PickerAction | null>;
 
   className?: string;
   style?: React.CSSProperties;
   classes?: Partial<typeof pickerClasses>;
-
-  itemHeight?: number;
-
+  /**
+   * 选项高度，支持 `px` `vw` `vh` `rem` 单位，默认 px
+   * @default 44
+   */
+  itemHeight?: number | string;
+  /**
+   * 选项对象中，选项文字对应的键名
+   * @default text
+   */
   textKey?: string;
+  /**
+   * 配置对象中取值键名
+   * @default values
+   */
   valuesKey?: string;
+  /**
+   * 子项键名
+   * @default children
+   */
   childrenKey?: string;
-
+  /**
+   * 对象数组，配置每一列显示的数据
+   */
   columns?: PickerOption[] | PickerObjectColumn[];
-
+  /**
+   * 可见的选项个数
+   * @default 6
+   */
   visibleItemCount?: number;
+  /**
+   * 初始index
+   */
   defaultIndex?: number;
+  /**
+   * 快速滑动时惯性滚动的时长，单位 ms
+   * @default 600
+   */
   swipeDuration?: number;
+  /**
+   * 是否为只读状态，只读状态下无法切换选项
+   */
   readOnly?: boolean;
-
+  /**
+   * 是否显示顶部栏
+   */
   showNavbar?: boolean;
-
+  /**
+   * 顶部栏位置，可选值为bottom
+   * @default top
+   */
   navbarPosition?: 'top' | 'bottom';
 
   NavbarProps?: Partial<NavbarProps>;
-
+  /**
+   * 顶部栏标题
+   */
   title?: string;
+  /**
+   * 顶部栏副标题
+   */
   subTitle?: string;
+  /**
+   * 取消按钮问题
+   */
   cancelText?: string;
+  /**
+   * 确定按钮文案
+   */
   confirmText?: string;
-
+  /**
+   * 是否显示加载状态
+   */
   loading?: boolean;
-
+  /**
+   * 改变回调
+   */
   onChange?(value: PickerOption | PickerOption[], columnIndex: number): void;
+  /**
+   * 确认回调
+   */
   onConfirm?(
     value: PickerOption | PickerOption[],
     columnIndex: number | number[]
   ): void;
+  /**
+   * 取消回调
+   */
   onCancel?(
     value: PickerOption | PickerOption[],
     columnIndex: number | number[]
@@ -193,7 +251,7 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     actionRef,
     className,
     style,
-    itemHeight = 44,
+    itemHeight: itemHeightProp = 44,
     textKey = 'text',
     valuesKey = 'values',
     childrenKey = 'children',
@@ -213,6 +271,11 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     onConfirm,
     onCancel
   } = props;
+
+  const itemHeight = React.useMemo(
+    () => unitToPx(itemHeightProp),
+    [itemHeightProp]
+  );
 
   const styleProps = {
     ...props,

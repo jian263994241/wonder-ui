@@ -1,7 +1,3 @@
-/**
- * title: 提示框
- * desc: 各种信息提示框
- */
 import {
   Button,
   Container,

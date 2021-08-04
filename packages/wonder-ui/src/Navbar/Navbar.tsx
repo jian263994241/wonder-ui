@@ -3,11 +3,11 @@ import styled from '../styles/styled';
 import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
+import { buttonClasses } from '../Button';
 import { css } from '@wonder-ui/utils';
 import { navbarClasses, useClasses } from './NavbarClasses';
 import { searchbarClasses } from '../Searchbar';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
-import { buttonClasses } from '../Button/ButtonClasses';
 export interface NavbarProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   /**

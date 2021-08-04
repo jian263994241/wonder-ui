@@ -79,7 +79,10 @@ export interface DropdownMenuProps
   extends React.HTMLAttributes<HTMLDivElement> {
   classes?: Partial<typeof dropdownMenuClasses>;
   component?: React.ElementType;
-  ref?: React.Ref<any>;
+  /**
+   * 子节点自然宽度
+   * @default false
+   */
   widthAuto?: boolean;
 }
 
