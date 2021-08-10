@@ -12,7 +12,7 @@ const Image = styled('div')`
 
 export default () => {
   return (
-    <Swipe autoplay>
+    <Swipe autoplay vertical style={{ height: 200 }}>
       <Image>1</Image>
       <Image>2</Image>
       <Image>3</Image>

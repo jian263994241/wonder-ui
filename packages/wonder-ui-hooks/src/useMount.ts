@@ -6,7 +6,7 @@ import { useSafeState } from './useSafeState';
  *
  * @param callback - Function to call before mount.
  */
-export function useMount(callback: () => void) {
+export function useMount(callback?: () => void) {
   const [mounted, setMounted] = useSafeState(false);
   const mountRef = React.useRef(callback);
   mountRef.current = callback;

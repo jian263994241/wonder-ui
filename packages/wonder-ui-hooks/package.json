@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/hooks",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Wonder-UI hooks",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -35,7 +35,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@wonder-ui/utils": "^2.1.12",
+    "@wonder-ui/utils": "^2.1.13",
     "dayjs": "^1.10.3",
     "eventemitter3": "^4.0.7",
     "intersection-observer": "^0.12.0",

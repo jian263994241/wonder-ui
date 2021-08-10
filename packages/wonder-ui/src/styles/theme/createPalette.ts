@@ -3,43 +3,54 @@ import { darken, getContrastRatio, lighten } from '../colorManipulator';
 import { getDevice } from '@wonder-ui/utils';
 import type { ColorKeys, ColorType } from './colors';
 
-interface ColorObj {
+type ColorObj = {
   main: string;
   light: string;
   dark: string;
   contrastText: string;
-}
+};
+
+type CommonColor = {
+  black: string;
+  white: string;
+};
+
+type TextColor = {
+  primary: string;
+  secondary: string;
+  disabled: string;
+};
+
+type BackgroundColor = {
+  paper: string;
+  default: string;
+};
+
+type ActionColor = {
+  active: string;
+  hover: string;
+  hoverOpacity: number;
+  selected: string;
+  selectedOpacity: number;
+  disabled: string;
+  disabledBackground: string;
+  disabledOpacity: number;
+  focus: string;
+  focusOpacity: number;
+  activatedOpacity: number;
+};
+
+type Mode = 'light' | 'dark';
 
 type ColorIntent = Partial<ColorObj> & Partial<ColorType>;
+
 export interface Palette {
-  common: {
-    black: string;
-    white: string;
-  };
+  common: CommonColor;
   colors: typeof colors;
-  text: {
-    primary: string;
-    secondary: string;
-    disabled: string;
-  };
+  text: TextColor;
   divider: string;
-  background: {
-    paper: string;
-    default: string;
-  };
-  action: {
-    active: string;
-    hover: string;
-    hoverOpacity: number;
-    selected: string;
-    selectedOpacity: number;
-    disabled: string;
-    disabledBackground: string;
-    disabledOpacity: number;
-    focus: string;
-    focusOpacity: number;
-    activatedOpacity: number;
-  };
+  background: BackgroundColor;
+  action: ActionColor;
   primary: ColorObj;
   secondary: ColorObj;
   danger: ColorObj;
@@ -49,7 +60,7 @@ export interface Palette {
   error: ColorObj;
   light: ColorObj;
   dark: ColorObj;
-  mode: 'light' | 'dark';
+  mode: Mode;
   contrastThreshold: number;
   tonalOffset: number;
   augmentColor: (
@@ -61,8 +72,24 @@ export interface Palette {
   getContrastText: (background: string) => string;
 }
 
-export interface PaletteOptions extends Partial<Omit<Palette, 'mode'>> {
-  mode?: 'light' | 'dark' | 'auto' | null;
+export interface PaletteOptions {
+  mode?: Mode | 'auto';
+  common?: Partial<CommonColor>;
+  text?: Partial<TextColor>;
+  divider?: string;
+  background?: Partial<BackgroundColor>;
+  action?: Partial<ActionColor>;
+  primary?: Partial<ColorObj>;
+  secondary?: Partial<ColorObj>;
+  danger?: Partial<ColorObj>;
+  warning?: Partial<ColorObj>;
+  info?: Partial<ColorObj>;
+  success?: Partial<ColorObj>;
+  error?: Partial<ColorObj>;
+  light?: Partial<ColorObj>;
+  dark?: Partial<ColorObj>;
+  contrastThreshold?: number;
+  tonalOffset?: number;
 }
 
 const common = {

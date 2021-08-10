@@ -551,7 +551,7 @@
           return A;
         }),
         n.d(t, 'm', function () {
-          return R;
+          return k;
         }),
         n.d(t, 'n', function () {
           return D;
@@ -600,6 +600,9 @@
         }),
         n.d(t, 'u', function () {
           return de;
+        }),
+        n.d(t, 'D', function () {
+          return fe;
         });
       var r = n('q1tI'),
         o = n('Bu8g');
@@ -1022,10 +1025,10 @@
           t = Object(a['a'])(e, 2),
           n = t[1];
         return y(() => {
-          n({});
+          Object(o['nextTick'])(() => n({}));
         });
       }
-      function R() {
+      function k() {
         for (var e = arguments.length, t = new Array(e), n = 0; n < e; n++)
           t[n] = arguments[n];
         return y((e) => {
@@ -1035,7 +1038,7 @@
         });
       }
       n('k7+O');
-      function k() {
+      function R() {
         var e =
             arguments.length > 0 && void 0 !== arguments[0]
               ? arguments[0]
@@ -1048,7 +1051,7 @@
         return e.replace(/x/g, () => t[Math.floor(Math.random() * n)]);
       }
       function D(e) {
-        var t = r['useRef']((e || '') + k()),
+        var t = r['useRef']((e || '') + R()),
           n = t.current;
         return n;
       }
@@ -1131,8 +1134,8 @@
           }, [t]);
       }
       var B = !0,
-        L = !1,
-        H = null,
+        H = !1,
+        L = null,
         z = {
           text: !0,
           search: !0,
@@ -1164,7 +1167,7 @@
         B = !1;
       }
       function q() {
-        'hidden' === this.visibilityState && L && (B = !0);
+        'hidden' === this.visibilityState && H && (B = !0);
       }
       function Y(e) {
         return [
@@ -1196,10 +1199,10 @@
         function i() {
           return (
             !!n.current &&
-            ((L = !0),
-            window.clearTimeout(H),
-            (H = window.setTimeout(() => {
-              L = !1;
+            ((H = !0),
+            window.clearTimeout(L),
+            (L = window.setTimeout(() => {
+              H = !1;
             }, 100)),
             (n.current = !1),
             !0)
@@ -1274,15 +1277,12 @@
         );
       }
       function te(e) {
-        var t = d({}),
-          n = Object(a['a'])(t, 2),
-          o = n[1],
-          i = () => o({}),
-          u = {
-            set: (e, t, n) => (e[t] != n && ((e[t] = n), setTimeout(i, 0)), !0),
+        var t = A(),
+          n = {
+            set: (e, n, r) => (e[n] != r && ((e[n] = r), setTimeout(t, 0)), !0),
           },
-          c = r['useRef'](new Proxy(e, u));
-        return c.current;
+          o = r['useRef'](new Proxy(e, n));
+        return o.current;
       }
       new Set();
       function ne(e) {
@@ -1575,6 +1575,19 @@
           }),
           n
         );
+      }
+      function fe() {
+        var e = Object(o['getWindow'])(),
+          t = d({ width: e.innerWidth || 0, height: e.innerHeight || 0 }),
+          n = Object(a['a'])(t, 2),
+          r = n[0],
+          i = n[1],
+          u = y(() => {
+            Object(o['nextTick'])(() => {
+              i({ width: e.innerWidth, height: e.innerHeight });
+            });
+          });
+        return j(e, 'resize', u), j(e, 'orientationchange', u), r;
       }
     },
     BF2X: function (e, t, n) {
@@ -2990,10 +3003,10 @@
           return Ae;
         }),
         n.d(t, 'd', function () {
-          return k;
+          return R;
         }),
         n.d(t, 'c', function () {
-          return Re;
+          return ke;
         });
       var r = '\\ud800-\\udfff',
         o = '\\u0300-\\u036f',
@@ -3044,7 +3057,7 @@
         var r = e.length;
         return (n = void 0 === n ? r : n), !t && n >= r ? e : e.slice(t, n);
       }
-      function R(e) {
+      function k(e) {
         return (t) => {
           if (!t) return '';
           var n = j(t) ? I(t) : void 0,
@@ -3053,15 +3066,15 @@
           return r[e]() + o;
         };
       }
-      var k = R('toUpperCase'),
+      var R = k('toUpperCase'),
         D = '\\ud800-\\udfff',
         F = '\\u0300-\\u036f',
         W = '\\ufe20-\\ufe2f',
         N = '\\u20d0-\\u20ff',
         M = '\\u1ab0-\\u1aff',
         B = '\\u1dc0-\\u1dff',
-        L = F + W + N + M + B,
-        H = '\\u2700-\\u27bf',
+        H = F + W + N + M + B,
+        L = '\\u2700-\\u27bf',
         z = 'a-z\\xdf-\\xf6\\xf8-\\xff',
         V = '\\xac\\xb1\\xd7\\xf7',
         Z = '\\x00-\\x2f\\x3a-\\x40\\x5b-\\x60\\x7b-\\xbf',
@@ -3073,11 +3086,11 @@
         K = V + Z + U + q,
         J = "['\u2019]",
         X = '['.concat(K, ']'),
-        $ = '['.concat(L, ']'),
+        $ = '['.concat(H, ']'),
         G = '\\d',
-        ee = '['.concat(H, ']'),
+        ee = '['.concat(L, ']'),
         te = '['.concat(z, ']'),
-        ne = '[^'.concat(D).concat(K + G + H + z + Y, ']'),
+        ne = '[^'.concat(D).concat(K + G + L + z + Y, ']'),
         re = '\\ud83c[\\udffb-\\udfff]',
         oe = '(?:'.concat($, '|').concat(re, ')'),
         ie = '[^'.concat(D, ']'),
@@ -3150,12 +3163,12 @@
       }
       var Ie = (e) =>
           je(Ce(e).replace(/['\u2019]/g, '')).reduce(
-            (e, t, n) => ((t = t.toLowerCase()), e + (n ? k(t) : t)),
+            (e, t, n) => ((t = t.toLowerCase()), e + (n ? R(t) : t)),
             '',
           ),
-        Ae = (e) => k(Ce(e).toLowerCase());
+        Ae = (e) => R(Ce(e).toLowerCase());
       parseInt;
-      function Re(e) {
+      function ke(e) {
         var t =
             arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 2,
           n = e + '';

@@ -145,10 +145,10 @@ const SearchbarBg = styled('div', { name: 'WuiNavbar', slot: 'Bg' })(
       zIndex: 0,
       background: alpha(backgroundColor, 0.85),
       transitionProperty: 'transform',
-      borderWidth: 0,
-      borderStyle: 'solid',
-      borderColor: theme.palette.divider,
-      borderBottomWidth: 'thin',
+      // borderWidth: 0,
+      // borderStyle: 'solid',
+      // borderColor: theme.palette.divider,
+      // borderBottomWidth: 'thin',
       backdropFilter: 'saturate(180%) blur(20px)'
     };
   }

@@ -10,9 +10,25 @@ const Image = styled('div')`
   height: 200px;
 `;
 
+const Indicator = styled('div')`
+  position: absolute;
+  z-index: 10;
+  bottom: 0;
+  right: 0;
+  padding: 6px 12px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.1);
+  font-size: 12px;
+`;
+
 export default () => {
   return (
-    <Swipe autoplay>
+    <Swipe
+      autoplay
+      onRenderIndicator={(activeIndex) => (
+        <Indicator>{activeIndex + 1}/3</Indicator>
+      )}
+    >
       <Image>1</Image>
       <Image>2</Image>
       <Image>3</Image>

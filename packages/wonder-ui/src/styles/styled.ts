@@ -48,7 +48,9 @@ const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
     ...styledOptions
   } = options;
 
-  let displayName: string | undefined;
+  let displayName: string | undefined = tag.displayName
+    ? `styled(${tag.displayName})`
+    : undefined;
   let name: string | undefined;
   let className: string | undefined;
 

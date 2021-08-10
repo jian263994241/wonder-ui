@@ -59,9 +59,7 @@ const NavbarRoot = styled('div', {
     margin: 0,
     paddingTop: 'env(safe-area-inset-top)',
     userSelect: 'none',
-    [`& .${searchbarClasses.root}`]: {
-      marginTop: -1
-    },
+
     [`& .${searchbarClasses.bg}`]: {
       display: 'none'
     }

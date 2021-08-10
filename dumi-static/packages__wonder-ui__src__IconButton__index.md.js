@@ -600,6 +600,9 @@
         }),
         n.d(t, 'u', function () {
           return de;
+        }),
+        n.d(t, 'D', function () {
+          return fe;
         });
       var r = n('q1tI'),
         o = n('Bu8g');
@@ -1022,7 +1025,7 @@
           t = Object(a['a'])(e, 2),
           n = t[1];
         return y(() => {
-          n({});
+          Object(o['nextTick'])(() => n({}));
         });
       }
       function k() {
@@ -1274,15 +1277,12 @@
         );
       }
       function te(e) {
-        var t = d({}),
-          n = Object(a['a'])(t, 2),
-          o = n[1],
-          i = () => o({}),
-          u = {
-            set: (e, t, n) => (e[t] != n && ((e[t] = n), setTimeout(i, 0)), !0),
+        var t = A(),
+          n = {
+            set: (e, n, r) => (e[n] != r && ((e[n] = r), setTimeout(t, 0)), !0),
           },
-          c = r['useRef'](new Proxy(e, u));
-        return c.current;
+          o = r['useRef'](new Proxy(e, n));
+        return o.current;
       }
       new Set();
       function ne(e) {
@@ -1575,6 +1575,19 @@
           }),
           n
         );
+      }
+      function fe() {
+        var e = Object(o['getWindow'])(),
+          t = d({ width: e.innerWidth || 0, height: e.innerHeight || 0 }),
+          n = Object(a['a'])(t, 2),
+          r = n[0],
+          i = n[1],
+          u = y(() => {
+            Object(o['nextTick'])(() => {
+              i({ width: e.innerWidth, height: e.innerHeight });
+            });
+          });
+        return j(e, 'resize', u), j(e, 'orientationchange', u), r;
       }
     },
     BF2X: function (e, t, n) {

@@ -8,11 +8,15 @@ const Image = styled('div')`
   align-items: center;
   width: 100%;
   height: 200px;
+
+  .WuiSwipe-item:nth-child(even) & {
+    background-color: #39ed81;
+  }
 `;
 
 export default () => {
   return (
-    <Swipe autoplay>
+    <Swipe loop={false} width={260}>
       <Image>1</Image>
       <Image>2</Image>
       <Image>3</Image>

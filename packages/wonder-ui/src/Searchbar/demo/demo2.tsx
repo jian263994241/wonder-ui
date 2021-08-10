@@ -1,62 +1,43 @@
+import * as React from 'react';
 import {
-  ArrowForward,
+  Button,
+  Drawer,
   Page,
   Searchbar,
-  WhiteSpace,
-  Button,
-  Space,
-  Drawer
+  Typography,
+  Space
 } from '@wonder-ui/core';
-import { Person, Share, ArrowClockwise } from '@wonder-ui/icons';
-import * as React from 'react';
+import { Search } from '@wonder-ui/icons';
 
 export default () => {
   const [DrawerVisible, setDrawerVisible] = React.useState(false);
 
   return (
     <Page
-      title="搜索"
-      NavbarProps={{
-        children: (
-          <Searchbar
-            icon={<Person />}
-            placeholder="请输入名字"
-            barRight={
-              <Button
-                style={{ whiteSpace: 'nowrap', marginRight: -12 }}
-                onClick={() => {
-                  setDrawerVisible(true);
-                }}
-              >
-                筛选
-              </Button>
-            }
-          />
-        )
-      }}
-    >
-      <WhiteSpace />
-      <Space direction="vertical">
-        按钮和图标:
+      navbar={
         <Searchbar
-          InputProps={{
-            readOnly: true,
-            onClick: () => alert('Input click'),
-            style: { color: 'green' }
-          }}
-          placeholder="请输入商品名字"
-          barRight={
-            <Space nowrap style={{ marginLeft: 10 }}>
-              <Share />
-              <ArrowClockwise />
+          style={{ position: 'absolute', top: 0 }}
+          icon={
+            <Space style={{ color: '#777' }} gap={3} verticalAlign="center">
+              地址
+              <Search style={{ fontSize: '0.8rem' }} />
             </Space>
           }
-          barLeft={
-            <ArrowForward direction="left" style={{ marginRight: 10 }} />
+          placeholder="请输入地址"
+          barRight={
+            <Button
+              style={{ whiteSpace: 'nowrap', marginRight: -12 }}
+              onClick={() => {
+                setDrawerVisible(true);
+              }}
+            >
+              筛选
+            </Button>
           }
         />
-      </Space>
-
+      }
+    >
+      <Typography style={{ padding: 12 }}>点击筛选展开面板</Typography>
       <Drawer
         anchor="right"
         visible={DrawerVisible}
@@ -65,7 +46,7 @@ export default () => {
         }}
       >
         <Page title="筛选" style={{ width: 200 }}>
-          12313
+          筛选面板
         </Page>
       </Drawer>
     </Page>

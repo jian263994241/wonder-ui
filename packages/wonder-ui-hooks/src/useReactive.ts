@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { useSafeState } from './useSafeState';
+import { useForceUpdate } from './useForceUpdate';
 
 export function useReactive<T extends object>(state: T): T {
-  const [, setState] = useSafeState({});
-
-  const update = () => setState({});
+  const update = useForceUpdate();
 
   const handler = {
     set: (obj: any, prop: string | symbol, value: any) => {

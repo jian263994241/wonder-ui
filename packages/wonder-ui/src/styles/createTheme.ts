@@ -30,7 +30,7 @@ interface ThemeOptions extends ThemeComponents {
   spacing?: SpacingConfig;
   typography?: TypographyOptions;
   shadows?: string[];
-  shape?: Shape;
+  shape?: Partial<Shape>;
   zIndex?: Partial<typeof zIndex>;
 }
 

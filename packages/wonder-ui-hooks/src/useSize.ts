@@ -1,4 +1,3 @@
-import * as React from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import { BasicTarget, getTargetElement } from './utils/dom';
 import { useEnhancedEffect } from './useEnhancedEffect';

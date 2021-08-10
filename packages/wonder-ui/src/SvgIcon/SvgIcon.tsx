@@ -59,7 +59,7 @@ const SvgIconRoot = styled('svg', { name: 'WuiSvgIcon', slot: 'Root' })(
     fill: 'currentColor',
     flexShrink: 0,
     fontSize: 'inherit',
-    verticalAlign: -1,
+    verticalAlign: 0,
     WebkitTapHighlightColor: 'transparent',
     transition: theme.transitions.create('fill', {
       duration: theme.transitions.duration.shorter

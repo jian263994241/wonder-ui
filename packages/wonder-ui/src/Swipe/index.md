@@ -16,16 +16,41 @@ group:
 
 ### 基本使用
 
+每个 Child 代表一张轮播卡片，可以通过 `autoplay` 属性设置自动轮播, `interval`设置轮播的间隔。
+
 <code src="./demo/demo1.tsx"></code>
 
+### 懒加载
 
-<API src="./Swipe.tsx" props="arrows|actionRef|children|interval|autoplay|dots|enableMouseEvents|infinite|initialSlide|disabled|disableLazyLoading|onChangeIndex|onSwitching|onTransitionEnd|onRenderDots|onRenderPrevArrow|onRenderNextArrow"></API>
+默认加载当前和相邻的`slide`, 可以通过`disableLazyLoading`属性禁用懒加载
+
+<code src="./demo/demo2.tsx"></code>
+
+### 纵向滚动
+
+通过`vertical`属性设置纵向滚动, 注意最外层容器需要设置高度
+
+<code src="./demo/demo3.tsx"></code>
+
+### 自定义滑块大小
+
+滑块默认宽度为 100%，可以通过 `width` 属性设置单个滑块的宽度。纵向滚动模式下，可以通过 `height` 属性设置单个滑块的高度。
+
+<code src="./demo/demo4.tsx"></code>
+
+### 自定义指示器
+
+通过 `onRenderIndicator` 属性可以自定义指示器的样式。
+
+<code src="./demo/demo5.tsx"></code>
+
+<API src="./Swipe.tsx" props="actionRef|autoplay|interval|classes|className|children|style|slideStyle|containerStyle|disableLazyLoading|touchable|initialSlide|showIndicators|stopPropagation|vertical|duration|width|height|loop|onRenderIndicator|onChange"></API>
 
 
-## 内置方法
+## Swipe 方法
 
 | 参数	|说明	|类型	|默认值
 | --- | --- | --- | ---
-| slickGoTo | 滑动到与index匹配的位置 | (slideNumber: number, dontAnimate?: boolean): void |
-| slickNext | 滑到下一张幻灯片 | (): void |
-| slickPrev | 滑到上一张幻灯片 | (): void |
+| swipeTo | 滑动到与index匹配的位置 | `(slideNumber: number, {immediate?: boolean}) => void` |
+| next | 滑到下一张幻灯片 | `() => void` |
+| prev | 滑到上一张幻灯片 | `() => void` |
