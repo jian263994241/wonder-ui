@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ActivityIndicator from '../ActivityIndicator';
 import Modal, { ModalProps } from '../Modal';
 import ReactDOM from 'react-dom';
 import styled from '../styles/styled';
@@ -6,7 +7,6 @@ import useThemeProps from '../styles/useThemeProps';
 import { createChainedFunction, isPromise } from '@wonder-ui/utils';
 import { emphasize } from '../styles/colorManipulator';
 import { useControlled } from '@wonder-ui/hooks';
-import ActivityIndicator from '../ActivityIndicator';
 
 export interface PreloaderProps extends React.HTMLAttributes<HTMLElement> {
   /**

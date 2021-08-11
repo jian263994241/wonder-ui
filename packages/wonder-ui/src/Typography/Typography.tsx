@@ -71,7 +71,6 @@ const TypographyRoot = styled('span', {
   padding: 0,
   display: 'block',
   textAlign: styleProps.align,
-  overflow: 'hidden',
   wordBreak: 'break-word',
   ...theme.typography[styleProps.variant],
 
@@ -93,11 +92,13 @@ const TypographyRoot = styled('span', {
   [`&.${typographyClasses.lineClamp}`]: {
     display: '-webkit-box',
     WebkitBoxOrient: 'vertical',
-    WebkitLineClamp: styleProps.lineClamp
+    WebkitLineClamp: styleProps.lineClamp,
+    overflow: 'hidden'
   },
   [`&.${typographyClasses.noWrap}`]: {
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    overflow: 'hidden'
   },
   [`&.${typographyClasses.gutterBottom}`]: {
     marginBottom: '0.35em'
@@ -124,6 +125,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       noWrap = false,
       paragraph = false,
       variant = 'body1',
+      inline = false,
       ...rest
     } = props;
 
@@ -138,7 +140,8 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       lineClamp,
       noWrap,
       paragraph,
-      variant
+      variant,
+      inline
     };
 
     const classes = useClasses(styleProps);

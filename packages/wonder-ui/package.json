@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/core",
-  "version": "2.0.0-27",
+  "version": "2.0.0-30",
   "description": "Wonder-UI react components",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -33,7 +33,7 @@
   "license": "MIT",
   "dependencies": {
     "@popperjs/core": "^2.9.0",
-    "@wonder-ui/hooks": "^1.1.7",
+    "@wonder-ui/hooks": "^1.1.10",
     "@wonder-ui/styled": "^1.0.7",
     "@wonder-ui/utils": "^2.1.13",
     "react-focus-lock": "^2.5.0",

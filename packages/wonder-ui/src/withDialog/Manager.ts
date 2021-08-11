@@ -31,4 +31,9 @@ export default class Manager {
     this.modalLock = true;
     fn(this.modalStackClearQueue);
   };
+
+  reset = () => {
+    this.modalLock = false;
+    this.modalStack = [];
+  };
 }

@@ -10,7 +10,7 @@ import { BaseTransitionProps, TransitionTimeout } from '../Transition';
 import { css } from '@wonder-ui/utils';
 import { snackbarClasses, useClasses } from './SnackbarClasses';
 import { useEventCallback, useForkRef, useSafeState } from '@wonder-ui/hooks';
-
+import Portal from '../Portal';
 export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * @ignore
@@ -52,6 +52,10 @@ export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
    * @ignore
    */
   disableWindowBlurListener?: boolean;
+  /**
+   * @ignore
+   */
+  disablePortal?: boolean;
   /**
    * 内容
    */
@@ -178,6 +182,7 @@ const Snackbar = React.forwardRef<HTMLElement, SnackbarProps>(
       children,
       className,
       disableWindowBlurListener = false,
+      disablePortal = false,
       message,
       onClose,
       onMouseEnter,
@@ -293,38 +298,40 @@ const Snackbar = React.forwardRef<HTMLElement, SnackbarProps>(
     }
 
     return (
-      <ClickAwayListener
-        onClickAway={handleClickAway}
-        {...ClickAwayListenerProps}
-      >
-        <SnackbarRoot
-          className={css(classes.root, className)}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          ref={handleRef}
-          {...rest}
+      <Portal disablePortal={disablePortal}>
+        <ClickAwayListener
+          onClickAway={handleClickAway}
+          {...ClickAwayListenerProps}
         >
-          <TransitionComponent
-            appear
-            in={visible}
-            direction={vertical === 'top' ? 'down' : 'up'}
-            timeout={transitionDuration}
-            onEnter={handleEnter}
-            onExited={handleExited}
-            {...TransitionProps}
+          <SnackbarRoot
+            className={css(classes.root, className)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            ref={handleRef}
+            {...rest}
           >
-            {children || (
-              <SnackbarContent
-                message={message}
-                action={action}
-                center={vertical === 'center' && horizontal === 'center'}
-                classes={{ root: classes.content }}
-                {...ContentProps}
-              />
-            )}
-          </TransitionComponent>
-        </SnackbarRoot>
-      </ClickAwayListener>
+            <TransitionComponent
+              appear
+              in={visible}
+              direction={vertical === 'top' ? 'down' : 'up'}
+              timeout={transitionDuration}
+              onEnter={handleEnter}
+              onExited={handleExited}
+              {...TransitionProps}
+            >
+              {children || (
+                <SnackbarContent
+                  message={message}
+                  action={action}
+                  center={vertical === 'center' && horizontal === 'center'}
+                  classes={{ root: classes.content }}
+                  {...ContentProps}
+                />
+              )}
+            </TransitionComponent>
+          </SnackbarRoot>
+        </ClickAwayListener>
+      </Portal>
     );
   }
 );

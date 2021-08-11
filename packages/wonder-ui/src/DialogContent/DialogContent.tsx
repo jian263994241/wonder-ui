@@ -165,6 +165,7 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
 
               {text && (
                 <Typography
+                  component="div"
                   variant="body1"
                   align="center"
                   classes={{ root: classes.text }}

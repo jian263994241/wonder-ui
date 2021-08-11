@@ -14,8 +14,8 @@ export const defaultVariantMapping = {
   h6: 'h6',
   subtitle1: 'h6',
   subtitle2: 'h6',
-  body1: 'p',
-  body2: 'p'
+  body1: 'span',
+  body2: 'span'
 } as const;
 
 export const typographyClasses = generateUtilityClasses('WuiTypography', [

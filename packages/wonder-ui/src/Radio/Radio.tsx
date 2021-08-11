@@ -27,18 +27,16 @@ const RadioWrapper = styled('label', {
   display: 'inline-flex',
   alignItems: 'baseline',
   cursor: 'pointer',
+  WebkitTapHighlightColor: 'transparent',
   ...(styleProps.disabled && {
     color: theme.palette.action.disabled,
     cursor: 'not-allowed'
   }),
-
-  [`& > .${radioClasses.root}`]: {
-    top: '.2em'
+  [`& .${radioClasses.input}`]: {
+    top: 2
   },
-
-  [`& > .${radioClasses.root} + span`]: {
-    paddingLeft: 8,
-    paddingRight: 8
+  [`& > span`]: {
+    paddingLeft: '.3em'
   }
 }));
 
@@ -87,46 +85,46 @@ const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })<{
     pointerEvents: 'none',
     filter: 'none',
     opacity: theme.palette.action.disabledOpacity
-  },
-  'label > & + *': {
-    marginLeft: '.3em'
   }
 }));
 
 const Radio = React.forwardRef<HTMLInputElement, RadioProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiRadio' });
-  const {
-    className,
-    children,
-    color = 'primary',
-
-    ...rest
-  } = props;
+  const { className, children, color = 'primary', style, ...rest } = props;
 
   const styleProps = { ...props, color };
 
   const classes = useClasses(styleProps);
 
-  const radioRendered = (
-    <RadioRoot
-      className={css(classes.root, className)}
-      ref={ref}
-      type="radio"
-      styleProps={styleProps}
-      {...rest}
-    />
-  );
-
   if (children) {
     return (
-      <RadioWrapper className={classes.wrapper} styleProps={styleProps}>
-        {radioRendered}
+      <RadioWrapper
+        className={css(classes.root, className)}
+        style={style}
+        styleProps={styleProps}
+      >
+        <RadioRoot
+          className={classes.input}
+          ref={ref}
+          type="radio"
+          styleProps={styleProps}
+          {...rest}
+        />
         <span>{children}</span>
       </RadioWrapper>
     );
   }
 
-  return radioRendered;
+  return (
+    <RadioRoot
+      className={css(classes.root, className)}
+      ref={ref}
+      type="radio"
+      styleProps={styleProps}
+      style={style}
+      {...rest}
+    />
+  );
 });
 
 export default Radio;

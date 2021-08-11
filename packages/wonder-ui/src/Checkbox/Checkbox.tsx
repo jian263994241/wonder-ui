@@ -35,18 +35,18 @@ const CheckboxWrapper = styled('label', {
   display: 'inline-flex',
   alignItems: 'baseline',
   cursor: 'pointer',
+  WebkitTapHighlightColor: 'transparent',
   ...(styleProps.disabled && {
     color: theme.palette.action.disabled,
     cursor: 'not-allowed'
   }),
 
-  [`& > .${checkboxClasses.root}`]: {
-    top: '.2em'
+  [`& .${checkboxClasses.input}`]: {
+    top: 2
   },
 
-  [`& > .${checkboxClasses.root} + span`]: {
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1)
+  [`& > span`]: {
+    paddingLeft: '.3em'
   }
 }));
 
@@ -61,6 +61,7 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })<{
   height: '1em',
   fontSize: 'inherit',
   outline: 0,
+  verticalAlign: 'middle',
   position: 'relative',
   backgroundColor: theme.palette.background.paper,
   backgroundPosition: 'center',
@@ -124,6 +125,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
       disabled,
       indeterminate = false,
       onChange,
+      style,
       ...rest
     } = props;
 
@@ -152,7 +154,29 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         [onChange, indeterminate]
       );
 
-    const checkboxRendered = (
+    if (children) {
+      return (
+        <CheckboxWrapper
+          className={css(classes.root, className)}
+          styleProps={styleProps}
+          style={style}
+        >
+          <CheckboxRoot
+            checked={checked}
+            className={classes.input}
+            disabled={disabled}
+            onChange={handleChange}
+            ref={hadnleRef}
+            type="checkbox"
+            styleProps={styleProps}
+            {...rest}
+          />
+          <span>{children}</span>
+        </CheckboxWrapper>
+      );
+    }
+
+    return (
       <CheckboxRoot
         checked={checked}
         className={css(classes.root, className)}
@@ -161,20 +185,10 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         ref={hadnleRef}
         type="checkbox"
         styleProps={styleProps}
+        style={style}
         {...rest}
       />
     );
-
-    if (children) {
-      return (
-        <CheckboxWrapper className={classes.wrapper} styleProps={styleProps}>
-          {checkboxRendered}
-          <span>{children}</span>
-        </CheckboxWrapper>
-      );
-    }
-
-    return checkboxRendered;
   }
 );
 

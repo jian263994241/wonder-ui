@@ -13,8 +13,7 @@ import {
   useEventCallback,
   useEventListener,
   useForkRef,
-  useSafeState,
-  useUnmount
+  useSafeState
 } from '@wonder-ui/hooks';
 
 // A modal manager used to track and manage the state of open Modals.
@@ -218,9 +217,10 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
     }
   };
 
-  const isTopModal = React.useCallback(() => manager.isTopModal(getModal()), [
-    manager
-  ]);
+  const isTopModal = React.useCallback(
+    () => manager.isTopModal(getModal()),
+    [manager]
+  );
 
   const handlePortalRef = useEventCallback((node) => {
     mountNodeRef.current = node;
@@ -299,13 +299,6 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
       onClose(event, 'backdropClick');
     }
   };
-
-  //解决组件刷新带来的close丢失问题
-  useUnmount(() => {
-    const event = getDocument().createEvent('MouseEvent');
-    event.initEvent('click', true, true);
-    onClose?.(event as any, 'backdropClick');
-  });
 
   const handleKeyDown = (event: any) => {
     if (onKeyDown) {
