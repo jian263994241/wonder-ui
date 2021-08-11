@@ -28,6 +28,7 @@ export function useSafeState(initialState?: any) {
     if (unmountedRef.current) return;
 
     updateCallbackRef.current = callback;
+
     setState(currentState);
   };
 

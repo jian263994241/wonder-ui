@@ -8,7 +8,7 @@ export function useReactive<T extends object>(state: T): T {
     set: (obj: any, prop: string | symbol, value: any) => {
       if (obj[prop] != value) {
         obj[prop] = value;
-        setTimeout(update, 0);
+        update();
       }
 
       return true;

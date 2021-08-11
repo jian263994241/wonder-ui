@@ -1,15 +1,16 @@
-import { useEventCallback } from './useEventCallback';
-import { useSafeState } from './useSafeState';
 import { nextTick } from '@wonder-ui/utils';
+import { useSafeState } from './useSafeState';
 /**
  * Force Update Components
  */
 export function useForceUpdate() {
   const [, setState] = useSafeState({});
 
-  return useEventCallback(() => {
-    nextTick(() => setState({}));
-  });
+  return () => {
+    nextTick(() => {
+      setState({});
+    });
+  };
 }
 
 export default useForceUpdate;
