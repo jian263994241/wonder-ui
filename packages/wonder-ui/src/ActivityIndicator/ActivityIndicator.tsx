@@ -132,7 +132,7 @@ const ActivityIndicatorIcon = styled('span', {
     color: theme.palette[styleProps.color!]?.dark
   }),
   '& > *': {
-    display: 'block'
+    display: 'block!important'
   }
 }));
 
