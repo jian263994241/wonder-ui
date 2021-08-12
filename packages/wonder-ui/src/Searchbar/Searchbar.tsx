@@ -12,7 +12,6 @@ import {
   generateUtilityClasses
 } from '@wonder-ui/utils';
 import {
-  useDebounce,
   useControlled,
   useEventCallback,
   useForkRef,
@@ -71,7 +70,7 @@ export interface SearchbarProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * 回调
    */
-  onCencel?(): void;
+  onCancel?(): void;
   /**
    * 回调
    */
@@ -145,10 +144,6 @@ const SearchbarBg = styled('div', { name: 'WuiNavbar', slot: 'Bg' })(
       zIndex: 0,
       background: alpha(backgroundColor, 0.85),
       transitionProperty: 'transform',
-      // borderWidth: 0,
-      // borderStyle: 'solid',
-      // borderColor: theme.palette.divider,
-      // borderBottomWidth: 'thin',
       backdropFilter: 'saturate(180%) blur(20px)'
     };
   }
@@ -170,8 +165,7 @@ const SearchbarCancelButton = styled(ButtonBase, {
   padding: '0 0.5em',
   transition: theme.transitions.create(['margin-right', 'opacity']),
   position: 'relative',
-  marginRight: -999,
-  opacity: 1,
+  opacity: 0,
   color: theme.palette.primary.main
 }));
 
@@ -183,7 +177,7 @@ const Searchbar = forwardRef<HTMLElement, SearchbarProps>((inProps, ref) => {
     cancelText = '取消',
     fixCancelButton = false,
     children,
-    onCencel,
+    onCancel,
     allowCancel = false,
     barLeft,
     barRight,
@@ -222,12 +216,11 @@ const Searchbar = forwardRef<HTMLElement, SearchbarProps>((inProps, ref) => {
     InputProps?.onBlur?.(e);
   });
 
+  const [cancalVisible, setCancalVisible] = useSafeState(false);
+
   const styleProps = { ...props };
 
   const classes = useClasses(styleProps);
-
-  const [cancalVisible, setCancalVisible] = useSafeState(false);
-  const focus2 = useDebounce(focus);
 
   React.useEffect(() => {
     if (fixCancelButton) {
@@ -235,12 +228,38 @@ const Searchbar = forwardRef<HTMLElement, SearchbarProps>((inProps, ref) => {
       return;
     }
 
-    if (focus2) {
+    if (focus) {
       setCancalVisible(true);
     } else if (!value) {
       setCancalVisible(false);
     }
-  }, [focus2, value, fixCancelButton]);
+  }, [focus, value, fixCancelButton]);
+
+  const cancelButtonStyle = React.useMemo(() => {
+    if (fixCancelButton) {
+      return {
+        marginRight: 0,
+        opacity: 1
+      };
+    }
+
+    if (!cancelButtonSize.width) {
+      return {
+        opacity: 0,
+        marginRight: -999
+      };
+    }
+
+    return !cancalVisible
+      ? {
+          opacity: 0,
+          marginRight: -cancelButtonSize.width
+        }
+      : {
+          marginRight: 0,
+          opacity: 1
+        };
+  }, [cancalVisible, cancelButtonSize, fixCancelButton]);
 
   return (
     <SearchbarRoot
@@ -272,20 +291,8 @@ const Searchbar = forwardRef<HTMLElement, SearchbarProps>((inProps, ref) => {
             styleProps={styleProps}
             className={classes.cancel}
             ref={cancelButtonRef}
-            onClick={onCencel}
-            style={{
-              ...(!cancalVisible
-                ? {
-                    opacity: 0,
-                    marginRight: cancelButtonSize.width
-                      ? -cancelButtonSize.width
-                      : 0
-                  }
-                : {
-                    marginRight: 0,
-                    opacity: 1
-                  })
-            }}
+            onClick={onCancel}
+            style={cancelButtonStyle}
           >
             {cancelText}
           </SearchbarCancelButton>
