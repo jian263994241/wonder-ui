@@ -124,13 +124,22 @@
             { className: 'markdown' },
             l.a.createElement(
               'h2',
-              { id: 'hello-dumi' },
+              { id: '\u6d4f\u89c8\u5668\u652f\u6301' },
               l.a.createElement(
                 r['AnchorLink'],
-                { to: '#hello-dumi', 'aria-hidden': 'true', tabIndex: -1 },
+                {
+                  to: '#\u6d4f\u89c8\u5668\u652f\u6301',
+                  'aria-hidden': 'true',
+                  tabIndex: -1,
+                },
                 l.a.createElement('span', { className: 'icon icon-link' }),
               ),
-              'Hello dumi!',
+              '\u6d4f\u89c8\u5668\u652f\u6301',
+            ),
+            l.a.createElement(
+              'p',
+              null,
+              'Wonder UI \u652f\u6301\u73b0\u4ee3\u6d4f\u89c8\u5668\u4ee5\u53ca Chrome >= 51\u3001iOS >= 10.0\uff08\u4e0e React \u4e00\u81f4\uff09',
             ),
           ),
         )

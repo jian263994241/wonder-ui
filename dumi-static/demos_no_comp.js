@@ -1453,13 +1453,8 @@
             se = (e) => {
               e.target === e.currentTarget &&
                 (W && W(e), N && N(e, 'backdropClick'));
-            };
-          Object(V['A'])(() => {
-            var e = Object(m['getDocument'])().createEvent('MouseEvent');
-            e.initEvent('click', !0, !0),
-              null === N || void 0 === N || N(e, 'backdropClick');
-          });
-          var ve = (e) => {
+            },
+            ve = (e) => {
               q && q(e),
                 'Escape' === e.key &&
                   oe() &&
@@ -2973,7 +2968,7 @@
             ),
             ae = v(ee),
             te = Object(i['y'])(),
-            ne = Object(i['D'])(),
+            ne = Object(i['C'])(),
             re = c['useMemo'](
               () => $[N ? 'height' : 'width'],
               [N, $.height, $.width],
@@ -3164,7 +3159,7 @@
           Object(i['i'])(() => {
             Ve(F);
           }, [F]),
-            Object(i['B'])(() => {
+            Object(i['A'])(() => {
               Ve($.active);
             }, [Y]),
             Object(i['i'])(
@@ -3893,8 +3888,8 @@
           h6: 'h6',
           subtitle1: 'h6',
           subtitle2: 'h6',
-          body1: 'p',
-          body2: 'p',
+          body1: 'span',
+          body2: 'span',
         },
         u = Object(d['generateUtilityClasses'])('WuiTypography', [
           'root',
@@ -3963,7 +3958,6 @@
                   padding: 0,
                   display: 'block',
                   textAlign: t.align,
-                  overflow: 'hidden',
                   wordBreak: 'break-word',
                 },
                 a.typography[t.variant],
@@ -3987,10 +3981,12 @@
                   display: '-webkit-box',
                   WebkitBoxOrient: 'vertical',
                   WebkitLineClamp: t.lineClamp,
+                  overflow: 'hidden',
                 },
                 ['&.'.concat(u.noWrap)]: {
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
+                  overflow: 'hidden',
                 },
                 ['&.'.concat(u.gutterBottom)]: { marginBottom: '0.35em' },
                 ['&.'.concat(u.paragraph)]: { marginBottom: a.spacing(2) },
@@ -4017,7 +4013,9 @@
             C = void 0 !== A && A,
             L = t.variant,
             y = void 0 === L ? 'body1' : L,
-            O = Object(r['a'])(t, [
+            O = t.inline,
+            F = void 0 !== O && O,
+            j = Object(r['a'])(t, [
               'align',
               'children',
               'className',
@@ -4028,9 +4026,10 @@
               'noWrap',
               'paragraph',
               'variant',
+              'inline',
             ]),
-            F = E || (C ? 'p' : m[y]),
-            j = Object(l['a'])(
+            x = E || (C ? 'p' : m[y]),
+            w = Object(l['a'])(
               Object(l['a'])({}, t),
               {},
               {
@@ -4041,19 +4040,20 @@
                 noWrap: H,
                 paragraph: C,
                 variant: y,
+                inline: F,
               },
             ),
-            x = h(j);
+            k = h(w);
           return c['createElement'](
             s,
             Object(n['a'])(
               {
-                as: F,
-                className: Object(d['css'])(p, x.root),
+                as: x,
+                className: Object(d['css'])(p, k.root),
                 ref: a,
-                styleProps: j,
+                styleProps: w,
               },
-              O,
+              j,
             ),
             v,
           );
@@ -6341,9 +6341,9 @@
             Object(m['r'])(() => {
               B(), Object(d['nextTick'])(T);
             }),
-            Object(m['B'])(B, [I]),
-            Object(m['B'])(T, [v, g, E, V, A]),
-            Object(m['B'])(() => {
+            Object(m['A'])(B, [I]),
+            Object(m['A'])(T, [v, g, E, V, A]),
+            Object(m['A'])(() => {
               var e = j(C);
               e !== x.current && ((x.current = e), B());
             }, [C]),
@@ -8056,7 +8056,7 @@
         m = t('Bu8g'),
         u = Object(m['generateUtilityClasses'])('WuiRadio', [
           'root',
-          'wrapper',
+          'input',
           'colorPrimary',
           'colorSecondary',
         ]),
@@ -8065,7 +8065,7 @@
             t = e.color,
             n = {
               root: ['root', t && 'color'.concat(Object(m['capitalize'])(t))],
-              wrapper: ['wrapper'],
+              input: ['input'],
             };
           return Object(m['composeClasses'])('WuiRadio', n, a);
         },
@@ -8079,6 +8079,7 @@
                   display: 'inline-flex',
                   alignItems: 'baseline',
                   cursor: 'pointer',
+                  WebkitTapHighlightColor: 'transparent',
                 },
                 t.disabled && {
                   color: a.palette.action.disabled,
@@ -8087,11 +8088,8 @@
               ),
               {},
               {
-                ['& > .'.concat(u.root)]: { top: '.2em' },
-                ['& > .'.concat(u.root, ' + span')]: {
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                },
+                ['& .'.concat(u.input)]: { top: 2 },
+                ['& > span']: { paddingLeft: '.3em' },
               },
             );
           },
@@ -8144,7 +8142,6 @@
               filter: 'none',
               opacity: a.palette.action.disabledOpacity,
             },
-            'label > & + *': { marginLeft: '.3em' },
           };
         }),
         p = c['forwardRef']((e, a) => {
@@ -8153,36 +8150,52 @@
             d = t.children,
             u = t.color,
             p = void 0 === u ? 'primary' : u,
-            z = Object(r['a'])(t, ['className', 'children', 'color']),
-            f = Object(l['a'])(Object(l['a'])({}, t), {}, { color: p }),
-            E = h(f),
-            b = c['createElement'](
-              v,
-              Object(n['a'])(
-                {
-                  className: Object(m['css'])(E.root, o),
-                  ref: a,
-                  type: 'radio',
-                  styleProps: f,
-                },
-                z,
-              ),
-            );
+            z = t.style,
+            f = Object(r['a'])(t, ['className', 'children', 'color', 'style']),
+            E = Object(l['a'])(Object(l['a'])({}, t), {}, { color: p }),
+            b = h(E);
           return d
             ? c['createElement'](
                 s,
-                { className: E.wrapper, styleProps: f },
-                b,
+                {
+                  className: Object(m['css'])(b.root, o),
+                  style: z,
+                  styleProps: E,
+                },
+                c['createElement'](
+                  v,
+                  Object(n['a'])(
+                    {
+                      className: b.input,
+                      ref: a,
+                      type: 'radio',
+                      styleProps: E,
+                    },
+                    f,
+                  ),
+                ),
                 c['createElement']('span', null, d),
               )
-            : b;
+            : c['createElement'](
+                v,
+                Object(n['a'])(
+                  {
+                    className: Object(m['css'])(b.root, o),
+                    ref: a,
+                    type: 'radio',
+                    styleProps: E,
+                    style: z,
+                  },
+                  f,
+                ),
+              );
         }),
         z = p;
     },
     LpvC: function (e, a, t) {
       'use strict';
       t.d(a, 'a', function () {
-        return y;
+        return O;
       });
       var n = t('0Owb'),
         r = t('k1fw'),
@@ -8304,7 +8317,8 @@
           return Object(v['composeClasses'])('WuiSnackbar', l, r);
         },
         A = t('AUa1'),
-        C = Object(u['a'])('div', { name: 'WuiSnackbar', slot: 'Root' })(
+        C = t('8oEd'),
+        L = Object(u['a'])('div', { name: 'WuiSnackbar', slot: 'Root' })(
           (e) => {
             var a = e.theme;
             return {
@@ -8377,7 +8391,7 @@
             };
           },
         ),
-        L = o['forwardRef']((e, a) => {
+        y = o['forwardRef']((e, a) => {
           var t = Object(h['a'])({ props: e, name: 'WuiSnackbar' }),
             m = t.action,
             u = t.anchorOrigin;
@@ -8391,22 +8405,24 @@
             g = t.TransitionProps;
           g = void 0 === g ? {} : g;
           var V = g.onEnter,
-            L = g.onExited,
-            y = Object(c['a'])(g, ['onEnter', 'onExited']),
-            O = t.autoHideDuration,
-            F = void 0 === O ? null : O,
-            j = t.children,
-            x = t.className,
-            w = t.disableWindowBlurListener,
-            k = void 0 !== w && w,
-            S = t.message,
-            R = t.onClose,
-            I = t.onMouseEnter,
-            B = t.onMouseLeave,
-            T = t.resumeHideDuration,
-            P = t.transitionDuration,
-            D = t.visible,
-            W = Object(c['a'])(t, [
+            y = g.onExited,
+            O = Object(c['a'])(g, ['onEnter', 'onExited']),
+            F = t.autoHideDuration,
+            j = void 0 === F ? null : F,
+            x = t.children,
+            w = t.className,
+            k = t.disableWindowBlurListener,
+            S = void 0 !== k && k,
+            R = t.disablePortal,
+            I = void 0 !== R && R,
+            B = t.message,
+            T = t.onClose,
+            P = t.onMouseEnter,
+            D = t.onMouseLeave,
+            W = t.resumeHideDuration,
+            N = t.transitionDuration,
+            q = t.visible,
+            U = Object(c['a'])(t, [
               'action',
               'anchorOrigin',
               'ClickAwayListenerProps',
@@ -8417,6 +8433,7 @@
               'children',
               'className',
               'disableWindowBlurListener',
+              'disablePortal',
               'message',
               'onClose',
               'onMouseEnter',
@@ -8425,118 +8442,122 @@
               'transitionDuration',
               'visible',
             ]),
-            N = o['useRef'](null),
-            q = Object(A['m'])(N, a),
-            U = o['useRef'](),
-            X = Object(A['t'])(!0),
-            G = Object(l['a'])(X, 2),
-            J = G[0],
-            Y = G[1],
-            Q = Object(r['a'])(
+            X = o['useRef'](null),
+            G = Object(A['m'])(X, a),
+            J = o['useRef'](),
+            Y = Object(A['t'])(!0),
+            Q = Object(l['a'])(Y, 2),
+            K = Q[0],
+            Z = Q[1],
+            _ = Object(r['a'])(
               Object(r['a'])({}, t),
               {},
               { anchorOrigin: { vertical: s, horizontal: p } },
             ),
-            K = H(Q),
-            Z = Object(A['j'])((e, a) => {
-              R && R(e, a);
+            $ = H(_),
+            ee = Object(A['j'])((e, a) => {
+              T && T(e, a);
             }),
-            _ = Object(A['j'])((e) => {
-              R &&
+            ae = Object(A['j'])((e) => {
+              T &&
                 null != e &&
-                (clearTimeout(U.current),
-                (U.current = setTimeout(() => {
-                  Z(null, 'timeout');
+                (clearTimeout(J.current),
+                (J.current = setTimeout(() => {
+                  ee(null, 'timeout');
                 }, e)));
             });
           o['useEffect'](
             () => (
-              D && _(F),
+              q && ae(j),
               () => {
-                clearTimeout(U.current);
+                clearTimeout(J.current);
               }
             ),
-            [D, F, _],
+            [q, j, ae],
           );
-          var $ = () => {
-              clearTimeout(U.current);
+          var te = () => {
+              clearTimeout(J.current);
             },
-            ee = o['useCallback'](() => {
-              null != F && _(null != T ? T : 0.5 * F);
-            }, [F, T, _]),
-            ae = (e) => {
-              I && I(e), $();
+            ne = o['useCallback'](() => {
+              null != j && ae(null != W ? W : 0.5 * j);
+            }, [j, W, ae]),
+            re = (e) => {
+              P && P(e), te();
             },
-            te = (e) => {
-              B && B(e), ee();
+            le = (e) => {
+              D && D(e), ne();
             },
-            ne = (e) => {
-              Y(!0), L && L(e);
+            ce = (e) => {
+              Z(!0), y && y(e);
             },
-            re = (e, a) => {
-              Y(!1), V && V(e, a);
+            oe = (e, a) => {
+              Z(!1), V && V(e, a);
             };
           o['useEffect'](() => {
-            if (!k && D)
+            if (!S && q)
               return (
-                window.addEventListener('focus', ee),
-                window.addEventListener('blur', $),
+                window.addEventListener('focus', ne),
+                window.addEventListener('blur', te),
                 () => {
-                  window.removeEventListener('focus', ee),
-                    window.removeEventListener('blur', $);
+                  window.removeEventListener('focus', ne),
+                    window.removeEventListener('blur', te);
                 }
               );
-          }, [k, ee, D]);
-          var le = (e) => {
-            R && R(e, 'clickaway');
+          }, [S, ne, q]);
+          var ie = (e) => {
+            T && T(e, 'clickaway');
           };
-          return !D && J
+          return !q && K
             ? null
             : o['createElement'](
-                i['a'],
-                Object(n['a'])({ onClickAway: le }, z),
+                C['a'],
+                { disablePortal: I },
                 o['createElement'](
-                  C,
-                  Object(n['a'])(
-                    {
-                      className: Object(v['css'])(K.root, x),
-                      onMouseEnter: ae,
-                      onMouseLeave: te,
-                      ref: q,
-                    },
-                    W,
-                  ),
+                  i['a'],
+                  Object(n['a'])({ onClickAway: ie }, z),
                   o['createElement'](
-                    b,
+                    L,
                     Object(n['a'])(
                       {
-                        appear: !0,
-                        in: D,
-                        direction: 'top' === s ? 'down' : 'up',
-                        timeout: P,
-                        onEnter: re,
-                        onExited: ne,
+                        className: Object(v['css'])($.root, w),
+                        onMouseEnter: re,
+                        onMouseLeave: le,
+                        ref: G,
                       },
-                      y,
+                      U,
                     ),
-                    j ||
-                      o['createElement'](
-                        M,
-                        Object(n['a'])(
-                          {
-                            message: S,
-                            action: m,
-                            center: 'center' === s && 'center' === p,
-                            classes: { root: K.content },
-                          },
-                          f,
-                        ),
+                    o['createElement'](
+                      b,
+                      Object(n['a'])(
+                        {
+                          appear: !0,
+                          in: q,
+                          direction: 'top' === s ? 'down' : 'up',
+                          timeout: N,
+                          onEnter: oe,
+                          onExited: ce,
+                        },
+                        O,
                       ),
+                      x ||
+                        o['createElement'](
+                          M,
+                          Object(n['a'])(
+                            {
+                              message: B,
+                              action: m,
+                              center: 'center' === s && 'center' === p,
+                              classes: { root: $.content },
+                            },
+                            f,
+                          ),
+                        ),
+                    ),
                   ),
                 ),
               );
         }),
-        y = L;
+        O = y;
     },
     LuWW: function (e, a, t) {
       'use strict';
@@ -12832,14 +12853,14 @@
             Te = () => {
               Re(!1), te(!1), (ne.current = !1);
             };
-          Object(H['B'])(() => {
+          Object(H['A'])(() => {
             oe.isInvalidate() || Ee(oe, !1);
           }, [q]),
-            Object(H['B'])(() => {
+            Object(H['A'])(() => {
               var e = f(k);
               ie(e), (e.isNaN() || !ne.current || W) && Ee(e, ne.current);
             }, [k]),
-            Object(H['B'])(() => {
+            Object(H['A'])(() => {
               W && Le();
             }, [ze]);
           var Pe = Object(c['a'])(
@@ -13141,9 +13162,9 @@
             Object(h['r'])(() => {
               P(), Object(i['nextTick'])(D);
             }),
-            Object(h['B'])(P, [T]),
-            Object(h['B'])(D, [E, C, y]),
-            Object(h['B'])(() => {
+            Object(h['A'])(P, [T]),
+            Object(h['A'])(D, [E, C, y]),
+            Object(h['A'])(() => {
               var e,
                 a = w(H);
               a &&
@@ -16402,7 +16423,7 @@
         u = t('Bu8g'),
         h = Object(u['generateUtilityClasses'])('WuiCheckbox', [
           'root',
-          'wrapper',
+          'input',
           'circle',
           'indeterminate',
           'colorPrimary',
@@ -16420,7 +16441,7 @@
                 t && 'color'.concat(Object(u['capitalize'])(t)),
                 r && 'indeterminate',
               ],
-              wrapper: ['wrapper'],
+              input: ['input'],
             };
           return Object(u['composeClasses'])('WuiCheckbox', l, a);
         },
@@ -16435,6 +16456,7 @@
                   display: 'inline-flex',
                   alignItems: 'baseline',
                   cursor: 'pointer',
+                  WebkitTapHighlightColor: 'transparent',
                 },
                 t.disabled && {
                   color: a.palette.action.disabled,
@@ -16443,11 +16465,8 @@
               ),
               {},
               {
-                ['& > .'.concat(h.root)]: { top: '.2em' },
-                ['& > .'.concat(h.root, ' + span')]: {
-                  paddingLeft: a.spacing(1),
-                  paddingRight: a.spacing(1),
-                },
+                ['& .'.concat(h.input)]: { top: 2 },
+                ['& > span']: { paddingLeft: '.3em' },
               },
             );
           },
@@ -16465,6 +16484,7 @@
               height: '1em',
               fontSize: 'inherit',
               outline: 0,
+              verticalAlign: 'middle',
               position: 'relative',
               backgroundColor: a.palette.background.paper,
               backgroundPosition: 'center',
@@ -16537,7 +16557,8 @@
             A = t.indeterminate,
             C = void 0 !== A && A,
             L = t.onChange,
-            y = Object(l['a'])(t, [
+            y = t.style,
+            O = Object(l['a'])(t, [
               'children',
               'checked',
               'circle',
@@ -16547,49 +16568,68 @@
               'disabled',
               'indeterminate',
               'onChange',
+              'style',
             ]),
-            O = Object(v['c'])({ value: m, defaultValue: V }),
-            F = Object(r['a'])(O, 2),
-            j = F[0],
-            x = F[1],
-            w = o['useRef'](null),
-            k = Object(v['m'])(w, a),
-            S = Object(c['a'])(
+            F = Object(v['c'])({ value: m, defaultValue: V }),
+            j = Object(r['a'])(F, 2),
+            x = j[0],
+            w = j[1],
+            k = o['useRef'](null),
+            S = Object(v['m'])(k, a),
+            R = Object(c['a'])(
               Object(c['a'])({}, t),
               {},
               { color: g, circle: f, indeterminate: C },
             ),
-            R = s(S),
-            I = o['useCallback'](
+            I = s(R),
+            B = o['useCallback'](
               (e) => {
                 var a = e.target;
-                x(a.checked), L && L(e);
+                w(a.checked), L && L(e);
               },
               [L, C],
-            ),
-            B = o['createElement'](
-              z,
-              Object(n['a'])(
-                {
-                  checked: j,
-                  className: Object(u['css'])(R.root, E),
-                  disabled: H,
-                  onChange: I,
-                  ref: k,
-                  type: 'checkbox',
-                  styleProps: S,
-                },
-                y,
-              ),
             );
           return i
             ? o['createElement'](
                 p,
-                { className: R.wrapper, styleProps: S },
-                B,
+                {
+                  className: Object(u['css'])(I.root, E),
+                  styleProps: R,
+                  style: y,
+                },
+                o['createElement'](
+                  z,
+                  Object(n['a'])(
+                    {
+                      checked: x,
+                      className: I.input,
+                      disabled: H,
+                      onChange: B,
+                      ref: S,
+                      type: 'checkbox',
+                      styleProps: R,
+                    },
+                    O,
+                  ),
+                ),
                 o['createElement']('span', null, i),
               )
-            : B;
+            : o['createElement'](
+                z,
+                Object(n['a'])(
+                  {
+                    checked: x,
+                    className: Object(u['css'])(I.root, E),
+                    disabled: H,
+                    onChange: B,
+                    ref: S,
+                    type: 'checkbox',
+                    styleProps: R,
+                    style: y,
+                  },
+                  O,
+                ),
+              );
         }),
         E = f;
     },
@@ -18820,7 +18860,7 @@
         c = t('AUa1'),
         o = Array(2e3).fill('');
       a['default'] = () => {
-        var e = Object(c['C'])(o, { overscan: 20, itemHeight: 44 }),
+        var e = Object(c['B'])(o, { overscan: 20, itemHeight: 44 }),
           a = e.list,
           t = e.containerProps,
           n = e.wrapperProps;
@@ -34172,16 +34212,16 @@
         l = t('tJVT'),
         c = t('PpiC'),
         o = t('q1tI'),
-        i = t('4ciN'),
-        d = t('i8i4'),
-        m = t.n(d),
-        u = t('DftM'),
-        h = t('S4cE'),
-        s = t('Bu8g'),
-        v = t('J7v5'),
-        p = t('AUa1'),
-        z = t('p16Y'),
-        f = Object(u['a'])(i['a'], {
+        i = t('p16Y'),
+        d = t('4ciN'),
+        m = t('i8i4'),
+        u = t.n(m),
+        h = t('DftM'),
+        s = t('S4cE'),
+        v = t('Bu8g'),
+        p = t('J7v5'),
+        z = t('AUa1'),
+        f = Object(h['a'])(d['a'], {
           name: 'WuiPreloader',
           slot: 'Root',
           shouldForwardProp: () => !0,
@@ -34189,11 +34229,11 @@
           var a = e.theme;
           return { zIndex: a.zIndex.dialog + 5 };
         }),
-        E = Object(u['a'])('div', { name: 'WuiPreloader', slot: 'Inner' })(
+        E = Object(h['a'])('div', { name: 'WuiPreloader', slot: 'Inner' })(
           (e) => {
             var a = e.theme,
               t = 'light' === a.palette.mode ? 0.75 : 0.98,
-              n = Object(v['c'])(a.palette.background.default, t);
+              n = Object(p['c'])(a.palette.background.default, t);
             return {
               boxSizing: 'border-box',
               position: 'fixed',
@@ -34214,12 +34254,12 @@
           },
         ),
         b = o['forwardRef']((e, a) => {
-          var t = Object(h['a'])({ props: e, name: 'WuiPreloader' }),
-            i = t.ModalProps,
-            d = void 0 === i ? {} : i,
-            m = t.children,
-            u = t.indicator,
-            v = t.theme,
+          var t = Object(s['a'])({ props: e, name: 'WuiPreloader' }),
+            d = t.ModalProps,
+            m = void 0 === d ? {} : d,
+            u = t.children,
+            h = t.indicator,
+            p = t.theme,
             b = t.visible,
             g = t.text,
             M = t.onLoad,
@@ -34237,7 +34277,7 @@
               'type',
               'vertical',
             ]),
-            L = Object(p['c'])({ defaultValue: !1, value: b }),
+            L = Object(z['c'])({ defaultValue: !1, value: b }),
             y = Object(l['a'])(L, 2),
             O = y[0],
             F = y[1],
@@ -34246,7 +34286,7 @@
               if (M) {
                 F(!0);
                 var e = M();
-                Object(s['isPromise'])(e) &&
+                Object(v['isPromise'])(e) &&
                   e
                     .then(() => {
                       F(!1);
@@ -34259,16 +34299,16 @@
           return o['createElement'](
             o['Fragment'],
             null,
-            m &&
+            u &&
               o['cloneElement'](
-                m,
+                u,
                 Object(r['a'])(
-                  Object(r['a'])({}, m.props),
+                  Object(r['a'])({}, u.props),
                   {},
                   {
-                    onClick: Object(s['createChainedFunction'])(
+                    onClick: Object(v['createChainedFunction'])(
                       x,
-                      m.props.onClick,
+                      u.props.onClick,
                     ),
                   },
                 ),
@@ -34277,25 +34317,25 @@
               f,
               Object(n['a'])(
                 {
-                  theme: v,
+                  theme: p,
                   ref: a,
                   visible: O,
                   disableScrollLock: !0,
                   disableFocusLock: !0,
                   BackdropProps: { invisible: !0 },
                 },
-                d,
+                m,
                 C,
               ),
               o['createElement'](
                 E,
                 { styleProps: j },
-                u ||
-                  o['createElement'](z['a'], {
+                h ||
+                  o['createElement'](i['a'], {
                     vertical: A,
                     type: V,
                     iconSize: 'large',
-                    color: v.palette.mode,
+                    color: p.palette.mode,
                     text: g,
                   }),
               ),
@@ -34309,14 +34349,14 @@
             arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
           ++M,
             M <= 1 &&
-              m.a.render(
+              u.a.render(
                 o['createElement'](b, Object(n['a'])({ visible: !0 }, e)),
                 g,
               );
         },
         H = () => {
           M > 0 && --M,
-            M <= 0 && m.a.render(o['createElement'](b, { visible: !1 }), g);
+            M <= 0 && u.a.render(o['createElement'](b, { visible: !1 }), g);
         },
         A = b;
     },
@@ -34413,7 +34453,7 @@
               },
             ),
             {},
-            { '& > *': { display: 'block' } },
+            { '& > *': { display: 'block!important' } },
           );
         }),
         E = Object(d['a'])(m['a'], { name: s, slot: 'Text' })({}),
@@ -35103,8 +35143,7 @@
             padding: '0 0.5em',
             transition: a.transitions.create(['margin-right', 'opacity']),
             position: 'relative',
-            marginRight: -999,
-            opacity: 1,
+            opacity: 0,
             color: a.palette.primary.main,
           };
         }),
@@ -35117,7 +35156,7 @@
             s = t.fixCancelButton,
             p = void 0 !== s && s,
             b = t.children,
-            L = t.onCencel,
+            L = t.onCancel,
             y = t.allowCancel,
             O = void 0 !== y && y,
             F = t.barLeft,
@@ -35134,7 +35173,7 @@
               'cancelText',
               'fixCancelButton',
               'children',
-              'onCencel',
+              'onCancel',
               'allowCancel',
               'barLeft',
               'barRight',
@@ -35182,76 +35221,79 @@
                   void 0 === a ||
                   a.call(i, e);
             }),
-            $ = Object(r['a'])({}, t),
-            ee = g($),
-            ae = Object(f['t'])(!1),
-            te = Object(l['a'])(ae, 2),
-            ne = te[0],
-            re = te[1],
-            le = Object(f['f'])(U);
-          return (
-            o['useEffect'](() => {
-              p || le ? re(!0) : D || re(!1);
-            }, [le, D, p]),
+            $ = Object(f['t'])(!1),
+            ee = Object(l['a'])($, 2),
+            ae = ee[0],
+            te = ee[1],
+            ne = Object(r['a'])({}, t),
+            re = g(ne);
+          o['useEffect'](() => {
+            p || U ? te(!0) : D || te(!1);
+          }, [U, D, p]);
+          var le = o['useMemo'](
+            () =>
+              p
+                ? { marginRight: 0, opacity: 1 }
+                : J.width
+                ? ae
+                  ? { marginRight: 0, opacity: 1 }
+                  : { opacity: 0, marginRight: -J.width }
+                : { opacity: 0, marginRight: -999 },
+            [ae, J, p],
+          );
+          return o['createElement'](
+            M,
+            Object(n['a'])(
+              { className: Object(z['css'])(re.root, d), ref: a },
+              B,
+            ),
+            o['createElement'](H, { className: re.bg }),
             o['createElement'](
-              M,
-              Object(n['a'])(
-                { className: Object(z['css'])(ee.root, d), ref: a },
-                B,
-              ),
-              o['createElement'](H, { className: ee.bg }),
+              V,
+              { className: re.inner },
+              F,
               o['createElement'](
-                V,
-                { className: ee.inner },
-                F,
-                o['createElement'](
-                  A,
-                  Object(n['a'])(
-                    {
-                      allowClear: !0,
-                      borderless: !0,
-                      type: 'search',
-                      placeholder: k,
-                    },
-                    i,
-                    {
-                      className: Object(z['css'])(
-                        ee.input,
-                        null === i || void 0 === i ? void 0 : i.className,
-                      ),
-                      prefix: w,
-                      styleProps: $,
-                      onFocus: Z,
-                      onBlur: _,
-                      actionRef: Q,
-                      value: D,
-                      onChange: K,
-                    },
-                  ),
+                A,
+                Object(n['a'])(
+                  {
+                    allowClear: !0,
+                    borderless: !0,
+                    type: 'search',
+                    placeholder: k,
+                  },
+                  i,
+                  {
+                    className: Object(z['css'])(
+                      re.input,
+                      null === i || void 0 === i ? void 0 : i.className,
+                    ),
+                    prefix: w,
+                    styleProps: ne,
+                    onFocus: Z,
+                    onBlur: _,
+                    actionRef: Q,
+                    value: D,
+                    onChange: K,
+                  },
                 ),
-                O &&
-                  !j &&
-                  o['createElement'](
-                    C,
-                    {
-                      disableRipple: !0,
-                      styleProps: $,
-                      className: ee.cancel,
-                      ref: G,
-                      onClick: L,
-                      style: Object(r['a'])(
-                        {},
-                        ne
-                          ? { marginRight: 0, opacity: 1 }
-                          : { opacity: 0, marginRight: J.width ? -J.width : 0 },
-                      ),
-                    },
-                    h,
-                  ),
-                j,
               ),
-              b,
-            )
+              O &&
+                !j &&
+                o['createElement'](
+                  C,
+                  {
+                    disableRipple: !0,
+                    styleProps: ne,
+                    className: re.cancel,
+                    ref: G,
+                    onClick: L,
+                    style: le,
+                  },
+                  h,
+                ),
+              j,
+            ),
+            b,
           );
         }),
         y = L;
@@ -37298,6 +37340,7 @@
                       u['a'],
                       Object(n['a'])(
                         {
+                          component: 'div',
                           variant: 'body1',
                           align: 'center',
                           classes: { root: O.text },
@@ -37872,12 +37915,12 @@
     zV3F: function (e, a, t) {
       'use strict';
       t.d(a, 'a', function () {
-        return v;
+        return p;
       });
       var n = t('0Owb'),
         r = t('k1fw'),
-        l = t('PpiC'),
-        c = t('tJVT'),
+        l = t('tJVT'),
+        c = t('PpiC'),
         o = t('q1tI'),
         i = t('NQ7C');
       class d {
@@ -37896,200 +37939,185 @@
               if (this.addQueue(e)) return !0;
               (this.modalLock = !0), e(this.modalStackClearQueue);
             }),
+            (this.reset = () => {
+              (this.modalLock = !1), (this.modalStack = []);
+            }),
             (this.modalStack = []);
         }
       }
       var m = t('LpvC'),
         u = t('Bu8g'),
         h = t('AUa1'),
-        s = new d();
-      function v(e) {
-        var a = o['memo'](e),
-          t = o['forwardRef']((e, t) => {
-            var d = s,
-              v = Object(h['t'])({}),
-              p = Object(c['a'])(v, 2),
-              z = p[0],
-              f = p[1],
-              E = Object(h['t'])({}),
-              b = Object(c['a'])(E, 2),
-              g = b[0],
-              M = b[1],
-              V = function () {
-                var e =
-                    arguments.length > 0 && void 0 !== arguments[0]
-                      ? arguments[0]
-                      : {},
-                  a = e.buttons,
-                  t = void 0 === a ? [] : a,
-                  n = e.ModalProps,
-                  c = void 0 === n ? {} : n,
-                  o = Object(l['a'])(e, ['buttons', 'ModalProps']);
-                d.run((e) => {
-                  var a = Object(r['a'])(
-                    Object(r['a'])({}, o),
-                    {},
-                    {
-                      buttons: t.map((e) =>
-                        Object(r['a'])(
-                          Object(r['a'])({}, e),
-                          {},
-                          {
-                            onClick: Object(u['createChainedFunction'])(
-                              e.onClick,
-                              () => {
-                                f((e) =>
-                                  Object(r['a'])(
-                                    Object(r['a'])({}, e),
-                                    {},
-                                    { visible: !1 },
-                                  ),
-                                );
-                              },
-                            ),
-                          },
-                        ),
-                      ),
-                      ModalProps: Object(r['a'])(
-                        Object(r['a'])({}, c),
-                        {},
-                        {
-                          onTransitionExited: Object(
-                            u['createChainedFunction'],
-                          )(() => {
-                            e();
-                          }, c.onTransitionExited),
-                        },
-                      ),
-                      key: new Date().getTime(),
-                    },
-                  );
-                  f(Object(r['a'])(Object(r['a'])({}, a), {}, { visible: !0 }));
-                });
-              },
-              H = o['useRef']({
-                custom: V,
-                alert: function () {
-                  var e =
-                      arguments.length > 0 && void 0 !== arguments[0]
-                        ? arguments[0]
-                        : {},
-                    a = e.okText,
-                    t = void 0 === a ? '\u786e\u5b9a' : a,
-                    n = e.onOk,
-                    c = Object(l['a'])(e, ['okText', 'onOk']);
-                  V(
-                    Object(r['a'])(
-                      Object(r['a'])({}, c),
-                      {},
-                      { buttons: [{ text: t, primary: !0, onClick: n }] },
-                    ),
-                  );
-                },
-                confirm: function () {
-                  var e =
-                      arguments.length > 0 && void 0 !== arguments[0]
-                        ? arguments[0]
-                        : {},
-                    a = e.okText,
-                    t = void 0 === a ? '\u786e\u5b9a' : a,
-                    n = e.onOk,
-                    c = e.cancelText,
-                    o = void 0 === c ? '\u53d6\u6d88' : c,
-                    i = e.onCancel,
-                    d = Object(l['a'])(e, [
-                      'okText',
-                      'onOk',
-                      'cancelText',
-                      'onCancel',
-                    ]);
-                  V(
-                    Object(r['a'])(
-                      Object(r['a'])({}, d),
-                      {},
-                      {
-                        buttons: [
-                          { children: o, onClick: i },
-                          { children: t, primary: !0, onClick: n },
-                        ],
+        s = (e) => {
+          var a = e.buttons,
+            t = void 0 === a ? [] : a,
+            d = Object(c['a'])(e, ['buttons']),
+            m = Object(h['t'])(!0),
+            s = Object(l['a'])(m, 2),
+            v = s[0],
+            p = s[1];
+          return o['createElement'](
+            i['a'],
+            Object(n['a'])({}, d, {
+              visible: v,
+              buttons: t.map((e) =>
+                Object(r['a'])(
+                  Object(r['a'])({}, e),
+                  {},
+                  {
+                    onClick: Object(u['createChainedFunction'])(
+                      e.onClick,
+                      () => {
+                        Object(u['nextTick'])(() => {
+                          p(!1);
+                        });
                       },
                     ),
+                  },
+                ),
+              ),
+            }),
+          );
+        },
+        v = (e) => {
+          var a = e.onClose,
+            t = Object(c['a'])(e, ['onClose']),
+            r = Object(h['t'])(!0),
+            i = Object(l['a'])(r, 2),
+            d = i[0],
+            u = i[1];
+          return o['createElement'](
+            m['a'],
+            Object(n['a'])({ visible: d }, t, {
+              onClose: (e, t) => {
+                u(!1), null === a || void 0 === a || a(e, t);
+              },
+            }),
+          );
+        };
+      function p(e) {
+        var a = o['memo'](e),
+          t = o['forwardRef']((e, t) => {
+            var l = Object(h['b'])(() => new d()),
+              i = Object(h['s'])([]),
+              m = (e) => {
+                var a = i.indexOf(e);
+                i.splice(a, 1);
+              };
+            o['useEffect'](
+              () => () => {
+                l.reset(), i.splice(0, i.length);
+              },
+              [],
+            );
+            var p = (e) => {
+                var a = Object(u['createId'])();
+                l.run((t) => {
+                  var r = o['createElement'](
+                    s,
+                    Object(n['a'])({}, e, {
+                      key: a,
+                      ModalProps: {
+                        onTransitionExited: () => {
+                          m(r), t();
+                        },
+                      },
+                    }),
                   );
-                },
-                toast: function (e) {
-                  var a =
-                      arguments.length > 1 && void 0 !== arguments[1]
-                        ? arguments[1]
-                        : {},
-                    t = a.autoHideDuration,
-                    n = void 0 === t ? 2e3 : t,
-                    l = a.stack,
-                    c = void 0 === l || l,
-                    o = a.onClose,
-                    i = a.anchorOrigin,
-                    m =
-                      void 0 === i
-                        ? { vertical: 'center', horizontal: 'center' }
-                        : i,
-                    u = {
-                      message: e,
-                      autoHideDuration: n,
-                      anchorOrigin: m,
-                      key: new Date().getTime(),
-                    };
-                  c
-                    ? d.run((e) => {
-                        M(
-                          Object(r['a'])(
-                            Object(r['a'])({}, u),
-                            {},
-                            {
-                              visible: !0,
-                              onClose: () => {
-                                M((e) =>
-                                  Object(r['a'])(
-                                    Object(r['a'])({}, e),
-                                    {},
-                                    { visible: !1 },
-                                  ),
-                                ),
-                                  e(),
-                                  o && o();
-                              },
-                            },
-                          ),
-                        );
-                      })
-                    : M(
-                        Object(r['a'])(
-                          Object(r['a'])({}, u),
-                          {},
-                          {
-                            visible: !0,
-                            onClose: () => {
-                              M((e) =>
-                                Object(r['a'])(
-                                  Object(r['a'])({}, e),
-                                  {},
-                                  { visible: !1 },
-                                ),
-                              ),
-                                o && o();
-                            },
-                          },
-                        ),
-                      );
-                },
-              });
+                  i.push(r);
+                });
+              },
+              z = (e) => {
+                var a = e.okText,
+                  t = void 0 === a ? '\u786e\u5b9a' : a,
+                  n = e.onOk,
+                  l = Object(c['a'])(e, ['okText', 'onOk']);
+                p(
+                  Object(r['a'])(
+                    { buttons: [{ text: t, primary: !0, onClick: n }] },
+                    l,
+                  ),
+                );
+              },
+              f = (e) => {
+                var a = e.okText,
+                  t = void 0 === a ? '\u786e\u5b9a' : a,
+                  n = e.onOk,
+                  l = e.cancelText,
+                  o = void 0 === l ? '\u53d6\u6d88' : l,
+                  i = e.onCancel,
+                  d = Object(c['a'])(e, [
+                    'okText',
+                    'onOk',
+                    'cancelText',
+                    'onCancel',
+                  ]);
+                p(
+                  Object(r['a'])(
+                    {
+                      buttons: [
+                        { children: o, onClick: i },
+                        { children: t, primary: !0, onClick: n },
+                      ],
+                    },
+                    d,
+                  ),
+                );
+              },
+              E = function (e) {
+                var a =
+                    arguments.length > 1 && void 0 !== arguments[1]
+                      ? arguments[1]
+                      : {},
+                  t = a.autoHideDuration,
+                  r = void 0 === t ? 2e3 : t,
+                  c = a.stack,
+                  d = void 0 === c || c,
+                  h = a.onClose,
+                  s = a.anchorOrigin,
+                  p =
+                    void 0 === s
+                      ? { vertical: 'center', horizontal: 'center' }
+                      : s,
+                  z = {
+                    message: e,
+                    autoHideDuration: r,
+                    anchorOrigin: p,
+                    key: Object(u['createId'])(),
+                  };
+                if (d)
+                  l.run((e) => {
+                    var a = o['createElement'](
+                      v,
+                      Object(n['a'])({}, z, {
+                        onClose: () => {
+                          m(a), e(), null === h || void 0 === h || h();
+                        },
+                      }),
+                    );
+                    i.push(a);
+                  });
+                else {
+                  var f = o['createElement'](
+                    v,
+                    Object(n['a'])({}, z, {
+                      onClose: () => {
+                        m(f), null === h || void 0 === h || h();
+                      },
+                    }),
+                  );
+                  i.push(f);
+                }
+              },
+              b = o['useRef']({ custom: p, alert: z, confirm: f, toast: E });
             return o['createElement'](
               o['Fragment'],
               null,
               o['createElement'](
                 a,
-                Object(n['a'])({}, e, { dialog: H.current, ref: t }),
+                Object(n['a'])({}, e, { dialog: b.current, ref: t }),
               ),
-              o['createElement'](i['a'], Object(n['a'])({ visible: !1 }, z)),
-              o['createElement'](m['a'], Object(n['a'])({ visible: !1 }, g)),
+              i.map((e) => e),
             );
           });
         return Object(u['hoistStatics'])(e, t), t;

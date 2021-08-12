@@ -1,12 +1,12 @@
 (window['webpackJsonp'] = window['webpackJsonp'] || []).push([
-  [11],
+  [10],
   {
-    '0H/f': function (e, t, a) {
+    '0H/f': function (e, t, n) {
       'use strict';
-      var n = a('q1tI'),
-        l = a.n(n),
-        r = a('dEAq'),
-        i = a('AUa1'),
+      var a = n('q1tI'),
+        l = n.n(a),
+        r = n('dEAq'),
+        i = n('AUa1'),
         c = {
           'zh-CN': {
             name: '\u5c5e\u6027\u540d',
@@ -25,10 +25,10 @@
         };
       t['a'] = (e) => {
         var t = e.identifier,
-          a = e.export,
+          n = e.export,
           d = e.props,
           u = Object(r['useApiData'])(t),
-          o = Object(n['useContext'])(r['context']),
+          o = Object(a['useContext'])(r['context']),
           s = o.locale,
           m = /^zh|cn$/i.test(s) ? c['zh-CN'] : c['en-US'],
           p = l.a.useRef(null),
@@ -71,7 +71,7 @@
                 l.a.createElement(
                   'tbody',
                   null,
-                  u[a].map((e) =>
+                  u[n].map((e) =>
                     E.includes(e.identifier)
                       ? l.a.createElement(
                           'tr',
@@ -97,13 +97,13 @@
         );
       };
     },
-    XjVH: function (e, t, a) {
+    '0lqN': function (e, t, n) {
       'use strict';
-      a.r(t);
-      var n = a('q1tI'),
-        l = a.n(n),
-        r = a('dEAq');
-      a('0H/f'), a('JjdP');
+      n.r(t);
+      var a = n('q1tI'),
+        l = n.n(a),
+        r = n('dEAq');
+      n('0H/f'), n('JjdP');
       t['default'] = (e) => (
         l.a.useEffect(() => {
           var t;
@@ -124,19 +124,14 @@
             { className: 'markdown' },
             l.a.createElement(
               'h1',
-              { id: '\u5feb\u901f\u4e0a\u624b' },
+              { id: 'faq' },
               l.a.createElement(
                 r['AnchorLink'],
-                {
-                  to: '#\u5feb\u901f\u4e0a\u624b',
-                  'aria-hidden': 'true',
-                  tabIndex: -1,
-                },
+                { to: '#faq', 'aria-hidden': 'true', tabIndex: -1 },
                 l.a.createElement('span', { className: 'icon icon-link' }),
               ),
-              '\u5feb\u901f\u4e0a\u624b',
+              'FAQ',
             ),
-            l.a.createElement('p', null, 'Balabala...'),
           ),
         )
       );

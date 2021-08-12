@@ -1,10 +1,11 @@
 ---
+title: Wonder UI
 hero:
-  title: Site Name
-  desc: dumi site app example
+  title: Wonder UI
+  desc: 丰富的移动端React组件库
   actions:
-    - text: Getting Started
-      link: /getting-started
+    - text: 快速上手
+      link: /guide
 features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
     title: Feature 1
@@ -18,4 +19,6 @@ features:
 footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](https://d.umijs.org)
 ---
 
-## Hello dumi!
+## 浏览器支持
+
+Wonder UI 支持现代浏览器以及 Chrome >= 51、iOS >= 10.0（与 React 一致）
