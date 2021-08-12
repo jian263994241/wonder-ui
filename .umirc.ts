@@ -42,6 +42,10 @@ export default defineConfig({
         path: '/components'
       },
       {
+        title: '更新日志',
+        path: 'https://github.com/jian263994241/wonder-ui/releases'
+      },
+      {
         title: 'GitHub',
         path: 'https://github.com/jian263994241/wonder-ui'
       }
