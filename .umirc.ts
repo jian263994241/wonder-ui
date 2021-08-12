@@ -33,10 +33,10 @@ export default defineConfig({
   navs: {
     'zh-CN': [
       // null, // null 值代表保留约定式生成的导航，只做增量配置
-      // {
-      //   title: '快速上手',
-      //   path: '/getting-started'
-      // },
+      {
+        title: '指南',
+        path: '/guide'
+      },
       {
         title: '组件',
         path: '/components'
@@ -48,58 +48,6 @@ export default defineConfig({
     ]
   },
 
-  // menus: {
-  //     {
-  //       title: '展示',
-  //       children: [
-  //         'components/backtop.md',
-  //         'components/badge.md',
-  //         'components/collapse.md',
-  //         'components/countdown.md',
-  //         // 'components/empty.md',
-  //         'components/label.md',
-  //         'components/list.md',
-  //         'components/noticebar.md',
-  //         'components/pullRefresh.md',
-  //         'components/skeleton.md',
-  //         'components/swipe.md',
-  //         'components/tabs.md',
-  //         'components/tag.md',
-  //         'components/tooltip.md'
-  //       ]
-  //     },
-  //     {
-  //       title: '反馈',
-  //       children: [
-  //         'components/activityIndicator.md',
-  //         'components/backdrop.md',
-  //         'components/dialog.md',
-  //         'components/drawer.md',
-  //         'components/popup.md',
-  //         'components/preloader.md',
-  //         'components/progress.md',
-  //         'components/result.md',
-  //         'components/snackbar.md'
-  //       ]
-  //     },
-  //     {
-  //       title: '路由',
-  //       children: []
-  //     },
-  //     {
-  //       title: '辅助',
-  //       children: [
-  //         'components/modal.md',
-  //         'components/popover.md',
-  //         'components/portal.md'
-  //       ]
-  //     },
-  //     {
-  //       title: '其他',
-  //       children: []
-  //     }
-  //   ]
-  // },
   styles: [
     `html, body, #root {
       height: 100%;
