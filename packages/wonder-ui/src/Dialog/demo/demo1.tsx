@@ -1,32 +1,36 @@
-import {
-  Button,
-  Container,
-  Dialog,
-  Page,
-  Space,
-  WhiteSpace
-} from '@wonder-ui/core';
+import * as React from 'react';
+import { Button, Dialog, Page, Space } from '@wonder-ui/core';
 
-export default () => (
-  <Page title="Dialog">
-    <WhiteSpace />
-    <Container>
-      <Space>
-        <Dialog
-          title="标题"
-          text="内容, 内容, 内容..."
-          buttons={[
-            {
-              text: '取消'
-            },
-            {
-              text: '好的',
-              primary: true
+export default () => {
+  const [visible, setVisible] = React.useState(false);
+  return (
+    <Page title="Dialog">
+      <Dialog
+        visible={visible}
+        title="标题"
+        text="内容, 内容, 内容..."
+        buttons={[
+          {
+            text: '取消',
+            onClick: () => {
+              setVisible(false);
             }
-          ]}
-        >
-          <Button variant="contained">提示框(文字)</Button>
-        </Dialog>
+          },
+          {
+            text: '好的',
+            primary: true,
+            onClick: () => {
+              setVisible(false);
+            }
+          }
+        ]}
+      />
+
+      <Space style={{ padding: 16 }}>
+        <Button variant="contained" onClick={() => setVisible(true)}>
+          提示框(文字)
+        </Button>
+
         <Dialog
           title="标题"
           content={
@@ -49,6 +53,6 @@ export default () => (
           <Button variant="contained">提示框(图片)</Button>
         </Dialog>
       </Space>
-    </Container>
-  </Page>
-);
+    </Page>
+  );
+};

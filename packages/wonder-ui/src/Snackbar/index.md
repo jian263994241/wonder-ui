@@ -22,13 +22,16 @@ group:
 
 ### 消息条的位置
 
+通过指定 `anchorOrigin` 的属性，您可以控制消息条的位置
+
 <code src="./demo/demo2.tsx"></code>
 
-### Toast（提示）
+### 使用Hook (Toast提示)
 
-使用消息条（Snackbar）来显示一个带警告提示组件的 toast
+ 使用`useSnackbar`来显示一个带警告提示组件的, 默认 2000ms 后消失,  通过属性 `autoHideDuration` 改变设置
 
-<code src="../withDialog/demo/demo3.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
+
 
 
 ## API

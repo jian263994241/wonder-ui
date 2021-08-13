@@ -16,6 +16,7 @@ export * from './createStyleStore';
 export * from './css';
 export * from './debounce';
 export * from './device';
+export * from './DialogManager';
 export * from './dom';
 export * from './focus';
 export * from './forwardRef';

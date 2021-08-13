@@ -1,7 +1,3 @@
-/**
- * title: 消息条的位置
- * desc: 通过指定 `anchorOrigin` 的属性，您可以控制消息条的位置
- */
 import * as React from 'react';
 import { Button, Snackbar, SnackbarProps, Space } from '@wonder-ui/core';
 

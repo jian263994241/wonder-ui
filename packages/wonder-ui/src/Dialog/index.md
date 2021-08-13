@@ -16,25 +16,25 @@ group:
 
 ### 基本使用
 
+Dialog可以通过 `visible` 控制显示隐藏, 也可以通过`children`节点的点击事件控制显示隐藏
+
 <code src="./demo/demo1.tsx"></code>
 
 ### 垂直按钮
 
-设置 `buttonsVertical` 按钮排列方向
+设置 `buttonsVertical` 按钮排列方向.
 
 <code src="./demo/demo2.tsx"></code>
 
-### 提示框
+### 使用 Hook
 
-各种信息提示框. 提示信息, 确认信息, ...
+`useDialog` 提供了提示信息, 确认信息, 操作框... 等自定义信息提示框
 
-<code src="../withDialog/demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ### 提示栈
 
-`withDialog` 提供 `alert`, `confirm`, `toast` 等静态方法
-
-<code src="../withDialog/demo/demo1.tsx"></code>
+<code src="./demo/demo4.tsx"></code>
 
 ### 提示框布局
 

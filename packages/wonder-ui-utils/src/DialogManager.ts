@@ -1,6 +1,6 @@
-type Fn = (...args: any[]) => any;
+type Fn = (...args: any[]) => unknown;
 
-export default class Manager {
+export class DialogManager {
   modalStack: Fn[];
 
   modalLock = false;

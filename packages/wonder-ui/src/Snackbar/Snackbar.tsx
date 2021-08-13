@@ -3,6 +3,7 @@ import ClickAwayListener, {
   ClickAwayListenerProps
 } from '../ClickAwayListener';
 import Grow from '../Grow';
+import Portal from '../Portal';
 import SnackbarContent, { SnackbarContentProps } from '../SnackbarContent';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
@@ -10,7 +11,6 @@ import { BaseTransitionProps, TransitionTimeout } from '../Transition';
 import { css } from '@wonder-ui/utils';
 import { snackbarClasses, useClasses } from './SnackbarClasses';
 import { useEventCallback, useForkRef, useSafeState } from '@wonder-ui/hooks';
-import Portal from '../Portal';
 export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * @ignore
