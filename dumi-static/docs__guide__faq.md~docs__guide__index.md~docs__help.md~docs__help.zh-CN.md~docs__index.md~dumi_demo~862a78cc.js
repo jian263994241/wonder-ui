@@ -76,13 +76,13 @@
         j =
           "import { TimePicker, TimePickerProps, withDialog } from '@wonder-ui/core';\nimport dayjs from 'dayjs';\n\nconst formatter: TimePickerProps['formatter'] = (type, value) => {\n  return type === 'hour' ? `${value}\u65f6` : `${value}\u5206`;\n};\n\nexport default withDialog(({ dialog }) => (\n  <TimePicker\n    formatter={formatter}\n    currentTime={dayjs().format('HH:mm')}\n    // onChange={(value) => dialog.toast(value)}\n    onConfirm={(value) => dialog.toast(value)}\n  />\n));",
         U =
-          'import {\n  Button,\n  Container,\n  Dialog,\n  Page,\n  Space,\n  WhiteSpace\n} from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page title="Dialog">\n    <WhiteSpace />\n    <Container>\n      <Space>\n        <Dialog\n          title="\u6807\u9898"\n          text="\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9..."\n          buttons={[\n            {\n              text: \'\u53d6\u6d88\'\n            },\n            {\n              text: \'\u597d\u7684\',\n              primary: true\n            }\n          ]}\n        >\n          <Button variant="contained">\u63d0\u793a\u6846(\u6587\u5b57)</Button>\n        </Dialog>\n        <Dialog\n          title="\u6807\u9898"\n          content={\n            <div>\n              <img\n                src="https://img.99bill.com/z/img/new-pos.png"\n                width={260}\n                height={260}\n                alt="img"\n              />\n            </div>\n          }\n          buttons={[\n            {\n              text: \'\u77e5\u9053\u5566!\',\n              primary: true\n            }\n          ]}\n        >\n          <Button variant="contained">\u63d0\u793a\u6846(\u56fe\u7247)</Button>\n        </Dialog>\n      </Space>\n    </Container>\n  </Page>\n);',
+          'import * as React from \'react\';\nimport { Button, Dialog, Page, Space } from \'@wonder-ui/core\';\n\nexport default () => {\n  const [visible, setVisible] = React.useState(false);\n  return (\n    <Page title="Dialog">\n      <Dialog\n        visible={visible}\n        title="\u6807\u9898"\n        text="\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9..."\n        buttons={[\n          {\n            text: \'\u53d6\u6d88\',\n            onClick: () => {\n              setVisible(false);\n            }\n          },\n          {\n            text: \'\u597d\u7684\',\n            primary: true,\n            onClick: () => {\n              setVisible(false);\n            }\n          }\n        ]}\n      />\n\n      <Space style={{ padding: 16 }}>\n        <Button variant="contained" onClick={() => setVisible(true)}>\n          \u63d0\u793a\u6846(\u6587\u5b57)\n        </Button>\n\n        <Dialog\n          title="\u6807\u9898"\n          content={\n            <div>\n              <img\n                src="https://img.99bill.com/z/img/new-pos.png"\n                width={260}\n                height={260}\n                alt="img"\n              />\n            </div>\n          }\n          buttons={[\n            {\n              text: \'\u77e5\u9053\u5566!\',\n              primary: true\n            }\n          ]}\n        >\n          <Button variant="contained">\u63d0\u793a\u6846(\u56fe\u7247)</Button>\n        </Dialog>\n      </Space>\n    </Page>\n  );\n};',
         G =
-          "import { Button, Container, Dialog, Page, WhiteSpace } from '@wonder-ui/core';\n\nexport default () => (\n  <Page title=\"Dialog vertical buttons\">\n    <WhiteSpace />\n    <Container>\n      <Dialog\n        buttonsVertical\n        buttons={[\n          {\n            text: '\u6807\u4e3a\u672a\u8bfb',\n            onClick: () => {\n              console.log('\u6807\u4e3a\u672a\u8bfb');\n            }\n          },\n          {\n            text: '\u7f6e\u9876\u804a\u5929',\n            onClick: () => {\n              console.log('\u7f6e\u9876\u804a\u5929');\n            }\n          }\n        ]}\n      >\n        <Button variant=\"contained\">\u5782\u76f4\u6309\u94ae</Button>\n      </Dialog>\n    </Container>\n  </Page>\n);",
+          "import { Button, Dialog, Page } from '@wonder-ui/core';\n\nexport default () => {\n  return (\n    <Page title=\"Vertical buttons\">\n      <div style={{ padding: 16 }}>\n        <Dialog\n          buttonsVertical\n          buttons={[\n            {\n              text: '\u6807\u4e3a\u672a\u8bfb',\n              onClick: () => {\n                console.log('\u6807\u4e3a\u672a\u8bfb');\n              }\n            },\n            {\n              text: '\u7f6e\u9876\u804a\u5929',\n              onClick: () => {\n                console.log('\u7f6e\u9876\u804a\u5929');\n              }\n            }\n          ]}\n        >\n          <Button variant=\"contained\">\u5782\u76f4\u6309\u94ae</Button>\n        </Dialog>\n      </div>\n    </Page>\n  );\n};",
         z =
-          "import {\n  Button,\n  Container,\n  Page,\n  Space,\n  WhiteSpace,\n  withDialog\n} from '@wonder-ui/core';\n\nexport default withDialog((props) => {\n  const { dialog } = props;\n  return (\n    <Page title=\"Dialogs\">\n      <WhiteSpace />\n      <Container>\n        <Space>\n          <Button\n            variant=\"contained\"\n            onClick={() =>\n              dialog.alert({ title: '\u63d0\u793a', text: '\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9...' })\n            }\n          >\n            \u63d0\u793a\u6846\n          </Button>\n          <Button\n            variant=\"contained\"\n            onClick={() => dialog.alert({ text: '\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9...' })}\n          >\n            \u63d0\u793a\u6846 (\u65e0\u6807\u9898)\n          </Button>\n          <Button\n            variant=\"contained\"\n            onClick={() =>\n              dialog.confirm({ title: '\u786e\u8ba4', text: '\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9...' })\n            }\n          >\n            \u786e\u8ba4\u6846\n          </Button>\n          <Button\n            variant=\"contained\"\n            onClick={() =>\n              dialog.custom({\n                title: '\u64cd\u4f5c',\n                text: '\u8bf7\u9009\u62e9\u4e00\u9879\u64cd\u4f5c',\n                buttonsVertical: true,\n                buttons: [\n                  {\n                    children: '\u6807\u4e3a\u672a\u8bfb',\n                    onClick: () => {\n                      console.log('\u6807\u4e3a\u672a\u8bfb');\n                    }\n                  },\n                  {\n                    children: '\u7f6e\u9876\u804a\u5929',\n                    onClick: () => {\n                      console.log('\u7f6e\u9876\u804a\u5929');\n                    }\n                  },\n                  {\n                    children: '\u53d6\u6d88',\n                    onClick: () => {}\n                  }\n                ]\n              })\n            }\n          >\n            \u64cd\u4f5c\u6846\n          </Button>\n        </Space>\n      </Container>\n    </Page>\n  );\n});",
+          "import { Button, Page, Space, useDialog } from '@wonder-ui/core';\n\nexport default () => {\n  const dialog = useDialog();\n\n  return (\n    <Page title=\"Dialog\">\n      <Space style={{ padding: 16 }}>\n        <Button\n          variant=\"contained\"\n          onClick={() => {\n            dialog.alert({ title: '\u63d0\u793a', text: '\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9...' });\n          }}\n        >\n          \u63d0\u793a\u6846\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={() => dialog.alert({ text: '\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9...' })}\n        >\n          \u63d0\u793a\u6846 (\u65e0\u6807\u9898)\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={() =>\n            dialog.confirm({ title: '\u786e\u8ba4', text: '\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9...' })\n          }\n        >\n          \u786e\u8ba4\u6846\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={() =>\n            dialog.custom({\n              title: '\u64cd\u4f5c',\n              text: '\u8bf7\u9009\u62e9\u4e00\u9879\u64cd\u4f5c',\n              buttonsVertical: true,\n              buttons: [\n                {\n                  children: '\u6807\u4e3a\u672a\u8bfb',\n                  onClick: () => {\n                    console.log('\u6807\u4e3a\u672a\u8bfb');\n                  }\n                },\n                {\n                  children: '\u7f6e\u9876\u804a\u5929',\n                  onClick: () => {\n                    console.log('\u7f6e\u9876\u804a\u5929');\n                  }\n                },\n                {\n                  children: '\u53d6\u6d88',\n                  onClick: () => {}\n                }\n              ]\n            })\n          }\n        >\n          \u64cd\u4f5c\u6846\n        </Button>\n      </Space>\n    </Page>\n  );\n};",
         W =
-          "import {\n  Button,\n  Container,\n  Page,\n  WhiteSpace,\n  withDialog\n} from '@wonder-ui/core';\n\nexport default withDialog((props) => {\n  const { dialog } = props;\n\n  return (\n    <Page title=\"Dialog stack\">\n      <WhiteSpace />\n      <Container>\n        <Button\n          variant=\"contained\"\n          onClick={() => {\n            dialog.alert({ title: '\u6807\u9898', text: 'dialog 1' });\n            dialog.alert({ title: '\u6807\u9898', text: 'dialog 2' });\n            dialog.confirm({ title: '\u6807\u9898', text: '\u786e\u5b9a\u8fd9\u4e48\u5e72\u5417?' });\n            dialog.alert({ title: '\u6807\u9898', text: 'dialog 4' });\n            dialog.toast('\u961f\u5217\u7ed3\u675f');\n          }}\n        >\n          \u63d0\u793a\u6846\n        </Button>\n      </Container>\n    </Page>\n  );\n});",
+          "import { Button, Page, useDialog, useSnackbar } from '@wonder-ui/core';\n\nexport default () => {\n  const dialog = useDialog();\n  const toast = useSnackbar();\n\n  return (\n    <Page title=\"Dialog stack\">\n      <div style={{ padding: 16 }}>\n        <Button\n          variant=\"contained\"\n          onClick={() => {\n            dialog.alert({ title: '\u6807\u9898', text: 'dialog 1' });\n            dialog.alert({ title: '\u6807\u9898', text: 'dialog 2' });\n            dialog.confirm({ title: '\u6807\u9898', text: '\u786e\u5b9a\u8fd9\u4e48\u5e72\u5417?' });\n            dialog.alert({\n              title: '\u6807\u9898',\n              text: 'dialog 4',\n              onOk: () => {\n                toast('\u961f\u5217\u7ed3\u675f');\n              }\n            });\n          }}\n        >\n          \u63d0\u793a\u6846\n        </Button>\n      </div>\n    </Page>\n  );\n};",
         N =
           'import { Page, Space, DialogContent, WhiteSpace } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page title="Dialog content">\n    <WhiteSpace />\n    <Space horizontalAlign="center">\n      <DialogContent\n        style={{ width: 220 }}\n        title="\u6807\u9898"\n        text="\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9..."\n        buttons={[\n          {\n            text: \'\u53d6\u6d88\',\n            onClick: () => {}\n          },\n          {\n            text: \'\u597d\u7684\',\n            primary: true,\n            onClick: () => {}\n          }\n        ]}\n      />\n    </Space>\n  </Page>\n);',
         _ =
@@ -91,13 +91,13 @@
           'import { Divider, Space, Typography } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space direction="vertical">\n    <Typography>\n      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne\n      merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen,\n      quo modo.\n    </Typography>\n    <Divider textAlign="center">Text</Divider>\n    <Typography>\n      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne\n      merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen,\n      quo modo.\n    </Typography>\n    <Divider textAlign="left">Left Text</Divider>\n    <Typography>\n      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne\n      merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen,\n      quo modo.\n    </Typography>\n    <Divider textAlign="right">Right Text</Divider>\n    <Typography>\n      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne\n      merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen,\n      quo modo.\n    </Typography>\n  </Space>\n);',
         Y =
           "import { Typography, Divider } from '@wonder-ui/core';\n\nexport default () => (\n  <div style={{ display: 'flex' }}>\n    <Typography>\n      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne\n      merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen,\n      quo modo.\n    </Typography>\n    <Divider direction=\"vertical\" flexItem>\n      VERTICAL\n    </Divider>\n    <Typography>\n      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne\n      merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen,\n      quo modo.\n    </Typography>\n  </div>\n);",
-        $ =
-          'import { Divider, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space split={<Divider direction="vertical" style={{ height: \'1em\' }} />}>\n    Text\n    <a href="#">Link</a>\n    <a href="#">Link</a>\n  </Space>\n);',
         Z =
+          'import { Divider, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space split={<Divider direction="vertical" style={{ height: \'1em\' }} />}>\n    Text\n    <a href="#">Link</a>\n    <a href="#">Link</a>\n  </Space>\n);',
+        $ =
           "import {\n  Button,\n  Drawer,\n  DrawerProps,\n  Page,\n  Space,\n  Typography,\n  WhiteSpace\n} from '@wonder-ui/core';\nimport { useToggle } from '@wonder-ui/hooks';\n\ntype Anchor = DrawerProps['anchor'];\n\nexport default () => {\n  const [visible, { toggle: toggleVisible }] = useToggle(false);\n  const [anchor, { toggle }] = useToggle<Anchor>('left');\n\n  const open = (anchor: Anchor) => {\n    toggle(anchor);\n    toggleVisible();\n  };\n\n  return (\n    <Page title=\"Drawer\">\n      <WhiteSpace />\n      <Space>\n        <Button variant=\"contained\" onClick={() => open('left')}>\n          \u5de6\n        </Button>\n        <Button variant=\"contained\" onClick={() => open('right')}>\n          \u53f3\n        </Button>\n        <Button variant=\"contained\" onClick={() => open('top')}>\n          \u4e0a\n        </Button>\n        <Button variant=\"contained\" onClick={() => open('bottom')}>\n          \u4e0b\n        </Button>\n      </Space>\n\n      <Drawer anchor={anchor} visible={visible} onClose={() => toggleVisible()}>\n        <Page\n          title=\"Basic Drawer\"\n          style={{\n            position: 'relative',\n            ...(['left', 'right'].indexOf(anchor || '') !== -1\n              ? { width: 260, height: '100%' }\n              : { width: '100%', height: 200 })\n          }}\n          showCloseButton\n          onClose={() => toggleVisible()}\n        >\n          <div style={{ padding: '10px 16px' }}>\n            <Typography>\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n            </Typography>\n          </div>\n        </Page>\n      </Drawer>\n    </Page>\n  );\n};",
-        X =
-          'import { DropdownMenu, DropdownMenuItem, Page, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page title="DropdownMenu">\n    <Space direction="vertical">\n      \u57fa\u672c\u4f7f\u7528\n      <DropdownMenu>\n        <DropdownMenuItem arrow overlay={<div>\u5168\u90e8\u5546\u54c1 ... </div>}>\n          \u5168\u90e8\u5546\u54c1\n        </DropdownMenuItem>\n        <DropdownMenuItem arrow overlay={<div>\u597d\u8bc4\u6392\u5e8f ...</div>}>\n          \u597d\u8bc4\u6392\u5e8f\n        </DropdownMenuItem>\n      </DropdownMenu>\n    </Space>\n  </Page>\n);',
         J =
+          'import { DropdownMenu, DropdownMenuItem, Page, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page title="DropdownMenu">\n    <Space direction="vertical">\n      \u57fa\u672c\u4f7f\u7528\n      <DropdownMenu>\n        <DropdownMenuItem arrow overlay={<div>\u5168\u90e8\u5546\u54c1 ... </div>}>\n          \u5168\u90e8\u5546\u54c1\n        </DropdownMenuItem>\n        <DropdownMenuItem arrow overlay={<div>\u597d\u8bc4\u6392\u5e8f ...</div>}>\n          \u597d\u8bc4\u6392\u5e8f\n        </DropdownMenuItem>\n      </DropdownMenu>\n    </Space>\n  </Page>\n);',
+        X =
           'import {\n  Button,\n  Divider,\n  DropdownMenu,\n  DropdownMenuItem,\n  Page,\n  Radio,\n  List,\n  ListItem,\n  ListItemText,\n  Toggle\n} from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page title="With list">\n    <DropdownMenu>\n      <DropdownMenuItem\n        arrow\n        overlay={\n          <div>\n            <List component="div">\n              <ListItem\n                divider\n                component="label"\n                extra={<Radio name="DropdownMenu1" />}\n              >\n                <ListItemText>\u5168\u90e8\u5546\u54c1</ListItemText>\n              </ListItem>\n              <ListItem\n                divider\n                component="label"\n                extra={<Radio name="DropdownMenu1" />}\n              >\n                <ListItemText>\u65b0\u6b3e\u5546\u54c1</ListItemText>\n              </ListItem>\n              <ListItem\n                divider\n                component="label"\n                extra={<Radio name="DropdownMenu1" />}\n              >\n                <ListItemText>\u6d3b\u52a8\u5546\u54c1</ListItemText>\n              </ListItem>\n            </List>\n          </div>\n        }\n      >\n        \u5168\u90e8\u5546\u54c1\n      </DropdownMenuItem>\n      <DropdownMenuItem\n        arrow\n        overlay={({ onClose }) => (\n          <div>\n            <List>\n              <ListItem divider extra={<Toggle />}>\n                <ListItemText>\u5305\u90ae</ListItemText>\n              </ListItem>\n              <ListItem extra={<Toggle defaultChecked />}>\n                <ListItemText>\u56e2\u8d2d</ListItemText>\n              </ListItem>\n            </List>\n            <Divider />\n            <div style={{ padding: 16 }}>\n              <Button\n                variant="contained"\n                fullWidth\n                disableFocusRipple\n                onClick={onClose}\n              >\n                \u786e \u8ba4\n              </Button>\n            </div>\n          </div>\n        )}\n      >\n        \u597d\u8bc4\u6392\u5e8f\n      </DropdownMenuItem>\n    </DropdownMenu>\n  </Page>\n);',
         Q =
           'import {\n  Button,\n  Divider,\n  DropdownMenu,\n  DropdownMenuItem,\n  Page,\n  Radio,\n  List,\n  ListItem,\n  ListItemText,\n  Toggle\n} from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page title="Auto width">\n    <DropdownMenu widthAuto>\n      <DropdownMenuItem\n        arrow\n        overlay={\n          <div>\n            <List component="div">\n              <ListItem\n                divider\n                component="label"\n                extra={<Radio name="DropdownMenu1" />}\n              >\n                <ListItemText>\u5168\u90e8\u5546\u54c1</ListItemText>\n              </ListItem>\n              <ListItem\n                divider\n                component="label"\n                extra={<Radio name="DropdownMenu1" />}\n              >\n                <ListItemText>\u65b0\u6b3e\u5546\u54c1</ListItemText>\n              </ListItem>\n              <ListItem\n                divider\n                component="label"\n                extra={<Radio name="DropdownMenu1" />}\n              >\n                <ListItemText>\u6d3b\u52a8\u5546\u54c1</ListItemText>\n              </ListItem>\n            </List>\n          </div>\n        }\n      >\n        \u5168\u90e8\u5546\u54c1\n      </DropdownMenuItem>\n      <DropdownMenuItem\n        arrow\n        overlay={({ onClose }) => (\n          <div>\n            <List>\n              <ListItem divider extra={<Toggle />}>\n                <ListItemText>\u5305\u90ae</ListItemText>\n              </ListItem>\n              <ListItem extra={<Toggle defaultChecked />}>\n                <ListItemText>\u56e2\u8d2d</ListItemText>\n              </ListItem>\n            </List>\n            <Divider />\n            <div style={{ padding: 16 }}>\n              <Button\n                variant="contained"\n                fullWidth\n                disableFocusRipple\n                onClick={onClose}\n              >\n                \u786e \u8ba4\n              </Button>\n            </div>\n          </div>\n        )}\n      >\n        \u597d\u8bc4\u6392\u5e8f\n      </DropdownMenuItem>\n\n      <DropdownMenuItem>\u9500\u91cf</DropdownMenuItem>\n      <DropdownMenuItem>\u53e3\u7891</DropdownMenuItem>\n    </DropdownMenu>\n  </Page>\n);',
@@ -199,13 +199,13 @@
           "import * as React from 'react';\nimport { Button, Popover } from '@wonder-ui/core';\nimport { useBoolean } from '@wonder-ui/hooks';\n\nexport default () => {\n  const [visible, actions] = useBoolean(false);\n  const buttonRef = React.useRef<HTMLElement>(null);\n\n  return (\n    <div>\n      <Button variant=\"contained\" ref={buttonRef} onClick={actions.setTrue}>\n        \u5f39\u51fa\u6846\n      </Button>\n\n      <Popover\n        visible={visible}\n        anchorEl={() => buttonRef.current}\n        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}\n        onClose={() => actions.setFalse()}\n      >\n        <div style={{ padding: 16 }}>\n          \u6c14\u6ce1\u5361\u7247\u5185\u5bb9... <Button>\u66f4\u591a</Button>\n        </div>\n      </Popover>\n    </div>\n  );\n};",
         Ye =
           "import * as React from 'react';\nimport { Button, Container, Popup, Typography } from '@wonder-ui/core';\n\nexport default () => {\n  const [popVisible, setVisible] = React.useState(false);\n  return (\n    <div>\n      <Container>\n        <Button variant=\"contained\" onClick={() => setVisible(true)}>\n          \u6253\u5f00\u5f39\u7a97\n        </Button>\n      </Container>\n\n      <Popup\n        title=\"Popup Title\"\n        visible={popVisible}\n        onClose={() => setVisible(false)}\n      >\n        <div style={{ padding: '30px  16px' }}>\n          <Typography gutterBottom>\n            \u5f39\u51fa\u7a97\u53e3\u6765\u4e86\u3002\u60a8\u53ef\u4ee5\u5728\u6b64\u5904\u653e\u7f6e\u4efb\u4f55\u5185\u5bb9\uff0c\u751a\u81f3\u53ef\u4ee5\u4f7f\u7528\u5176\u81ea\u5df1\u7684\u72ec\u7acb\u89c6\u56fe\u5bfc\u822a\u3002\u4e5f\u4e0d\u662f\uff0c\u9ed8\u8ba4\u60c5\u51b5\u4e0b\uff0c\u5728\n            iPhone / iPod \u548c iPad \u4e0a\u770b\u8d77\u6765\u6709\u70b9\u4e0d\u540c\u7684\u5f39\u51fa\u7a97\u53e3\uff0ciPhone\n            \u5b83\u662f\u5168\u5c4f\u7684\u3002\n          </Typography>\n\n          <Typography>...</Typography>\n        </div>\n      </Popup>\n    </div>\n  );\n};",
-        $e =
-          "import * as React from 'react';\nimport { Button, Portal } from '@wonder-ui/core';\nimport { useToggle } from '@wonder-ui/hooks';\n\nexport default () => {\n  const target = React.useRef(null);\n  const [visible, { toggle }] = useToggle(false);\n\n  return (\n    <div>\n      <Button variant=\"contained\" onClick={() => toggle()}>\n        Toggle\n      </Button>\n\n      <div style={{ backgroundColor: 'grey' }}>\n        {visible && (\n          <Portal container={() => target.current}>\n            <div>Portal Content</div>\n          </Portal>\n        )}\n      </div>\n\n      <div ref={target} style={{ backgroundColor: 'pink' }}></div>\n    </div>\n  );\n};",
         Ze =
+          "import * as React from 'react';\nimport { Button, Portal } from '@wonder-ui/core';\nimport { useToggle } from '@wonder-ui/hooks';\n\nexport default () => {\n  const target = React.useRef(null);\n  const [visible, { toggle }] = useToggle(false);\n\n  return (\n    <div>\n      <Button variant=\"contained\" onClick={() => toggle()}>\n        Toggle\n      </Button>\n\n      <div style={{ backgroundColor: 'grey' }}>\n        {visible && (\n          <Portal container={() => target.current}>\n            <div>Portal Content</div>\n          </Portal>\n        )}\n      </div>\n\n      <div ref={target} style={{ backgroundColor: 'pink' }}></div>\n    </div>\n  );\n};",
+        $e =
           'import { Button, Container, Preloader } from \'@wonder-ui/core\';\nimport { useToggle } from \'@wonder-ui/hooks\';\n\nexport default () => {\n  const [visible, { toggle }] = useToggle(false);\n\n  const open = () => {\n    toggle();\n\n    setTimeout(() => {\n      toggle();\n    }, 2000);\n  };\n\n  return (\n    <Container>\n      <Button variant="contained" onClick={() => open()}>\n        Open\n      </Button>\n      <Preloader visible={visible} text="\u52a0\u8f7d\u4e2d..." />\n    </Container>\n  );\n};',
-        Xe =
-          'import { Button, Preloader } from \'@wonder-ui/core\';\n\nconst loadData = () =>\n  new Promise((resolve) => {\n    setTimeout(() => {\n      resolve({});\n    }, 2000);\n  });\n\nexport default () => (\n  <Preloader onLoad={loadData}>\n    <Button variant="contained">Onload</Button>\n  </Preloader>\n);',
         Je =
+          'import { Button, Preloader } from \'@wonder-ui/core\';\n\nconst loadData = () =>\n  new Promise((resolve) => {\n    setTimeout(() => {\n      resolve({});\n    }, 2000);\n  });\n\nexport default () => (\n  <Preloader onLoad={loadData}>\n    <Button variant="contained">Onload</Button>\n  </Preloader>\n);',
+        Xe =
           'import { Button, showPreloader, hidePreloader } from \'@wonder-ui/core\';\n\nexport default () => {\n  const open = () => {\n    showPreloader();\n    setTimeout(() => {\n      hidePreloader();\n    }, 2000);\n  };\n\n  return (\n    <Button variant="contained" onClick={() => open()}>\n      Open\n    </Button>\n  );\n};',
         Qe =
           "import {\n  Button,\n  showPreloader,\n  hidePreloader,\n  Space,\n  LinearProgress,\n  Typography,\n  WhiteSpace\n} from '@wonder-ui/core';\n\nexport default () => {\n  const open = (type: 'spinner' | 'circular' | 'custom') => {\n    if (type === 'spinner' || type === 'circular') {\n      showPreloader({\n        type,\n        text: `type - ${type}`\n      });\n    } else {\n      showPreloader({\n        indicator: (\n          <div style={{ width: 200, paddingTop: 20 }}>\n            <LinearProgress />\n            <WhiteSpace />\n            <Typography>\u52a0\u8f7d\u4e2d...</Typography>\n          </div>\n        )\n      });\n    }\n\n    setTimeout(() => {\n      hidePreloader();\n    }, 2000);\n  };\n\n  return (\n    <Space>\n      <Button variant=\"contained\" onClick={() => open('spinner')}>\n        Open(spinner)\n      </Button>\n\n      <Button variant=\"contained\" onClick={() => open('circular')}>\n        Open(circular)\n      </Button>\n\n      <Button variant=\"contained\" onClick={() => open('custom')}>\n        Open(custom)\n      </Button>\n    </Space>\n  );\n};",
@@ -242,7 +242,7 @@
         yt =
           "import * as React from 'react';\nimport { Button, Snackbar, SnackbarProps, Space } from '@wonder-ui/core';\n\nexport default function Example() {\n  const [state, setState] = React.useState<Partial<SnackbarProps>>({\n    visible: false,\n    anchorOrigin: {\n      vertical: 'top',\n      horizontal: 'center'\n    }\n  });\n\n  const { anchorOrigin = {}, visible } = state;\n\n  const handleClick = (newState: any) => () => {\n    setState({ visible: true, ...newState });\n  };\n\n  const handleClose = () => {\n    setState({ ...state, visible: false });\n  };\n\n  return (\n    <div>\n      <Space>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'top',\n              horizontal: 'left'\n            }\n          })}\n        >\n          \u5de6\u4e0a\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'top',\n              horizontal: 'center'\n            }\n          })}\n        >\n          \u4e2d\u4e0a\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'top',\n              horizontal: 'right'\n            }\n          })}\n        >\n          \u53f3\u4e0a\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'bottom',\n              horizontal: 'right'\n            }\n          })}\n        >\n          \u53f3\u4e0b\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'bottom',\n              horizontal: 'center'\n            }\n          })}\n        >\n          \u4e2d\u4e0b\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'bottom',\n              horizontal: 'left'\n            }\n          })}\n        >\n          \u5de6\u4e0b\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'center',\n              horizontal: 'center'\n            }\n          })}\n        >\n          \u4e2d\n        </Button>\n      </Space>\n\n      <Snackbar\n        visible={visible}\n        message=\"\u7b80\u5355\u7684\u6d88\u606f\u6761\"\n        autoHideDuration={null}\n        anchorOrigin={anchorOrigin}\n        onClose={handleClose}\n        key={anchorOrigin.vertical + anchorOrigin.horizontal!}\n      />\n    </div>\n  );\n}",
         Et =
-          "import { Button, withDialog } from '@wonder-ui/core';\n\nexport default withDialog((props) => {\n  const { dialog } = props;\n\n  return (\n    <Button\n      variant=\"contained\"\n      onClick={() => {\n        dialog.toast('\u4e00\u6761\u901a\u77e5\u4fe1\u606f');\n        dialog.toast('\u4e00\u6761\u901a\u77e5\u4fe1\u606f.');\n        dialog.toast('\u4e00\u6761\u901a\u77e5\u4fe1\u606f..');\n        dialog.toast('\u4e00\u6761\u901a\u77e5\u4fe1\u606f...');\n      }}\n    >\n      toast\n    </Button>\n  );\n});",
+          "import { Button, Space, useSnackbar } from '@wonder-ui/core';\n\nexport default function Example() {\n  const snackbar = useSnackbar();\n\n  return (\n    <Space>\n      <Button variant=\"contained\" onClick={() => snackbar('\u7b80\u5355\u7684\u6d88\u606f\u6761')}>\n        \u7b80\u5355\u7684\u6d88\u606f\u6761\n      </Button>\n      <Button\n        variant=\"contained\"\n        onClick={() => {\n          snackbar('\u7b80\u5355\u7684\u6d88\u606f\u6761 - 1');\n          snackbar('\u7b80\u5355\u7684\u6d88\u606f\u6761 - 2');\n          snackbar('\u7b80\u5355\u7684\u6d88\u606f\u6761 - 3');\n        }}\n      >\n        \u6d88\u606f\u6808\n      </Button>\n    </Space>\n  );\n}",
         vt =
           'import { Space, Button } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space>\n    \u95f4\u8ddd:\n    <Button variant="contained">Button</Button>\n    <Button variant="contained">Button</Button>\n  </Space>\n);',
         Ht =
@@ -307,13 +307,13 @@
           'import { WhiteSpace, Divider, styled } from \'@wonder-ui/core\';\n\nconst WhiteSpaceDemo = styled(WhiteSpace)({\n  background: \'#0092ff\'\n});\n\nexport default () => (\n  <div>\n    <Divider>Size sm</Divider>\n    <WhiteSpaceDemo size="small" />\n\n    <Divider>Size md (default)</Divider>\n    <WhiteSpaceDemo />\n\n    <Divider>Size lg</Divider>\n    <WhiteSpaceDemo size="large" />\n  </div>\n);',
         Yt =
           'import {\n  WhiteSpace,\n  List,\n  ListItem,\n  ListHeader,\n  ListItemText,\n  Page\n} from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page>\n    <List>\n      <ListHeader>WhiteSpace</ListHeader>\n      <ListItem divider>\n        <ListItemText>Item 1</ListItemText>\n      </ListItem>\n      <ListItem>\n        <ListItemText>Item 2</ListItemText>\n      </ListItem>\n      <WhiteSpace component="li" />\n      <ListItem>\n        <ListItemText>Item 3</ListItemText>\n      </ListItem>\n    </List>\n  </Page>\n);',
-        $t =
-          'import { CircularProgress, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space>\n    <CircularProgress color="primary" />\n    <CircularProgress color="secondary" />\n    <CircularProgress color="success" />\n    <CircularProgress color="danger" />\n    <CircularProgress color="warning" />\n    <CircularProgress color="info" />\n    <CircularProgress color="light" />\n    <CircularProgress color="dark" />\n  </Space>\n);',
         Zt =
+          'import { CircularProgress, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space>\n    <CircularProgress color="primary" />\n    <CircularProgress color="secondary" />\n    <CircularProgress color="success" />\n    <CircularProgress color="danger" />\n    <CircularProgress color="warning" />\n    <CircularProgress color="info" />\n    <CircularProgress color="light" />\n    <CircularProgress color="dark" />\n  </Space>\n);',
+        $t =
           "import { CircularProgress, Space } from '@wonder-ui/core';\n\nexport default () => (\n  <Space>\n    <CircularProgress />\n    <CircularProgress size={24} />\n  </Space>\n);",
-        Xt =
-          'import * as React from \'react\';\nimport { Space, CircularProgress } from \'@wonder-ui/core\';\nimport { useInterval } from \'@wonder-ui/hooks\';\n\nexport default () => {\n  const [count, setCount] = React.useState(0);\n\n  useInterval(() => {\n    if (count < 100) {\n      setCount(count + 10);\n    } else {\n      setCount(0);\n    }\n  }, 800);\n\n  return (\n    <Space>\n      <CircularProgress variant="determinate" value={20} />\n      <CircularProgress variant="determinate" value={40} />\n      <CircularProgress variant="determinate" value={60} />\n      <CircularProgress variant="determinate" value={80} />\n      <CircularProgress variant="determinate" value={100} />\n      <CircularProgress\n        variant="determinate"\n        size={100}\n        thickness={1}\n        value={count}\n        label={`${count}%`}\n      />\n    </Space>\n  );\n};',
         Jt =
+          'import * as React from \'react\';\nimport { Space, CircularProgress } from \'@wonder-ui/core\';\nimport { useInterval } from \'@wonder-ui/hooks\';\n\nexport default () => {\n  const [count, setCount] = React.useState(0);\n\n  useInterval(() => {\n    if (count < 100) {\n      setCount(count + 10);\n    } else {\n      setCount(0);\n    }\n  }, 800);\n\n  return (\n    <Space>\n      <CircularProgress variant="determinate" value={20} />\n      <CircularProgress variant="determinate" value={40} />\n      <CircularProgress variant="determinate" value={60} />\n      <CircularProgress variant="determinate" value={80} />\n      <CircularProgress variant="determinate" value={100} />\n      <CircularProgress\n        variant="determinate"\n        size={100}\n        thickness={1}\n        value={count}\n        label={`${count}%`}\n      />\n    </Space>\n  );\n};',
+        Xt =
           'import { LinearProgress, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space direction="vertical">\n    <LinearProgress variant="indeterminate" color="primary" />\n  </Space>\n);',
         Qt =
           'import { LinearProgress, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space direction="vertical">\n    <LinearProgress variant="determinate" value={20} color="primary" />\n    <LinearProgress variant="determinate" value={40} color="secondary" />\n    <LinearProgress variant="determinate" value={60} color="success" />\n    <LinearProgress variant="determinate" value={80} color="danger" />\n    <LinearProgress variant="determinate" value={80} color="warning" />\n    <LinearProgress variant="determinate" value={80} color="info" />\n  </Space>\n);',
@@ -1841,8 +1841,8 @@
           previewerProps: {
             sources: { _: { tsx: U } },
             dependencies: {
-              '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
+              '@wonder-ui/core': { version: '2.0.0-31' },
             },
             identifier: 'dialog-demo1',
           },
@@ -1890,7 +1890,7 @@
             identifier: 'dialog-demo2',
           },
         },
-        'withdialog-demo2': {
+        'dialog-demo3': {
           component: Object(o['c'])({
             loader: (function () {
               var e = Object(i['a'])(
@@ -1907,7 +1907,7 @@
                               n.e(79),
                               n.e(5),
                               n.e(8),
-                            ]).then(n.bind(null, '40Xy'))
+                            ]).then(n.bind(null, 'k73f'))
                           );
                         case 2:
                           return e.abrupt('return', e.sent.default);
@@ -1930,10 +1930,10 @@
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
             },
-            identifier: 'withdialog-demo2',
+            identifier: 'dialog-demo3',
           },
         },
-        'withdialog-demo1': {
+        'dialog-demo4': {
           component: Object(o['c'])({
             loader: (function () {
               var e = Object(i['a'])(
@@ -1950,7 +1950,7 @@
                               n.e(79),
                               n.e(5),
                               n.e(8),
-                            ]).then(n.bind(null, 'kWmP'))
+                            ]).then(n.bind(null, 'jJVZ'))
                           );
                         case 2:
                           return e.abrupt('return', e.sent.default);
@@ -1973,7 +1973,7 @@
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
             },
-            identifier: 'withdialog-demo1',
+            identifier: 'dialog-demo4',
           },
         },
         'dialogcontent-demo1': {
@@ -2183,7 +2183,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: $ } },
+            sources: { _: { tsx: Z } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -2226,7 +2226,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: Z } },
+            sources: { _: { tsx: $ } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               '@wonder-ui/hooks': { version: '1.1.11' },
@@ -2270,7 +2270,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: X } },
+            sources: { _: { tsx: J } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -2313,7 +2313,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: J } },
+            sources: { _: { tsx: X } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -4582,7 +4582,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: $e } },
+            sources: { _: { tsx: Ze } },
             dependencies: {
               react: { version: '>=16.8.0' },
               '@wonder-ui/core': { version: '2.0.0-31' },
@@ -4628,7 +4628,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: Ze } },
+            sources: { _: { tsx: $e } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               '@wonder-ui/hooks': { version: '1.1.11' },
@@ -4672,7 +4672,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: Xe } },
+            sources: { _: { tsx: Je } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -4715,7 +4715,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: Je } },
+            sources: { _: { tsx: Xe } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -5477,13 +5477,10 @@
               react: { version: '>=16.8.0' },
               '@wonder-ui/core': { version: '2.0.0-31' },
             },
-            title: '\u6d88\u606f\u6761\u7684\u4f4d\u7f6e',
-            description:
-              '<div class="markdown"><p>\u901a\u8fc7\u6307\u5b9a <code>anchorOrigin</code> \u7684\u5c5e\u6027\uff0c\u60a8\u53ef\u4ee5\u63a7\u5236\u6d88\u606f\u6761\u7684\u4f4d\u7f6e</p></div>',
             identifier: 'snackbar-demo2',
           },
         },
-        'withdialog-demo3': {
+        'snackbar-demo3': {
           component: Object(o['c'])({
             loader: (function () {
               var e = Object(i['a'])(
@@ -5500,7 +5497,7 @@
                               n.e(79),
                               n.e(5),
                               n.e(8),
-                            ]).then(n.bind(null, '64HL'))
+                            ]).then(n.bind(null, 'pWLb'))
                           );
                         case 2:
                           return e.abrupt('return', e.sent.default);
@@ -5523,10 +5520,7 @@
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
             },
-            title: 'Toast',
-            description:
-              '<div class="markdown"><p>Snackbar \u5b9e\u73b0\u7684 Toast</p></div>',
-            identifier: 'withdialog-demo3',
+            identifier: 'snackbar-demo3',
           },
         },
         'space-demo1': {
@@ -6550,7 +6544,7 @@
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               '@wonder-ui/hooks': { version: '1.1.11' },
-              '@wonder-ui/utils': { version: '2.1.13' },
+              '@wonder-ui/utils': { version: '2.1.14' },
               react: { version: '>=16.8.0' },
             },
             identifier: 'tag-closable',
@@ -6992,7 +6986,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: $t } },
+            sources: { _: { tsx: Zt } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -7037,7 +7031,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: Zt } },
+            sources: { _: { tsx: $t } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -7083,7 +7077,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: Xt } },
+            sources: { _: { tsx: Jt } },
             dependencies: {
               react: { version: '>=16.8.0' },
               '@wonder-ui/core': { version: '2.0.0-31' },
@@ -7129,7 +7123,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: Jt } },
+            sources: { _: { tsx: Xt } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },

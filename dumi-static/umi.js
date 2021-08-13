@@ -2884,8 +2884,8 @@
                   },
                   {
                     depth: 3,
-                    value: '\u63d0\u793a\u6846',
-                    heading: '\u63d0\u793a\u6846',
+                    value: '\u4f7f\u7528 Hook',
+                    heading: '\u4f7f\u7528-hook',
                   },
                   {
                     depth: 3,
@@ -4333,8 +4333,8 @@
                   },
                   {
                     depth: 3,
-                    value: 'Toast\uff08\u63d0\u793a\uff09',
-                    heading: 'toast\uff08\u63d0\u793a\uff09',
+                    value: '\u4f7f\u7528Hook (Toast\u63d0\u793a)',
+                    heading: '\u4f7f\u7528hook-toast\u63d0\u793a',
                   },
                   { depth: 2, value: 'API', heading: 'api' },
                 ],
@@ -5033,7 +5033,7 @@
               exact: !0,
               meta: {
                 filePath: 'docs/index.md',
-                updatedTime: 1612253466e3,
+                updatedTime: 1628755272e3,
                 title: 'Wonder UI',
                 hero: {
                   title: 'Wonder UI',

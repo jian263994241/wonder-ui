@@ -562,6 +562,34 @@
         a(e, 'click');
       }
     },
+    '9CgO': function (e, t, n) {
+      'use strict';
+      n.d(t, 'a', function () {
+        return r;
+      });
+      class r {
+        constructor() {
+          (this.modalStack = void 0),
+            (this.modalLock = !1),
+            (this.addQueue = (e) => {
+              if (this.modalLock) return this.modalStack.push(e), !0;
+            }),
+            (this.modalStackClearQueue = () => {
+              this.modalLock = !1;
+              var e = this.modalStack.shift();
+              e && setTimeout(() => this.run(e), 0);
+            }),
+            (this.run = (e) => {
+              if (this.addQueue(e)) return !0;
+              (this.modalLock = !0), e(this.modalStackClearQueue);
+            }),
+            (this.reset = () => {
+              (this.modalLock = !1), (this.modalStack = []);
+            }),
+            (this.modalStack = []);
+        }
+      }
+    },
     A91U: function (e, t, n) {
       'use strict';
       n.d(t, 'a', function () {
@@ -628,7 +656,7 @@
           return C;
         }),
         n.d(t, 'm', function () {
-          return A;
+          return k;
         }),
         n.d(t, 'n', function () {
           return R;
@@ -1099,7 +1127,7 @@
           });
         };
       }
-      function A() {
+      function k() {
         for (var e = arguments.length, t = new Array(e), n = 0; n < e; n++)
           t[n] = arguments[n];
         return h((e) => {
@@ -1109,7 +1137,7 @@
         });
       }
       n('k7+O');
-      var k = (e) => {
+      var A = (e) => {
         var t = r['useRef'](e);
         x(
           () => () => {
@@ -1213,8 +1241,8 @@
             }
           }, [t]);
       }
-      var B = !0,
-        L = !1,
+      var L = !0,
+        B = !1,
         H = null,
         z = {
           text: !0,
@@ -1241,15 +1269,15 @@
         );
       }
       function V(e) {
-        e.metaKey || e.altKey || e.ctrlKey || (B = !0);
+        e.metaKey || e.altKey || e.ctrlKey || (L = !0);
       }
       function U() {
-        B = !1;
+        L = !1;
       }
       function q() {
-        'hidden' === this.visibilityState && L && (B = !0);
+        'hidden' === this.visibilityState && B && (L = !0);
       }
-      function Y(e) {
+      function Q(e) {
         return [
           Object(o['on'])(e, 'keydown', V, !0),
           Object(o['on'])(e, 'mousedown', U, !0),
@@ -1258,19 +1286,19 @@
           Object(o['on'])(e, 'visibilitychange', q, !0),
         ];
       }
-      function Q(e) {
+      function Y(e) {
         var t = e.target;
         try {
           if (t) return t.matches(':focus-visible');
         } catch (n) {}
-        return B || Z(t);
+        return L || Z(t);
       }
       var K = () => {
         var e = r['useRef']([]),
           t = r['useCallback']((t) => {
-            null != t && (e.current = Y(Object(o['getDocument'])(t)));
+            null != t && (e.current = Q(Object(o['getDocument'])(t)));
           }, []);
-        k(() => {
+        A(() => {
           e.current.forEach((e) => {
             e();
           });
@@ -1279,17 +1307,17 @@
         function i() {
           return (
             !!n.current &&
-            ((L = !0),
+            ((B = !0),
             window.clearTimeout(H),
             (H = window.setTimeout(() => {
-              L = !1;
+              B = !1;
             }, 100)),
             (n.current = !1),
             !0)
           );
         }
         function u(e) {
-          return !!Q(e) && ((n.current = !0), !0);
+          return !!Y(e) && ((n.current = !0), !0);
         }
         return { isFocusVisibleRef: n, onFocus: u, onBlur: i, ref: t };
       };
@@ -1680,10 +1708,14 @@
       });
       n('JRFm'), n('0D7Y');
       var o = n('W7Nk');
-      n.o(o, 'KeyCodes') &&
-        n.d(t, 'KeyCodes', function () {
-          return o['KeyCodes'];
+      n.o(o, 'DialogManager') &&
+        n.d(t, 'DialogManager', function () {
+          return o['DialogManager'];
         }),
+        n.o(o, 'KeyCodes') &&
+          n.d(t, 'KeyCodes', function () {
+            return o['KeyCodes'];
+          }),
         n.o(o, 'allowScrollOnElement') &&
           n.d(t, 'allowScrollOnElement', function () {
             return o['allowScrollOnElement'];
@@ -1968,277 +2000,281 @@
         n.d(t, 'getSupport', function () {
           return v['b'];
         });
-      var h = n('Pn2d');
-      n.o(h, 'allowScrollOnElement') &&
+      var h = n('9CgO');
+      n.d(t, 'DialogManager', function () {
+        return h['a'];
+      });
+      var m = n('Pn2d');
+      n.o(m, 'allowScrollOnElement') &&
         n.d(t, 'allowScrollOnElement', function () {
-          return h['allowScrollOnElement'];
+          return m['allowScrollOnElement'];
         }),
-        n.o(h, 'capitalize') &&
+        n.o(m, 'capitalize') &&
           n.d(t, 'capitalize', function () {
-            return h['capitalize'];
+            return m['capitalize'];
           }),
-        n.o(h, 'clamp') &&
+        n.o(m, 'clamp') &&
           n.d(t, 'clamp', function () {
-            return h['clamp'];
+            return m['clamp'];
           }),
-        n.o(h, 'createId') &&
+        n.o(m, 'createId') &&
           n.d(t, 'createId', function () {
-            return h['createId'];
+            return m['createId'];
           }),
-        n.o(h, 'deepClone') &&
+        n.o(m, 'deepClone') &&
           n.d(t, 'deepClone', function () {
-            return h['deepClone'];
+            return m['deepClone'];
           }),
-        n.o(h, 'disableBodyScroll') &&
+        n.o(m, 'disableBodyScroll') &&
           n.d(t, 'disableBodyScroll', function () {
-            return h['disableBodyScroll'];
+            return m['disableBodyScroll'];
           }),
-        n.o(h, 'elementContains') &&
+        n.o(m, 'elementContains') &&
           n.d(t, 'elementContains', function () {
-            return h['elementContains'];
+            return m['elementContains'];
           }),
-        n.o(h, 'enableBodyScroll') &&
+        n.o(m, 'enableBodyScroll') &&
           n.d(t, 'enableBodyScroll', function () {
-            return h['enableBodyScroll'];
+            return m['enableBodyScroll'];
           }),
-        n.o(h, 'findScrollableParent') &&
+        n.o(m, 'findScrollableParent') &&
           n.d(t, 'findScrollableParent', function () {
-            return h['findScrollableParent'];
+            return m['findScrollableParent'];
           }),
-        n.o(h, 'forwardRef') &&
+        n.o(m, 'forwardRef') &&
           n.d(t, 'forwardRef', function () {
-            return h['forwardRef'];
+            return m['forwardRef'];
           }),
-        n.o(h, 'getDocument') &&
+        n.o(m, 'getDocument') &&
           n.d(t, 'getDocument', function () {
-            return h['getDocument'];
+            return m['getDocument'];
           }),
-        n.o(h, 'getElementIndexPath') &&
+        n.o(m, 'getElementIndexPath') &&
           n.d(t, 'getElementIndexPath', function () {
-            return h['getElementIndexPath'];
+            return m['getElementIndexPath'];
           }),
-        n.o(h, 'getFocusableByIndexPath') &&
+        n.o(m, 'getFocusableByIndexPath') &&
           n.d(t, 'getFocusableByIndexPath', function () {
-            return h['getFocusableByIndexPath'];
+            return m['getFocusableByIndexPath'];
           }),
-        n.o(h, 'getNextElement') &&
+        n.o(m, 'getNextElement') &&
           n.d(t, 'getNextElement', function () {
-            return h['getNextElement'];
+            return m['getNextElement'];
           }),
-        n.o(h, 'getParent') &&
+        n.o(m, 'getParent') &&
           n.d(t, 'getParent', function () {
-            return h['getParent'];
+            return m['getParent'];
           }),
-        n.o(h, 'getPreviousElement') &&
+        n.o(m, 'getPreviousElement') &&
           n.d(t, 'getPreviousElement', function () {
-            return h['getPreviousElement'];
+            return m['getPreviousElement'];
           }),
-        n.o(h, 'getRect') &&
+        n.o(m, 'getRect') &&
           n.d(t, 'getRect', function () {
-            return h['getRect'];
+            return m['getRect'];
           }),
-        n.o(h, 'getScrollParent') &&
+        n.o(m, 'getScrollParent') &&
           n.d(t, 'getScrollParent', function () {
-            return h['getScrollParent'];
+            return m['getScrollParent'];
           }),
-        n.o(h, 'getScrollTop') &&
+        n.o(m, 'getScrollTop') &&
           n.d(t, 'getScrollTop', function () {
-            return h['getScrollTop'];
+            return m['getScrollTop'];
           }),
-        n.o(h, 'getScrollbarWidth') &&
+        n.o(m, 'getScrollbarWidth') &&
           n.d(t, 'getScrollbarWidth', function () {
-            return h['getScrollbarWidth'];
+            return m['getScrollbarWidth'];
           }),
-        n.o(h, 'getWindow') &&
+        n.o(m, 'getWindow') &&
           n.d(t, 'getWindow', function () {
-            return h['getWindow'];
+            return m['getWindow'];
           }),
-        n.o(h, 'hoistStatics') &&
+        n.o(m, 'hoistStatics') &&
           n.d(t, 'hoistStatics', function () {
-            return h['hoistStatics'];
+            return m['hoistStatics'];
           }),
-        n.o(h, 'isDate') &&
+        n.o(m, 'isDate') &&
           n.d(t, 'isDate', function () {
-            return h['isDate'];
+            return m['isDate'];
           }),
-        n.o(h, 'isElementFocusSubZone') &&
+        n.o(m, 'isElementFocusSubZone') &&
           n.d(t, 'isElementFocusSubZone', function () {
-            return h['isElementFocusSubZone'];
+            return m['isElementFocusSubZone'];
           }),
-        n.o(h, 'isElementFocusZone') &&
+        n.o(m, 'isElementFocusZone') &&
           n.d(t, 'isElementFocusZone', function () {
-            return h['isElementFocusZone'];
+            return m['isElementFocusZone'];
           }),
-        n.o(h, 'isElementTabbable') &&
+        n.o(m, 'isElementTabbable') &&
           n.d(t, 'isElementTabbable', function () {
-            return h['isElementTabbable'];
+            return m['isElementTabbable'];
           }),
-        n.o(h, 'isHidden') &&
+        n.o(m, 'isHidden') &&
           n.d(t, 'isHidden', function () {
-            return h['isHidden'];
+            return m['isHidden'];
           }),
-        n.o(h, 'isObject') &&
+        n.o(m, 'isObject') &&
           n.d(t, 'isObject', function () {
-            return h['isObject'];
+            return m['isObject'];
           }),
-        n.o(h, 'isPromise') &&
+        n.o(m, 'isPromise') &&
           n.d(t, 'isPromise', function () {
-            return h['isPromise'];
+            return m['isPromise'];
           }),
-        n.o(h, 'nextTick') &&
+        n.o(m, 'nextTick') &&
           n.d(t, 'nextTick', function () {
-            return h['nextTick'];
+            return m['nextTick'];
           }),
-        n.o(h, 'noop') &&
+        n.o(m, 'noop') &&
           n.d(t, 'noop', function () {
-            return h['noop'];
+            return m['noop'];
           }),
-        n.o(h, 'on') &&
+        n.o(m, 'on') &&
           n.d(t, 'on', function () {
-            return h['on'];
+            return m['on'];
           }),
-        n.o(h, 'padZero') &&
+        n.o(m, 'padZero') &&
           n.d(t, 'padZero', function () {
-            return h['padZero'];
+            return m['padZero'];
           }),
-        n.o(h, 'portalContainsElement') &&
+        n.o(m, 'portalContainsElement') &&
           n.d(t, 'portalContainsElement', function () {
-            return h['portalContainsElement'];
+            return m['portalContainsElement'];
           }),
-        n.o(h, 'preventDefault') &&
+        n.o(m, 'preventDefault') &&
           n.d(t, 'preventDefault', function () {
-            return h['preventDefault'];
+            return m['preventDefault'];
           }),
-        n.o(h, 'raiseClick') &&
+        n.o(m, 'raiseClick') &&
           n.d(t, 'raiseClick', function () {
-            return h['raiseClick'];
+            return m['raiseClick'];
           }),
-        n.o(h, 'setScrollTop') &&
+        n.o(m, 'setScrollTop') &&
           n.d(t, 'setScrollTop', function () {
-            return h['setScrollTop'];
+            return m['setScrollTop'];
           }),
-        n.o(h, 'shouldWrapFocus') &&
+        n.o(m, 'shouldWrapFocus') &&
           n.d(t, 'shouldWrapFocus', function () {
-            return h['shouldWrapFocus'];
+            return m['shouldWrapFocus'];
           }),
-        n.o(h, 'unitToPx') &&
+        n.o(m, 'unitToPx') &&
           n.d(t, 'unitToPx', function () {
-            return h['unitToPx'];
+            return m['unitToPx'];
           }),
-        n.o(h, 'upperFirst') &&
+        n.o(m, 'upperFirst') &&
           n.d(t, 'upperFirst', function () {
-            return h['upperFirst'];
+            return m['upperFirst'];
           }),
-        n.o(h, 'warn') &&
+        n.o(m, 'warn') &&
           n.d(t, 'warn', function () {
-            return h['warn'];
+            return m['warn'];
           });
-      var m = n('ChYo');
+      var p = n('ChYo');
       n.d(t, 'getElementIndexPath', function () {
-        return m['a'];
+        return p['a'];
       }),
         n.d(t, 'getFocusableByIndexPath', function () {
-          return m['b'];
+          return p['b'];
         }),
         n.d(t, 'getNextElement', function () {
-          return m['c'];
+          return p['c'];
         }),
         n.d(t, 'getPreviousElement', function () {
-          return m['d'];
+          return p['d'];
         }),
         n.d(t, 'isElementFocusSubZone', function () {
-          return m['e'];
+          return p['e'];
         }),
         n.d(t, 'isElementFocusZone', function () {
-          return m['f'];
+          return p['f'];
         }),
         n.d(t, 'isElementTabbable', function () {
-          return m['g'];
+          return p['g'];
         }),
         n.d(t, 'shouldWrapFocus', function () {
-          return m['h'];
+          return p['h'];
         });
-      var p = n('loQL');
+      var g = n('loQL');
       n.d(t, 'forwardRef', function () {
-        return p['a'];
-      });
-      n('Nht4');
-      var g = n('gcMD');
-      n.d(t, 'hoistStatics', function () {
         return g['a'];
       });
-      var b = n('QfVf');
-      n.d(t, 'createId', function () {
+      n('Nht4');
+      var b = n('gcMD');
+      n.d(t, 'hoistStatics', function () {
         return b['a'];
       });
-      n('cL9e'), n('XtT8'), n('E+oR');
-      var y = n('H4hf');
-      n.d(t, 'noop', function () {
+      var y = n('QfVf');
+      n.d(t, 'createId', function () {
         return y['a'];
       });
-      var E = n('ygrP');
-      n.d(t, 'clamp', function () {
+      n('cL9e'), n('XtT8'), n('E+oR');
+      var E = n('H4hf');
+      n.d(t, 'noop', function () {
         return E['a'];
       });
-      var w = n('ozbf');
-      n.d(t, 'deepClone', function () {
+      var w = n('ygrP');
+      n.d(t, 'clamp', function () {
         return w['a'];
       });
-      n('svPo');
-      var S = n('kb9T');
-      n.d(t, 'allowScrollOnElement', function () {
+      var S = n('ozbf');
+      n.d(t, 'deepClone', function () {
         return S['a'];
+      });
+      n('svPo');
+      var x = n('kb9T');
+      n.d(t, 'allowScrollOnElement', function () {
+        return x['a'];
       }),
         n.d(t, 'disableBodyScroll', function () {
-          return S['b'];
+          return x['b'];
         }),
         n.d(t, 'enableBodyScroll', function () {
-          return S['c'];
-        }),
-        n.d(t, 'findScrollableParent', function () {
-          return S['d'];
-        }),
-        n.d(t, 'getScrollTop', function () {
-          return S['e'];
-        }),
-        n.d(t, 'getScrollbarWidth', function () {
-          return S['f'];
-        }),
-        n.d(t, 'setScrollTop', function () {
-          return S['g'];
-        });
-      var x = n('R0Fw');
-      n.d(t, 'capitalize', function () {
-        return x['b'];
-      }),
-        n.d(t, 'padZero', function () {
           return x['c'];
         }),
-        n.d(t, 'upperFirst', function () {
+        n.d(t, 'findScrollableParent', function () {
           return x['d'];
+        }),
+        n.d(t, 'getScrollTop', function () {
+          return x['e'];
+        }),
+        n.d(t, 'getScrollbarWidth', function () {
+          return x['f'];
+        }),
+        n.d(t, 'setScrollTop', function () {
+          return x['g'];
         });
-      var O = n('rAVa');
+      var O = n('R0Fw');
+      n.d(t, 'capitalize', function () {
+        return O['b'];
+      }),
+        n.d(t, 'padZero', function () {
+          return O['c'];
+        }),
+        n.d(t, 'upperFirst', function () {
+          return O['d'];
+        });
+      var _ = n('rAVa');
       n.d(t, 'isHidden', function () {
-        return O['a'];
-      });
-      n('SWSs');
-      var _ = n('aj3v');
-      n.d(t, 'unitToPx', function () {
         return _['a'];
       });
-      var j = n('errf');
-      n.d(t, 'isDate', function () {
+      n('SWSs');
+      var j = n('aj3v');
+      n.d(t, 'unitToPx', function () {
         return j['a'];
+      });
+      var P = n('errf');
+      n.d(t, 'isDate', function () {
+        return P['a'];
       }),
         n.d(t, 'isObject', function () {
-          return j['e'];
+          return P['e'];
         }),
         n.d(t, 'isPromise', function () {
-          return j['f'];
+          return P['f'];
         });
-      var P = n('uK5r');
+      var I = n('uK5r');
       n.d(t, 'warn', function () {
-        return P['a'];
+        return I['a'];
       });
     },
     ChYo: function (e, t, n) {
@@ -3115,13 +3151,13 @@
         return Ce;
       }),
         n.d(t, 'b', function () {
-          return Ae;
+          return ke;
         }),
         n.d(t, 'd', function () {
           return D;
         }),
         n.d(t, 'c', function () {
-          return ke;
+          return Ae;
         });
       var r = '\\ud800-\\udfff',
         o = '\\u0300-\\u036f',
@@ -3168,27 +3204,27 @@
       function C(e) {
         return j(e) ? T(e) : P(e);
       }
-      function A(e, t, n) {
+      function k(e, t, n) {
         var r = e.length;
         return (n = void 0 === n ? r : n), !t && n >= r ? e : e.slice(t, n);
       }
-      function k(e) {
+      function A(e) {
         return (t) => {
           if (!t) return '';
           var n = j(t) ? C(t) : void 0,
             r = n ? n[0] : t[0],
-            o = n ? A(n, 1).join('') : t.slice(1);
+            o = n ? k(n, 1).join('') : t.slice(1);
           return r[e]() + o;
         };
       }
-      var D = k('toUpperCase'),
+      var D = A('toUpperCase'),
         R = '\\ud800-\\udfff',
         F = '\\u0300-\\u036f',
         W = '\\ufe20-\\ufe2f',
         M = '\\u20d0-\\u20ff',
         N = '\\u1ab0-\\u1aff',
-        B = '\\u1dc0-\\u1dff',
-        L = F + W + M + N + B,
+        L = '\\u1dc0-\\u1dff',
+        B = F + W + M + N + L,
         H = '\\u2700-\\u27bf',
         z = 'a-z\\xdf-\\xf6\\xf8-\\xff',
         Z = '\\xac\\xb1\\xd7\\xf7',
@@ -3196,29 +3232,29 @@
         U = '\\u2000-\\u206f',
         q =
           ' \\t\\x0b\\f\\xa0\\ufeff\\n\\r\\u2028\\u2029\\u1680\\u180e\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200a\\u202f\\u205f\\u3000',
-        Y = 'A-Z\\xc0-\\xd6\\xd8-\\xde',
-        Q = '\\ufe0e\\ufe0f',
+        Q = 'A-Z\\xc0-\\xd6\\xd8-\\xde',
+        Y = '\\ufe0e\\ufe0f',
         K = Z + V + U + q,
         J = "['\u2019]",
         X = '['.concat(K, ']'),
-        $ = '['.concat(L, ']'),
+        $ = '['.concat(B, ']'),
         G = '\\d',
         ee = '['.concat(H, ']'),
         te = '['.concat(z, ']'),
-        ne = '[^'.concat(R).concat(K + G + H + z + Y, ']'),
+        ne = '[^'.concat(R).concat(K + G + H + z + Q, ']'),
         re = '\\ud83c[\\udffb-\\udfff]',
         oe = '(?:'.concat($, '|').concat(re, ')'),
         ie = '[^'.concat(R, ']'),
         ue = '(?:\\ud83c[\\udde6-\\uddff]){2}',
         ae = '[\\ud800-\\udbff][\\udc00-\\udfff]',
-        ce = '['.concat(Y, ']'),
+        ce = '['.concat(Q, ']'),
         le = '\\u200d',
         se = '(?:'.concat(te, '|').concat(ne, ')'),
         de = '(?:'.concat(ce, '|').concat(ne, ')'),
         fe = '(?:'.concat(J, '(?:d|ll|m|re|s|t|ve))?'),
         ve = '(?:'.concat(J, '(?:D|LL|M|RE|S|T|VE))?'),
         he = ''.concat(oe, '?'),
-        me = '['.concat(Q, ']?'),
+        me = '['.concat(Y, ']?'),
         pe = '(?:'
           .concat(le, '(?:')
           .concat([ie, ue, ae].join('|'), ')')
@@ -3281,9 +3317,9 @@
             (e, t, n) => ((t = t.toLowerCase()), e + (n ? D(t) : t)),
             '',
           ),
-        Ae = (e) => D(Te(e).toLowerCase());
+        ke = (e) => D(Te(e).toLowerCase());
       parseInt;
-      function ke(e) {
+      function Ae(e) {
         var t =
             arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 2,
           n = e + '';

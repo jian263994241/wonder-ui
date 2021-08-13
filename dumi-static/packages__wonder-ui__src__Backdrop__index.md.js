@@ -19,8 +19,8 @@
           s =
             arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {},
           p = 0,
-          c = !1,
           u = !1,
+          c = !1,
           f = !0,
           m =
             !l && 0 !== l && 'function' === typeof window.requestAnimationFrame;
@@ -40,18 +40,18 @@
           clearTimeout(e);
         }
         function H(e) {
-          return (p = e), (o = E(b, l)), c ? y(e) : a;
+          return (p = e), (o = E(b, l)), u ? y(e) : a;
         }
         function h(e) {
           var t = e - d,
             n = e - p,
             i = l - t;
-          return u ? Math.min(i, r - n) : i;
+          return c ? Math.min(i, r - n) : i;
         }
         function g(e) {
           var t = e - d,
             n = e - p;
-          return void 0 === d || t >= l || t < 0 || (u && n >= r);
+          return void 0 === d || t >= l || t < 0 || (c && n >= r);
         }
         function b() {
           var e = Date.now();
@@ -83,16 +83,16 @@
             s[p] = arguments[p];
           if (((t = s), (n = this), (d = e), i)) {
             if (void 0 === o) return H(d);
-            if (u) return (o = E(b, l)), y(d);
+            if (c) return (o = E(b, l)), y(d);
           }
           return void 0 === o && (o = E(b, l)), a;
         }
         return (
           (l = +(l || 0)),
           Object(i['e'])(s) &&
-            ((c = !!s.leading),
-            (u = 'maxWait' in s),
-            (r = u ? Math.max(+(s.maxWait || 0), l) : r),
+            ((u = !!s.leading),
+            (c = 'maxWait' in s),
+            (r = c ? Math.max(+(s.maxWait || 0), l) : r),
             (f = 'trailing' in s ? !!s.trailing : f)),
           (D.cancel = L),
           (D.flush = T),
@@ -132,8 +132,8 @@
               if (s)
                 for (var p in s)
                   if (s.hasOwnProperty(p))
-                    for (var c = s[p], u = 0; !1 !== a && u < c.length; u++) {
-                      var f = c[u];
+                    for (var u = s[p], c = 0; !1 !== a && c < u.length; c++) {
+                      var f = u[c];
                       f.objectCallback &&
                         (a = f.objectCallback.call(f.parent, n));
                     }
@@ -196,7 +196,7 @@
               p[t].count++,
               i._isElement(e))
             ) {
-              var c = function () {
+              var u = function () {
                 if (!a._isDisposed) {
                   var e;
                   try {
@@ -216,12 +216,12 @@
                   return e;
                 }
               };
-              (s.elementCallback = c),
+              (s.elementCallback = u),
                 e.addEventListener
-                  ? e.addEventListener(t, c, r)
-                  : e.attachEvent && e.attachEvent('on' + t, c);
+                  ? e.addEventListener(t, u, r)
+                  : e.attachEvent && e.attachEvent('on' + t, u);
             } else {
-              var u = function () {
+              var c = function () {
                 if (!a._isDisposed) {
                   for (
                     var e = arguments.length, t = new Array(e), i = 0;
@@ -232,7 +232,7 @@
                   return n.apply(l, t);
                 }
               };
-              s.objectCallback = u;
+              s.objectCallback = c;
             }
             this._eventRecords.push(s);
           }
@@ -310,8 +310,8 @@
           l = e.props,
           s = Object(a['useApiData'])(t),
           p = Object(i['useContext'])(a['context']),
-          c = p.locale,
-          u = /^zh|cn$/i.test(c) ? d['zh-CN'] : d['en-US'],
+          u = p.locale,
+          c = /^zh|cn$/i.test(u) ? d['zh-CN'] : d['en-US'],
           f = r.a.useRef(null),
           m = Object(o['b'])(() => ('string' === typeof l ? l.split('|') : []));
         return (
@@ -338,14 +338,14 @@
                     r.a.createElement(
                       'th',
                       { style: { width: '12%' } },
-                      u.name,
+                      c.name,
                     ),
-                    r.a.createElement('th', null, u.description),
-                    r.a.createElement('th', null, u.type),
+                    r.a.createElement('th', null, c.description),
+                    r.a.createElement('th', null, c.type),
                     r.a.createElement(
                       'th',
                       { style: { width: '10%' } },
-                      u.default,
+                      c.default,
                     ),
                   ),
                 ),
@@ -367,7 +367,7 @@
                           r.a.createElement(
                             'td',
                             null,
-                            e.default || (e.required && u.required) || '-',
+                            e.default || (e.required && c.required) || '-',
                           ),
                         )
                       : null,
@@ -485,6 +485,34 @@
         d(e, 'click');
       }
     },
+    '9CgO': function (e, t, n) {
+      'use strict';
+      n.d(t, 'a', function () {
+        return i;
+      });
+      class i {
+        constructor() {
+          (this.modalStack = void 0),
+            (this.modalLock = !1),
+            (this.addQueue = (e) => {
+              if (this.modalLock) return this.modalStack.push(e), !0;
+            }),
+            (this.modalStackClearQueue = () => {
+              this.modalLock = !1;
+              var e = this.modalStack.shift();
+              e && setTimeout(() => this.run(e), 0);
+            }),
+            (this.run = (e) => {
+              if (this.addQueue(e)) return !0;
+              (this.modalLock = !0), e(this.modalStackClearQueue);
+            }),
+            (this.reset = () => {
+              (this.modalLock = !1), (this.modalStack = []);
+            }),
+            (this.modalStack = []);
+        }
+      }
+    },
     A91U: function (e, t, n) {
       'use strict';
       n.d(t, 'a', function () {
@@ -596,10 +624,10 @@
           return pe;
         }),
         n.d(t, 'u', function () {
-          return ce;
+          return ue;
         }),
         n.d(t, 'C', function () {
-          return ue;
+          return ce;
         });
       var i = n('q1tI'),
         r = n('Bu8g');
@@ -663,7 +691,7 @@
           p = i['useCallback'](() => a(!1), []);
         return [r, { toggle: o, setTrue: l, setFalse: p }];
       }
-      function c(e, t) {
+      function u(e, t) {
         return e
           ? ((n =
               'function' === typeof e ? e() : 'current' in e ? e.current : e),
@@ -671,10 +699,10 @@
           : t;
         var n;
       }
-      var u = 'click';
+      var c = 'click';
       function f(e, t) {
         var n =
-            arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : u,
+            arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : c,
           a = i['useRef'](e);
         (a.current = e),
           i['useEffect'](() => {
@@ -682,7 +710,7 @@
                 var n = Array.isArray(t) ? t : [t];
                 n.some((t) => {
                   var n,
-                    i = c(t);
+                    i = u(t);
                   return (
                     !!i &&
                     ((n = e.composedPath
@@ -721,11 +749,11 @@
           o = Object(d['a'])(a, 2),
           l = o[0],
           p = o[1],
-          c = i ? n : l,
-          u = m((e) => {
+          u = i ? n : l,
+          c = m((e) => {
             i || p(e);
           });
-        return [c, u];
+        return [u, c];
       }
       var E = n('Wgwc'),
         v = n.n(E),
@@ -749,10 +777,10 @@
           o = void 0 === a ? 1e3 : a,
           l = t.onEnd,
           p = void 0 === l ? () => 0 : l,
-          c = s(r),
-          u = Object(d['a'])(c, 2),
-          f = u[0],
-          y = u[1],
+          u = s(r),
+          c = Object(d['a'])(u, 2),
+          f = c[0],
+          y = c[1],
           E = s(() => H(f)),
           v = Object(d['a'])(E, 2),
           g = v[0],
@@ -804,15 +832,15 @@
                 l = a.afterTxt,
                 s = void 0 === l ? '' : l,
                 p = a.start,
-                c = i.length;
-              if (i.endsWith(s)) c = i.length - s.length;
-              else if (i.startsWith(d)) c = d.length;
+                u = i.length;
+              if (i.endsWith(s)) u = i.length - s.length;
+              else if (i.startsWith(d)) u = d.length;
               else {
-                var u = d[p - 1],
-                  f = i.indexOf(u, p - 1);
-                -1 !== f && (c = f + 1);
+                var c = d[p - 1],
+                  f = i.indexOf(c, p - 1);
+                -1 !== f && (u = f + 1);
               }
-              e.setSelectionRange(c, c);
+              e.setSelectionRange(u, u);
             } catch (m) {
               Object(r['warn'])(
                 'Something warning of cursor restore. Please fire issue about this: '.concat(
@@ -896,7 +924,7 @@
           o = Object(d['a'])(a, 2),
           l = o[0],
           p = o[1],
-          c = function () {
+          u = function () {
             var e =
               arguments.length > 0 && void 0 !== arguments[0]
                 ? arguments[0]
@@ -912,7 +940,7 @@
                 ),
               );
           },
-          u = (e, t) => {
+          c = (e, t) => {
             p((n) => {
               var i = [...n];
               return i.splice(e, 0, t), r(e), i;
@@ -995,7 +1023,7 @@
           };
         return {
           list: l,
-          insert: u,
+          insert: c,
           merge: E,
           replace: v,
           remove: H,
@@ -1007,7 +1035,7 @@
           unshift: M,
           shift: T,
           sortForm: L,
-          resetList: c,
+          resetList: u,
         };
       }
       var x = n('k1fw');
@@ -1083,7 +1111,7 @@
       }
       function F(e) {
         var t = s(() => {
-            var t = c(e);
+            var t = u(e);
             return O(t);
           }),
           n = Object(d['a'])(t, 2),
@@ -1091,7 +1119,7 @@
           a = n[1];
         return (
           i['useEffect'](() => {
-            var t = c(e);
+            var t = u(e);
             if (!t) return () => {};
             var n = new IntersectionObserver((e) => {
               var t,
@@ -1223,10 +1251,10 @@
           n.current = !0;
         }, t);
       }
-      function J(e) {
+      function Q(e) {
         return 'function' === typeof e;
       }
-      function Q(e) {
+      function J(e) {
         function t(t, n) {
           var i = e,
             r = s(() => p()),
@@ -1239,28 +1267,28 @@
               try {
                 return JSON.parse(e);
               } catch (r) {}
-            return J(n) ? n() : n;
+            return Q(n) ? n() : n;
           }
           X(() => {
             l(p());
           }, [t]);
-          var c = m((e) => {
+          var u = m((e) => {
             if ('undefined' === typeof e) i.removeItem(t), l(void 0);
-            else if (J(e)) {
+            else if (Q(e)) {
               var n = p(),
                 r = e(n);
               i.setItem(t, JSON.stringify(r)), l(r);
             } else i.setItem(t, JSON.stringify(e)), l(e);
           });
-          return [o, c];
+          return [o, u];
         }
         return e
           ? t
           : function (e) {
-              return [J(e) ? e() : e, () => {}];
+              return [Q(e) ? e() : e, () => {}];
             };
       }
-      var $ = Q;
+      var $ = J;
       $('object' === typeof window ? window.localStorage : null),
         n('9og8'),
         n('WmNS');
@@ -1303,7 +1331,7 @@
               };
             return { isSelected: e, select: t, unSelect: n, toggle: i };
           }, [l]),
-          c = i['useMemo'](() => {
+          u = i['useMemo'](() => {
             var t = () => {
                 e.forEach((e) => {
                   l.add(e);
@@ -1336,13 +1364,13 @@
               toggleAll: d,
             };
           }, [l, e, a]);
-        return Object(x['a'])(Object(x['a'])({ selected: a }, p), c);
+        return Object(x['a'])(Object(x['a'])({ selected: a }, p), u);
       }
-      Q('object' === typeof window ? window.sessionStorage : null);
+      J('object' === typeof window ? window.sessionStorage : null);
       var ie = n('bdgK');
       function re(e) {
         var t = s(() => {
-            var t = c(e);
+            var t = u(e);
             return {
               width: (t || {}).clientWidth,
               height: (t || {}).clientHeight,
@@ -1353,7 +1381,7 @@
           r = n[1];
         return (
           L(() => {
-            var t = c(e);
+            var t = u(e);
             if (!t) return () => {};
             var n = new ie['a']((e) => {
               e.forEach((e) => {
@@ -1399,8 +1427,8 @@
           o = e.type,
           l = void 0 === o ? 'focus' : o,
           s = e.focusElements,
-          c = void 0 === s ? [] : s,
-          u = i['useRef'](null),
+          u = void 0 === s ? [] : s,
+          c = i['useRef'](null),
           m = a(() => Object(r['getSupport'])()),
           y = p(!1),
           E = Object(d['a'])(y, 2),
@@ -1413,13 +1441,13 @@
           L = m.touch ? 'touchend' : 'mouseup',
           T = m.touch ? 'touchend' : 'mouseleave',
           D = (e, t) => {
-            C(u, e, t, { passive: !0 });
+            C(c, e, t, { passive: !0 });
           };
         return (
           'hover' === l && (D('mouseenter', h), D('mouseleave', g)),
           'touch' === l && (D(b, h), D(M, g), D(L, g), D(T, g)),
-          'focus' === l && (D(b, h), f(g, c.concat(u), b)),
-          { targetRef: u, active: !n && v }
+          'focus' === l && (D(b, h), f(g, u.concat(c), b)),
+          { targetRef: c, active: !n && v }
         );
       }
       n('nFlj');
@@ -1430,18 +1458,18 @@
           o = Object(d['a'])(a, 2),
           l = o[0],
           p = o[1],
-          c = t.itemHeight,
-          u = t.overscan,
-          f = void 0 === u ? 5 : u;
-        c || console.warn('please enter a valid itemHeight');
+          u = t.itemHeight,
+          c = t.overscan,
+          f = void 0 === c ? 5 : c;
+        u || console.warn('please enter a valid itemHeight');
         var m = (t) => {
-            if ('number' === typeof c) return Math.ceil(t / c);
+            if ('number' === typeof u) return Math.ceil(t / u);
             for (
               var n = l.start, i = void 0 === n ? 0 : n, r = 0, a = 0, o = i;
               o < e.length;
               o++
             ) {
-              var d = c(o);
+              var d = u(o);
               if (((r += d), r >= t)) {
                 a = o;
                 break;
@@ -1450,9 +1478,9 @@
             return a - i;
           },
           y = (t) => {
-            if ('number' === typeof c) return Math.floor(t / c) + 1;
+            if ('number' === typeof u) return Math.floor(t / u) + 1;
             for (var n = 0, i = 0, r = 0; r < e.length; r++) {
-              var a = c(r);
+              var a = u(r);
               if (((n += a), n >= t)) {
                 i = r;
                 break;
@@ -1475,17 +1503,17 @@
         }, [r.width, r.height]);
         var v = i['useMemo'](
             () =>
-              'number' === typeof c
-                ? e.length * c
-                : e.reduce((e, t, n) => e + c(n), 0),
+              'number' === typeof u
+                ? e.length * u
+                : e.reduce((e, t, n) => e + u(n), 0),
             [e.length],
           ),
           H = (t) => {
-            if ('number' === typeof c) {
-              var n = t * c;
+            if ('number' === typeof u) {
+              var n = t * u;
               return n;
             }
-            var i = e.slice(0, t).reduce((e, t, n) => e + c(n), 0);
+            var i = e.slice(0, t).reduce((e, t, n) => e + u(n), 0);
             return i;
           },
           h = (e) => {
@@ -1536,12 +1564,12 @@
               (o.current = 0),
               (d.current = void 0);
           },
-          c = (n) => {
+          u = (n) => {
             p(),
               (e.current = n.touches[0].clientX),
               (t.current = n.touches[0].clientY);
           },
-          u = (i) => {
+          c = (i) => {
             var l = i.touches[0];
             (n.current = l.clientX < 0 ? 0 : l.clientX - e.current),
               (r.current = l.clientY - t.current),
@@ -1550,8 +1578,8 @@
               d.current || (d.current = se(a.current, o.current));
           };
         return {
-          move: u,
-          start: c,
+          move: c,
+          start: u,
           reset: p,
           startX: e,
           startY: t,
@@ -1564,7 +1592,7 @@
           isHorizontal: s,
         };
       }
-      function ce(e, t) {
+      function ue(e, t) {
         var n = i['useRef']();
         return (
           ee(() => {
@@ -1577,7 +1605,7 @@
           n
         );
       }
-      function ue() {
+      function ce() {
         var e = Object(r['getWindow'])(),
           t = s({ width: e.innerWidth || 0, height: e.innerHeight || 0 }),
           n = Object(d['a'])(t, 2),
@@ -1603,10 +1631,14 @@
       });
       n('JRFm'), n('0D7Y');
       var r = n('W7Nk');
-      n.o(r, 'KeyCodes') &&
-        n.d(t, 'KeyCodes', function () {
-          return r['KeyCodes'];
+      n.o(r, 'DialogManager') &&
+        n.d(t, 'DialogManager', function () {
+          return r['DialogManager'];
         }),
+        n.o(r, 'KeyCodes') &&
+          n.d(t, 'KeyCodes', function () {
+            return r['KeyCodes'];
+          }),
         n.o(r, 'allowScrollOnElement') &&
           n.d(t, 'allowScrollOnElement', function () {
             return r['allowScrollOnElement'];
@@ -1876,13 +1908,13 @@
           return p['b'];
         });
       n('Dvvy');
-      var c = n('rQGm');
+      var u = n('rQGm');
       n.d(t, 'css', function () {
-        return c['a'];
-      });
-      var u = n('/3eQ');
-      n.d(t, 'debounce', function () {
         return u['a'];
+      });
+      var c = n('/3eQ');
+      n.d(t, 'debounce', function () {
+        return c['a'];
       });
       var f = n('K2Yx');
       n.d(t, 'getDevice', function () {
@@ -1891,277 +1923,281 @@
         n.d(t, 'getSupport', function () {
           return f['b'];
         });
-      var m = n('Pn2d');
-      n.o(m, 'allowScrollOnElement') &&
+      var m = n('9CgO');
+      n.d(t, 'DialogManager', function () {
+        return m['a'];
+      });
+      var y = n('Pn2d');
+      n.o(y, 'allowScrollOnElement') &&
         n.d(t, 'allowScrollOnElement', function () {
-          return m['allowScrollOnElement'];
+          return y['allowScrollOnElement'];
         }),
-        n.o(m, 'capitalize') &&
+        n.o(y, 'capitalize') &&
           n.d(t, 'capitalize', function () {
-            return m['capitalize'];
+            return y['capitalize'];
           }),
-        n.o(m, 'clamp') &&
+        n.o(y, 'clamp') &&
           n.d(t, 'clamp', function () {
-            return m['clamp'];
+            return y['clamp'];
           }),
-        n.o(m, 'createId') &&
+        n.o(y, 'createId') &&
           n.d(t, 'createId', function () {
-            return m['createId'];
+            return y['createId'];
           }),
-        n.o(m, 'deepClone') &&
+        n.o(y, 'deepClone') &&
           n.d(t, 'deepClone', function () {
-            return m['deepClone'];
+            return y['deepClone'];
           }),
-        n.o(m, 'disableBodyScroll') &&
+        n.o(y, 'disableBodyScroll') &&
           n.d(t, 'disableBodyScroll', function () {
-            return m['disableBodyScroll'];
+            return y['disableBodyScroll'];
           }),
-        n.o(m, 'elementContains') &&
+        n.o(y, 'elementContains') &&
           n.d(t, 'elementContains', function () {
-            return m['elementContains'];
+            return y['elementContains'];
           }),
-        n.o(m, 'enableBodyScroll') &&
+        n.o(y, 'enableBodyScroll') &&
           n.d(t, 'enableBodyScroll', function () {
-            return m['enableBodyScroll'];
+            return y['enableBodyScroll'];
           }),
-        n.o(m, 'findScrollableParent') &&
+        n.o(y, 'findScrollableParent') &&
           n.d(t, 'findScrollableParent', function () {
-            return m['findScrollableParent'];
+            return y['findScrollableParent'];
           }),
-        n.o(m, 'forwardRef') &&
+        n.o(y, 'forwardRef') &&
           n.d(t, 'forwardRef', function () {
-            return m['forwardRef'];
+            return y['forwardRef'];
           }),
-        n.o(m, 'getDocument') &&
+        n.o(y, 'getDocument') &&
           n.d(t, 'getDocument', function () {
-            return m['getDocument'];
+            return y['getDocument'];
           }),
-        n.o(m, 'getElementIndexPath') &&
+        n.o(y, 'getElementIndexPath') &&
           n.d(t, 'getElementIndexPath', function () {
-            return m['getElementIndexPath'];
+            return y['getElementIndexPath'];
           }),
-        n.o(m, 'getFocusableByIndexPath') &&
+        n.o(y, 'getFocusableByIndexPath') &&
           n.d(t, 'getFocusableByIndexPath', function () {
-            return m['getFocusableByIndexPath'];
+            return y['getFocusableByIndexPath'];
           }),
-        n.o(m, 'getNextElement') &&
+        n.o(y, 'getNextElement') &&
           n.d(t, 'getNextElement', function () {
-            return m['getNextElement'];
+            return y['getNextElement'];
           }),
-        n.o(m, 'getParent') &&
+        n.o(y, 'getParent') &&
           n.d(t, 'getParent', function () {
-            return m['getParent'];
+            return y['getParent'];
           }),
-        n.o(m, 'getPreviousElement') &&
+        n.o(y, 'getPreviousElement') &&
           n.d(t, 'getPreviousElement', function () {
-            return m['getPreviousElement'];
+            return y['getPreviousElement'];
           }),
-        n.o(m, 'getRect') &&
+        n.o(y, 'getRect') &&
           n.d(t, 'getRect', function () {
-            return m['getRect'];
+            return y['getRect'];
           }),
-        n.o(m, 'getScrollParent') &&
+        n.o(y, 'getScrollParent') &&
           n.d(t, 'getScrollParent', function () {
-            return m['getScrollParent'];
+            return y['getScrollParent'];
           }),
-        n.o(m, 'getScrollTop') &&
+        n.o(y, 'getScrollTop') &&
           n.d(t, 'getScrollTop', function () {
-            return m['getScrollTop'];
+            return y['getScrollTop'];
           }),
-        n.o(m, 'getScrollbarWidth') &&
+        n.o(y, 'getScrollbarWidth') &&
           n.d(t, 'getScrollbarWidth', function () {
-            return m['getScrollbarWidth'];
+            return y['getScrollbarWidth'];
           }),
-        n.o(m, 'getWindow') &&
+        n.o(y, 'getWindow') &&
           n.d(t, 'getWindow', function () {
-            return m['getWindow'];
+            return y['getWindow'];
           }),
-        n.o(m, 'hoistStatics') &&
+        n.o(y, 'hoistStatics') &&
           n.d(t, 'hoistStatics', function () {
-            return m['hoistStatics'];
+            return y['hoistStatics'];
           }),
-        n.o(m, 'isDate') &&
+        n.o(y, 'isDate') &&
           n.d(t, 'isDate', function () {
-            return m['isDate'];
+            return y['isDate'];
           }),
-        n.o(m, 'isElementFocusSubZone') &&
+        n.o(y, 'isElementFocusSubZone') &&
           n.d(t, 'isElementFocusSubZone', function () {
-            return m['isElementFocusSubZone'];
+            return y['isElementFocusSubZone'];
           }),
-        n.o(m, 'isElementFocusZone') &&
+        n.o(y, 'isElementFocusZone') &&
           n.d(t, 'isElementFocusZone', function () {
-            return m['isElementFocusZone'];
+            return y['isElementFocusZone'];
           }),
-        n.o(m, 'isElementTabbable') &&
+        n.o(y, 'isElementTabbable') &&
           n.d(t, 'isElementTabbable', function () {
-            return m['isElementTabbable'];
+            return y['isElementTabbable'];
           }),
-        n.o(m, 'isHidden') &&
+        n.o(y, 'isHidden') &&
           n.d(t, 'isHidden', function () {
-            return m['isHidden'];
+            return y['isHidden'];
           }),
-        n.o(m, 'isObject') &&
+        n.o(y, 'isObject') &&
           n.d(t, 'isObject', function () {
-            return m['isObject'];
+            return y['isObject'];
           }),
-        n.o(m, 'isPromise') &&
+        n.o(y, 'isPromise') &&
           n.d(t, 'isPromise', function () {
-            return m['isPromise'];
+            return y['isPromise'];
           }),
-        n.o(m, 'nextTick') &&
+        n.o(y, 'nextTick') &&
           n.d(t, 'nextTick', function () {
-            return m['nextTick'];
+            return y['nextTick'];
           }),
-        n.o(m, 'noop') &&
+        n.o(y, 'noop') &&
           n.d(t, 'noop', function () {
-            return m['noop'];
+            return y['noop'];
           }),
-        n.o(m, 'on') &&
+        n.o(y, 'on') &&
           n.d(t, 'on', function () {
-            return m['on'];
+            return y['on'];
           }),
-        n.o(m, 'padZero') &&
+        n.o(y, 'padZero') &&
           n.d(t, 'padZero', function () {
-            return m['padZero'];
+            return y['padZero'];
           }),
-        n.o(m, 'portalContainsElement') &&
+        n.o(y, 'portalContainsElement') &&
           n.d(t, 'portalContainsElement', function () {
-            return m['portalContainsElement'];
+            return y['portalContainsElement'];
           }),
-        n.o(m, 'preventDefault') &&
+        n.o(y, 'preventDefault') &&
           n.d(t, 'preventDefault', function () {
-            return m['preventDefault'];
+            return y['preventDefault'];
           }),
-        n.o(m, 'raiseClick') &&
+        n.o(y, 'raiseClick') &&
           n.d(t, 'raiseClick', function () {
-            return m['raiseClick'];
+            return y['raiseClick'];
           }),
-        n.o(m, 'setScrollTop') &&
+        n.o(y, 'setScrollTop') &&
           n.d(t, 'setScrollTop', function () {
-            return m['setScrollTop'];
+            return y['setScrollTop'];
           }),
-        n.o(m, 'shouldWrapFocus') &&
+        n.o(y, 'shouldWrapFocus') &&
           n.d(t, 'shouldWrapFocus', function () {
-            return m['shouldWrapFocus'];
+            return y['shouldWrapFocus'];
           }),
-        n.o(m, 'unitToPx') &&
+        n.o(y, 'unitToPx') &&
           n.d(t, 'unitToPx', function () {
-            return m['unitToPx'];
+            return y['unitToPx'];
           }),
-        n.o(m, 'upperFirst') &&
+        n.o(y, 'upperFirst') &&
           n.d(t, 'upperFirst', function () {
-            return m['upperFirst'];
+            return y['upperFirst'];
           }),
-        n.o(m, 'warn') &&
+        n.o(y, 'warn') &&
           n.d(t, 'warn', function () {
-            return m['warn'];
+            return y['warn'];
           });
-      var y = n('ChYo');
+      var E = n('ChYo');
       n.d(t, 'getElementIndexPath', function () {
-        return y['a'];
+        return E['a'];
       }),
         n.d(t, 'getFocusableByIndexPath', function () {
-          return y['b'];
+          return E['b'];
         }),
         n.d(t, 'getNextElement', function () {
-          return y['c'];
+          return E['c'];
         }),
         n.d(t, 'getPreviousElement', function () {
-          return y['d'];
+          return E['d'];
         }),
         n.d(t, 'isElementFocusSubZone', function () {
-          return y['e'];
+          return E['e'];
         }),
         n.d(t, 'isElementFocusZone', function () {
-          return y['f'];
+          return E['f'];
         }),
         n.d(t, 'isElementTabbable', function () {
-          return y['g'];
+          return E['g'];
         }),
         n.d(t, 'shouldWrapFocus', function () {
-          return y['h'];
+          return E['h'];
         });
-      var E = n('loQL');
+      var v = n('loQL');
       n.d(t, 'forwardRef', function () {
-        return E['a'];
-      });
-      n('Nht4');
-      var v = n('gcMD');
-      n.d(t, 'hoistStatics', function () {
         return v['a'];
       });
-      var H = n('QfVf');
-      n.d(t, 'createId', function () {
+      n('Nht4');
+      var H = n('gcMD');
+      n.d(t, 'hoistStatics', function () {
         return H['a'];
       });
-      n('cL9e'), n('XtT8'), n('E+oR');
-      var h = n('H4hf');
-      n.d(t, 'noop', function () {
+      var h = n('QfVf');
+      n.d(t, 'createId', function () {
         return h['a'];
       });
-      var g = n('ygrP');
-      n.d(t, 'clamp', function () {
+      n('cL9e'), n('XtT8'), n('E+oR');
+      var g = n('H4hf');
+      n.d(t, 'noop', function () {
         return g['a'];
       });
-      var b = n('ozbf');
-      n.d(t, 'deepClone', function () {
+      var b = n('ygrP');
+      n.d(t, 'clamp', function () {
         return b['a'];
       });
-      n('svPo');
-      var M = n('kb9T');
-      n.d(t, 'allowScrollOnElement', function () {
+      var M = n('ozbf');
+      n.d(t, 'deepClone', function () {
         return M['a'];
+      });
+      n('svPo');
+      var L = n('kb9T');
+      n.d(t, 'allowScrollOnElement', function () {
+        return L['a'];
       }),
         n.d(t, 'disableBodyScroll', function () {
-          return M['b'];
+          return L['b'];
         }),
         n.d(t, 'enableBodyScroll', function () {
-          return M['c'];
-        }),
-        n.d(t, 'findScrollableParent', function () {
-          return M['d'];
-        }),
-        n.d(t, 'getScrollTop', function () {
-          return M['e'];
-        }),
-        n.d(t, 'getScrollbarWidth', function () {
-          return M['f'];
-        }),
-        n.d(t, 'setScrollTop', function () {
-          return M['g'];
-        });
-      var L = n('R0Fw');
-      n.d(t, 'capitalize', function () {
-        return L['b'];
-      }),
-        n.d(t, 'padZero', function () {
           return L['c'];
         }),
-        n.d(t, 'upperFirst', function () {
+        n.d(t, 'findScrollableParent', function () {
           return L['d'];
+        }),
+        n.d(t, 'getScrollTop', function () {
+          return L['e'];
+        }),
+        n.d(t, 'getScrollbarWidth', function () {
+          return L['f'];
+        }),
+        n.d(t, 'setScrollTop', function () {
+          return L['g'];
         });
-      var T = n('rAVa');
+      var T = n('R0Fw');
+      n.d(t, 'capitalize', function () {
+        return T['b'];
+      }),
+        n.d(t, 'padZero', function () {
+          return T['c'];
+        }),
+        n.d(t, 'upperFirst', function () {
+          return T['d'];
+        });
+      var C = n('rAVa');
       n.d(t, 'isHidden', function () {
-        return T['a'];
-      });
-      n('SWSs');
-      var C = n('aj3v');
-      n.d(t, 'unitToPx', function () {
         return C['a'];
       });
-      var D = n('errf');
-      n.d(t, 'isDate', function () {
+      n('SWSs');
+      var D = n('aj3v');
+      n.d(t, 'unitToPx', function () {
         return D['a'];
+      });
+      var w = n('errf');
+      n.d(t, 'isDate', function () {
+        return w['a'];
       }),
         n.d(t, 'isObject', function () {
-          return D['e'];
+          return w['e'];
         }),
         n.d(t, 'isPromise', function () {
-          return D['f'];
+          return w['f'];
         });
-      var w = n('uK5r');
+      var I = n('uK5r');
       n.d(t, 'warn', function () {
-        return w['a'];
+        return I['a'];
       });
     },
     ChYo: function (e, t, n) {
@@ -2173,7 +2209,7 @@
           return p;
         }),
         n.d(t, 'g', function () {
-          return u;
+          return c;
         }),
         n.d(t, 'f', function () {
           return f;
@@ -2198,11 +2234,11 @@
         l = 'data-is-sub-focuszone';
       function s(e, t, n, i, r, a, o, d) {
         if (!t || (!o && t === e)) return null;
-        var l = c(t);
+        var l = u(t);
         if (r && l && (a || (!f(t) && !m(t)))) {
           var p = s(e, t.lastElementChild, !0, !0, !0, a, o, d);
           if (p) {
-            if ((d && u(p, !0)) || !d) return p;
+            if ((d && c(p, !0)) || !d) return p;
             var y = s(e, p.previousElementSibling, !0, !0, !0, a, o, d);
             if (y) return y;
             var E = p.parentElement;
@@ -2213,14 +2249,14 @@
             }
           }
         }
-        if (n && l && u(t, d)) return t;
+        if (n && l && c(t, d)) return t;
         var H = s(e, t.previousElementSibling, !0, !0, !0, a, o, d);
         return H || (i ? null : s(e, t.parentElement, !0, !1, !1, a, o, d));
       }
       function p(e, t, n, i, r, a, o, d) {
         if (!t || (t === e && r && !o)) return null;
-        var l = c(t);
-        if (n && l && u(t, d)) return t;
+        var l = u(t);
+        if (n && l && c(t, d)) return t;
         if (!r && l && (a || (!f(t) && !m(t)))) {
           var s = p(e, t.firstElementChild, !0, !0, !1, a, o, d);
           if (s) return s;
@@ -2229,7 +2265,7 @@
         var y = p(e, t.nextElementSibling, !0, !0, !1, a, o, d);
         return y || (i ? null : p(e, t.parentElement, !1, !1, !0, a, o, d));
       }
-      function c(e) {
+      function u(e) {
         if (!e || !e.getAttribute) return !1;
         var t = e.getAttribute(o);
         return null !== t && void 0 !== t
@@ -2238,7 +2274,7 @@
               null !== e.offsetParent ||
               !0 === e.isVisible;
       }
-      function u(e, t) {
+      function c(e, t) {
         if (!e || e.disabled) return !1;
         var n = 0,
           i = null;
@@ -2284,7 +2320,7 @@
         } finally {
           a.f();
         }
-        return (r = u(r) && c(r) ? r : p(e, r, !0) || s(e, r)), r;
+        return (r = c(r) && u(r) ? r : p(e, r, !0) || s(e, r)), r;
       }
       function v(e, t) {
         var n = [];
@@ -2392,9 +2428,9 @@
           "import { ArrowUp } from '@wonder-ui/icons';\nimport { BackTop, IconButton, useTheme } from '@wonder-ui/core';\n\nexport default () => {\n  const theme = useTheme();\n  return (\n    <div>\n      \u6309\u94ae\u51fa\u73b0\u5728\u53f3\u4e0b\u89d2\n      <BackTop style={{ bottom: 30 }}>\n        <IconButton\n          style={{\n            backgroundColor: theme.palette.colors.blue.A200,\n            color: '#fff'\n          }}\n        >\n          <ArrowUp />\n        </IconButton>\n      </BackTop>\n    </div>\n  );\n};",
         p =
           'import { Button, Backdrop, CircularProgress, useTheme } from \'@wonder-ui/core\';\nimport { useToggle } from \'@wonder-ui/hooks\';\n\nexport default () => {\n  const theme = useTheme();\n  const [visible, { toggle }] = useToggle();\n\n  return (\n    <div>\n      <Button onClick={() => toggle()} variant="contained">\n        Show Backdrop\n      </Button>\n\n      <Backdrop\n        visible={visible}\n        onClick={() => toggle()}\n        style={{ zIndex: theme.zIndex.fixed }}\n      >\n        <CircularProgress color="light" />\n      </Backdrop>\n    </div>\n  );\n};',
-        c =
-          'import { Badge, Typography } from \'@wonder-ui/core\';\n\nexport default () => (\n  <div>\n    <Typography variant="h1" gutterBottom>\n      Example heading <Badge color="secondary" text="New" />\n    </Typography>\n    <Typography variant="h2" gutterBottom>\n      Example heading <Badge color="secondary" text="New" />\n    </Typography>\n    <Typography variant="h3" gutterBottom>\n      Example heading <Badge color="secondary" text="New" />\n    </Typography>\n    <Typography variant="h4" gutterBottom>\n      Example heading <Badge color="secondary" text="New" />\n    </Typography>\n    <Typography variant="h5" gutterBottom>\n      Example heading <Badge color="secondary" text="New" />\n    </Typography>\n    <Typography variant="h6">\n      Example heading <Badge color="secondary" text="New" />\n    </Typography>\n  </div>\n);',
         u =
+          'import { Badge, Typography } from \'@wonder-ui/core\';\n\nexport default () => (\n  <div>\n    <Typography variant="h1" gutterBottom>\n      Example heading <Badge color="secondary" text="New" />\n    </Typography>\n    <Typography variant="h2" gutterBottom>\n      Example heading <Badge color="secondary" text="New" />\n    </Typography>\n    <Typography variant="h3" gutterBottom>\n      Example heading <Badge color="secondary" text="New" />\n    </Typography>\n    <Typography variant="h4" gutterBottom>\n      Example heading <Badge color="secondary" text="New" />\n    </Typography>\n    <Typography variant="h5" gutterBottom>\n      Example heading <Badge color="secondary" text="New" />\n    </Typography>\n    <Typography variant="h6">\n      Example heading <Badge color="secondary" text="New" />\n    </Typography>\n  </div>\n);',
+        c =
           'import { Badge, Button } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Button variant="contained">\n    Notifications\n    <Badge style={{ marginLeft: 3 }} color="light" text="1" />\n  </Button>\n);',
         f =
           'import { Badge, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space>\n    <Badge color="primary" text="primary" />\n    <Badge color="secondary" text="secondary" />\n    <Badge color="success" text="success" />\n    <Badge color="danger" text="danger" />\n    <Badge color="warning" text="warning" />\n    <Badge color="info" text="info" />\n    <Badge color="light" text="light" />\n    <Badge color="dark" text="dark" />\n  </Space>\n);',
@@ -2452,13 +2488,13 @@
         V =
           "import { TimePicker, TimePickerProps, withDialog } from '@wonder-ui/core';\nimport dayjs from 'dayjs';\n\nconst formatter: TimePickerProps['formatter'] = (type, value) => {\n  return type === 'hour' ? `${value}\u65f6` : `${value}\u5206`;\n};\n\nexport default withDialog(({ dialog }) => (\n  <TimePicker\n    formatter={formatter}\n    currentTime={dayjs().format('HH:mm')}\n    // onChange={(value) => dialog.toast(value)}\n    onConfirm={(value) => dialog.toast(value)}\n  />\n));",
         U =
-          'import {\n  Button,\n  Container,\n  Dialog,\n  Page,\n  Space,\n  WhiteSpace\n} from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page title="Dialog">\n    <WhiteSpace />\n    <Container>\n      <Space>\n        <Dialog\n          title="\u6807\u9898"\n          text="\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9..."\n          buttons={[\n            {\n              text: \'\u53d6\u6d88\'\n            },\n            {\n              text: \'\u597d\u7684\',\n              primary: true\n            }\n          ]}\n        >\n          <Button variant="contained">\u63d0\u793a\u6846(\u6587\u5b57)</Button>\n        </Dialog>\n        <Dialog\n          title="\u6807\u9898"\n          content={\n            <div>\n              <img\n                src="https://img.99bill.com/z/img/new-pos.png"\n                width={260}\n                height={260}\n                alt="img"\n              />\n            </div>\n          }\n          buttons={[\n            {\n              text: \'\u77e5\u9053\u5566!\',\n              primary: true\n            }\n          ]}\n        >\n          <Button variant="contained">\u63d0\u793a\u6846(\u56fe\u7247)</Button>\n        </Dialog>\n      </Space>\n    </Container>\n  </Page>\n);',
+          'import * as React from \'react\';\nimport { Button, Dialog, Page, Space } from \'@wonder-ui/core\';\n\nexport default () => {\n  const [visible, setVisible] = React.useState(false);\n  return (\n    <Page title="Dialog">\n      <Dialog\n        visible={visible}\n        title="\u6807\u9898"\n        text="\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9..."\n        buttons={[\n          {\n            text: \'\u53d6\u6d88\',\n            onClick: () => {\n              setVisible(false);\n            }\n          },\n          {\n            text: \'\u597d\u7684\',\n            primary: true,\n            onClick: () => {\n              setVisible(false);\n            }\n          }\n        ]}\n      />\n\n      <Space style={{ padding: 16 }}>\n        <Button variant="contained" onClick={() => setVisible(true)}>\n          \u63d0\u793a\u6846(\u6587\u5b57)\n        </Button>\n\n        <Dialog\n          title="\u6807\u9898"\n          content={\n            <div>\n              <img\n                src="https://img.99bill.com/z/img/new-pos.png"\n                width={260}\n                height={260}\n                alt="img"\n              />\n            </div>\n          }\n          buttons={[\n            {\n              text: \'\u77e5\u9053\u5566!\',\n              primary: true\n            }\n          ]}\n        >\n          <Button variant="contained">\u63d0\u793a\u6846(\u56fe\u7247)</Button>\n        </Dialog>\n      </Space>\n    </Page>\n  );\n};',
         W =
-          "import { Button, Container, Dialog, Page, WhiteSpace } from '@wonder-ui/core';\n\nexport default () => (\n  <Page title=\"Dialog vertical buttons\">\n    <WhiteSpace />\n    <Container>\n      <Dialog\n        buttonsVertical\n        buttons={[\n          {\n            text: '\u6807\u4e3a\u672a\u8bfb',\n            onClick: () => {\n              console.log('\u6807\u4e3a\u672a\u8bfb');\n            }\n          },\n          {\n            text: '\u7f6e\u9876\u804a\u5929',\n            onClick: () => {\n              console.log('\u7f6e\u9876\u804a\u5929');\n            }\n          }\n        ]}\n      >\n        <Button variant=\"contained\">\u5782\u76f4\u6309\u94ae</Button>\n      </Dialog>\n    </Container>\n  </Page>\n);",
+          "import { Button, Dialog, Page } from '@wonder-ui/core';\n\nexport default () => {\n  return (\n    <Page title=\"Vertical buttons\">\n      <div style={{ padding: 16 }}>\n        <Dialog\n          buttonsVertical\n          buttons={[\n            {\n              text: '\u6807\u4e3a\u672a\u8bfb',\n              onClick: () => {\n                console.log('\u6807\u4e3a\u672a\u8bfb');\n              }\n            },\n            {\n              text: '\u7f6e\u9876\u804a\u5929',\n              onClick: () => {\n                console.log('\u7f6e\u9876\u804a\u5929');\n              }\n            }\n          ]}\n        >\n          <Button variant=\"contained\">\u5782\u76f4\u6309\u94ae</Button>\n        </Dialog>\n      </div>\n    </Page>\n  );\n};",
         G =
-          "import {\n  Button,\n  Container,\n  Page,\n  Space,\n  WhiteSpace,\n  withDialog\n} from '@wonder-ui/core';\n\nexport default withDialog((props) => {\n  const { dialog } = props;\n  return (\n    <Page title=\"Dialogs\">\n      <WhiteSpace />\n      <Container>\n        <Space>\n          <Button\n            variant=\"contained\"\n            onClick={() =>\n              dialog.alert({ title: '\u63d0\u793a', text: '\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9...' })\n            }\n          >\n            \u63d0\u793a\u6846\n          </Button>\n          <Button\n            variant=\"contained\"\n            onClick={() => dialog.alert({ text: '\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9...' })}\n          >\n            \u63d0\u793a\u6846 (\u65e0\u6807\u9898)\n          </Button>\n          <Button\n            variant=\"contained\"\n            onClick={() =>\n              dialog.confirm({ title: '\u786e\u8ba4', text: '\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9...' })\n            }\n          >\n            \u786e\u8ba4\u6846\n          </Button>\n          <Button\n            variant=\"contained\"\n            onClick={() =>\n              dialog.custom({\n                title: '\u64cd\u4f5c',\n                text: '\u8bf7\u9009\u62e9\u4e00\u9879\u64cd\u4f5c',\n                buttonsVertical: true,\n                buttons: [\n                  {\n                    children: '\u6807\u4e3a\u672a\u8bfb',\n                    onClick: () => {\n                      console.log('\u6807\u4e3a\u672a\u8bfb');\n                    }\n                  },\n                  {\n                    children: '\u7f6e\u9876\u804a\u5929',\n                    onClick: () => {\n                      console.log('\u7f6e\u9876\u804a\u5929');\n                    }\n                  },\n                  {\n                    children: '\u53d6\u6d88',\n                    onClick: () => {}\n                  }\n                ]\n              })\n            }\n          >\n            \u64cd\u4f5c\u6846\n          </Button>\n        </Space>\n      </Container>\n    </Page>\n  );\n});",
+          "import { Button, Page, Space, useDialog } from '@wonder-ui/core';\n\nexport default () => {\n  const dialog = useDialog();\n\n  return (\n    <Page title=\"Dialog\">\n      <Space style={{ padding: 16 }}>\n        <Button\n          variant=\"contained\"\n          onClick={() => {\n            dialog.alert({ title: '\u63d0\u793a', text: '\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9...' });\n          }}\n        >\n          \u63d0\u793a\u6846\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={() => dialog.alert({ text: '\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9...' })}\n        >\n          \u63d0\u793a\u6846 (\u65e0\u6807\u9898)\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={() =>\n            dialog.confirm({ title: '\u786e\u8ba4', text: '\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9...' })\n          }\n        >\n          \u786e\u8ba4\u6846\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={() =>\n            dialog.custom({\n              title: '\u64cd\u4f5c',\n              text: '\u8bf7\u9009\u62e9\u4e00\u9879\u64cd\u4f5c',\n              buttonsVertical: true,\n              buttons: [\n                {\n                  children: '\u6807\u4e3a\u672a\u8bfb',\n                  onClick: () => {\n                    console.log('\u6807\u4e3a\u672a\u8bfb');\n                  }\n                },\n                {\n                  children: '\u7f6e\u9876\u804a\u5929',\n                  onClick: () => {\n                    console.log('\u7f6e\u9876\u804a\u5929');\n                  }\n                },\n                {\n                  children: '\u53d6\u6d88',\n                  onClick: () => {}\n                }\n              ]\n            })\n          }\n        >\n          \u64cd\u4f5c\u6846\n        </Button>\n      </Space>\n    </Page>\n  );\n};",
         z =
-          "import {\n  Button,\n  Container,\n  Page,\n  WhiteSpace,\n  withDialog\n} from '@wonder-ui/core';\n\nexport default withDialog((props) => {\n  const { dialog } = props;\n\n  return (\n    <Page title=\"Dialog stack\">\n      <WhiteSpace />\n      <Container>\n        <Button\n          variant=\"contained\"\n          onClick={() => {\n            dialog.alert({ title: '\u6807\u9898', text: 'dialog 1' });\n            dialog.alert({ title: '\u6807\u9898', text: 'dialog 2' });\n            dialog.confirm({ title: '\u6807\u9898', text: '\u786e\u5b9a\u8fd9\u4e48\u5e72\u5417?' });\n            dialog.alert({ title: '\u6807\u9898', text: 'dialog 4' });\n            dialog.toast('\u961f\u5217\u7ed3\u675f');\n          }}\n        >\n          \u63d0\u793a\u6846\n        </Button>\n      </Container>\n    </Page>\n  );\n});",
+          "import { Button, Page, useDialog, useSnackbar } from '@wonder-ui/core';\n\nexport default () => {\n  const dialog = useDialog();\n  const toast = useSnackbar();\n\n  return (\n    <Page title=\"Dialog stack\">\n      <div style={{ padding: 16 }}>\n        <Button\n          variant=\"contained\"\n          onClick={() => {\n            dialog.alert({ title: '\u6807\u9898', text: 'dialog 1' });\n            dialog.alert({ title: '\u6807\u9898', text: 'dialog 2' });\n            dialog.confirm({ title: '\u6807\u9898', text: '\u786e\u5b9a\u8fd9\u4e48\u5e72\u5417?' });\n            dialog.alert({\n              title: '\u6807\u9898',\n              text: 'dialog 4',\n              onOk: () => {\n                toast('\u961f\u5217\u7ed3\u675f');\n              }\n            });\n          }}\n        >\n          \u63d0\u793a\u6846\n        </Button>\n      </div>\n    </Page>\n  );\n};",
         _ =
           'import { Page, Space, DialogContent, WhiteSpace } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page title="Dialog content">\n    <WhiteSpace />\n    <Space horizontalAlign="center">\n      <DialogContent\n        style={{ width: 220 }}\n        title="\u6807\u9898"\n        text="\u5185\u5bb9, \u5185\u5bb9, \u5185\u5bb9..."\n        buttons={[\n          {\n            text: \'\u53d6\u6d88\',\n            onClick: () => {}\n          },\n          {\n            text: \'\u597d\u7684\',\n            primary: true,\n            onClick: () => {}\n          }\n        ]}\n      />\n    </Space>\n  </Page>\n);',
         N =
@@ -2471,9 +2507,9 @@
           'import { Divider, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space split={<Divider direction="vertical" style={{ height: \'1em\' }} />}>\n    Text\n    <a href="#">Link</a>\n    <a href="#">Link</a>\n  </Space>\n);',
         X =
           "import {\n  Button,\n  Drawer,\n  DrawerProps,\n  Page,\n  Space,\n  Typography,\n  WhiteSpace\n} from '@wonder-ui/core';\nimport { useToggle } from '@wonder-ui/hooks';\n\ntype Anchor = DrawerProps['anchor'];\n\nexport default () => {\n  const [visible, { toggle: toggleVisible }] = useToggle(false);\n  const [anchor, { toggle }] = useToggle<Anchor>('left');\n\n  const open = (anchor: Anchor) => {\n    toggle(anchor);\n    toggleVisible();\n  };\n\n  return (\n    <Page title=\"Drawer\">\n      <WhiteSpace />\n      <Space>\n        <Button variant=\"contained\" onClick={() => open('left')}>\n          \u5de6\n        </Button>\n        <Button variant=\"contained\" onClick={() => open('right')}>\n          \u53f3\n        </Button>\n        <Button variant=\"contained\" onClick={() => open('top')}>\n          \u4e0a\n        </Button>\n        <Button variant=\"contained\" onClick={() => open('bottom')}>\n          \u4e0b\n        </Button>\n      </Space>\n\n      <Drawer anchor={anchor} visible={visible} onClose={() => toggleVisible()}>\n        <Page\n          title=\"Basic Drawer\"\n          style={{\n            position: 'relative',\n            ...(['left', 'right'].indexOf(anchor || '') !== -1\n              ? { width: 260, height: '100%' }\n              : { width: '100%', height: 200 })\n          }}\n          showCloseButton\n          onClose={() => toggleVisible()}\n        >\n          <div style={{ padding: '10px 16px' }}>\n            <Typography>\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n              Some contents... <br />\n            </Typography>\n          </div>\n        </Page>\n      </Drawer>\n    </Page>\n  );\n};",
-        J =
-          'import { DropdownMenu, DropdownMenuItem, Page, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page title="DropdownMenu">\n    <Space direction="vertical">\n      \u57fa\u672c\u4f7f\u7528\n      <DropdownMenu>\n        <DropdownMenuItem arrow overlay={<div>\u5168\u90e8\u5546\u54c1 ... </div>}>\n          \u5168\u90e8\u5546\u54c1\n        </DropdownMenuItem>\n        <DropdownMenuItem arrow overlay={<div>\u597d\u8bc4\u6392\u5e8f ...</div>}>\n          \u597d\u8bc4\u6392\u5e8f\n        </DropdownMenuItem>\n      </DropdownMenu>\n    </Space>\n  </Page>\n);',
         Q =
+          'import { DropdownMenu, DropdownMenuItem, Page, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page title="DropdownMenu">\n    <Space direction="vertical">\n      \u57fa\u672c\u4f7f\u7528\n      <DropdownMenu>\n        <DropdownMenuItem arrow overlay={<div>\u5168\u90e8\u5546\u54c1 ... </div>}>\n          \u5168\u90e8\u5546\u54c1\n        </DropdownMenuItem>\n        <DropdownMenuItem arrow overlay={<div>\u597d\u8bc4\u6392\u5e8f ...</div>}>\n          \u597d\u8bc4\u6392\u5e8f\n        </DropdownMenuItem>\n      </DropdownMenu>\n    </Space>\n  </Page>\n);',
+        J =
           'import {\n  Button,\n  Divider,\n  DropdownMenu,\n  DropdownMenuItem,\n  Page,\n  Radio,\n  List,\n  ListItem,\n  ListItemText,\n  Toggle\n} from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page title="With list">\n    <DropdownMenu>\n      <DropdownMenuItem\n        arrow\n        overlay={\n          <div>\n            <List component="div">\n              <ListItem\n                divider\n                component="label"\n                extra={<Radio name="DropdownMenu1" />}\n              >\n                <ListItemText>\u5168\u90e8\u5546\u54c1</ListItemText>\n              </ListItem>\n              <ListItem\n                divider\n                component="label"\n                extra={<Radio name="DropdownMenu1" />}\n              >\n                <ListItemText>\u65b0\u6b3e\u5546\u54c1</ListItemText>\n              </ListItem>\n              <ListItem\n                divider\n                component="label"\n                extra={<Radio name="DropdownMenu1" />}\n              >\n                <ListItemText>\u6d3b\u52a8\u5546\u54c1</ListItemText>\n              </ListItem>\n            </List>\n          </div>\n        }\n      >\n        \u5168\u90e8\u5546\u54c1\n      </DropdownMenuItem>\n      <DropdownMenuItem\n        arrow\n        overlay={({ onClose }) => (\n          <div>\n            <List>\n              <ListItem divider extra={<Toggle />}>\n                <ListItemText>\u5305\u90ae</ListItemText>\n              </ListItem>\n              <ListItem extra={<Toggle defaultChecked />}>\n                <ListItemText>\u56e2\u8d2d</ListItemText>\n              </ListItem>\n            </List>\n            <Divider />\n            <div style={{ padding: 16 }}>\n              <Button\n                variant="contained"\n                fullWidth\n                disableFocusRipple\n                onClick={onClose}\n              >\n                \u786e \u8ba4\n              </Button>\n            </div>\n          </div>\n        )}\n      >\n        \u597d\u8bc4\u6392\u5e8f\n      </DropdownMenuItem>\n    </DropdownMenu>\n  </Page>\n);',
         $ =
           'import {\n  Button,\n  Divider,\n  DropdownMenu,\n  DropdownMenuItem,\n  Page,\n  Radio,\n  List,\n  ListItem,\n  ListItemText,\n  Toggle\n} from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page title="Auto width">\n    <DropdownMenu widthAuto>\n      <DropdownMenuItem\n        arrow\n        overlay={\n          <div>\n            <List component="div">\n              <ListItem\n                divider\n                component="label"\n                extra={<Radio name="DropdownMenu1" />}\n              >\n                <ListItemText>\u5168\u90e8\u5546\u54c1</ListItemText>\n              </ListItem>\n              <ListItem\n                divider\n                component="label"\n                extra={<Radio name="DropdownMenu1" />}\n              >\n                <ListItemText>\u65b0\u6b3e\u5546\u54c1</ListItemText>\n              </ListItem>\n              <ListItem\n                divider\n                component="label"\n                extra={<Radio name="DropdownMenu1" />}\n              >\n                <ListItemText>\u6d3b\u52a8\u5546\u54c1</ListItemText>\n              </ListItem>\n            </List>\n          </div>\n        }\n      >\n        \u5168\u90e8\u5546\u54c1\n      </DropdownMenuItem>\n      <DropdownMenuItem\n        arrow\n        overlay={({ onClose }) => (\n          <div>\n            <List>\n              <ListItem divider extra={<Toggle />}>\n                <ListItemText>\u5305\u90ae</ListItemText>\n              </ListItem>\n              <ListItem extra={<Toggle defaultChecked />}>\n                <ListItemText>\u56e2\u8d2d</ListItemText>\n              </ListItem>\n            </List>\n            <Divider />\n            <div style={{ padding: 16 }}>\n              <Button\n                variant="contained"\n                fullWidth\n                disableFocusRipple\n                onClick={onClose}\n              >\n                \u786e \u8ba4\n              </Button>\n            </div>\n          </div>\n        )}\n      >\n        \u597d\u8bc4\u6392\u5e8f\n      </DropdownMenuItem>\n\n      <DropdownMenuItem>\u9500\u91cf</DropdownMenuItem>\n      <DropdownMenuItem>\u53e3\u7891</DropdownMenuItem>\n    </DropdownMenu>\n  </Page>\n);',
@@ -2499,9 +2535,9 @@
           'import * as React from \'react\';\nimport { Button, Input, InputAction, Space } from \'@wonder-ui/core\';\n\nexport default () => {\n  const actionRef = React.useRef<InputAction>();\n\n  return (\n    <Space direction="vertical">\n      <Space>\n        <Button\n          variant="outlined"\n          onClick={() => {\n            actionRef.current?.focus({ cursor: \'start\' });\n          }}\n        >\n          Focus at first\n        </Button>\n        <Button\n          variant="outlined"\n          onClick={() => {\n            actionRef.current?.focus({ cursor: \'end\' });\n          }}\n        >\n          Focus at last\n        </Button>\n        <Button\n          variant="outlined"\n          onClick={() => {\n            actionRef.current?.focus({ cursor: \'all\' });\n          }}\n        >\n          Focus to select all\n        </Button>\n        <Button\n          variant="outlined"\n          onClick={() => {\n            actionRef.current?.focus({ preventScroll: true });\n          }}\n        >\n          Focus prevent scroll\n        </Button>\n      </Space>\n      <Input\n        actionRef={actionRef}\n        placeholder="\u8bf7\u8f93\u5165"\n        defaultValue="\u805a\u7126\u989d\u5916\u914d\u7f6e\u5c5e\u6027"\n      />\n    </Space>\n  );\n};',
         pe =
           'import { Input, Space } from \'@wonder-ui/core\';\n\nexport default () => {\n  return (\n    <Space>\n      <Input type="password" placeholder="Input password" />\n    </Space>\n  );\n};',
-        ce =
-          'import { InputNumber, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space direction="vertical">\n    <InputNumber placeholder="Basic" defaultValue={3} />\n    <InputNumber placeholder="Disable StepHandler" disableStepHandler />\n    <InputNumber placeholder="Disabled" disabled />\n  </Space>\n);',
         ue =
+          'import { InputNumber, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space direction="vertical">\n    <InputNumber placeholder="Basic" defaultValue={3} />\n    <InputNumber placeholder="Disable StepHandler" disableStepHandler />\n    <InputNumber placeholder="Disabled" disabled />\n  </Space>\n);',
+        ce =
           "import { InputNumber, Space } from '@wonder-ui/core';\n\nfunction onChange(value: string) {\n  console.log('changed', value);\n}\n\nexport default () => (\n  <Space>\n    <InputNumber\n      defaultValue={1000}\n      formatter={(value) => `$ ${value}`.replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',')}\n      parser={(value) => value!.replace(/\\$\\s?|(,*)/g, '')}\n      onChange={onChange}\n    />\n    <InputNumber\n      defaultValue={100}\n      min={0}\n      max={100}\n      formatter={(value) => `${value}%`}\n      parser={(value) => value!.replace('%', '')}\n      onChange={onChange}\n    />\n  </Space>\n);",
         fe =
           'import { InputNumber, Space } from \'@wonder-ui/core\';\n\nfunction onChange(value: string) {\n  console.log(\'changed\', value);\n}\n\nexport default () => (\n  <Space>\n    <InputNumber\n      defaultValue="1"\n      min="0"\n      max="10"\n      step="0.00000000000001"\n      onChange={onChange}\n      stringMode\n    />\n  </Space>\n);',
@@ -2579,9 +2615,9 @@
           "import * as React from 'react';\nimport { Button, Portal } from '@wonder-ui/core';\nimport { useToggle } from '@wonder-ui/hooks';\n\nexport default () => {\n  const target = React.useRef(null);\n  const [visible, { toggle }] = useToggle(false);\n\n  return (\n    <div>\n      <Button variant=\"contained\" onClick={() => toggle()}>\n        Toggle\n      </Button>\n\n      <div style={{ backgroundColor: 'grey' }}>\n        {visible && (\n          <Portal container={() => target.current}>\n            <div>Portal Content</div>\n          </Portal>\n        )}\n      </div>\n\n      <div ref={target} style={{ backgroundColor: 'pink' }}></div>\n    </div>\n  );\n};",
         Xe =
           'import { Button, Container, Preloader } from \'@wonder-ui/core\';\nimport { useToggle } from \'@wonder-ui/hooks\';\n\nexport default () => {\n  const [visible, { toggle }] = useToggle(false);\n\n  const open = () => {\n    toggle();\n\n    setTimeout(() => {\n      toggle();\n    }, 2000);\n  };\n\n  return (\n    <Container>\n      <Button variant="contained" onClick={() => open()}>\n        Open\n      </Button>\n      <Preloader visible={visible} text="\u52a0\u8f7d\u4e2d..." />\n    </Container>\n  );\n};',
-        Je =
-          'import { Button, Preloader } from \'@wonder-ui/core\';\n\nconst loadData = () =>\n  new Promise((resolve) => {\n    setTimeout(() => {\n      resolve({});\n    }, 2000);\n  });\n\nexport default () => (\n  <Preloader onLoad={loadData}>\n    <Button variant="contained">Onload</Button>\n  </Preloader>\n);',
         Qe =
+          'import { Button, Preloader } from \'@wonder-ui/core\';\n\nconst loadData = () =>\n  new Promise((resolve) => {\n    setTimeout(() => {\n      resolve({});\n    }, 2000);\n  });\n\nexport default () => (\n  <Preloader onLoad={loadData}>\n    <Button variant="contained">Onload</Button>\n  </Preloader>\n);',
+        Je =
           'import { Button, showPreloader, hidePreloader } from \'@wonder-ui/core\';\n\nexport default () => {\n  const open = () => {\n    showPreloader();\n    setTimeout(() => {\n      hidePreloader();\n    }, 2000);\n  };\n\n  return (\n    <Button variant="contained" onClick={() => open()}>\n      Open\n    </Button>\n  );\n};',
         $e =
           "import {\n  Button,\n  showPreloader,\n  hidePreloader,\n  Space,\n  LinearProgress,\n  Typography,\n  WhiteSpace\n} from '@wonder-ui/core';\n\nexport default () => {\n  const open = (type: 'spinner' | 'circular' | 'custom') => {\n    if (type === 'spinner' || type === 'circular') {\n      showPreloader({\n        type,\n        text: `type - ${type}`\n      });\n    } else {\n      showPreloader({\n        indicator: (\n          <div style={{ width: 200, paddingTop: 20 }}>\n            <LinearProgress />\n            <WhiteSpace />\n            <Typography>\u52a0\u8f7d\u4e2d...</Typography>\n          </div>\n        )\n      });\n    }\n\n    setTimeout(() => {\n      hidePreloader();\n    }, 2000);\n  };\n\n  return (\n    <Space>\n      <Button variant=\"contained\" onClick={() => open('spinner')}>\n        Open(spinner)\n      </Button>\n\n      <Button variant=\"contained\" onClick={() => open('circular')}>\n        Open(circular)\n      </Button>\n\n      <Button variant=\"contained\" onClick={() => open('custom')}>\n        Open(custom)\n      </Button>\n    </Space>\n  );\n};",
@@ -2607,9 +2643,9 @@
           'import { Navbar, Page, Searchbar, WhiteSpace } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Page\n    title="\u641c\u7d22"\n    NavbarProps={{\n      children: <Searchbar placeholder="\u8bf7\u8f93\u5165\u641c\u7d22\u5173\u952e\u5b57" allowCancel />\n    }}\n    //\u53ea\u5c55\u793a\u641c\u7d22\u6761\n    // navbar={\n    //   <Searchbar\n    //     placeholder="\u8bf7\u8f93\u5165\u641c\u7d22\u5173\u952e\u5b57"\n    //     allowCancel\n    //     style={{ position: \'absolute\', top: 0 }}\n    //   />\n    // }\n  >\n    <WhiteSpace />\n\n    <Navbar title="navbar & search">\n      <Searchbar placeholder="\u8bf7\u8f93\u5165\u641c\u7d22\u5173\u952e\u5b57" allowCancel />\n    </Navbar>\n\n    <WhiteSpace />\n\n    <Searchbar placeholder="\u8bf7\u8f93\u5165\u641c\u7d22\u5173\u952e\u5b57" allowCancel fixCancelButton />\n  </Page>\n);',
         pt =
           "import * as React from 'react';\nimport {\n  Button,\n  Drawer,\n  Page,\n  Searchbar,\n  Typography,\n  Space\n} from '@wonder-ui/core';\nimport { Search } from '@wonder-ui/icons';\n\nexport default () => {\n  const [DrawerVisible, setDrawerVisible] = React.useState(false);\n\n  return (\n    <Page\n      navbar={\n        <Searchbar\n          style={{ position: 'absolute', top: 0 }}\n          icon={\n            <Space style={{ color: '#777' }} gap={3} verticalAlign=\"center\">\n              \u5730\u5740\n              <Search style={{ fontSize: '0.8rem' }} />\n            </Space>\n          }\n          placeholder=\"\u8bf7\u8f93\u5165\u5730\u5740\"\n          barRight={\n            <Button\n              style={{ whiteSpace: 'nowrap', marginRight: -12 }}\n              onClick={() => {\n                setDrawerVisible(true);\n              }}\n            >\n              \u7b5b\u9009\n            </Button>\n          }\n        />\n      }\n    >\n      <Typography style={{ padding: 12 }}>\u70b9\u51fb\u7b5b\u9009\u5c55\u5f00\u9762\u677f</Typography>\n      <Drawer\n        anchor=\"right\"\n        visible={DrawerVisible}\n        onClose={() => {\n          setDrawerVisible(false);\n        }}\n      >\n        <Page title=\"\u7b5b\u9009\" style={{ width: 200 }}>\n          \u7b5b\u9009\u9762\u677f\n        </Page>\n      </Drawer>\n    </Page>\n  );\n};",
-        ct =
-          'import { ArrowClockwise, Share } from \'@wonder-ui/icons\';\nimport {\n  ArrowForward,\n  IconButton,\n  Searchbar,\n  Space,\n  styled\n} from \'@wonder-ui/core\';\n\nconst MySearch = styled(Searchbar)`\n  .WuiSearchbar-bg {\n    background-color: rgb(79, 192, 141);\n  }\n  .WuiSvgIcon-root {\n    color: #fff;\n  }\n  .WuiSearchbar-input {\n    border-radius: 999px;\n  }\n`;\n\nexport default () => {\n  return (\n    <MySearch\n      InputProps={{\n        readOnly: true,\n        onClick: () => alert(\'Link to Search Page\')\n      }}\n      placeholder="\u70b9\u51fb\u8df3\u8f6c\u641c\u7d22\u9875"\n      barRight={\n        <Space nowrap gap={0}>\n          <IconButton>\n            <Share fontSize="small" />\n          </IconButton>\n\n          <IconButton edge="end">\n            <ArrowClockwise fontSize="small" />\n          </IconButton>\n        </Space>\n      }\n      barLeft={\n        <IconButton edge="start">\n          <ArrowForward direction="left" fontSize="small" />\n        </IconButton>\n      }\n    />\n  );\n};',
         ut =
+          'import { ArrowClockwise, Share } from \'@wonder-ui/icons\';\nimport {\n  ArrowForward,\n  IconButton,\n  Searchbar,\n  Space,\n  styled\n} from \'@wonder-ui/core\';\n\nconst MySearch = styled(Searchbar)`\n  .WuiSearchbar-bg {\n    background-color: rgb(79, 192, 141);\n  }\n  .WuiSvgIcon-root {\n    color: #fff;\n  }\n  .WuiSearchbar-input {\n    border-radius: 999px;\n  }\n`;\n\nexport default () => {\n  return (\n    <MySearch\n      InputProps={{\n        readOnly: true,\n        onClick: () => alert(\'Link to Search Page\')\n      }}\n      placeholder="\u70b9\u51fb\u8df3\u8f6c\u641c\u7d22\u9875"\n      barRight={\n        <Space nowrap gap={0}>\n          <IconButton>\n            <Share fontSize="small" />\n          </IconButton>\n\n          <IconButton edge="end">\n            <ArrowClockwise fontSize="small" />\n          </IconButton>\n        </Space>\n      }\n      barLeft={\n        <IconButton edge="start">\n          <ArrowForward direction="left" fontSize="small" />\n        </IconButton>\n      }\n    />\n  );\n};',
+        ct =
           "import { Page, Paper, Skeleton } from '@wonder-ui/core';\n\nexport default () => (\n  <Page title=\"Skeleton\">\n    <Paper style={{ padding: '20px 0' }}>\n      <Skeleton title />\n      <Skeleton title />\n      <Skeleton title />\n    </Paper>\n  </Page>\n);",
         ft =
           "import { Page, Paper, Skeleton, Divider } from '@wonder-ui/core';\n\nexport default () => (\n  <Page title=\"Skeleton with avatar\">\n    <Paper style={{ padding: '20px 0' }}>\n      <Skeleton title avatar />\n      <Skeleton title avatar />\n      <Skeleton title avatar />\n    </Paper>\n  </Page>\n);",
@@ -2618,7 +2654,7 @@
         yt =
           "import * as React from 'react';\nimport { Button, Snackbar, SnackbarProps, Space } from '@wonder-ui/core';\n\nexport default function Example() {\n  const [state, setState] = React.useState<Partial<SnackbarProps>>({\n    visible: false,\n    anchorOrigin: {\n      vertical: 'top',\n      horizontal: 'center'\n    }\n  });\n\n  const { anchorOrigin = {}, visible } = state;\n\n  const handleClick = (newState: any) => () => {\n    setState({ visible: true, ...newState });\n  };\n\n  const handleClose = () => {\n    setState({ ...state, visible: false });\n  };\n\n  return (\n    <div>\n      <Space>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'top',\n              horizontal: 'left'\n            }\n          })}\n        >\n          \u5de6\u4e0a\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'top',\n              horizontal: 'center'\n            }\n          })}\n        >\n          \u4e2d\u4e0a\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'top',\n              horizontal: 'right'\n            }\n          })}\n        >\n          \u53f3\u4e0a\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'bottom',\n              horizontal: 'right'\n            }\n          })}\n        >\n          \u53f3\u4e0b\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'bottom',\n              horizontal: 'center'\n            }\n          })}\n        >\n          \u4e2d\u4e0b\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'bottom',\n              horizontal: 'left'\n            }\n          })}\n        >\n          \u5de6\u4e0b\n        </Button>\n        <Button\n          variant=\"contained\"\n          onClick={handleClick({\n            anchorOrigin: {\n              vertical: 'center',\n              horizontal: 'center'\n            }\n          })}\n        >\n          \u4e2d\n        </Button>\n      </Space>\n\n      <Snackbar\n        visible={visible}\n        message=\"\u7b80\u5355\u7684\u6d88\u606f\u6761\"\n        autoHideDuration={null}\n        anchorOrigin={anchorOrigin}\n        onClose={handleClose}\n        key={anchorOrigin.vertical + anchorOrigin.horizontal!}\n      />\n    </div>\n  );\n}",
         Et =
-          "import { Button, withDialog } from '@wonder-ui/core';\n\nexport default withDialog((props) => {\n  const { dialog } = props;\n\n  return (\n    <Button\n      variant=\"contained\"\n      onClick={() => {\n        dialog.toast('\u4e00\u6761\u901a\u77e5\u4fe1\u606f');\n        dialog.toast('\u4e00\u6761\u901a\u77e5\u4fe1\u606f.');\n        dialog.toast('\u4e00\u6761\u901a\u77e5\u4fe1\u606f..');\n        dialog.toast('\u4e00\u6761\u901a\u77e5\u4fe1\u606f...');\n      }}\n    >\n      toast\n    </Button>\n  );\n});",
+          "import { Button, Space, useSnackbar } from '@wonder-ui/core';\n\nexport default function Example() {\n  const snackbar = useSnackbar();\n\n  return (\n    <Space>\n      <Button variant=\"contained\" onClick={() => snackbar('\u7b80\u5355\u7684\u6d88\u606f\u6761')}>\n        \u7b80\u5355\u7684\u6d88\u606f\u6761\n      </Button>\n      <Button\n        variant=\"contained\"\n        onClick={() => {\n          snackbar('\u7b80\u5355\u7684\u6d88\u606f\u6761 - 1');\n          snackbar('\u7b80\u5355\u7684\u6d88\u606f\u6761 - 2');\n          snackbar('\u7b80\u5355\u7684\u6d88\u606f\u6761 - 3');\n        }}\n      >\n        \u6d88\u606f\u6808\n      </Button>\n    </Space>\n  );\n}",
         vt =
           'import { Space, Button } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space>\n    \u95f4\u8ddd:\n    <Button variant="contained">Button</Button>\n    <Button variant="contained">Button</Button>\n  </Space>\n);',
         Ht =
@@ -2687,9 +2723,9 @@
           'import { CircularProgress, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space>\n    <CircularProgress color="primary" />\n    <CircularProgress color="secondary" />\n    <CircularProgress color="success" />\n    <CircularProgress color="danger" />\n    <CircularProgress color="warning" />\n    <CircularProgress color="info" />\n    <CircularProgress color="light" />\n    <CircularProgress color="dark" />\n  </Space>\n);',
         Xt =
           "import { CircularProgress, Space } from '@wonder-ui/core';\n\nexport default () => (\n  <Space>\n    <CircularProgress />\n    <CircularProgress size={24} />\n  </Space>\n);",
-        Jt =
-          'import * as React from \'react\';\nimport { Space, CircularProgress } from \'@wonder-ui/core\';\nimport { useInterval } from \'@wonder-ui/hooks\';\n\nexport default () => {\n  const [count, setCount] = React.useState(0);\n\n  useInterval(() => {\n    if (count < 100) {\n      setCount(count + 10);\n    } else {\n      setCount(0);\n    }\n  }, 800);\n\n  return (\n    <Space>\n      <CircularProgress variant="determinate" value={20} />\n      <CircularProgress variant="determinate" value={40} />\n      <CircularProgress variant="determinate" value={60} />\n      <CircularProgress variant="determinate" value={80} />\n      <CircularProgress variant="determinate" value={100} />\n      <CircularProgress\n        variant="determinate"\n        size={100}\n        thickness={1}\n        value={count}\n        label={`${count}%`}\n      />\n    </Space>\n  );\n};',
         Qt =
+          'import * as React from \'react\';\nimport { Space, CircularProgress } from \'@wonder-ui/core\';\nimport { useInterval } from \'@wonder-ui/hooks\';\n\nexport default () => {\n  const [count, setCount] = React.useState(0);\n\n  useInterval(() => {\n    if (count < 100) {\n      setCount(count + 10);\n    } else {\n      setCount(0);\n    }\n  }, 800);\n\n  return (\n    <Space>\n      <CircularProgress variant="determinate" value={20} />\n      <CircularProgress variant="determinate" value={40} />\n      <CircularProgress variant="determinate" value={60} />\n      <CircularProgress variant="determinate" value={80} />\n      <CircularProgress variant="determinate" value={100} />\n      <CircularProgress\n        variant="determinate"\n        size={100}\n        thickness={1}\n        value={count}\n        label={`${count}%`}\n      />\n    </Space>\n  );\n};',
+        Jt =
           'import { LinearProgress, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space direction="vertical">\n    <LinearProgress variant="indeterminate" color="primary" />\n  </Space>\n);',
         $t =
           'import { LinearProgress, Space } from \'@wonder-ui/core\';\n\nexport default () => (\n  <Space direction="vertical">\n    <LinearProgress variant="determinate" value={20} color="primary" />\n    <LinearProgress variant="determinate" value={40} color="secondary" />\n    <LinearProgress variant="determinate" value={60} color="success" />\n    <LinearProgress variant="determinate" value={80} color="danger" />\n    <LinearProgress variant="determinate" value={80} color="warning" />\n    <LinearProgress variant="determinate" value={80} color="info" />\n  </Space>\n);',
@@ -2908,7 +2944,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: c } },
+            sources: { _: { tsx: u } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -2951,7 +2987,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: u } },
+            sources: { _: { tsx: c } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -4217,8 +4253,8 @@
           previewerProps: {
             sources: { _: { tsx: U } },
             dependencies: {
-              '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
+              '@wonder-ui/core': { version: '2.0.0-31' },
             },
             identifier: 'dialog-demo1',
           },
@@ -4266,7 +4302,7 @@
             identifier: 'dialog-demo2',
           },
         },
-        'withdialog-demo2': {
+        'dialog-demo3': {
           component: Object(o['c'])({
             loader: (function () {
               var e = Object(i['a'])(
@@ -4283,7 +4319,7 @@
                               n.e(79),
                               n.e(5),
                               n.e(8),
-                            ]).then(n.bind(null, '40Xy'))
+                            ]).then(n.bind(null, 'k73f'))
                           );
                         case 2:
                           return e.abrupt('return', e.sent.default);
@@ -4306,10 +4342,10 @@
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
             },
-            identifier: 'withdialog-demo2',
+            identifier: 'dialog-demo3',
           },
         },
-        'withdialog-demo1': {
+        'dialog-demo4': {
           component: Object(o['c'])({
             loader: (function () {
               var e = Object(i['a'])(
@@ -4326,7 +4362,7 @@
                               n.e(79),
                               n.e(5),
                               n.e(8),
-                            ]).then(n.bind(null, 'kWmP'))
+                            ]).then(n.bind(null, 'jJVZ'))
                           );
                         case 2:
                           return e.abrupt('return', e.sent.default);
@@ -4349,7 +4385,7 @@
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
             },
-            identifier: 'withdialog-demo1',
+            identifier: 'dialog-demo4',
           },
         },
         'dialogcontent-demo1': {
@@ -4646,7 +4682,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: J } },
+            sources: { _: { tsx: Q } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -4689,7 +4725,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: Q } },
+            sources: { _: { tsx: J } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -5273,7 +5309,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: ce } },
+            sources: { _: { tsx: ue } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -5319,7 +5355,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: ue } },
+            sources: { _: { tsx: ce } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -7048,7 +7084,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: Je } },
+            sources: { _: { tsx: Qe } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -7091,7 +7127,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: Qe } },
+            sources: { _: { tsx: Je } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -7669,7 +7705,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: ct } },
+            sources: { _: { tsx: ut } },
             dependencies: {
               '@wonder-ui/icons': { version: '2.0.2' },
               '@wonder-ui/core': { version: '2.0.0-31' },
@@ -7713,7 +7749,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: ut } },
+            sources: { _: { tsx: ct } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -7853,13 +7889,10 @@
               react: { version: '>=16.8.0' },
               '@wonder-ui/core': { version: '2.0.0-31' },
             },
-            title: '\u6d88\u606f\u6761\u7684\u4f4d\u7f6e',
-            description:
-              '<div class="markdown"><p>\u901a\u8fc7\u6307\u5b9a <code>anchorOrigin</code> \u7684\u5c5e\u6027\uff0c\u60a8\u53ef\u4ee5\u63a7\u5236\u6d88\u606f\u6761\u7684\u4f4d\u7f6e</p></div>',
             identifier: 'snackbar-demo2',
           },
         },
-        'withdialog-demo3': {
+        'snackbar-demo3': {
           component: Object(o['c'])({
             loader: (function () {
               var e = Object(i['a'])(
@@ -7876,7 +7909,7 @@
                               n.e(79),
                               n.e(5),
                               n.e(8),
-                            ]).then(n.bind(null, '64HL'))
+                            ]).then(n.bind(null, 'pWLb'))
                           );
                         case 2:
                           return e.abrupt('return', e.sent.default);
@@ -7899,10 +7932,7 @@
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
             },
-            title: 'Toast',
-            description:
-              '<div class="markdown"><p>Snackbar \u5b9e\u73b0\u7684 Toast</p></div>',
-            identifier: 'withdialog-demo3',
+            identifier: 'snackbar-demo3',
           },
         },
         'space-demo1': {
@@ -8926,7 +8956,7 @@
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               '@wonder-ui/hooks': { version: '1.1.11' },
-              '@wonder-ui/utils': { version: '2.1.13' },
+              '@wonder-ui/utils': { version: '2.1.14' },
               react: { version: '>=16.8.0' },
             },
             identifier: 'tag-closable',
@@ -9459,7 +9489,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: Jt } },
+            sources: { _: { tsx: Qt } },
             dependencies: {
               react: { version: '>=16.8.0' },
               '@wonder-ui/core': { version: '2.0.0-31' },
@@ -9505,7 +9535,7 @@
             })(),
           }),
           previewerProps: {
-            sources: { _: { tsx: Qt } },
+            sources: { _: { tsx: Jt } },
             dependencies: {
               '@wonder-ui/core': { version: '2.0.0-31' },
               react: { version: '>=16.8.0' },
@@ -9726,8 +9756,8 @@
               capacitor: !!r.Capacitor,
               nwjs: !1,
             },
-            c = r.screen.width,
-            u = r.screen.height,
+            u = r.screen.width,
+            c = r.screen.height,
             f = s.match(/(Android);?[\s\/]+([\d.]+)?/),
             m = s.match(/(iPad).*OS\s([\d_]+)/),
             y = s.match(/(iPod)(.*OS\s([\d_]+))?/),
@@ -9760,7 +9790,7 @@
           !m &&
             L &&
             i.touch &&
-            T.indexOf(''.concat(c, 'x').concat(u)) >= 0 &&
+            T.indexOf(''.concat(u, 'x').concat(c)) >= 0 &&
             ((m = s.match(/(Version)\/([\d.]+)/)),
             m || (m = ['0', '1', '13_0_0']),
             (L = !1)),
@@ -9896,12 +9926,12 @@
               setTimeout(l, 0);
             };
           else {
-            var c = 1,
-              u = new MutationObserver(l),
-              f = document.createTextNode(String(c));
-            u.observe(f, { characterData: !0 }),
+            var u = 1,
+              c = new MutationObserver(l),
+              f = document.createTextNode(String(u));
+            c.observe(f, { characterData: !0 }),
               (e = () => {
-                (c = (c + 1) % 2), (f.data = String(c));
+                (u = (u + 1) % 2), (f.data = String(u));
               });
           }
           return function (t, n) {
@@ -10150,14 +10180,14 @@
         return p['a'];
       });
       n('P3Lt');
-      var c = n('Vu9J');
+      var u = n('Vu9J');
       n.d(t, 'getWindow', function () {
-        return c['a'];
+        return u['a'];
       });
       n('UjDP');
-      var u = n('AAgS');
+      var c = n('AAgS');
       n.d(t, 'on', function () {
-        return u['a'];
+        return c['a'];
       });
       var f = n('arzW');
       n.d(t, 'portalContainsElement', function () {
@@ -10209,10 +10239,10 @@
         l = '\\u1dc0-\\u1dff',
         s = r + a + o + d + l,
         p = '\\ufe0e\\ufe0f',
-        c = '['.concat(i, ']'),
-        u = '['.concat(s, ']'),
+        u = '['.concat(i, ']'),
+        c = '['.concat(s, ']'),
         f = '\\ud83c[\\udffb-\\udfff]',
-        m = '(?:'.concat(u, '|').concat(f, ')'),
+        m = '(?:'.concat(c, '|').concat(f, ')'),
         y = '[^'.concat(i, ']'),
         E = '(?:\\ud83c[\\udde6-\\uddff]){2}',
         v = '[\\ud800-\\udbff][\\udc00-\\udfff]',
@@ -10225,8 +10255,8 @@
           .concat([y, E, v].join('|'), ')')
           .concat(b + g, ')*'),
         L = b + g + M,
-        T = ''.concat(y).concat(u, '?'),
-        C = '(?:'.concat([T, u, E, v, c].join('|'), ')');
+        T = ''.concat(y).concat(c, '?'),
+        C = '(?:'.concat([T, c, E, v, u].join('|'), ')');
       function D(e) {
         return h.test(e);
       }
@@ -10278,22 +10308,22 @@
         Y = '\\ufe0e\\ufe0f',
         Z = G + z + _ + N,
         X = "['\u2019]",
-        J = '['.concat(Z, ']'),
-        Q = '['.concat(V, ']'),
+        Q = '['.concat(Z, ']'),
+        J = '['.concat(V, ']'),
         $ = '\\d',
         ee = '['.concat(U, ']'),
         te = '['.concat(W, ']'),
         ne = '[^'.concat(B).concat(Z + $ + U + W + q, ']'),
         ie = '\\ud83c[\\udffb-\\udfff]',
-        re = '(?:'.concat(Q, '|').concat(ie, ')'),
+        re = '(?:'.concat(J, '|').concat(ie, ')'),
         ae = '[^'.concat(B, ']'),
         oe = '(?:\\ud83c[\\udde6-\\uddff]){2}',
         de = '[\\ud800-\\udbff][\\udc00-\\udfff]',
         le = '['.concat(q, ']'),
         se = '\\u200d',
         pe = '(?:'.concat(te, '|').concat(ne, ')'),
-        ce = '(?:'.concat(le, '|').concat(ne, ')'),
-        ue = '(?:'.concat(X, '(?:d|ll|m|re|s|t|ve))?'),
+        ue = '(?:'.concat(le, '|').concat(ne, ')'),
+        ce = '(?:'.concat(X, '(?:d|ll|m|re|s|t|ve))?'),
         fe = '(?:'.concat(X, '(?:D|LL|M|RE|S|T|VE))?'),
         me = ''.concat(re, '?'),
         ye = '['.concat(Y, ']?'),
@@ -10310,13 +10340,13 @@
             ''
               .concat(le, '?')
               .concat(te, '+')
-              .concat(ue, '(?=')
-              .concat([J, le, '$'].join('|'), ')'),
+              .concat(ce, '(?=')
+              .concat([Q, le, '$'].join('|'), ')'),
             ''
-              .concat(ce, '+')
+              .concat(ue, '+')
               .concat(fe, '(?=')
-              .concat([J, le + pe, '$'].join('|'), ')'),
-            ''.concat(le, '?').concat(pe, '+').concat(ue),
+              .concat([Q, le + pe, '$'].join('|'), ')'),
+            ''.concat(le, '?').concat(pe, '+').concat(ce),
             ''.concat(le, '+').concat(fe),
             He,
             ve,
@@ -10651,18 +10681,18 @@
             n && 'boolean' === typeof n.trailing && (d = n.trailing);
           var p = (t) => {
               var n = Date.now(),
-                c = n - l,
-                u = o ? a - c : a;
+                u = n - l,
+                c = o ? a - u : a;
               return (
-                c >= a && (!t || o)
+                u >= a && (!t || o)
                   ? ((l = n),
                     s && (this.clearTimeout(s), (s = null)),
                     (i = e.apply(this._parent, r)))
-                  : null === s && d && (s = this.setTimeout(p, u)),
+                  : null === s && d && (s = this.setTimeout(p, c)),
                 i
               );
             },
-            c = function () {
+            u = function () {
               for (
                 var e = arguments.length, t = new Array(e), n = 0;
                 n < e;
@@ -10671,7 +10701,7 @@
                 t[n] = arguments[n];
               return (r = t), p(!0);
             };
-          return c;
+          return u;
         }
         debounce(e, t, n) {
           if (this._isDisposed) {
@@ -10690,8 +10720,8 @@
             l = !0,
             s = null,
             p = 0,
-            c = Date.now(),
-            u = null;
+            u = Date.now(),
+            c = null;
           n && 'boolean' === typeof n.leading && (d = n.leading),
             n && 'boolean' === typeof n.trailing && (l = n.trailing),
             n &&
@@ -10699,7 +10729,7 @@
               !isNaN(n.maxWait) &&
               (s = n.maxWait);
           var f = (e) => {
-              u && (this.clearTimeout(u), (u = null)), (c = e);
+              c && (this.clearTimeout(c), (c = null)), (u = e);
             },
             m = (t) => {
               f(t), (r = e.apply(this._parent, a));
@@ -10710,18 +10740,18 @@
               e && (d && t - p >= o && (n = !0), (p = t));
               var i = t - p,
                 a = o - i,
-                f = t - c,
+                f = t - u,
                 E = !1;
               return (
                 null !== s &&
-                  (f >= s && u ? (E = !0) : (a = Math.min(a, s - f))),
+                  (f >= s && c ? (E = !0) : (a = Math.min(a, s - f))),
                 i >= o || E || n
                   ? m(t)
-                  : (null !== u && e) || !l || (u = this.setTimeout(y, a)),
+                  : (null !== c && e) || !l || (c = this.setTimeout(y, a)),
                 r
               );
             },
-            E = () => !!u,
+            E = () => !!c,
             v = () => {
               E() && f(Date.now());
             },
@@ -10891,12 +10921,12 @@
         n.d(t, 'c', function () {
           return f;
         });
-      var c = /[\\^$.*+?()[\]{}|]/g,
-        u = RegExp(
+      var u = /[\\^$.*+?()[\]{}|]/g,
+        c = RegExp(
           '^'.concat(
             Function.prototype.toString
               .call(Object.prototype.hasOwnProperty)
-              .replace(c, '\\$&')
+              .replace(u, '\\$&')
               .replace(
                 /hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,
                 '$1.*?',
@@ -10906,7 +10936,7 @@
         );
       function f(e) {
         var t = typeof e;
-        return null != e && ('object' === t || 'function' === t) && u.test(e);
+        return null != e && ('object' === t || 'function' === t) && c.test(e);
       }
     },
     fYvM: function (e, t) {},
@@ -11069,12 +11099,12 @@
         l = n('Vu9J'),
         s = n('svPo'),
         p = (n('errf'), 0),
-        c = Object(r['a'])(),
-        u = new a['a'](null),
+        u = Object(r['a'])(),
+        c = new a['a'](null),
         f = 'data-is-scrollable',
         m = function (e) {
           var t =
-            arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : u;
+            arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : c;
           if (e) {
             var n = 0,
               i = null,
@@ -11114,12 +11144,12 @@
         var t = Object(d['a'])(e);
         if (E(e)) {
           var n = g(Object(d['a'])(e));
-          c.styles.push({
+          u.styles.push({
             value: e.style.boxSizing,
             property: 'box-sizing',
             el: e,
           }),
-            c.styles.push({
+            u.styles.push({
               value: e.style.paddingRight,
               property: 'padding-right',
               el: e,
@@ -11128,7 +11158,7 @@
             (e.style.boxSizing = 'border-box');
           var i = Object(d['a'])(e).querySelectorAll('.fixed');
           [].forEach.call(i, (e) => {
-            c.styles.push({
+            u.styles.push({
               value: e.style.paddingRight,
               property: 'padding-right',
               el: e,
@@ -11145,12 +11175,12 @@
               : e;
         o &&
           !p &&
-          (c.styles.push({
+          (u.styles.push({
             value: o.style.overflow,
             property: 'overflow',
             el: o,
           }),
-          c.styles.push({ value: o.style.width, property: 'width', el: o }),
+          u.styles.push({ value: o.style.width, property: 'width', el: o }),
           (o.style.overflow = 'hidden'),
           (o.style.width = '100%'),
           t.addEventListener('touchmove', y, { passive: !1, capture: !1 })),
@@ -11159,7 +11189,7 @@
       function h(e) {
         if (((e = e || Object(d['a'])().body), p > 0)) {
           var t = Object(d['a'])(e);
-          e && 1 === p && (c.restore(), t.removeEventListener('touchmove', y)),
+          e && 1 === p && (u.restore(), t.removeEventListener('touchmove', y)),
             p--;
         }
       }
