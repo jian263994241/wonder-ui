@@ -113,13 +113,12 @@ export type SwipeItemAction = {
   setOffset: (offset: number) => void;
 };
 
-export interface SwipeItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  index?: number;
-  size?: number;
-  vertical?: boolean;
-  loop?: boolean;
-  disableLazyLoading?: boolean;
+export type ContextType = {
+  size: number;
+  vertical: boolean;
+  loop: boolean;
+  disableLazyLoading: boolean;
   activeIndex: number;
-  count?: number;
-  actionRef?: React.Ref<SwipeItemAction>;
-}
+  count: number;
+  actionRefs: React.Ref<SwipeItemAction>[];
+};

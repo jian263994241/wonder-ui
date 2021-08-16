@@ -199,6 +199,9 @@ export * from './SvgIcon';
 export { default as Swipe } from './Swipe';
 export * from './Swipe';
 
+export { default as SwipeItem } from './SwipeItem';
+export * from './SwipeItem';
+
 export { default as TabContext } from './TabContext';
 
 export { default as Tabs } from './Tabs';

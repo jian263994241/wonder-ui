@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import SwipeItemUnstyled from './SwipeItem';
 import useThemeProps from '../styles/useThemeProps';
 import {
   clamp,
@@ -10,9 +9,9 @@ import {
   generateUtilityClasses,
   globalClasses,
   isHidden,
-  preventDefault,
-  setRef
+  preventDefault
 } from '@wonder-ui/utils';
+import { SwipeContext } from './SwipeContext';
 import {
   useDocumentVisibility,
   useEnhancedEffect,
@@ -28,8 +27,8 @@ import type {
   SwipeState,
   SwipeProps,
   SwipeClasses,
-  SwipeItemAction,
-  SwipeToOptions
+  SwipeToOptions,
+  SwipeItemAction
 } from './SwipeTypes';
 
 const COMPONENT_NAME = 'WuiSwipe';
@@ -86,16 +85,6 @@ const SwipeContainer = styled('div', {
   })
 }));
 
-const SwipeItem = styled(SwipeItemUnstyled, {
-  name: COMPONENT_NAME,
-  slot: 'Item'
-})({
-  position: 'relative',
-  flexShrink: 0,
-  width: '100%',
-  height: '100%'
-});
-
 const SwipeIndicators = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Indicators'
@@ -141,10 +130,10 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
   const {
     actionRef,
     autoplay: allowAutoPlay = false,
-    children: childrenProp,
+    children,
     className,
     containerStyle,
-    disableLazyLoading,
+    disableLazyLoading = false,
     duration = 500,
     height,
     initialSlide = 0,
@@ -161,20 +150,11 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     ...rest
   } = props;
 
-  const internalChildren = React.Children.toArray(childrenProp);
-
-  const count = React.useMemo(
-    () => internalChildren.length,
-    [internalChildren]
-  );
-
-  const childrenAction = React.useMemo(
-    () =>
-      createArray(count, (index) => index).map((index) => {
-        return React.createRef<SwipeItemAction>();
-      }),
+  const childrenAction = useReactive<React.MutableRefObject<SwipeItemAction>[]>(
     []
   );
+
+  const count = childrenAction.length;
 
   const rootRef = React.useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(rootRef, ref);
@@ -290,14 +270,13 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
 
       // auto move first and last swipe in loop mode
       if (loop) {
-        if (childrenAction[0].current && targetOffset !== minOffset) {
+        if (childrenAction[0] && targetOffset !== minOffset) {
           const outRightBound = targetOffset < minOffset;
           childrenAction[0].current.setOffset(outRightBound ? trackSize : 0);
         }
 
         if (childrenAction[count - 1] && targetOffset !== 0) {
           const outLeftBound = targetOffset > 0;
-          //@ts-expect-error
           childrenAction[count - 1].current.setOffset(
             outLeftBound ? -trackSize : 0
           );
@@ -527,7 +506,8 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     disableLazyLoading,
     loop,
     size,
-    vertical
+    vertical,
+    actionRefs: childrenAction
   };
 
   return (
@@ -537,32 +517,20 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
       ref={handleRef}
       {...rest}
     >
-      <SwipeContainer
-        ref={containerRef}
-        styleProps={styleProps}
-        className={classes.container}
-        style={{ ...containerStyle, ...trackStyle }}
-        onTouchStart={onTouchStart}
-        // onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-        onTouchCancel={onTouchEnd}
-      >
-        {internalChildren.map((item, index) => (
-          <SwipeItem
-            className={classes.item}
-            style={slideStyle}
-            index={index}
-            key={index}
-            actionRef={(action) => {
-              setRef(childrenAction[index], action);
-            }}
-            {...childProps}
-          >
-            {item}
-          </SwipeItem>
-        ))}
-      </SwipeContainer>
-
+      <SwipeContext.Provider value={childProps}>
+        <SwipeContainer
+          ref={containerRef}
+          styleProps={styleProps}
+          className={classes.container}
+          style={{ ...containerStyle, ...trackStyle }}
+          onTouchStart={onTouchStart}
+          // onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          onTouchCancel={onTouchEnd}
+        >
+          {children}
+        </SwipeContainer>
+      </SwipeContext.Provider>
       {showIndicators &&
         (onRenderIndicator ? (
           onRenderIndicator(activeIndex)

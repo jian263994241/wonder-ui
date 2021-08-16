@@ -1,4 +1,4 @@
-import { Swipe, styled } from '@wonder-ui/core';
+import { Swipe, SwipeItem, styled } from '@wonder-ui/core';
 
 const Image = styled('div')`
   color: #fff;
@@ -21,17 +21,23 @@ const Indicator = styled('div')`
   font-size: 12px;
 `;
 
+const items = Array(3).fill('');
+
 export default () => {
   return (
     <Swipe
       autoplay
       onRenderIndicator={(activeIndex) => (
-        <Indicator>{activeIndex + 1}/3</Indicator>
+        <Indicator>
+          {activeIndex + 1}/{items.length}
+        </Indicator>
       )}
     >
-      <Image>1</Image>
-      <Image>2</Image>
-      <Image>3</Image>
+      {items.map((item, index) => (
+        <SwipeItem key={index}>
+          <Image>{index + 1}</Image>
+        </SwipeItem>
+      ))}
     </Swipe>
   );
 };

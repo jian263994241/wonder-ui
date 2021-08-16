@@ -1,4 +1,4 @@
-import { Swipe, styled } from '@wonder-ui/core';
+import { Swipe, SwipeItem, styled } from '@wonder-ui/core';
 
 const Image = styled('div')`
   color: #fff;
@@ -9,17 +9,21 @@ const Image = styled('div')`
   width: 100%;
   height: 200px;
 
-  .WuiSwipe-item:nth-child(even) & {
+  .WuiSwipeItem-root:nth-of-type(even) & {
     background-color: #39ed81;
   }
 `;
 
+const items = Array(6).fill('');
+
 export default () => {
   return (
     <Swipe loop={false} width={260}>
-      <Image>1</Image>
-      <Image>2</Image>
-      <Image>3</Image>
+      {items.map((item, index) => (
+        <SwipeItem key={index}>
+          <Image>{index + 1}</Image>
+        </SwipeItem>
+      ))}
     </Swipe>
   );
 };

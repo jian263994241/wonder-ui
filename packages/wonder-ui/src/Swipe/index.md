@@ -46,7 +46,7 @@ group:
 
 <API src="./Swipe.tsx" props="actionRef|autoplay|interval|classes|className|children|style|slideStyle|containerStyle|disableLazyLoading|touchable|initialSlide|showIndicators|stopPropagation|vertical|duration|width|height|loop|onRenderIndicator|onChange"></API>
 
-
+<API src="../SwipeItem/SwipeItem.tsx" props="className|children|style"></API>
 ## Swipe 方法
 
 | 参数	|说明	|类型	|默认值

@@ -1,22 +1,61 @@
 import * as React from 'react';
-import { useMount, useReactive } from '@wonder-ui/hooks';
-import type { SwipeItemProps } from './SwipeTypes';
+import styled from '../styles/styled';
+import { SwipeContext } from '../Swipe/SwipeContext';
+import { useMount, useReactive, useConst } from '@wonder-ui/hooks';
+import { warn, generateUtilityClasses, css, findIndex } from '@wonder-ui/utils';
+import type { SwipeItemProps, SwipeItemClasses } from './SwipeItemTypes';
+import type { SwipeItemAction } from '../Swipe/SwipeTypes';
+
+const COMPONENT_NAME = 'WuiSwipeItem';
+
+export const swipeItemClasses: SwipeItemClasses = generateUtilityClasses(
+  COMPONENT_NAME,
+  ['root']
+);
+
+const SwipeItemRoot = styled('div', {
+  name: COMPONENT_NAME,
+  slot: 'Root'
+})({
+  position: 'relative',
+  flexShrink: 0,
+  width: '100%',
+  height: '100%'
+});
 
 const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
   (props, ref) => {
+    const { children, className, style, ...rest } = props;
+    const context = React.useContext(SwipeContext);
+    const actionRef = React.useRef<SwipeItemAction>();
+
+    if (!context) {
+      warn('<SwipeItem> must be a child component of <Swipe>.');
+      return null;
+    }
+
     const {
-      actionRef,
       activeIndex = 0,
       count = 0,
-      children,
-      style,
       size,
-      index = -1,
       vertical,
       loop,
       disableLazyLoading,
-      ...rest
-    } = props;
+      actionRefs
+    } = context;
+
+    const index = useConst(() => {
+      //@ts-expect-error
+      actionRefs.push(actionRef);
+      return findIndex(actionRefs, (item) => item === actionRef);
+    });
+
+    React.useEffect(
+      () => () => {
+        actionRefs.splice(index, 1);
+      },
+      [index]
+    );
 
     const mounted = useMount();
     const rendered = React.useRef<boolean>(false);
@@ -66,9 +105,14 @@ const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
     React.useImperativeHandle(actionRef, () => ({ setOffset }), []);
 
     return (
-      <div style={{ ...style, ...computedStyle }} ref={ref} {...rest}>
+      <SwipeItemRoot
+        className={css(swipeItemClasses.root, className)}
+        style={{ ...style, ...computedStyle }}
+        ref={ref}
+        {...rest}
+      >
         {shouldRender ? children : null}
-      </div>
+      </SwipeItemRoot>
     );
   }
 );
