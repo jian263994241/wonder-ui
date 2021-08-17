@@ -240,7 +240,6 @@ export function alpha(color: string | ColorObject, value: number) {
   return recomposeColor(color);
 }
 
-export const fade = alpha;
 /**
  * Darkens a color.
  *

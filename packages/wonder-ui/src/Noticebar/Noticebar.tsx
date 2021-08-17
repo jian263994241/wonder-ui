@@ -1,20 +1,20 @@
 import * as React from 'react';
+import CloseButton from '../CloseButton';
+import Fade from '../Fade';
+import Space from '../Space';
 import styled from '../styles/styled';
+import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
 import {
-  css,
-  generateUtilityClasses,
+  capitalize,
   composeClasses,
-  capitalize
+  css,
+  generateUtilityClasses
 } from '@wonder-ui/utils';
-import { alpha, darken, lighten } from '../styles/colorManipulator';
-import CloseButton from '../CloseButton';
-import Typography from '../Typography';
-import Space from '../Space';
-import Fade from '../Fade';
+import { darken, lighten } from '../styles/colorManipulator';
 import { useEventCallback, useSafeState } from '@wonder-ui/hooks';
 
-const COMPONENT_NAME = 'NoticeBar';
+const COMPONENT_NAME = 'Noticebar';
 
 export const noticebarClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
@@ -85,10 +85,9 @@ export interface NoticebarProps extends React.HTMLAttributes<HTMLDivElement> {
 const NoticebarRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
   styleProps: NoticebarProps;
 }>(({ theme, styleProps }) => {
-  const color = theme.palette[styleProps.type || 'warning'].main;
-  const backgroundColor = alpha(color, 0.3);
-  const textColor =
-    theme.palette.mode === 'light' ? darken(color, 0.48) : lighten(color, 0.48);
+  const color = theme.palette[styleProps.type || 'warning'];
+  const backgroundColor = lighten(color.light, 0.48);
+  const textColor = darken(color.dark, 0.48);
 
   return {
     width: '100%',
@@ -102,14 +101,14 @@ const NoticebarRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
   };
 });
 
-const NoticebarIcon = styled(Typography, {
+const NoticebarIcon = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Icon'
 })(({ theme }) => ({
   alignSelf: 'flex-start',
   padding: theme.spacing(1, 1, 0, 2),
-  marginTop: 1,
-  flexShrink: 0
+  flexShrink: 0,
+  lineHeight: 1.65
 }));
 
 const NoticebarText = styled(Typography, {
@@ -149,6 +148,7 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
       wrap = false,
       scrollable = false,
       onClose,
+      style,
       icon,
       ...rest
     } = props;
@@ -164,13 +164,13 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
     });
 
     return (
-      <Fade in={visible} unmountOnExit>
-        <NoticebarRoot
-          styleProps={styleProps}
-          className={css(classes.root, className)}
-          ref={ref}
-          {...rest}
-        >
+      <Fade
+        in={visible}
+        unmountOnExit
+        style={style}
+        className={css(classes.root, className)}
+      >
+        <NoticebarRoot styleProps={styleProps} ref={ref} {...rest}>
           {icon && <NoticebarIcon> {icon}</NoticebarIcon>}
 
           <NoticebarText

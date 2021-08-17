@@ -61,7 +61,7 @@ export default ({
             </tr>
           </thead>
           <tbody>
-            {data[expt].map((row) => {
+            {data[expt]?.map((row) => {
               return propsList.includes(row.identifier) ? (
                 <tr key={row.identifier}>
                   <td>{row.identifier}</td>
