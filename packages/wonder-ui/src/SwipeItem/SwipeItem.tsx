@@ -44,11 +44,16 @@ const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
       actionRefs
     } = context;
 
-    const index = useConst(() => {
-      //@ts-expect-error
-      actionRefs.push(actionRef);
-      return findIndex(actionRefs, (item) => item === actionRef);
-    });
+    const index = React.useMemo(() => {
+      let currentIndex = findIndex(actionRefs, (item) => item === actionRef);
+
+      if (currentIndex < 0) {
+        actionRefs.push(actionRef);
+        currentIndex = findIndex(actionRefs, (item) => item === actionRef);
+      }
+
+      return currentIndex;
+    }, []);
 
     React.useEffect(
       () => () => {

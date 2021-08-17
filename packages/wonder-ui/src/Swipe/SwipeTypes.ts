@@ -120,5 +120,5 @@ export type ContextType = {
   disableLazyLoading: boolean;
   activeIndex: number;
   count: number;
-  actionRefs: React.Ref<SwipeItemAction>[];
+  actionRefs: React.Ref<SwipeItemAction | undefined>[];
 };

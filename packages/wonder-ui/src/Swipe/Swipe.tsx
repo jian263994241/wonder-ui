@@ -272,12 +272,12 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
       if (loop) {
         if (childrenAction[0] && targetOffset !== minOffset) {
           const outRightBound = targetOffset < minOffset;
-          childrenAction[0].current.setOffset(outRightBound ? trackSize : 0);
+          childrenAction[0].current?.setOffset(outRightBound ? trackSize : 0);
         }
 
         if (childrenAction[count - 1] && targetOffset !== 0) {
           const outLeftBound = targetOffset > 0;
-          childrenAction[count - 1].current.setOffset(
+          childrenAction[count - 1].current?.setOffset(
             outLeftBound ? -trackSize : 0
           );
         }
