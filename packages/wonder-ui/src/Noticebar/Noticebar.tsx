@@ -73,7 +73,7 @@ export interface NoticebarProps extends React.HTMLAttributes<HTMLDivElement> {
   scrollable?: boolean;
   /**
    * 类型
-   * @default info
+   * @default warning
    */
   type?: 'success' | 'info' | 'warning' | 'error';
   /**
@@ -108,7 +108,10 @@ const NoticebarIcon = styled('span', {
   alignSelf: 'flex-start',
   padding: theme.spacing(1, 1, 0, 2),
   flexShrink: 0,
-  lineHeight: 1.65
+  lineHeight: 1.465,
+  '& > *': {
+    verticalAlign: 'middle'
+  }
 }));
 
 const NoticebarText = styled(Typography, {
@@ -144,7 +147,7 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
       closable = false,
       className,
       children,
-      type = 'info',
+      type = 'warning',
       wrap = false,
       scrollable = false,
       onClose,
@@ -171,7 +174,9 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
         className={css(classes.root, className)}
       >
         <NoticebarRoot styleProps={styleProps} ref={ref} {...rest}>
-          {icon && <NoticebarIcon> {icon}</NoticebarIcon>}
+          {icon && (
+            <NoticebarIcon className={classes.icon}> {icon}</NoticebarIcon>
+          )}
 
           <NoticebarText
             className={classes.text}

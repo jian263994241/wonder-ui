@@ -4,7 +4,7 @@ import { InfoCircle, CheckCircle, ExclamationCircle } from '@wonder-ui/icons';
 export default () => (
   <Space direction="vertical" itemWrap={false}>
     <Noticebar type="info" icon={<InfoCircle />}>
-      Info (default) Noticebar.
+      Info Noticebar.
     </Noticebar>
     <Noticebar
       type="warning"
@@ -15,7 +15,7 @@ export default () => (
         </IconButton>
       }
     >
-      Warning Noticebar.
+      Warning (default) Noticebar.
     </Noticebar>
     <Noticebar type="error" closable>
       message...message...message...message...message...message...message...message...message...message...message...message...
