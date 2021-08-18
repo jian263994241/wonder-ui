@@ -28,6 +28,12 @@ group:
 
 <code src="./demo/wrap.tsx"></code>
 
+### 等分容器
+
+设置`itemEqual`属性实现等分内容
+
+<code src="./demo/itemEqual.tsx"></code>
+
 ### 水平方向-水平对齐
 
 <code src="./demo/horizontalAlign.tsx"></code>
@@ -55,7 +61,7 @@ type Alignment = 'start' | 'end' | 'center' | 'space-between' | 'space-around' |
 type SpaceSize = 'small' | 'medium' | 'large' | number;
 ```
 
-<API src="./Space.tsx" props="classes|component|direction|gap|horizontalAlign|nowrap|split|verticalAlign|itemWrap"></API>
+<API src="./Space.tsx"></API>
 
 
 

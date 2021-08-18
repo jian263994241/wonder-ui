@@ -91,6 +91,11 @@ export interface SpaceProps extends React.HTMLAttributes<HTMLElement> {
    * @default false
    */
   nowrap?: boolean;
+  /**
+   * 等分容器
+   * @default false
+   */
+  itemEqual?: boolean;
 }
 
 interface SpaceStyleProps extends SpaceProps {}
@@ -165,6 +170,14 @@ const SpaceRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
   };
 });
 
+const SpaceItem = styled('span', { name: COMPONENT_NAME, slot: 'Item' })<{
+  styleProps: SpaceStyleProps;
+}>(({ styleProps }) => ({
+  ...(styleProps.itemEqual && {
+    flex: 1
+  })
+}));
+
 const SpaceSplit = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Split'
@@ -173,8 +186,6 @@ const SpaceSplit = styled('span', {
   alignSelf: 'stretch',
   alignItems: 'center'
 });
-
-const SpaceItem = styled('span', { name: COMPONENT_NAME, slot: 'Item' })({});
 
 const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
@@ -192,6 +203,7 @@ const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
     verticalFill = false,
     nowrap = false,
     itemWrap = true,
+    itemEqual = false,
     ...rest
   } = props;
 
@@ -204,7 +216,8 @@ const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
     verticalAlign,
     verticalFill,
     horizontalAlign,
-    reversed
+    reversed,
+    itemEqual
   };
 
   const classes = useClasses(styleProps);
@@ -223,7 +236,9 @@ const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
             <SpaceSplit className={classes.split}>{split}</SpaceSplit>
           )}
           {itemWrap ? (
-            <SpaceItem className={classes.item}>{child}</SpaceItem>
+            <SpaceItem className={classes.item} styleProps={styleProps}>
+              {child}
+            </SpaceItem>
           ) : React.isValidElement(child) ? (
             React.cloneElement(child, {
               className: css(classes.item, child.props.className)
