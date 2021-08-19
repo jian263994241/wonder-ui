@@ -33,9 +33,9 @@
   "license": "MIT",
   "dependencies": {
     "@popperjs/core": "^2.9.0",
-    "@wonder-ui/hooks": "^1.1.11",
+    "@wonder-ui/hooks": "^1.1.12",
     "@wonder-ui/styled": "^1.0.7",
-    "@wonder-ui/utils": "^2.1.14",
+    "@wonder-ui/utils": "^2.1.15",
     "react-focus-lock": "^2.5.0",
     "react-is": "^17.0.2",
     "react-transition-group": "^4.4.1"

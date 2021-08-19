@@ -6,6 +6,7 @@ import {
   composeClasses,
   createArray,
   css,
+  doubleRaf,
   generateUtilityClasses,
   globalClasses,
   isHidden,
@@ -21,7 +22,8 @@ import {
   useReactive,
   useTouch,
   useUpdateEffect,
-  useWindowSize
+  useWindowSize,
+  useSafeState
 } from '@wonder-ui/hooks';
 import type {
   SwipeState,
@@ -54,12 +56,6 @@ const useClasses = (styleProps: SwipeProps) => {
   };
 
   return composeClasses('WuiSwipe', slots, classes);
-};
-
-const doubleRaf = (cb: () => void) => {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(cb);
-  });
 };
 
 const SwipeRoot = styled('div', {
@@ -154,7 +150,11 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     []
   );
 
-  const count = childrenAction.length;
+  const [count, setCount] = useSafeState(childrenAction.length);
+
+  React.useEffect(() => {
+    setCount(childrenAction.length);
+  }, [childrenAction.length]);
 
   const rootRef = React.useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(rootRef, ref);
@@ -164,7 +164,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     width: 0,
     height: 0,
     offset: 0,
-    active: 0,
+    active: initialSlide,
     swiping: false
   });
 
@@ -334,7 +334,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
 
   const stopAutoplay = () => clearTimeout(autoplayTimer.current!);
 
-  const autoplay = () => {
+  const autoplay = useEventCallback(() => {
     stopAutoplay();
     if (allowAutoPlay && interval > 0 && count > 1) {
       autoplayTimer.current = setTimeout(() => {
@@ -342,7 +342,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
         autoplay();
       }, +interval);
     }
-  };
+  });
 
   const swipeTo = useEventCallback(
     (index: number, options: SwipeToOptions = {}) => {
@@ -479,14 +479,8 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
   const documentVisible = useDocumentVisibility();
 
   useEnhancedEffect(() => {
-    initialize(initialSlide);
-  }, [initialSlide]);
-
-  useUpdateEffect(() => {
     initialize(state.active);
-  }, [count]);
 
-  useEnhancedEffect(() => {
     if (allowAutoPlay && documentVisible === 'visible') {
       autoplay();
     } else {
@@ -496,7 +490,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     return () => {
       stopAutoplay();
     };
-  }, [allowAutoPlay, documentVisible]);
+  }, [allowAutoPlay, documentVisible, count]);
 
   useEnhancedEffect(resize, [windowSize.width, windowSize.height]);
 
