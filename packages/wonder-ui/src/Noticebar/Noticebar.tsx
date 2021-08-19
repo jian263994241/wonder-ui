@@ -293,8 +293,9 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
       raf(() => {
         // use double raf to ensure animation can start
         doubleRaf(() => {
-          state.offset = -contentWidth;
+          state.offset = -contentWidth.current;
           state.duration = (contentWidth.current + wrapWidth.current) / +speed;
+
           onReplay?.();
         });
       });
