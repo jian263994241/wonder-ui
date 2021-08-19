@@ -34,14 +34,14 @@ type ToastOption = {
   };
 };
 
-interface Dialogs {
+export interface Dialogs {
   custom: (props: DialogProps) => void;
   alert: (props: AlertProps) => void;
   confirm: (props: ConfirmProps) => void;
   toast: (message: string, options?: ToastOption) => void;
 }
 
-export default function withDialog<P>(
+export function withDialog<P>(
   Component: React.ComponentType<
     P & {
       dialog: Dialogs;

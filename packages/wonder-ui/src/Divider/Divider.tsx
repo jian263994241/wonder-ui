@@ -185,6 +185,9 @@ const DividerRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })(
         '&::after': {
           width: '90%'
         }
+      },
+      [`&.${dividerClasses.inset}`]: {
+        marginLeft: theme.spacing(2)
       }
     };
   }

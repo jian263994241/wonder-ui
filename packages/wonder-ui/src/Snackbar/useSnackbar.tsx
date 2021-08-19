@@ -2,9 +2,14 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Snackbar, { SnackbarProps } from './Snackbar';
 import useTheme from '../styles/useTheme';
-import { createId, DialogManager, nextTick } from '@wonder-ui/utils';
 import { ThemeProvider } from '@wonder-ui/styled';
 import { useConst, useReactive, useSafeState } from '@wonder-ui/hooks';
+import {
+  createId,
+  DialogManager,
+  nextTick,
+  getDocument
+} from '@wonder-ui/utils';
 
 const defaultManager = new DialogManager();
 
@@ -50,7 +55,7 @@ export function useSnackbar(options: SnackbarHookOptions = {}) {
     onRender
   } = options;
 
-  const container = useConst(() => document.createElement('div'));
+  const container = useConst(() => getDocument().createElement('div'));
   const modals = useReactive<JSX.Element[]>([]);
   const theme = useTheme();
 
