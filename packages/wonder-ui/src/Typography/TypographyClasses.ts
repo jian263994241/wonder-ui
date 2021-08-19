@@ -1,9 +1,10 @@
 import {
-  generateUtilityClasses,
   capitalize,
   composeClasses,
+  generateUtilityClasses,
   upperFirst
 } from '@wonder-ui/utils';
+import type { TypographyClasses, TypographyProps } from './TypographyTypes';
 
 export const defaultVariantMapping = {
   h1: 'h1',
@@ -15,60 +16,46 @@ export const defaultVariantMapping = {
   subtitle1: 'h6',
   subtitle2: 'h6',
   body1: 'span',
-  body2: 'span'
-} as const;
+  body2: 'span',
+  inherit: 'div'
+};
 
-export const typographyClasses = generateUtilityClasses('WuiTypography', [
-  'root',
-  'h1',
-  'h2',
-  'h3',
-  'h4',
-  'h5',
-  'h6',
-  'subtitle1',
-  'subtitle2',
-  'body1',
-  'body2',
-  'inherit',
-  'inline',
-  'button',
-  'caption',
-  'overline',
-  'alignLeft',
-  'alignRight',
-  'alignCenter',
-  'alignJustify',
-  'colorPrimary',
-  'colorSecondary',
-  'colorTextPrimary',
-  'colorTextSecondary',
-  'colorError',
-  'noWrap',
-  'gutterBottom',
-  'paragraph',
-  'lineClamp'
-]);
+export const typographyClasses: TypographyClasses = generateUtilityClasses(
+  'WuiTypography',
+  [
+    'root',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'subtitle1',
+    'subtitle2',
+    'body1',
+    'body2',
+    'inherit',
+    'inline',
+    'button',
+    'caption',
+    'overline',
+    'alignLeft',
+    'alignRight',
+    'alignCenter',
+    'alignJustify',
+    'colorPrimary',
+    'colorSecondary',
+    'colorTextPrimary',
+    'colorTextSecondary',
+    'colorError',
+    'noWrap',
+    'gutterBottom',
+    'paragraph',
+    'lineClamp'
+  ]
+);
 
-export interface TypographyStyleProps {
-  align: 'center' | 'inherit' | 'justify' | 'left' | 'right';
-  classes?: Partial<typeof typographyClasses>;
-  color:
-    | 'inherit'
-    | 'primary'
-    | 'secondary'
-    | 'textPrimary'
-    | 'textSecondary'
-    | 'error';
-  gutterBottom: boolean;
-  inline?: boolean;
-  lineClamp?: number;
-  noWrap: boolean;
-  paragraph: boolean;
-  variant: keyof typeof defaultVariantMapping;
-}
-
-export const useClasses = (styleProps: TypographyStyleProps) => {
+export const useClasses = (styleProps: TypographyProps) => {
   const {
     align,
     color,
@@ -77,20 +64,18 @@ export const useClasses = (styleProps: TypographyStyleProps) => {
     paragraph,
     variant,
     lineClamp,
-    inline,
     classes
   } = styleProps;
 
   const slots = {
     root: [
       'root',
-      variant,
-      align !== 'inherit' && `align${capitalize(align)}`,
-      color !== 'inherit' && `color${upperFirst(color)}`,
+      variant != 'inherit' && variant,
+      align !== 'inherit' && `align${capitalize(align!)}`,
+      color !== 'inherit' && `color${upperFirst(color!)}`,
       gutterBottom && 'gutterBottom',
       noWrap && 'noWrap',
       paragraph && 'paragraph',
-      inline && 'inline',
       typeof lineClamp === 'number' && lineClamp !== 0 && 'lineClamp'
     ]
   };

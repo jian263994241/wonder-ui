@@ -10,6 +10,22 @@ export interface TypographyOptions {
   htmlFontSize?: number;
 }
 
+export interface TypographyVariants {
+  h1: React.CSSProperties;
+  h2: React.CSSProperties;
+  h3: React.CSSProperties;
+  h4: React.CSSProperties;
+  h5: React.CSSProperties;
+  h6: React.CSSProperties;
+  subtitle1: React.CSSProperties;
+  subtitle2: React.CSSProperties;
+  body1: React.CSSProperties;
+  body2: React.CSSProperties;
+  button: React.CSSProperties;
+  caption: React.CSSProperties;
+  overline: React.CSSProperties;
+}
+
 function round(value: number) {
   return Math.round(value * 1e5) / 1e5;
 }
@@ -62,7 +78,7 @@ export default function createTypography(typography: TypographyOptions = {}) {
     };
   }
 
-  const variants = {
+  const variants: TypographyVariants = {
     h1: buildVariant(fontWeightMedium, 40, 1.167, -1.5),
     h2: buildVariant(fontWeightMedium, 32, 1.2, -0.5),
     h3: buildVariant(fontWeightMedium, 28, 1.167, 0),

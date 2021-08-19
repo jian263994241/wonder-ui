@@ -27,6 +27,6 @@ html的所有标题 `h1`~`h6`
 
 <code src="./demo/paragraph.tsx"></code>
 
-<API src="./Typography.tsx" props="align|children|color|component|gutterBottom|lineClamp|noWrap|paragraph|variant"></API>
+<API src="./Typography.tsx"></API>
 
 

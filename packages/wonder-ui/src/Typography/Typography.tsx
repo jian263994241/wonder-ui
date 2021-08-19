@@ -5,75 +5,22 @@ import { css } from '@wonder-ui/utils';
 import {
   defaultVariantMapping,
   typographyClasses,
-  TypographyStyleProps,
   useClasses
 } from './TypographyClasses';
-
-export interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * @description 对齐
-   * @default inherit
-   */
-  align?: 'center' | 'inherit' | 'justify' | 'left' | 'right';
-  /**
-   * class
-   */
-  classes?: Partial<typeof typographyClasses>;
-  /**
-   * @description 颜色
-   * @default inherit
-   */
-  color?:
-    | 'inherit'
-    | 'primary'
-    | 'secondary'
-    | 'textPrimary'
-    | 'textSecondary'
-    | 'error';
-  /**
-   * Root element
-   */
-  component?: React.ElementType;
-  /**
-   * @description 不换行
-   * @default false
-   */
-  noWrap?: boolean;
-  /**
-   * @description 多行省略
-   * @default 0
-   */
-  lineClamp?: number;
-  /** inline */
-  inline?: boolean;
-  /**
-   * @description 段落
-   * @default false
-   */
-  paragraph?: boolean;
-  /**
-   * @description 增加间距
-   * @default false
-   */
-  gutterBottom?: boolean;
-  /**
-   * @description 样式类型
-   * @default body1
-   */
-  variant?: keyof typeof defaultVariantMapping;
-}
+import type { TypographyProps } from './TypographyTypes';
 
 const TypographyRoot = styled('span', {
   name: 'WuiTypography',
   slot: 'Root'
-})<{ styleProps: TypographyStyleProps }>(({ theme, styleProps }) => ({
+})<{ styleProps: TypographyProps }>(({ theme, styleProps }) => ({
   margin: 0,
   padding: 0,
   display: 'block',
   textAlign: styleProps.align,
   wordBreak: 'break-word',
-  ...theme.typography[styleProps.variant],
-
+  ...(styleProps.variant &&
+    styleProps.variant != 'inherit' &&
+    theme.typography[styleProps.variant]),
   [`&.${typographyClasses.colorPrimary}`]: {
     color: theme.palette.primary.main
   },
@@ -105,9 +52,6 @@ const TypographyRoot = styled('span', {
   },
   [`&.${typographyClasses.paragraph}`]: {
     marginBottom: theme.spacing(2)
-  },
-  [`&.${typographyClasses.inline}`]: {
-    display: 'inline'
   }
 }));
 
@@ -125,7 +69,6 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       noWrap = false,
       paragraph = false,
       variant = 'body1',
-      inline = false,
       ...rest
     } = props;
 
@@ -140,15 +83,14 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       lineClamp,
       noWrap,
       paragraph,
-      variant,
-      inline
+      variant
     };
 
     const classes = useClasses(styleProps);
 
     return (
       <TypographyRoot
-        as={_component}
+        as={_component as React.ElementType}
         className={css(className, classes.root)}
         ref={ref}
         styleProps={styleProps}

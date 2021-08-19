@@ -1,6 +1,6 @@
 import * as colors from './colors';
 import { darken, getContrastRatio, lighten } from '../colorManipulator';
-import { getDevice } from '@wonder-ui/utils';
+import { getDevice, getDocument } from '@wonder-ui/utils';
 import type { ColorKeys, ColorType } from './colors';
 
 type ColorObj = {
@@ -186,6 +186,15 @@ function addLightOrDark(
 }
 
 function getMode(mode: PaletteOptions['mode']): Palette['mode'] {
+  const doc = getDocument();
+
+  const prefersColor =
+    doc.documentElement && doc.documentElement.dataset['prefersColor'];
+
+  if (prefersColor === 'light' || prefersColor === 'dark') {
+    return prefersColor;
+  }
+
   if (mode === 'light') return 'light';
   if (mode === 'dark') return 'dark';
 
@@ -230,7 +239,7 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
       light: defaultDark,
       dark: darken(defaultDark, darkenCoefficient)
     },
-    mode: modeProp,
+    mode: modeProp = 'light',
     contrastThreshold = 3,
     tonalOffset = 0.2
   } = palette;
