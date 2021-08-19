@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
-import ReactMarkdown from 'react-markdown';
 import { context, useApiData } from 'dumi/theme';
-import { useConst } from '@wonder-ui/hooks';
 import type { IApiComponentProps } from 'dumi/theme';
 
 const LOCALE_TEXTS = {
@@ -23,8 +21,7 @@ const LOCALE_TEXTS = {
 
 export default ({
   identifier,
-  export: expt,
-  props
+  export: expt
 }: IApiComponentProps & { props?: string }) => {
   const data = useApiData(identifier);
   const { locale } = useContext(context);
@@ -33,14 +30,6 @@ export default ({
     : LOCALE_TEXTS['en-US'];
 
   const rootRef = React.useRef<HTMLTableElement>(null);
-
-  const propsList = useConst(() => {
-    if (typeof props === 'string') {
-      return props.split('|');
-    }
-
-    return [];
-  });
 
   React.useEffect(() => {
     if (rootRef.current) {
@@ -62,7 +51,7 @@ export default ({
           </thead>
           <tbody>
             {data[expt]?.map((row) => {
-              return propsList.includes(row.identifier) ? (
+              return (
                 <tr key={row.identifier}>
                   <td>{row.identifier}</td>
                   <td>{row.description || '-'}</td>
@@ -73,7 +62,7 @@ export default ({
                     {row.default || (row.required && texts.required) || '-'}
                   </td>
                 </tr>
-              ) : null;
+              );
             })}
           </tbody>
         </table>

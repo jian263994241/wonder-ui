@@ -21,3 +21,6 @@ __snapshots__
 .umi-production
 .env.local
 
+
+#dumi
+dumi-static
