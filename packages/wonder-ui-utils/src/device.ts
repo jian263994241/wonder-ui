@@ -220,7 +220,6 @@ function calcDevice({ userAgent }: { userAgent?: string } = {}): Device {
   const LIGHT = '(prefers-color-scheme: light)';
   device.prefersColorScheme = function prefersColorTheme() {
     let theme = 'light';
-    const doc = getDocument();
 
     if (window.matchMedia && window.matchMedia(LIGHT).matches) {
       theme = 'light';
@@ -228,10 +227,7 @@ function calcDevice({ userAgent }: { userAgent?: string } = {}): Device {
     if (window.matchMedia && window.matchMedia(DARK).matches) {
       theme = 'dark';
     }
-    return (
-      (doc.documentElement && doc.documentElement.dataset['prefersColor']) ||
-      theme
-    );
+    return theme;
   };
 
   // Export object
