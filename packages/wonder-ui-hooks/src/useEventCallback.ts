@@ -7,14 +7,12 @@ import * as React from 'react';
 export function useEventCallback<T extends (...args: any[]) => any>(fn: T) {
   const ref = React.useRef(fn);
 
-  React.useEffect(() => {
-    ref.current = fn;
-  });
+  ref.current = fn;
 
-  return (React.useCallback(
+  return React.useCallback(
     (...args: any[]) => (void 0, ref.current)(...args),
     []
-  ) as any) as T;
+  ) as any as T;
 }
 
 export default useEventCallback;
