@@ -225,7 +225,7 @@ const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
   return (
     <SpaceRoot
       as={component}
-      className={css(classes.root, className)}
+      className={css(className, classes.root)}
       ref={ref as React.Ref<HTMLDivElement>}
       styleProps={styleProps}
       {...rest}
