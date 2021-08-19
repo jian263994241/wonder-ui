@@ -1,81 +1,123 @@
 import * as React from 'react';
+import ArrowForward from '../ArrowForward';
 import CloseButton from '../CloseButton';
 import Fade from '../Fade';
+import IconButton from '../IconButton';
 import Space from '../Space';
 import styled from '../styles/styled';
-import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
 import {
   capitalize,
   composeClasses,
   css,
-  generateUtilityClasses
+  doubleRaf,
+  generateUtilityClasses,
+  getRect,
+  raf
 } from '@wonder-ui/utils';
 import { darken, lighten } from '../styles/colorManipulator';
-import { useEventCallback, useSafeState } from '@wonder-ui/hooks';
+import { useEventCallback, useReactive, useWindowSize } from '@wonder-ui/hooks';
+import { swipeClasses } from '../Swipe/Swipe';
+import { swipeItemClasses } from '../SwipeItem/SwipeItem';
 
 const COMPONENT_NAME = 'Noticebar';
 
 export const noticebarClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
+  'textWrap',
   'text',
+  'textAfter',
   'icon',
-  'actions',
   'close',
   'closable',
+  'link',
   'scrollable',
-  'typeSuccess',
   'typeInfo',
   'typeWarning',
-  'typeError',
   'wrap'
 ]);
 
 const useClasses = (styleProps: NoticebarProps) => {
-  const { classes, closable, scrollable, type, wrap } = styleProps;
+  const { classes, scrollable, type, wrap, mode } = styleProps;
   const slots = {
     root: [
       'root',
-      closable && 'closable',
+      mode && mode,
       scrollable && 'scrollable',
       type && `type${capitalize(type)}`,
       wrap && 'wrap'
     ],
     icon: ['icon'],
+    textWrap: ['textWrap'],
     text: ['text'],
     close: ['close'],
-    acionts: ['actions']
+    textAfter: ['textAfter']
   };
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-export interface NoticebarProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface NoticebarProps {
   /**
-   * 操作区域
+   * 自定义文字后面的内容
    */
-  actions?: React.ReactNode;
+  textAfter?: React.ReactNode;
+  /**
+   * 类名
+   */
+  className?: string;
+
+  children?: React.ReactNode;
+  /**
+   * 样式
+   */
+  style?: React.CSSProperties;
+  /**
+   * Css api
+   */
   classes?: Partial<typeof noticebarClasses>;
   /**
-   * 可关闭的
+   * 通知栏模式, 可选值为: 可关闭的或链接
    */
-  closable?: boolean;
+  mode?: 'closeable' | 'link';
+  /**
+   * 通知文本内容
+   */
+  text?: string;
   /**
    * 图标
    */
   icon?: React.ReactNode;
   /**
-   * 关闭时回调
+   * 动画延迟时间 (s)
    */
-  onClose?(): void;
+  delay?: number;
+  /**
+   * 滚动速率 (px/s)
+   * @default 60
+   */
+  speed?: number;
+  /**
+   * 关闭通知栏时触发
+   */
+  onClose?(event: React.MouseEvent): void;
+  /**
+   * 点击通知栏时触发
+   */
+  onClick?(event: React.MouseEvent): void;
+  /**
+   * 每当滚动栏重新开始滚动时触发
+   */
+  onReplay?(): void;
   /**
    * 滚动
+   * @default true
    */
   scrollable?: boolean;
   /**
    * 类型
    * @default warning
    */
-  type?: 'success' | 'info' | 'warning' | 'error';
+  type?: 'info' | 'warning';
   /**
    * 换行
    */
@@ -85,19 +127,35 @@ export interface NoticebarProps extends React.HTMLAttributes<HTMLDivElement> {
 const NoticebarRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
   styleProps: NoticebarProps;
 }>(({ theme, styleProps }) => {
-  const color = theme.palette[styleProps.type || 'warning'];
-  const backgroundColor = lighten(color.light, 0.48);
-  const textColor = darken(color.dark, 0.48);
+  const color = theme.palette[styleProps.type || 'warning'].main;
+  const backgroundColor = lighten(color, 0.9);
+  const textColor = darken(color, 0.2);
 
   return {
+    ...theme.typography.body2,
+    margin: 0,
+    boxSizing: 'border-box',
     width: '100%',
+    height: 40,
+    padding: theme.spacing(0, 2),
     color: textColor,
     backgroundColor,
-    boxSizing: 'border-box',
-    padding: 0,
-    margin: 0,
     display: 'flex',
-    alignItems: 'flex-start'
+    alignItems: 'center',
+
+    ...(styleProps.wrap && {
+      height: 'auto',
+      padding: theme.spacing(1, 2)
+    }),
+
+    [`& .${swipeClasses.root}`]: {
+      width: '100%',
+      height: '100%'
+    },
+    [`& .${swipeItemClasses.root}`]: {
+      display: 'flex',
+      alignItems: 'center'
+    }
   };
 });
 
@@ -105,98 +163,207 @@ const NoticebarIcon = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Icon'
 })(({ theme }) => ({
-  alignSelf: 'flex-start',
-  padding: theme.spacing(1, 1, 0, 2),
+  marginRight: theme.spacing(1),
   flexShrink: 0,
-  lineHeight: 1.465,
-  '& > *': {
-    verticalAlign: 'middle'
-  }
+  display: 'flex',
+  fontSize: theme.typography.pxToRem(16)
 }));
 
-const NoticebarText = styled(Typography, {
+const NoticebarTextWrap = styled('div', {
+  name: COMPONENT_NAME,
+  slot: 'TextWrap'
+})({
+  position: 'relative',
+  flex: 1,
+  display: 'flex',
+  alignItems: 'center',
+  height: '100%',
+  overflow: 'hidden'
+});
+
+const NoticebarText = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Text'
 })<{
   styleProps: NoticebarProps;
-}>(({ styleProps, theme }) => ({
-  width: '99%',
-  boxSizing: 'border-box',
-  padding: theme.spacing(1, 2),
-  alignSelf: 'center',
-  ...(!!styleProps.icon && {
-    paddingLeft: 0
-  }),
-  ...((!!styleProps.closable || !!styleProps.actions) && {
-    paddingRight: 0
-  })
+}>(({ styleProps }) => ({
+  position: 'absolute',
+  transitionTimingFunction: 'linear',
+
+  ...(!styleProps.scrollable &&
+    !styleProps.wrap && {
+      maxWidth: '100%'
+    }),
+  ...(styleProps.wrap
+    ? {
+        position: 'relative',
+        whiteSpace: 'normal',
+        wordWrap: 'break-word'
+      }
+    : {
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
+      })
 }));
 
-const NoticebarActions = styled(Space, {
+const NoticebarTextAfter = styled(Space, {
   name: COMPONENT_NAME,
-  slot: 'Actions'
-})({
-  flexShrink: 0
-});
+  slot: 'TextAfter'
+})(({ theme }) => ({
+  cursor: 'pointer',
+  display: 'flex',
+  fontSize: theme.typography.pxToRem(16),
+  marginRight: -theme.spacing(2)
+}));
 
 const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
-      actions,
-      closable = false,
       className,
       children,
       type = 'warning',
       wrap = false,
-      scrollable = false,
+      scrollable = !wrap,
       onClose,
+      onClick,
+      onReplay,
       style,
       icon,
+      text,
+      mode,
+      speed = 60,
+      delay = 1,
+      textAfter,
       ...rest
     } = props;
 
-    const [visible, setVisible] = useSafeState(true);
-
-    const styleProps = { ...props, closable, type, scrollable, wrap };
-    const classes = useClasses(styleProps);
-
-    const handleClose = useEventCallback(() => {
-      setVisible(false);
-      onClose?.();
+    const state = useReactive({
+      show: true,
+      offset: 0,
+      duration: 0
     });
+
+    const styleProps = { ...props, type, scrollable, wrap };
+    const classes = useClasses(styleProps);
+    const { width: windowWidth } = useWindowSize();
+
+    const wrapRef = React.useRef<HTMLDivElement>(null);
+    const contentRef = React.useRef<HTMLDivElement>(null);
+
+    const wrapWidth = React.useRef(0);
+    const contentWidth = React.useRef(0);
+    const startTimer = React.useRef<NodeJS.Timeout>();
+
+    const reset = useEventCallback(() => {
+      const ms = typeof delay === 'number' ? +delay * 1000 : 0;
+
+      wrapWidth.current = 0;
+      contentWidth.current = 0;
+      state.offset = 0;
+      state.duration = 0;
+
+      clearTimeout(startTimer.current!);
+      startTimer.current = setTimeout(() => {
+        if (!wrapRef.current || !contentRef.current || scrollable === false) {
+          return;
+        }
+
+        const wrapRefWidth = getRect(wrapRef.current).width;
+        const contentRefWidth = getRect(contentRef.current).width;
+
+        if (scrollable || contentRefWidth > wrapRefWidth) {
+          doubleRaf(() => {
+            wrapWidth.current = wrapRefWidth;
+            contentWidth.current = contentRefWidth;
+            state.offset = -contentWidth.current;
+            state.duration = contentWidth.current / +speed;
+          });
+        }
+      }, ms);
+    });
+
+    const onTransitionEnd = () => {
+      state.offset = wrapWidth.current;
+      state.duration = 0;
+
+      // wait to render offset
+      // using nextTick won't work in iOS14
+      raf(() => {
+        // use double raf to ensure animation can start
+        doubleRaf(() => {
+          state.offset = -contentWidth;
+          state.duration = (contentWidth.current + wrapWidth.current) / +speed;
+          onReplay?.();
+        });
+      });
+    };
+
+    React.useEffect(() => {
+      reset();
+    }, [text, scrollable, windowWidth]);
+
+    const handleClose = useEventCallback((e) => {
+      state.show = false;
+      onClose?.(e);
+    });
+
+    const trackStyle = {
+      transform: state.offset ? `translateX(${state.offset}px)` : '',
+      transitionDuration: `${state.duration}s`
+    };
 
     return (
       <Fade
-        in={visible}
+        in={state.show}
         unmountOnExit
         style={style}
         className={css(classes.root, className)}
       >
-        <NoticebarRoot styleProps={styleProps} ref={ref} {...rest}>
+        <NoticebarRoot role="alert" styleProps={styleProps} ref={ref} {...rest}>
           {icon && (
-            <NoticebarIcon className={classes.icon}> {icon}</NoticebarIcon>
+            <NoticebarIcon className={classes.icon}>{icon}</NoticebarIcon>
           )}
 
-          <NoticebarText
-            className={classes.text}
-            styleProps={styleProps}
-            component={scrollable ? ('marquee' as any) : 'span'}
-            noWrap={!wrap}
+          <NoticebarTextWrap
+            ref={wrapRef}
+            role="marquee"
+            className={classes.textWrap}
           >
-            {children}
-          </NoticebarText>
-          {(actions || closable) && (
-            <NoticebarActions className={classes.acionts} itemWrap={false}>
-              {actions}
-              {closable && (
+            {children || (
+              <NoticebarText
+                ref={contentRef}
+                className={classes.text}
+                style={trackStyle}
+                styleProps={styleProps}
+                onTransitionEnd={onTransitionEnd}
+              >
+                {text}
+              </NoticebarText>
+            )}
+          </NoticebarTextWrap>
+
+          {(textAfter || mode) && (
+            <NoticebarTextAfter className={classes.textAfter} itemWrap={false}>
+              {textAfter}
+              {mode === 'closeable' && (
                 <CloseButton
                   className={classes.close}
-                  fontSize="small"
+                  color="inherit"
                   onClick={handleClose}
                 />
               )}
-            </NoticebarActions>
+              {mode === 'link' && (
+                <IconButton
+                  className={classes.close}
+                  color="inherit"
+                  onClick={onClick}
+                >
+                  <ArrowForward fontSize="small" />
+                </IconButton>
+              )}
+            </NoticebarTextAfter>
           )}
         </NoticebarRoot>
       </Fade>
