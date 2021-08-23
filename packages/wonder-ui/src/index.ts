@@ -52,9 +52,6 @@ export * from './Collapse';
 export { default as Container } from './Container';
 export * from './Container';
 
-export { default as CountDown } from './CountDown';
-export * from './CountDown';
-
 export { default as DatePicker } from './DatePicker';
 export * from './DatePicker';
 
