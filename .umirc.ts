@@ -36,7 +36,11 @@ export default defineConfig({
     }
   },
   resolve: {
-    includes: ['packages/wonder-ui/src', 'docs'],
+    includes: [
+      'packages/wonder-ui/src',
+      'packages/wonder-ui-hooks/src',
+      'docs'
+    ],
     previewLangs: ['tsx']
   },
 
@@ -51,6 +55,10 @@ export default defineConfig({
       {
         title: '组件',
         path: '/components'
+      },
+      {
+        title: 'Hooks',
+        path: '/hooks'
       },
       {
         title: '更新日志',
