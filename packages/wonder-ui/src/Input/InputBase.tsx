@@ -5,12 +5,7 @@ import styled from '../styles/styled';
 import TextareaAutosize from './TextareaAutosize';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import {
-  composeClasses,
-  css,
-  generateUtilityClasses,
-  nextTick
-} from '@wonder-ui/utils';
+import { composeClasses, css, generateUtilityClasses } from '@wonder-ui/utils';
 import { InputFocusOptions, resolveOnChange, triggerFocus } from './inputUtils';
 import {
   useControlled,
@@ -47,6 +42,12 @@ export const inputClasses = generateUtilityClasses(COMPONENT_NAME, [
   'readonly',
   'hasError'
 ]);
+
+type RevealButtonProps = {
+  className: string;
+  visible: boolean;
+  onClick: React.MouseEventHandler<any>;
+};
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size'> {
@@ -116,6 +117,10 @@ export interface InputProps
    * 后缀图标
    */
   onRenderSuffix?(props: InputProps): React.ReactNode;
+  /**
+   * 自定义显示密码按钮
+   */
+  onRenderRevealButton?(props: RevealButtonProps): React.ReactNode;
   /**
    * 按下回车的回调
    */
@@ -388,6 +393,7 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       onCompositionEnd,
       onRenderPrefix,
       onRenderSuffix,
+      onRenderRevealButton,
       parser,
       prefix,
       readOnly = false,
@@ -557,7 +563,13 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
               />
             )}
 
-            {type === 'password' && (
+            {type === 'password' && onRenderRevealButton ? (
+              onRenderRevealButton({
+                onClick: handleReveal,
+                visible: isRevealingPassword,
+                className: classes.revealButton
+              })
+            ) : (
               <InputRevealButton
                 onClick={handleReveal}
                 visible={isRevealingPassword}
