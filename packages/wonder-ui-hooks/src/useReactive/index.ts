@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { nextTick } from '@wonder-ui/utils';
 import { useCreation } from '../useCreation';
+import { useSafeState } from '../useSafeState';
 
 const proxyMap = new WeakMap();
 const rawMap = new WeakMap();
@@ -14,6 +16,11 @@ function observer<T extends object>(initialVal: T, cb: () => void): T {
   // 添加缓存 防止重新构建proxy
   if (existingProxy) {
     return existingProxy;
+  }
+
+  //虚拟dom不做代理
+  if (React.isValidElement(initialVal)) {
+    return initialVal;
   }
 
   // 防止代理已经代理过的对象
@@ -46,12 +53,14 @@ function observer<T extends object>(initialVal: T, cb: () => void): T {
 }
 
 export function useReactive<S extends object>(initialState: S): S {
-  const [, setFlag] = React.useState({});
+  const [, setFlag] = useSafeState({});
   const stateRef = React.useRef<S>(initialState);
 
   const state = useCreation(() => {
     return observer(stateRef.current, () => {
-      setFlag({});
+      nextTick(() => {
+        setFlag({});
+      });
     });
   }, []);
 
