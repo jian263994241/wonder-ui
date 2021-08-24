@@ -30,4 +30,4 @@ group:
 
 <API src="./DatePicker.tsx" props="type|currentDate|minDate|maxDate|filter|formatter|onChange|onConfirm|onCancel"></API>
 
-<API src="../TimePicker/TimePicker.tsx" props="type|currentTime|minHour|maxHour|minMinute|maxMinute|filter|formatter|onChange|onConfirm|onCancel"></API>
+<API src="../TimePicker/TimePicker.tsx"></API>

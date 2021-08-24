@@ -83,6 +83,10 @@ const ListItemRoot = styled('li', {
   whiteSpace: 'unset',
   ...(styleProps.button && {
     cursor: 'pointer'
+  }),
+  ...(styleProps.disabled && {
+    opacity: theme.palette.action.disabledOpacity,
+    pointerEvents: 'none'
   })
 }));
 
@@ -103,9 +107,6 @@ const ListItemInner = styled('div', {
     borderStyle: 'solid',
     borderColor: theme.palette.divider,
     borderBottomWidth: 'thin'
-  }),
-  ...(styleProps.disabled && {
-    opacity: theme.palette.action.disabledOpacity
   })
 }));
 

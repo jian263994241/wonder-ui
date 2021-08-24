@@ -4,13 +4,14 @@ import {
   WhiteSpace,
   Checkbox,
   Container,
-  withDialog
+  useSnackbar
 } from '@wonder-ui/core';
 import * as React from 'react';
 
-export default withDialog((props) => {
+export default () => {
   const [loading, setLoading] = React.useState(false);
   const [needDialog, setDialogState] = React.useState(true);
+  const toast = useSnackbar();
 
   return (
     <Page title="PullRefresh">
@@ -25,7 +26,7 @@ export default withDialog((props) => {
           setTimeout(() => {
             setLoading(false);
             if (needDialog) {
-              props.dialog.toast('加载成功');
+              toast('加载成功');
             }
           }, 2000);
         }}
@@ -46,4 +47,4 @@ export default withDialog((props) => {
       </PullRefresh>
     </Page>
   );
-});
+};

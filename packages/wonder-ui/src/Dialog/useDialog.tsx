@@ -10,7 +10,7 @@ import {
   nextTick
 } from '@wonder-ui/utils';
 import { ThemeProvider } from '@wonder-ui/styled';
-import { useConst, useReactive, useSafeState } from '@wonder-ui/hooks';
+import { useCreation, useReactive, useSafeState } from '@wonder-ui/hooks';
 
 type AlertOptions = {
   title?: React.ReactNode;
@@ -61,7 +61,7 @@ const defaultManager = new DialogManager();
 export function useDialog(options: DialogHookOptions = {}) {
   const { manager = defaultManager, onRender } = options;
 
-  const container = useConst(() => getDocument().createElement('div'));
+  const container = useCreation(() => getDocument().createElement('div'), []);
   const modals = useReactive<JSX.Element[]>([]);
   const theme = useTheme();
 

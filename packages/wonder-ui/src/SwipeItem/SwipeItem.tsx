@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import { SwipeContext } from '../Swipe/SwipeContext';
-import { useMount, useReactive, useConst } from '@wonder-ui/hooks';
+import { useCreation, useMount, useReactive } from '@wonder-ui/hooks';
 import { warn, generateUtilityClasses, css, findIndex } from '@wonder-ui/utils';
 import type { SwipeItemProps, SwipeItemClasses } from './SwipeItemTypes';
 import type { SwipeItemAction } from '../Swipe/SwipeTypes';
@@ -44,12 +44,12 @@ const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
       actionRefs
     } = context;
 
-    const index = React.useMemo(() => {
+    const index = useCreation(() => {
       let currentIndex = findIndex(actionRefs, (item) => item === actionRef);
 
       if (currentIndex < 0) {
         actionRefs.push(actionRef);
-        currentIndex = findIndex(actionRefs, (item) => item === actionRef);
+        currentIndex = actionRefs.length - 1;
       }
 
       return currentIndex;
@@ -81,7 +81,7 @@ const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
       return style;
     }, [state.offset, size, vertical]);
 
-    const shouldRender = React.useMemo(() => {
+    const shouldRender = useCreation(() => {
       if (disableLazyLoading || rendered.current) {
         return true;
       }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DialogManager } from '@wonder-ui/utils';
 import { DialogProps } from '../Dialog';
 import { hoistStatics } from '@wonder-ui/utils';
-import { useConst } from '@wonder-ui/hooks';
+import { useCreation } from '@wonder-ui/hooks';
 import { useDialog } from '../Dialog/useDialog';
 import { useSnackbar } from '../Snackbar/useSnackbar';
 
@@ -52,7 +52,7 @@ export function withDialog<P>(
 
   const returnComponent = React.forwardRef<React.ComponentType<P>, P>(
     (props, ref) => {
-      const manager = useConst(() => new DialogManager());
+      const manager = useCreation(() => new DialogManager(), []);
 
       const dialog = useDialog({ manager });
       const toast = useSnackbar({ manager });

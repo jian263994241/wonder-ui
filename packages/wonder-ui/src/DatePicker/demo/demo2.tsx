@@ -1,7 +1,8 @@
-import { DatePicker, withDialog } from '@wonder-ui/core';
+import { DatePicker, useSnackbar } from '@wonder-ui/core';
 import dayjs from 'dayjs';
 
-export default withDialog(({ dialog }) => {
+export default () => {
+  const toast = useSnackbar();
   return (
     <DatePicker
       type="date"
@@ -11,8 +12,8 @@ export default withDialog(({ dialog }) => {
       currentDate={new Date()}
       onConfirm={(value) => {
         const dateString = dayjs(value).format('YYYY/MM/DD');
-        dialog.toast(dateString);
+        toast(dateString);
       }}
     />
   );
-});
+};

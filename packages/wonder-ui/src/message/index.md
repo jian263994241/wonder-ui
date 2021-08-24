@@ -9,7 +9,7 @@ group:
   order: 5
 ---
 
-# message 消息
+# message 全局消息
 
 提供 Dialog, Snackbar 的方法调用
 

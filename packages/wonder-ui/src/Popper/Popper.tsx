@@ -9,14 +9,9 @@ import {
   OptionsGeneric,
   State as PopperState
 } from '@popperjs/core';
-import { getDocument, setRef } from '@wonder-ui/utils';
+import { getDocument, nextTick, setRef } from '@wonder-ui/utils';
 import { TransitionProps } from '../Transition';
-import {
-  useEnhancedEffect,
-  useForceUpdate,
-  useForkRef,
-  useSafeState
-} from '@wonder-ui/hooks';
+import { useEnhancedEffect, useForkRef, useSafeState } from '@wonder-ui/hooks';
 
 type AnchorEl = HTMLElement | null | (() => HTMLElement | null);
 type BasePlacement = 'top' | 'bottom' | 'right' | 'left';
@@ -102,7 +97,7 @@ const Popper = React.forwardRef<HTMLElement, PopperProps>((inProps, ref) => {
     ...rest
   } = props;
 
-  const forceUpdate = useForceUpdate();
+  const [, forceUpdate] = React.useState({});
   const tooltipRef = React.useRef<HTMLElement>(null);
   const ownRef = useForkRef(tooltipRef, ref);
 
@@ -186,7 +181,9 @@ const Popper = React.forwardRef<HTMLElement, PopperProps>((inProps, ref) => {
 
       handlePopperRefRef.current(popper);
 
-      setTimeout(forceUpdate, 0);
+      nextTick(() => {
+        forceUpdate({});
+      });
     }
   }, [anchorEl, disablePortal, modifiers, open, rtlPlacement, popperOptions]);
 

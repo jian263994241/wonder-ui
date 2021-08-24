@@ -21,7 +21,6 @@ import {
   useForkRef,
   useReactive,
   useTouch,
-  useUpdateEffect,
   useWindowSize,
   useSafeState
 } from '@wonder-ui/hooks';
