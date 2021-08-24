@@ -1,7 +1,6 @@
 import * as React from 'react';
-import dayjs from 'dayjs';
-import { useEventCallback } from './useEventCallback';
-import { useSafeState } from './useSafeState';
+import { useEventCallback } from '../useEventCallback';
+import { useSafeState } from '../useSafeState';
 
 export type TDate = Date | number | string | undefined;
 
@@ -25,7 +24,7 @@ const calcLeft = (t?: TDate) => {
   }
 
   // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-  const left = dayjs(t).valueOf() - new Date().getTime();
+  const left = new Date(t).getTime() - new Date().getTime();
   if (left < 0) {
     return 0;
   }
@@ -43,8 +42,11 @@ const parseMs = (milliseconds: number): FormattedRes => {
 };
 
 export function useCountDown(options?: CountDownOptions) {
-  const { targetDate = Date.now(), interval = 1000, onEnd = () => 0 } =
-    options || {};
+  const {
+    targetDate = Date.now(),
+    interval = 1000,
+    onEnd = () => 0
+  } = options || {};
 
   const [target, setTargetDate] = useSafeState<TDate>(targetDate);
   const [timeLeft, setTimeLeft] = useSafeState(() => calcLeft(target));

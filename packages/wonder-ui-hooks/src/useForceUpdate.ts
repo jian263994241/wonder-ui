@@ -1,4 +1,4 @@
-import { nextTick } from '@wonder-ui/utils';
+import { useDebounceFn } from './useDebounceFn';
 import { useSafeState } from './useSafeState';
 /**
  * Force Update Components
@@ -6,10 +6,10 @@ import { useSafeState } from './useSafeState';
 export function useForceUpdate() {
   const [, setState] = useSafeState({});
 
+  const setDebounceState = useDebounceFn(setState, 1);
+
   return () => {
-    nextTick(() => {
-      setState({});
-    });
+    setDebounceState({});
   };
 }
 

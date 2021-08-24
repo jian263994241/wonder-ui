@@ -3,7 +3,7 @@ import { BasicTarget } from './utils/dom';
 import { getSupport } from '@wonder-ui/utils';
 import { useBoolean } from './useBoolean';
 import { useClickAway } from './useClickAway';
-import { useConst } from './useConst';
+import { useCreation } from './useCreation';
 import { useEventListener } from './useEventListener';
 
 export function useTouchFeedback<T extends Element>(
@@ -25,7 +25,7 @@ export function useTouchFeedback<T extends Element>(
   const { disabled = false, type = 'focus', focusElements = [] } = options;
 
   const targetRef = React.useRef<T>(null);
-  const support = useConst(() => getSupport());
+  const support = useCreation(() => getSupport(), []);
   const [active, { setTrue, setFalse }] = useBoolean(false);
 
   const touchstart = support.touch ? 'touchstart' : 'mousedown';

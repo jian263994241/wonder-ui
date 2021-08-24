@@ -54,3 +54,4 @@ export * from './useVirtualList';
 export * from './useTouch';
 export * from './useScrollParent';
 export * from './useWindowSize';
+export * from './useCreation';
