@@ -1,12 +1,15 @@
 import { createStyleStore } from './createStyleStore';
 import { EventGroup } from './EventGroup';
 import { getDevice } from './device';
-import { getDocument } from './dom/getDocument';
-import { getWindow } from './dom/getWindow';
+import {
+  ownerDocument,
+  ownerWindow,
+  isWindow,
+  getScrollbarSize,
+  scrollTop
+} from './dom';
 import { hasVerticalOverflow } from './overflow';
-import { isWindow } from './validate';
 
-let _scrollbarWidth: number;
 let _bodyScrollDisabledCount = 0;
 
 const storeStyle = createStyleStore();
@@ -114,10 +117,10 @@ const _disableIosBodyScroll = (event: TouchEvent) => {
 
 // Is a vertical scrollbar displayed?
 export const isOverflowing = (container: HTMLElement): boolean => {
-  const doc = getDocument(container);
+  const doc = ownerDocument(container);
 
   if (doc.body === container) {
-    return getWindow(container).innerWidth > doc.documentElement.clientWidth;
+    return ownerWindow(container).innerWidth > doc.documentElement.clientWidth;
   }
 
   return hasVerticalOverflow(container);
@@ -125,7 +128,8 @@ export const isOverflowing = (container: HTMLElement): boolean => {
 
 const getPaddingRight = (element: Element): number => {
   return (
-    parseInt(getWindow(element).getComputedStyle(element).paddingRight, 10) || 0
+    parseInt(ownerWindow(element).getComputedStyle(element).paddingRight, 10) ||
+    0
   );
 };
 
@@ -137,12 +141,12 @@ const getPaddingRight = (element: Element): number => {
 export function disableBodyScroll(
   container?: HTMLElement | null | undefined
 ): void {
-  container = container || getDocument().body;
+  container = container || document.body;
 
-  const doc = getDocument(container);
+  const doc = ownerDocument(container);
 
   if (isOverflowing(container)) {
-    const scrollbarSize = getScrollbarWidth(getDocument(container));
+    const scrollbarSize = getScrollbarSize();
 
     storeStyle.styles.push({
       value: container.style.boxSizing,
@@ -163,7 +167,7 @@ export function disableBodyScroll(
     container.style.boxSizing = 'border-box';
 
     // .mui-fixed is a global helper.
-    const fixedElements = getDocument(container).querySelectorAll('.fixed');
+    const fixedElements = ownerDocument(container).querySelectorAll('.fixed');
     [].forEach.call(fixedElements, (element: HTMLElement | SVGElement) => {
       storeStyle.styles.push({
         value: element.style.paddingRight,
@@ -178,7 +182,7 @@ export function disableBodyScroll(
 
   // https://css-tricks.com/snippets/css/force-vertical-scrollbar/
   const parent = container.parentElement;
-  const containerWindow = getWindow(container);
+  const containerWindow = ownerWindow(container);
   const scrollContainer =
     parent?.nodeName === 'HTML' &&
     containerWindow.getComputedStyle(parent).overflowY === 'scroll'
@@ -218,10 +222,10 @@ export function disableBodyScroll(
 export function enableBodyScroll(
   container?: HTMLElement | null | undefined
 ): void {
-  container = container || getDocument().body;
+  container = container || document.body;
 
   if (_bodyScrollDisabledCount > 0) {
-    const doc = getDocument(container);
+    const doc = ownerDocument(container);
 
     if (container && _bodyScrollDisabledCount === 1) {
       // doc.body.classList.remove(DisabledScrollClassName);
@@ -236,30 +240,6 @@ export function enableBodyScroll(
 }
 
 /**
- * Calculates the width of a scrollbar for the browser/os.
- *
- * @public
- */
-export function getScrollbarWidth(doc: Document = document): number {
-  if (_scrollbarWidth === undefined) {
-    let scrollDiv: HTMLElement = document.createElement('div');
-    scrollDiv.style.setProperty('width', '100px');
-    scrollDiv.style.setProperty('height', '100px');
-    scrollDiv.style.setProperty('overflow', 'scroll');
-    scrollDiv.style.setProperty('position', 'absolute');
-    scrollDiv.style.setProperty('top', '-9999px');
-    doc.body.appendChild(scrollDiv);
-    // Get the scrollbar width
-    _scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-
-    // Delete the DIV
-    doc.body.removeChild(scrollDiv);
-  }
-
-  return _scrollbarWidth;
-}
-
-/**
  * Traverses up the DOM for the element with the data-is-scrollable=true attribute, or returns
  * document.body.
  *
@@ -269,7 +249,7 @@ export function findScrollableParent(
   startingElement: HTMLElement | null
 ): HTMLElement | Window | undefined | null {
   let el: HTMLElement | Window | undefined | null = startingElement;
-  const doc = getDocument(startingElement)!;
+  const doc = ownerDocument(startingElement)!;
 
   // First do a quick scan for the scrollable attribute.
   while (el && el !== doc.body) {
@@ -299,7 +279,7 @@ export function findScrollableParent(
 
   // Fall back to window scroll.
   if (!el || el === doc.body) {
-    el = getWindow(startingElement);
+    el = ownerWindow(startingElement);
   }
 
   return el;
@@ -318,14 +298,6 @@ export function getScrollTop(el: Element | Window): number {
   return Math.max(top, 0);
 }
 
-export function setScrollTop(el: ScrollElement, value: number) {
-  if ('scrollTop' in el) {
-    el.scrollTop = value;
-  } else {
-    el.scrollTo(el.scrollX, value);
-  }
-}
-
 export function getRootScrollTop(): number {
   return (
     window.pageYOffset ||
@@ -336,8 +308,8 @@ export function getRootScrollTop(): number {
 }
 
 export function setRootScrollTop(value: number) {
-  setScrollTop(window, value);
-  setScrollTop(document.body, value);
+  scrollTop(window, value);
+  scrollTop(document.body, value);
 }
 
 // get distance from element top to page top or scroller top

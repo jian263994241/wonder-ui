@@ -1,4 +1,4 @@
-import { getWindow, getDocument } from './dom';
+import { getComputedStyle, ownerDocument } from './dom';
 import { isDef, isNumeric } from './validate';
 
 export function addUnit(value?: string | number): string | undefined {
@@ -14,9 +14,8 @@ let rootFontSize: number;
 
 function getRootFontSize() {
   if (!rootFontSize) {
-    const doc = getDocument().documentElement;
-    const fontSize =
-      doc.style.fontSize || getWindow().getComputedStyle(doc).fontSize;
+    const doc = ownerDocument().documentElement;
+    const fontSize = doc.style.fontSize || getComputedStyle(doc).fontSize;
 
     rootFontSize = parseFloat(fontSize);
   }

@@ -1,4 +1,4 @@
-import { getWindow } from './dom/getWindow';
+import { ownerWindow } from './dom';
 
 declare function setTimeout(cb: Function, delay: number): number;
 declare function setInterval(cb: Function, delay: number): number;
@@ -141,7 +141,7 @@ export class Async {
     targetElement?: Element | null
   ): number {
     let immediateId = 0;
-    const win = getWindow(targetElement)!;
+    const win = ownerWindow(targetElement)!;
 
     if (!this._isDisposed) {
       if (!this._immediateIds) {
@@ -176,7 +176,7 @@ export class Async {
    * @param targetElement - Optional target element to use for identifying the correct window.
    */
   public clearImmediate(id: number, targetElement?: Element | null): void {
-    const win = getWindow(targetElement)!;
+    const win = ownerWindow(targetElement)!;
 
     if (this._immediateIds && this._immediateIds[id]) {
       win.clearTimeout(id);
@@ -443,7 +443,7 @@ export class Async {
     targetElement?: Element | null
   ): number {
     let animationFrameId = 0;
-    const win = getWindow(targetElement)!;
+    const win = ownerWindow(targetElement)!;
 
     if (!this._isDisposed) {
       if (!this._animationFrameIds) {
@@ -477,7 +477,7 @@ export class Async {
     id: number,
     targetElement?: Element | null
   ): void {
-    const win = getWindow(targetElement)!;
+    const win = ownerWindow(targetElement)!;
 
     if (this._animationFrameIds && this._animationFrameIds[id]) {
       win.cancelAnimationFrame

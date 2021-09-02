@@ -1,9 +1,8 @@
 import {
-  elementContains,
+  contains,
   elementContainsAttribute,
-  getDocument,
-  getParent,
-  getWindow
+  ownerDocument,
+  ownerWindow
 } from './dom';
 
 const IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable';
@@ -468,10 +467,10 @@ export function isElementFocusSubZone(element?: HTMLElement): boolean {
  * @public
  */
 export function doesElementContainFocus(element: HTMLElement): boolean {
-  let document = getDocument(element);
+  let document = ownerDocument(element);
   let currentActiveElement: HTMLElement | undefined =
     document && (document.activeElement as HTMLElement);
-  if (currentActiveElement && elementContains(element, currentActiveElement)) {
+  if (currentActiveElement && contains(element, currentActiveElement)) {
     return true;
   }
   return false;
@@ -516,7 +515,7 @@ export function focusAsync(
 
     targetToFocusOnNextRepaint = element;
 
-    const win = getWindow(element as Element);
+    const win = ownerWindow(element as Element);
 
     if (win) {
       // element.focus() is a no-op if the element is no longer in the DOM, meaning this is always safe
@@ -573,7 +572,7 @@ export function getElementIndexPath(
   const path: number[] = [];
 
   while (toElement && fromElement && toElement !== fromElement) {
-    const parent = getParent(toElement, true);
+    const parent = toElement.parentNode as HTMLElement;
 
     if (parent === null) {
       return [];

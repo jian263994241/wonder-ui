@@ -1,4 +1,3 @@
-import { getParent } from './getParent';
 /**
  * Finds the first parent element where the matchFunction returns true
  * @param element - element to start searching at
@@ -14,5 +13,5 @@ export function findElementRecursive(
   }
   return matchFunction(element)
     ? element
-    : findElementRecursive(getParent(element), matchFunction);
+    : findElementRecursive(element.parentNode as HTMLElement, matchFunction);
 }

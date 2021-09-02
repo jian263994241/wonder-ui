@@ -1,5 +1,3 @@
-import { getDocument } from './dom/getDocument';
-import { getWindow } from './dom/getWindow';
 interface Supoort {
   touch: boolean;
   pointerEvents: boolean;
@@ -10,9 +8,6 @@ interface Supoort {
 let support: Supoort;
 
 function calcSupport(): Supoort {
-  const window = getWindow();
-  const document = getDocument();
-
   return {
     touch: !!(
       'ontouchstart' in window ||
@@ -82,7 +77,7 @@ let deviceCalculated: Device;
 
 function calcDevice({ userAgent }: { userAgent?: string } = {}): Device {
   const support = getSupport();
-  const window = getWindow() as any;
+
   const platform = window.navigator.platform;
   const ua = userAgent || window.navigator.userAgent;
 
@@ -99,10 +94,10 @@ function calcDevice({ userAgent }: { userAgent?: string } = {}): Device {
     firefox: false,
     macos: false,
     windows: false,
-    cordova: !!(window.cordova || window.phonegap),
-    phonegap: !!(window.cordova || window.phonegap),
+    cordova: !!((window as any).cordova || (window as any).phonegap),
+    phonegap: !!((window as any).cordova || (window as any).phonegap),
     electron: false,
-    capacitor: !!window.Capacitor,
+    capacitor: !!(window as any).Capacitor,
     nwjs: false
   };
 
@@ -119,7 +114,7 @@ function calcDevice({ userAgent }: { userAgent?: string } = {}): Device {
   const windows = platform === 'Win32';
   const electron = ua.toLowerCase().indexOf('electron') >= 0;
   const nwjs =
-    typeof window.nw !== 'undefined' &&
+    typeof (window as any).nw !== 'undefined' &&
     typeof process !== 'undefined' &&
     typeof process.versions !== 'undefined' &&
     typeof process.versions.nw !== 'undefined';
@@ -190,7 +185,8 @@ function calcDevice({ userAgent }: { userAgent?: string } = {}): Device {
   device.webView =
     !!(
       (iphone || ipad || ipod) &&
-      (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone)
+      (ua.match(/.*AppleWebKit(?!.*Safari)/i) ||
+        (window.navigator as any).standalone)
     ) ||
     (window.matchMedia &&
       window.matchMedia('(display-mode: standalone)').matches);

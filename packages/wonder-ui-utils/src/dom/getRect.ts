@@ -1,4 +1,17 @@
-import { IRectangle } from '../IRectangle';
+/**
+ * Rectangle interface.
+ *
+ * @public
+ * {@docCategory IRectangle}
+ */
+export interface IRectangle {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+  right: number;
+  bottom: number;
+}
 
 function makeDOMRect(width: number, height: number) {
   return {
@@ -23,7 +36,15 @@ export function getRect(element: HTMLElement | Window | null): IRectangle {
     } else if (
       (element as { getBoundingClientRect?: unknown }).getBoundingClientRect
     ) {
-      return (element as HTMLElement).getBoundingClientRect();
+      const rect = (element as HTMLElement).getBoundingClientRect();
+      return {
+        top: rect.top,
+        left: rect.left,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height
+      };
     }
   }
 

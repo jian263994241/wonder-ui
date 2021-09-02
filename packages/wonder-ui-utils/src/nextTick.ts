@@ -1,7 +1,6 @@
 //https://github.com/answershuto/learnVue/blob/master/docs/Vue.js%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0DOM%E7%AD%96%E7%95%A5%E5%8F%8AnextTick.MarkDown
-import { getDevice } from '../device';
-import { isNative } from '../validate';
-import { noop } from '../noop';
+import { getDevice } from './device';
+import { isNative } from './validate';
 
 /**
  * Defer a task to execute it asynchronously.
@@ -59,7 +58,7 @@ export const nextTick = (function () {
       // microtask queue but the queue isn't being flushed, until the browser
       // needs to do some other work, e.g. handle a timer. Therefore we can
       // "force" the microtask queue to be flushed by adding an empty timer.
-      if (isIOS) setTimeout(noop);
+      if (isIOS) setTimeout(() => {});
     };
   } else if (
     typeof MutationObserver !== 'undefined' &&
