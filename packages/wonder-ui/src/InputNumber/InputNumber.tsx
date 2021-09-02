@@ -616,8 +616,8 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
       }
     };
 
-    const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> =
-      useEventCallback((event) => {
+    const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useEventCallback(
+      (event) => {
         userTypingRef.current = true;
 
         if (event.key === 'Enter') {
@@ -640,7 +640,8 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
           onInternalStep('ArrowUp' === event.key);
           event.preventDefault();
         }
-      });
+      }
+    );
 
     const onKeyUp = () => {
       userTypingRef.current = false;

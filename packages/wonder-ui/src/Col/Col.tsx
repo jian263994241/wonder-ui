@@ -35,7 +35,7 @@ const Col = React.forwardRef<HTMLElement, ColProps>((inProps, ref) => {
   return (
     <ColRoot
       as={component}
-      className={css(classes.root, className)}
+      className={css(className, classes.root)}
       ref={ref as React.Ref<HTMLDivElement>}
       {...rest}
     >

@@ -6,7 +6,6 @@ import {
   createChainedFunction,
   createId,
   DialogManager,
-  getDocument,
   nextTick
 } from '@wonder-ui/utils';
 import { ThemeProvider } from '@wonder-ui/styled';
@@ -61,7 +60,7 @@ const defaultManager = new DialogManager();
 export function useDialog(options: DialogHookOptions = {}) {
   const { manager = defaultManager, onRender } = options;
 
-  const container = useCreation(() => getDocument().createElement('div'), []);
+  const container = useCreation(() => document.createElement('div'), []);
   const modals = useReactive<JSX.Element[]>([]);
   const theme = useTheme();
 

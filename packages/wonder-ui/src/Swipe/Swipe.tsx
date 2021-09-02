@@ -9,7 +9,7 @@ import {
   doubleRaf,
   generateUtilityClasses,
   globalClasses,
-  isHidden,
+  isVisible,
   preventDefault
 } from '@wonder-ui/utils';
 import { SwipeContext } from './SwipeContext';
@@ -173,15 +173,15 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
   const touch = useTouch();
   const windowSize = useWindowSize();
 
-  const size = React.useMemo(
-    () => state[vertical ? 'height' : 'width'],
-    [vertical, state.height, state.width]
-  );
+  const size = React.useMemo(() => state[vertical ? 'height' : 'width'], [
+    vertical,
+    state.height,
+    state.width
+  ]);
 
-  const delta = React.useMemo(
-    () => (vertical ? touch.deltaY : touch.deltaX),
-    [vertical]
-  );
+  const delta = React.useMemo(() => (vertical ? touch.deltaY : touch.deltaX), [
+    vertical
+  ]);
   const minOffset = React.useMemo(() => {
     if (state.rect) {
       const base = vertical ? state.rect.height : state.rect.width;
@@ -190,17 +190,17 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     return 0;
   }, [vertical, state.rect, size, count]);
 
-  const maxCount = React.useMemo(
-    () => Math.ceil(Math.abs(minOffset) / size),
-    [minOffset, size]
-  );
+  const maxCount = React.useMemo(() => Math.ceil(Math.abs(minOffset) / size), [
+    minOffset,
+    size
+  ]);
 
   const trackSize = React.useMemo(() => count * size, [count, size]);
 
-  const activeIndex = React.useMemo(
-    () => (state.active + count) % count,
-    [state.active, count]
-  );
+  const activeIndex = React.useMemo(() => (state.active + count) % count, [
+    state.active,
+    count
+  ]);
 
   const isCorrectDirection = () => {
     const expect = vertical ? 'vertical' : 'horizontal';
@@ -379,7 +379,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
       return;
     }
 
-    if (!isHidden(root)) {
+    if (isVisible(root)) {
       const rect = {
         width: root.offsetWidth,
         height: root.offsetHeight
@@ -416,7 +416,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     correctPosition();
   });
 
-  const onTouchMove = useEventCallback((event: React.TouchEvent) => {
+  const onTouchMove = useEventCallback((event: TouchEvent) => {
     if (touchable && state.swiping) {
       touch.move(event);
 

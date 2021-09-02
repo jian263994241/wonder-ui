@@ -70,6 +70,16 @@ export interface StepperProps
    */
   step?: number | string;
   /**
+   * 按钮长按触发的时长(ms)
+   * @default 800
+   */
+  stepDelay?: number;
+  /**
+   * 连续增长的时间间隔(ms)
+   * @default 150
+   */
+  stepInterval?: number;
+  /**
    * 当前值
    */
   value?: number | string;
@@ -193,6 +203,8 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
     min = 0,
     onChange,
     step = 1,
+    stepDelay = 800,
+    stepInterval = 150,
     value: valueProp,
     defaultValue = min,
     ...rest
@@ -236,6 +248,8 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
         <StepperMinus
           className={classes.minus}
           onStep={handleMinus}
+          interval={stepInterval}
+          delay={stepDelay}
           styleProps={styleProps}
         />
       )}
@@ -265,6 +279,8 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
         <StepperPlus
           className={classes.plus}
           onStep={handlePlus}
+          interval={stepInterval}
+          delay={stepDelay}
           styleProps={styleProps}
         />
       )}

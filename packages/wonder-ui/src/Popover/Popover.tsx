@@ -5,7 +5,7 @@ import Paper, { PaperProps } from '../Paper';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { BaseTransitionProps, TransitionTimeout } from '../Transition';
-import { css, debounce, getDocument, getWindow } from '@wonder-ui/utils';
+import { css, debounce, ownerDocument, ownerWindow } from '@wonder-ui/utils';
 import { popoverClasses, useClasses } from './PopoverClasses';
 import { useForkRef } from '@wonder-ui/hooks';
 
@@ -44,9 +44,9 @@ export function getOffsetLeft(rect: Rect, horizontal: Horizontal) {
 }
 
 function getAnchorEl(anchorEl?: AnchorEl) {
-  return (
-    typeof anchorEl === 'function' ? anchorEl() : anchorEl
-  ) as HTMLElement;
+  return (typeof anchorEl === 'function'
+    ? anchorEl()
+    : anchorEl) as HTMLElement;
 }
 
 function getTransformOriginValue(transformOrigin: TransformOrigin) {
@@ -197,7 +197,7 @@ const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
     const anchorElement =
       resolvedAnchorEl && resolvedAnchorEl.nodeType === 1
         ? resolvedAnchorEl
-        : getDocument(paperRef.current).body;
+        : ownerDocument(paperRef.current).body;
     const anchorRect = anchorElement.getBoundingClientRect();
 
     return {
@@ -250,7 +250,7 @@ const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
       const right = left + elemRect.width;
 
       // Use the parent window of the anchorEl if provided
-      const containerWindow = getWindow(getAnchorEl(anchorEl));
+      const containerWindow = ownerWindow(getAnchorEl(anchorEl));
 
       // Window thresholds taking required margin into account
       const heightThreshold = containerWindow.innerHeight - marginThreshold;
@@ -347,7 +347,7 @@ const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
       setPositioningStyles();
     });
     const resolvedAnchorEl = getAnchorEl(anchorEl);
-    const containerWindow = getWindow(resolvedAnchorEl);
+    const containerWindow = ownerWindow(resolvedAnchorEl);
     containerWindow.addEventListener('resize', handleResize);
     containerWindow.addEventListener('scroll', handleResize);
     return () => {
@@ -359,7 +359,7 @@ const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
 
   const container =
     containerProp ||
-    (anchorEl ? getDocument(getAnchorEl(anchorEl)).body : undefined);
+    (anchorEl ? ownerDocument(getAnchorEl(anchorEl)).body : undefined);
 
   return (
     <PopoverRoot

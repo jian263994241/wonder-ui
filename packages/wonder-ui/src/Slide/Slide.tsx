@@ -4,7 +4,7 @@ import Transition, {
   TransitionTimeout
 } from '../Transition';
 import useTheme from '../styles/useTheme';
-import { debounce, getWindow } from '@wonder-ui/utils';
+import { debounce, ownerWindow } from '@wonder-ui/utils';
 import { duration, easing } from '../styles/transitions';
 import { getTransitionProps, reflow } from '../Transition/utils';
 import { useForkRef } from '@wonder-ui/hooks';
@@ -24,7 +24,7 @@ function getTranslateValue(
   node: HTMLElement
 ) {
   const rect = node.getBoundingClientRect();
-  const containerWindow = getWindow(node);
+  const containerWindow = ownerWindow(node);
   let transform;
 
   if ((node as any).fakeTransform) {
@@ -193,7 +193,7 @@ const Slide: React.FC<SlideProps> = React.forwardRef((props, ref) => {
       }
     });
 
-    const containerWindow = getWindow(nodeRef.current);
+    const containerWindow = ownerWindow(nodeRef.current);
     containerWindow.addEventListener('resize', handleResize);
     return () => {
       handleResize.cancel();

@@ -192,6 +192,7 @@ const Drawer = React.forwardRef<HTMLElement, DrawerProps>((inProps, ref) => {
 
   const drawer = (
     <DrawerPaper
+      ref={ref}
       elevation={variant === 'temporary' ? elevation : 0}
       square
       {...PaperProps}
@@ -243,7 +244,6 @@ const Drawer = React.forwardRef<HTMLElement, DrawerProps>((inProps, ref) => {
       autoFocus
       visible={visible}
       classes={{ root: css(classes.root, classes.modal, className) }}
-      ref={ref}
       keepMounted={keepMounted}
       {...rest}
       {...ModalProps}

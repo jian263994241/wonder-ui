@@ -1,22 +1,21 @@
 import * as React from 'react';
 import useThemeProps from '../styles/useThemeProps';
 import {
-  elementContains,
+  contains,
   findScrollableParent,
-  getDocument,
   getElementIndexPath,
   getFocusableByIndexPath,
   getNextElement,
-  getParent,
   getPreviousElement,
-  getWindow,
   isElementFocusSubZone,
   isElementFocusZone,
   isElementTabbable,
   KeyCodes,
+  ownerDocument,
+  ownerWindow,
   portalContainsElement,
-  raiseClick,
-  shouldWrapFocus
+  shouldWrapFocus,
+  triggerEvent
 } from '@wonder-ui/utils';
 import {
   FocusZoneDirection,
@@ -36,7 +35,6 @@ const ALLOWED_INPUT_TYPES = [
   'url',
   'search'
 ];
-const ALLOW_VIRTUAL_ELEMENTS = false;
 
 const IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable';
 const IS_ENTER_DISABLED_ATTRIBUTE = 'data-disable-click-on-enter';
@@ -109,7 +107,7 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
         defaultFocusElementRef.current = null;
         element = root;
 
-        if (activeElement && !elementContains(element, activeElement)) {
+        if (activeElement && !contains(element, activeElement)) {
           activeElementRef.current = null;
         }
       }
@@ -236,21 +234,18 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
 
     const _getOwnerZone = (element?: HTMLElement): HTMLElement | null => {
       const root = rootRef.current;
-      let parentElement = getParent(
-        element as HTMLElement,
-        ALLOW_VIRTUAL_ELEMENTS
-      );
+      let parentElement = element?.parentNode as HTMLElement;
 
       while (
         parentElement &&
         parentElement !== root &&
-        parentElement !== getDocument(root).body
+        parentElement !== ownerDocument(root).body
       ) {
         if (isElementFocusZone(parentElement)) {
           return parentElement;
         }
 
-        parentElement = getParent(parentElement, ALLOW_VIRTUAL_ELEMENTS);
+        parentElement = parentElement.parentNode as HTMLElement;
       }
 
       return parentElement;
@@ -432,11 +427,9 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
         : null;
 
       do {
-        element = (
-          isForward
-            ? getNextElement(root, element)
-            : getPreviousElement(root, element)
-        ) as HTMLElement;
+        element = (isForward
+          ? getNextElement(root, element)
+          : getPreviousElement(root, element)) as HTMLElement;
 
         if (isBidirectional) {
           if (element) {
@@ -892,11 +885,11 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
           target.getAttribute(IS_FOCUSABLE_ATTRIBUTE) === 'true' &&
           target.getAttribute(IS_ENTER_DISABLED_ATTRIBUTE) !== 'true'
         ) {
-          raiseClick(target);
+          triggerEvent(target, 'click');
           return true;
         }
 
-        target = getParent(target, ALLOW_VIRTUAL_ELEMENTS) as HTMLElement;
+        target = target.parentNode as HTMLElement;
       } while (target !== rootRef.current);
 
       return false;
@@ -968,7 +961,7 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
         } else if (
           !forceIntoFirstElement &&
           activeElement &&
-          elementContains(root, activeElement) &&
+          contains(root, activeElement) &&
           isElementTabbable(activeElement)
         ) {
           activeElement.focus();
@@ -1020,7 +1013,7 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
           return;
         }
         if (
-          getDocument(root).activeElement === root &&
+          ownerDocument(root).activeElement === root &&
           isInnerZoneRef.current
         ) {
           // If this element has focus, it is being controlled by a parent.
@@ -1248,10 +1241,7 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
               newActiveElement = parentElement;
               break;
             }
-            parentElement = getParent(
-              parentElement,
-              ALLOW_VIRTUAL_ELEMENTS
-            ) as HTMLElement;
+            parentElement = parentElement.parentNode as HTMLElement;
           }
         }
 
@@ -1330,7 +1320,7 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
 
         while (target && target !== rootRef.current) {
           path.push(target);
-          target = getParent(target, ALLOW_VIRTUAL_ELEMENTS) as HTMLElement;
+          target = target.parentNode as HTMLElement;
         }
 
         while (path.length) {
@@ -1382,19 +1372,19 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
       };
 
       if (root) {
-        const win = getWindow(root);
-        let parentElement = getParent(root, ALLOW_VIRTUAL_ELEMENTS);
+        const win = ownerWindow(root);
+        let parentElement = root.parentNode as HTMLElement;
 
         while (
           parentElement &&
-          parentElement !== getDocument(root).body &&
+          parentElement !== ownerDocument(root).body &&
           parentElement.nodeType === 1
         ) {
           if (isElementFocusZone(parentElement)) {
             isInnerZoneRef.current = true;
             break;
           }
-          parentElement = getParent(parentElement, ALLOW_VIRTUAL_ELEMENTS);
+          parentElement = parentElement.parentNode as HTMLElement;
         }
 
         if (!isInnerZoneRef.current) {
@@ -1414,7 +1404,7 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
           defaultTabbableElement &&
           typeof defaultTabbableElement === 'string'
         ) {
-          activeElementRef.current = getDocument(root).querySelector(
+          activeElementRef.current = ownerDocument(root).querySelector(
             defaultTabbableElement
           ) as HTMLElement;
           // eslint-disable-next-line deprecation/deprecation
@@ -1450,7 +1440,7 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
     //componentDidUpdate
     React.useEffect(() => {
       const { current: root } = rootRef;
-      const doc = getDocument(root);
+      const doc = ownerDocument(root);
       if (
         doc &&
         lastIndexPathRef.current &&
@@ -1486,18 +1476,14 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
 
     if (children) {
       const root = rootRef.current;
-      const doc = getDocument(root);
+      const doc = ownerDocument(root);
 
       if (doc) {
         const focusedElement = doc.activeElement as HTMLElement;
 
         // Only update the index path if we are not parked on the root.
         if (focusedElement !== root) {
-          const shouldRestoreFocus = elementContains(
-            root,
-            focusedElement,
-            false
-          );
+          const shouldRestoreFocus = contains(root!, focusedElement);
           lastIndexPathRef.current = shouldRestoreFocus
             ? getElementIndexPath(root as HTMLElement, focusedElement)
             : undefined;

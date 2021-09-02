@@ -1,6 +1,6 @@
 import * as colors from './colors';
 import { darken, getContrastRatio, lighten } from '../colorManipulator';
-import { getDevice, getDocument } from '@wonder-ui/utils';
+import { getDevice } from '@wonder-ui/utils';
 import type { ColorKeys, ColorType } from './colors';
 
 type ColorObj = {
@@ -104,8 +104,8 @@ const defaultDanger = '#dc3545';
 const defaultWarning = '#ffc107';
 const defaultInfo = '#0dcaf0';
 const defaultSuccess = '#198754';
-const defaultLight = '#f8f9fa';
-const defaultDark = '#212529';
+const defaultLight = '#fff';
+const defaultDark = '#000';
 
 const darkenCoefficient = 0.08;
 
@@ -186,7 +186,7 @@ function addLightOrDark(
 }
 
 function getMode(mode: PaletteOptions['mode']): Palette['mode'] {
-  const doc = getDocument();
+  const doc = document;
 
   const prefersColor =
     doc.documentElement && doc.documentElement.dataset['prefersColor'];

@@ -563,19 +563,20 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
               />
             )}
 
-            {type === 'password' && onRenderRevealButton ? (
-              onRenderRevealButton({
-                onClick: handleReveal,
-                visible: isRevealingPassword,
-                className: classes.revealButton
-              })
-            ) : (
-              <InputRevealButton
-                onClick={handleReveal}
-                visible={isRevealingPassword}
-                className={classes.revealButton}
-              />
-            )}
+            {type === 'password' &&
+              (onRenderRevealButton ? (
+                onRenderRevealButton({
+                  onClick: handleReveal,
+                  visible: isRevealingPassword,
+                  className: classes.revealButton
+                })
+              ) : (
+                <InputRevealButton
+                  onClick={handleReveal}
+                  visible={isRevealingPassword}
+                  className={classes.revealButton}
+                />
+              ))}
 
             {onRenderSuffix ? onRenderSuffix(styleProps) : suffix}
           </InputSuffix>

@@ -9,7 +9,7 @@ import {
   OptionsGeneric,
   State as PopperState
 } from '@popperjs/core';
-import { getDocument, nextTick, setRef } from '@wonder-ui/utils';
+import { ownerDocument, nextTick, setRef } from '@wonder-ui/utils';
 import { TransitionProps } from '../Transition';
 import { useEnhancedEffect, useForkRef, useSafeState } from '@wonder-ui/hooks';
 
@@ -28,9 +28,9 @@ type VariationPlacement =
 type Placement = AutoPlacement | BasePlacement | VariationPlacement;
 
 function getAnchorEl(anchorEl?: AnchorEl) {
-  return (
-    typeof anchorEl === 'function' ? anchorEl() : anchorEl
-  ) as HTMLElement;
+  return (typeof anchorEl === 'function'
+    ? anchorEl()
+    : anchorEl) as HTMLElement;
 }
 
 function flipPlacement(placement: Placement, theme: any) {
@@ -247,7 +247,7 @@ const Popper = React.forwardRef<HTMLElement, PopperProps>((inProps, ref) => {
 
   const container =
     containerProp ||
-    (anchorEl ? getDocument(getAnchorEl(anchorEl)).body : undefined);
+    (anchorEl ? ownerDocument(getAnchorEl(anchorEl)).body : undefined);
 
   return (
     <Portal disablePortal={disablePortal} container={container}>

@@ -11,6 +11,10 @@ import { useForkRef, useSize } from '@wonder-ui/hooks';
 export interface NavbarProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   /**
+   * 去除背景
+   */
+  backgroundInVisible?: boolean;
+  /**
    * css api
    */
   classes?: Partial<typeof navbarClasses>;
@@ -173,6 +177,7 @@ const NavbarRight = styled('span', {
 const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiNavbar' });
   const {
+    backgroundInVisible = false,
     children,
     className,
     fixed = false,
@@ -249,12 +254,15 @@ const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
   return (
     <NavbarRoot
       theme={theme}
-      className={css(classes.root, className)}
+      className={css(className, classes.root)}
       {...rest}
       styleProps={styleProps}
       ref={handleRef}
     >
-      <NavbarBg theme={theme} className={classes.background} />
+      {!backgroundInVisible && (
+        <NavbarBg theme={theme} className={classes.background} />
+      )}
+
       <NavbarInner
         theme={theme}
         ref={navbarInnerNodeRef}

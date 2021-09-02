@@ -11,12 +11,12 @@ import {
 /**
  * When click and hold on a button - the speed of auto changing the value.
  */
-const STEP_INTERVAL = 200;
+const STEP_INTERVAL = 150;
 
 /**
  * When click and hold on a button - the delay before auto changing the value.
  */
-const STEP_DELAY = 600;
+const STEP_DELAY = 800;
 
 export interface StepButtonProps {
   classes?: Partial<typeof stepButtonClasses>;

@@ -1,12 +1,11 @@
 import * as React from 'react';
-import * as ReactIs from 'react-is';
 import Backdrop, { BackdropProps } from '../Backdrop';
 import FocusLock from 'react-focus-lock';
 import ModalManager, { ariaHidden, Modal as ModalType } from './ModalManager';
 import Portal, { Container, getContainer } from '../Portal/Portal';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { createChainedFunction, css, getDocument } from '@wonder-ui/utils';
+import { createChainedFunction, css, ownerDocument } from '@wonder-ui/utils';
 import { modalClasses, useClasses } from './ModalClasses';
 import { ReactFocusLockProps } from 'react-focus-lock/interfaces';
 import {
@@ -127,7 +126,7 @@ export interface ModalProps {
    * 过渡动画事件
    */
   onTransitionExited?(): void;
-  /**@ignore */
+
   style?: React.CSSProperties;
   /**
    * 是否显示
@@ -201,7 +200,7 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
       ? hasTransitionProp
       : getHasTransition(props);
 
-  const getDoc = () => getDocument(mountNodeRef.current);
+  const getDoc = () => ownerDocument(mountNodeRef.current);
   const getModal = () => {
     modal.current.modalRef = modalRef.current;
     modal.current.mount = mountNodeRef.current;
@@ -217,10 +216,9 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
     }
   };
 
-  const isTopModal = React.useCallback(
-    () => manager.isTopModal(getModal()),
-    [manager]
-  );
+  const isTopModal = React.useCallback(() => manager.isTopModal(getModal()), [
+    manager
+  ]);
 
   const handlePortalRef = useEventCallback((node) => {
     mountNodeRef.current = node;
@@ -352,7 +350,7 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
 
   let _children = children;
 
-  if (ReactIs.isElement(children)) {
+  if (React.isValidElement(children)) {
     const childProps: any = {};
 
     const { tabIndex = '-1', onEnter, onExited } = children.props as any;

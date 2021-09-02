@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { useTabContext } from '../TabContext';
-import { DelayedRender } from '@wonder-ui/utils';
+
 export interface TabPaneProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * 激活内容

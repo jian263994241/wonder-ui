@@ -41,7 +41,7 @@ const Row = React.forwardRef<HTMLElement, RowProps>((inProps, ref) => {
   return (
     <RowRoot
       as={component}
-      className={css(classes.root, className)}
+      className={css(className, classes.root)}
       styleProps={styleProps}
       ref={ref as React.Ref<HTMLDivElement>}
       {...rest}

@@ -4,12 +4,7 @@ import Snackbar, { SnackbarProps } from './Snackbar';
 import useTheme from '../styles/useTheme';
 import { ThemeProvider } from '@wonder-ui/styled';
 import { useCreation, useReactive, useSafeState } from '@wonder-ui/hooks';
-import {
-  createId,
-  DialogManager,
-  nextTick,
-  getDocument
-} from '@wonder-ui/utils';
+import { createId, DialogManager, nextTick } from '@wonder-ui/utils';
 
 const defaultManager = new DialogManager();
 
@@ -55,7 +50,7 @@ export function useSnackbar(options: SnackbarHookOptions = {}) {
     onRender
   } = options;
 
-  const container = useCreation(() => getDocument().createElement('div'), []);
+  const container = useCreation(() => document.createElement('div'), []);
   const modals = useReactive<JSX.Element[]>([]);
   const theme = useTheme();
 

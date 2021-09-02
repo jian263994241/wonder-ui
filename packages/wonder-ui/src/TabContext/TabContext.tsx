@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { noop } from '@wonder-ui/utils';
 import { useControlled } from '@wonder-ui/hooks';
 
 export interface TabContextProps {
@@ -13,7 +12,9 @@ type Context = {
   onChangeunControlled(value: any): void;
 };
 
-const Context = React.createContext<Context>({ onChangeunControlled: noop });
+const Context = React.createContext<Context>({
+  onChangeunControlled: () => {}
+});
 
 export default function TabContext(props: TabContextProps) {
   const { children, value: valueProp, defaultValue } = props;

@@ -4,7 +4,7 @@ import {
   forwardRef,
   getRect,
   getScrollParent,
-  isHidden,
+  isVisible,
   on,
   generateUtilityClasses,
   composeClasses,
@@ -135,7 +135,7 @@ const Sticky = forwardRef<HTMLDivElement, StickyProps>((inProps, ref) => {
   const handleScroll = useEventCallback(() => {
     const { current: root } = rootRef;
 
-    if (!root || isHidden(root)) return;
+    if (!root || !isVisible(root)) return;
 
     const _state = { ...state };
 
@@ -174,7 +174,8 @@ const Sticky = forwardRef<HTMLDivElement, StickyProps>((inProps, ref) => {
 
   React.useEffect(() => {
     if (rootRef.current) {
-      const scrollParent = getScrollParent(rootRef.current);
+      const scrollParent = getScrollParent(rootRef.current) as HTMLElement;
+
       return on(scrollParent, 'scroll', handleScroll);
     }
   }, []);

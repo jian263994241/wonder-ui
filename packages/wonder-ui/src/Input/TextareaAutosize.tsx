@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { debounce, getWindow } from '@wonder-ui/utils';
+import { debounce, ownerWindow } from '@wonder-ui/utils';
 import { useEnhancedEffect, useForkRef, useSafeState } from '@wonder-ui/hooks';
 import styled from '../styles/styled';
 
@@ -76,7 +76,7 @@ const TextareaAutosize = React.forwardRef<
 
   const syncHeight = React.useCallback(() => {
     const input = inputRef.current!;
-    const containerWindow = getWindow(input);
+    const containerWindow = ownerWindow(input);
     const computedStyle = containerWindow.getComputedStyle(input);
 
     // If input's width is shrunk and it's not visible, don't sync height.
@@ -151,7 +151,7 @@ const TextareaAutosize = React.forwardRef<
       syncHeight();
     });
 
-    const containerWindow = getWindow(inputRef.current);
+    const containerWindow = ownerWindow(inputRef.current);
     containerWindow.addEventListener('resize', handleResize);
     return () => {
       handleResize.cancel();

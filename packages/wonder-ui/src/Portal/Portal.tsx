@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { getDocument, setRef } from '@wonder-ui/utils';
+import { setRef } from '@wonder-ui/utils';
 import { useEnhancedEffect, useForkRef, useSafeState } from '@wonder-ui/hooks';
 
 export type Container = HTMLElement | null | (() => HTMLElement | null);
@@ -27,7 +27,7 @@ const Portal: React.FC<PortalProps> = React.forwardRef((props, ref) => {
 
   useEnhancedEffect(() => {
     if (!disablePortal) {
-      setMountNode(getContainer(container) || getDocument().body);
+      setMountNode(getContainer(container) || document.body);
     }
   }, [container, disablePortal]);
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import Fade from '../Fade';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { forwardRef, getScrollTop, on, setScrollTop } from '@wonder-ui/utils';
+import { forwardRef, getScrollTop, on, scrollTop } from '@wonder-ui/utils';
 import {
   useEventCallback,
   useForkRef,
@@ -46,7 +46,7 @@ function scrollTo(element: Element | Window, to: number, duration: number) {
   var animateScroll = function () {
     currentTime += increment;
     var val = easeInOutQuad(currentTime, start, change, duration);
-    setScrollTop(element, val);
+    scrollTop(element as Element, val);
     if (currentTime < duration) {
       window.requestAnimationFrame(animateScroll);
     }

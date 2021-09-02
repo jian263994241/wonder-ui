@@ -10,6 +10,7 @@ import {
   generateUtilityClasses
 } from '@wonder-ui/utils';
 import {
+  useTouchFeedback,
   useEventCallback,
   useForkRef,
   useIsFocusVisible,
@@ -20,19 +21,27 @@ const COMPONENT_NAME = 'WuiButtonBase';
 
 export const buttonBaseClasses: ButtonBaseClasses = generateUtilityClasses(
   COMPONENT_NAME,
-  ['root', 'disabled', 'focusVisible']
+  ['root', 'disabled', 'focusVisible', 'active']
 );
 
 interface StyleProps extends ButtonBaseProps {
   focusVisible?: boolean;
+  active?: boolean;
 }
 
 export const useClasses = (styleProps: StyleProps) => {
-  const { disabled, focusVisible, focusVisibleClassName, classes } = styleProps;
+  const {
+    active,
+    disabled,
+    focusVisible,
+    focusVisibleClassName,
+    classes
+  } = styleProps;
 
   const slots = {
     root: [
       'root',
+      active && 'active',
       disabled && 'disabled',
       focusVisible && 'focusVisible',
       focusVisible && focusVisibleClassName
@@ -324,8 +333,9 @@ const ButtonBase = forwardRef<HTMLElement, ButtonBaseProps>((inProps, ref) => {
     }
   }
 
+  const { active, targetRef } = useTouchFeedback({ type: 'touch' });
   const handleOwnRef = useForkRef(focusVisibleRef, buttonRef);
-  const handleRef = useForkRef(ref, handleOwnRef);
+  const handleRef = useForkRef(ref, handleOwnRef, targetRef);
 
   const [mountedState, setMountedState] = useSafeState(false);
 
@@ -337,6 +347,7 @@ const ButtonBase = forwardRef<HTMLElement, ButtonBaseProps>((inProps, ref) => {
 
   const styleProps = {
     ...props,
+    active,
     centerRipple,
     component,
     disabled,

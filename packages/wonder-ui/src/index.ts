@@ -133,6 +133,9 @@ export * from './Navbar';
 export { default as Noticebar } from './Noticebar';
 export * from './Noticebar';
 
+export { default as NumberKeyboard } from './NumberKeyboard';
+export * from './NumberKeyboard';
+
 export { default as Page } from './Page';
 export * from './Page';
 

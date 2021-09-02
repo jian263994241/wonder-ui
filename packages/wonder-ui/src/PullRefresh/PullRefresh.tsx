@@ -289,7 +289,7 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
 
     const reachTopRef = React.useRef(false);
 
-    const checkPosition = (event: React.TouchEvent) => {
+    const checkPosition = (event: TouchEvent) => {
       reachTopRef.current = getScrollTop(scrollParentRef.current!) === 0;
 
       if (reachTopRef.current) {
@@ -298,13 +298,13 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
       }
     };
 
-    const onTouchStart = useEventCallback((event: React.TouchEvent) => {
+    const onTouchStart = useEventCallback((event) => {
       if (isTouchable()) {
         checkPosition(event);
       }
     });
 
-    const onTouchMove = useEventCallback((event: React.TouchEvent) => {
+    const onTouchMove = useEventCallback((event) => {
       if (isTouchable()) {
         if (!reachTopRef.current) {
           checkPosition(event);

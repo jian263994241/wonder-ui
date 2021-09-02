@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { isFragment } from 'react-is';
-import { getDocument, getScrollbarWidth } from '@wonder-ui/utils';
+import { ownerDocument, getScrollbarSize } from '@wonder-ui/utils';
 import { useForkRef, useEnhancedEffect } from '@wonder-ui/hooks';
 import List from '../List';
 import {
@@ -87,9 +86,7 @@ const MenuList: React.FC<MenuListProps> = React.forwardRef((props, ref) => {
           containerElement.clientHeight < list.clientHeight &&
           noExplicitWidth
         ) {
-          const scrollbarSize = `${getScrollbarWidth(
-            getDocument(containerElement)
-          )}px`;
+          const scrollbarSize = `${getScrollbarSize()}px`;
           list.style[
             theme.direction === 'rtl' ? 'paddingLeft' : 'paddingRight'
           ] = scrollbarSize;
@@ -111,7 +108,7 @@ const MenuList: React.FC<MenuListProps> = React.forwardRef((props, ref) => {
      * or document.body or document.documentElement. Only the first case will
      * trigger this specific handler.
      */
-    const currentFocus = getDocument(list).activeElement as HTMLElement;
+    const currentFocus = ownerDocument(list).activeElement as HTMLElement;
 
     if (key === 'ArrowDown') {
       // Prevent scroll of the page

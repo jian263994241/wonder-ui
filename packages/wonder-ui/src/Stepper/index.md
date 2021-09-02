@@ -20,8 +20,10 @@ group:
 
 ### 自定义
 
+如果不想触发连续增长, 可以给 `stepDelay` 一个尽可能大的值
+
 <code src="./demo/demo2.tsx"></code>
 
 
-<API src="./Stepper.tsx" props="InputNumberProps|defaultValue|disableInput|disableMinusButton|disablePlusButton|disabled|hideInput|hideMinusButton|hidePlusButton|max|min|onChange|step|value"></API>
+<API src="./Stepper.tsx"></API>
 

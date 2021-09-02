@@ -31,6 +31,6 @@ Searchbar可以单独使用, 也可以和`Page`, `Navbar`一起使用
 
 <code src="./demo/demo3.tsx"></code>
 
-<API src="./Searchbar.tsx" props="InputProps|allowCancel|barLeft|barRight|cancelText|defaultValue|fixCancelButton|icon|onCencel|onChange|placeholder|value"></API>
+<API src="./Searchbar.tsx" ></API>
 
 

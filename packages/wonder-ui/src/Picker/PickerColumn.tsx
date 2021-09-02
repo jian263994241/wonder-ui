@@ -282,7 +282,7 @@ const PickerColumn = React.forwardRef<HTMLDivElement, PickerColumnProps>(
       transitionEndTrigger.current = null;
     });
 
-    const onTouchMove = useEventCallback((event: React.TouchEvent) => {
+    const onTouchMove = useEventCallback((event: TouchEvent) => {
       if (readOnly) {
         return;
       }

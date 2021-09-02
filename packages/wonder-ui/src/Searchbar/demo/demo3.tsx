@@ -6,6 +6,7 @@ import {
   Space,
   styled
 } from '@wonder-ui/core';
+import * as React from 'react';
 
 const MySearch = styled(Searchbar)`
   .WuiSearchbar-bg {
@@ -20,10 +21,14 @@ const MySearch = styled(Searchbar)`
 `;
 
 export default () => {
+  const actionRef = React.useRef<any>();
+
+  console.log(actionRef);
   return (
     <MySearch
       InputProps={{
         readOnly: true,
+        actionRef: actionRef,
         onClick: () => alert('Link to Search Page')
       }}
       placeholder="点击跳转搜索页"
