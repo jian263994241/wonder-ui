@@ -6,7 +6,7 @@ import { useClickAway } from './useClickAway';
 import { useCreation } from './useCreation';
 import { useEventListener } from './useEventListener';
 
-export function useTouchFeedback<T extends Element>(
+export function useTouchFeedback(
   options: {
     /**
      * 禁用
@@ -19,12 +19,12 @@ export function useTouchFeedback<T extends Element>(
     /**
      * Focus node
      */
-    focusElements?: BasicTarget<Element>[];
+    focusElements?: BasicTarget<HTMLElement>[];
   } = {}
 ) {
   const { disabled = false, type = 'focus', focusElements = [] } = options;
 
-  const targetRef = React.useRef<T>(null);
+  const targetRef = React.useRef<HTMLElement>(null);
   const support = useCreation(() => getSupport(), []);
   const [active, { setTrue, setFalse }] = useBoolean(false);
 

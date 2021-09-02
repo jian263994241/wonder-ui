@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { on } from '@wonder-ui/utils';
+import { useEventCallback } from './useEventCallback';
 
 /**
  * Hook to attach an event handler on mount and handle cleanup.
@@ -8,36 +9,51 @@ import { on } from '@wonder-ui/utils';
  * @param callback - The handler for the event
  * @param useCapture - Whether or not to attach the handler for the capture phase
  */
-export function useEventListener<TElement extends Element, IEvent>(
-  element:
-    | React.RefObject<TElement | undefined | null>
-    | TElement
-    | Window
-    | Document
-    | undefined
-    | null,
+export function useEventListener<K extends keyof DocumentEventMap>(
+  node: Document | React.Ref<Document | undefined | null>,
+  eventName: K,
+  listener: (this: Document, ev: DocumentEventMap[K]) => any,
+  options?: boolean | AddEventListenerOptions
+): void;
+
+export function useEventListener<K extends keyof HTMLElementEventMap>(
+  node: HTMLElement | React.Ref<HTMLElement | undefined | null>,
+  eventName: K,
+  listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+  options?: boolean | AddEventListenerOptions
+): void;
+
+export function useEventListener<K extends keyof WindowEventMap>(
+  node: Window | React.Ref<Window | undefined | null>,
+  eventName: K,
+  listener: (this: Window, ev: WindowEventMap[K]) => any,
+  options?: boolean | AddEventListenerOptions
+): void;
+
+export function useEventListener(
+  node: any,
   eventName: string,
-  callback: (event: IEvent) => void,
+  listener: EventListenerOrEventListenerObject,
+  useCapture?: boolean | AddEventListenerOptions
+): void;
+
+export function useEventListener(
+  node: any,
+  eventName: string,
+  listener: EventListenerOrEventListenerObject,
   useCapture?: boolean | AddEventListenerOptions
 ) {
   // Use a ref for the callback to prevent repeatedly attaching/unattaching callbacks that are unstable across renders
-  const callbackRef = React.useRef(callback);
-  callbackRef.current = callback;
+
+  const _callback = useEventCallback(listener as any);
 
   React.useEffect(() => {
-    const actualElement =
-      element && 'current' in element ? element.current : element;
+    const actualElement = node && 'current' in node ? node.current : node;
     if (!actualElement) {
       return;
     }
 
-    const dispose = on(
-      actualElement,
-      eventName,
-      //@ts-expect-error
-      (event: IEvent) => callbackRef.current(event),
-      useCapture
-    );
+    const dispose = on(actualElement, eventName, _callback, useCapture);
     return dispose;
-  }, [element, eventName, useCapture]);
+  }, [node, eventName, useCapture]);
 }

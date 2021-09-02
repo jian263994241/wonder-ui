@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { getDocument, on } from '@wonder-ui/utils';
+import { ownerDocument, on } from '@wonder-ui/utils';
 import { useUnmount } from './useUnmount';
 // based on https://github.com/WICG/focus-visible/blob/v4.1.5/src/focus-visible.js
 
@@ -124,7 +124,7 @@ export const useIsFocusVisible = () => {
   const eventsRef = React.useRef<Array<Function>>([]);
   const ref = React.useCallback((node) => {
     if (node != null) {
-      eventsRef.current = prepare(getDocument(node));
+      eventsRef.current = prepare(ownerDocument(node));
     }
   }, []);
 
