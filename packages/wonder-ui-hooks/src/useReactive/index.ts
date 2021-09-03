@@ -1,10 +1,15 @@
 import * as React from 'react';
-import { nextTick, isObject } from '@wonder-ui/utils';
+import { nextTick } from '@wonder-ui/utils';
 import { useCreation } from '../useCreation';
 import { useSafeState } from '../useSafeState';
 
 const proxyMap = new WeakMap();
 const rawMap = new WeakMap();
+
+function isObject(val: any): val is object {
+  const typeString = Object.prototype.toString.call(val).toLocaleLowerCase();
+  return typeString === '[object object]' || typeString === '[object array]';
+}
 
 function observer<T extends object>(initialVal: T, cb: () => void): T {
   const existingProxy = proxyMap.get(initialVal);
