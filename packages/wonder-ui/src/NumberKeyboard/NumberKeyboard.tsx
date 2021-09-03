@@ -17,22 +17,29 @@ import {
   globalClasses
 } from '@wonder-ui/utils';
 import { useCreation, useForkRef } from '@wonder-ui/hooks';
-import type { NumberKeyboardProps, KeyConfig } from './NumberKeyboardTypes';
+import type {
+  NumberKeyboardProps,
+  KeyConfig,
+  NumberKeyboardClasses
+} from './NumberKeyboardTypes';
 
 const COMPONENT_NAME = 'WuiNumberKeyboard';
 
-const numberKeyboardClasses = generateUtilityClasses(COMPONENT_NAME, [
-  'root',
-  'header',
-  'body',
-  'keys',
-  'keyWrapper',
-  'key',
-  'close',
-  'delete',
-  'enter',
-  'slidebar'
-]);
+const numberKeyboardClasses: NumberKeyboardClasses = generateUtilityClasses(
+  COMPONENT_NAME,
+  [
+    'root',
+    'header',
+    'body',
+    'keys',
+    'keyWrapper',
+    'key',
+    'close',
+    'delete',
+    'enter',
+    'slidebar'
+  ]
+);
 
 const useClasses = (styleProps: NumberKeyboardProps) => {
   const { classes } = styleProps;

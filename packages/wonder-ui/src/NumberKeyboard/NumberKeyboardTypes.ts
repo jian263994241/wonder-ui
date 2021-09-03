@@ -9,7 +9,19 @@ export type KeyConfig = {
   wider?: boolean;
 };
 
-export type NumberKeyboardClasses = {};
+export type NumberKeyboardClasses = Record<
+  | 'root'
+  | 'header'
+  | 'body'
+  | 'keys'
+  | 'keyWrapper'
+  | 'key'
+  | 'close'
+  | 'delete'
+  | 'enter'
+  | 'slidebar',
+  string
+>;
 
 export interface NumberKeyboardProps {
   /**
