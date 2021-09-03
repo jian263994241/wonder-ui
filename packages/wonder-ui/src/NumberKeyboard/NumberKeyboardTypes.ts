@@ -29,7 +29,7 @@ export interface NumberKeyboardProps {
    */
   children?: JSX.Element;
 
-  classes?: Partial<keyof NumberKeyboardClasses>;
+  classes?: Partial<NumberKeyboardClasses>;
 
   className?: string;
   /**
