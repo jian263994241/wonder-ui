@@ -1,4 +1,4 @@
-import { NumberKeyboard, InputNumber, Page } from '@wonder-ui/core';
+import { NumberKeyboard, InputNumber } from '@wonder-ui/core';
 
 export default () => (
   <div>
