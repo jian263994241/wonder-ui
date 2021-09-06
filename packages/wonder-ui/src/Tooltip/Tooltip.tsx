@@ -77,7 +77,7 @@ const TooltipTooltip = styled('div', {
   return {
     backgroundColor: backgroundColor,
     borderRadius: theme.shape.borderRadius,
-    color: theme.palette.common.white,
+    color: theme.palette.getContrastText(backgroundColor),
     fontFamily: theme.typography.fontFamily,
     fontWeight: theme.typography.fontWeightRegular,
     lineHeight: `${round(16 / 12)}em`,

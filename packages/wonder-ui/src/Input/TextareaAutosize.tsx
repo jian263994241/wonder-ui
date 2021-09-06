@@ -46,7 +46,9 @@ const TextareaAutosizeRoot = styled('span', {
     outline: 'inherit',
     lineHeight: 'inherit',
     font: 'inherit',
-    fontSize: 'inherit'
+    fontSize: 'inherit',
+    color: 'inherit',
+    backgroundColor: 'transparent'
   }
 });
 
