@@ -1,5 +1,6 @@
 //https://github.com/microsoft/fluentui/tree/master/packages/utilities/src/dom
 
+export * from './attribute';
 export * from './contains';
 export * from './elementContainsAttribute';
 export * from './findElementRecursive';

@@ -2,6 +2,7 @@ import { createStyleStore } from './createStyleStore';
 import { EventGroup } from './EventGroup';
 import { getDevice } from './device';
 import {
+  attribute,
   ownerDocument,
   ownerWindow,
   isWindow,
@@ -253,7 +254,7 @@ export function findScrollableParent(
 
   // First do a quick scan for the scrollable attribute.
   while (el && el !== doc.body) {
-    if (el.getAttribute(DATA_IS_SCROLLABLE_ATTRIBUTE) === 'true') {
+    if (attribute(el, DATA_IS_SCROLLABLE_ATTRIBUTE) === 'true') {
       return el;
     }
     el = el.parentElement;
@@ -263,7 +264,7 @@ export function findScrollableParent(
   el = startingElement;
 
   while (el && el !== doc.body) {
-    if (el.getAttribute(DATA_IS_SCROLLABLE_ATTRIBUTE) !== 'false') {
+    if (attribute(el, DATA_IS_SCROLLABLE_ATTRIBUTE) !== 'false') {
       const computedStyles = getComputedStyle(el);
       let overflowY = computedStyles
         ? computedStyles.getPropertyValue('overflow-y')
