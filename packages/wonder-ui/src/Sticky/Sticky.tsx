@@ -1,22 +1,26 @@
 import * as React from 'react';
+import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import {
+  composeClasses,
+  css,
   forwardRef,
+  generateUtilityClasses,
   getRect,
   getScrollParent,
+  getScrollTop,
   isVisible,
-  on,
-  generateUtilityClasses,
-  composeClasses,
-  css
+  triggerEvent,
+  unitToPx
 } from '@wonder-ui/utils';
 import {
   useDocumentVisibility,
   useEventCallback,
+  useEventListener,
   useForkRef,
-  useSafeState
+  useReactive,
+  useUpdateEffect
 } from '@wonder-ui/hooks';
-import styled from '../styles/styled';
 
 const COMPONENT_NAME = 'WuiSticky';
 
@@ -28,23 +32,32 @@ const stickyClasses = generateUtilityClasses(COMPONENT_NAME, [
 
 export type StickyPosition = 'top' | 'bottom';
 
-export interface StickyProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface StickyProps {
   classes?: Partial<typeof stickyClasses>;
+
+  className?: string;
+  /**
+   * 内容
+   */
+  children?: React.ReactNode;
   /**
    * 容器
    */
   container?: HTMLElement | null;
+
   component?: React.ElementType;
+
   /**
-   * 固定位置
+   * 吸顶时与底部的距离，支持 px vw vh rem 单位，默认 px
    */
-  offsetBottom?: number;
+  offsetBottom?: number | string;
   /**
-   * 固定位置
+   * 吸顶时与顶部的距离，支持 px vw vh rem 单位，默认 px
    */
-  offsetTop?: number;
+  offsetTop?: number | string;
   /**
    * 固定
+   * @default top
    */
   position?: StickyPosition;
   /**
@@ -52,6 +65,16 @@ export interface StickyProps extends React.HTMLAttributes<HTMLDivElement> {
    * @default 999
    */
   zIndex?: number;
+
+  style?: React.CSSProperties;
+  /**
+   * 当吸顶状态改变时触发
+   */
+  onChange?(isFixed: boolean): void;
+  /**
+   * 滚动时触发
+   */
+  onScroll?(params: { isFixed: boolean; scrollTop: number }): void;
 }
 
 export interface StickyStyleProps extends StickyProps {
@@ -85,8 +108,8 @@ const StickyInner = styled('div', { name: COMPONENT_NAME, slot: 'Inner' })<{
 const Sticky = forwardRef<HTMLDivElement, StickyProps>((inProps, ref) => {
   const props = useThemeProps({ name: 'WuiSticky', props: inProps });
   const {
-    offsetTop = 0,
-    offsetBottom = 0,
+    offsetTop: offsetTopProp = 0,
+    offsetBottom: offsetBottomProp = 0,
     position = 'top',
     zIndex,
     children,
@@ -94,24 +117,36 @@ const Sticky = forwardRef<HTMLDivElement, StickyProps>((inProps, ref) => {
     component,
     style,
     container,
+    onChange,
+    onScroll,
     ...rest
   } = props;
 
-  const [state, setState] = useSafeState({
+  const state = useReactive({
     fixed: false,
     width: 0, // root width
     height: 0, // root height
     transform: 0
   });
 
-  const offset = position === 'top' ? offsetTop : offsetBottom;
+  const offsetTop = React.useMemo(() => unitToPx(offsetTopProp), [
+    offsetTopProp
+  ]);
+  const offsetBottom = React.useMemo(() => unitToPx(offsetBottomProp), [
+    offsetBottomProp
+  ]);
+
+  const offset = React.useMemo(
+    () => (position === 'top' ? offsetTop : offsetBottom),
+    [position]
+  );
 
   const rootStyle = React.useMemo(() => {
     const { fixed, height, width } = state;
     if (fixed) {
       return { width, height };
     }
-  }, [state]);
+  }, [state.width, state.height, state.fixed]);
 
   const stickyStyle = React.useMemo(() => {
     const { fixed, height, width, transform } = state;
@@ -127,64 +162,73 @@ const Sticky = forwardRef<HTMLDivElement, StickyProps>((inProps, ref) => {
         transform: `translate3d(0, ${transform}px, 0)`
       })
     };
-  }, [state, zIndex]);
+  }, [state.fixed, state.height, state.width, state.transform, zIndex, offset]);
 
   const rootRef = React.useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(rootRef, ref);
+  const scrollParentRef = React.useRef<HTMLElement>();
 
   const handleScroll = useEventCallback(() => {
     const { current: root } = rootRef;
 
     if (!root || !isVisible(root)) return;
 
-    const _state = { ...state };
-
     const rootRect = getRect(root);
+    const scrollTop = getScrollTop(scrollParentRef.current!);
 
-    _state.width = rootRect.width;
-    _state.height = rootRect.height;
+    state.width = rootRect.width;
+    state.height = rootRect.height;
 
     if (position === 'top') {
       // The sticky component should be kept inside the container element
       if (container) {
         const containerRect = getRect(container);
-        const difference = containerRect.bottom - offset - _state.height;
-        _state.fixed = offset > rootRect.top && containerRect.bottom > 0;
-        _state.transform = difference < 0 ? difference : 0;
+        const difference = containerRect.bottom - offset - state.height;
+        state.fixed = offset > rootRect.top && containerRect.bottom > 0;
+        state.transform = difference < 0 ? difference : 0;
       } else {
-        _state.fixed = offset > rootRect.top;
+        state.fixed = offset > rootRect.top;
       }
     } else {
       const { clientHeight } = document.documentElement;
       if (container) {
         const containerRect = getRect(container);
         const difference =
-          clientHeight - containerRect.top - offset - _state.height;
-        _state.fixed =
+          clientHeight - containerRect.top - offset - state.height;
+        state.fixed =
           clientHeight - offset < rootRect.bottom &&
           clientHeight > containerRect.top;
-        _state.transform = difference < 0 ? -difference : 0;
+        state.transform = difference < 0 ? -difference : 0;
       } else {
-        _state.fixed = clientHeight - offset < rootRect.bottom;
+        state.fixed = clientHeight - offset < rootRect.bottom;
       }
     }
 
-    setState(_state);
+    onScroll?.({
+      scrollTop,
+      isFixed: state.fixed
+    });
   });
 
   React.useEffect(() => {
-    if (rootRef.current) {
-      const scrollParent = getScrollParent(rootRef.current) as HTMLElement;
-
-      return on(scrollParent, 'scroll', handleScroll);
+    if (rootRef.current && !scrollParentRef.current) {
+      scrollParentRef.current = getScrollParent(rootRef.current) as HTMLElement;
     }
   }, []);
 
   const docVisibility = useDocumentVisibility();
 
-  React.useEffect(() => {
-    handleScroll();
+  useUpdateEffect(() => {
+    if (scrollParentRef.current) {
+      triggerEvent(scrollParentRef.current, 'scroll');
+    }
   }, [docVisibility]);
+
+  useEventListener(scrollParentRef, 'scroll', handleScroll);
+
+  React.useEffect(() => {
+    onChange?.(state.fixed);
+  }, [state.fixed]);
 
   const styleProps = { ...props, fixed: state.fixed };
 
