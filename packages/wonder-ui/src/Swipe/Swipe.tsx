@@ -14,15 +14,16 @@ import {
 } from '@wonder-ui/utils';
 import { SwipeContext } from './SwipeContext';
 import {
+  useChildren,
   useDocumentVisibility,
   useEnhancedEffect,
   useEventCallback,
   useEventListener,
   useForkRef,
   useReactive,
+  useSafeState,
   useTouch,
-  useWindowSize,
-  useSafeState
+  useWindowSize
 } from '@wonder-ui/hooks';
 import type {
   SwipeState,
@@ -31,6 +32,7 @@ import type {
   SwipeToOptions,
   SwipeItemAction
 } from './SwipeTypes';
+import SwipeItem from '../SwipeItem';
 
 const COMPONENT_NAME = 'WuiSwipe';
 
@@ -125,7 +127,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
   const {
     actionRef,
     autoplay: allowAutoPlay = false,
-    children,
+    children: childrenProp,
     className,
     containerStyle,
     disableLazyLoading = false,
@@ -145,6 +147,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     ...rest
   } = props;
 
+  const children = useChildren(childrenProp, SwipeItem);
   const childrenAction = useReactive<React.MutableRefObject<SwipeItemAction>[]>(
     []
   );
