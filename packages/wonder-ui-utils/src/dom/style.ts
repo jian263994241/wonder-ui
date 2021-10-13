@@ -3,9 +3,9 @@ import { getComputedStyle } from './getComputedStyle';
 import { hyphenate } from './hyphenate';
 import { isTransform } from './isTransform';
 
-type HyphenProperty = keyof CSS.PropertiesHyphen;
-type CamelProperty = keyof CSS.Properties;
-type Property = HyphenProperty | CamelProperty;
+export type HyphenProperty = keyof CSS.PropertiesHyphen;
+export type CamelProperty = keyof CSS.Properties;
+export type Property = HyphenProperty | CamelProperty;
 
 export function style(
   node: HTMLElement,
@@ -16,6 +16,11 @@ export function style<T extends HyphenProperty>(
   node: HTMLElement,
   property: T
 ): CSS.PropertiesHyphen[T];
+
+export function style<T extends CamelProperty>(
+  node: HTMLElement,
+  property: T
+): CSS.Properties[T];
 
 export function style<T extends Property>(
   node: HTMLElement,
