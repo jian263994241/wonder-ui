@@ -11,6 +11,10 @@ function isObject(val: any): val is object {
   return typeString === '[object object]' || typeString === '[object array]';
 }
 
+function isRefObject(val: any): val is React.MutableRefObject<any> {
+  return 'current' in val;
+}
+
 function observer<T extends object>(initialVal: T, cb: () => void): T {
   const existingProxy = proxyMap.get(initialVal);
 
@@ -19,8 +23,8 @@ function observer<T extends object>(initialVal: T, cb: () => void): T {
     return existingProxy;
   }
 
-  //虚拟dom不做代理
-  if (React.isValidElement(initialVal)) {
+  //虚拟dom | refObject 不做代理
+  if (React.isValidElement(initialVal) || isRefObject(initialVal)) {
     return initialVal;
   }
 
@@ -36,9 +40,15 @@ function observer<T extends object>(initialVal: T, cb: () => void): T {
       return isObject(res) ? observer(res, cb) : Reflect.get(target, key);
     },
     set(target, key, val) {
-      const ret = Reflect.set(target, key, val);
-      cb();
-      return ret;
+      //@ts-expect-error
+      if (target[key] != val) {
+        const ret = Reflect.set(target, key, val);
+        cb();
+
+        return ret;
+      }
+
+      return true;
     },
     deleteProperty(target, key) {
       const ret = Reflect.deleteProperty(target, key);
