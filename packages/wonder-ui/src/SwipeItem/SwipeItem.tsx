@@ -1,10 +1,9 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import { SwipeContext } from '../Swipe/SwipeContext';
 import { useCreation, useMount, useReactive } from '@wonder-ui/hooks';
-import { warn, generateUtilityClasses, css, findIndex } from '@wonder-ui/utils';
+import { warn, generateUtilityClasses, css } from '@wonder-ui/utils';
 import type { SwipeItemProps, SwipeItemClasses } from './SwipeItemTypes';
-import type { SwipeItemAction } from '../Swipe/SwipeTypes';
+import { useParent, useExpose } from '../Swipe/relation';
 
 const COMPONENT_NAME = 'WuiSwipeItem';
 
@@ -26,41 +25,21 @@ const SwipeItemRoot = styled('div', {
 const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
   (props, ref) => {
     const { children, className, style, ...rest } = props;
-    const context = React.useContext(SwipeContext);
-    const actionRef = React.useRef<SwipeItemAction>();
-
-    if (!context) {
-      warn('<SwipeItem> must be a child component of <Swipe>.');
-      return null;
-    }
 
     const {
+      index,
       activeIndex = 0,
       count = 0,
       size,
       vertical,
       loop,
-      disableLazyLoading,
-      actionRefs
-    } = context;
+      disableLazyLoading
+    } = useParent();
 
-    const index = useCreation(() => {
-      let currentIndex = findIndex(actionRefs, (item) => item === actionRef);
-
-      if (currentIndex < 0) {
-        actionRefs.push(actionRef);
-        currentIndex = actionRefs.length - 1;
-      }
-
-      return currentIndex;
-    }, []);
-
-    React.useEffect(
-      () => () => {
-        actionRefs.splice(index, 1);
-      },
-      [index]
-    );
+    if (index < 0) {
+      warn('<SwipeItem> must be a child component of <Swipe>.');
+      return null;
+    }
 
     const mounted = useMount();
     const rendered = React.useRef<boolean>(false);
@@ -107,7 +86,7 @@ const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
       state.offset = offset;
     };
 
-    React.useImperativeHandle(actionRef, () => ({ setOffset }), []);
+    useExpose({ setOffset });
 
     return (
       <SwipeItemRoot

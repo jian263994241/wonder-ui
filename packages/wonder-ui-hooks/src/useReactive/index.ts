@@ -11,10 +11,6 @@ function isObject(val: any): val is object {
   return typeString === '[object object]' || typeString === '[object array]';
 }
 
-function isRefObject(val: any): val is React.MutableRefObject<any> {
-  return 'current' in val;
-}
-
 function observer<T extends object>(initialVal: T, cb: () => void): T {
   const existingProxy = proxyMap.get(initialVal);
 
@@ -24,7 +20,7 @@ function observer<T extends object>(initialVal: T, cb: () => void): T {
   }
 
   //虚拟dom | refObject 不做代理
-  if (React.isValidElement(initialVal) || isRefObject(initialVal)) {
+  if (React.isValidElement(initialVal)) {
     return initialVal;
   }
 

@@ -1,5 +1,5 @@
 ---
-mobile: false
+mobile: true
 toc: menu
 nav:
   path: /components

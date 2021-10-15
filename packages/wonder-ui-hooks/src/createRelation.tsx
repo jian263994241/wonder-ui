@@ -7,68 +7,70 @@ type CustomValueType = {
 
 type ContextValueType = {
   index: number;
-  count: number;
   exposedValueRefs: React.MutableRefObject<CustomValueType>[];
 } & CustomValueType;
 
-const ChildContext = React.createContext<ContextValueType | null>(null);
+const ChildContext = React.createContext<ContextValueType>({
+  index: -1,
+  exposedValueRefs: []
+});
 
 export function createRelation() {
   const useChildren = () => {
-    const exposedValueRefs: React.MutableRefObject<CustomValueType>[] = [];
-
     const state = useReactive({
-      count: 0
+      count: 0,
+      exposedValueRefs: [] as React.MutableRefObject<CustomValueType>[]
     });
 
-    function linkChildren(children: any, providedValue: any = {}) {
+    function linkChildren(children: any, providedValue: CustomValueType = {}) {
       const childrenArray = React.Children.toArray(children);
 
       state.count = childrenArray.length;
 
-      return React.Children.toArray(children).map((child, index) => {
-        return (
-          <ChildContext.Provider
-            value={{ ...providedValue, exposedValueRefs, index }}
-            key={index}
-          >
-            <React.Fragment>{child}</React.Fragment>
-          </ChildContext.Provider>
-        );
-      });
+      return React.Children.toArray(children).map((child, index) => (
+        <ChildContext.Provider
+          value={{
+            ...providedValue,
+            exposedValueRefs: state.exposedValueRefs,
+            index
+          }}
+          key={index}
+        >
+          {child}
+        </ChildContext.Provider>
+      ));
     }
 
     return {
       count: state.count,
-      linkChildren,
-      exposedValueRefs
+      exposedValueRefs: state.exposedValueRefs,
+      linkChildren
     };
   };
 
   const useParent = () => {
-    return (React.useContext(ChildContext) || {
-      index: -1,
-      exposedValueRefs: []
-    }) as ContextValueType;
+    return React.useContext(ChildContext);
   };
 
   const useExpose = (value: CustomValueType) => {
-    const { exposedValueRefs, index } = useParent();
+    const { exposedValueRefs } = useParent();
 
-    const exposedRef =
-      React.useRef() as React.MutableRefObject<CustomValueType>;
+    const exposedRef = React.useRef<CustomValueType>(value);
+
+    exposedRef.current = value;
 
     React.useEffect(() => {
-      if (exposedValueRefs[index] === undefined) {
+      const index = exposedValueRefs.indexOf(exposedRef);
+
+      if (index < 0) {
         exposedValueRefs.push(exposedRef);
       }
 
-      exposedValueRefs[index].current = value;
-
       return () => {
+        const index = exposedValueRefs.indexOf(exposedRef);
         exposedValueRefs.splice(index, 1);
       };
-    }, [value]);
+    }, [exposedValueRefs]);
   };
 
   return {

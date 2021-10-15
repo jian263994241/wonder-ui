@@ -44,9 +44,15 @@ group:
 
 <code src="./demo/demo5.tsx"></code>
 
-<API src="./Swipe.tsx"></API>
+## Props
 
-<API src="../SwipeItem/SwipeItem.tsx"></API>
+### Swipe
+
+<API src="./Swipe.tsx" hideTitle></API>
+
+### SwipeItem
+
+<API src="../SwipeItem/SwipeItem.tsx" hideTitle></API>
 ## Swipe 方法
 
 | 参数	|说明	|类型	|默认值

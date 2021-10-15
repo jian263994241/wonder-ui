@@ -12,9 +12,7 @@ import {
   isVisible,
   preventDefault
 } from '@wonder-ui/utils';
-import { SwipeContext } from './SwipeContext';
 import {
-  useChildren,
   useDocumentVisibility,
   useEnhancedEffect,
   useEventCallback,
@@ -32,7 +30,8 @@ import type {
   SwipeToOptions,
   SwipeItemAction
 } from './SwipeTypes';
-import SwipeItem from '../SwipeItem';
+
+import { useChildren } from './relation';
 
 const COMPONENT_NAME = 'WuiSwipe';
 
@@ -127,7 +126,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
   const {
     actionRef,
     autoplay: allowAutoPlay = false,
-    children: childrenProp,
+    children,
     className,
     containerStyle,
     disableLazyLoading = false,
@@ -147,16 +146,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     ...rest
   } = props;
 
-  const children = useChildren(childrenProp, SwipeItem);
-  const childrenAction = useReactive<React.MutableRefObject<SwipeItemAction>[]>(
-    []
-  );
-
-  const [count, setCount] = useSafeState(childrenAction.length);
-
-  React.useEffect(() => {
-    setCount(childrenAction.length);
-  }, [childrenAction.length]);
+  const { count, exposedValueRefs, linkChildren } = useChildren();
 
   const rootRef = React.useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(rootRef, ref);
@@ -176,15 +166,15 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
   const touch = useTouch();
   const windowSize = useWindowSize();
 
-  const size = React.useMemo(() => state[vertical ? 'height' : 'width'], [
-    vertical,
-    state.height,
-    state.width
-  ]);
+  const size = React.useMemo(
+    () => state[vertical ? 'height' : 'width'],
+    [vertical, state.height, state.width]
+  );
 
-  const delta = React.useMemo(() => (vertical ? touch.deltaY : touch.deltaX), [
-    vertical
-  ]);
+  const delta = React.useMemo(
+    () => (vertical ? touch.deltaY : touch.deltaX),
+    [vertical]
+  );
   const minOffset = React.useMemo(() => {
     if (state.rect) {
       const base = vertical ? state.rect.height : state.rect.width;
@@ -193,17 +183,17 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     return 0;
   }, [vertical, state.rect, size, count]);
 
-  const maxCount = React.useMemo(() => Math.ceil(Math.abs(minOffset) / size), [
-    minOffset,
-    size
-  ]);
+  const maxCount = React.useMemo(
+    () => Math.ceil(Math.abs(minOffset) / size),
+    [minOffset, size]
+  );
 
   const trackSize = React.useMemo(() => count * size, [count, size]);
 
-  const activeIndex = React.useMemo(() => (state.active + count) % count, [
-    state.active,
-    count
-  ]);
+  const activeIndex = React.useMemo(
+    () => (state.active + count) % count,
+    [state.active, count]
+  );
 
   const isCorrectDirection = () => {
     const expect = vertical ? 'vertical' : 'horizontal';
@@ -272,14 +262,14 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
 
       // auto move first and last swipe in loop mode
       if (loop) {
-        if (childrenAction[0] && targetOffset !== minOffset) {
+        if (exposedValueRefs[0] && targetOffset !== minOffset) {
           const outRightBound = targetOffset < minOffset;
-          childrenAction[0].current?.setOffset(outRightBound ? trackSize : 0);
+          exposedValueRefs[0].current?.setOffset(outRightBound ? trackSize : 0);
         }
 
-        if (childrenAction[count - 1] && targetOffset !== 0) {
+        if (exposedValueRefs[count - 1] && targetOffset !== 0) {
           const outLeftBound = targetOffset > 0;
-          childrenAction[count - 1].current?.setOffset(
+          exposedValueRefs[count - 1].current?.setOffset(
             outLeftBound ? -trackSize : 0
           );
         }
@@ -400,7 +390,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     state.active = active;
     state.swiping = true;
     state.offset = getTargetOffset(active);
-    childrenAction.forEach((swipe) => {
+    exposedValueRefs.forEach((swipe) => {
       swipe.current?.setOffset(0);
     });
   };
@@ -502,8 +492,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     disableLazyLoading,
     loop,
     size,
-    vertical,
-    actionRefs: childrenAction
+    vertical
   };
 
   return (
@@ -513,20 +502,19 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
       ref={handleRef}
       {...rest}
     >
-      <SwipeContext.Provider value={childProps}>
-        <SwipeContainer
-          ref={containerRef}
-          styleProps={styleProps}
-          className={classes.container}
-          style={{ ...containerStyle, ...trackStyle }}
-          onTouchStart={onTouchStart}
-          // onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          onTouchCancel={onTouchEnd}
-        >
-          {children}
-        </SwipeContainer>
-      </SwipeContext.Provider>
+      <SwipeContainer
+        ref={containerRef}
+        styleProps={styleProps}
+        className={classes.container}
+        style={{ ...containerStyle, ...trackStyle }}
+        onTouchStart={onTouchStart}
+        // onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        onTouchCancel={onTouchEnd}
+      >
+        {linkChildren(children, childProps)}
+      </SwipeContainer>
+
       {showIndicators &&
         (onRenderIndicator ? (
           onRenderIndicator(activeIndex)
