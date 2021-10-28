@@ -205,6 +205,12 @@ export * from './Swipe';
 export { default as SwipeItem } from './SwipeItem';
 export * from './SwipeItem';
 
+export { default as TabBar } from './TabBar';
+export * from './TabBar';
+
+export { default as TabBarItem } from './TabBarItem';
+export * from './TabBarItem';
+
 export { default as TabContext } from './TabContext';
 
 export { default as Tabs } from './Tabs';
