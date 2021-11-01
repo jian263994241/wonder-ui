@@ -1,3 +1,28 @@
-export interface SwipeItemProps extends React.HTMLAttributes<HTMLDivElement> {}
+import * as React from 'react';
+import { SwipeItemClasses } from './SwipeItemClasses';
+export interface SwipeItemProps {
+  /**
+   * 样式名
+   */
+  className?: string;
+  /**
+   * 内容
+   */
+  children?: React.ReactNode;
+  /**
+   * Css api
+   */
+  classes?: Partial<SwipeItemClasses>;
+  /**
+   * 样式
+   */
+  style?: React.CSSProperties;
+}
 
-export type SwipeItemClasses = Record<'root', string>;
+export type SwipeItemState = {
+  offset: number;
+};
+
+export interface SwipeItemStyleProps extends SwipeItemProps {
+  active: boolean;
+}

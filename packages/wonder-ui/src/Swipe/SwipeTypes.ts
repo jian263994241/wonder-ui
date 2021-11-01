@@ -1,7 +1,4 @@
-export type SwipeClasses = Record<
-  'root' | 'vertical' | 'container' | 'item' | 'indicators' | 'indicator',
-  string
->;
+import { SwipeClasses } from './SwipeClasses';
 
 export type SwipeState = {
   rect: { width: number; height: number } | null;
@@ -21,30 +18,39 @@ export type SwipeAction = {
   next: () => void;
   resize: () => void;
   swipeTo: (index: number, options?: SwipeToOptions) => void;
+  active: number;
 };
 
 export interface SwipeProps {
   /**
    * 内置方法
    */
-  actionRef?: React.Ref<SwipeAction | null>;
-
+  actionRef?: React.Ref<SwipeAction | null | undefined>;
+  /**
+   * Css api
+   */
   classes?: Partial<SwipeClasses>;
-
+  /**
+   * 样式名
+   */
   className?: string;
   /**
    * 内容
    */
   children?: React.ReactNode;
-
+  /**
+   * 样式
+   */
   style?: React.CSSProperties;
-
+  /**
+   * 样式
+   */
   containerStyle?: React.CSSProperties;
   /**
-   * 禁用逐步加载图像或渲染组件
-   * @default false
+   * 逐步加载图像或渲染组件
+   * @default true
    */
-  disableLazyLoading?: boolean;
+  lazyRender?: boolean;
   /**
    * 是否可以通过手势滑动
    * @default true
@@ -55,8 +61,6 @@ export interface SwipeProps {
    * @default 0
    */
   initialSlide?: number;
-
-  slideStyle?: React.CSSProperties;
   /**
    * 是否显示指示器
    * @default true
@@ -108,10 +112,6 @@ export interface SwipeProps {
    */
   onChange?(index: number): void;
 }
-
-export type SwipeItemAction = {
-  setOffset: (offset: number) => void;
-};
 
 export type ContextType = {
   size: number;

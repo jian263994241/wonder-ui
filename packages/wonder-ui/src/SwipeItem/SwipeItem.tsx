@@ -1,16 +1,27 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import { useCreation, useMount, useReactive } from '@wonder-ui/hooks';
-import { warn, generateUtilityClasses, css } from '@wonder-ui/utils';
-import type { SwipeItemProps, SwipeItemClasses } from './SwipeItemTypes';
-import { useParent, useExpose } from '../Swipe/relation';
+import { COMPONENT_NAME } from './SwipeItemClasses';
+import { composeClasses, css, warn } from '@wonder-ui/utils';
+import { SwipeContext } from '../Swipe/SwipeContext';
+import { SwipeItemState } from './SwipeItemTypes';
+import {
+  useCreation,
+  useId,
+  useMount,
+  useReactive,
+  useUnmount
+} from '@wonder-ui/hooks';
+import type { SwipeItemProps, SwipeItemStyleProps } from './SwipeItemTypes';
 
-const COMPONENT_NAME = 'WuiSwipeItem';
+const useClasses = (styleProps: SwipeItemStyleProps) => {
+  const { active, classes } = styleProps;
 
-export const swipeItemClasses: SwipeItemClasses = generateUtilityClasses(
-  COMPONENT_NAME,
-  ['root']
-);
+  const slots = {
+    root: ['root', active && 'active']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
 
 const SwipeItemRoot = styled('div', {
   name: COMPONENT_NAME,
@@ -26,42 +37,62 @@ const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
   (props, ref) => {
     const { children, className, style, ...rest } = props;
 
-    const {
-      index,
-      activeIndex = 0,
-      count = 0,
-      size,
-      vertical,
-      loop,
-      disableLazyLoading
-    } = useParent();
+    const context = React.useContext(SwipeContext);
 
-    if (index < 0) {
+    if (!context) {
       warn('<SwipeItem> must be a child component of <Swipe>.');
       return null;
     }
 
+    const {
+      activeIndex,
+      store,
+      props: parentProps,
+      state: parentState
+    } = context;
+
+    const state = useReactive<SwipeItemState>({ offset: 0 });
+
+    const itemKey = useId('swipe-item-');
+
+    store.set(itemKey, state);
+
+    useUnmount(() => {
+      store.delete(itemKey);
+    });
+
+    const index = useCreation(() => {
+      return Array.from(store.keys()).indexOf(itemKey);
+    }, [store, itemKey]);
+
     const mounted = useMount();
     const rendered = React.useRef<boolean>(false);
-
-    const state = useReactive({ offset: 0 });
 
     const computedStyle = React.useMemo(() => {
       const style: React.CSSProperties = {};
 
-      if (size) {
-        style[vertical ? 'height' : 'width'] = size;
+      if (parentProps.vertical) {
+        style.height = parentState.height;
+      } else {
+        style.width = parentState.width;
       }
 
       if (state.offset) {
-        style.transform = `translate${vertical ? 'Y' : 'X'}(${state.offset}px)`;
+        style.transform = `translate${parentProps.vertical ? 'Y' : 'X'}(${
+          state.offset
+        }px)`;
       }
 
       return style;
-    }, [state.offset, size, vertical]);
+    }, [
+      state.offset,
+      parentState.height,
+      parentState.width,
+      parentProps.vertical
+    ]);
 
     const shouldRender = useCreation(() => {
-      if (disableLazyLoading || rendered.current) {
+      if (!parentProps.lazyRender || rendered.current) {
         return true;
       }
 
@@ -70,27 +101,37 @@ const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
         return false;
       }
 
+      const count = React.Children.count(parentProps.children);
+
       const maxActive = count - 1;
       const prevActive =
-        activeIndex === 0 && loop ? maxActive : activeIndex - 1;
+        activeIndex === 0 && parentProps.loop ? maxActive : activeIndex - 1;
       const nextActive =
-        activeIndex === maxActive && loop ? 0 : activeIndex + 1;
+        activeIndex === maxActive && parentProps.loop ? 0 : activeIndex + 1;
 
       rendered.current =
         index === activeIndex || index === prevActive || index === nextActive;
 
       return rendered.current;
-    }, [activeIndex, index, loop, disableLazyLoading, count, mounted]);
+    }, [
+      parentProps.children,
+      parentProps.lazyRender,
+      parentProps.loop,
+      activeIndex,
+      index,
+      mounted
+    ]);
 
-    const setOffset = (offset: number) => {
-      state.offset = offset;
+    const styleProps = {
+      ...props,
+      active: index === activeIndex
     };
 
-    useExpose({ setOffset });
+    const classes = useClasses(styleProps);
 
     return (
       <SwipeItemRoot
-        className={css(swipeItemClasses.root, className)}
+        className={css(classes.root, className)}
         style={{ ...style, ...computedStyle }}
         ref={ref}
         {...rest}

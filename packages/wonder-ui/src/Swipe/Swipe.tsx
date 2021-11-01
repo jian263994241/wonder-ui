@@ -7,42 +7,23 @@ import {
   createArray,
   css,
   doubleRaf,
-  generateUtilityClasses,
   globalClasses,
   isVisible,
   preventDefault
 } from '@wonder-ui/utils';
+import { COMPONENT_NAME } from './SwipeClasses';
+import { ContextValueType, SwipeContext } from './SwipeContext';
 import {
+  useCreation,
   useDocumentVisibility,
-  useEnhancedEffect,
   useEventCallback,
   useEventListener,
   useForkRef,
   useReactive,
-  useSafeState,
   useTouch,
   useWindowSize
 } from '@wonder-ui/hooks';
-import type {
-  SwipeState,
-  SwipeProps,
-  SwipeClasses,
-  SwipeToOptions,
-  SwipeItemAction
-} from './SwipeTypes';
-
-import { useChildren } from './relation';
-
-const COMPONENT_NAME = 'WuiSwipe';
-
-export const swipeClasses: SwipeClasses = generateUtilityClasses('WuiSwipe', [
-  'root',
-  'vertical',
-  'container',
-  'item',
-  'indicators',
-  'indicator'
-]);
+import type { SwipeState, SwipeProps, SwipeToOptions } from './SwipeTypes';
 
 const useClasses = (styleProps: SwipeProps) => {
   const { classes, vertical } = styleProps;
@@ -129,7 +110,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     children,
     className,
     containerStyle,
-    disableLazyLoading = false,
+    lazyRender = true,
     duration = 500,
     height,
     initialSlide = 0,
@@ -138,7 +119,6 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     onChange,
     onRenderIndicator,
     showIndicators = true,
-    slideStyle,
     touchable = true,
     vertical = false,
     stopPropagation = true,
@@ -146,7 +126,25 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     ...rest
   } = props;
 
-  const { count, exposedValueRefs, linkChildren } = useChildren();
+  const styleProps = {
+    ...props,
+    vertical,
+    touchable,
+    autoplay: allowAutoPlay,
+    lazyRender,
+    duration,
+    initialSlide,
+    interval,
+    loop,
+    showIndicators,
+    stopPropagation
+  };
+
+  const store = useCreation(() => {
+    return new Map() as ContextValueType['store'];
+  }, [children]);
+
+  const count = React.Children.count(children);
 
   const rootRef = React.useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(rootRef, ref);
@@ -160,22 +158,19 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     swiping: false
   });
 
-  const styleProps = { ...props, vertical, touchable };
-  const classes = useClasses(styleProps);
-
-  const touch = useTouch();
-  const windowSize = useWindowSize();
-
-  const size = React.useMemo(
+  const size = useCreation(
     () => state[vertical ? 'height' : 'width'],
     [vertical, state.height, state.width]
   );
-
-  const delta = React.useMemo(
+  const classes = useClasses(styleProps);
+  const windowSize = useWindowSize();
+  const touch = useTouch();
+  const delta = useCreation(
     () => (vertical ? touch.deltaY : touch.deltaX),
     [vertical]
   );
-  const minOffset = React.useMemo(() => {
+
+  const minOffset = useCreation(() => {
     if (state.rect) {
       const base = vertical ? state.rect.height : state.rect.width;
       return base - size * count;
@@ -183,14 +178,14 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     return 0;
   }, [vertical, state.rect, size, count]);
 
-  const maxCount = React.useMemo(
+  const maxCount = useCreation(
     () => Math.ceil(Math.abs(minOffset) / size),
     [minOffset, size]
   );
 
-  const trackSize = React.useMemo(() => count * size, [count, size]);
+  const trackSize = useCreation(() => count * size, [count, size]);
 
-  const activeIndex = React.useMemo(
+  const activeIndex = useCreation(
     () => (state.active + count) % count,
     [state.active, count]
   );
@@ -200,7 +195,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     return touch.direction.current === expect;
   };
 
-  const trackStyle = React.useMemo(() => {
+  const trackStyle = useCreation(() => {
     const style: React.CSSProperties = {
       transitionDuration: `${state.swiping ? 0 : duration}ms`,
       transform: `translate${vertical ? 'Y' : 'X'}(${state.offset}px)`
@@ -260,18 +255,18 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
       const targetActive = getTargetActive(pace);
       const targetOffset = getTargetOffset(targetActive, offset);
 
+      const exposes = Array.from(store.values());
+
       // auto move first and last swipe in loop mode
       if (loop) {
-        if (exposedValueRefs[0] && targetOffset !== minOffset) {
+        if (exposes[0] && targetOffset !== minOffset) {
           const outRightBound = targetOffset < minOffset;
-          exposedValueRefs[0].current?.setOffset(outRightBound ? trackSize : 0);
+          exposes[0].offset = outRightBound ? trackSize : 0;
         }
 
-        if (exposedValueRefs[count - 1] && targetOffset !== 0) {
+        if (exposes[count - 1] && targetOffset !== 0) {
           const outLeftBound = targetOffset > 0;
-          exposedValueRefs[count - 1].current?.setOffset(
-            outLeftBound ? -trackSize : 0
-          );
+          exposes[count - 1].offset = outLeftBound ? -trackSize : 0;
         }
       }
 
@@ -390,8 +385,8 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     state.active = active;
     state.swiping = true;
     state.offset = getTargetOffset(active);
-    exposedValueRefs.forEach((swipe) => {
-      swipe.current?.setOffset(0);
+    store.forEach((swipe) => {
+      swipe.offset = 0;
     });
   };
 
@@ -463,14 +458,15 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
       prev,
       next,
       resize,
-      swipeTo
+      swipeTo,
+      active: state.active
     }),
-    []
+    [state.active]
   );
 
   const documentVisible = useDocumentVisibility();
 
-  useEnhancedEffect(() => {
+  React.useEffect(() => {
     initialize(state.active);
 
     if (allowAutoPlay && documentVisible === 'visible') {
@@ -484,60 +480,60 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     };
   }, [allowAutoPlay, documentVisible, count]);
 
-  useEnhancedEffect(resize, [windowSize.width, windowSize.height]);
-
-  const childProps = {
-    activeIndex,
-    count,
-    disableLazyLoading,
-    loop,
-    size,
-    vertical
-  };
+  React.useEffect(resize, [windowSize.width, windowSize.height]);
 
   return (
-    <SwipeRoot
-      className={css(classes.root, className)}
-      styleProps={styleProps}
-      ref={handleRef}
-      {...rest}
+    <SwipeContext.Provider
+      value={{
+        props: styleProps,
+        state,
+        store,
+        activeIndex
+      }}
     >
-      <SwipeContainer
-        ref={containerRef}
+      <SwipeRoot
+        className={css(classes.root, className)}
         styleProps={styleProps}
-        className={classes.container}
-        style={{ ...containerStyle, ...trackStyle }}
-        onTouchStart={onTouchStart}
-        // onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-        onTouchCancel={onTouchEnd}
+        ref={handleRef}
+        {...rest}
       >
-        {linkChildren(children, childProps)}
-      </SwipeContainer>
+        <SwipeContainer
+          ref={containerRef}
+          styleProps={styleProps}
+          className={classes.container}
+          style={{ ...containerStyle, ...trackStyle }}
+          onTouchStart={onTouchStart}
+          // onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          onTouchCancel={onTouchEnd}
+        >
+          {children}
+        </SwipeContainer>
 
-      {showIndicators &&
-        (onRenderIndicator ? (
-          onRenderIndicator(activeIndex)
-        ) : (
-          <SwipeIndicators
-            styleProps={styleProps}
-            className={classes.indicators}
-          >
-            {createArray(count, (index) => index).map((index) => (
-              <SwipeIndicator
-                styleProps={styleProps}
-                onClick={() => swipeTo(index)}
-                className={css(classes.indicator, {
-                  [globalClasses.active]: activeIndex === index
-                })}
-                key={index}
-              >
-                <span>{index}</span>
-              </SwipeIndicator>
-            ))}
-          </SwipeIndicators>
-        ))}
-    </SwipeRoot>
+        {showIndicators &&
+          (onRenderIndicator ? (
+            onRenderIndicator(activeIndex)
+          ) : (
+            <SwipeIndicators
+              styleProps={styleProps}
+              className={classes.indicators}
+            >
+              {createArray(count, (index) => index).map((index) => (
+                <SwipeIndicator
+                  styleProps={styleProps}
+                  onClick={() => swipeTo(index)}
+                  className={css(classes.indicator, {
+                    [globalClasses.active]: activeIndex === index
+                  })}
+                  key={index}
+                >
+                  <span>{index}</span>
+                </SwipeIndicator>
+              ))}
+            </SwipeIndicators>
+          ))}
+      </SwipeRoot>
+    </SwipeContext.Provider>
   );
 });
 

@@ -1,2 +1,2 @@
 export { default } from './Swipe';
-export type { SwipeProps } from './SwipeTypes';
+export type { SwipeProps, SwipeAction } from './SwipeTypes';
