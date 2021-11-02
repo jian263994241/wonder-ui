@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ownerDocument, getScrollbarSize } from '@wonder-ui/utils';
-import { useForkRef, useEnhancedEffect } from '@wonder-ui/hooks';
+import { useForkRef } from '@wonder-ui/hooks';
 import List from '../List';
 import {
   moveFocus,
@@ -68,7 +68,7 @@ const MenuList: React.FC<MenuListProps> = React.forwardRef((props, ref) => {
     lastTime: 0
   });
 
-  useEnhancedEffect(() => {
+  React.useEffect(() => {
     if (autoFocus) {
       listRef.current!.focus();
     }

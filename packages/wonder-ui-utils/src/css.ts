@@ -5,7 +5,7 @@ import { camelCase } from './string';
  * @internal
  */
 export interface IDictionary {
-  [className: string]: boolean;
+  [className: string]: boolean | undefined;
 }
 
 /**

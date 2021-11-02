@@ -1,10 +1,6 @@
 import * as React from 'react';
 import { css } from '@wonder-ui/utils';
-import {
-  useEventCallback,
-  useEnhancedEffect,
-  useSafeState
-} from '@wonder-ui/hooks';
+import { useEventCallback, useSafeState } from '@wonder-ui/hooks';
 
 export interface RippleProps extends React.HTMLAttributes<HTMLSpanElement> {
   classes: Record<
@@ -62,7 +58,7 @@ const Ripple = React.forwardRef<HTMLSpanElement, RippleProps>((props, ref) => {
 
   const handleExited = useEventCallback(onExited);
   // Ripple is used for user feedback (e.g. click or press) so we want to apply styles with the highest priority
-  useEnhancedEffect(() => {
+  React.useEffect(() => {
     if (!inProp) {
       // react-transition-group#onExit
       setLeaving(true);

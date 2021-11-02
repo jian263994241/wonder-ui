@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEnhancedEffect } from './useEnhancedEffect';
 
 export function useUpdateEffect(
   effect: React.EffectCallback,
@@ -7,7 +6,7 @@ export function useUpdateEffect(
 ) {
   const isMounted = React.useRef(false);
 
-  useEnhancedEffect(() => {
+  React.useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true;
     } else {

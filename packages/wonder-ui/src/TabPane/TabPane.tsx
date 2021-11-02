@@ -1,93 +1,102 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { useTabContext } from '../TabContext';
-
+import { Context } from '../TabContext/TabContext';
+import { useCreation } from '@wonder-ui/hooks';
+import SwipeItem from '../SwipeItem';
+import { SwipeContext } from '../Swipe/SwipeContext';
 export interface TabPaneProps extends React.HTMLAttributes<HTMLElement> {
-  /**
-   * 激活内容
-   */
-  active?: boolean;
-  /**
-   * @ignore
-   * 适合动画的隐藏方式
-   */
-  animated?: boolean;
   /**
    * 内容
    */
   children?: React.ReactNode;
   /**
+   * 节点类型
+   */
+  component?: React.ElementType;
+  /**
    * 隐藏时销毁内容
    */
   destroyInactiveTabPane?: boolean;
   /**
-   * 强制渲染内容
-   */
-  forceRender?: boolean;
-  /**
    * 值
    */
   value?: any;
-  /**
-   * @ignore
-   */
-  ref?: React.Ref<any>;
 }
 
 const TabPaneRoot = styled('div', {
   name: 'WuiTabPane',
   slot: 'Root'
 })({
-  flex: 'none',
   width: '100%',
-  outline: 'none',
   boxSizing: 'border-box',
   margin: 0,
   padding: 0,
   listStyle: 'none'
 });
 
-const TabPane = React.forwardRef<HTMLElement, TabPaneProps>((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiTabPane' });
-  const {
-    active: activeProp = false,
-    animated = false,
-    destroyInactiveTabPane = false,
-    forceRender = false,
-    children,
-    style,
-    value,
-    ...rest
-  } = props;
+const TabPane = React.forwardRef<HTMLDivElement, TabPaneProps>(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiTabPane' });
+    const {
+      destroyInactiveTabPane = false,
+      children,
+      component,
+      value,
+      ...rest
+    } = props;
 
-  const { value: contextValue } = useTabContext();
-  const active = contextValue != null ? contextValue === value : activeProp;
-  const [visited, setVisited] = React.useState(forceRender);
+    const context = React.useContext(Context);
 
-  React.useEffect(() => {
-    if (active) {
-      setVisited(true);
-    } else if (destroyInactiveTabPane) {
-      setVisited(false);
+    if (!context) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.error(
+          '[WUI] <TabPane> must be a child component of <TabContext>.'
+        );
+      }
+      return null;
     }
-  }, [active, destroyInactiveTabPane]);
 
-  const inActiveStyle: React.CSSProperties = animated
-    ? { visibility: 'hidden', overflowY: 'hidden', height: 0 }
-    : { display: 'none' };
+    const { props: contextProps, state } = context;
 
-  return (
-    <TabPaneRoot
-      role="tabpanel"
-      aria-hidden={!active}
-      style={{ ...style, ...(!active ? inActiveStyle : {}) }}
-      {...rest}
-      ref={ref as React.Ref<HTMLDivElement>}
-    >
-      {(active || visited || forceRender) && children}
-    </TabPaneRoot>
-  );
-});
+    const inited = React.useRef(false);
+
+    const active = useCreation(() => {
+      const isActive = value === state.value;
+
+      if (isActive && !inited.current) {
+        inited.current = true;
+      }
+
+      return isActive;
+    }, [state.value, value]);
+
+    const swipeContext = React.useContext(SwipeContext);
+
+    if (swipeContext) {
+      return (
+        <SwipeItem ref={ref} role="tabpanel" aria-hidden={!active}>
+          {children}
+        </SwipeItem>
+      );
+    }
+
+    const shouldRender = inited.current || !contextProps.lazyRender;
+    const content = shouldRender ? children : null;
+
+    return (
+      <TabPaneRoot
+        as={component}
+        role="tabpanel"
+        aria-hidden={!active}
+        hidden={!active}
+        ref={ref}
+        {...rest}
+      >
+        {content}
+      </TabPaneRoot>
+    );
+  }
+);
 
 export default TabPane;

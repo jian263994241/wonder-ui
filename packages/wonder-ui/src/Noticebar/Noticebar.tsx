@@ -17,8 +17,8 @@ import {
 } from '@wonder-ui/utils';
 import { darken, lighten } from '../styles/colorManipulator';
 import { useEventCallback, useReactive, useWindowSize } from '@wonder-ui/hooks';
-import { swipeClasses } from '../Swipe/Swipe';
-import { swipeItemClasses } from '../SwipeItem/SwipeItem';
+import { swipeClasses } from '../Swipe/SwipeClasses';
+import { swipeItemClasses } from '../SwipeItem/SwipeItemClasses';
 
 const COMPONENT_NAME = 'Noticebar';
 
@@ -187,7 +187,6 @@ const NoticebarText = styled('span', {
 })<{
   styleProps: NoticebarProps;
 }>(({ styleProps }) => ({
-  position: 'absolute',
   transitionTimingFunction: 'linear',
 
   ...(!styleProps.scrollable &&
@@ -201,6 +200,7 @@ const NoticebarText = styled('span', {
         wordWrap: 'break-word'
       }
     : {
+        position: 'absolute',
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis'

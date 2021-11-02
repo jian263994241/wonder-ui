@@ -21,7 +21,8 @@ import {
   useForkRef,
   useReactive,
   useTouch,
-  useWindowSize
+  useWindowSize,
+  useUpdateEffect
 } from '@wonder-ui/hooks';
 import type { SwipeState, SwipeProps, SwipeToOptions } from './SwipeTypes';
 
@@ -113,10 +114,10 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     lazyRender = true,
     duration = 500,
     height,
-    initialSlide = 0,
+    defaultIndex = 0,
     interval = 3000,
     loop = true,
-    onChange,
+    onIndexChange,
     onRenderIndicator,
     showIndicators = true,
     touchable = true,
@@ -133,7 +134,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     autoplay: allowAutoPlay,
     lazyRender,
     duration,
-    initialSlide,
+    defaultIndex,
     interval,
     loop,
     showIndicators,
@@ -154,7 +155,8 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     width: 0,
     height: 0,
     offset: 0,
-    active: initialSlide,
+    active: defaultIndex,
+    activeIndex: defaultIndex,
     swiping: false
   });
 
@@ -185,10 +187,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
 
   const trackSize = useCreation(() => count * size, [count, size]);
 
-  const activeIndex = useCreation(
-    () => (state.active + count) % count,
-    [state.active, count]
-  );
+  const getActiveIndex = (active: number) => (active + count) % count;
 
   const isCorrectDirection = () => {
     const expect = vertical ? 'vertical' : 'horizontal';
@@ -272,9 +271,10 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
 
       state.active = targetActive;
       state.offset = targetOffset;
+      state.activeIndex = getActiveIndex(targetActive);
 
       if (emitChange && targetActive !== active) {
-        onChange?.(activeIndex);
+        onIndexChange?.(state.activeIndex);
       }
     }
   );
@@ -361,7 +361,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
   );
 
   // initialize swipe position
-  const initialize = (active = +initialSlide) => {
+  const initialize = (active = +defaultIndex) => {
     const { current: root } = rootRef;
     if (!root) {
       return;
@@ -383,6 +383,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     }
 
     state.active = active;
+    state.activeIndex = getActiveIndex(active);
     state.swiping = true;
     state.offset = getTargetOffset(active);
     store.forEach((swipe) => {
@@ -466,6 +467,10 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
 
   const documentVisible = useDocumentVisibility();
 
+  useUpdateEffect(() => {
+    swipeTo(defaultIndex);
+  }, [defaultIndex]);
+
   React.useEffect(() => {
     initialize(state.active);
 
@@ -487,8 +492,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
       value={{
         props: styleProps,
         state,
-        store,
-        activeIndex
+        store
       }}
     >
       <SwipeRoot
@@ -512,7 +516,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
 
         {showIndicators &&
           (onRenderIndicator ? (
-            onRenderIndicator(activeIndex)
+            onRenderIndicator(state.activeIndex)
           ) : (
             <SwipeIndicators
               styleProps={styleProps}
@@ -523,7 +527,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
                   styleProps={styleProps}
                   onClick={() => swipeTo(index)}
                   className={css(classes.indicator, {
-                    [globalClasses.active]: activeIndex === index
+                    [globalClasses.active]: state.activeIndex === index
                   })}
                   key={index}
                 >

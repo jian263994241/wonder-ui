@@ -1,6 +1,6 @@
+import * as React from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import { BasicTarget, getTargetElement } from './utils/dom';
-import { useEnhancedEffect } from './useEnhancedEffect';
 import { useSafeState } from './useSafeState';
 
 type Size = { width?: number; height?: number };
@@ -15,7 +15,7 @@ export function useSize(target: BasicTarget): Size {
     };
   });
 
-  useEnhancedEffect(() => {
+  React.useEffect(() => {
     const el = getTargetElement(target);
 
     if (!el) {

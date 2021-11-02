@@ -1,4 +1,4 @@
-import { TabBar, TabBarItem, Space, Typography } from '@wonder-ui/core';
+import { Tabs, Tab, Space, Typography } from '@wonder-ui/core';
 import { House, ListTask, Chat, Person } from '@wonder-ui/icons';
 
 const tabs = [
@@ -35,50 +35,30 @@ const Title = (props: any) => (
 
 export default () => (
   <Space direction="vertical" gap="medium">
-    <Title>基本用法</Title>
-    <TabBar>
+    <Title>图标和文字</Title>
+    <Tabs>
       {tabs.map((item, index) => (
-        <TabBarItem
+        <Tab
           key={index}
-          itemKey={item.key}
-          label={item.label}
-          icon={item.icon}
-        />
-      ))}
-    </TabBar>
-
-    <Title>徽标</Title>
-    <TabBar>
-      {tabs.map((item, index) => (
-        <TabBarItem
-          key={index}
-          itemKey={item.key}
-          label={item.label}
-          icon={item.icon}
           badge={item.badge}
+          label={item.label}
+          icon={item.icon}
         />
       ))}
-    </TabBar>
+    </Tabs>
 
     <Title>仅图标</Title>
-    <TabBar>
+    <Tabs>
       {tabs.map((item, index) => (
-        <TabBarItem key={index} itemKey={item.key} icon={item.icon} />
+        <Tab key={index} badge={item.badge} icon={item.icon} />
       ))}
-    </TabBar>
+    </Tabs>
 
     <Title>仅文字</Title>
-    <TabBar>
+    <Tabs>
       {tabs.map((item, index) => (
-        <TabBarItem key={index} itemKey={item.key} label={item.label} />
+        <Tab key={index} badge={item.badge} label={item.label} />
       ))}
-    </TabBar>
-
-    <Title>文字和指示器</Title>
-    <TabBar showIndicator>
-      {tabs.map((item, index) => (
-        <TabBarItem key={index} itemKey={item.key} label={item.label} />
-      ))}
-    </TabBar>
+    </Tabs>
   </Space>
 );

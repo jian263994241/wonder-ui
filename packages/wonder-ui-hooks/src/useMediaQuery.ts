@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEnhancedEffect } from './useEnhancedEffect';
 import { useSafeState } from './useSafeState';
 
 type Options = {
@@ -39,7 +38,7 @@ export function useMediaQuery(queryInput: string, otpions: Options = {}) {
     return defaultMatches;
   });
 
-  useEnhancedEffect(() => {
+  React.useEffect(() => {
     let active = true;
 
     if (!matchMedia) {

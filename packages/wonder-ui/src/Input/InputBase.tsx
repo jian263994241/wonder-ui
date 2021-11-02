@@ -273,8 +273,8 @@ const InputInput = styled('input', {
 
     '&::-webkit-input-placeholder': placeholder,
     '&::-moz-placeholder': placeholder, // Firefox 19+
-    '&:-ms-input-placeholder': placeholder, // IE11
     '&::-ms-input-placeholder': placeholder, // Edge
+
     '&:focus': {
       outline: 0
     },

@@ -6,7 +6,6 @@ export type ContextValueType = {
   props: SwipeProps;
   state: SwipeState;
   store: Map<any, SwipeItemState>;
-  activeIndex: number;
 };
 
 export const SwipeContext = React.createContext<ContextValueType | null>(null);

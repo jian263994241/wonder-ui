@@ -6,6 +6,7 @@ export type SwipeState = {
   height: number;
   offset: number;
   active: number;
+  activeIndex: number;
   swiping: boolean;
 };
 
@@ -60,7 +61,7 @@ export interface SwipeProps {
    * 初始位置索引值
    * @default 0
    */
-  initialSlide?: number;
+  defaultIndex?: number;
   /**
    * 是否显示指示器
    * @default true
@@ -110,7 +111,7 @@ export interface SwipeProps {
   /**
    * 每一页轮播结束后触发
    */
-  onChange?(index: number): void;
+  onIndexChange?(index: number): void;
 }
 
 export type ContextType = {

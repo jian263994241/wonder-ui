@@ -11,7 +11,7 @@ import {
 } from '@popperjs/core';
 import { ownerDocument, nextTick, setRef } from '@wonder-ui/utils';
 import { TransitionProps } from '../Transition';
-import { useEnhancedEffect, useForkRef, useSafeState } from '@wonder-ui/hooks';
+import { useForkRef, useSafeState } from '@wonder-ui/hooks';
 
 type AnchorEl = HTMLElement | null | (() => HTMLElement | null);
 type BasePlacement = 'top' | 'bottom' | 'right' | 'left';
@@ -28,9 +28,9 @@ type VariationPlacement =
 type Placement = AutoPlacement | BasePlacement | VariationPlacement;
 
 function getAnchorEl(anchorEl?: AnchorEl) {
-  return (typeof anchorEl === 'function'
-    ? anchorEl()
-    : anchorEl) as HTMLElement;
+  return (
+    typeof anchorEl === 'function' ? anchorEl() : anchorEl
+  ) as HTMLElement;
 }
 
 function flipPlacement(placement: Placement, theme: any) {
@@ -104,7 +104,7 @@ const Popper = React.forwardRef<HTMLElement, PopperProps>((inProps, ref) => {
   const popperRef = React.useRef<PopperInstance>(null);
   const handlePopperRef = useForkRef(popperRef, popperRefProp);
   const handlePopperRefRef = React.useRef(handlePopperRef);
-  useEnhancedEffect(() => {
+  React.useEffect(() => {
     handlePopperRefRef.current = handlePopperRef;
   }, [handlePopperRef]);
   React.useImperativeHandle(

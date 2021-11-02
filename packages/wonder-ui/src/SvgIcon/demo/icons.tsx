@@ -106,7 +106,7 @@ export default () => {
   const [_searchText, setSearchText] = React.useState<string>();
   const [searchResult, setSearchResult] = React.useState<Array<string>>([]);
 
-  const searchText = useDebounce(_searchText, 500);
+  const searchText = useDebounce(_searchText, 1000);
 
   const handleOpen = (state: any) => {
     setPopoverState(state);
@@ -166,7 +166,7 @@ export default () => {
             placeholder="搜索图标"
             prefix={<Search color="action" />}
             onChange={handleChange}
-            value={searchText}
+            value={_searchText}
           />
         </Space>
 

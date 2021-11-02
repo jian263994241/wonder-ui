@@ -20,6 +20,8 @@ export const badgeClasses = generateUtilityClasses('WuiBadge', [
   'colorDark'
 ]);
 
+export type BadgeClasses = typeof badgeClasses;
+
 export interface BadgeStyleProps {
   children?: any;
   classes?: Partial<typeof badgeClasses>;

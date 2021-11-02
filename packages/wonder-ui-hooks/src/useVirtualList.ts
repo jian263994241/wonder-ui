@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useSize } from './useSize';
-import { useEnhancedEffect } from './useEnhancedEffect';
 import { useSafeState } from './useSafeState';
 interface OptionType {
   itemHeight: number | ((index: number) => number);
@@ -67,7 +66,7 @@ export function useVirtualList<T = any>(list: T[], options: OptionType) {
     }
   };
 
-  useEnhancedEffect(() => {
+  React.useEffect(() => {
     calculateRange();
   }, [size.width, size.height]);
 

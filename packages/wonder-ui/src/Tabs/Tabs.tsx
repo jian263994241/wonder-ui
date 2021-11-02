@@ -1,263 +1,199 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
+import { COMPONENT_NAME } from './TabsClasses';
 import {
+  composeClasses,
+  css,
+  isDef,
+  isVisible,
+  nextTick
+} from '@wonder-ui/utils';
+import { ContextValueType, TabsContext } from './TabsContext';
+import { isColor } from '../styles/colorManipulator';
+import { TabsProps, TabsStyleProps } from './TabsTypes';
+import {
+  useCreation,
   useEventCallback,
+  useForkRef,
   useReactive,
-  useWindowSize,
-  useForkRef
+  useUpdateEffect,
+  useWindowSize
 } from '@wonder-ui/hooks';
-import { nextTick, isVisible, isDef } from '@wonder-ui/utils';
-import { TabsProps } from './TabsTypes';
-import Sticky from '../Sticky';
-import Tab, { TabProps } from '../Tab';
-import ButtonBase from '../ButtonBase';
-import Swipe from '../Swipe';
 
-const COMPONENT_NAME = 'WuiTabs';
+const useClasses = (styleProps: TabsStyleProps) => {
+  const { classes, centered, variant } = styleProps;
+
+  const slots = {
+    root: ['root', variant && variant, centered && 'centered'],
+    indicator: ['indicator']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
 
 const TabsRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})(({ theme }) => ({}));
-
-const TabsHeader = styled('div', { name: COMPONENT_NAME, slot: 'Header' })({
-  overflow: 'hidden'
-});
-
-const TabsNav = styled('div', { name: COMPONENT_NAME, slot: 'Nav' })({
+})<{ styleProps: TabsStyleProps }>(({ theme, styleProps }) => ({
   position: 'relative',
-  display: 'flex',
   userSelect: 'none',
-  height: 44
-});
-
-const TabsTitle = styled(ButtonBase, { name: COMPONENT_NAME, slot: 'Title' })(
-  ({ theme }) => ({
-    ...theme.typography.body1,
-    flex: '1 0 auto',
-    padding: '0 12px',
-    alignItems: 'center'
-  })
-);
+  display: 'flex',
+  flexWrap: 'nowrap',
+  justifyContent: styleProps.centered ? 'center' : 'flex-start',
+  alignItems: 'stretch',
+  backgroundColor: theme.palette.background.paper,
+  ...(styleProps.variant === 'scrollable'
+    ? {
+        overflowX: 'auto',
+        overflowY: 'hidden',
+        WebkitOverflowScrolling: 'touch'
+      }
+    : {
+        overflow: 'hidden'
+      }),
+  '&::-webkit-scrollbar': {
+    display: 'none'
+  }
+}));
 
 const TabsIndicator = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Indicator'
-})(({ theme }) => ({
+})<{ styleProps: TabsStyleProps }>(({ theme, styleProps }) => ({
   position: 'absolute',
   bottom: 0,
   left: 0,
   zIndex: 1,
   width: 40,
   height: 2,
-  backgroundColor: theme.palette.primary.main
+  backgroundColor: styleProps.textColor || theme.palette.primary.main,
+  transition: theme.transitions.create('transform', { duration: 0 })
 }));
 
 const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
-    active,
-    children: childrenProp,
-    disableIndicator = false,
+    children,
+    centered,
+    className,
     indicatorStyle,
-    sticky = false,
-    scrollspy = false,
-    offsetTop = 0
+    showIndicator,
+    value,
+    defaultValue,
+    onChange,
+    variant = 'fullWidth',
+    textColor: textColorProp,
+    ...rest
   } = props;
 
-  const children = useChildren(childrenProp, Tab);
-
-  const rootRef = React.useRef<HTMLDivElement>(null);
-  const handleRef = useForkRef(rootRef, ref);
-  const wrapRef = React.useRef<HTMLDivElement>(null);
-  const navRef = React.useRef<HTMLDivElement>(null);
-  const titleRefs = React.useRef<React.MutableRefObject<HTMLDivElement>[]>([]);
-
-  const windowSize = useWindowSize();
-
-  const state = useReactive({
+  const store = useCreation(() => {
+    return new Map() as ContextValueType['store'];
+  }, [children]);
+  const state = useReactive<ContextValueType['state']>({
+    current: undefined,
     inited: false,
-    position: '',
-    lineStyle: {} as React.CSSProperties,
-    currentIndex: 2
+    lineStyle: {}
   });
 
-  const lockScrollRef = React.useRef(false);
-  const stickyFixedRef = React.useRef(false);
+  const tabsRef = React.useRef<HTMLDivElement>();
+  const handleRootRef = useForkRef(tabsRef, ref);
 
-  const setTitleRefs = (node: HTMLElement | null, index: number) => {
-    titleRefs.current[index] = {
-      current: node
-    } as React.MutableRefObject<HTMLDivElement>;
-  };
-
-  const getTabName = (
-    tab: React.ReactElement<TabProps>,
-    index: number
-  ): number | string => tab.props.name ?? index;
-
-  const findAvailableTab = (index: number) => {
-    const diff = index < state.currentIndex ? -1 : 1;
-
-    while (index >= 0 && index < children.length) {
-      if (!children[index].props.disabled) {
-        return index;
-      }
-
-      index += diff;
-    }
-  };
-
-  const setCurrentIndex = (currentIndex: number) => {
-    const newIndex = findAvailableTab(currentIndex);
-
-    if (!isDef(newIndex)) {
-      return;
-    }
-
-    const newTab = children[newIndex];
-    const newName = getTabName(newTab, newIndex);
-    const shouldEmitChange = state.currentIndex !== null;
-
-    state.currentIndex = newIndex;
-
-    if (newName !== active) {
-      // emit('update:active', newName);
-
-      if (shouldEmitChange) {
-        // emit('change', newName, newTab.title);
-      }
-    }
-  };
-
-  // correct the index of active tab
-  const setCurrentIndexByName = (name: number | string) => {
-    const matched = children.find(
-      (tab, index) => getTabName(tab, index) === name
-    );
-
-    const index = matched ? children.indexOf(matched) : 0;
-
-    setCurrentIndex(index);
-  };
-
-  // console.log(children);
-
-  // const scrollToCurrentContent = (immediate = false) => {
-  //   if (scrollspy) {
-  //     const target = children[state.currentIndex].$el;
-
-  //     if (target && scroller.value) {
-  //       const to = getElementTop(target, scroller.value) - scrollOffset.value;
-
-  //       lockScroll = true;
-  //       scrollTopTo(
-  //         scroller.value,
-  //         to,
-  //         immediate ? 0 : +props.duration,
-  //         () => {
-  //           lockScroll = false;
-  //         }
-  //       );
-  //     }
-  //   }
-  // };
-
-  // update nav bar style
   const setLine = useEventCallback(() => {
     const shouldAnimate = state.inited;
+    const currentStore = state.current;
 
     nextTick(() => {
-      const { current: titles } = titleRefs;
+      state.inited = true;
 
       if (
-        disableIndicator ||
-        !titles[state.currentIndex] ||
-        !isVisible(rootRef.current!)
+        !showIndicator ||
+        !currentStore ||
+        currentStore.disabled ||
+        !isVisible(tabsRef.current!)
       ) {
         return;
       }
 
-      const title = titles[state.currentIndex].current;
+      const tabNode = currentStore.root;
 
-      const left = title.offsetLeft + title.offsetWidth / 2;
+      if (tabNode) {
+        const left = tabNode.offsetLeft + tabNode.offsetWidth / 2;
+        const lineWidth = tabNode.offsetWidth;
+        const lineStyle: React.CSSProperties = {
+          ...indicatorStyle,
+          width: indicatorStyle?.width || lineWidth,
+          transform: `translateX(${left}px) translateX(-50%)`
+        };
+        if (shouldAnimate) {
+          lineStyle.transitionDuration = `${200}ms`;
+        }
+        state.lineStyle = lineStyle;
 
-      const lineWidth = title.offsetWidth;
-
-      const lineStyle: React.CSSProperties = {
-        ...indicatorStyle,
-        width: indicatorStyle?.width || lineWidth,
-        transform: `translateX(${left}px) translateX(-50%)`
-      };
-
-      if (shouldAnimate) {
-        lineStyle.transitionDuration = `${200}s`;
+        tabNode.scrollIntoView({
+          block: 'nearest',
+          behavior: 'smooth',
+          inline: 'center'
+        });
       }
-
-      state.lineStyle = lineStyle;
     });
   });
 
-  React.useEffect(setLine, [windowSize.width]);
+  const windowSize = useWindowSize();
 
-  const onStickyScroll = (params: { isFixed: boolean; scrollTop: number }) => {
-    stickyFixedRef.current = params.isFixed;
-    // emit('scroll', params);
+  useUpdateEffect(setLine, [windowSize.width]);
+
+  const getItemMeta = useEventCallback((key) => {
+    const values = Array.from(store.values());
+    if (key === null) return;
+    return store.get(key) || values[0];
+  });
+
+  React.useEffect(() => {
+    const activeItem = getItemMeta(value ?? defaultValue);
+
+    if (activeItem && !activeItem.disabled) {
+      state.current = activeItem;
+      setLine();
+    }
+  }, [value, defaultValue]);
+
+  const textColor = useCreation(() => {
+    return isColor(textColorProp) ? textColorProp : undefined;
+  }, [textColorProp]);
+
+  const styleProps = {
+    ...props,
+    variant,
+    textColor
   };
 
-  const scrollTo = (name: number | string) => {
-    nextTick(() => {
-      setCurrentIndexByName(name);
-      // scrollToCurrentContent(true);
-    });
-  };
-
-  const renderNav = () => {
-    return children.map(({ props }, index) => {
-      return (
-        <TabsTitle
-          role="tab"
-          key={index}
-          ref={(node) => setTitleRefs(node, index)}
-          disableRipple
-        >
-          {props.title}
-        </TabsTitle>
-      );
-    });
-  };
-
-  const renderHeader = () => {
-    return (
-      <TabsHeader ref={wrapRef}>
-        <TabsNav role="tablist" ref={navRef}>
-          {renderNav()}
-          {!disableIndicator && children.length > 0 && (
-            <TabsIndicator style={{ ...state.lineStyle }} />
-          )}
-        </TabsNav>
-
-        {children}
-      </TabsHeader>
-    );
-  };
+  const classes = useClasses(styleProps);
 
   return (
-    <TabsRoot ref={handleRef}>
-      {sticky ? (
-        <Sticky
-          container={rootRef.current}
-          offsetTop={offsetTop}
-          onScroll={onStickyScroll}
-        >
-          {renderHeader()}
-        </Sticky>
-      ) : (
-        renderHeader()
-      )}
-      <Swipe>{children}</Swipe>
-    </TabsRoot>
+    <TabsContext.Provider value={{ props: styleProps, state, store, setLine }}>
+      <TabsRoot
+        role="tablist"
+        ref={handleRootRef}
+        className={css(classes.root, className)}
+        {...rest}
+        styleProps={styleProps}
+      >
+        {React.Children.map(children, (child, index) => {
+          if (React.isValidElement(child)) {
+            return React.cloneElement(child, { index });
+          }
+          return null;
+        })}
+        {showIndicator && isDef(state.current) && !state.current.disabled && (
+          <TabsIndicator
+            className={classes.indicator}
+            style={state.lineStyle}
+            styleProps={styleProps}
+          />
+        )}
+      </TabsRoot>
+    </TabsContext.Provider>
   );
 });
 

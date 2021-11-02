@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { debounce, ownerWindow } from '@wonder-ui/utils';
-import { useEnhancedEffect, useForkRef, useSafeState } from '@wonder-ui/hooks';
+import { debounce, ownerWindow, nextTick } from '@wonder-ui/utils';
+import { useForkRef, useSafeState } from '@wonder-ui/hooks';
 import styled from '../styles/styled';
 
 function getStyleValue(computedStyle: Record<string, any>, property: string) {
@@ -39,6 +39,7 @@ const TextareaAutosizeRoot = styled('span', {
   display: 'inline-flex',
   alignItems: 'center',
   paddingTop: 4,
+  width: '100%',
   '& > textarea': {
     border: 0,
     resize: 'inherit',
@@ -161,8 +162,10 @@ const TextareaAutosize = React.forwardRef<
     };
   }, [syncHeight]);
 
-  useEnhancedEffect(() => {
-    syncHeight();
+  React.useEffect(() => {
+    nextTick(() => {
+      syncHeight();
+    });
   });
 
   React.useEffect(() => {
@@ -182,14 +185,16 @@ const TextareaAutosize = React.forwardRef<
   };
 
   return (
-    <TextareaAutosizeRoot className={className} style={style}>
+    <TextareaAutosizeRoot>
       <textarea
         value={value}
         onChange={handleChange}
         ref={handleRef}
+        className={className}
         // Apply the rows prop to get a "correct" first SSR paint
         rows={minRows}
         style={{
+          ...style,
           height: state.outerHeightStyle,
           // Need a large enough different to allow scrolling.
           // This prevents infinite rendering loop.

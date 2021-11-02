@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { BasicTarget, getTargetElement } from './utils/dom';
-import { useEnhancedEffect } from './useEnhancedEffect';
 import { useEventCallback } from './useEventCallback';
 import { useSafeState } from './useSafeState';
 interface Position {
@@ -22,7 +21,7 @@ export function useScroll(
 
   const shouldUpdatePersist = useEventCallback(shouldUpdate);
 
-  useEnhancedEffect(() => {
+  React.useEffect(() => {
     const el = getTargetElement(target, document);
     if (!el) return;
 

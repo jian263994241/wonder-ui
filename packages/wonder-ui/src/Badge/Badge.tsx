@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { useClasses, badgeClasses } from './BadgeClasses';
-import { css, generateUtilityStyles, capitalize } from '@wonder-ui/utils';
+import { badgeClasses, BadgeClasses, useClasses } from './BadgeClasses';
+import { capitalize, css, generateUtilityStyles } from '@wonder-ui/utils';
 export interface BadgeProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * @description 徽章颜色
@@ -17,6 +17,10 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLElement> {
     | 'info'
     | 'light'
     | 'dark';
+  /**
+   * css api
+   */
+  classes?: Partial<BadgeClasses>;
   /** component  */
   component?: React.ElementType;
   /**

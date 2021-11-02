@@ -1,35 +1,40 @@
 import * as React from 'react';
-import { useControlled } from '@wonder-ui/hooks';
+import { useControlled, useReactive } from '@wonder-ui/hooks';
 
 export interface TabContextProps {
   children?: React.ReactNode;
   defaultValue?: any;
   value?: any;
+  lazyRender?: boolean;
 }
 
-type Context = {
-  value?: any;
-  onChangeunControlled(value: any): void;
+export type TabContextType = {
+  props: TabContextProps;
+  state: {
+    value: any;
+  };
 };
 
-const Context = React.createContext<Context>({
-  onChangeunControlled: () => {}
-});
+export const Context = React.createContext<TabContextType | null>(null);
 
 export default function TabContext(props: TabContextProps) {
-  const { children, value: valueProp, defaultValue } = props;
-  const [value, onChangeunControlled] = useControlled({
-    value: valueProp,
-    defaultValue
+  const { lazyRender = true, children, value, defaultValue } = props;
+
+  const state = useReactive<TabContextType['state']>({
+    value: value ?? defaultValue
   });
 
-  return (
-    <Context.Provider value={{ value, onChangeunControlled }}>
-      {children}
-    </Context.Provider>
-  );
-}
+  React.useEffect(() => {
+    state.value = value;
+  }, [value]);
 
-export function useTabContext() {
-  return React.useContext(Context);
+  const contextValue = {
+    state,
+    props: {
+      ...props,
+      lazyRender
+    }
+  };
+
+  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 }

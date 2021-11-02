@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { useEnhancedEffect } from './useEnhancedEffect';
 import { useSafeState } from './useSafeState';
+
+const useEnhancedEffect =
+  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 /**
  * Hook which asynchronously executes a callback once the component has been mounted.
  *

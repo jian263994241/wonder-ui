@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SwipeItemClasses } from './SwipeItemClasses';
-export interface SwipeItemProps {
+export interface SwipeItemProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * 样式名
    */

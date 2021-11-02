@@ -1,1 +1,1 @@
-export { default, useTabContext } from './TabContext';
+export { default } from './TabContext';

@@ -44,12 +44,7 @@ const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
       return null;
     }
 
-    const {
-      activeIndex,
-      store,
-      props: parentProps,
-      state: parentState
-    } = context;
+    const { store, props: parentProps, state: parentState } = context;
 
     const state = useReactive<SwipeItemState>({ offset: 0 });
 
@@ -100,7 +95,7 @@ const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
       if (!mounted) {
         return false;
       }
-
+      const { activeIndex } = parentState;
       const count = React.Children.count(parentProps.children);
 
       const maxActive = count - 1;
@@ -117,14 +112,14 @@ const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
       parentProps.children,
       parentProps.lazyRender,
       parentProps.loop,
-      activeIndex,
+      parentState.activeIndex,
       index,
       mounted
     ]);
 
     const styleProps = {
       ...props,
-      active: index === activeIndex
+      active: index === parentState.activeIndex
     };
 
     const classes = useClasses(styleProps);
