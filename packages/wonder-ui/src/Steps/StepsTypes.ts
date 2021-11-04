@@ -14,6 +14,7 @@ export interface StepsProps {
   classes?: Partial<StepsClasses>;
   /**
    * 当前步骤
+   * @default 0
    */
   current?: number;
   /**
