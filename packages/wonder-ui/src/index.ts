@@ -193,6 +193,12 @@ export * from './StepButton';
 export { default as Stepper } from './Stepper';
 export * from './Stepper';
 
+export { default as Steps } from './Steps';
+export * from './Steps';
+
+export { default as Step } from './Step';
+export * from './Step';
+
 export { default as Sticky } from './Sticky';
 export * from './Sticky';
 

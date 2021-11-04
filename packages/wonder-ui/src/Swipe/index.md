@@ -44,7 +44,7 @@ group:
 
 <code src="./demo/demo5.tsx"></code>
 
-## Props
+## API
 
 ### Swipe
 

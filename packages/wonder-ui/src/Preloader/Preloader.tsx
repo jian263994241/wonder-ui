@@ -173,7 +173,11 @@ export const showPreloader = (props: PreloaderProps = {}) => {
   }
 };
 
-export const hidePreloader = () => {
+export const hidePreloader = (options: { hideAll?: boolean } = {}) => {
+  if (options.hideAll) {
+    count = 0;
+  }
+
   if (count > 0) {
     --count;
   }

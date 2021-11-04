@@ -28,7 +28,7 @@ group:
 组件提供了两个全局方法, 方便调用:
 
 - showPreloader(PreloaderProps);
-- hidePreloader();
+- hidePreloader({ hideAll?: boolean } );
 
 <code src="./demo/demo3.tsx"></code>
 
@@ -43,7 +43,7 @@ import { showPreloader, hidePreloader } from '@wonder-ui/core'
 
 showPreloader(PreloaderProps);
 
-hidePreloader();
+hidePreloader({ hideAll?: boolean });
 ```
 
 <API src="./Preloader.tsx" exports='["default"]' props="children|onLoad|text|visible|indicator|vertical|type"></API>
