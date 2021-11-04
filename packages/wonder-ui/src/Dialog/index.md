@@ -26,12 +26,6 @@ Dialog可以通过 `visible` 控制显示隐藏, 也可以通过`children`节点
 
 <code src="./demo/demo2.tsx"></code>
 
-### 使用 Hook
-
-`useDialog` 提供了提示信息, 确认信息, 操作框... 等自定义信息提示框
-
-<code src="./demo/demo3.tsx"></code>
-
 ### 提示栈
 
 <code src="./demo/demo4.tsx"></code>
@@ -51,6 +45,6 @@ interface DialogButton extends ButtonBaseProps {
 }
 ```
 
-<API src="./Dialog.tsx" props="visible|children|title|text|buttons|transitionDuration|buttonsVertical|textTypographyProps|titleTypographyProps|content|elevation"></API>
+<API src="./Dialog.tsx"></API>
 
 
