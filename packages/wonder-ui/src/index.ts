@@ -127,9 +127,6 @@ export * from './Modal';
 export { default as ModalContent } from './ModalContent';
 export * from './ModalContent';
 
-export { default as Indicator } from './Indicator';
-export * from './Indicator';
-
 export { default as Navbar } from './Navbar';
 export * from './Navbar';
 

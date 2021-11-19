@@ -1,6 +1,6 @@
 import * as React from 'react';
 import CircularProgress from '../CircularProgress';
-import Indicator from '../Indicator';
+import Indicator from './Indicator';
 import styled from '../styles/styled';
 import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
