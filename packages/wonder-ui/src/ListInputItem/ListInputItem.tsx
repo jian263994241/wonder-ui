@@ -156,10 +156,10 @@ const ListInputItemInputWrap = styled('span', {
 const ListInputItemInput = styled(InputBase, {
   name: COMPONENT_NAME,
   slot: 'Input'
-})({
+})(({ theme }) => ({
   padding: 0,
-  height: 'auto'
-});
+  height: theme.typography.pxToRem(44 - 6 * 2)
+}));
 
 const ListInputItem = forwardRef<HTMLLIElement, ListInputItemProps>(
   (inProps, ref) => {
@@ -234,9 +234,6 @@ const ListInputItem = forwardRef<HTMLLIElement, ListInputItemProps>(
         )}
         <ListInputItemInputWrap className={classes.inputWrap}>
           <ListInputItemInput
-            type={type}
-            component="span"
-            multiline={multiline}
             className={css(classes.input, InputProps?.className)}
             error={!!errorMessage}
             {...inputProps}
