@@ -39,6 +39,9 @@ group:
 
 <code src="./demo/demo6.tsx"></code>
 
+### 格式化显示
+
+<code src="./demo/demo7.tsx"></code>
 ## 类型
 
 ```typescript

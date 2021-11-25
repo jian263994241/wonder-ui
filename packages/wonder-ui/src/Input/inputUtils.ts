@@ -31,7 +31,7 @@ export function triggerFocus(
           element.setSelectionRange(0, len);
       }
     } catch (error) {
-      warn(error);
+      warn(error as any);
     }
   }
 }
@@ -51,18 +51,18 @@ export function resolveOnChange<
     return;
   }
   let event = e;
-  const originalInputValue = target.value;
 
   if (e.type === 'click') {
     // click clear icon
     event = Object.create(e);
-    event.target = target;
-    event.currentTarget = target;
-    // change target ref value cause e.target.value should be '' when clear input
-    target.value = '';
+
+    const currentTarget = target.cloneNode(true) as E;
+
+    event.target = currentTarget;
+    event.currentTarget = currentTarget;
+
+    currentTarget.value = '';
     onChange(event as React.ChangeEvent<E>);
-    // reset target ref value
-    target.value = originalInputValue;
     return;
   }
 

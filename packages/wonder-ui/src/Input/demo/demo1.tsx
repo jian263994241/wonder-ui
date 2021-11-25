@@ -6,7 +6,7 @@ import { Input, Space } from '@wonder-ui/core';
 import * as React from 'react';
 
 export default () => {
-  const [value, setValue] = React.useState('123123');
+  const [value, setValue] = React.useState('');
 
   return (
     <Space direction="vertical">
@@ -18,16 +18,11 @@ export default () => {
         }}
       />
 
+      <Input placeholder="Basic (borderless)" borderless />
+
       <Input readOnly placeholder="Basic readOnly" />
 
-      <Input readOnly disabledActiveStyle placeholder="Basic readOnly" />
-
-      <Input
-        readOnly
-        disabledActiveStyle
-        borderless
-        placeholder="Basic readOnly"
-      />
+      <Input readOnly borderless placeholder="Basic readOnly (borderless)" />
 
       <Input disabled placeholder="Basic disabled" />
 

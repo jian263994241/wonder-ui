@@ -27,6 +27,12 @@ export interface InputAction {
 
 const COMPONENT_NAME = 'WuiInput';
 
+const SIZE = {
+  large: 40,
+  middle: 32,
+  small: 24
+};
+
 export const inputClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'input',
@@ -110,6 +116,11 @@ export interface InputProps
    */
   suffix?: React.ReactNode;
   /**
+   * 控件大小。
+   * @default middle
+   */
+  size?: 'large' | 'middle' | 'small';
+  /**
    * 前缀图标的
    */
   onRenderPrefix?(props: InputProps): React.ReactNode;
@@ -137,10 +148,10 @@ export interface InputProps
    * 输入框默认内容
    */
   defaultValue?: string | ReadonlyArray<string> | number;
-  /** Transform `display value` to value */
-  parser?: (displayValue: any) => any;
-  /** Transform `value` to display value show in input */
-  formatter?: (value: any) => string;
+  // /** Transform `display value` to value */
+  // parser?: (displayValue: any) => any;
+  // /** Transform `value` to display value show in input */
+  // formatter?: (value: any) => string;
 }
 
 export interface InputStyleProps extends InputProps {
@@ -195,11 +206,15 @@ const InputRoot = styled('div', {
   overflow: 'hidden',
   WebkitTapHighlightColor: 'transparent',
   width: '100%',
-  height: styleProps.multiline ? 'auto' : theme.typography.pxToRem(32),
+  height: theme.typography.pxToRem(SIZE[styleProps.size!]),
   padding: theme.spacing(0, 1),
   margin: 0,
-
   transition: theme.transitions.create(['border-color', 'box-shadow']),
+
+  ...(styleProps.multiline && {
+    height: 'auto',
+    padding: theme.spacing(0.5, 1)
+  }),
 
   ...(!styleProps.borderless && {
     border: 'thin solid',
@@ -267,7 +282,6 @@ const InputInput = styled('input', {
     minWidth: 0,
     maxHeight: '100%',
     lineHeight: 'inherit',
-    margin: theme.spacing(0.5, 0),
     padding: 0,
     top: !!styleProps.multiline ? -1 : 0,
 
@@ -378,7 +392,6 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       disabled = false,
       disabledActiveStyle = false,
       error = false,
-      formatter,
       maxRows,
       minRows = 2,
       multiline = false,
@@ -394,11 +407,11 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       onRenderPrefix,
       onRenderSuffix,
       onRenderRevealButton,
-      parser,
       prefix,
       readOnly = false,
       required,
       resizable = false,
+      size = 'middle',
       style,
       suffix,
       tabIndex,
@@ -429,12 +442,13 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       ...props,
       multiline,
       disabled,
-      disabledActiveStyle,
+      disabledActiveStyle: readOnly ? true : disabledActiveStyle,
       resizable,
       borderless,
       readOnly,
       focused,
-      error
+      error,
+      size
     };
 
     const classes = useClasses(styleProps);
@@ -460,56 +474,71 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
 
     React.useImperativeHandle(actionRef, () => action, [inputRef, value]);
 
-    const handleChange = useEventCallback((e) => {
-      const _value =
-        formatter && parser ? parser(e.target.value) : e.target.value;
+    const removePasswordTimeout = React.useRef<NodeJS.Timeout>();
 
-      setValueIfunControlled(_value);
-      resolveOnChange(inputRef.current!, e, onChange, _value);
-    });
+    const clearPasswordValueAttribute = () => {
+      removePasswordTimeout.current = setTimeout(() => {
+        if (
+          inputRef.current &&
+          inputRef.current.getAttribute('type') === 'password' &&
+          inputRef.current.hasAttribute('value')
+        ) {
+          inputRef.current.removeAttribute('value');
+        }
+      });
+    };
 
-    const handleFocus = useEventCallback((event) => {
-      setFocused(true);
-
-      if (onFocus) {
-        onFocus(event);
+    const handleChange = useEventCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        // const _value =
+        //   formatter && parser ? parser(e.target.value) : e.target.value;
+        setValueIfunControlled(e.target.value);
+        resolveOnChange(inputRef.current!, e, onChange);
       }
-    });
+    );
 
-    const handleBlur = useEventCallback((event) => {
-      setFocused(false);
-
-      if (onBlur) {
-        onBlur(event);
+    const handleKeyDown = useEventCallback(
+      (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (onPressEnter && e.key === 'Enter') {
+          onPressEnter(e);
+        }
+        onKeyDown?.(e);
       }
-    });
+    );
 
-    const handleClick = useEventCallback((event) => {
-      if (readOnly) {
-        action.blur();
-      } else {
-        action.focus();
-      }
+    const handleFocus = useEventCallback(
+      (e: React.FocusEvent<HTMLInputElement>) => {
+        setFocused(true, clearPasswordValueAttribute);
 
-      if (onClick) {
-        onClick(event);
+        onFocus?.(e);
       }
-    });
+    );
 
-    const handleKeyDown = useEventCallback((event) => {
-      if (onPressEnter && event.keyCode === 13) {
-        onPressEnter(event);
-      }
-      if (onKeyDown) {
-        onKeyDown(event);
-      }
-    });
+    const handleBlur = useEventCallback(
+      (e: React.FocusEvent<HTMLInputElement>) => {
+        setFocused(false, clearPasswordValueAttribute);
 
-    const handleReset = useEventCallback((e) => {
-      setValueIfunControlled('');
-      action.focus();
-      resolveOnChange(inputRef.current!, e, onChange);
-    });
+        onBlur?.(e);
+      }
+    );
+
+    const handleClick = useEventCallback(
+      (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+        if (readOnly) {
+          action.blur();
+        }
+
+        onClick?.(e);
+      }
+    );
+
+    const handleReset = useEventCallback(
+      (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        setValueIfunControlled('', () => action.focus(), true);
+
+        resolveOnChange(inputRef.current!, e, onChange);
+      }
+    );
 
     const handleReveal = useEventCallback(() => {
       setRevealingPassword(!isRevealingPassword, () => {
@@ -550,7 +579,8 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
           disabled={disabled}
           readOnly={readOnly}
           ref={handleRef}
-          value={formatter && parser ? formatter(value) : value}
+          // value={formatter && parser ? formatter(value) : value}
+          value={value}
           onChange={handleChange}
         />
 

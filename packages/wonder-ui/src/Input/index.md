@@ -19,6 +19,10 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
+### 尺寸
+
+<code src="./demo/demo10.tsx"></code>
+
 ### 带移除图标
 
 <code src="./demo/demo2.tsx"></code>
@@ -39,9 +43,6 @@ group:
 
 <code src="./demo/demo6.tsx"></code>
 
-### 格式化显示
-
-<code src="./demo/demo7.tsx"></code>
 
 ### 聚焦
 
