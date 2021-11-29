@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Picker, PickerProps, PickerAction } from '@wonder-ui/core';
 
 const cities = {
@@ -11,18 +10,13 @@ const props: PickerProps = {
 };
 
 export default () => {
-  const actionRef = React.useRef<PickerAction>(null);
-
-  const onChange = (values: (keyof typeof cities)[]) => {
-    actionRef.current?.setColumnValues(1, cities[values[0]]);
+  const onChange = (
+    values: (keyof typeof cities)[],
+    columnIndex: number,
+    picker: PickerAction
+  ) => {
+    picker.setColumnValues(1, cities[values[0]]);
   };
 
-  return (
-    <Picker
-      actionRef={actionRef}
-      onChange={onChange}
-      disableDrawer
-      {...props}
-    />
-  );
+  return <Picker onChange={onChange} disableDrawer {...props} />;
 };

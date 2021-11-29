@@ -236,7 +236,11 @@ export interface PickerProps {
   /**
    * 改变回调
    */
-  onChange?(value: PickerOption | PickerOption[], columnIndex: number): void;
+  onChange?(
+    value: PickerOption | PickerOption[],
+    columnIndex: number,
+    picker: PickerAction
+  ): void;
   /**
    * 确认回调
    */
@@ -265,10 +269,17 @@ export interface PickerProps {
    */
   onClose?: DrawerProps['onClose'];
 
+  /**
+   * 值
+   */
   value?: any;
-
+  /**
+   * 默认值
+   */
   defaultValue?: any;
-
+  /**
+   * 渲染输入框
+   */
   onRenderInput?(args: {
     value: any;
     setVisibleUnControlled: (visible: boolean) => void;
@@ -516,9 +527,9 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     }
 
     if (dataType === 'plain') {
-      onChange?.(getColumnValue(0)!, getColumnIndex(0)!);
+      onChange?.(getColumnValue(0)!, getColumnIndex(0)!, pickerAction);
     } else {
-      onChange?.(getValues(), columnIndex);
+      onChange?.(getValues(), columnIndex, pickerAction);
     }
   });
 
@@ -607,23 +618,21 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
       />
     ) : null;
 
-  React.useImperativeHandle(
-    actionRef,
-    () => ({
-      getValues,
-      setValues,
-      getIndexes,
-      setIndexes,
-      getColumnValue,
-      setColumnValue,
-      getColumnIndex,
-      setColumnIndex,
-      getColumnValues,
-      setColumnValues,
-      confirm
-    }),
-    [columns]
-  );
+  const pickerAction = {
+    getValues,
+    setValues,
+    getIndexes,
+    setIndexes,
+    getColumnValue,
+    setColumnValue,
+    getColumnIndex,
+    setColumnIndex,
+    getColumnValues,
+    setColumnValues,
+    confirm
+  };
+
+  React.useImperativeHandle(actionRef, () => pickerAction, [columns]);
 
   const renderPicker = () => (
     <PickerRoot
