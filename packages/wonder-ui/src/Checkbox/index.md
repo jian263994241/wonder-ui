@@ -26,6 +26,12 @@ group:
 
 <code src="./demo/demo3.tsx"></code>
 
+### 选择框组
+
+使用 `CheckableGroup` 完成逻辑编组
+
+<code src="./demo/demo4.tsx"></code>
+
 
 <API src="./Checkbox.tsx" props="circle|color|children|indeterminate|checked|onChange|defaultChecked"></API>
 

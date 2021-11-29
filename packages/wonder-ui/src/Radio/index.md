@@ -19,5 +19,11 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
+### 单选框组
+
+使用 `CheckableGroup` 完成逻辑编组
+
+<code src="./demo/demo2.tsx"></code>
+
 
 <API src="./Radio.tsx" props="color|children|value|onChange|defaultValue|className|style"></API>

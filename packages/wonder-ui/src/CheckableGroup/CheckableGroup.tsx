@@ -22,7 +22,6 @@ interface CheckableGroupItemProps {
   checked: boolean;
   data: ItemObjectOption;
   emitOnChange(): void;
-  key: number;
 }
 
 export interface CheckableGroupProps {
@@ -45,7 +44,7 @@ export interface CheckableGroupProps {
   /**
    * 渲染项
    */
-  onRenderItem?(props: CheckableGroupItemProps): React.ReactNode;
+  onRenderItem?(props: CheckableGroupItemProps): JSX.Element;
   /**
    * 值
    */
@@ -109,14 +108,16 @@ export default function CheckableGroup(props: CheckableGroupProps) {
         {options.map((dataItem, index) => {
           const dataValue = dataItem.value || dataItem;
 
-          return onRenderItem({
-            data: dataItem,
-            key: index,
-            checked: isValueSelected(dataValue, value),
-            emitOnChange: exclusive
-              ? handleExclusiveChange.bind(null, dataValue)
-              : handleChange.bind(null, dataValue)
-          });
+          return React.cloneElement(
+            onRenderItem({
+              data: dataItem,
+              checked: isValueSelected(dataValue, value),
+              emitOnChange: exclusive
+                ? handleExclusiveChange.bind(null, dataValue)
+                : handleChange.bind(null, dataValue)
+            }),
+            { key: index }
+          );
         })}
       </React.Fragment>
     );
