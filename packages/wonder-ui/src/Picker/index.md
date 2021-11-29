@@ -54,11 +54,17 @@ group:
 
 <code src="./demo/demo6.tsx"></code>
 
-### 搭配抽屉使用
+### 浮层
 
-在实际场景中，Picker 通常作为用于辅助表单填写，可以搭配 `Drawer` 实现该效果
+在实际场景中，Picker 通常在浮层中显示
 
 <code src="./demo/demo7.tsx"></code>
+
+### 表单输入
+
+Picker 作为用于辅助表单填写项, 搭配 `rc-field-form`
+
+<code src="./demo/demo9.tsx"></code>
 
 ### 地址选择器
 

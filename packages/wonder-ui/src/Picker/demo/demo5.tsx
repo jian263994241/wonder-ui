@@ -17,5 +17,12 @@ export default () => {
     actionRef.current?.setColumnValues(1, cities[values[0]]);
   };
 
-  return <Picker actionRef={actionRef} onChange={onChange} {...props} />;
+  return (
+    <Picker
+      actionRef={actionRef}
+      onChange={onChange}
+      disableDrawer
+      {...props}
+    />
+  );
 };

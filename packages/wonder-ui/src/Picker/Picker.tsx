@@ -7,6 +7,7 @@ import Column, {
   PickerObjectColumn,
   PickerOption
 } from './PickerColumn';
+import Drawer, { DrawerProps } from '../Drawer';
 import Navbar, { NavbarProps } from '../Navbar';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
@@ -17,12 +18,14 @@ import {
   generateUtilityClasses,
   isObject,
   preventDefault,
-  unitToPx
+  unitToPx,
+  nextTick
 } from '@wonder-ui/utils';
 import {
   useEventCallback,
   useEventListener,
-  useSafeState
+  useSafeState,
+  useControlled
 } from '@wonder-ui/hooks';
 
 const COMPONENT_NAME = 'WuiPicker';
@@ -143,6 +146,8 @@ export type PickerAction = {
 };
 
 export interface PickerProps {
+  DrawerProps?: Partial<DrawerProps>;
+
   /**
    * 内置方法
    */
@@ -184,6 +189,10 @@ export interface PickerProps {
    * 初始index
    */
   defaultIndex?: number;
+  /**
+   * 禁用浮层
+   */
+  disableDrawer?: boolean;
   /**
    * 快速滑动时惯性滚动的时长，单位 ms
    * @default 600
@@ -242,15 +251,39 @@ export interface PickerProps {
     value: PickerOption | PickerOption[],
     columnIndex: number | number[]
   ): void;
+
+  /**
+   * 浮层显示
+   */
+  visible?: boolean;
+  /**
+   * 默认浮层显示
+   */
+  defaultVisible?: boolean;
+  /**
+   * 点击浮层关闭事件
+   */
+  onClose?: DrawerProps['onClose'];
+
+  value?: any;
+
+  defaultValue?: any;
+
+  onRenderInput?(args: {
+    value: any;
+    setVisibleUnControlled: (visible: boolean) => void;
+  }): JSX.Element;
 }
 
 const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
+    DrawerProps,
     NavbarProps,
     actionRef,
     className,
     style,
+    disableDrawer,
     itemHeight: itemHeightProp = 44,
     textKey = 'text',
     valuesKey = 'values',
@@ -269,7 +302,13 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     confirmText = '确定',
     onChange,
     onConfirm,
-    onCancel
+    onCancel,
+    visible: visibleProp,
+    defaultVisible,
+    onClose,
+    value: valueProp,
+    defaultValue,
+    onRenderInput
   } = props;
 
   const itemHeight = React.useMemo(
@@ -290,6 +329,25 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     PickerObjectColumn[]
   >([]);
   const childrenRefs = React.useRef<PickerColumnAction[]>([]);
+  const [visible, setVisibleUnControlled] = useControlled({
+    value: visibleProp,
+    defaultValue: defaultVisible
+  });
+
+  const [value] = useControlled({
+    value: valueProp,
+    defaultValue
+  });
+
+  React.useEffect(() => {
+    nextTick(() => {
+      if (Array.isArray(value)) {
+        setValues(value);
+      } else if (value) {
+        setValues([value]);
+      }
+    });
+  }, [value]);
 
   const dataType = React.useMemo(() => {
     const firstColumn = columns[0];
@@ -467,9 +525,14 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
   const confirm = useEventCallback(() => {
     childrenRefs.current.forEach((child) => child.stopMomentum());
     emitEvent(onConfirm);
+    setVisibleUnControlled(false);
   });
 
-  const cancel = () => emitEvent(onCancel);
+  const cancel = () =>
+    emitEvent((...args) => {
+      onCancel?.(...args);
+      setVisibleUnControlled(false);
+    });
 
   const classes = useClasses(styleProps);
 
@@ -562,7 +625,7 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     [columns]
   );
 
-  return (
+  const renderPicker = () => (
     <PickerRoot
       ref={ref}
       className={css(classes.root, className)}
@@ -575,6 +638,25 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
       {renderColumns()}
       {navbarPosition === 'bottom' && renderNavbar()}
     </PickerRoot>
+  );
+
+  if (disableDrawer) {
+    return renderPicker();
+  }
+
+  return (
+    <React.Fragment>
+      {onRenderInput?.({ value, setVisibleUnControlled })}
+      <Drawer
+        keepMounted
+        anchor="bottom"
+        {...DrawerProps}
+        onClose={onClose}
+        visible={visible}
+      >
+        {renderPicker()}
+      </Drawer>
+    </React.Fragment>
   );
 });
 

@@ -8,7 +8,8 @@ import {
   deepClone,
   generateUtilityClasses,
   isObject,
-  preventDefault
+  preventDefault,
+  warn
 } from '@wonder-ui/utils';
 import {
   useEventCallback,
@@ -232,8 +233,11 @@ const PickerColumn = React.forwardRef<HTMLDivElement, PickerColumnProps>(
     const getOptionText = (option: PickerOption) => {
       if (isObject(option) && textKey in option) {
         return option[textKey];
+      } else if (typeof option === 'string' || typeof option === 'number') {
+        return option;
       }
-      return option;
+
+      warn(`Picker error: textKey [${textKey}] is not is col columns`);
     };
 
     const getIndexByOffset = (offset: number) =>
@@ -348,6 +352,11 @@ const PickerColumn = React.forwardRef<HTMLDivElement, PickerColumnProps>(
 
       return state.options.map((option, index: number) => {
         const text = getOptionText(option);
+
+        if (!text) {
+          return null;
+        }
+
         const disabled = isOptionDisabled(option)!;
 
         const itemProps = {

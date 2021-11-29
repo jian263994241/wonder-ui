@@ -1,16 +1,19 @@
 import {
   Button,
   Picker,
+  PickerProps,
   Page,
   List,
   ListInputItem,
   ListHeader,
   WhiteSpace
 } from '@wonder-ui/core';
-import { getPCA, CascadeData } from 'lcn';
 import Form, { Field } from 'rc-field-form';
 
-const pca = getPCA();
+const props: PickerProps = {
+  columns: ['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华', '衢州'],
+  defaultIndex: 2
+};
 
 export default () => {
   return (
@@ -23,17 +26,9 @@ export default () => {
         <List>
           <ListHeader>表单</ListHeader>
 
-          <Field
-            name="city"
-            trigger="onConfirm"
-            getValueFromEvent={(values: CascadeData[]) => {
-              return values.map((item) => item.name).join('/');
-              // return values.map((item) => item.code).join(',');
-            }}
-          >
+          <Field name="city" trigger="onConfirm" initialValue="金华">
             <Picker
-              columns={pca}
-              textKey="name"
+              {...props}
               onRenderInput={({ value, setVisibleUnControlled }) => {
                 return (
                   <ListInputItem

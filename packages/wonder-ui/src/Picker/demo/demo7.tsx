@@ -1,5 +1,4 @@
 import {
-  Drawer,
   Picker,
   PickerProps,
   Page,
@@ -20,7 +19,7 @@ export default () => {
   return (
     <Page>
       <List>
-        <ListHeader>表单</ListHeader>
+        <ListHeader>浮层</ListHeader>
         <ListInputItem
           button
           label="城市"
@@ -32,25 +31,20 @@ export default () => {
           }}
         />
       </List>
-      <Drawer
-        keepMounted
-        anchor="bottom"
-        visible={state.visible}
-        onClose={() => {
+      <Picker
+        onConfirm={(value: string) => {
+          state.value = value;
           state.visible = false;
         }}
-      >
-        <Picker
-          onConfirm={(value: string) => {
-            state.visible = false;
-            state.value = value;
-          }}
-          onCancel={() => {
-            state.visible = false;
-          }}
-          {...props}
-        />
-      </Drawer>
+        onCancel={() => {
+          state.visible = false;
+        }}
+        visible={state.visible}
+        onClose={(e) => {
+          state.visible = false;
+        }}
+        {...props}
+      />
     </Page>
   );
 };

@@ -6,4 +6,4 @@ const props: PickerProps = {
   loading: true
 };
 
-export default () => <Picker {...props} />;
+export default () => <Picker disableDrawer {...props} />;

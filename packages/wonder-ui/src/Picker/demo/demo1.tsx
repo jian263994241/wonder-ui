@@ -5,4 +5,4 @@ const props: PickerProps = {
   defaultIndex: 2
 };
 
-export default () => <Picker {...props} />;
+export default () => <Picker disableDrawer {...props} />;
