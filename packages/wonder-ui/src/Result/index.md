@@ -10,3 +10,14 @@ group:
 ---
 
 # Result 结果
+
+向用户反馈操作结果
+
+## 代码演示
+### 基本使用
+
+<code src="./demo/demo1.tsx"></code>
+
+<API src="./Result.tsx"></API>
+
+
