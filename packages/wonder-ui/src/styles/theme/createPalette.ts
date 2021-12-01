@@ -103,7 +103,7 @@ const defaultError = '#ee0a24';
 const defaultDanger = '#dc3545';
 const defaultWarning = '#ffc107';
 const defaultInfo = '#0dcaf0';
-const defaultSuccess = '#198754';
+const defaultSuccess = '#039245';
 const defaultLight = '#fff';
 const defaultDark = '#000';
 

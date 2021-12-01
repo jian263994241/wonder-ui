@@ -58,7 +58,7 @@ const Paper = React.forwardRef<HTMLElement, PaperProps>((inProps, ref) => {
   const {
     className,
     component = 'div',
-    elevation = 1,
+    elevation = 0,
     square = false,
     variant = 'elevation',
     ...rest

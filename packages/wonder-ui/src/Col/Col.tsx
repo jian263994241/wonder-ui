@@ -6,11 +6,17 @@ import { css } from '@wonder-ui/utils';
 import { useClasses } from './ColClasses';
 
 export interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** 占位格 */
+  /**
+   * 占位格
+   */
   col?: ResponsiveValue<ColsType>;
-  /** as  */
+  /**
+   * 节点
+   */
   component?: React.ElementType;
-  /** 偏移宫格 */
+  /**
+   * 偏移宫格
+   */
   offset?: ResponsiveValue<number>;
 }
 

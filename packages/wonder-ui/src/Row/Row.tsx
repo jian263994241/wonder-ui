@@ -7,10 +7,22 @@ import { makeGridColumns } from './mixins';
 import { rowClasses, RowStyleProps, useClasses } from './RowClasses';
 
 export interface RowProps extends React.HTMLAttributes<HTMLElement> {
+  /**
+   * 内容
+   */
   children?: React.ReactNode;
   classes?: Partial<typeof rowClasses>;
+  /**
+   * 节点
+   */
   component?: React.ElementType;
+  /**
+   * 间距
+   */
   gutter?: number | [number, number];
+  /**
+   * 设置均分的栅格
+   */
   rowCols?: ResponsiveValue<ColsType>;
 }
 

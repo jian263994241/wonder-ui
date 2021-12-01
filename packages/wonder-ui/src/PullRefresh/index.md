@@ -24,7 +24,7 @@ group:
 <code src="./demo/demo2.tsx"></code>
 
 
-<API src="./PullRefresh.tsx" props="refreshing|pullingText|loosingText|loadingText|successText|successDuration|animationDuration|headHeight|pullDistance|disabled|onRefresh|slots"></API>
+<API src="./PullRefresh.tsx"></API>
 
 
 

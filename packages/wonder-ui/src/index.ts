@@ -166,6 +166,9 @@ export * from './PullRefresh';
 export { default as Radio } from './Radio';
 export * from './Radio';
 
+export { default as Result } from './Result';
+export * from './Result';
+
 export { default as Row } from './Row';
 export * from './Row';
 

@@ -10,7 +10,7 @@ import {
 import { getPCA, CascadeData } from 'lcn';
 import Form, { Field } from 'rc-field-form';
 
-const pca = getPCA();
+const pca = getPCA({ inland: true });
 
 export default () => {
   return (

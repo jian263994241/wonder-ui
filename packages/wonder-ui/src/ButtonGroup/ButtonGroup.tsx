@@ -8,7 +8,7 @@ import { css } from '@wonder-ui/utils';
 
 export interface ButtonGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
-   * 按钮属性 [ButtonProps](#/components/general/button#api)
+   * 按钮属性
    */
   ButtonProps?: Partial<ButtonProps>;
   /**
