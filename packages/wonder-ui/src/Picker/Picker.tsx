@@ -425,12 +425,20 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     let cursor: PickerObjectColumn = {
       [childrenKey]: columns
     };
+
     const indexes = getIndexes();
 
     for (let i = 0; i <= columnIndex; i++) {
       cursor = cursor[childrenKey]?.[indexes[i]];
+
       if (!cursor) {
         break;
+      }
+    }
+
+    for (let i = 0; i < indexes.length; i++) {
+      if (i > columnIndex && !cursor[childrenKey]) {
+        setColumnValues(i, []);
       }
     }
 

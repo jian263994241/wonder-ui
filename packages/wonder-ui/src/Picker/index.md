@@ -72,7 +72,7 @@ Picker 作为用于辅助表单填写项, 搭配 `rc-field-form`
 
 <code src="./demo/demo8.tsx"></code>
 
-<API src="./Picker.tsx" props="actionRef|columns|title|subTitle|confirmText|cancelText|textKey|childrenKey|loading|readOnly|showNavbar|navbarPosition|defaultIndex|itemHeight|visibleItemCount|visible|swipeDuration|onChange|onConfirm"></API>
+<API src="./Picker.tsx"></API>
 
 
 

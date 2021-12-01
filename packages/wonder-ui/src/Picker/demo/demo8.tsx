@@ -27,7 +27,10 @@ export default () => {
             name="city"
             trigger="onConfirm"
             getValueFromEvent={(values: CascadeData[]) => {
-              return values.map((item) => item.name).join('/');
+              return values
+                .map((item) => (item ? item.name : undefined))
+                .filter(Boolean)
+                .join('/');
               // return values.map((item) => item.code).join(',');
             }}
           >
