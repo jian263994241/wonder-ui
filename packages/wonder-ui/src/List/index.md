@@ -83,10 +83,20 @@ group:
 
 <code  src="./demo/virtualList.tsx"></code>
 
-<API src="./List.tsx" props="inset|className|style|children"></API>
+## API
 
-<API src="../ListHeader/ListHeader.tsx" props="sticky|className|style|children"></API>
+### List
 
-<API src="../ListItem/ListItem.tsx" props="alignItems|arrow|divider|button|media|extra|className|style|children"></API>
+<API src="./List.tsx" hideTitle></API>
 
-<API src="../ListItemText/ListItemText.tsx" props="className|style|children"></API>
+### ListHeader
+
+<API src="../ListHeader/ListHeader.tsx" hideTitle></API>
+
+### ListItem
+
+<API src="../ListItem/ListItem.tsx" hideTitle></API>
+
+### ListItemText
+
+<API src="../ListItemText/ListItemText.tsx" hideTitle></API>

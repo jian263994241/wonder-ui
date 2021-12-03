@@ -13,6 +13,8 @@ group:
 
 控制`单选`, `多选`逻辑, 自定义UI
 
+## 代码演示
+
 ### 按钮选项组
 
 <code src="../ButtonGroup/demo/demo4.tsx"></code>
@@ -34,7 +36,7 @@ interface CheckableGroupItemProps {
 }
 ```
 
-<API src="./CheckableGroup.tsx" props="defaultValue|exclusive|onChange|options|onRenderItem|value"></API>
+<API src="./CheckableGroup.tsx" ></API>
 
 
 

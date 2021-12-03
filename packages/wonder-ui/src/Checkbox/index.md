@@ -33,6 +33,6 @@ group:
 <code src="./demo/demo4.tsx"></code>
 
 
-<API src="./Checkbox.tsx" props="circle|color|children|indeterminate|checked|onChange|defaultChecked"></API>
+<API src="./Checkbox.tsx"></API>
 
 

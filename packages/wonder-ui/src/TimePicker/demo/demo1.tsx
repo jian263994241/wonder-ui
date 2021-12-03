@@ -7,6 +7,7 @@ const formatter: TimePickerProps['formatter'] = (type, value) => {
 
 export default withDialog(({ dialog }) => (
   <TimePicker
+    disableDrawer
     formatter={formatter}
     currentTime={dayjs().format('HH:mm')}
     // onChange={(value) => dialog.toast(value)}

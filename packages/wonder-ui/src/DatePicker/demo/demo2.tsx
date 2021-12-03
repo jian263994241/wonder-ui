@@ -5,6 +5,7 @@ export default () => {
   const toast = useSnackbar();
   return (
     <DatePicker
+      disableDrawer
       type="date"
       title="选择年月日"
       minDate={new Date(2020, 0, 1)}

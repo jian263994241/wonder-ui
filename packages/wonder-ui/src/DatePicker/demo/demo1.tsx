@@ -5,6 +5,7 @@ export default () => {
   const toast = useSnackbar();
   return (
     <DatePicker
+      disableDrawer
       onConfirm={(value) => {
         const dateString = dayjs(value).format('YYYY/MM/DD,HH:mm');
         toast(dateString);

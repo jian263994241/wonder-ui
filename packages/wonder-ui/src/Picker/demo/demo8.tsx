@@ -34,24 +34,9 @@ export default () => {
               // return values.map((item) => item.code).join(',');
             }}
           >
-            <Picker
-              columns={pca}
-              textKey="name"
-              onRenderInput={({ value, setVisibleUnControlled }) => {
-                return (
-                  <ListInputItem
-                    button
-                    label="城市"
-                    readOnly
-                    placeholder="选择城市"
-                    value={value}
-                    onClick={() => {
-                      setVisibleUnControlled(true);
-                    }}
-                  />
-                );
-              }}
-            />
+            <Picker columns={pca} textKey="name">
+              <ListInputItem button label="城市" placeholder="选择城市" />
+            </Picker>
           </Field>
         </List>
         <WhiteSpace />

@@ -25,12 +25,12 @@ export default () => (
       <CheckListItem value="C">C</CheckListItem>
     </CheckList>
 
-    <CheckList defaultValue={['A']}>
+    <CheckList multiple defaultValue={['A']}>
       <ListHeader>局部只读</ListHeader>
-      <CheckListItem value="A">A</CheckListItem>
-      <CheckListItem value="B" readOnly>
-        B
+      <CheckListItem value="A" readOnly>
+        A
       </CheckListItem>
+      <CheckListItem value="B">B</CheckListItem>
       <CheckListItem value="C">C</CheckListItem>
     </CheckList>
   </div>

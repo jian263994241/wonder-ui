@@ -61,6 +61,12 @@ type ResponsiveValue<T = any> = T | Partial<Record<BreakpointKeys, T>>;
 
 ```
 
-<API src="./Row.tsx" props="gutter|rowCols"></API>
+## API
 
-<API src="../Col/Col.tsx" props="col|offset"></API>
+### Row
+
+<API src="./Row.tsx" hideTitle></API>
+
+### Col
+
+<API src="../Col/Col.tsx" hideTitle></API>

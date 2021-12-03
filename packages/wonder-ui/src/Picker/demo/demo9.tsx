@@ -45,6 +45,17 @@ export default () => {
               }}
             />
           </Field>
+
+          <Field name="city2" trigger="onConfirm" initialValue="金华">
+            <Picker {...props}>
+              <ListInputItem
+                button
+                label="城市2"
+                readOnly
+                placeholder="选择城市"
+              />
+            </Picker>
+          </Field>
         </List>
         <WhiteSpace />
         <Button type="submit" variant="contained" fullWidth>
