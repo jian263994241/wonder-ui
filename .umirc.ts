@@ -70,41 +70,12 @@ export default defineConfig({
       }
     ]
   },
-
-  styles: [
-    `html, body, #root {
-      height: 100%;
-    }
-
-    .__dumi-default-device {
-      top: 100px !important;
-      height: 580px !important;
-    }
-
-    .__dumi-default-device-status > span:first-of-type {
-      text-indent: -999em!important;
-    }
-
-    .__dumi-default-mobile-demo-layout, .__dumi-default-mobile-demo-layout>div {
-      height: 100%;
-      padding: 0 !important;
-    }
-
-    li[title=API] + li[title=API] {
-      display: none;
-    }
-
-    .__dumi-default-menu[data-mode='site'] .__dumi-default-menu-list > li > a {
-      padding-left: 28px!important;
-    }
-
-    .__dumi-default-menu[data-mode='site'] .__dumi-default-menu-list > li > a ~ ul {
-      margin-left: 28px!important;
-    }
-
-    .markdown table th, .markdown table td{
-      padding: 10px 14px!important;
-    }
-    `
-  ]
+  hash: true,
+  fastRefresh: {},
+  scripts: [
+    `if (location.hash.startsWith('#/~demos/')) {
+      document.body.style.background = '#f5f7fa'
+    }`
+  ],
+  styles: []
 });

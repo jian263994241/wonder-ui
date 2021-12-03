@@ -34,6 +34,12 @@ export * from './CheckableTag';
 export { default as Checkbox } from './Checkbox';
 export * from './Checkbox';
 
+export { default as CheckList } from './CheckList';
+export * from './CheckList';
+
+export { default as CheckListItem } from './CheckListItem';
+export * from './CheckListItem';
+
 export { default as CircularProgress } from './CircularProgress';
 export * from './CircularProgress';
 

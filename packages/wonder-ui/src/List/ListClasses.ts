@@ -2,6 +2,8 @@ import { composeClasses, generateUtilityClasses } from '@wonder-ui/utils';
 
 export const listClasses = generateUtilityClasses('WuiList', ['root', 'inset']);
 
+export type ListClassesType = typeof listClasses;
+
 export interface ListStyleProps {
   classes?: Partial<typeof listClasses>;
   inset?: boolean;

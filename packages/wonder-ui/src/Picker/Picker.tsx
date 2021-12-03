@@ -157,6 +157,10 @@ export interface PickerProps {
   style?: React.CSSProperties;
   classes?: Partial<typeof pickerClasses>;
   /**
+   * 用法同 onRenderInput, 注入 onClick, value, readOnly
+   */
+  children?: JSX.Element;
+  /**
    * 选项高度，支持 `px` `vw` `vh` `rem` 单位，默认 px
    * @default 44
    */
@@ -298,6 +302,7 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     itemHeight: itemHeightProp = 44,
     textKey = 'text',
     valuesKey = 'values',
+    children,
     childrenKey = 'children',
     columns = [],
     defaultIndex: defaultIndexProp = 0,
@@ -663,7 +668,18 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
 
   return (
     <React.Fragment>
-      {onRenderInput?.({ value, setVisibleUnControlled })}
+      {children &&
+        React.isValidElement(children) &&
+        React.cloneElement(children as JSX.Element, {
+          readOnly: true,
+          value,
+          onClick: () => {
+            setVisibleUnControlled(true);
+          }
+        })}
+      {!children &&
+        onRenderInput &&
+        onRenderInput({ value, setVisibleUnControlled })}
       <Drawer
         keepMounted
         anchor="bottom"

@@ -5,7 +5,11 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
 import { css, forwardRef } from '@wonder-ui/utils';
-import { listItemClasses, useClasses } from './ListItemClasses';
+import {
+  ListItemClassesType,
+  listItemClasses,
+  useClasses
+} from './ListItemClasses';
 
 export interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
   /**
@@ -23,7 +27,7 @@ export interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
   /**
    * Css api
    */
-  classes?: Partial<typeof listItemClasses>;
+  classes?: Partial<ListItemClassesType>;
   /**
    * Root element
    */

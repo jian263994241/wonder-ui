@@ -2,10 +2,16 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { css } from '@wonder-ui/utils';
-import { listClasses, useClasses } from './ListClasses';
+import {
+  listClasses,
+  useClasses,
+  ListClassesType,
+  ListStyleProps
+} from './ListClasses';
 
 export interface ListProps extends React.HTMLAttributes<HTMLElement> {
   component?: React.ElementType;
+  classes?: Partial<ListClassesType>;
   /**
    * 内嵌样式
    * @default false
@@ -13,8 +19,6 @@ export interface ListProps extends React.HTMLAttributes<HTMLElement> {
   inset?: boolean;
   ref?: React.Ref<HTMLElement>;
 }
-
-export interface ListStyleProps extends ListProps {}
 
 const ListRoot = styled('ul', {
   name: 'WuiList',

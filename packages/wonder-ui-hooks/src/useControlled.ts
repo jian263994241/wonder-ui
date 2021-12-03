@@ -12,7 +12,11 @@ export function useControlled<V>(props: ControlledProps<V>) {
   const value = controlled ? (valueProp as V) : valueState;
 
   const setValueIfUncontrolled = useEventCallback(
-    (newValue: V, callback?: () => void, alwaysCallback?: boolean) => {
+    (
+      newValue: V | ((prevValue: V) => V),
+      callback?: () => void,
+      alwaysCallback?: boolean
+    ) => {
       if (!controlled) {
         setValue(newValue, callback);
       } else if (alwaysCallback) {

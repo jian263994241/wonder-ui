@@ -241,7 +241,7 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
       if (status === 'normal') {
         return '';
       }
-
+      //@ts-ignore
       const textProp = props[`${status}Text`];
 
       return textProp || status;

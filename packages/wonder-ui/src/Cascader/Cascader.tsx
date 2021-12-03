@@ -1,8 +1,7 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-
-export interface CascaderProps {}
+import { CascaderProps } from './CascaderTypes';
 
 const Cascader = React.forwardRef(() => {
   return null;

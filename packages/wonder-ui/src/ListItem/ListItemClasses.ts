@@ -10,8 +10,10 @@ export const listItemClasses = generateUtilityClasses('WuiListItem', [
   'extra'
 ]);
 
+export type ListItemClassesType = typeof listItemClasses;
+
 export interface ListItemStyleProps {
-  classes?: Partial<typeof listItemClasses>;
+  classes?: Partial<ListItemClassesType>;
 }
 
 export const useClasses = (styleProps: ListItemStyleProps) => {
