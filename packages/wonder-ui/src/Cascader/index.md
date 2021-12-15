@@ -8,7 +8,7 @@ group:
   title: 数据录入
   order: 3
 ---
-# Cascader 级联选择
+# Cascader 级联选择器
 
 级联选择框，用于多层级数据的选择.
 
@@ -19,7 +19,8 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
+
 ## API
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
+<API src="./Cascader.tsx" hideTitle></API>
+
