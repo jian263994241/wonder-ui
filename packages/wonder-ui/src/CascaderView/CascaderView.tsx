@@ -62,7 +62,7 @@ const CascaderView = React.forwardRef<HTMLDivElement, CascaderViewProps>(
       options = [],
       placeholder = '请选择',
       onChange,
-      getOptionsSelected
+      onOptionsChange
     } = props;
 
     const [valueState = [], setValueUnControlled] = useControlled({
@@ -131,7 +131,7 @@ const CascaderView = React.forwardRef<HTMLDivElement, CascaderViewProps>(
     }, [valueState, options]);
 
     React.useEffect(() => {
-      getOptionsSelected?.(selected);
+      onOptionsChange?.(selected);
     }, [selected]);
 
     const nextTab = useEventCallback(() => {

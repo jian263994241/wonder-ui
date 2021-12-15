@@ -33,7 +33,7 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
       onClose,
       visible: visibleProp,
       defaultVisible = false,
-      getOptionsSelected: getOptionsSelectedProp,
+      onOptionsChange: onOptionsChangeProp,
       textKey = 'label',
       valueKey = 'value',
       keepMounted,
@@ -59,9 +59,7 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
       onClose?.();
     };
 
-    const getOptionsSelected: typeof getOptionsSelectedProp = (
-      options = []
-    ) => {
+    const optionsChangeHandler: typeof onOptionsChangeProp = (options = []) => {
       const lastOption = options[options.length - 1];
 
       if (
@@ -113,10 +111,10 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
             />
             <CascaderView
               disableRipple={disableRipple}
-              getOptionsSelected={getOptionsSelected}
               textKey={textKey}
               valueKey={valueKey}
               onChange={onSelect}
+              onOptionsChange={optionsChangeHandler}
               {...rest}
             />
           </CascaderRoot>

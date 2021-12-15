@@ -23,5 +23,19 @@ group:
 
 ## API
 
+```tsx | pure
+export type CascaderOption = {
+  label?: React.ReactNode;
+  value?: string | number;
+  disabled?: boolean;
+  children?: CascaderOption[];
+  className?: string;
+  style?: React.CSSProperties;
+  description?: string;
+  // for custom filed names
+  [key: string]: any;
+};
+```
+
 <API src="./CascaderView.tsx" hideTitle></API>
 

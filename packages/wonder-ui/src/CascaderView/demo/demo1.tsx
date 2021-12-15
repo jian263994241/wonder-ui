@@ -22,7 +22,6 @@ export default () => {
         <ListHeader>基础用法</ListHeader>
 
         <ListItem
-          button
           extra={displayValue.length > 0 ? displayValue.join(',') : '无数据'}
         >
           地区
@@ -44,7 +43,7 @@ export default () => {
         onChange={(value) => {
           setValue(value);
         }}
-        getOptionsSelected={(options) => {
+        onOptionsChange={(options) => {
           setDisplayValue(options.map((item) => item.name));
         }}
         style={{ '--cascader-content-height': '400px' } as React.CSSProperties}

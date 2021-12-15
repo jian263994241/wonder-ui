@@ -51,13 +51,13 @@ export interface CascaderViewProps {
    */
   divider?: boolean;
   /**
-   * 获取当前选中配置项
-   */
-  getOptionsSelected?: (options: CascaderOption[]) => void;
-  /**
    * 选项改变时触发
    */
   onChange?: (value: (string | number)[]) => void;
+  /**
+   * 获取当前选中配置项
+   */
+  onOptionsChange?: (options: CascaderOption[]) => void;
   /**
    * 配置每一列的选项
    */
