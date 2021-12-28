@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { setRef } from '@wonder-ui/utils';
-import { useForkRef, useSafeState } from '@wonder-ui/hooks';
+import { setRef, canUseDOM } from '@wonder-ui/utils';
+import { useForkRef, useCreation } from '@wonder-ui/hooks';
 
 export type Container = HTMLElement | null | (() => HTMLElement | null);
 
@@ -18,18 +18,19 @@ export interface PortalProps {
 
 const Portal: React.FC<PortalProps> = React.forwardRef((props, ref) => {
   const { children, container, disablePortal = false } = props;
-  const [mountNode, setMountNode] = useSafeState<HTMLElement | null>(null);
+
+  const mountNode = useCreation(() => {
+    if (canUseDOM && !disablePortal) {
+      return getContainer(container) || document.body;
+    }
+    return null;
+  }, [container, disablePortal]);
+
   const handleRef = useForkRef(
     //@ts-expect-error
     React.isValidElement(children) ? children.ref : null,
     ref
   );
-
-  React.useEffect(() => {
-    if (!disablePortal) {
-      setMountNode(getContainer(container) || document.body);
-    }
-  }, [container, disablePortal]);
 
   React.useEffect(() => {
     if (mountNode && !disablePortal) {
@@ -44,14 +45,12 @@ const Portal: React.FC<PortalProps> = React.forwardRef((props, ref) => {
 
   if (disablePortal) {
     if (React.isValidElement(children)) {
-      return React.cloneElement(children, {
-        ref: handleRef
-      });
+      return React.cloneElement(children, { ref: handleRef });
     }
     return children;
   }
 
-  return mountNode ? ReactDOM.createPortal(children, mountNode) : mountNode;
+  return mountNode ? ReactDOM.createPortal(children, mountNode) : children;
 });
 
 export default Portal;
