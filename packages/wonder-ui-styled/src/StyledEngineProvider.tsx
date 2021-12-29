@@ -7,10 +7,31 @@ interface StyledProvider {
   children?: NonNullable<React.ReactNode>;
 }
 
-export const cache = createCache({ key: 'css', prepend: true });
+// <meta name="emotion-insertion-point" content="">
+const emotionInsertionPoint = document.createElement('meta');
+emotionInsertionPoint.setAttribute('name', 'emotion-insertion-point');
+emotionInsertionPoint.setAttribute('content', '');
+
+export const cache = createCache({
+  key: 'css',
+  insertionPoint: emotionInsertionPoint
+});
 
 export default function StyledEngineProvider(props: StyledProvider) {
   const { injectFirst, children } = props;
+
+  React.useEffect(() => {
+    const head = document.querySelector('head');
+
+    if (head && injectFirst) {
+      head.appendChild(emotionInsertionPoint);
+
+      return () => {
+        head.removeChild(emotionInsertionPoint);
+      };
+    }
+  }, [injectFirst]);
+
   return injectFirst ? (
     <CacheProvider value={cache}>{children}</CacheProvider>
   ) : (
