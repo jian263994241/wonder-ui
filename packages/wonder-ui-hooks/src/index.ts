@@ -31,6 +31,7 @@ export * from './useMediaQuery';
 export * from './useMount';
 export * from './useMouseRef';
 export * from './usePrevious';
+export * from './useResizeEffect';
 export * from './useReactive';
 export * from './useResponsive';
 export * from './useSafeState';

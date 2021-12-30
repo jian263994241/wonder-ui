@@ -82,6 +82,9 @@ export * from './DropdownMenu';
 export { default as DropdownMenuItem } from './DropdownMenuItem';
 export * from './DropdownMenuItem';
 
+export { default as Ellipsis } from './Ellipsis';
+export * from './Ellipsis';
+
 export { default as Empty } from './Empty';
 export * from './Empty';
 
