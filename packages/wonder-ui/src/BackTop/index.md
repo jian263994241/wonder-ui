@@ -27,4 +27,4 @@ group:
 
 <code src="./demo/customize.tsx"></code>
 
-<API src="./BackTop.tsx" props="className|duration|style|visibilityHeight|onClick"></API>
+<API src="./BackTop.tsx" ></API>

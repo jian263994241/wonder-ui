@@ -37,6 +37,6 @@ group:
 
 <code src="./demo/demo5.tsx"></code>
 
-<API src="./ButtonGroup.tsx" props="ButtonProps|component|direction"></API>
+<API src="./ButtonGroup.tsx"></API>
 
 

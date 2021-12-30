@@ -39,5 +39,5 @@ group:
 <code src="./demo/demo5.tsx"></code>
 
 
-<API src="./Badge.tsx" props="color|hideContent|rounded|text"></API>
+<API src="./Badge.tsx"></API>
 

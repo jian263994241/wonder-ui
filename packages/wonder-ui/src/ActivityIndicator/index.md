@@ -18,5 +18,5 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-<API src="./ActivityIndicator.tsx" props="color|iconSize|text|type|vertical"></API>
+<API src="./ActivityIndicator.tsx" ></API>
 

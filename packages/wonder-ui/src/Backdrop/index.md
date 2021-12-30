@@ -18,5 +18,5 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-<API src="./Backdrop.tsx" props="invisible|visible|transitionDuration"></API>
+<API src="./Backdrop.tsx" ></API>
 

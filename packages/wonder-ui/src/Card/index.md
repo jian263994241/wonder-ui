@@ -17,3 +17,5 @@ group:
 ### 基本使用
 
 <code src="./demo/demo1.tsx"></code>
+
+<API src="./Card.tsx"></API>
