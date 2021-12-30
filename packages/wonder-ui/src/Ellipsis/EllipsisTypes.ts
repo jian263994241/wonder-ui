@@ -19,10 +19,12 @@ export interface EllipsisProps
   children: string;
   /**
    * 省略号位置
+   * @default end
    */
   direction?: 'start' | 'end' | 'middle';
   /**
    * 展示行数
+   * @default 1
    */
   rows?: number;
   /**
