@@ -3,9 +3,30 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import type { EllipsisProps, EllipsisedValue } from './EllipsisTypes';
 import { useForkRef, useResizeEffect } from '@wonder-ui/hooks';
-import { getComputedStyle, unitToPx, ownerDocument } from '@wonder-ui/utils';
+import {
+  getComputedStyle,
+  unitToPx,
+  ownerDocument,
+  css,
+  composeClasses
+} from '@wonder-ui/utils';
+import { COMPONENT_NAME } from './EllipsisClasses';
 
-const COMPONENT_NAME = 'WuiEllipsis';
+const useClasses = (
+  props: EllipsisProps & { exceeded: boolean; expanded: boolean }
+) => {
+  const { classes, exceeded, expanded } = props;
+  const slots = {
+    root: [
+      'root',
+      exceeded ? (expanded ? 'expanded' : 'collapsed') : undefined
+    ],
+    expandAction: ['expandAction'],
+    collapseAction: ['collapseAction']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
 
 const EllipsisRoot = styled('div', {
   name: COMPONENT_NAME,
@@ -32,6 +53,7 @@ const Ellipsis = React.forwardRef<HTMLDivElement, EllipsisProps>(
       expandText = '',
       collapseText = '',
       children: content,
+      className,
       ...rest
     } = props;
 
@@ -159,16 +181,24 @@ const Ellipsis = React.forwardRef<HTMLDivElement, EllipsisProps>(
       }
     }, rootRef);
 
+    const classes = useClasses({ ...props, exceeded, expanded });
+
     const expandActionElement =
       exceeded && expandText ? (
-        <EllipsisAction onClick={() => setExpanded(true)}>
+        <EllipsisAction
+          onClick={() => setExpanded(true)}
+          className={classes.expandAction}
+        >
           {expandText}
         </EllipsisAction>
       ) : null;
 
     const collapseActionElement =
       exceeded && expandText ? (
-        <EllipsisAction onClick={() => setExpanded(false)}>
+        <EllipsisAction
+          onClick={() => setExpanded(false)}
+          className={classes.collapseAction}
+        >
           {collapseText}
         </EllipsisAction>
       ) : null;
@@ -196,7 +226,11 @@ const Ellipsis = React.forwardRef<HTMLDivElement, EllipsisProps>(
     };
 
     return (
-      <EllipsisRoot ref={handleRef} {...rest}>
+      <EllipsisRoot
+        ref={handleRef}
+        className={css(classes.root, className)}
+        {...rest}
+      >
         {renderContent()}
       </EllipsisRoot>
     );
