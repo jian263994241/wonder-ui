@@ -1,13 +1,4 @@
-import {
-  Container,
-  Page,
-  List,
-  ListHeader,
-  ListItem,
-  ListItemText,
-  Typography,
-  WhiteSpace
-} from '@wonder-ui/core';
+import { Page, List, ListHeader, ListItem, Typography } from '@wonder-ui/core';
 import { useVirtualList } from '@wonder-ui/hooks';
 
 const dataList = Array(2000).fill('');
@@ -19,19 +10,18 @@ export default () => {
   });
 
   return (
-    <Page title="Virtual list" ContentProps={containerProps}>
-      <Container>
-        <WhiteSpace />
+    <Page ContentProps={containerProps}>
+      <div style={{ padding: 20 }}>
         <Typography paragraph>
           This example shows how to use Virtual List
         </Typography>
-      </Container>
+      </div>
 
       <List {...wrapperProps}>
-        <ListHeader sticky>Virtual List</ListHeader>
+        <ListHeader sticky>虚拟列表</ListHeader>
         {list.map(({ data, index }) => (
           <ListItem key={index} style={{ height: 44 }}>
-            <ListItemText>Item {index}</ListItemText>
+            Item {index}
           </ListItem>
         ))}
       </List>

@@ -1,32 +1,43 @@
 import { Button, Space, Paper } from '@wonder-ui/core';
 
+const colors = [
+  'primary',
+  'secondary',
+  'success',
+  'danger',
+  'warning',
+  'info',
+  'light',
+  'dark',
+  'inherit'
+] as const;
+
 export default () => (
   <Paper>
-    <Space>
-      <Button color="primary" variant="contained">
-        Primary
-      </Button>
-      <Button color="secondary" variant="contained">
-        Secondary
-      </Button>
-      <Button color="success" variant="contained">
-        Success
-      </Button>
-      <Button color="danger" variant="contained">
-        Danger
-      </Button>
-      <Button color="warning" variant="contained">
-        Warning
-      </Button>
-      <Button color="info" variant="contained">
-        Info
-      </Button>
-      <Button color="light" variant="contained">
-        Light
-      </Button>
-      <Button color="dark" variant="contained">
-        Dark
-      </Button>
+    <Space direction="vertical" gap={20}>
+      <Space>
+        {colors.map((color, index) => (
+          <Button color={color} variant="contained" key={index}>
+            {color}
+          </Button>
+        ))}
+      </Space>
+
+      <Space>
+        {colors.map((color, index) => (
+          <Button color={color} variant="outlined" key={index}>
+            {color}
+          </Button>
+        ))}
+      </Space>
+
+      <Space>
+        {colors.map((color, index) => (
+          <Button color={color} variant="text" key={index}>
+            {color}
+          </Button>
+        ))}
+      </Space>
     </Space>
   </Paper>
 );

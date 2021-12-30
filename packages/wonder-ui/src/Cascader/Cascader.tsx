@@ -8,9 +8,13 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import X from '../icons/X';
 import { CascaderProps } from './CascaderTypes';
+import {
+  CascaderAction,
+  CascaderOption
+} from '../CascaderView/CascaderViewTypes';
 import { COMPONENT_NAME } from './CascaderClasses';
-import { createChainedFunction } from '@wonder-ui/utils';
-import { useControlled } from '@wonder-ui/hooks';
+import { createChainedFunction, isControlled } from '@wonder-ui/utils';
+import { useControlled, useCreation, useForkRef } from '@wonder-ui/hooks';
 
 const CascaderRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })(
   ({ theme }) => ({
@@ -23,32 +27,35 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
+      actionRef: actionRefProp,
       title,
       classes,
       cancelText,
       separator = ',',
-      value,
       disableRipple,
       children,
       onClose,
       visible: visibleProp,
       defaultVisible = false,
-      onOptionsChange: onOptionsChangeProp,
       textKey = 'label',
       valueKey = 'value',
       keepMounted,
+      value,
+      defaultValue,
       onChange,
-      onSelect,
       onRenderChildren,
       ...rest
     } = props;
+
+    const actionRef = React.useRef<CascaderAction>(null);
+    const handleRef = useForkRef(actionRef, actionRefProp);
 
     const [visible, setVisibleUnControlled] = useControlled({
       value: visibleProp,
       defaultValue: defaultVisible
     });
 
-    const [displayText, setDisplayText] = React.useState('');
+    const [options, setOptions] = React.useState<CascaderOption[]>([]);
 
     const show = () => {
       setVisibleUnControlled(true);
@@ -59,20 +66,29 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
       onClose?.();
     };
 
-    const optionsChangeHandler: typeof onOptionsChangeProp = (options = []) => {
-      const lastOption = options[options.length - 1];
-
-      if (
-        lastOption &&
-        (!lastOption.children || lastOption.children.length === 0)
-      ) {
-        setDisplayText(options.map((item) => item[textKey]).join(separator));
-
-        onChange?.(options.map((item) => item[valueKey]));
-
-        cancel();
+    React.useEffect(() => {
+      if (actionRef.current) {
+        if (isControlled(props, 'value') || defaultValue) {
+          const val = value ?? defaultValue;
+          const options = actionRef.current.getOptions(val);
+          setOptions(options);
+        }
       }
+    }, [defaultValue, value]);
+
+    const handleChange = (values: CascaderOption[]) => {
+      if (!isControlled(props, 'value')) {
+        setOptions(options);
+      }
+
+      onChange?.(values);
+
+      cancel();
     };
+
+    const displayText = useCreation(() => {
+      return options.map((item) => item[textKey]).join(separator);
+    }, [options, separator, textKey]);
 
     return (
       <React.Fragment>
@@ -87,7 +103,7 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
           })}
         {!children &&
           onRenderChildren &&
-          onRenderChildren({ displayText, onClick: show })}
+          onRenderChildren({ displayText, onClick: show, options })}
         <Drawer
           keepMounted={keepMounted}
           visible={visible}
@@ -110,11 +126,13 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
               }
             />
             <CascaderView
+              actionRef={handleRef}
               disableRipple={disableRipple}
               textKey={textKey}
               valueKey={valueKey}
-              onChange={onSelect}
-              onOptionsChange={optionsChangeHandler}
+              onChange={handleChange}
+              value={value}
+              defaultValue={defaultValue}
               {...rest}
             />
           </CascaderRoot>

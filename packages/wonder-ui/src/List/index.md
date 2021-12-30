@@ -1,6 +1,4 @@
 ---
-mobile: true
-toc: menu
 nav:
   path: /components
 group:
@@ -36,7 +34,7 @@ group:
 
 <code src="./demo/demo8.tsx"></code>
 
-### 文件夹列表
+### 媒体列表
 
 <code src="./demo/demo3.tsx"></code>
 
@@ -97,6 +95,3 @@ group:
 
 <API src="../ListItem/ListItem.tsx" hideTitle></API>
 
-### ListItemText
-
-<API src="../ListItemText/ListItemText.tsx" hideTitle></API>

@@ -3,7 +3,6 @@ export * from './DialogManager';
 export * from './EventGroup';
 export * from './KeyCodes';
 export * from './StackManager';
-export * from './appendFunction';
 export * from './array';
 export * from './asAsync';
 export * from './classes';

@@ -25,5 +25,11 @@ group:
 
 <code src="./demo/demo2.tsx"></code>
 
+### 自定义
 
-<API src="./Radio.tsx" props="color|children|value|onChange|defaultValue|className|style"></API>
+组件提供了一些CSS变量快速定义样式, 如果想要自定义图标可以直接用`CheckableGroup` + icon 实现
+
+<code src="./demo/demo3.tsx"></code>
+
+
+<API src="./Radio.tsx" ></API>

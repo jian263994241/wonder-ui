@@ -5,7 +5,7 @@ export type CscaderViewClassesType = typeof cascaderViewClasses;
 
 export type CascaderOption = {
   label?: React.ReactNode;
-  value?: string | number;
+  value?: any;
   disabled?: boolean;
   children?: CascaderOption[];
   className?: string;
@@ -20,7 +20,16 @@ export type CascaderTab = {
   selected: CascaderOption | null;
 };
 
+export type CascaderAction = {
+  getOptions(values?: any[]): CascaderOption[];
+  getValues(): any[];
+};
+
 export interface CascaderViewProps {
+  /**
+   * 内部方法
+   */
+  actionRef?: React.Ref<CascaderAction | null>;
   /**
    * 选中图标
    */
@@ -41,7 +50,7 @@ export interface CascaderViewProps {
   /**
    * 默认选中项
    */
-  defaultValue?: (string | number)[];
+  defaultValue?: any[];
   /**
    * 禁用点击波纹
    */
@@ -51,13 +60,13 @@ export interface CascaderViewProps {
    */
   divider?: boolean;
   /**
-   * 选项改变时触发
+   * 选择完整时触发
    */
-  onChange?: (value: (string | number)[]) => void;
+  onChange?: (value: CascaderOption[]) => void;
   /**
-   * 获取当前选中配置项
+   * 选择时触发
    */
-  onOptionsChange?: (options: CascaderOption[]) => void;
+  onSelect?: (value: CascaderOption[]) => void;
   /**
    * 配置每一列的选项
    */
@@ -78,7 +87,7 @@ export interface CascaderViewProps {
   /**
    * 选中项
    */
-  value?: (string | number)[];
+  value?: any[];
   /**
    * 配置对象中取值键名
    * @default value

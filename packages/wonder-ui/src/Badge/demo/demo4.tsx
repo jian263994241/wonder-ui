@@ -1,7 +1,7 @@
 import { Badge, Space } from '@wonder-ui/core';
 
 export default () => (
-  <Space>
+  <Space style={{ padding: 16 }}>
     <Badge color="primary" text="primary" rounded />
     <Badge color="secondary" text="secondary" rounded />
     <Badge color="success" text="success" rounded />

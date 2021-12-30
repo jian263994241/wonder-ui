@@ -39,9 +39,13 @@ group:
 
 <code src="./demo/demo6.tsx"></code>
 
-### 地址选择器
+### 默认值
 
 <code src="./demo/demo7.tsx"></code>
+
+### 地址选择器
+
+<code src="./demo/demo8.tsx"></code>
 
 
 ## Column 数据结构
@@ -140,21 +144,24 @@ const data2 = [
 
 ## 内置方法
 
-通过 `actionRef` 可以获取到 Picker 内置方法
+通过 `actionRef` 可以获取到 PickerView 内置方法 `PickerAction`
 
-| 方法名 |	说明 |	参数 |	返回值
-| --- | --- | --- | ---
-| getValues	| 获取所有列选中的值 |	-	| values
-| setValues	| 设置所有列选中的值 |	values	| -
-| getIndexes	| 获取所有列选中值对应的索引 |	-	| indexes
-| setIndexes	| 设置所有列选中值对应的索引 |	indexes	| -
-| getColumnValue	| 获取对应列选中的值 |	columnIndex	| value
-| setColumnValue	| 设置对应列选中的值 |	columnIndex, value	| -
-| getColumnIndex	| 获取对应列选中项的索引 |	columnIndex	| optionIndex
-| setColumnIndex	| 设置对应列选中项的索引 |	columnIndex, optionIndex	| -
-| getColumnValues	| 获取对应列中所有选项 |	columnIndex	| values
-| setColumnValues	| 设置对应列中所有选项 |	columnIndex, values	| -
-| confirm	| 停止惯性滚动并触发 confirm 事件 |	-	| -
+```ts prue
+export type PickerAction = {
+  getValues(): PickerOption[];
+  setValues(values: string[]): void;
+  getIndexes(): number[];
+  setIndexes(indexes: number[]): void;
+  getColumnValue(columnIndex: number): PickerOption | undefined;
+  setColumnValue(index: number, value: string): void;
+  getColumnIndex(index: number): number | undefined;
+  setColumnIndex(columnIndex: number, optionIndex: number): void;
+  getColumnValues(index: number): PickerOption[] | undefined;
+  setColumnValues(index: number, options: PickerOption[]): void;
+  confirm(): void;
+};
+
+```
 
 
 <API src="./PickerView.tsx" ></API>

@@ -23,6 +23,14 @@ export interface TabsProps {
    */
   defaultValue?: any;
   /**
+   * 禁用
+   */
+  disabled?: boolean;
+  /**
+   * 禁用波纹
+   */
+  disableRipple?: boolean;
+  /**
    * 指示器样式
    */
   indicatorStyle?: React.CSSProperties;

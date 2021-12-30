@@ -63,8 +63,12 @@ group:
 
 <code src="./demo/disabled.tsx"></code>
 
+### 自定义按钮主题
 
-<API src="./Button.tsx" props="color|classes|className|style|component|children|disableRipple|disableFocusRipple|disabled|focusVisibleClassName|square|fullWidth|shape|size|variant"></API>
+<code src="./demo/theme.tsx"></code>
+
+
+<API src="./Button.tsx"></API>
 
 
 

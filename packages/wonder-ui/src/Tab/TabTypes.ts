@@ -12,13 +12,14 @@ export interface TabProps extends ButtonBaseProps {
    */
   classes?: Partial<TabClasses>;
   /**
+   * 同 label
+   */
+  children?: React.ReactNode;
+  /**
    * 禁用
    */
   disabled?: boolean;
-  /**
-   * 禁用波纹
-   */
-  disableRipple?: boolean;
+
   /**
    * 图标
    */
@@ -49,9 +50,4 @@ export interface TabStyleProps extends TabProps {
   isActive: boolean;
   variant: TabsProps['variant'];
   textColor?: string;
-}
-
-export interface TabMeta {
-  root: HTMLElement | null;
-  disabled?: boolean;
 }

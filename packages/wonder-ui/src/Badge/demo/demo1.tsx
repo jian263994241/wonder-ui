@@ -1,7 +1,7 @@
 import { Badge, Typography } from '@wonder-ui/core';
 
 export default () => (
-  <div>
+  <div style={{ padding: 16 }}>
     <Typography variant="h1" gutterBottom>
       Example heading <Badge color="secondary" text="New" />
     </Typography>

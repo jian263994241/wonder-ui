@@ -10,24 +10,19 @@ import {
   composeClasses,
   css,
   generateUtilityClasses,
+  isControlled,
   isObject,
-  nextTick,
   unitToPx
 } from '@wonder-ui/utils';
 import {
   PickerAction,
   PickerColumnAction,
+  PickerObjectColumn,
   PickerObjectOption,
   PickerOption,
-  PickerViewProps,
-  PickerObjectColumn
+  PickerViewProps
 } from './PickerViewTypes';
-import {
-  useControlled,
-  useCreation,
-  useEventCallback,
-  useDebounceFn
-} from '@wonder-ui/hooks';
+import { useCreation } from '@wonder-ui/hooks';
 
 export const pickerClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
@@ -134,34 +129,32 @@ const PickerView = React.forwardRef<HTMLDivElement, PickerViewProps>(
       textKey = 'text',
       valuesKey = 'values',
       childrenKey = 'children',
-      columns = [],
-      defaultIndex: defaultIndexProp = 0,
+      columns: columnsProp,
       readOnly = false,
       loading = false,
       visibleItemCount = 6,
       onChange,
       onConfirm,
-      value: valueProp,
-      defaultValue: defaultValueProp
+      defaultValue,
+      value
     } = props;
 
-    const defaultValue = useCreation(() => {
-      if (
-        typeof defaultValueProp === 'string' ||
-        typeof defaultValueProp === 'number'
-      ) {
-        return [defaultValueProp];
+    const columns = React.useMemo(() => {
+      if (Array.isArray(columnsProp)) {
+        return columnsProp;
+      } else {
+        return [columnsProp].filter(Boolean);
       }
-
-      return defaultValueProp || [];
-    }, [defaultValueProp]);
+    }, [columnsProp]);
 
     const dataType = useCreation(() => {
       const firstColumn = columns[0];
+
       if (isObject(firstColumn)) {
         if (childrenKey in firstColumn) return 'cascade';
         if ('values' in firstColumn) return 'object';
       }
+
       return 'plain';
     }, [columns]);
 
@@ -178,7 +171,7 @@ const PickerView = React.forwardRef<HTMLDivElement, PickerViewProps>(
 
       while (cursor && cursor[childrenKey]) {
         const children = cursor[childrenKey];
-        let defaultIndex = cursor.defaultIndex ?? +defaultIndexProp;
+        let defaultIndex = cursor.defaultIndex ?? +0;
 
         while (children[defaultIndex] && children[defaultIndex].disabled) {
           if (defaultIndex < children.length - 1) {
@@ -213,17 +206,15 @@ const PickerView = React.forwardRef<HTMLDivElement, PickerViewProps>(
 
     const childrenRefs = React.useRef<PickerColumnAction[]>([]);
 
-    const [value] = useControlled({ value: valueProp, defaultValue });
-
     React.useEffect(() => {
-      nextTick(() => {
-        if (Array.isArray(value)) {
-          setValues(value);
-        } else if (value) {
-          setValues([value]);
+      if (isControlled(props, 'value')) {
+        const val = value || defaultValue;
+
+        if (val && val.length > 0) {
+          setValues(val);
         }
-      });
-    }, [value]);
+      }
+    }, [value, defaultValue]);
 
     // get indexes of all columns
     const getIndexes = () =>
@@ -277,7 +268,7 @@ const PickerView = React.forwardRef<HTMLDivElement, PickerViewProps>(
     };
 
     // set column value by index
-    const setColumnValue = (index: number, value: string | number) => {
+    const setColumnValue = (index: number, value: string) => {
       const column = getChild(index);
 
       if (column) {
@@ -304,10 +295,12 @@ const PickerView = React.forwardRef<HTMLDivElement, PickerViewProps>(
       });
 
     // set values of all columns
-    const setValues = (values: (string | number)[]) => {
-      values.forEach((value, index) => {
-        setColumnValue(index, value);
-      });
+    const setValues = (values?: string[]) => {
+      if (Array.isArray(values)) {
+        values.forEach((value, index) => {
+          setColumnValue(index, value);
+        });
+      }
     };
 
     // set indexes of all columns
@@ -336,34 +329,26 @@ const PickerView = React.forwardRef<HTMLDivElement, PickerViewProps>(
       }
     };
 
-    const emitEvent = useDebounceFn(
-      (
-        callback?: (
-          value: PickerOption | PickerObjectOption,
-          columnIndexes: number | number[],
-          picker: PickerAction
-        ) => void
-      ) => {
-        if (dataType === 'plain') {
-          callback?.(getColumnValue(0)!, getColumnIndex(0)!, pickerAction);
-        } else {
-          callback?.(getValues(), getIndexes(), pickerAction);
-        }
-      }
-    );
+    const emitEvent = (
+      callback?: (value: PickerOption[], picker: PickerAction) => void
+    ) => {
+      setTimeout(() => {
+        callback?.(getValues(), pickerAction);
+      }, 0);
+    };
 
-    const handleChange = useEventCallback((columnIndex: number) => {
+    const handleChange = (columnIndex: number) => {
       if (dataType === 'cascade') {
         onCascadeChange(columnIndex);
       }
 
       emitEvent(onChange);
-    });
+    };
 
-    const confirm = useEventCallback(() => {
+    const confirm = () => {
       childrenRefs.current.forEach((child) => child.stopMomentum());
       emitEvent(onConfirm);
-    });
+    };
 
     const classes = useClasses(styleProps);
 
@@ -383,8 +368,31 @@ const PickerView = React.forwardRef<HTMLDivElement, PickerViewProps>(
       };
     }, [itemHeightProp, visibleItemCount]);
 
-    const renderColumns = () => {
-      return (
+    const pickerAction = {
+      getValues,
+      setValues,
+      getIndexes,
+      setIndexes,
+      getColumnValue,
+      setColumnValue,
+      getColumnIndex,
+      setColumnIndex,
+      getColumnValues,
+      setColumnValues,
+      confirm
+    };
+
+    React.useImperativeHandle(actionRef, () => pickerAction);
+
+    return (
+      <PickerRoot
+        ref={ref}
+        className={css(classes.root, className)}
+        style={style}
+      >
+        <PickerViewLoading visible={loading} className={classes.loading}>
+          <ActivityIndicator color="primary" iconSize="medium" />
+        </PickerViewLoading>
         <PickerColumns className={classes.columns} style={styles.columnsStyle}>
           <PickerMask style={styles.maskStyle} className={classes.mask} />
           <PickerIndicator
@@ -401,7 +409,7 @@ const PickerView = React.forwardRef<HTMLDivElement, PickerViewProps>(
                 textKey={textKey}
                 readOnly={readOnly}
                 itemHeight={styles.itemHeight}
-                defaultIndex={item.defaultIndex ?? +defaultIndexProp}
+                defaultIndex={item.defaultIndex ?? +0}
                 initialOptions={item[valuesKey]}
                 visibleItemCount={visibleItemCount}
                 onChange={() => handleChange(columnIndex)}
@@ -414,35 +422,6 @@ const PickerView = React.forwardRef<HTMLDivElement, PickerViewProps>(
             );
           })}
         </PickerColumns>
-      );
-    };
-
-    const pickerAction = {
-      getValues,
-      setValues,
-      getIndexes,
-      setIndexes,
-      getColumnValue,
-      setColumnValue,
-      getColumnIndex,
-      setColumnIndex,
-      getColumnValues,
-      setColumnValues,
-      confirm
-    };
-
-    React.useImperativeHandle(actionRef, () => pickerAction, [columns]);
-
-    return (
-      <PickerRoot
-        ref={ref}
-        className={css(classes.root, className)}
-        style={style}
-      >
-        <PickerViewLoading visible={loading} className={classes.loading}>
-          <ActivityIndicator color="primary" iconSize="medium" />
-        </PickerViewLoading>
-        {renderColumns()}
       </PickerRoot>
     );
   }

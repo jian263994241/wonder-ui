@@ -3,78 +3,10 @@ import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { ButtonClasses, ButtonProps } from './ButtonTypes';
+import { ButtonProps } from './ButtonTypes';
 import { ButtonGroupContext } from '../ButtonGroup/ButtonGroupContext';
-import {
-  capitalize,
-  composeClasses,
-  css,
-  forwardRef,
-  generateUtilityClasses
-} from '@wonder-ui/utils';
-
-const COMPONENT_NAME = 'WuiButton';
-
-export const buttonClasses: ButtonClasses = generateUtilityClasses(
-  COMPONENT_NAME,
-  [
-    'root',
-    'label',
-    'text',
-    'textInherit',
-    'textPrimary',
-    'textSecondary',
-    'textSuccess',
-    'textDanger',
-    'textWarning',
-    'textInfo',
-    'textLight',
-    'textDark',
-    'outlined',
-    'outlinedInherit',
-    'outlinedPrimary',
-    'outlinedSecondary',
-    'outlinedSuccess',
-    'outlinedDanger',
-    'outlinedWarning',
-    'outlinedInfo',
-    'outlinedLight',
-    'outlinedDark',
-    'contained',
-    'containedInherit',
-    'containedPrimary',
-    'containedSecondary',
-    'containedSuccess',
-    'containedDanger',
-    'containedWarning',
-    'containedInfo',
-    'containedLight',
-    'containedDark',
-    'focusVisible',
-    'disabled',
-    'colorInherit',
-    'textSizeSmall',
-    'textSizeMedium',
-    'textSizeLarge',
-    'outlinedSizeSmall',
-    'outlinedSizeMedium',
-    'outlinedSizeLarge',
-    'containedSizeSmall',
-    'containedSizeMedium',
-    'containedSizeLarge',
-    'sizeMedium',
-    'sizeSmall',
-    'sizeLarge',
-    'fullWidth',
-    'startIcon',
-    'endIcon',
-    'edgeStart',
-    'edgeEnd',
-    'iconSizeSmall',
-    'iconSizeMedium',
-    'iconSizeLarge'
-  ]
-);
+import { capitalize, composeClasses, css, forwardRef } from '@wonder-ui/utils';
+import { COMPONENT_NAME, buttonClasses } from './buttonClasses';
 
 type ButtonStyleProps = ButtonProps &
   Required<Pick<ButtonProps, 'color' | 'size' | 'shape'>>;
@@ -110,6 +42,17 @@ const ButtonRoot = styled(ButtonBase, {
   shouldForwardProp: () => true
 })<ButtonBaseProps & { styleProps: ButtonStyleProps }>(
   ({ theme, styleProps }) => {
+    const getColor = (name: string, color: string) =>
+      `var(--button-${name}-color, ${color})`;
+
+    const mainColor =
+      styleProps.color !== 'inherit'
+        ? getColor(
+            `${styleProps.color}-${styleProps.variant}`,
+            theme.palette[styleProps.color].main
+          )
+        : undefined;
+
     return {
       ...theme.typography.button,
       display: 'inline-flex',
@@ -120,35 +63,32 @@ const ButtonRoot = styled(ButtonBase, {
       }),
       transition: theme.transitions.create(
         ['background-color', 'box-shadow', 'border-color', 'color'],
-        {
-          duration: theme.transitions.duration.short
-        }
+        { duration: theme.transitions.duration.short }
       ),
+
       ...(styleProps.color !== 'inherit' &&
         styleProps.variant === 'text' && {
-          color: theme.palette[styleProps.color].main
+          color: mainColor
         }),
 
       ...(styleProps.color !== 'inherit' &&
         styleProps.variant === 'contained' && {
           border: 'thin solid',
           borderColor: 'transparent',
-          color: theme.palette[styleProps.color].contrastText,
-          backgroundColor: theme.palette[styleProps.color].main
+          color: `var(--button-contrast-text-color, ${
+            theme.palette[styleProps.color].contrastText
+          })`,
+          backgroundColor: mainColor
         }),
 
       ...(styleProps.color !== 'inherit' &&
         styleProps.variant === 'outlined' && {
-          color: theme.palette[styleProps.color].main,
+          color: mainColor,
           backgroundColor: 'transparent',
           border: 'thin solid',
-          borderColor: theme.palette[styleProps.color].main,
-          '&.active': {
-            color: theme.palette[styleProps.color].contrastText,
-            backgroundColor: theme.palette[styleProps.color].main,
-            borderColor: theme.palette[styleProps.color].main
-          }
+          borderColor: mainColor
         }),
+
       '&:hover': {
         textDecoration: 'none',
         backgroundColor: alpha(
@@ -159,71 +99,88 @@ const ButtonRoot = styled(ButtonBase, {
         '@media (hover: none)': {
           backgroundColor: 'transparent'
         },
-        ...(styleProps.variant === 'text' &&
-          styleProps.color !== 'inherit' && {
-            backgroundColor: alpha(
-              theme.palette[styleProps.color].main,
-              theme.palette.action.hoverOpacity
+        ...(styleProps.color !== 'inherit' &&
+          styleProps.variant === 'text' && {
+            // Reset on touch devices, it doesn't add specificity
+            backgroundColor: getColor(
+              `${styleProps.color}-text-active`,
+              alpha(
+                theme.palette[styleProps.color].dark,
+                theme.palette.action.hoverOpacity
+              )
+            ),
+            '@media (hover: none)': {
+              backgroundColor: 'transparent'
+            }
+          }),
+        ...(styleProps.color !== 'inherit' &&
+          styleProps.variant === 'outlined' && {
+            backgroundColor: getColor(
+              `${styleProps.color}-outlined-active`,
+              alpha(
+                theme.palette[styleProps.color].dark,
+                theme.palette.action.hoverOpacity
+              )
             ),
             // Reset on touch devices, it doesn't add specificity
             '@media (hover: none)': {
               backgroundColor: 'transparent'
             }
           }),
-        ...(styleProps.variant === 'outlined' &&
-          styleProps.color !== 'inherit' && {
-            border: `thin solid ${theme.palette[styleProps.color].main}`,
-            backgroundColor: alpha(
-              theme.palette[styleProps.color].main,
-              theme.palette.action.hoverOpacity
+        ...(styleProps.color !== 'inherit' &&
+          styleProps.variant === 'contained' && {
+            backgroundColor: getColor(
+              `${styleProps.color}-contained-active`,
+              theme.palette[styleProps.color].dark
             ),
             // Reset on touch devices, it doesn't add specificity
             '@media (hover: none)': {
-              backgroundColor: 'transparent'
+              backgroundColor: mainColor
             }
-          }),
-        ...(styleProps.variant === 'contained' && {
-          backgroundColor: theme.palette.colors.grey.A100,
-          boxShadow: theme.shadows[4],
-          // Reset on touch devices, it doesn't add specificity
-          '@media (hover: none)': {
-            // boxShadow: theme.shadows[2],
-            backgroundColor: theme.palette.colors.grey[300]
-          }
-        }),
-        ...(styleProps.variant === 'contained' &&
-          styleProps.color !== 'inherit' && {
-            backgroundColor: theme.palette[styleProps.color].dark,
+          })
+      },
+      [`&.${buttonClasses.active}`]: {
+        ...(styleProps.color !== 'inherit' &&
+          styleProps.variant === 'text' && {
             // Reset on touch devices, it doesn't add specificity
-            '@media (hover: none)': {
-              backgroundColor: theme.palette[styleProps.color].main
-            }
+            backgroundColor: getColor(
+              `${styleProps.color}-text-active`,
+              alpha(
+                theme.palette[styleProps.color].dark,
+                theme.palette.action.hoverOpacity
+              )
+            )
+          }),
+        ...(styleProps.color !== 'inherit' &&
+          styleProps.variant === 'outlined' && {
+            backgroundColor: getColor(
+              `${styleProps.color}-outlined-active`,
+              alpha(
+                theme.palette[styleProps.color].dark,
+                theme.palette.action.hoverOpacity
+              )
+            )
+          }),
+        ...(styleProps.color !== 'inherit' &&
+          styleProps.variant === 'contained' && {
+            backgroundColor: getColor(
+              `${styleProps.color}-contained-active`,
+              theme.palette[styleProps.color].dark
+            )
           })
       },
       '&:active': {
         ...(styleProps.variant === 'contained' && {
-          boxShadow: theme.shadows[6]
+          boxShadow: theme.shadows[4]
         })
       },
       [`&.${buttonClasses.focusVisible}`]: {
         ...(styleProps.variant === 'contained' && {
-          boxShadow: theme.shadows[6]
+          boxShadow: theme.shadows[4]
         })
       },
       [`&.${buttonClasses.disabled}`]: {
-        color: theme.palette.action.disabled,
-        ...(styleProps.variant === 'outlined' && {
-          border: `thin solid ${theme.palette.action.disabledBackground}`
-        }),
-        ...(styleProps.variant === 'outlined' &&
-          styleProps.color === 'secondary' && {
-            border: `thin solid ${theme.palette.action.disabled}`
-          }),
-        ...(styleProps.variant === 'contained' && {
-          color: theme.palette.action.disabled,
-          boxShadow: theme.shadows[0],
-          backgroundColor: theme.palette.action.disabledBackground
-        })
+        opacity: theme.palette.action.disabledOpacity
       },
       [`&.${buttonClasses.sizeSmall}`]: {
         ...(styleProps.shape === 'round' && {
@@ -266,7 +223,10 @@ const ButtonLabel = styled('span', {
   width: '100%',
   display: 'inherit',
   alignItems: 'inherit',
-  justifyContent: 'inherit'
+  justifyContent: 'inherit',
+  [`*:disabled > &`]: {
+    pointerEvents: 'none'
+  }
 });
 
 const commonIconStyles = (styleProps: ButtonStyleProps) => ({

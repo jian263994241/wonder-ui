@@ -6,17 +6,9 @@ import {
   useForkRef,
   useReactive,
   useSafeState,
-  useTouch,
-  useUpdateEffect
+  useTouch
 } from '@wonder-ui/hooks';
-import {
-  clamp,
-  css,
-  isObject,
-  preventDefault,
-  setRef,
-  warn
-} from '@wonder-ui/utils';
+import { clamp, css, isObject, preventDefault, warn } from '@wonder-ui/utils';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { COMPONENT_NAME, pickerViewClasses } from './PickerViewClasses';
@@ -123,7 +115,7 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
 
     const getIndex = () => state.index;
 
-    const setIndex = (index: number) => {
+    const setIndex = (index: number, emitChange?: boolean) => {
       index = adjustIndex(index) || 0;
 
       const offset = -index * itemHeight;
@@ -131,6 +123,9 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
       const trigger = () => {
         if (index !== state.index) {
           state.index = index;
+          if (emitChange) {
+            onChange?.(index);
+          }
         }
       };
 
@@ -150,10 +145,6 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
       }
     }, [defaultIndex]);
 
-    useUpdateEffect(() => {
-      onChange?.(state.index);
-    }, [state.index, columnOptions]);
-
     const setOptions = (options: PickerOption[] = []) => {
       if (JSON.stringify(options) !== JSON.stringify(columnOptions)) {
         _setOptions(options, () => {
@@ -171,7 +162,7 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
 
       transitionEndTrigger.current = null;
       state.duration = DEFAULT_DURATION;
-      setIndex(index);
+      setIndex(index, true);
     });
 
     const getOptionText = (option: PickerOption) => {
@@ -195,7 +186,7 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
       const index = getIndexByOffset(distance);
 
       state.duration = +swipeDuration;
-      setIndex(index);
+      setIndex(index, true);
     };
 
     const stopMomentum = useEventCallback(() => {
@@ -278,10 +269,14 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
 
       const index = getIndexByOffset(state.offset);
       state.duration = DEFAULT_DURATION;
-      setIndex(index);
+      setIndex(index, true);
+
+      setTimeout(() => {
+        moving.current = false;
+      }, 0);
     });
 
-    const setValue = (value: string | number) => {
+    const setValue = (value: string) => {
       for (let i = 0; i < columnOptions.length; i++) {
         if (getOptionText(columnOptions[i]) === value) {
           return setIndex(i);
@@ -291,7 +286,7 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
 
     const getValue = () => columnOptions[state.index!];
 
-    setRef(actionRef, {
+    React.useImperativeHandle(actionRef, () => ({
       getIndex,
       setIndex,
       getValue,
@@ -299,7 +294,7 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
       setOptions,
       getOptions,
       stopMomentum
-    });
+    }));
 
     const wrapperStyle: React.CSSProperties = {
       transform: `translate3d(0, ${state.offset + baseOffset}px, 0)`,

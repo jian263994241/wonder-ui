@@ -25,6 +25,9 @@ export * from './ButtonGroup';
 export { default as Cascader } from './Cascader';
 export * from './Cascader';
 
+export { default as CascaderView } from './CascaderView';
+export * from './CascaderView';
+
 export { default as CheckableGroup } from './CheckableGroup';
 export * from './CheckableGroup';
 
@@ -150,6 +153,9 @@ export * from './Paper';
 
 export { default as Picker } from './Picker';
 export * from './Picker';
+
+export { default as PickerView } from './PickerView';
+export * from './PickerView';
 
 export { default as Popover } from './Popover';
 export * from './Popover';

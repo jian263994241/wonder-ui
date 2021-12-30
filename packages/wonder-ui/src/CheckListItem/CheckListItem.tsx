@@ -2,7 +2,6 @@ import * as React from 'react';
 import CheckListContext from '../CheckList/CheckListContext';
 import DefaultCheckIcon from '../icons/Check2';
 import ListItem from '../ListItem';
-import ListItemText from '../ListItemText';
 import useThemeProps from '../styles/useThemeProps';
 import { CheckListItemProps } from './CheckListItemTypes';
 import { useEventCallback } from '@wonder-ui/hooks';
@@ -14,7 +13,6 @@ const CheckListItem = React.forwardRef<HTMLLIElement, CheckListItemProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
-      ListItemTextProps,
       children,
       disabled,
       divider,
@@ -23,6 +21,8 @@ const CheckListItem = React.forwardRef<HTMLLIElement, CheckListItemProps>(
       value,
       media,
       readOnly,
+      onClick,
+      meta = {},
       ...rest
     } = props;
     const context = React.useContext(CheckListContext);
@@ -45,32 +45,37 @@ const CheckListItem = React.forwardRef<HTMLLIElement, CheckListItemProps>(
 
     const isReadOnly = parentReadOnly || readOnly;
 
-    const handleChange = useEventCallback(() => {
+    const handleChange = useEventCallback((e) => {
       if (isReadOnly) {
         return;
       }
-      setValue(value);
+      setValue(value, meta);
+
+      onClick?.(e);
     });
+
+    const isActive = parentValue.includes(value);
+    const isDisabled = parentDisabled || disabled;
 
     return (
       <ListItem
-        ref={ref}
+        role="menuitem"
+        aria-checked={isActive}
+        aria-disabled={isDisabled}
+        tabIndex={isDisabled ? undefined : isActive ? 0 : -1}
         button={!isReadOnly}
         divider={divider}
-        extra={parentValue.includes(value) ? itemActiveIcon : null}
+        extra={isActive ? itemActiveIcon : null}
         onClick={handleChange}
         disableRipple={disableRipple}
-        disabled={parentDisabled || disabled}
+        disabled={isDisabled}
         media={media}
+        primary={primary}
+        secondary={secondary}
+        children={children}
+        ref={ref}
         {...rest}
-      >
-        <ListItemText
-          {...ListItemTextProps}
-          primary={primary}
-          secondary={secondary}
-          children={children}
-        />
-      </ListItem>
+      />
     );
   }
 );

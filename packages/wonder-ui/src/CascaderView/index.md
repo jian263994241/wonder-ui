@@ -21,11 +21,20 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
+## 内置方法
+
+```tsx | pure
+export type CascaderAction = {
+  getOptions(values?: any[]): CascaderOption[];
+  getValues(): any[];
+};
+```
+
 ## API
 
 ```tsx | pure
 export type CascaderOption = {
-  label?: React.ReactNode;
+  textKey?: React.ReactNode;
   value?: string | number;
   disabled?: boolean;
   children?: CascaderOption[];

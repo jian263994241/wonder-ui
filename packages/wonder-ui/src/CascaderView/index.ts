@@ -1,2 +1,6 @@
 export { default } from './CascaderView';
-export type { CascaderViewProps, CascaderOption } from './CascaderViewTypes';
+export type {
+  CascaderViewProps,
+  CascaderOption,
+  CascaderAction
+} from './CascaderViewTypes';

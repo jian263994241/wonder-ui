@@ -20,14 +20,5 @@ Sticky 组件与 CSS 中position: sticky属性实现的效果一致，当组件�
 <code src="./demo/demo1.tsx"></code>
 
 
-### 吸顶距离
-
-<code src="./demo/demo2.tsx"></code>
-
-### 指定容器
-
-<code src="./demo/demo3.tsx"></code>
-
-
-<API src="./Sticky.tsx" props="container|offsetTop|offsetBottom|position|zIndex"></API>
+<API src="./Sticky.tsx"></API>
 

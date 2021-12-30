@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { ListClassesType } from '../List/ListClasses';
 
+type Meta = Record<string, any>;
+
 export interface CheckListProps {
   /**
    * 选中图标
@@ -37,7 +39,7 @@ export interface CheckListProps {
   /**
    * 选项改变时触发
    */
-  onChange?: (value: string[]) => void;
+  onChange?: (value: string[], meta: Meta) => void;
   /**
    * 只读
    */
@@ -58,5 +60,5 @@ export interface CheckListContextType {
   readOnly?: boolean;
   disabled?: boolean;
   disableRipple?: boolean;
-  setValue: (value: string) => void;
+  setValue: (value: string, meta: Meta) => void;
 }

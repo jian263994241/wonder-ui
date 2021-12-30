@@ -2,23 +2,15 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { COMPONENT_NAME } from './TabsClasses';
-import {
-  composeClasses,
-  css,
-  isDef,
-  isVisible,
-  nextTick
-} from '@wonder-ui/utils';
+import { composeClasses, css } from '@wonder-ui/utils';
 import { ContextValueType, TabsContext } from './TabsContext';
 import { isColor } from '../styles/colorManipulator';
 import { TabsProps, TabsStyleProps } from './TabsTypes';
 import {
+  useControlled,
   useCreation,
-  useEventCallback,
   useForkRef,
-  useReactive,
-  useUpdateEffect,
-  useWindowSize
+  useReactive
 } from '@wonder-ui/hooks';
 
 const useClasses = (styleProps: TabsStyleProps) => {
@@ -68,7 +60,7 @@ const TabsIndicator = styled('span', {
   width: 40,
   height: 2,
   backgroundColor: styleProps.textColor || theme.palette.primary.main,
-  transition: theme.transitions.create('transform', { duration: 0 })
+  transition: theme.transitions.create(['transform', 'width'], { duration: 0 })
 }));
 
 const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((inProps, ref) => {
@@ -79,99 +71,47 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((inProps, ref) => {
     className,
     indicatorStyle,
     showIndicator,
-    value,
+    value: valueProp,
     defaultValue,
     onChange,
     variant = 'fullWidth',
     textColor: textColorProp,
+    disableRipple,
     ...rest
   } = props;
 
-  const store = useCreation(() => {
-    return new Map() as ContextValueType['store'];
-  }, [children]);
+  const [value, setValueUnControlled] = useControlled({
+    value: valueProp,
+    defaultValue
+  });
+
   const state = useReactive<ContextValueType['state']>({
-    current: undefined,
     inited: false,
-    lineStyle: {}
+    lineStyle: {
+      display: 'none'
+    }
   });
 
   const tabsRef = React.useRef<HTMLDivElement>();
   const handleRootRef = useForkRef(tabsRef, ref);
 
-  const setLine = useEventCallback(() => {
-    const shouldAnimate = state.inited;
-    const currentStore = state.current;
-
-    nextTick(() => {
-      state.inited = true;
-
-      if (
-        !showIndicator ||
-        !currentStore ||
-        currentStore.disabled ||
-        !isVisible(tabsRef.current!)
-      ) {
-        return;
-      }
-
-      const tabNode = currentStore.root;
-
-      if (tabNode) {
-        const left = tabNode.offsetLeft + tabNode.offsetWidth / 2;
-        const lineWidth = tabNode.offsetWidth;
-        const lineStyle: React.CSSProperties = {
-          ...indicatorStyle,
-          width: indicatorStyle?.width || lineWidth,
-          transform: `translateX(${left}px) translateX(-50%)`
-        };
-        if (shouldAnimate) {
-          lineStyle.transitionDuration = `${200}ms`;
-        }
-        state.lineStyle = lineStyle;
-
-        tabNode.scrollIntoView({
-          block: 'nearest',
-          behavior: 'smooth',
-          inline: 'center'
-        });
-      }
-    });
-  });
-
-  const windowSize = useWindowSize();
-
-  useUpdateEffect(setLine, [windowSize.width]);
-
-  const getItemMeta = useEventCallback((key) => {
-    const values = Array.from(store.values());
-    if (key === null) return;
-    return store.get(key) || values[0];
-  });
-
-  React.useEffect(() => {
-    const activeItem = getItemMeta(value ?? defaultValue);
-
-    if (activeItem && !activeItem.disabled) {
-      state.current = activeItem;
-      setLine();
-    }
-  }, [value, defaultValue]);
-
   const textColor = useCreation(() => {
     return isColor(textColorProp) ? textColorProp : undefined;
   }, [textColorProp]);
 
-  const styleProps = {
-    ...props,
-    variant,
-    textColor
-  };
+  const styleProps = { ...props, variant, textColor };
 
   const classes = useClasses(styleProps);
 
   return (
-    <TabsContext.Provider value={{ props: styleProps, state, store, setLine }}>
+    <TabsContext.Provider
+      value={{
+        props: styleProps,
+        state,
+        setValueUnControlled,
+        currentValue: value
+      }}
+    >
       <TabsRoot
         role="tablist"
         ref={handleRootRef}
@@ -179,13 +119,8 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((inProps, ref) => {
         {...rest}
         styleProps={styleProps}
       >
-        {React.Children.map(children, (child, index) => {
-          if (React.isValidElement(child)) {
-            return React.cloneElement(child, { index });
-          }
-          return null;
-        })}
-        {showIndicator && isDef(state.current) && !state.current.disabled && (
+        {children}
+        {showIndicator && (
           <TabsIndicator
             className={classes.indicator}
             style={state.lineStyle}

@@ -10,6 +10,7 @@ import {
   listItemClasses,
   useClasses
 } from './ListItemClasses';
+import Typography from '../Typography';
 
 export interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
   /**
@@ -54,6 +55,14 @@ export interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
    * @default false
    */
   button?: boolean;
+  /**
+   * 主要文字
+   */
+  primary?: React.ReactNode;
+  /**
+   * 次要文字
+   */
+  secondary?: React.ReactNode;
   /**
    * 前面的类容
    */
@@ -117,12 +126,12 @@ const ListItemInner = styled('div', {
 const ListItemBody = styled('div', {
   name: 'WuiListItem',
   slot: 'Body'
-})({
-  display: 'flex',
+})(({ theme }) => ({
+  ...theme.typography.body1,
+  color: theme.palette.text.primary,
   width: '100%',
-  boxSizing: 'border-box',
-  color: 'inherit'
-});
+  boxSizing: 'border-box'
+}));
 
 const ListItemArrow = styled('span', {
   name: 'WuiListItem',
@@ -195,6 +204,8 @@ const ListItem = forwardRef<HTMLElement, ListItemProps>((inProps, ref) => {
     disableRipple = false,
     component = 'li',
     selected = false,
+    primary,
+    secondary,
     extra,
     media,
     ...rest
@@ -238,7 +249,29 @@ const ListItem = forwardRef<HTMLElement, ListItemProps>((inProps, ref) => {
       )}
 
       <ListItemInner styleProps={styleProps} className={classes.inner}>
-        <ListItemBody className={classes.body}>{children}</ListItemBody>
+        <ListItemBody className={classes.body}>
+          {primary && (
+            <Typography
+              variant="body1"
+              classes={{ root: classes.textPrimary }}
+              component="span"
+              color="textPrimary"
+            >
+              {primary}
+            </Typography>
+          )}
+          {secondary && (
+            <Typography
+              variant="body2"
+              component="div"
+              classes={{ root: classes.textSecondary }}
+              color="textSecondary"
+            >
+              {secondary}
+            </Typography>
+          )}
+          {children}
+        </ListItemBody>
 
         {extra && (
           <ListItemExtra className={classes.extra}>{extra}</ListItemExtra>

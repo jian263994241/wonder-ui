@@ -1,2 +1,2 @@
-export { default, buttonClasses } from './Button';
+export { default } from './Button';
 export * from './ButtonTypes';

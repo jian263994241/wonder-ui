@@ -210,6 +210,7 @@ const InputRoot = styled('div', {
   padding: theme.spacing(0, 1),
   margin: 0,
   transition: theme.transitions.create(['border-color', 'box-shadow']),
+  backgroundColor: theme.palette.background.paper,
 
   ...(styleProps.multiline && {
     height: 'auto',

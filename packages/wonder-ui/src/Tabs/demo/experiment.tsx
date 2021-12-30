@@ -6,31 +6,31 @@ const Block = styled('div')`
 `;
 
 export default () => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(1);
+
+  const list = React.useMemo(() => Array(8).fill(''), []);
 
   return (
     <React.Fragment>
       <Tabs
         showIndicator
+        variant="scrollable"
+        value={value}
         onChange={(a) => {
           setValue(a);
         }}
       >
-        <Tab label="标签 1" />
-        <Tab label="标签 2" />
-        <Tab label="标签 3" />
+        {list.map((_, index) => (
+          <Tab label={`标签 ${index + 1}`} key={index} value={index} />
+        ))}
       </Tabs>
 
       <TabContext value={value}>
-        <TabPane value={0}>
-          <Block>Content of Tab Pane 1</Block>
-        </TabPane>
-        <TabPane value={1}>
-          <Block>Content of Tab Pane 2</Block>
-        </TabPane>
-        <TabPane value={2}>
-          <Block>Content of Tab Pane 3</Block>
-        </TabPane>
+        {list.map((_, index) => (
+          <TabPane key={index} value={index}>
+            <Block>内容 {index + 1}</Block>
+          </TabPane>
+        ))}
       </TabContext>
     </React.Fragment>
   );

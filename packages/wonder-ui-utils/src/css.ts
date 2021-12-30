@@ -61,7 +61,7 @@ export function css(...args: ICssInput[]): string {
     }
   }
 
-  return classes.join(' ');
+  return classes.reverse().join(' ');
 }
 
 /**

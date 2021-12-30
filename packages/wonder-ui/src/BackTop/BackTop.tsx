@@ -13,6 +13,7 @@ import {
 const COMPONENT_NAME = 'WuiBackTop';
 
 export interface BackTopProps {
+  children?: React.ReactNode;
   /**
    * 额外的 CSS className
    */

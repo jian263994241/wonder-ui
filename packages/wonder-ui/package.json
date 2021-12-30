@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/core",
-  "version": "2.0.0-41",
+  "version": "2.0.0-42",
   "description": "Wonder-UI react components",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -32,12 +32,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@popperjs/core": "^2.9.0",
+    "@popperjs/core": "^2.11.0",
     "@wonder-ui/hooks": "^1.1.19",
-    "@wonder-ui/styled": "^1.0.7",
-    "@wonder-ui/utils": "^2.2.1",
-    "react-focus-lock": "^2.5.0",
-    "react-transition-group": "^4.4.1"
+    "@wonder-ui/styled": "^1.1.0",
+    "@wonder-ui/utils": "^2.2.2",
+    "react-focus-lock": "^2.7.1",
+    "react-transition-group": "^4.4.2"
   },
   "peerDependencies": {
     "react": ">=16.8.0"

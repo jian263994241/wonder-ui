@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import XIcon from '../CloseButton/XIcon';
+import XIcon from '../icons/X';
 import { alpha } from '../styles/colorManipulator';
 import { css } from '@wonder-ui/utils';
 import { tagClasses, useClasses } from './TagClasses';

@@ -1,50 +1,38 @@
-import { Collapse, Page, List, ListItem, ListItemText } from '@wonder-ui/core';
-import { HeartFill } from '@wonder-ui/icons';
-import { useToggle } from '@wonder-ui/hooks';
+import * as React from 'react';
+import { Collapse, List, ListItem, ListHeader } from '@wonder-ui/core';
 
 export default () => {
-  const [visible, { toggle }] = useToggle(true);
+  const [visible, setVisible] = React.useState(true);
+
+  const toggle = () => {
+    setVisible((show) => !show);
+  };
+
   return (
-    <Page title="Nested list">
-      <List>
-        <ListItem divider media={<HeartFill />}>
-          <ListItemText>Item 1</ListItemText>
-        </ListItem>
-        <ListItem divider media={<HeartFill />}>
-          <ListItemText>Item 2</ListItemText>
-        </ListItem>
+    <List>
+      <ListHeader>嵌套列表</ListHeader>
+      <ListItem divider>Item 1</ListItem>
+      <ListItem divider>Item 2</ListItem>
 
-        <ListItem
-          arrow={visible ? 'vertical-up' : 'vertical'}
-          onClick={() => toggle()}
-          button
-          divider
-        >
-          Item 3
-        </ListItem>
+      <ListItem
+        button
+        divider
+        arrow={visible ? 'vertical-up' : 'vertical'}
+        onClick={() => toggle()}
+      >
+        Item 3
+      </ListItem>
 
-        <Collapse in={visible}>
-          <List>
-            <ListItem divider media={<HeartFill />}>
-              <ListItemText>Item 1</ListItemText>
-            </ListItem>
-            <ListItem divider media={<HeartFill />}>
-              <ListItemText>Item 2</ListItemText>
-            </ListItem>
+      <Collapse in={visible}>
+        <List>
+          <ListItem divider>Nested Item 1</ListItem>
+          <ListItem divider>NestedItem 2</ListItem>
+          <ListItem>NestedItem 3</ListItem>
+        </List>
+      </Collapse>
 
-            <ListItem divider>
-              <ListItemText>Item 3</ListItemText>
-            </ListItem>
-          </List>
-        </Collapse>
-
-        <ListItem divider>
-          <ListItemText>Item 4</ListItemText>
-        </ListItem>
-        <ListItem divider>
-          <ListItemText>Item 5</ListItemText>
-        </ListItem>
-      </List>
-    </Page>
+      <ListItem divider>Item 4</ListItem>
+      <ListItem>Item 5</ListItem>
+    </List>
   );
 };

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cascaderClasses } from './CascaderClasses';
-import { CascaderViewProps } from '../CascaderView';
+import { CascaderViewProps, CascaderOption } from '../CascaderView';
 
 export type CascaderClassesType = typeof cascaderClasses;
 
@@ -50,18 +50,11 @@ export interface CascaderProps extends CascaderViewProps {
    */
   onClose?: () => void;
   /**
-   * 值改变时触发
-   */
-  onChange?: (value: (string | number)[]) => void;
-  /**
-   * 选择时触发
-   */
-  onSelect?: (value: (string | number)[]) => void;
-  /**
    * 作用同children, 渲染显示框
    */
   onRenderChildren?: (props: {
     displayText: string;
+    options: CascaderOption[];
     onClick: () => void;
   }) => JSX.Element;
 }

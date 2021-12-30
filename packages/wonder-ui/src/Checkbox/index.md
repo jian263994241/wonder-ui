@@ -32,6 +32,12 @@ group:
 
 <code src="./demo/demo4.tsx"></code>
 
+### 自定义
+
+组件提供了一些CSS变量快速定义样式, 如果想要自定义图标可以直接用`CheckableGroup` + icon 实现
+
+<code src="./demo/demo5.tsx"></code>
+
 
 <API src="./Checkbox.tsx"></API>
 

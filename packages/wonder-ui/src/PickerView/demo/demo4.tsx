@@ -9,8 +9,8 @@ const columns = [
 export default () => (
   <PickerView
     columns={columns}
-    onChange={(value) => {
-      console.log(value);
+    onChange={(values) => {
+      console.log(values);
     }}
   />
 );

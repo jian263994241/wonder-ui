@@ -15,7 +15,7 @@ const PageRoot = styled('div', {
   slot: 'Root'
 })(({ theme }) => ({
   boxSizing: 'border-box',
-  position: 'relative',
+  position: 'absolute',
   width: '100%',
   height: '100%',
   transform: 'none',

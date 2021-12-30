@@ -3,7 +3,7 @@ import styled from '../styles/styled';
 import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { buttonClasses } from '../Button';
+import { buttonClasses } from '../Button/buttonClasses';
 import { css } from '@wonder-ui/utils';
 import { navbarClasses, useClasses } from './NavbarClasses';
 import { searchbarClasses } from '../Searchbar';
@@ -245,7 +245,15 @@ const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
     }
 
     return titleLeft;
-  }, [navbarInnerWidth2, titleWidth, leftWidth, rightWidth]);
+  }, [
+    navbarInnerWidth2,
+    titleWidth,
+    leftWidth,
+    rightWidth,
+    barLeft,
+    barRight,
+    title
+  ]);
 
   const styleProps = { ...props, fixed };
 

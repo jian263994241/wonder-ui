@@ -3,7 +3,7 @@ import {
   CircularProgress,
   List,
   ListItem,
-  ListItemText,
+  ListHeader,
   styled
 } from '@wonder-ui/core';
 import { useDynamicList } from '@wonder-ui/hooks';
@@ -35,17 +35,15 @@ export default () => {
 
   return (
     <Page
-      title="Infinite scroll"
       ContentRef={scrollRef}
       ContentProps={{
         onScroll: handleScroll
       }}
     >
       <List>
+        <ListHeader sticky>无限滚动列表</ListHeader>
         {list.map((item, index) => (
-          <ListItem key={index}>
-            <ListItemText>Item {index}</ListItemText>
-          </ListItem>
+          <ListItem key={index}>Item {index}</ListItem>
         ))}
       </List>
       <Indicator>

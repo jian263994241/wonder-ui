@@ -1,29 +1,21 @@
-import { Page, List, ListItem, ListItemText } from '@wonder-ui/core';
+import { List, ListHeader, ListItem } from '@wonder-ui/core';
 
 const ListItemLink = ListItem.withComponent('a');
 
 export default () => (
-  <Page title="Link">
-    <List component="div">
-      <ListItemLink divider href="#列表链接">
-        <ListItemText>Link 1</ListItemText>
-      </ListItemLink>
+  <List component="div">
+    <ListHeader component="div">列表链接</ListHeader>
+    <ListItemLink button divider href="#列表链接" arrow="horizontal">
+      Link 1
+    </ListItemLink>
 
-      <ListItemLink divider href="#列表链接" extra={<span>CEO</span>}>
-        <ListItemText>Link 2</ListItemText>
-      </ListItemLink>
-
-      <ListItemLink divider href="#列表链接" arrow="horizontal">
-        <ListItemText>Link 3</ListItemText>
-      </ListItemLink>
-
-      <ListItemLink
-        href="#列表链接"
-        arrow="horizontal"
-        extra={<span>CEO</span>}
-      >
-        <ListItemText>Link 4</ListItemText>
-      </ListItemLink>
-    </List>
-  </Page>
+    <ListItemLink
+      button
+      href="#列表链接"
+      arrow="horizontal"
+      extra={<span>CEO</span>}
+    >
+      Link 2
+    </ListItemLink>
+  </List>
 );

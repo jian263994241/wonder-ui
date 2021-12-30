@@ -21,7 +21,7 @@ export default () => {
 
       <Drawer visible={visible} anchor="bottom" onClose={() => setFalse()}>
         <Page
-          style={{ width: '100%', height: 300 }}
+          style={{ width: '100%', height: 300, position: 'relative' }}
           title="抽屉"
           showCloseButton
           onClose={() => setFalse()}

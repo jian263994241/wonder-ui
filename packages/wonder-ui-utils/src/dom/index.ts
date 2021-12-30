@@ -3,6 +3,7 @@
 export * from './animate';
 export * from './attribute';
 export * from './contains';
+export * from './canUseDOM';
 export * from './elementContainsAttribute';
 export * from './findElementRecursive';
 export * from './getComputedStyle';

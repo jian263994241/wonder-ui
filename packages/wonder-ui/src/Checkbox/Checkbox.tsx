@@ -18,7 +18,18 @@ export interface CheckboxProps
    * @default primary
    */
   color?: 'primary' | 'secondary';
-
+  /**
+   * 选中
+   */
+  checked?: boolean;
+  /**
+   * 默认选中
+   */
+  defaultChecked?: boolean;
+  /**
+   * 禁用
+   */
+  disabled?: boolean;
   /**
    * @description 不明确的
    * @default false
@@ -57,27 +68,32 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })<{
   padding: 0,
   margin: 0,
   colorAdjust: 'exact',
-  width: '1em',
-  height: '1em',
+  width: `var(--checkbox-size, 1em)`,
+  height: `var(--checkbox-size, 1em)`,
   fontSize: 'inherit',
   outline: 0,
   verticalAlign: 'middle',
   position: 'relative',
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: `var(--checkobx-bg-color, ${theme.palette.background.paper})`,
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'contain',
   borderWidth: 1,
   borderStyle: 'solid',
-  borderColor: theme.palette.divider,
+  borderColor: `var(--checkbox-border-color, ${theme.palette.divider})`,
   borderRadius: '.25em',
+  cursor: 'pointer',
   transition: theme.transitions.create(
     ['border-color', 'background-color', 'box-shadow', 'opacity'],
     { duration: theme.transitions.duration.shortest }
   ),
   '&:checked': {
-    borderColor: theme.palette[styleProps.color!].main,
-    backgroundColor: theme.palette[styleProps.color!].main,
+    borderColor: `var(--checkbox-${styleProps.color}-color, ${
+      theme.palette[styleProps.color!].main
+    })`,
+    backgroundColor: `var(--checkbox-${styleProps.color}-color, ${
+      theme.palette[styleProps.color!].main
+    })`,
     backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
       `<svg xmlns="http://www.w3.org/2000/svg" fill="${
         theme.palette[styleProps.color!].contrastText
@@ -85,22 +101,21 @@ const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })<{
     )}")`
   },
   [`&.${checkboxClasses.indeterminate}, &:indeterminate`]: {
-    borderColor: theme.palette[styleProps.color!].main,
-    backgroundColor: theme.palette[styleProps.color!].main,
+    borderColor: `var(--checkbox-${styleProps.color}-color, ${
+      theme.palette[styleProps.color!].main
+    })`,
+    backgroundColor: `var(--checkbox-${styleProps.color}-color, ${
+      theme.palette[styleProps.color!].main
+    })`,
     backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
       `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="none" stroke="${
         theme.palette[styleProps.color!].contrastText
       }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 10h8"/></svg>`
     )}")`
   },
-  '&:focus': {
-    boxShadow: `0 0 0 0.25rem ${alpha(
-      theme.palette[styleProps.color!].main,
-      0.25
-    )}`
-  },
   '&:disabled': {
     pointerEvents: 'none',
+    cursor: 'not-allowed',
     filter: 'none',
     opacity: theme.palette.action.disabledOpacity
   },
@@ -141,18 +156,17 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 
     const classes = useClasses(styleProps);
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> =
-      React.useCallback(
-        (e) => {
-          const input = e.target;
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
+      (e) => {
+        const input = e.target;
 
-          setChecked(input.checked);
-          if (onChange) {
-            onChange(e);
-          }
-        },
-        [onChange, indeterminate]
-      );
+        setChecked(input.checked);
+        if (onChange) {
+          onChange(e);
+        }
+      },
+      [onChange, indeterminate]
+    );
 
     if (children) {
       return (

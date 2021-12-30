@@ -7,7 +7,9 @@ export const listItemClasses = generateUtilityClasses('WuiListItem', [
   'arrow',
   'disabled',
   'media',
-  'extra'
+  'extra',
+  'textPrimary',
+  'textSecondary'
 ]);
 
 export type ListItemClassesType = typeof listItemClasses;
@@ -25,7 +27,9 @@ export const useClasses = (styleProps: ListItemStyleProps) => {
     body: ['body'],
     arrow: ['arrow'],
     media: ['media'],
-    extra: ['extra']
+    extra: ['extra'],
+    textPrimary: ['textPrimary'],
+    textSecondary: ['textSecondary']
   };
 
   return composeClasses('WuiListItem', slots, classes);

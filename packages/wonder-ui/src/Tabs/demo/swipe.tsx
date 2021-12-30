@@ -7,36 +7,33 @@ const Block = styled('div')`
 
 export default () => {
   const [value, setValue] = React.useState(0);
+  const list = React.useMemo(() => Array(8).fill(''), []);
 
   return (
     <React.Fragment>
       <Tabs
         showIndicator
+        variant="scrollable"
         value={value}
         onChange={(a) => {
           setValue(a);
         }}
       >
-        <Tab label="标签 1" />
-        <Tab label="标签 2" />
-        <Tab label="标签 3" />
+        {list.map((_, index) => (
+          <Tab label={`标签 ${index + 1}`} key={index} value={index} />
+        ))}
       </Tabs>
-
       <Swipe
         defaultIndex={value}
         onIndexChange={(index) => {
           setValue(index);
         }}
       >
-        <SwipeItem>
-          <Block>Content of Tab Pane 1</Block>
-        </SwipeItem>
-        <SwipeItem>
-          <Block>Content of Tab Pane 2</Block>
-        </SwipeItem>
-        <SwipeItem>
-          <Block>Content of Tab Pane 3</Block>
-        </SwipeItem>
+        {list.map((_, index) => (
+          <SwipeItem key={index}>
+            <Block>内容 {index + 1}</Block>
+          </SwipeItem>
+        ))}
       </Swipe>
     </React.Fragment>
   );

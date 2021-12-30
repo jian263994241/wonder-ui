@@ -47,17 +47,17 @@ const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })<{
   margin: 0,
   padding: 0,
   colorAdjust: 'exact',
-  width: '1em',
-  height: '1em',
+  width: `var(--radio-size, 1em)`,
+  height: `var(--radio-size, 1em)`,
   fontSize: 'inherit',
   verticalAlign: 'middle',
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: `var(--radio-bg-color, ${theme.palette.background.paper})`,
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'contain',
   borderWidth: 1,
   borderStyle: 'solid',
-  borderColor: theme.palette.divider,
+  borderColor: `var(--radio-border-color, ${theme.palette.divider})`,
   borderRadius: '50%',
   position: 'relative',
   transition: theme.transitions.create(
@@ -67,20 +67,19 @@ const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })<{
     }
   ),
   '&:checked': {
-    borderColor: theme.palette[styleProps.color!].main,
-    backgroundColor: theme.palette[styleProps.color!].main,
+    borderColor: `var(--radio-${styleProps.color}-color,${
+      theme.palette[styleProps.color!].main
+    })`,
+    backgroundColor: `var(--radio-${styleProps.color}-color,${
+      theme.palette[styleProps.color!].main
+    })`,
     backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
       `<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='${
         theme.palette[styleProps.color!].contrastText
       }'/></svg>`
     )}")`
   },
-  '&:focus': {
-    boxShadow: `0 0 0 0.25rem ${alpha(
-      theme.palette[styleProps.color!].main,
-      0.25
-    )}`
-  },
+
   '&:disabled': {
     pointerEvents: 'none',
     filter: 'none',

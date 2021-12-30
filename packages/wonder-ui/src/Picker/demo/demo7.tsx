@@ -1,15 +1,8 @@
-import {
-  Picker,
-  PickerProps,
-  Page,
-  List,
-  ListInputItem,
-  ListHeader
-} from '@wonder-ui/core';
+import { Picker, Page, List, ListInputItem, ListHeader } from '@wonder-ui/core';
 import { useReactive } from '@wonder-ui/hooks';
 
-const props: PickerProps = {
-  columns: ['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华', '衢州'],
+const columns = {
+  values: ['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华', '衢州'],
   defaultIndex: 2
 };
 
@@ -32,18 +25,15 @@ export default () => {
         />
       </List>
       <Picker
-        onConfirm={(value: string) => {
-          state.value = value;
+        columns={columns}
+        onConfirm={(values) => {
+          state.value = values[0] as string;
           state.visible = false;
         }}
         onCancel={() => {
           state.visible = false;
         }}
         visible={state.visible}
-        onClose={(e) => {
-          state.visible = false;
-        }}
-        {...props}
       />
     </Page>
   );

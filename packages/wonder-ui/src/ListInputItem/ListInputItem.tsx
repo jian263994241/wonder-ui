@@ -5,6 +5,7 @@ import ListItem, { ListItemProps } from '../ListItem';
 import styled from '../styles/styled';
 import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
+import { listItemClasses } from '../ListItem/ListItemClasses';
 import {
   composeClasses,
   css,
@@ -133,7 +134,11 @@ interface ListInputItemStyleProps extends ListInputItemProps {}
 const ListInputItemRoot = styled(ListItem, {
   name: COMPONENT_NAME,
   slot: 'Root'
-})({});
+})({
+  [`.${listItemClasses.body}`]: {
+    display: 'flex'
+  }
+});
 
 const ListInputItemLabel = styled(Label, {
   name: COMPONENT_NAME,

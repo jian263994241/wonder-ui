@@ -4,14 +4,14 @@ import { pickerViewClasses } from './PickerViewClasses';
 export type PickerViewClassesType = typeof pickerViewClasses;
 
 export type PickerObjectOption = {
-  text?: string | number;
+  text?: string;
   disabled?: boolean;
   children?: PickerObjectOption[];
   // for custom filed names
   [key: string]: any;
 };
 
-export type PickerOption = string | number | PickerObjectOption;
+export type PickerOption = string | PickerObjectOption;
 
 export type PickerObjectColumn = {
   values?: PickerOption[];
@@ -22,15 +22,13 @@ export type PickerObjectColumn = {
   [key: string]: any;
 };
 
-export type PickerColumn = PickerOption[];
-
 export type PickerAction = {
   getValues(): PickerOption[];
-  setValues(values: (string | number)[]): void;
+  setValues(values: string[]): void;
   getIndexes(): number[];
   setIndexes(indexes: number[]): void;
   getColumnValue(columnIndex: number): PickerOption | undefined;
-  setColumnValue(index: number, value: string | number): void;
+  setColumnValue(index: number, value: string): void;
   getColumnIndex(index: number): number | undefined;
   setColumnIndex(columnIndex: number, optionIndex: number): void;
   getColumnValues(index: number): PickerOption[] | undefined;
@@ -38,6 +36,7 @@ export type PickerAction = {
   confirm(): void;
 };
 
+export type PickerColumn = PickerOption[];
 export interface PickerViewProps {
   /**
    * 内置方法
@@ -53,7 +52,11 @@ export interface PickerViewProps {
   /**
    * 配置每一列显示的数据
    */
-  columns?: PickerColumn | PickerColumn[] | PickerObjectColumn[];
+  columns?:
+    | PickerColumn
+    | PickerColumn[]
+    | PickerObjectColumn
+    | PickerObjectColumn[];
   /**
    * 选项高度，支持 `px` `vw` `vh` `rem` 单位，默认 px
    * @default 44px
@@ -80,10 +83,13 @@ export interface PickerViewProps {
    */
   visibleItemCount?: number;
   /**
-   * 初始index, 单列的时候可用
-   * @default 0
+   * 默认值
    */
-  defaultIndex?: number;
+  defaultValue?: string[];
+  /**
+   * 值
+   */
+  value?: string[];
   /**
    * 是否显示加载状态
    */
@@ -91,26 +97,18 @@ export interface PickerViewProps {
   /**
    * 改变回调
    */
-  onChange?: (
-    value: PickerOption | PickerOption[],
-    columnIndex: number | number[],
-    picker: PickerAction
-  ) => void;
+  onChange?(values: PickerOption[], picker: PickerAction): void;
   /**
    * action.confirm() 时触发
    */
-  onConfirm?: (
-    value: PickerOption | PickerOption[],
-    columnIndex: number | number[],
-    picker: PickerAction
-  ) => void;
+  onConfirm?(values: PickerOption[], picker: PickerAction): void;
 }
 
 export type PickerColumnAction = {
   getIndex: () => number;
   setIndex(index: number, emitChange?: boolean): void;
   getValue(): PickerOption;
-  setValue(value: string | number): void;
+  setValue(value: string): void;
   setOptions(options: PickerOption[]): void;
   getOptions(): PickerOption[];
   stopMomentum(): void;

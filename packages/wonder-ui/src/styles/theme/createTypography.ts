@@ -30,6 +30,30 @@ function round(value: number) {
   return Math.round(value * 1e5) / 1e5;
 }
 
+function ellipsis(
+  width: string | number,
+  lines: number = 1
+): Record<string, any> {
+  const styles = {
+    display: 'inline-block',
+    maxWidth: width || '100%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    wordWrap: 'normal'
+  };
+
+  return lines > 1
+    ? {
+        ...styles,
+        WebkitBoxOrient: 'vertical',
+        WebkitLineClamp: lines,
+        display: '-webkit-box',
+        whiteSpace: 'normal'
+      }
+    : styles;
+}
+
 const caseAllCaps = {
   textTransform: 'uppercase'
 };
@@ -103,6 +127,7 @@ export default function createTypography(typography: TypographyOptions = {}) {
     fontWeightMedium,
     fontWeightBold,
     pxToRem,
+    ellipsis,
     ...variants
   };
 }

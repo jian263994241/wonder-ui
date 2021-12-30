@@ -5,10 +5,16 @@ import styled from '../styles/styled';
 import Typography from '../Typography';
 import { badgeClasses } from '../Badge/BadgeClasses';
 import { COMPONENT_NAME, tabClasses } from './TabClasses';
-import { composeClasses, css, isControlled, setRef } from '@wonder-ui/utils';
-import { TabMeta, TabProps, TabStyleProps } from './TabTypes';
+import { composeClasses, css, isVisible, nextTick } from '@wonder-ui/utils';
+import { TabProps, TabStyleProps } from './TabTypes';
 import { TabsContext } from '../Tabs/TabsContext';
-import { useEventCallback, useReactive } from '@wonder-ui/hooks';
+import {
+  useEventCallback,
+  useForkRef,
+  useId,
+  useUpdateEffect,
+  useWindowSize
+} from '@wonder-ui/hooks';
 
 const useClasses = (styleProps: TabStyleProps) => {
   const { isActive, classes, disabled } = styleProps;
@@ -79,11 +85,11 @@ const Tab = React.forwardRef<HTMLSpanElement, TabProps>((props, ref) => {
   const {
     badge,
     className,
+    children,
     disabled,
     label,
     icon,
     iconPosition = 'top',
-    index = -1,
     value,
     onClick,
     onRenderIcon,
@@ -92,6 +98,8 @@ const Tab = React.forwardRef<HTMLSpanElement, TabProps>((props, ref) => {
   } = props as TabProps & { index: number };
 
   const context = React.useContext(TabsContext);
+  const rootRef = React.useRef<HTMLElement>(null);
+  const handleRef = useForkRef(rootRef, ref);
 
   if (!context) {
     if (process.env.NODE_ENV !== 'production') {
@@ -100,28 +108,62 @@ const Tab = React.forwardRef<HTMLSpanElement, TabProps>((props, ref) => {
     return null;
   }
 
-  const itemKey = value ?? index;
+  const {
+    state: parentState,
+    props: parentProps,
+    setValueUnControlled,
+    currentValue
+  } = context;
 
-  const { state, store, setLine, props: parentProps } = context;
+  const defaultKey = useId('tabItem');
 
-  const meta = useReactive<TabMeta>({
-    root: null,
-    disabled
-  });
+  const itemKey = value ?? defaultKey;
+
+  const isDisabled = disabled || parentProps.disabled;
+
+  const isActive = currentValue === itemKey;
 
   React.useEffect(() => {
-    store.set(itemKey, meta);
+    setValueUnControlled((prevValue: any) => {
+      if (!prevValue) return itemKey;
+      return prevValue;
+    });
+  }, []);
 
-    return () => {
-      store.delete(itemKey);
+  const setLine = (tabNode: HTMLElement) => {
+    const shouldAnimate = parentState.inited;
+
+    if (!tabNode) return;
+    if (!isVisible(tabNode!)) return;
+
+    if (!parentProps.showIndicator || isDisabled) {
+      parentState.lineStyle = { display: 'none' };
+      return;
+    }
+
+    parentState.inited = true;
+
+    const left = tabNode.offsetLeft + tabNode.offsetWidth / 2;
+    const lineWidth = tabNode.offsetWidth;
+    const lineStyle: React.CSSProperties = {
+      ...parentProps.indicatorStyle,
+      width: parentProps.indicatorStyle?.width || lineWidth,
+      transform: `translateX(${left}px) translateX(-50%)`
     };
-  }, [store, itemKey]);
+    if (shouldAnimate) {
+      lineStyle.transitionDuration = `${150}ms`;
+    }
 
-  const isActive = disabled ? false : state.current === meta;
+    parentState.lineStyle = lineStyle;
 
-  React.useEffect(() => {
-    meta.disabled = disabled;
-  }, [disabled]);
+    nextTick(() => {
+      tabNode.scrollIntoView({
+        block: 'nearest',
+        behavior: 'smooth',
+        inline: 'center'
+      });
+    });
+  };
 
   const styleProps = {
     ...props,
@@ -134,22 +176,36 @@ const Tab = React.forwardRef<HTMLSpanElement, TabProps>((props, ref) => {
   const classes = useClasses(styleProps);
 
   const handleClick = useEventCallback((e) => {
-    if (disabled) {
+    if (isDisabled) {
       return null;
     }
 
-    if (!isControlled(parentProps, 'value')) {
-      state.current = meta;
-      setLine();
-    }
+    setValueUnControlled(itemKey);
 
-    parentProps.onChange?.(value ?? index);
+    parentProps.onChange?.(value);
     onClick?.(e);
   });
 
+  React.useEffect(() => {
+    if (isActive) {
+      setLine(rootRef.current!);
+    }
+  }, [isActive, children]);
+
+  const windowSize = useWindowSize();
+
+  useUpdateEffect(() => {
+    if (isActive) {
+      setLine(rootRef.current!);
+    }
+  }, [windowSize.width]);
+
+  const text = label || children;
+
   const renderIcon = () => (onRenderIcon ? onRenderIcon(isActive) : icon);
+
   const renderLabel = () =>
-    label && (
+    text ? (
       <TabLabel
         className={classes.label}
         variant="body1"
@@ -157,9 +213,10 @@ const Tab = React.forwardRef<HTMLSpanElement, TabProps>((props, ref) => {
         align="center"
         noWrap={!wrapped}
       >
-        {label}
+        {text}
       </TabLabel>
-    );
+    ) : null;
+
   const renderBadge = () =>
     !!badge && (
       <TabBadge
@@ -175,12 +232,10 @@ const Tab = React.forwardRef<HTMLSpanElement, TabProps>((props, ref) => {
     <TabRoot
       aria-selected={isActive}
       role="tab"
-      ref={(node) => {
-        meta.root = node;
-        setRef(ref, node);
-      }}
+      ref={handleRef}
       className={css(classes.root, className)}
-      disabled={disabled}
+      disabled={isDisabled}
+      disableRipple={parentProps.disableRipple}
       onClick={handleClick}
       styleProps={styleProps}
       tabIndex={isActive ? 0 : -1}

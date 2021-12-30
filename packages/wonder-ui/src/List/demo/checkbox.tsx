@@ -1,28 +1,17 @@
-import {
-  Checkbox,
-  Page,
-  List,
-  ListItem,
-  ListHeader,
-  ListItemText
-} from '@wonder-ui/core';
-
-const ListLabel = ListItemText.withComponent('label');
+import { Checkbox, List, ListItem, ListHeader } from '@wonder-ui/core';
 
 export default () => (
-  <Page title="Checkbox">
-    <List>
-      <ListHeader>Settings</ListHeader>
-      <ListItem button divider media={<Checkbox id="checkbox-wifi1" />}>
-        <ListLabel component="label" htmlFor="checkbox-wifi1">
-          Wi-Fi
-        </ListLabel>
-      </ListItem>
-      <ListItem button media={<Checkbox id="checkbox-wifi2" />}>
-        <ListLabel component="label" htmlFor="checkbox-wifi2">
-          Wi-Fi 2
-        </ListLabel>
-      </ListItem>
-    </List>
-  </Page>
+  <List>
+    <ListHeader>Settings</ListHeader>
+    <ListItem button divider media={<Checkbox id="checkbox-wifi1" />}>
+      <label htmlFor="checkbox-wifi1" style={{ display: 'block' }}>
+        Wi-Fi
+      </label>
+    </ListItem>
+    <ListItem button media={<Checkbox id="checkbox-wifi2" />}>
+      <label htmlFor="checkbox-wifi2" style={{ display: 'block' }}>
+        Wi-Fi 2
+      </label>
+    </ListItem>
+  </List>
 );

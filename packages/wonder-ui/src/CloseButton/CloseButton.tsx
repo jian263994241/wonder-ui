@@ -1,6 +1,6 @@
 import * as React from 'react';
 import IconButton, { IconButtonProps } from '../IconButton';
-import XIcon from './XIcon';
+import XIcon from '../icons/X';
 import { SvgIconProps } from '../SvgIcon';
 
 export interface CloseButtonProps extends IconButtonProps {

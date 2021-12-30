@@ -80,8 +80,11 @@ const ButtonBaseRoot = styled('button', {
     borderStyle: 'none' // Remove Firefox dotted outline.
   },
   [`&.${buttonBaseClasses.disabled}`]: {
-    pointerEvents: 'none', // Disable link interactions
-    cursor: 'default'
+    pointerEvents: 'none' // Disable link interactions
+  },
+  '&:disabled': {
+    pointerEvents: 'auto',
+    cursor: 'not-allowed'
   },
   '@media print': {
     colorAdjust: 'exact'
@@ -363,7 +366,7 @@ const ButtonBase = forwardRef<HTMLElement, ButtonBaseProps>((inProps, ref) => {
   return (
     <ButtonBaseRoot
       as={ComponentProp}
-      className={css(className, classes.root)}
+      className={css(classes.root, className)}
       onBlur={handleBlur}
       onClick={onClick}
       onContextMenu={handleContextMenu}

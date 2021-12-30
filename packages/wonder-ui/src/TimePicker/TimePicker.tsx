@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Picker, { PickerAction, PickerProps } from '../Picker';
+import Picker, { PickerProps } from '../Picker';
+import type { PickerAction } from '../PickerView/PickerViewTypes';
 import useThemeProps from '../styles/useThemeProps';
 import { clamp, createArray, nextTick, padZero } from '@wonder-ui/utils';
 import {
@@ -13,7 +14,8 @@ type ColumnType = 'hour' | 'minute';
 
 const COMPONENT_NAME = 'WuiTimePicker';
 
-export interface TimePickerProps extends Omit<PickerProps, 'columns'> {
+export interface TimePickerProps
+  extends Omit<PickerProps, 'columns' | 'onChange' | 'onConfirm'> {
   /**
    * 当前时间
    */

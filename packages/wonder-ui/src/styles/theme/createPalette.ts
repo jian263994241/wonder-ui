@@ -104,7 +104,7 @@ const defaultDanger = '#dc3545';
 const defaultWarning = '#ffc107';
 const defaultInfo = '#0dcaf0';
 const defaultSuccess = '#039245';
-const defaultLight = '#fff';
+const defaultLight = '#eee';
 const defaultDark = '#000';
 
 const darkenCoefficient = 0.08;

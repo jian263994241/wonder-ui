@@ -10,7 +10,7 @@ const Block = styled('div')`
 `;
 
 export default () => (
-  <Space size="large">
+  <Space gap={20} style={{ padding: 16 }}>
     <Badge color="danger">
       <Block></Block>
     </Badge>

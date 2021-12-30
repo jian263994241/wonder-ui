@@ -1,57 +1,24 @@
-import * as React from 'react';
-import { getPCA } from 'lcn';
-import {
-  List,
-  ListHeader,
-  ListInputItem,
-  Page,
-  PickerAction,
-  PickerObjectOption,
-  PickerView,
-  WhiteSpace
-} from '@wonder-ui/core';
+import { PickerView, PickerObjectColumn } from '@wonder-ui/core';
 
-const pca = getPCA({ inland: true });
+const columns: PickerObjectColumn[] = [
+  // 第一列
+  {
+    values: ['周一', '周二', '周三', '周四', '周五'],
+    defaultIndex: 2
+  },
+  // 第二列
+  {
+    values: ['上午', '下午', '晚上'],
+    defaultIndex: 1
+  }
+];
 
-export default () => {
-  const actionRef = React.useRef<PickerAction>(null);
-  const [displayText, setDisplayText] = React.useState('');
-
-  const setValues = () => {
-    const values = actionRef.current?.getValues() || [];
-
-    const displayText = values
-      .map((item) => (item as PickerObjectOption).name)
-      .join(',');
-
-    setDisplayText(displayText);
-  };
-
-  React.useEffect(() => {
-    setValues();
-  }, []);
-
-  return (
-    <Page>
-      <List>
-        <ListHeader>地址选择器</ListHeader>
-
-        <ListInputItem
-          label="城市"
-          placeholder="选择城市"
-          value={displayText}
-        />
-      </List>
-      <WhiteSpace />
-
-      <PickerView
-        actionRef={actionRef}
-        textKey="name"
-        columns={pca}
-        onChange={() => {
-          setValues();
-        }}
-      />
-    </Page>
-  );
-};
+export default () => (
+  <PickerView
+    columns={columns}
+    defaultValue={['周一', '晚上']}
+    onChange={(value) => {
+      console.log(value);
+    }}
+  />
+);

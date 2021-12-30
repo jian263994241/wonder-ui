@@ -28,7 +28,7 @@ const CheckList = React.forwardRef<HTMLUListElement, CheckListProps>(
       value: valueProp
     });
 
-    const setValue = (itemValue: string) => {
+    const setValue = (itemValue: string, meta: any) => {
       let newValue;
 
       if (multiple) {
@@ -45,7 +45,7 @@ const CheckList = React.forwardRef<HTMLUListElement, CheckListProps>(
 
       setValueUnControlled(newValue);
 
-      onChange?.(newValue);
+      onChange?.(newValue, meta);
     };
 
     const contextValue = {
@@ -59,7 +59,7 @@ const CheckList = React.forwardRef<HTMLUListElement, CheckListProps>(
 
     return (
       <CheckListContext.Provider value={contextValue}>
-        <List ref={ref} {...rest}>
+        <List ref={ref} role="menu" {...rest}>
           {children}
         </List>
       </CheckListContext.Provider>

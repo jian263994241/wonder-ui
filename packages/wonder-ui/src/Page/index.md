@@ -33,5 +33,5 @@ group:
 <code src="./demo/demo3.tsx"></code>
 
 
-<API src="./Page.tsx" props="NavbarProps|ToolbarProps|classes|contentRef|navbar|onBack|onClose|showBackButton|showCloseButton|subTitle|title|toolbar"></API>
+<API src="./Page.tsx" ></API>
 

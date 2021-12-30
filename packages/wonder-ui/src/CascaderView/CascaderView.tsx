@@ -14,8 +14,8 @@ import {
   StyleProps
 } from './CascaderViewTypes';
 import { COMPONENT_NAME } from './CascaderViewClasses';
-import { composeClasses, css } from '@wonder-ui/utils';
-import { useControlled, useCreation, useEventCallback } from '@wonder-ui/hooks';
+import { composeClasses, css, isControlled, isObject } from '@wonder-ui/utils';
+import { useCreation, useEventCallback } from '@wonder-ui/hooks';
 
 const useClasses = (styleProps: StyleProps) => {
   const { classes } = styleProps;
@@ -49,6 +49,7 @@ const CascaderView = React.forwardRef<HTMLDivElement, CascaderViewProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
+      actionRef,
       activeIcon,
       className,
       disableRipple,
@@ -57,20 +58,27 @@ const CascaderView = React.forwardRef<HTMLDivElement, CascaderViewProps>(
       valueKey = 'value',
       textKey = 'label',
       childrenKey = 'children',
-      value: valueProp,
+      value,
       defaultValue,
       options = [],
       placeholder = '请选择',
       onChange,
-      onOptionsChange
+      onSelect
     } = props;
 
-    const [valueState = [], setValueUnControlled] = useControlled({
-      value: valueProp,
-      defaultValue
-    });
-
+    const [innerValue, setInnerValue] = React.useState<CascaderOption[]>([]);
     const [activeTabIndex, setActiveTabIndex] = React.useState(0);
+
+    React.useEffect(() => {
+      if (isControlled(props, 'value') || defaultValue) {
+        const val = value || defaultValue;
+
+        if (val && val.length > 0) {
+          setInnerValue(isObject(val[0]) ? val : actions.getOptions(val));
+          setActiveTabIndex(val.length - 1);
+        }
+      }
+    }, [value, defaultValue]);
 
     const getSelectedOptionsByValue = (
       options: CascaderOption[],
@@ -95,7 +103,7 @@ const CascaderView = React.forwardRef<HTMLDivElement, CascaderViewProps>(
 
     const getSelectedOptionsByValues = (
       options: CascaderOption[],
-      values: (string | number)[] = []
+      values: any[] = []
     ): CascaderTab[] => {
       const lastValue = values[values.length - 1];
       const selectedOptions = getSelectedOptionsByValue(options, lastValue);
@@ -120,48 +128,49 @@ const CascaderView = React.forwardRef<HTMLDivElement, CascaderViewProps>(
       return [{ options, selected: null }];
     };
 
-    const { selectedOptions, selected } = useCreation(() => {
-      const selectedOptions = getSelectedOptionsByValues(options, valueState);
+    const selectedOptions = useCreation(() => {
+      return getSelectedOptionsByValues(
+        options,
+        innerValue.map((item) => item[valueKey])
+      );
+    }, [innerValue, options]);
 
-      const selected = selectedOptions
-        .map((tab) => tab.selected)
-        .filter(Boolean) as CascaderOption[];
+    const actions = {
+      getOptions: (values?: any[]) => {
+        return getSelectedOptionsByValues(options, values || innerValue)
+          .map((tab) => tab.selected)
+          .filter(Boolean) as CascaderOption[];
+      },
+      getValues: () => innerValue
+    };
 
-      return { selectedOptions, selected };
-    }, [valueState, options]);
+    React.useImperativeHandle(actionRef, () => actions);
 
-    React.useEffect(() => {
-      onOptionsChange?.(selected);
-    }, [selected]);
+    const handleSelect = useEventCallback(
+      (tabIndex: number, value: any, meta: CascaderOption) => {
+        const prevValue = innerValue[tabIndex];
+        const newValue: CascaderOption[] = [];
+        const hasNext = meta.children && meta.children.length > 0;
 
-    const nextTab = useEventCallback(() => {
-      setActiveTabIndex((prev) => {
-        if (prev === selectedOptions.length - 1) {
-          return prev;
+        if (hasNext) {
+          setActiveTabIndex(tabIndex + 1);
         }
-        return prev + 1;
-      });
-    });
 
-    React.useEffect(() => {
-      setActiveTabIndex(selectedOptions.length - 1);
-    }, [selectedOptions]);
+        if (!prevValue || prevValue[valueKey] != value[0]) {
+          for (let i = 0; i < tabIndex; i++) {
+            newValue[i] = innerValue[i];
+          }
+          newValue[tabIndex] = meta;
 
-    const onSelect = useEventCallback((tabIndex: number, value: any) => {
-      const newValue = [];
+          setInnerValue(newValue);
+          onSelect?.(newValue);
 
-      if (valueState[tabIndex] != value[0]) {
-        for (let i = 0; i < tabIndex; i++) {
-          newValue[i] = valueState[i];
+          if (!hasNext) {
+            onChange?.(newValue);
+          }
         }
-        newValue[tabIndex] = value[0];
-
-        setValueUnControlled(newValue);
-        onChange?.(newValue);
-      } else {
-        nextTab();
       }
-    });
+    );
 
     const onTabChange = (index: number) => setActiveTabIndex(index);
 
@@ -197,7 +206,7 @@ const CascaderView = React.forwardRef<HTMLDivElement, CascaderViewProps>(
               <CheckList
                 activeIcon={activeIcon}
                 disableRipple={disableRipple}
-                onChange={onSelect.bind(null, index)}
+                onChange={handleSelect.bind(null, index)}
                 className={classes.content}
                 value={tab.selected?.[valueKey]}
               >

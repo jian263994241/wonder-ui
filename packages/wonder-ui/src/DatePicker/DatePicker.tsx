@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Picker, { PickerAction, PickerProps } from '../Picker';
+import Picker, { PickerProps } from '../Picker';
+import { PickerAction } from '../PickerView/PickerViewTypes';
 import useThemeProps from '../styles/useThemeProps';
 import {
   clamp,
@@ -20,7 +21,8 @@ type ColumnType = 'year' | 'month' | 'day' | 'hour' | 'minute';
 
 const COMPONENT_NAME = 'WuiDatePicker';
 
-export interface DatePickerProps extends Omit<PickerProps, 'columns'> {
+export interface DatePickerProps
+  extends Omit<PickerProps, 'columns' | 'onChange' | 'onConfirm'> {
   /**
    * 类型
    * @default datetime

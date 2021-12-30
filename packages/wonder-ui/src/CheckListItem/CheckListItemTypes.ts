@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { ListItemClassesType } from '../ListItem/ListItemClasses';
-import { ListItemTextProps } from '../ListItemText';
 
 export interface CheckListItemProps {
-  ListItemTextProps?: Partial<ListItemTextProps>;
   /**
    * 等同 primary
    */
@@ -48,4 +46,12 @@ export interface CheckListItemProps {
    * 选项值
    */
   value: string;
+  /**
+   * 点击事件
+   */
+  onClick?: React.MouseEventHandler<HTMLLIElement>;
+  /**
+   * 元数据
+   */
+  meta?: Record<string, any>;
 }

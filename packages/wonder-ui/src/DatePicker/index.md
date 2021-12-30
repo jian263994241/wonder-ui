@@ -28,6 +28,13 @@ group:
 
 <code src="../TimePicker/demo/demo1.tsx"></code>
 
-<API src="./DatePicker.tsx" props="type|currentDate|minDate|maxDate|filter|formatter|onChange|onConfirm|onCancel"></API>
+## API
 
-<API src="../TimePicker/TimePicker.tsx"></API>
+### DatePicker
+
+<API src="./DatePicker.tsx" hideTitle></API>
+
+
+### TimePicker
+
+<API src="../TimePicker/TimePicker.tsx" hideTitle></API>
