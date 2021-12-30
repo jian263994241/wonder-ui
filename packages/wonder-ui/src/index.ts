@@ -22,6 +22,9 @@ export * from './ButtonBase';
 export { default as ButtonGroup } from './ButtonGroup';
 export * from './ButtonGroup';
 
+export { default as Card } from './Card';
+export * from './Card';
+
 export { default as Cascader } from './Cascader';
 export * from './Cascader';
 
