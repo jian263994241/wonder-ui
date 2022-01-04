@@ -1,23 +1,21 @@
-import { Button, Container, Preloader } from '@wonder-ui/core';
-import { useToggle } from '@wonder-ui/hooks';
+import * as React from 'react';
+import { Button, Preloader } from '@wonder-ui/core';
 
 export default () => {
-  const [visible, { toggle }] = useToggle(false);
+  const [visible, setVisible] = React.useState(false);
 
   const open = () => {
-    toggle();
+    setVisible(true);
 
     setTimeout(() => {
-      toggle();
+      setVisible(false);
     }, 2000);
   };
 
   return (
-    <Container>
-      <Button variant="contained" onClick={() => open()}>
-        Open
-      </Button>
+    <div>
+      <Button onClick={() => open()}>Open</Button>
       <Preloader visible={visible} text="加载中..." />
-    </Container>
+    </div>
   );
 };

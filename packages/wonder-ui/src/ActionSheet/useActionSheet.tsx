@@ -3,7 +3,7 @@ import ActionSheet from './ActionSheet';
 import type { ActionSheetProps } from './ActionSheetTypes';
 
 export default function useActionSheet(
-  props: Omit<ActionSheetProps, 'visible'>
+  props: Omit<ActionSheetProps, 'visible'> = {}
 ) {
   const [visible, setVisible] = React.useState(false);
   const rendered = <ActionSheet {...props} visible={visible} />;

@@ -1,2 +1,4 @@
-export { default, showPreloader, hidePreloader } from './Preloader';
-export type { PreloaderProps } from './Preloader';
+export { default } from './Preloader';
+export { default as usePreloader } from './usePreloader';
+export { showPreloader, hidePreloader } from './globals';
+export type { PreloaderProps } from './PreloaderTypes';

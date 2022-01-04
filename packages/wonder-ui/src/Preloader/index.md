@@ -19,16 +19,8 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-### 异步使用
+### 指令调用
 
-<code src="./demo/demo2.tsx"></code>
-
-### 方法调用
-
-组件提供了两个全局方法, 方便调用:
-
-- showPreloader(PreloaderProps);
-- hidePreloader({ hideAll?: boolean } );
 
 <code src="./demo/demo3.tsx"></code>
 
@@ -38,14 +30,26 @@ group:
 
 ### 全局调用
 
-```jsx | pure
-import { showPreloader, hidePreloader } from '@wonder-ui/core'
+推荐使用`usePreloader`替代
 
-showPreloader(PreloaderProps);
+<code src="./demo/demo2.tsx"></code>
 
-hidePreloader({ hideAll?: boolean });
+## Hook
+
+```ts pure
+
+interface usePreloaderProps extends Omit<PreloaderProps, 'visible'> {
+  timeout?: number;
+}
+
+const preloader = usePreloader(usePreloaderProps?);
+
+preloader.show(); //显示
+preloader.hide(); //隐藏
+preloader.hideAll(); //隐藏所有
+preloader.rendered // 节点, 放入虚拟dom上下文中
 ```
 
-<API src="./Preloader.tsx" exports='["default"]' props="children|onLoad|text|visible|indicator|vertical|type"></API>
+<API src="./Preloader.tsx"></API>
 
 

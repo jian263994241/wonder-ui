@@ -1,49 +1,12 @@
 import * as React from 'react';
 import ActivityIndicator from '../ActivityIndicator';
 import Modal, { ModalProps } from '../Modal';
-import ReactDOM from 'react-dom';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { createChainedFunction, isPromise } from '@wonder-ui/utils';
 import { emphasize } from '../styles/colorManipulator';
+import { PreloaderProps } from './PreloaderTypes';
 import { useControlled } from '@wonder-ui/hooks';
-
-export interface PreloaderProps extends React.HTMLAttributes<HTMLElement> {
-  /**
-   * ModalProps
-   * @default false
-   */
-  ModalProps?: Partial<ModalProps>;
-  /**
-   *  触发节点
-   */
-  children?: JSX.Element;
-  /**
-   * 自定义指示器图标
-   */
-  indicator?: React.ReactNode;
-  /**
-   * 异步回调
-   */
-  onLoad?: () => Promise<any>;
-  /**
-   * 文字
-   */
-  text?: string;
-  /**
-   * 指示器类型
-   * @default circular
-   */
-  type?: 'spinner' | 'circular';
-  /**
-   * 是否显示
-   */
-  visible?: boolean;
-  /**
-   * 垂直排列
-   */
-  vertical?: boolean;
-}
 
 const PreloaderRoot = styled(Modal, {
   name: 'WuiPreloader',
@@ -161,29 +124,5 @@ const Preloader = React.forwardRef<HTMLElement, PreloaderProps>(
     );
   }
 );
-
-const container = document.createElement('div');
-
-let count = 0;
-
-export const showPreloader = (props: PreloaderProps = {}) => {
-  ++count;
-  if (count <= 1) {
-    ReactDOM.render(<Preloader visible {...props} />, container);
-  }
-};
-
-export const hidePreloader = (options: { hideAll?: boolean } = {}) => {
-  if (options.hideAll) {
-    count = 0;
-  }
-
-  if (count > 0) {
-    --count;
-  }
-  if (count <= 0) {
-    ReactDOM.render(<Preloader visible={false} />, container);
-  }
-};
 
 export default Preloader;

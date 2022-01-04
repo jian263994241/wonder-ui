@@ -1,7 +1,6 @@
 import {
   Button,
-  showPreloader,
-  hidePreloader,
+  usePreloader,
   Space,
   LinearProgress,
   Typography,
@@ -9,41 +8,56 @@ import {
 } from '@wonder-ui/core';
 
 export default () => {
-  const open = (type: 'spinner' | 'circular' | 'custom') => {
-    if (type === 'spinner' || type === 'circular') {
-      showPreloader({
-        type,
-        text: `type - ${type}`
-      });
-    } else {
-      showPreloader({
-        indicator: (
-          <div style={{ width: 200, paddingTop: 20 }}>
-            <LinearProgress />
-            <WhiteSpace />
-            <Typography>加载中...</Typography>
-          </div>
-        )
-      });
-    }
+  const spinner = usePreloader({
+    type: 'spinner',
+    text: 'type-spinner',
+    timeout: 2000
+  });
 
-    setTimeout(() => {
-      hidePreloader();
-    }, 2000);
-  };
+  const circular = usePreloader({
+    type: 'circular',
+    text: 'type-circular',
+    timeout: 2000
+  });
+
+  const custom = usePreloader({
+    timeout: 2000,
+    indicator: (
+      <div style={{ width: 200, paddingTop: 20 }}>
+        <LinearProgress />
+        <WhiteSpace />
+        <Typography>加载中...</Typography>
+      </div>
+    )
+  });
 
   return (
     <Space>
-      <Button variant="contained" onClick={() => open('spinner')}>
-        Open(spinner)
+      <Button
+        onClick={() => {
+          spinner.show();
+        }}
+      >
+        Spinner
+        {spinner.rendered}
       </Button>
 
-      <Button variant="contained" onClick={() => open('circular')}>
-        Open(circular)
+      <Button
+        onClick={() => {
+          circular.show();
+        }}
+      >
+        Circular
+        {circular.rendered}
       </Button>
 
-      <Button variant="contained" onClick={() => open('custom')}>
-        Open(custom)
+      <Button
+        onClick={() => {
+          custom.show();
+        }}
+      >
+        Custom
+        {custom.rendered}
       </Button>
     </Space>
   );

@@ -1,16 +1,19 @@
-import { Button, showPreloader, hidePreloader } from '@wonder-ui/core';
+import { Button, usePreloader } from '@wonder-ui/core';
 
 export default () => {
+  const preloader = usePreloader();
+
   const open = () => {
-    showPreloader();
+    preloader.show();
     setTimeout(() => {
-      hidePreloader();
+      preloader.hide();
     }, 2000);
   };
 
   return (
-    <Button variant="contained" onClick={() => open()}>
-      Open
-    </Button>
+    <div>
+      <Button onClick={() => open()}>Open</Button>
+      {preloader.rendered}
+    </div>
   );
 };

@@ -1,14 +1,12 @@
-import { Button, Preloader } from '@wonder-ui/core';
+import { Button, showPreloader, hidePreloader } from '@wonder-ui/core';
 
-const loadData = () =>
-  new Promise((resolve) => {
+export default () => {
+  const open = () => {
+    showPreloader();
     setTimeout(() => {
-      resolve({});
+      hidePreloader();
     }, 2000);
-  });
+  };
 
-export default () => (
-  <Preloader onLoad={loadData}>
-    <Button variant="contained">Onload</Button>
-  </Preloader>
-);
+  return <Button onClick={() => open()}>Open</Button>;
+};
