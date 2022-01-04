@@ -1,3 +1,6 @@
+export { default as ActionSheet } from './ActionSheet';
+export * from './ActionSheet';
+
 export { default as ActivityIndicator } from './ActivityIndicator';
 export * from './ActivityIndicator';
 

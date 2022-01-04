@@ -34,11 +34,16 @@ export class StackManager {
     const called = fn(this.modalStackClearQueue);
 
     if (isPromise(called)) {
-      return called.then((value) => {
-        this.modalStackClearQueue();
+      return called
+        .then((value) => {
+          this.modalStackClearQueue();
 
-        return value;
-      });
+          return value;
+        })
+        .catch(() => {
+          this.modalStack = [];
+          this.modalLock = false;
+        });
     }
   };
 }

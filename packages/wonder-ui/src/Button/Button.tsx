@@ -55,7 +55,6 @@ const ButtonRoot = styled(ButtonBase, {
 
     return {
       ...theme.typography.button,
-      display: 'inline-flex',
       backgroundColor: 'transparent',
       border: 'thin solid transparent',
       ...(styleProps.shape === 'default' && {

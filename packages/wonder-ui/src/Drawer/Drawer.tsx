@@ -83,12 +83,9 @@ const DrawerPaper = styled(Paper, {
   slot: 'Paper',
   shouldForwardProp: () => true
 })(({ theme }) => ({
-  overflowY: 'auto',
-  display: 'flex',
-  flexDirection: 'column',
   height: '100%',
-  flex: '1 0 auto',
   zIndex: theme.zIndex.drawer,
+  overflowY: 'auto',
   WebkitOverflowScrolling: 'touch', // Add iOS momentum scrolling.
   // temporary style
   position: 'fixed',
@@ -100,7 +97,9 @@ const DrawerPaper = styled(Paper, {
 
   [`&.${drawerClasses.anchorLeft}`]: {
     /* Styles applied to the Paper component if `anchor="left"`. */
-    left: 0
+    left: 0,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0
   },
   [`&.${drawerClasses.anchorTop}`]: {
     /* Styles applied to the Paper component if `anchor="top"`. */
@@ -108,11 +107,15 @@ const DrawerPaper = styled(Paper, {
     left: 0,
     right: 0,
     height: 'auto',
-    maxHeight: '100%'
+    maxHeight: '100%',
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0
   },
   [`&.${drawerClasses.anchorRight}`]: {
     /* Styles applied to the Paper component if `anchor="right"`. */
-    right: 0
+    right: 0,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0
   },
   [`&.${drawerClasses.anchorBottom}`]: {
     /* Styles applied to the Paper component if `anchor="bottom"`. */
@@ -121,7 +124,9 @@ const DrawerPaper = styled(Paper, {
     bottom: 0,
     right: 0,
     height: 'auto',
-    maxHeight: '100%'
+    maxHeight: '100%',
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
   },
   [`&.${drawerClasses.temporaryAnchorLeft}`]: {
     /* Styles applied to the Paper component if `anchor="left"` and `variant` is not "temporary". */
@@ -194,7 +199,6 @@ const Drawer = React.forwardRef<HTMLElement, DrawerProps>((inProps, ref) => {
     <DrawerPaper
       ref={ref}
       elevation={variant === 'temporary' ? elevation : 0}
-      square
       {...PaperProps}
       classes={{ root: css(classes.paper, PaperProps.className) }}
     >

@@ -9,7 +9,7 @@ export function isObject(val: any): val is object {
   return val != null && typeof val === 'object' && Array.isArray(val) === false;
 }
 
-export function isPromise<T>(obj: any): obj is PromiseLike<T> {
+export function isPromise<T>(obj: any): obj is Promise<T> {
   return (
     !!obj &&
     (typeof obj === 'object' || typeof obj === 'function') &&

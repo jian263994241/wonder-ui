@@ -6,6 +6,8 @@ import {
 
 export const drawerClasses = generateUtilityClasses('WuiDrawer', [
   'root',
+  'modal',
+  'paper',
   'permanent',
   'persistent',
   'temporary',
