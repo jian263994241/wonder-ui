@@ -2,22 +2,20 @@
  * title: 基本使用
  * desc: 一条基本的通知消息
  */
+import * as React from 'react';
 import { Button, Snackbar } from '@wonder-ui/core';
-import { useToggle } from '@wonder-ui/hooks';
 
 export default function Example() {
-  const [visible, { toggle }] = useToggle();
+  const [visible, setVisible] = React.useState(false);
 
   return (
     <div>
-      <Button variant="contained" onClick={() => toggle()}>
-        简单的消息条
-      </Button>
+      <Button onClick={() => setVisible(true)}>简单的消息条</Button>
       <Snackbar
         visible={visible}
         message="简单的消息条"
         autoHideDuration={3000}
-        onClose={() => toggle()}
+        onClose={() => setVisible(false)}
       />
     </div>
   );

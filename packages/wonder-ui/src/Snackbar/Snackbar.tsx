@@ -1,92 +1,14 @@
 import * as React from 'react';
-import ClickAwayListener, {
-  ClickAwayListenerProps
-} from '../ClickAwayListener';
+import ClickAwayListener from '../ClickAwayListener';
 import Grow from '../Grow';
 import Portal from '../Portal';
-import SnackbarContent, { SnackbarContentProps } from '../SnackbarContent';
+import SnackbarContent from '../SnackbarContent';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { BaseTransitionProps, TransitionTimeout } from '../Transition';
 import { css } from '@wonder-ui/utils';
 import { snackbarClasses, useClasses } from './SnackbarClasses';
 import { useEventCallback, useForkRef, useSafeState } from '@wonder-ui/hooks';
-export interface SnackbarProps extends React.HTMLAttributes<HTMLElement> {
-  /**
-   * @ignore
-   */
-  ClickAwayListenerProps?: Partial<ClickAwayListenerProps>;
-  /**
-   * @ignore
-   */
-  ContentProps?: Partial<SnackbarContentProps>;
-  /**
-   * 过渡动画组件
-   */
-  TransitionComponent?: React.ComponentType<BaseTransitionProps>;
-  /**
-   * 过渡动画组件属性
-   */
-  TransitionProps?: BaseTransitionProps;
-  /**
-   * 操作区
-   */
-  action?: React.ReactNode;
-  /**
-   * 定位
-   */
-  anchorOrigin?: {
-    vertical?: 'top' | 'center' | 'bottom';
-    horizontal?: 'left' | 'center' | 'right';
-  };
-  /**
-   * 自动关闭持续时间
-   * @default null
-   */
-  autoHideDuration?: number | null;
-  /**
-   * @ignore
-   */
-  children?: React.ReactElement;
-  /**
-   * @ignore
-   */
-  disableWindowBlurListener?: boolean;
-  /**
-   * @ignore
-   */
-  disablePortal?: boolean;
-  /**
-   * 内容
-   */
-  message?: React.ReactNode;
-  /**
-   * 关闭回调事件
-   */
-  onClose?: (event: Event, reason: 'timeout' | 'clickaway') => void;
-  /**
-   * @ignore
-   */
-  onMouseEnter?: React.MouseEventHandler<HTMLElement>;
-  /**
-   * @ignore
-   */
-  onMouseLeave?: React.MouseEventHandler<HTMLElement>;
-  /**
-   * 暂停持续时间
-   */
-  resumeHideDuration?: boolean | null;
-  /**
-   * 过渡动画持续时间
-   */
-  transitionDuration?: TransitionTimeout;
-  /**
-   * 是否显示
-   */
-  visible?: boolean;
-  /**@ignore */
-  ref?: React.Ref<any>;
-}
+import type { SnackbarProps } from './SnackbarTypes';
 
 const SnackbarRoot = styled('div', {
   name: 'WuiSnackbar',
@@ -190,6 +112,7 @@ const Snackbar = React.forwardRef<HTMLElement, SnackbarProps>(
       resumeHideDuration,
       transitionDuration,
       visible,
+      maskClickable = true,
       ...rest
     } = props;
 
@@ -288,8 +211,8 @@ const Snackbar = React.forwardRef<HTMLElement, SnackbarProps>(
     }, [disableWindowBlurListener, handleResume, visible]);
 
     const handleClickAway = (event: any) => {
-      if (onClose) {
-        onClose(event, 'clickaway');
+      if (maskClickable) {
+        handleClose(event, 'clickaway');
       }
     };
 

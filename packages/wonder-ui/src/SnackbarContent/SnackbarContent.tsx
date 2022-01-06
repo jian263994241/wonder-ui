@@ -2,14 +2,16 @@ import * as React from 'react';
 import Paper from '../Paper';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { emphasize } from '../styles/colorManipulator';
+import { emphasize, alpha } from '../styles/colorManipulator';
 import { snackbarContentClasses, useClasses } from './SnackbarContentClasses';
-export interface SnackbarContentProps
-  extends React.HTMLAttributes<HTMLElement> {
+export interface SnackbarContentProps {
+  className?: string;
+
+  style?: React.CSSProperties;
   /**
    * 操作区
    */
-  action?: React.ReactNode;
+  action?: JSX.Element;
   /**
    * @ignore
    */
@@ -41,7 +43,7 @@ const SnackbarContentRoot = styled(Paper, {
   return {
     ...theme.typography.body2,
     color: theme.palette.getContrastText(backgroundColor),
-    backgroundColor,
+    backgroundColor: alpha(backgroundColor, 0.92),
     padding: '6px 16px',
     borderRadius: theme.shape.borderRadius,
 

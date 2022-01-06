@@ -24,7 +24,6 @@ export default function Example() {
     <div>
       <Space>
         <Button
-          variant="contained"
           onClick={handleClick({
             anchorOrigin: {
               vertical: 'top',
@@ -35,7 +34,6 @@ export default function Example() {
           左上
         </Button>
         <Button
-          variant="contained"
           onClick={handleClick({
             anchorOrigin: {
               vertical: 'top',
@@ -46,7 +44,6 @@ export default function Example() {
           中上
         </Button>
         <Button
-          variant="contained"
           onClick={handleClick({
             anchorOrigin: {
               vertical: 'top',
@@ -57,7 +54,6 @@ export default function Example() {
           右上
         </Button>
         <Button
-          variant="contained"
           onClick={handleClick({
             anchorOrigin: {
               vertical: 'bottom',
@@ -68,7 +64,6 @@ export default function Example() {
           右下
         </Button>
         <Button
-          variant="contained"
           onClick={handleClick({
             anchorOrigin: {
               vertical: 'bottom',
@@ -79,7 +74,6 @@ export default function Example() {
           中下
         </Button>
         <Button
-          variant="contained"
           onClick={handleClick({
             anchorOrigin: {
               vertical: 'bottom',
@@ -90,7 +84,6 @@ export default function Example() {
           左下
         </Button>
         <Button
-          variant="contained"
           onClick={handleClick({
             anchorOrigin: {
               vertical: 'center',
@@ -105,7 +98,7 @@ export default function Example() {
       <Snackbar
         visible={visible}
         message="简单的消息条"
-        autoHideDuration={null}
+        autoHideDuration={2000}
         anchorOrigin={anchorOrigin}
         onClose={handleClose}
         key={anchorOrigin.vertical + anchorOrigin.horizontal!}

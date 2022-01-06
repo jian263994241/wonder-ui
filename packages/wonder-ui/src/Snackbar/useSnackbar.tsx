@@ -1,109 +1,55 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import Snackbar, { SnackbarProps } from './Snackbar';
-import useTheme from '../styles/useTheme';
-import { ThemeProvider } from '@wonder-ui/styled';
-import { useCreation, useReactive, useSafeState } from '@wonder-ui/hooks';
-import { createId, DialogManager, nextTick } from '@wonder-ui/utils';
+import Snackbar from './Snackbar';
+import { useReactive } from '@wonder-ui/hooks';
+import type { SnackbarProps } from './SnackbarTypes';
 
-const defaultManager = new DialogManager();
+export default function useSnackbar(
+  props: Omit<SnackbarProps, 'visible'> = {}
+) {
+  const state = useReactive({
+    props: undefined as any,
+    visible: false,
+    key: '0' as any
+  });
 
-export type SnackbarHookOptions = {
-  autoHideDuration?: number;
-  anchorOrigin?: SnackbarProps['anchorOrigin'];
-  manager?: InstanceType<typeof DialogManager>;
-  onRender?: (element: JSX.Element) => JSX.Element;
-};
+  const timeoutRef = React.useRef<NodeJS.Timeout>();
 
-export type SnackbarOptions = {
-  autoHideDuration?: number;
-  anchorOrigin?: SnackbarProps['anchorOrigin'];
-  onClose?: () => void;
-};
+  const hide = () => {
+    timeoutRef.current = setTimeout(() => {
+      state.visible = false;
+    }, 0);
+  };
 
-const SnackbarWrap = (props: SnackbarProps) => {
-  const { onClose, ...rest } = props;
-  const [visible, setVisible] = useSafeState(true);
+  const show = (props: Omit<SnackbarProps, 'visible'>) => {
+    setTimeout(() => {
+      if (props) {
+        clearTimeout(timeoutRef.current!);
+        state.props = props;
+        state.visible = true;
+        state.key = props.message;
+      }
+    }, 0);
+  };
 
-  return (
+  const handleColose = (e: any, reason: 'timeout' | 'clickaway') => {
+    hide();
+
+    const callback = state.props?.onClose || props.onClose;
+
+    if (callback) {
+      callback(e, reason);
+    }
+  };
+
+  const rendered = (
     <Snackbar
-      visible={visible}
-      {...rest}
-      onClose={(e, r) => {
-        setVisible(false);
-        nextTick(() => {
-          onClose?.(e, r);
-        });
-      }}
+      {...props}
+      {...state.props}
+      key={state.key}
+      visible={state.visible}
+      onClose={handleColose}
     />
   );
-};
 
-export function useSnackbar(options: SnackbarHookOptions = {}) {
-  const {
-    anchorOrigin: anchorOriginProp = {
-      vertical: 'center',
-      horizontal: 'center'
-    },
-    autoHideDuration: autoHideDurationProp = 2000,
-    manager = defaultManager,
-    onRender
-  } = options;
-
-  const container = useCreation(() => document.createElement('div'), []);
-  const modals = useReactive<JSX.Element[]>([]);
-  const theme = useTheme();
-
-  const destroy = (item: JSX.Element) => {
-    const index = modals.indexOf(item);
-    modals.splice(index, 1);
-  };
-
-  React.useEffect(
-    () => () => {
-      manager.reset();
-      modals.splice(0, modals.length);
-    },
-    []
-  );
-
-  React.useEffect(() => {
-    const rendered = (
-      <ThemeProvider theme={theme}>{modals.map((item) => item)}</ThemeProvider>
-    );
-
-    ReactDOM.render(onRender ? onRender(rendered) : rendered, container);
-  }, [modals.length, theme, onRender]);
-
-  const showSnackbar = (message: string, options: SnackbarOptions = {}) => {
-    const {
-      anchorOrigin = anchorOriginProp,
-      autoHideDuration = autoHideDurationProp,
-      onClose
-    } = options;
-
-    const customProps = {
-      message,
-      autoHideDuration,
-      anchorOrigin,
-      key: createId()
-    };
-
-    manager.run((clearQueue) => {
-      const rendered = (
-        <SnackbarWrap
-          {...customProps}
-          onClose={() => {
-            destroy(rendered);
-            clearQueue();
-            onClose?.();
-          }}
-        />
-      );
-
-      modals.push(rendered);
-    });
-  };
-
-  return showSnackbar;
+  return { rendered, hide, show };
 }

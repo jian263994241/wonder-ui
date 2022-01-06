@@ -26,23 +26,37 @@ group:
 
 <code src="./demo/demo2.tsx"></code>
 
+### Hooks
 
+<code src="./demo/demo3.tsx"></code>
+
+### 指令式调用
+
+指令式调用`Context`不可用, 推荐使用`useSnackbar`替代.
+
+<code src="./demo/demo4.tsx"></code>
 
 
 ## API
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+### useSnackbar
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| classes | css | `'root', 'content', 'anchorTopLeft', 'anchorTopCenter', 'anchorTopRight', 'anchorBottomLeft', 'anchorBottomCenter', 'anchorBottomRight', 'anchorCenter'` |
-| TransitionComponent | 过渡动画组件 | `React.ComponentType<BaseTransitionProps>` | Grow
-| TransitionProps | 过渡动画组件属性 | `BaseTransitionProps` |
-| actions | 操作区 | `ReactNode` |
-| anchorOrigin | 定位 |  `{ vertical?: 'top' \| 'center' \| 'bottom'; horizontal?: 'left' \| 'center' \| 'right'; }` | `{ vertical: 'bottom', horizontal: 'left' }`
-| autoHideDuration | 自动关闭持续时间 | `number \| null` | null
-| message | 内容 | `ReactNode` |
-| onClose | 关闭回调事件 | `(event: Event, reason: 'timeout' \| 'clickaway') => void` |
-| resumeHideDuration | 暂停持续时间 | `boolean \| null` |
-| transitionDuration | 过渡动画持续时间 | `TransitionTimeout` |
-| visible | 是否显示 | `boolean` |
+```tsx pure
+const snackbar = useSnackbar(Omit<SnackbarProps, 'visible'>?)
+
+snackbar.show(Omit<SnackbarProps, 'visible'>?) //显示
+snackbar.hide() //隐藏
+snackbar.rendered //渲染, 放入虚拟dom上下文中
+
+```
+
+### Exposes
+
+```tsx pure
+showSnackbar(Omit<SnackbarProps, 'visible'>?) //显示
+hideSnackbar(); //隐藏
+```
+
+### SnackbarProps
+
+<API src="./Snackbar.tsx" hideTitle></API>
