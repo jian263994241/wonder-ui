@@ -11,34 +11,41 @@ group:
 
 # message 全局消息
 
-提供 Dialog, Snackbar 的方法调用
-
+提供 alert, confirm, toast 的方法
 
 ## 代码演示
 ### 基本使用
 
-方法调用的组件不在上下文内, 需要使用`message`提供的方法 `message.setup` 设置主题
+`message`支持消息栈和异步关闭
 
-<code src="./demo/global.tsx"></code>
+<code src="./demo/demo1.tsx"></code>
 
+### 配置
+
+配置 toast 自动关闭时间, 出现位置
+
+<code src="./demo/demo2.tsx"></code>
 
 ## API
-
-`alert`, `confirm`, `custom` 请参考 `useDialog` 的API
-
-`toast` 请参考 `useSnackbar` 的API
 
 ```jsx | pure
 
 message.alert({ title, text, onOk, okText });
 
-message.confirm({ title, text, onOk, okText, onCancel, cancelText });
+message.confirm({
+  title?: React.ReactNode;
+  text?: React.ReactNode;
+  content?: React.ReactNode;
+  onOk?: () => void;
+  okText?: string;
+  onCancel?: () => void;
+  cancelText?: string;
+  danger?: boolean;
+});
 
-message.custom(DialogProps);
+message.toast(message, SnackbarProps)
 
-message.toast(message, SnackbarHookOptions)
-
-// 设置主题
-message.setup({ theme })
+// 设置
+message.setup({ toastOption?: SnackbarProps })
 
 ```
