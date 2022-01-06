@@ -72,6 +72,13 @@ export default function ClickAwayListener(
   const nodeRef = React.useRef<HTMLElement>(null);
   const activatedRef = React.useRef(false);
   const syntheticEventRef = React.useRef(false);
+  const supportTouch = React.useMemo(() => {
+    return !!(
+      'ontouchstart' in window ||
+      ((window as any).DocumentTouch &&
+        document instanceof (window as any).DocumentTouch)
+    );
+  }, []);
 
   React.useEffect(() => {
     // Ensure that this component is not "activated" synchronously.
@@ -160,8 +167,12 @@ export default function ClickAwayListener(
     childrenProps[touchEvent] = createHandleSynthetic(touchEvent);
   }
 
+  if (mouseEvent !== false) {
+    childrenProps[mouseEvent] = createHandleSynthetic(mouseEvent);
+  }
+
   React.useEffect(() => {
-    if (touchEvent !== false) {
+    if (supportTouch && touchEvent !== false) {
       const mappedTouchEvent = mapEventPropToEvent(touchEvent);
       const doc = ownerDocument(nodeRef.current!);
 
@@ -178,15 +189,7 @@ export default function ClickAwayListener(
       };
     }
 
-    return undefined;
-  }, [handleClickAway, touchEvent]);
-
-  if (mouseEvent !== false) {
-    childrenProps[mouseEvent] = createHandleSynthetic(mouseEvent);
-  }
-
-  React.useEffect(() => {
-    if (mouseEvent !== false) {
+    if (!supportTouch && mouseEvent !== false) {
       const mappedMouseEvent = mapEventPropToEvent(mouseEvent);
       const doc = ownerDocument(nodeRef.current!);
 
@@ -198,7 +201,7 @@ export default function ClickAwayListener(
     }
 
     return undefined;
-  }, [handleClickAway, mouseEvent]);
+  }, [mouseEvent, touchEvent]);
 
   return (
     <React.Fragment>

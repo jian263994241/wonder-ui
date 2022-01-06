@@ -9,11 +9,11 @@ import {
   Col,
   Typography,
   IconButton,
-  withDialog
+  message
 } from '@wonder-ui/core';
 import { InfoCircle } from '@wonder-ui/icons';
 
-export default withDialog((props) => (
+export default () => (
   <Page>
     <List>
       <ListHeader>自定义</ListHeader>
@@ -22,7 +22,7 @@ export default withDialog((props) => (
           <IconButton
             edge="end"
             onClick={() => {
-              props.dialog.toast('提示文案提示文案');
+              message.toast('提示文案提示文案');
             }}
           >
             <InfoCircle fontSize="small" />
@@ -54,4 +54,4 @@ export default withDialog((props) => (
       </ListItem>
     </List>
   </Page>
-));
+);

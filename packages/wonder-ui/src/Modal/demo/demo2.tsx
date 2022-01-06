@@ -10,7 +10,7 @@ import {
   Typography,
   WhiteSpace,
   Space,
-  withDialog
+  message
 } from '@wonder-ui/core';
 import { useBoolean } from '@wonder-ui/hooks';
 
@@ -19,7 +19,7 @@ const Demo = styled('div')`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 320px;
+  width: 220px;
   background-color: rgb(255, 255, 255);
   border: 2px solid rgb(0, 0, 0);
   box-shadow: rgb(0 0 0 / 20%) 0px 11px 15px -7px,
@@ -27,7 +27,7 @@ const Demo = styled('div')`
   padding: 32px;
 `;
 
-export default withDialog((props) => {
+export default () => {
   const [visible, { setTrue, setFalse }] = useBoolean();
 
   return (
@@ -56,9 +56,7 @@ export default withDialog((props) => {
             <Space>
               <Button
                 variant="contained"
-                onClick={() =>
-                  props.dialog.alert({ text: 'Dialog alert message' })
-                }
+                onClick={() => message.alert({ text: 'Dialog alert message' })}
               >
                 确定
               </Button>
@@ -71,4 +69,4 @@ export default withDialog((props) => {
       </Modal>
     </div>
   );
-});
+};

@@ -261,7 +261,7 @@ export * from './Typography';
 export { default as WhiteSpace } from './WhiteSpace';
 export * from './WhiteSpace';
 
-export { default as message, withDialog } from './message';
+export { default as message } from './message';
 
 export { default as styled } from './styles/styled';
 

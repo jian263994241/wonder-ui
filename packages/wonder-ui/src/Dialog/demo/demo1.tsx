@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Button, Dialog, Page, Space } from '@wonder-ui/core';
+import { Button, Dialog, Space } from '@wonder-ui/core';
 
 export default () => {
   const [visible, setVisible] = React.useState(false);
   return (
-    <Page title="Dialog">
+    <div>
+      <Button onClick={() => setVisible(true)}>显式调用</Button>
       <Dialog
         visible={visible}
         title="标题"
@@ -26,33 +27,27 @@ export default () => {
         ]}
       />
 
-      <Space style={{ padding: 16 }}>
-        <Button variant="contained" onClick={() => setVisible(true)}>
-          提示框(文字)
-        </Button>
-
-        <Dialog
-          title="标题"
-          content={
-            <div>
-              <img
-                src="https://img.99bill.com/z/img/new-pos.png"
-                width={260}
-                height={260}
-                alt="img"
-              />
-            </div>
+      <Dialog
+        title="标题"
+        content={
+          <div>
+            <img
+              src="https://img.99bill.com/z/img/new-pos.png"
+              width={260}
+              height={260}
+              alt="img"
+            />
+          </div>
+        }
+        buttons={[
+          {
+            text: '知道啦!',
+            primary: true
           }
-          buttons={[
-            {
-              text: '知道啦!',
-              primary: true
-            }
-          ]}
-        >
-          <Button variant="contained">提示框(图片)</Button>
-        </Dialog>
-      </Space>
-    </Page>
+        ]}
+      >
+        <Button>按钮触发</Button>
+      </Dialog>
+    </div>
   );
 };

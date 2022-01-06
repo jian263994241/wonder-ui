@@ -1,25 +1,22 @@
-import { Page, Space, DialogContent, WhiteSpace } from '@wonder-ui/core';
+import { DialogContent } from '@wonder-ui/core';
 
 export default () => (
-  <Page title="Dialog content">
-    <WhiteSpace />
-    <Space horizontalAlign="center">
-      <DialogContent
-        style={{ width: 220 }}
-        title="标题"
-        text="内容, 内容, 内容..."
-        buttons={[
-          {
-            text: '取消',
-            onClick: () => {}
-          },
-          {
-            text: '好的',
-            primary: true,
-            onClick: () => {}
-          }
-        ]}
-      />
-    </Space>
-  </Page>
+  <div style={{ padding: 16 }}>
+    <DialogContent
+      style={{ width: '100%' }}
+      title="标题"
+      text="内容, 内容, 内容..."
+      buttons={[
+        {
+          text: '取消',
+          onClick: () => {}
+        },
+        {
+          text: '删除',
+          danger: true,
+          onClick: () => {}
+        }
+      ]}
+    />
+  </div>
 );

@@ -35,7 +35,7 @@
     "@popperjs/core": "^2.11.0",
     "@wonder-ui/hooks": "^1.2.0",
     "@wonder-ui/styled": "^1.1.0",
-    "@wonder-ui/utils": "^2.2.2",
+    "@wonder-ui/utils": "^2.2.3",
     "react-focus-lock": "^2.7.1",
     "react-transition-group": "^4.4.2"
   },

@@ -33,3 +33,4 @@ export * from './uniqueNumber';
 export * from './unit';
 export * from './validate';
 export * from './warn';
+export * from './useHookOutsideRef';

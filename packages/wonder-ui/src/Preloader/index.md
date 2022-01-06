@@ -19,8 +19,7 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-### 指令调用
-
+### Hook
 
 <code src="./demo/demo3.tsx"></code>
 
@@ -28,13 +27,15 @@ group:
 
 <code src="./demo/demo4.tsx"></code>
 
-### 全局调用
+### 指令调用
 
-推荐使用`usePreloader`替代
+指令调用时`Context`不可用, 推荐使用`usePreloader`替代.
 
 <code src="./demo/demo2.tsx"></code>
 
-## Hook
+## API
+
+### usePreloader
 
 ```ts pure
 
@@ -44,12 +45,20 @@ interface usePreloaderProps extends Omit<PreloaderProps, 'visible'> {
 
 const preloader = usePreloader(usePreloaderProps?);
 
-preloader.show(); //显示
+preloader.show(usePreloaderProps?); //显示
 preloader.hide(); //隐藏
-preloader.hideAll(); //隐藏所有
-preloader.rendered // 节点, 放入虚拟dom上下文中
+preloader.rendered // 渲染, 放入虚拟dom上下文中
 ```
 
-<API src="./Preloader.tsx"></API>
+### Exposes
+
+```ts pure
+showPreloader(Omit<PreloaderProps, 'visible'>?); //显示
+hidePreloader({hideAll?: boolean}?) //隐藏
+```
+
+### PreloaderProps
+
+<API src="./Preloader.tsx" hideTitle></API>
 
 

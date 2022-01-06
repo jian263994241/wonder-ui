@@ -4,7 +4,7 @@ import Modal, { ModalProps } from '../Modal';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { createChainedFunction, isPromise } from '@wonder-ui/utils';
-import { emphasize } from '../styles/colorManipulator';
+import { emphasize, alpha } from '../styles/colorManipulator';
 import { PreloaderProps } from './PreloaderTypes';
 import { useControlled } from '@wonder-ui/hooks';
 
@@ -34,7 +34,7 @@ const PreloaderInner = styled('div', {
     color: theme.palette.getContrastText(backgroundColor),
     display: 'block',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: backgroundColor,
+    backgroundColor: alpha(backgroundColor, 0.92),
     padding: 12,
     outline: 'none',
     textAlign: 'center',

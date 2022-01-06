@@ -32,8 +32,8 @@ const ActionSheetRoot = styled(Drawer, {
 })(({ theme }) => ({
   userSelect: 'none',
   [`.${drawerClasses.paper}`]: {
-    borderTopLeftRadius: `var(--action-sheet-border-radius, 16px)`,
-    borderTopRightRadius: `var(--action-sheet-border-radius, 16px)`,
+    borderTopLeftRadius: `var(--action-sheet-border-radius, ${theme.shape.borderRadius}px)`,
+    borderTopRightRadius: `var(--action-sheet-border-radius, ${theme.shape.borderRadius}px)`,
     paddingBottom: 'env(safe-area-inset-bottom)'
   },
   [`.${whiteSpaceClasses.root}`]: {

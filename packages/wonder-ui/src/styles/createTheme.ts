@@ -1,16 +1,16 @@
 import * as React from 'react';
-import type { CSSObject } from '@wonder-ui/styled';
 import * as transitions from './transitions';
-import createPalette, { PaletteOptions, Palette } from './theme/createPalette';
-import createTypography, { TypographyOptions } from './theme/createTypography';
-import createSpacing, { SpacingConfig, Spacing } from './theme/createSpacing';
 import createBreakpoints, {
   Breakpoints,
   BreakpointsOptions
 } from './theme/createBreakpoints';
+import createPalette, { Palette, PaletteOptions } from './theme/createPalette';
+import createSpacing, { Spacing, SpacingConfig } from './theme/createSpacing';
+import createTypography, { TypographyOptions } from './theme/createTypography';
 import shadows from './theme/shadows';
 import shape, { Shape } from './theme/shape';
 import zIndex from './theme/zIndex';
+import type { CSSObject } from '@wonder-ui/styled';
 
 interface ThemeComponents {
   components?: {
@@ -46,6 +46,8 @@ export interface Theme extends ThemeComponents {
   zIndex: typeof zIndex;
 }
 
+export const defaultTheme = {} as Theme;
+
 export function createTheme(options: ThemeOptions = {}): Theme {
   const {
     breakpoints: breakpointsInput,
@@ -58,7 +60,7 @@ export function createTheme(options: ThemeOptions = {}): Theme {
     ...rest
   } = options;
 
-  return {
+  const newTheme = {
     breakpoints: createBreakpoints(breakpointsInput),
     direction,
     palette: createPalette(paletteInput),
@@ -70,6 +72,10 @@ export function createTheme(options: ThemeOptions = {}): Theme {
     zIndex: { ...zIndex, ...zIndexInput },
     ...rest
   };
+
+  Object.assign(defaultTheme, newTheme);
+
+  return newTheme;
 }
 
 export default createTheme;

@@ -115,7 +115,7 @@ const DividerRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })(
       flexShrink: 0,
       borderWidth: 0,
       borderStyle: 'solid',
-      borderColor: theme.palette.divider,
+      borderColor: `var(--divider-color, ${theme.palette.divider})`,
       borderBottomWidth: 'thin',
       [`&.${dividerClasses.absolute}`]: {
         position: 'absolute',
@@ -124,7 +124,10 @@ const DividerRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })(
         width: '100%'
       },
       [`&.${dividerClasses.light}`]: {
-        borderColor: alpha(theme.palette.divider, 0.08)
+        borderColor: `var(--divider-color, ${alpha(
+          theme.palette.divider,
+          0.08
+        )})`
       },
       [`&.${dividerClasses.middle}`]: {
         marginLeft: theme.spacing(2),
@@ -153,7 +156,7 @@ const DividerRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })(
         '&::before, &::after': {
           position: 'relative',
           width: '100%',
-          borderTop: `thin solid ${theme.palette.divider}`,
+          borderTop: `thin solid var(--divider-color, ${theme.palette.divider})`,
           top: '50%',
           content: '""',
           transform: 'translateY(50%)'
@@ -166,7 +169,7 @@ const DividerRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })(
           top: '0%',
           left: '50%',
           borderTop: 0,
-          borderLeft: `thin solid ${theme.palette.divider}`,
+          borderLeft: `thin solid var(--divider-color, ${theme.palette.divider})`,
           transform: 'translateX(0%)'
         }
       },

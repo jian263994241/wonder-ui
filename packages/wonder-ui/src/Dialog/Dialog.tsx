@@ -1,45 +1,14 @@
 import * as React from 'react';
-import DialogContent, { DialogContentProps } from '../DialogContent';
+import DialogContent from '../DialogContent';
 import Grow from '../Grow';
 import Modal, { ModalProps } from '../Modal';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { BaseTransitionProps, TransitionTimeout } from '../Transition';
 import { createChainedFunction, css } from '@wonder-ui/utils';
-import { dialogClasses, useClasses } from './DialogClasses';
+import { DialogProps } from './DialogTypes';
 import { duration } from '../styles/transitions';
+import { useClasses } from './DialogClasses';
 import { useControlled } from '@wonder-ui/hooks';
-
-export interface DialogProps
-  extends Omit<DialogContentProps, 'classes' | 'children'> {
-  classes?: Partial<typeof dialogClasses>;
-  /**
-   * 触发节点
-   */
-  children?: JSX.Element;
-  /**
-   * 是否显示, 受控组件
-   * @default false
-   */
-  visible?: boolean;
-  /**
-   * 动画过渡组件
-   */
-  TranstionComponent?: React.ComponentType<BaseTransitionProps>;
-  /**
-   * 动画过渡组件属性
-   */
-  TranstionComponentProps?: BaseTransitionProps;
-  /**
-   * 过渡动画时长(ms)
-   */
-  transitionDuration?: TransitionTimeout;
-  /**
-   * Modal props
-   * @ignore
-   */
-  ModalProps?: Partial<ModalProps>;
-}
 
 const defaultTransitionDuration = duration.area.medium;
 
@@ -53,10 +22,11 @@ const DialogRoot = styled(Modal, {
   zIndex: theme.zIndex.dialog
 }));
 
-const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
+const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiDialog' });
 
   const {
+    contentClasses,
     buttons = [],
     children,
     className,
@@ -96,7 +66,6 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
           )
         })}
       <DialogRoot
-        autoFocus={false}
         visible={visible}
         theme={theme}
         className={css(classes.root, className)}
@@ -112,15 +81,15 @@ const Dialog: React.FC<DialogProps> = React.forwardRef((inProps, ref) => {
         >
           <DialogContent
             {...rest}
-            role="presentation"
-            classes={{ root: classes.content }}
+            classes={contentClasses}
+            className={classes.content}
             buttonsVertical={buttonsVertical}
             style={{ marginLeft: 10, marginRight: 10 }}
             buttons={buttons.map((props) => ({
               ...props,
               onClick: createChainedFunction(
-                props.onClick,
-                toogleVisibleIfUncontroled
+                toogleVisibleIfUncontroled,
+                props.onClick
               )
             }))}
           ></DialogContent>

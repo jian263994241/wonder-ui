@@ -31,18 +31,24 @@ group:
 
 <code src="./demo/demo4.tsx"></code>
 
-### 指令式调用
-
-`const { rendered, show, hide } = useActionSheet(ActionSheetProps)`
+### Hook
 
 <code src="./demo/demo5.tsx"></code>
+
+### 指令式调用
+
+指令式调用`Context`不可用, 推荐使用`useActionSheet`替代.
+
+<code src="./demo/demo7.tsx"></code>
 
 ### 自定义
 
 <code src="./demo/demo6.tsx"></code>
 
 
-## Action 数据结构
+## API
+
+###  ActionSheetAction 数据结构
 
 ```jsx pure
 export type ActionSheetAction = {
@@ -56,5 +62,24 @@ export type ActionSheetAction = {
   [k: string]: any;
 }
 ```
+### useActionSheet
 
-<API src="./ActionSheet.tsx"></API>
+```tsx pure
+const actionSheet = useActionSheet(Omit<ActionSheetProps, 'visible'>?)
+
+actionSheet.show(Omit<ActionSheetProps, 'visible'>?) //显示
+actionSheet.hide() //隐藏
+actionSheet.rendered //渲染, 放入虚拟dom上下文中
+
+```
+
+### Exposes
+
+```tsx pure
+showActionSheet(Omit<ActionSheetProps, 'visible'>?) //显示
+hideActionSheet(); //隐藏
+```
+
+### ActionSheetProps
+
+<API src="./ActionSheet.tsx" hideTitle></API>

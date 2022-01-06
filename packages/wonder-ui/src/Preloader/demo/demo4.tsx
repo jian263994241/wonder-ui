@@ -32,33 +32,35 @@ export default () => {
   });
 
   return (
-    <Space>
-      <Button
-        onClick={() => {
-          spinner.show();
-        }}
-      >
-        Spinner
-        {spinner.rendered}
-      </Button>
+    <div>
+      {spinner.rendered}
+      {circular.rendered}
+      {custom.rendered}
+      <Space>
+        <Button
+          onClick={() => {
+            spinner.show();
+          }}
+        >
+          Spinner
+        </Button>
 
-      <Button
-        onClick={() => {
-          circular.show();
-        }}
-      >
-        Circular
-        {circular.rendered}
-      </Button>
+        <Button
+          onClick={() => {
+            circular.show();
+          }}
+        >
+          Circular
+        </Button>
 
-      <Button
-        onClick={() => {
-          custom.show();
-        }}
-      >
-        Custom
-        {custom.rendered}
-      </Button>
-    </Space>
+        <Button
+          onClick={() => {
+            custom.show();
+          }}
+        >
+          Custom
+        </Button>
+      </Space>
+    </div>
   );
 };

@@ -1,11 +1,16 @@
 import * as React from 'react';
-import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
+import ButtonBase from '../ButtonBase';
 import Divider from '../Divider';
 import Paper, { PaperProps } from '../Paper';
 import styled from '../styles/styled';
-import Typography, { TypographyProps } from '../Typography';
+import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
+import { css } from '@wonder-ui/utils';
 import { dialogContentClasses, useClasses } from './DialogContentClasses';
+import type {
+  DialogButtonProps,
+  DialogContentProps
+} from './DialogContentTypes';
 
 const DialogContentRoot = styled(Paper, {
   name: 'WuiDialogContent',
@@ -15,7 +20,7 @@ const DialogContentRoot = styled(Paper, {
   ...theme.typography.body2,
   borderRadius: theme.shape.dialogRadius,
   width: '100%',
-  maxWidth: 325,
+  maxWidth: 300,
   userSelect: 'none',
   overflow: 'hidden'
 }));
@@ -45,78 +50,32 @@ const DialogContentButtons = styled('div', {
   }
 });
 
-export interface DialogButton extends ButtonBaseProps {
-  primary?: boolean;
-  text?: React.ReactNode;
-}
-
 export const DialogButton = styled(ButtonBase, {
   name: 'WuiDialogContent',
   slot: 'button',
-  shouldForwardProp: (prop) => prop != 'primary'
-})<DialogButton>(({ theme, primary }) => ({
+  shouldForwardProp: (prop) => prop != 'primary' && prop != 'danger'
+})<DialogButtonProps>(({ theme, primary, danger }) => ({
   ...theme.typography.button,
   width: '100%',
   height: 44,
-  color: theme.palette.primary.main,
-  fontWeight: primary ? 600 : 400,
+  fontWeight: 400,
   fontSize: theme.typography.pxToRem(16),
   textAlign: 'center',
   backgroundColor: 'transparent',
   border: 0,
-  // borderStyle: 'solid',
-  // borderRightWidth: 'thin',
-  // borderColor: theme.palette.divider,
   boxSizing: 'border-box',
   textOverflow: 'ellipsis',
   overflow: 'hidden',
-
-  [`.${dialogContentClasses.buttonsVertical} > &`]: {
-    // borderWidth: 0,
-    // borderBottomWidth: 'thin',
-    // flexShrink: 0
-  },
-  '&:last-child': {
-    // borderWidth: 0
-  }
+  color: `var(--dialog-button-color, ${theme.palette.text.primary})`,
+  ...(primary && {
+    fontWeight: 700,
+    color: `var(--dialog-button-primary-color, ${theme.palette.primary.main})`
+  }),
+  ...(danger && {
+    fontWeight: 700,
+    color: `var(--dialog-button-danger-color, ${theme.palette.danger.main})`
+  })
 }));
-
-export interface DialogContentProps extends PaperProps {
-  /**
-   * 按钮垂直排列
-   */
-  buttonsVertical?: boolean;
-  /**
-   * 按钮
-   */
-  buttons?: Array<DialogButton>;
-  classes?: Partial<typeof dialogContentClasses>;
-  /**
-   * 文字后的节点
-   */
-  content?: React.ReactNode;
-  /**
-   * 阴影
-   * @default 4
-   */
-  elevation?: number;
-  /**
-   * 标题下的文字
-   */
-  text?: React.ReactNode;
-  /**
-   * 文字属性
-   */
-  textTypographyProps?: TypographyProps;
-  /**
-   * 标题
-   */
-  title?: React.ReactNode;
-  /**
-   * 文字属性
-   */
-  titleTypographyProps?: TypographyProps;
-}
 
 const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
   (inProps, ref) => {
@@ -126,23 +85,24 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
       buttons = [],
       className,
       children,
-      content,
-      elevation = 0,
+      disableRipple,
+      elevation = 1,
       text,
       textTypographyProps,
       title,
       titleTypographyProps,
+      content: contentProp,
       ...rest
     } = props;
 
-    const styleProps = { buttonsVertical };
-
+    const styleProps = { ...props, buttonsVertical };
     const classes = useClasses(styleProps);
+    const content = contentProp || children;
 
     return (
       <DialogContentRoot
-        classes={{ root: classes.root }}
-        className={className}
+        role="presentation"
+        className={css(classes.root, className)}
         elevation={elevation}
         ref={ref}
         {...rest}
@@ -152,11 +112,11 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
             <DialogContentInner className={classes.inner}>
               {title && (
                 <Typography
+                  noWrap
                   variant="subtitle1"
                   align="center"
-                  noWrap
                   gutterBottom={!!text || !!content}
-                  classes={{ root: classes.title }}
+                  className={classes.title}
                   {...titleTypographyProps}
                 >
                   {title}
@@ -168,7 +128,7 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
                   component="div"
                   variant="body1"
                   align="center"
-                  classes={{ root: classes.text }}
+                  className={classes.text}
                   gutterBottom
                   {...textTypographyProps}
                 >
@@ -184,8 +144,7 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
         {buttons.length > 0 && (
           <DialogContentButtons className={classes.buttons}>
             {buttons.map((buttonProps, index) => {
-              const { children, text, ...rest } = buttonProps;
-
+              const { text, ...rest } = buttonProps;
               return (
                 <React.Fragment key={index}>
                   {index != 0 && (
@@ -195,11 +154,11 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
                     />
                   )}
                   <DialogButton
-                    focusRipple
-                    classes={{ root: classes.button }}
+                    disableRipple={disableRipple}
+                    className={classes.button}
                     {...rest}
                   >
-                    {text || children}
+                    {text}
                   </DialogButton>
                 </React.Fragment>
               );

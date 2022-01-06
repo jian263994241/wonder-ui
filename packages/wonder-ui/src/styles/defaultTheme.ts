@@ -1,5 +1,5 @@
-import createTheme from './createTheme';
+import { createTheme, defaultTheme } from './createTheme';
 
-let theme = createTheme();
+createTheme();
 
-export const getDefaultTheme = () => theme;
+export const getDefaultTheme = () => defaultTheme;
