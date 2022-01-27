@@ -5,6 +5,7 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { addUnit, composeClasses, css, unitToPx } from '@wonder-ui/utils';
 import { COMPONENT_NAME } from './ImageClasses';
+import { imageClasses } from './ImageClasses';
 import {
   useCreation,
   useForkRef,
@@ -14,9 +15,9 @@ import {
 import type { ImageProps } from './ImageTypes';
 
 const useClasses = (styleProps: ImageProps) => {
-  const { classes } = styleProps;
+  const { classes, round } = styleProps;
   const slots = {
-    root: ['root'],
+    root: ['root', round && 'round'],
     img: ['img'],
     placeholder: ['placeholder'],
     fallback: ['fallback']
@@ -30,10 +31,17 @@ const ImageRoot = styled('div', {
   slot: 'Root'
 })({
   display: 'inline-block',
+  position: 'relative',
   overflow: 'hidden',
   width: 'var(--image-width, auto)',
   height: 'var(--image-height, auto)',
-  borderRadius: 'var(--image-radius, 0px)'
+  borderRadius: 'var(--image-radius, 0px)',
+  [`&.${imageClasses.round}`]: {
+    borderRadius: `var(--border-radius-max, 50%)`,
+    [`.${imageClasses.img}`]: {
+      borderRadius: 'inherit'
+    }
+  }
 });
 
 const ImageImg = styled('img', {
@@ -42,7 +50,8 @@ const ImageImg = styled('img', {
 })({
   width: '100%',
   height: '100%',
-  display: 'block'
+  display: 'block',
+  WebkitUserDrag: 'none'
 });
 
 const ImagePlaceholder = styled('div', {
@@ -50,8 +59,8 @@ const ImagePlaceholder = styled('div', {
   slot: 'Placeholder'
 })(({ theme }) => ({
   position: 'relative',
-  backgroundColor: theme.palette.background.default,
-  color: theme.palette.text.secondary,
+  color: `var(--image-placeholder-color, ${theme.palette.text.secondary})`,
+  fontSize: `var(--image-placeholder-size, ${theme.typography.body2})`,
   height: '100%',
   width: '100%',
   display: 'flex',
@@ -64,8 +73,8 @@ const ImageFallback = styled('div', {
   slot: 'Fallback'
 })(({ theme }) => ({
   position: 'relative',
-  backgroundColor: theme.palette.background.default,
-  color: theme.palette.text.secondary,
+  color: `var(--image-fallback-color, ${theme.palette.text.secondary})`,
+  fontSize: `var(--image-fallback-size, ${theme.typography.body2})`,
   height: '100%',
   width: '100%',
   display: 'flex',
@@ -108,7 +117,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>((inProps, ref) => {
     [heightProp]
   );
   const radius = useCreation(
-    () => (radiusProp ? unitToPx(radiusProp) : radiusProp),
+    () => (radiusProp ? addUnit(unitToPx(radiusProp)) : radiusProp),
     [radiusProp]
   );
   const [loaded, setLoaded] = React.useState(false);

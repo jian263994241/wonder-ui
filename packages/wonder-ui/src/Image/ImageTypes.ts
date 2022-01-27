@@ -48,6 +48,10 @@ export interface ImageProps
    */
   radius?: string | number;
   /**
+   * 显示圆形
+   */
+  round?: boolean;
+  /**
    * 图片懒加载
    */
   lazy?: boolean;
