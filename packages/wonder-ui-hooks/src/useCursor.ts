@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import { warn } from '@wonder-ui/utils';
 /**
  * Keep input cursor in the correct position if possible.
  * Is this necessary since we have `formatter` which may mass the content?
@@ -67,9 +66,7 @@ export function useCursor(
 
         input.setSelectionRange(startPos, startPos);
       } catch (e) {
-        warn(
-          `Something warning of cursor restore. Please fire issue about this: ${e.message}`
-        );
+        console.error(e);
       }
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/hooks",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Wonder-UI hooks",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -35,12 +35,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@wonder-ui/utils": "^2.2.3",
+    "@wonder-ui/utils": "^2.2.4",
     "eventemitter3": "^4.0.7",
     "intersection-observer": "^0.12.0",
     "querystringify": "^2.2.0",
-    "resize-observer-polyfill": "^1.5.1",
-    "screenfull": "^5.1.0"
+    "resize-observer-polyfill": "^1.5.1"
   },
   "peerDependencies": {
     "react": ">=16.8.0"

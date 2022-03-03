@@ -19,9 +19,7 @@ export type { CSSObject, PropsOf, Theme };
 export interface CreateStyled<AdditionOptions extends Object = {}> {
   <
     C extends React.ComponentClass<React.ComponentProps<C>>,
-    ForwardedProps extends keyof React.ComponentProps<
-      C
-    > = keyof React.ComponentProps<C>
+    ForwardedProps extends keyof React.ComponentProps<C> = keyof React.ComponentProps<C>
   >(
     component: C,
     options: FilteringStyledOptions<React.ComponentProps<C>, ForwardedProps> &
@@ -53,9 +51,7 @@ export interface CreateStyled<AdditionOptions extends Object = {}> {
 
   <
     C extends React.ComponentType<React.ComponentProps<C>>,
-    ForwardedProps extends keyof React.ComponentProps<
-      C
-    > = keyof React.ComponentProps<C>
+    ForwardedProps extends keyof React.ComponentProps<C> = keyof React.ComponentProps<C>
   >(
     component: C,
     options: FilteringStyledOptions<React.ComponentProps<C>, ForwardedProps> &

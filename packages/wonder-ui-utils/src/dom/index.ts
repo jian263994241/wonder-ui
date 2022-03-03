@@ -1,6 +1,5 @@
 //https://github.com/react-bootstrap/dom-helpers/blob/master/src
 
-export * from './animate';
 export * from './attribute';
 export * from './contains';
 export * from './canUseDOM';

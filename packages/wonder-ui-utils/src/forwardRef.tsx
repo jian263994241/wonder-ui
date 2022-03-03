@@ -14,9 +14,9 @@ export function forwardRef<T, P = {}>(
   Target.withComponent = function TargetWithComponent<
     T2 extends React.ElementType
   >(Component: T2) {
-    return (props: P & React.ComponentProps<T2>) => (
-      <Target component={Component} {...props} />
-    );
+    return React.forwardRef((props: P & React.ComponentProps<T2>, ref) => (
+      <Target component={Component} ref={ref} {...props} />
+    ));
   };
 
   return Target;

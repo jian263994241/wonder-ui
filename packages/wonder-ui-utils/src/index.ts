@@ -29,6 +29,7 @@ export * from './overflow';
 export * from './raf';
 export * from './scroll';
 export * from './string';
+export * from './types';
 export * from './uniqueNumber';
 export * from './unit';
 export * from './validate';

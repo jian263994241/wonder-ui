@@ -1,24 +1,29 @@
 import * as React from 'react';
 import { useEventCallback } from './useEventCallback';
+import { BasicTarget, getTargetElement } from './utils/dom';
 
 export function useResizeEffect<T extends HTMLElement>(
   effect: (target: T) => void,
-  targetRef: React.RefObject<T>
+  target: BasicTarget<T>
 ) {
   const fn = useEventCallback(effect);
+
   React.useEffect(() => {
-    const target = targetRef.current;
-    if (!target) return;
+    const _target = getTargetElement(target);
+
+    if (!_target) return;
+    //@ts-ignore
     if (window.ResizeObserver) {
+      //@ts-ignore
       const observer = new ResizeObserver(() => {
-        fn(target);
+        fn(_target);
       });
-      observer.observe(target);
+      observer.observe(_target);
       return () => {
         observer.disconnect();
       };
     } else {
-      fn(target);
+      fn(_target);
     }
-  }, [targetRef]);
+  }, [target]);
 }

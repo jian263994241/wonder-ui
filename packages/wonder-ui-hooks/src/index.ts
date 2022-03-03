@@ -17,7 +17,6 @@ export * from './useEventListener';
 export * from './useEventTarget';
 export * from './useForceUpdate';
 export * from './useForkRef';
-export * from './useFullscreen';
 export * from './useHistoryTravel';
 export * from './useId';
 export * from './useInViewport';

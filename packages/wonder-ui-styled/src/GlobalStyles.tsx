@@ -5,12 +5,12 @@ import { isEmpty } from './utils';
 type Styles = string | CSSObject;
 type StylesCallback<Theme> = (theme: Theme) => Styles;
 
-interface GlobalStylesProps<Theme = object> {
+export interface GlobalStylesProps<Theme = object> {
   defaultTheme?: Theme;
   styles?: Styles | StylesCallback<Theme>;
 }
 
-export default function GlobalStyles(props: GlobalStylesProps) {
+export default function GlobalStyles(props: GlobalStylesProps): JSX.Element {
   const { defaultTheme, styles } = props;
 
   const globalStyles =

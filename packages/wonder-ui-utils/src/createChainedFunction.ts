@@ -13,11 +13,10 @@ import { isPromise } from './validate';
 export function createChainedFunction(...funcs: any[]) {
   const manager = new StackManager();
 
-  return function chainedFunction(self: any, ...args: any[]) {
+  return function chainedFunction(...args: any[]) {
     funcs.forEach((func) => {
       manager.run((next) => {
-        const promise = func?.apply(self, args);
-
+        const promise = func?.apply(null, args);
         if (isPromise(promise)) {
           return promise;
         } else {
