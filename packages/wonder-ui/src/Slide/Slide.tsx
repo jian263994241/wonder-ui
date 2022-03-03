@@ -1,40 +1,27 @@
 import * as React from 'react';
-import Transition, {
-  BaseTransitionProps,
-  TransitionTimeout
-} from '../Transition';
-import useTheme from '../styles/useTheme';
-import { debounce, ownerWindow } from '@wonder-ui/utils';
-import { duration, easing } from '../styles/transitions';
-import { getTransitionProps, reflow } from '../Transition/utils';
-import { useForkRef } from '@wonder-ui/hooks';
+import { animated, useSpring } from '@react-spring/web';
+import { getRect, ownerWindow } from '@wonder-ui/utils';
+import { springConfig, TransitionBaseProps } from '../styles/transitions';
+import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
 
-export interface SlideProps extends BaseTransitionProps<HTMLElement> {
-  appear?: boolean;
-  children: React.ReactElement & React.RefAttributes<React.ReactElement>;
+export interface SlideProps extends TransitionBaseProps {
   direction?: 'down' | 'left' | 'right' | 'up';
-  easing?: { enter: string; exit: string };
-  in?: boolean;
-  style?: React.CSSProperties;
-  timeout?: TransitionTimeout;
 }
 
 function getTranslateValue(
   direction: SlideProps['direction'],
-  node: HTMLElement
+  node: HTMLElement,
+  resolvedContainer?: HTMLElement
 ) {
-  const rect = node.getBoundingClientRect();
+  const rect = getRect(node);
+  const containerRect = resolvedContainer && getRect(node);
   const containerWindow = ownerWindow(node);
   let transform;
 
-  if ((node as any).fakeTransform) {
-    transform = (node as any).fakeTransform;
-  } else {
-    const computedStyle = containerWindow.getComputedStyle(node);
-    transform =
-      computedStyle.getPropertyValue('-webkit-transform') ||
-      computedStyle.getPropertyValue('transform');
-  }
+  const computedStyle = containerWindow.getComputedStyle(node);
+  transform =
+    computedStyle.getPropertyValue('-webkit-transform') ||
+    computedStyle.getPropertyValue('transform');
 
   let offsetX = 0;
   let offsetY = 0;
@@ -46,197 +33,126 @@ function getTranslateValue(
   }
 
   if (direction === 'left') {
-    return `translateX(${containerWindow.innerWidth}px) translateX(${
-      offsetX - rect.left
-    }px)`;
+    if (containerRect) {
+      return {
+        x: containerRect.right + offsetX - rect.left,
+        y: 0
+      };
+    }
+
+    return {
+      x: containerWindow.innerWidth + offsetX - rect.left,
+      y: 0
+    };
   }
 
   if (direction === 'right') {
-    return `translateX(-${rect.left + rect.width - offsetX}px)`;
+    if (containerRect) {
+      return {
+        x: -(rect.right - containerRect.left - offsetX),
+        y: 0
+      };
+    }
+
+    return {
+      x: -(rect.left + rect.width - offsetX),
+      y: 0
+    };
   }
 
   if (direction === 'up') {
-    return `translateY(${containerWindow.innerHeight}px) translateY(${
-      offsetY - rect.top
-    }px)`;
+    if (containerRect) {
+      return {
+        x: 0,
+        y: containerRect.bottom + offsetY - rect.top
+      };
+    }
+
+    return {
+      x: 0,
+      y: containerWindow.innerHeight + offsetY - rect.top
+    };
   }
 
   // direction === 'down'
-  return `translateY(-${rect.top + rect.height - offsetY}px)`;
-}
-
-export function setTranslateValue(
-  direction: SlideProps['direction'],
-  node: HTMLElement
-) {
-  const transform = getTranslateValue(direction, node);
-
-  if (transform) {
-    node.style.webkitTransform = transform;
-    node.style.transform = transform;
+  if (containerRect) {
+    return {
+      x: 0,
+      y: -(rect.top - containerRect.top + rect.height - offsetY)
+    };
   }
+
+  return {
+    x: 0,
+    y: -(rect.top + rect.height - offsetY)
+  };
 }
 
-const defaultEasing = {
-  enter: easing.easeOut,
-  exit: easing.sharp
-};
-
-const defaultTimeout = duration.area.medium;
-
-const Slide: React.FC<SlideProps> = React.forwardRef((props, ref) => {
+const Slide = React.forwardRef<HTMLDivElement, SlideProps>((props, ref) => {
   const {
-    appear = true,
     children,
     direction = 'down',
-    easing: easingProp = defaultEasing,
+    duration: durationProp,
+    delay,
     in: inProp,
+    immediate,
     onEnter,
-    onEntering,
+    onEntered,
     onExit,
     onExited,
     style,
-    timeout = defaultTimeout,
     ...rest
   } = props;
-  const theme = useTheme();
+
   const nodeRef = React.useRef<HTMLElement>(null);
-  const foreignRef = useForkRef(children.ref, ref);
-  const handleRef = useForkRef(nodeRef, foreignRef);
+  const handleRef = useForkRef(nodeRef, ref);
 
-  const handleEnter: SlideProps['onEnter'] = (node, isAppearing) => {
-    setTranslateValue(direction, node);
-    reflow(node);
-
-    if (onEnter) {
-      onEnter(node, isAppearing);
+  const onStart = useEventCallback(() => {
+    if (inProp) {
+      onEnter?.();
+    } else {
+      onExit?.();
     }
-  };
+  });
 
-  const handleEntering: SlideProps['onEntering'] = (node, isAppearing) => {
-    const transitionProps = getTransitionProps(
-      { timeout, style, easing: easingProp },
-      {
-        mode: 'enter'
-      }
-    );
-
-    node.style.webkitTransition = theme.transitions.create(
-      '-webkit-transform',
-      {
-        ...transitionProps
-      }
-    );
-
-    node.style.transition = theme.transitions.create('transform', {
-      ...transitionProps
-    });
-
-    node.style.webkitTransform = 'none';
-    node.style.transform = 'none';
-    if (onEntering) {
-      onEntering(node, isAppearing);
+  const onRest = useEventCallback(() => {
+    if (inProp) {
+      onEntered?.();
+    } else {
+      onExited?.();
     }
-  };
+  });
 
-  const handleExit: SlideProps['onExit'] = (node) => {
-    const transitionProps = getTransitionProps(
-      { timeout, style, easing: easingProp },
-      {
-        mode: 'exit'
-      }
-    );
-
-    node.style.webkitTransition = theme.transitions.create(
-      '-webkit-transform',
-      {
-        ...transitionProps
-      }
-    );
-
-    node.style.transition = theme.transitions.create('transform', {
-      ...transitionProps
-    });
-
-    setTranslateValue(direction, node);
-
-    if (onExit) {
-      onExit(node);
-    }
-  };
-
-  const handleExited: SlideProps['onExited'] = (node) => {
-    // No need for transitions when the component is hidden
-    node.style.webkitTransition = '';
-    node.style.transition = '';
-
-    if (onExited) {
-      onExited(node);
-    }
-  };
-
-  const updatePosition = React.useCallback(() => {
-    if (nodeRef.current) {
-      setTranslateValue(direction, nodeRef.current);
-    }
-  }, [direction]);
-
-  React.useEffect(() => {
-    // Skip configuration where the position is screen size invariant.
-    if (inProp || direction === 'down' || direction === 'right') {
-      return undefined;
-    }
-
-    const handleResize = debounce(() => {
-      if (nodeRef.current) {
-        setTranslateValue(direction, nodeRef.current);
-      }
-    });
-
-    const containerWindow = ownerWindow(nodeRef.current);
-    containerWindow.addEventListener('resize', handleResize);
-    return () => {
-      handleResize.cancel();
-      containerWindow.removeEventListener('resize', handleResize);
+  const [styles, api] = useSpring(() => {
+    return {
+      x: 0,
+      y: 0,
+      cancel: true,
+      onStart,
+      onRest
     };
-  }, [direction, inProp]);
+  });
 
   React.useEffect(() => {
-    if (!inProp) {
-      // We need to update the position of the drawer when the direction change and
-      // when it's hidden.
-      updatePosition();
+    const { current: node } = nodeRef;
+
+    if (node) {
+      api.start({
+        from: getTranslateValue(direction, node),
+        to: { x: 0, y: 0 },
+        reverse: !inProp,
+        delay,
+        immediate,
+        config: springConfig({ in: inProp, duration: durationProp })
+      });
     }
-  }, [inProp, updatePosition]);
+  }, [inProp, delay, immediate, durationProp]);
 
   return (
-    <Transition
-      ref={handleRef}
-      onEnter={handleEnter}
-      onEntering={handleEntering}
-      onExit={handleExit}
-      onExited={handleExited}
-      appear={appear}
-      in={inProp}
-      timeout={timeout}
-      {...rest}
-    >
-      {(state, childProps) => {
-        return React.cloneElement(children, {
-          style: {
-            visibility: state === 'exited' && !inProp ? 'hidden' : undefined,
-            ...style,
-            ...children.props.style
-          },
-          ...childProps
-        });
-      }}
-    </Transition>
+    <animated.div style={{ ...style, ...styles }} ref={handleRef} {...rest}>
+      {children}
+    </animated.div>
   );
 });
-
-Slide.defaultProps = {
-  in: false //Modal hasTranstion
-};
 
 export default Slide;

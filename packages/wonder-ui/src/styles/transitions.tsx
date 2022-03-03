@@ -1,3 +1,5 @@
+import BezierEasing from 'bezier-easing';
+
 export const easing = {
   // This is the most common easing curve.
   easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
@@ -12,6 +14,14 @@ export const easing = {
   sharp: 'cubic-bezier(0.4, 0, 0.6, 1)'
 };
 
+export const easingFunction = {
+  easeInOut: BezierEasing(0.4, 0, 0.2, 1),
+  easeOut: BezierEasing(0, 0, 0.2, 1),
+  easeIn: BezierEasing(0.4, 0, 1, 1),
+  ease: BezierEasing(0.25, 0.01, 0.25, 1),
+  sharp: BezierEasing(0.4, 0, 0.6, 1)
+};
+
 //https://material.io/design/motion/speed.html#controlling-speed
 export const duration = {
   shortest: 150,
@@ -21,18 +31,86 @@ export const duration = {
   standard: 300,
   // this is to be used in complex animations
   complex: 375,
-  // Transition Area
-  area: {
-    small: 100,
-    medium: {
-      enter: 250,
-      exit: 200
-    },
-    large: {
-      enter: 300,
-      exit: 250
-    }
+  // recommended when something is entering screen
+  enteringScreen: 225,
+  // recommended when something is leaving screen
+  leavingScreen: 195
+};
+
+export type TransitionDuration = number | { enter: number; exit: number };
+
+export interface TransitionBaseProps
+  extends React.AriaAttributes,
+    React.DOMAttributes<HTMLDivElement> {
+  role?: string;
+  /**
+   * className
+   */
+  className?: string;
+  /**
+   * children
+   */
+  children?: React.ReactNode;
+  /**
+   * style
+   */
+  style?: React.CSSProperties;
+  /**
+   * 过度时间 ms
+   */
+  duration?: TransitionDuration;
+  /**
+   * 延迟
+   */
+  delay?: number;
+  /**
+   * 显示
+   */
+  in?: boolean;
+  /**
+   * 立即完成过度
+   */
+  immediate?: boolean;
+  /**
+   * transition event
+   */
+  onEnter?: () => void;
+  /**
+   * transition event
+   */
+  onEntered?: () => void;
+  /**
+   * transition event
+   */
+  onExit?: () => void;
+  /**
+   * transition event
+   */
+  onExited?: () => void;
+}
+
+export const getDuration = (
+  durationProp?: TransitionDuration,
+  enter?: boolean
+) => {
+  if (typeof durationProp === 'number') {
+    return durationProp;
   }
+
+  if (typeof durationProp === 'object') {
+    return enter
+      ? durationProp.enter ?? duration.enteringScreen
+      : durationProp.exit ?? duration.leavingScreen;
+  }
+
+  return enter ? duration.enteringScreen : duration.leavingScreen;
+};
+
+export const springConfig = (props: TransitionBaseProps) => {
+  return {
+    duration: getDuration(props.duration, props.in),
+    easing: props.in ? easingFunction.easeOut : easingFunction.sharp
+  };
 };
 
 export const formatMs = (milliseconds: number) =>
@@ -83,9 +161,8 @@ export function getTransitionDurationFromElement(element?: HTMLElement) {
   }
 
   // Get transition-duration of the element
-  let { transitionDuration, transitionDelay } = window.getComputedStyle(
-    element
-  );
+  let { transitionDuration, transitionDelay } =
+    window.getComputedStyle(element);
 
   const floatTransitionDuration = Number.parseFloat(transitionDuration);
   const floatTransitionDelay = Number.parseFloat(transitionDelay);

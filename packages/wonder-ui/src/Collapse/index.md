@@ -16,7 +16,6 @@ group:
 
 ### 基本使用
 
-通过改变 `visible` 显示或隐藏内容
 
 <code src="./demo/demo1.tsx"></code>
 
@@ -28,9 +27,7 @@ group:
 
 ### 水平方向折叠
 
-通过 `direction=horizontal, collapsedSize` 改变折叠方向
-
 <code src="./demo/demo3.tsx"></code>
 
-<API src="./Collapse.tsx" props="collapsedSize|direction|in|onEnter|onEntered|onEntering|onExit|onExited|onExiting|timeout|className|style"></API>
+<API src="./Collapse.tsx" ></API>
 

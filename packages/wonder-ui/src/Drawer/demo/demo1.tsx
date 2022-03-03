@@ -1,12 +1,5 @@
-import {
-  Button,
-  Drawer,
-  DrawerProps,
-  Page,
-  Space,
-  Typography,
-  WhiteSpace
-} from '@wonder-ui/core';
+import * as React from 'react';
+import { Button, Drawer, DrawerProps, Page, Space } from '@wonder-ui/core';
 import { useToggle } from '@wonder-ui/hooks';
 
 type Anchor = DrawerProps['anchor'];
@@ -21,8 +14,7 @@ export default () => {
   };
 
   return (
-    <Page title="Drawer">
-      <WhiteSpace />
+    <React.Fragment>
       <Space>
         <Button variant="contained" onClick={() => open('left')}>
           左
@@ -51,21 +43,19 @@ export default () => {
           onClose={() => toggleVisible()}
         >
           <div style={{ padding: '10px 16px' }}>
-            <Typography>
-              Some contents... <br />
-              Some contents... <br />
-              Some contents... <br />
-              Some contents... <br />
-              Some contents... <br />
-              Some contents... <br />
-              Some contents... <br />
-              Some contents... <br />
-              Some contents... <br />
-              Some contents... <br />
-            </Typography>
+            Some contents... <br />
+            Some contents... <br />
+            Some contents... <br />
+            Some contents... <br />
+            Some contents... <br />
+            Some contents... <br />
+            Some contents... <br />
+            Some contents... <br />
+            Some contents... <br />
+            Some contents... <br />
           </div>
         </Page>
       </Drawer>
-    </Page>
+    </React.Fragment>
   );
 };
