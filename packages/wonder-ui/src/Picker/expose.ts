@@ -2,7 +2,11 @@ import usePicker from './usePicker';
 import { PickerProps } from './PickerTypes';
 import { useHookOutsideRef } from '@wonder-ui/utils';
 
-const actionRef = useHookOutsideRef(usePicker);
+const actionRef = useHookOutsideRef(usePicker, {
+  DrawerProps: {
+    keepMounted: false
+  }
+});
 
 export function showPicker(props?: Omit<PickerProps, 'visible'>) {
   actionRef.current?.show(props);

@@ -1,36 +1,34 @@
 import * as React from 'react';
-import Picker from '../Picker';
+import PickerView from '../PickerView';
 import useThemeProps from '../styles/useThemeProps';
 import {
   convertDateToStringArray,
   convertStringArrayToDate,
   defaultRenderLabel,
   generateDatePickerColumns
-} from '../DatePickerView/utils';
+} from './utils';
 import { useControlled, useCreation, useEventCallback } from '@wonder-ui/hooks';
-import type { DatePickerProps } from './DatePickerTypes';
+import type { DatePickerViewProps } from './DatePickerViewTypes';
 
-const COMPONENT_NAME = 'WuiDatePicker';
+const COMPONENT_NAME = 'WuiDatePickerView';
 
 const currentYear = new Date().getFullYear();
 const diffYear = 10;
 const defaultMinDate = new Date(currentYear - diffYear, 0, 1);
 const defaultMaxDate = new Date(currentYear + diffYear, 11, 31);
 
-const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>(
+const DatePickerView = React.forwardRef<HTMLDivElement, DatePickerViewProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
       filter,
       minDate = defaultMinDate,
       maxDate = defaultMaxDate,
-      children,
+      precision = 'day',
       onChange,
-      onConfirm,
+      onRenderLabel = defaultRenderLabel,
       value: valueProp,
       defaultValue,
-      precision = 'day',
-      onRenderLabel = defaultRenderLabel,
       ...rest
     } = props;
 
@@ -51,37 +49,20 @@ const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>(
       ).map((column) => ({ values: column }));
     });
 
-    const handleChange = (selected: string[]) => {
+    const handleChange = useEventCallback((selected: string[]) => {
       onChange?.(convertStringArrayToDate(selected, precision));
-    };
-
-    const confirm = (values: string[]) => {
-      return onConfirm?.(convertStringArrayToDate(values, precision));
-    };
+    });
 
     return (
-      <Picker
+      <PickerView
         ref={ref}
         value={pickerViewValue}
         columns={columns}
         onChange={handleChange}
-        onConfirm={confirm}
         {...rest}
-      >
-        {({ selected, show }) => {
-          return children?.({
-            selected: selected
-              ? convertStringArrayToDate(
-                  selected.map((item: any) => item.value) as string[],
-                  precision
-                )
-              : undefined,
-            show
-          });
-        }}
-      </Picker>
+      />
     );
   }
 );
 
-export default DatePicker;
+export default DatePickerView;

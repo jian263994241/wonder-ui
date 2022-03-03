@@ -18,23 +18,15 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-### 选择年月日
+### 表单组件
 
-通过 type 属性来定义需要选择的时间类型，type 为 date 表示选择年月日。通过 minDate 和 maxDate 属性可以确定可选的时间范围。
+Picker 作为用于辅助表单填写项, 搭配 `rc-field-form`
 
 <code src="./demo/demo2.tsx"></code>
 
-### 选择时间
-
-<code src="../TimePicker/demo/demo1.tsx"></code>
-
-## API
-
-### DatePicker
-
-<API src="./DatePicker.tsx" hideTitle></API>
+更多场景和参数请参考 `DatePickerView`
 
 
-### TimePicker
+<API src="./DatePicker.tsx" ></API>
 
-<API src="../TimePicker/TimePicker.tsx" hideTitle></API>
+

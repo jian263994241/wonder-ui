@@ -1,5 +1,5 @@
-import { Picker, Page, List, ListInputItem, ListHeader } from '@wonder-ui/core';
-import { useReactive } from '@wonder-ui/hooks';
+import * as React from 'react';
+import { Button, Picker } from '@wonder-ui/core';
 
 const columns = {
   values: ['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华', '衢州'],
@@ -7,34 +7,23 @@ const columns = {
 };
 
 export default () => {
-  const state = useReactive({ visible: false, value: '' });
+  const [value, setValue] = React.useState<string[]>();
 
   return (
-    <Page>
-      <List>
-        <ListHeader>浮层</ListHeader>
-        <ListInputItem
-          button
-          label="城市"
-          readOnly
-          placeholder="选择城市"
-          value={state.value}
-          onClick={() => {
-            state.visible = true;
-          }}
-        />
-      </List>
-      <Picker
-        columns={columns}
-        onConfirm={(values) => {
-          state.value = values[0] as string;
-          state.visible = false;
-        }}
-        onCancel={() => {
-          state.visible = false;
-        }}
-        visible={state.visible}
-      />
-    </Page>
+    <Picker
+      value={value}
+      columns={columns}
+      onConfirm={(value) => {
+        setValue(value);
+      }}
+    >
+      {({ selected, show }) => {
+        return (
+          <Button onClick={show}>
+            {selected ? `城市: ${selected[0]}` : '选择城市'}
+          </Button>
+        );
+      }}
+    </Picker>
   );
 };

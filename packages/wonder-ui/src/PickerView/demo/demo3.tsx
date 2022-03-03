@@ -64,20 +64,16 @@ export default () => (
   <Space direction="vertical">
     <PickerView
       columns={columns}
+      fieldNames={{ label: 'text' }}
       onChange={(values) => {
-        console.log(
-          (values as PickerObjectOption[]).map((item) => item.text).join(',')
-        );
+        console.log(values);
       }}
     />
 
     <PickerView
       columns={columns2}
-      textKey="label"
       onChange={(values) => {
-        console.log(
-          (values as PickerObjectOption[]).map((item) => item.label).join(',')
-        );
+        console.log(values);
       }}
     />
   </Space>

@@ -149,16 +149,12 @@ const data2 = [
 ```ts prue
 export type PickerAction = {
   getValues(): PickerOption[];
-  setValues(values: string[]): void;
   getIndexes(): number[];
-  setIndexes(indexes: number[]): void;
   getColumnValue(columnIndex: number): PickerOption | undefined;
-  setColumnValue(index: number, value: string): void;
   getColumnIndex(index: number): number | undefined;
   setColumnIndex(columnIndex: number, optionIndex: number): void;
-  getColumnValues(index: number): PickerOption[] | undefined;
-  setColumnValues(index: number, options: PickerOption[]): void;
-  confirm(): void;
+  getColumnOptions(index: number): PickerOption[] | undefined;
+  setColumnOptions(index: number, options: PickerOption[]): void;
 };
 
 ```

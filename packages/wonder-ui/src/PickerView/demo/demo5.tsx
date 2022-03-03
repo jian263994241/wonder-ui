@@ -8,9 +8,9 @@ const cities = {
 const columns = [{ values: Object.keys(cities) }, { values: cities['浙江'] }];
 
 export default () => {
-  const onChange: PickerViewProps['onChange'] = (values: any, picker) => {
-    picker.setColumnValues(1, cities[values[0] as keyof typeof cities]);
-    //选项发生改变,重新获取值
+  const onChange: PickerViewProps['onChange'] = (values: any[], picker) => {
+    picker.setColumnOptions(1, cities[values[0] as '浙江' | '福建']);
+    //选项发生改变, 重新获取值
     console.log(picker.getValues());
   };
 

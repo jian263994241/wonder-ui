@@ -1,18 +1,20 @@
-import { DrawerProps } from '../Drawer';
-import { NavbarProps } from '../Navbar';
+import * as React from 'react';
 import { PickerViewProps, PickerOption } from '../PickerView';
 
-export interface PickerProps extends PickerViewProps {
-  DrawerProps?: Partial<DrawerProps>;
-  NavbarProps?: Partial<NavbarProps>;
+export interface PickerPopupProps {
+  className?: string;
 
-  children?: JSX.Element;
+  children?: React.ReactNode;
   /**
    * 顶部栏标题
    */
   title?: string;
   /**
-   * 取消按钮问题
+   * 副标题
+   */
+  subTitle?: string;
+  /**
+   * 取消按钮文字
    */
   cancelText?: string;
   /**
@@ -20,27 +22,37 @@ export interface PickerProps extends PickerViewProps {
    */
   confirmText?: string;
   /**
-   * 连接符, 多列展示用
-   */
-  separator?: string;
-  /**
-   * 浮层显示
+   * 控制浮层显示/隐藏
    */
   visible?: boolean;
+  /**
+   * 关闭浮层触发事件
+   */
+  onCancel?(): void;
+  /**
+   * 确认按钮触发事件
+   */
+  onConfirm?(): void;
+
+  style?: React.CSSProperties;
+}
+
+export interface PickerProps
+  extends PickerViewProps,
+    Omit<PickerPopupProps, 'onConfirm' | 'children'> {
+  /**
+   * 数据展示
+   */
+  children?: (props: {
+    selected?: PickerOption[];
+    show: () => void;
+  }) => React.ReactNode;
   /**
    * 默认浮层显示
    */
   defaultVisible?: boolean;
   /**
-   * 渲染输入框
+   * 确认按钮触发事件
    */
-  onRenderChildren?(args: {
-    options: PickerOption[];
-    displayText: string;
-    onClick: () => void;
-  }): JSX.Element;
-  /**
-   * 关闭浮层触发事件
-   */
-  onCancel?(): void;
+  onConfirm?(values: any[]): void;
 }

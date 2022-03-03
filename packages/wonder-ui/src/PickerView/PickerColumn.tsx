@@ -1,15 +1,17 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import useThemeProps from '../styles/useThemeProps';
-import { clamp, css, isObject, preventDefault, warn } from '@wonder-ui/utils';
-import { ColumnClasses, ColumnProps, PickerOption } from './PickerViewTypes';
+import Typography from '../Typography';
+import { clamp, css, isObject, preventDefault } from '@wonder-ui/utils';
+import { ColumnProps, PickerFieldNames, PickerOption } from './PickerViewTypes';
 import { COMPONENT_NAME, pickerViewClasses } from './PickerViewClasses';
+import { easing } from '../styles/transitions';
 import {
-  useEventCallback,
   useEventListener,
-  useForkRef,
+  useCreation,
+  useEventCallback,
   useReactive,
-  useTouch
+  useTouch,
+  useForkRef
 } from '@wonder-ui/hooks';
 
 const DEFAULT_DURATION = 200;
@@ -33,189 +35,136 @@ const PickerColumnContent = styled('ul', {
   margin: 0,
   padding: 0,
   listStyle: 'none',
-  transitionTimingFunction: 'cubic-bezier(0.23, 1, 0.68, 1)'
+  transitionTimingFunction: easing.easeInOut
 });
 
-const PickerColumnItem = styled('li', { name: COMPONENT_NAME, slot: 'Item' })(
-  ({ theme }) => ({
-    outline: 0,
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '0 4px',
-    color: theme.palette.text.primary
-  })
-);
-
-function getElementTranslateY(element: Element) {
-  const style = window.getComputedStyle(element);
-  const transform = style.transform || style.webkitTransform;
-  const translateY = transform.slice(7, transform.length - 1).split(', ')[5];
-
-  return Number(translateY);
-}
+const PickerColumnItem = styled('li', { name: COMPONENT_NAME, slot: 'Item' })({
+  outline: 0,
+  overflow: 'hidden',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '0 4px'
+});
 
 function isOptionDisabled(option: PickerOption) {
   return isObject(option) && option.disabled;
 }
 
+const adjustIndex = (index: number, options: PickerOption[]) => {
+  index = clamp(index, 0, options.length);
+  // ->
+  for (let i = index; i < options.length; i++) {
+    if (!isOptionDisabled(options[i])) return i;
+  }
+  // <-
+  for (let i = index - 1; i >= 0; i--) {
+    if (!isOptionDisabled(options[i])) return i;
+  }
+
+  return 0;
+};
+
+export const getOptionText = (
+  option: PickerOption,
+  fieldNames: PickerFieldNames
+) => {
+  if (isObject(option) && fieldNames.label in option) {
+    return option[fieldNames.label];
+  } else if (typeof option === 'string' || typeof option === 'number') {
+    return option;
+  } else {
+    console.log(fieldNames);
+    console.warn(
+      `Picker error: fieldNames.label [${fieldNames.label}] is not is col columns`
+    );
+  }
+};
+
+export const getOptionValue = (
+  option: PickerOption,
+  fieldNames: PickerFieldNames
+) => {
+  if (isObject(option)) {
+    return option[fieldNames.value] ?? option[fieldNames.label];
+  } else if (typeof option === 'string' || typeof option === 'number') {
+    return option;
+  }
+};
+
 const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
-  (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
+  (props, ref) => {
     const {
-      actionRef,
+      options: columnItems = [],
+      index: indexProp,
       defaultIndex = 0,
-      initialOptions,
       itemHeight = 44,
       className,
       readOnly,
       swipeDuration = 225,
-      textKey = 'text',
+      fieldNames,
       visibleItemCount = 6,
       style,
-      onChange,
-      classes = {} as ColumnClasses
+      onIndexChange,
+      onRenderLabel,
+      classes = {} as any
     } = props;
-
-    const moving = React.useRef<boolean>(false);
+    const rootRef = React.useRef(null);
+    const handleRef = useForkRef(rootRef, ref);
+    const touch = useTouch();
+    const movingRef = React.useRef<boolean>(false);
     const startOffset = React.useRef<number>();
     const touchStartTime = React.useRef<number>();
     const momentumOffset = React.useRef<number>();
-    const transitionEndTrigger = React.useRef<Function | null>(null);
 
-    const rootRef = React.useRef<HTMLDivElement>(null);
-    const handleRef = useForkRef(rootRef, ref);
-    const wrapper = React.useRef<HTMLUListElement>(null);
+    const state = useReactive({ offset: 0, duration: 0, index: 0 });
 
-    const state = useReactive({
-      index: defaultIndex,
-      offset: 0,
-      duration: 0,
-      options: [] as PickerOption[]
-    });
-
-    const touch = useTouch();
-
-    const baseOffset = React.useMemo(
+    const baseOffset = useCreation(
       () => (itemHeight * (+visibleItemCount - 1)) / 2,
       [itemHeight, visibleItemCount]
     );
 
-    const adjustIndex = (index: number) => {
-      index = clamp(index, 0, state.options.length);
-
-      for (let i = index; i < state.options.length; i++) {
-        if (!isOptionDisabled(state.options[i])) return i;
-      }
-      for (let i = index - 1; i >= 0; i--) {
-        if (!isOptionDisabled(state.options[i])) return i;
-      }
-    };
-
-    const getIndex = () => state.index;
-
-    const setIndex = (index: number, emitChange?: boolean) => {
-      index = adjustIndex(index) || 0;
-
-      const offset = -index * itemHeight;
-
-      const trigger = () => {
-        if (index !== state.index) {
-          state.index = index;
-          if (emitChange) {
-            onChange?.(index);
-          }
-        }
-      };
-
-      // trigger the change event after transitionend when moving
-      if (moving.current && offset !== state.offset) {
-        transitionEndTrigger.current = trigger;
-      } else {
-        trigger();
-      }
-
-      state.offset = offset;
-    };
-
-    const setOptions = (options: PickerOption[] = []) => {
-      if (JSON.stringify(options) !== JSON.stringify(state.options)) {
-        state.options = options;
-        setIndex(defaultIndex);
-      }
-    };
-
     React.useEffect(() => {
-      if (
-        initialOptions &&
-        JSON.stringify(initialOptions) !== JSON.stringify(state.options)
-      ) {
-        setOptions(initialOptions);
-      } else if (defaultIndex != undefined) {
-        setIndex(defaultIndex);
-      }
-    }, [initialOptions, defaultIndex]);
+      setIndex(indexProp ?? defaultIndex, false);
+    }, [indexProp, defaultIndex, columnItems]);
 
-    const getOptions = () => state.options;
+    const setIndex = (index: number, emitChange: boolean = true) => {
+      index = adjustIndex(index, columnItems);
+
+      if (state.index != index && emitChange) {
+        onIndexChange?.(index);
+      }
+
+      state.index = index;
+      state.offset = -index * itemHeight;
+    };
 
     const onClickItem = useEventCallback((index: number) => {
-      if (moving.current || readOnly) {
+      if (movingRef.current || readOnly) {
         return;
       }
 
-      transitionEndTrigger.current = null;
       state.duration = DEFAULT_DURATION;
-      setIndex(index, true);
+
+      setIndex(index);
     });
 
-    const getOptionText = (option: PickerOption) => {
-      if (isObject(option) && textKey in option) {
-        return option[textKey];
-      } else if (typeof option === 'string' || typeof option === 'number') {
-        return option;
-      }
-
-      warn(`Picker error: textKey [${textKey}] is not is col columns`);
-    };
-
     const getIndexByOffset = (offset: number) =>
-      clamp(Math.round(-offset / itemHeight), 0, state.options.length - 1);
-
-    const momentum = (distance: number, duration: number) => {
-      const speed = Math.abs(distance / duration);
-
-      distance = state.offset + (speed / 0.003) * (distance < 0 ? -1 : 1);
-
-      const index = getIndexByOffset(distance);
-
-      state.duration = +swipeDuration;
-      setIndex(index, true);
-    };
+      clamp(Math.round(-offset / itemHeight), 0, columnItems.length - 1);
 
     const stopMomentum = useEventCallback(() => {
-      moving.current = false;
+      movingRef.current = false;
       state.duration = 0;
-
-      if (transitionEndTrigger.current) {
-        transitionEndTrigger.current();
-        transitionEndTrigger.current = null;
-      }
     });
 
     const onTouchStart = useEventCallback((event: React.TouchEvent) => {
-      if (readOnly) {
-        return;
-      }
+      if (readOnly) return;
 
       touch.start(event);
 
-      if (moving.current) {
-        const translateY = getElementTranslateY(wrapper.current!);
+      if (movingRef.current) {
+        state.offset = Math.min(0, state.offset);
 
-        state.offset = Math.min(0, translateY - baseOffset);
         startOffset.current = state.offset;
       } else {
         startOffset.current = state.offset;
@@ -224,25 +173,21 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
       state.duration = 0;
       touchStartTime.current = Date.now();
       momentumOffset.current = startOffset.current;
-      transitionEndTrigger.current = null;
     });
 
     const onTouchMove = useEventCallback((event: TouchEvent) => {
-      if (readOnly) {
-        return;
-      }
+      if (readOnly) return;
 
       touch.move(event);
 
       if (touch.isVertical()) {
-        moving.current = true;
-
+        movingRef.current = true;
         preventDefault(event, true);
       }
 
       state.offset = clamp(
         startOffset.current! + touch.deltaY.current,
-        -(state.options.length * itemHeight),
+        -(columnItems.length * itemHeight),
         itemHeight
       );
 
@@ -256,11 +201,9 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
     useEventListener(rootRef, 'touchmove', onTouchMove, { passive: false });
 
     const onTouchEnd = useEventCallback(() => {
-      if (readOnly) {
-        return;
-      }
+      if (!movingRef.current || readOnly) return;
 
-      moving.current = false;
+      movingRef.current = false;
 
       const distance = state.offset - momentumOffset.current!;
       const duration = Date.now() - touchStartTime.current!;
@@ -269,44 +212,20 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
         Math.abs(distance) > MOMENTUM_LIMIT_DISTANCE;
 
       if (allowMomentum) {
-        momentum(distance, duration);
-        return;
+        const speed = Math.abs(distance / duration);
+        const index = getIndexByOffset(
+          state.offset + (speed / 0.003) * (distance < 0 ? -1 : 1)
+        );
+
+        state.duration = +swipeDuration;
+        setIndex(index);
+      } else {
+        const index = getIndexByOffset(state.offset);
+
+        state.duration = DEFAULT_DURATION;
+        setIndex(index);
       }
-
-      const index = getIndexByOffset(state.offset);
-      state.duration = DEFAULT_DURATION;
-      setIndex(index, true);
-
-      setTimeout(() => {
-        moving.current = false;
-      }, 0);
     });
-
-    const setValue = (value: string) => {
-      for (let i = 0; i < state.options.length; i++) {
-        if (getOptionText(state.options[i]) === value) {
-          return setIndex(i);
-        }
-      }
-    };
-
-    const getValue = () => state.options[state.index!];
-
-    React.useImperativeHandle(actionRef, () => ({
-      getIndex,
-      setIndex,
-      getValue,
-      setValue,
-      setOptions,
-      getOptions,
-      stopMomentum
-    }));
-
-    const wrapperStyle: React.CSSProperties = {
-      transform: `translate3d(0, ${state.offset + baseOffset}px, 0)`,
-      transitionDuration: `${state.duration}ms`,
-      transitionProperty: state.duration ? 'transform' : 'none'
-    };
 
     return (
       <PickerColumnRoot
@@ -319,36 +238,31 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
       >
         <PickerColumnContent
           className={classes.content}
-          ref={wrapper}
-          style={wrapperStyle}
           onTransitionEnd={stopMomentum}
+          style={{
+            transform: `translate3d(0, ${state.offset + baseOffset}px, 0)`,
+            transitionDuration: `${state.duration}ms`,
+            transitionProperty: state.duration ? 'transform' : 'none'
+          }}
         >
-          {state.options.map((option, index: number) => {
-            const text = getOptionText(option);
-
-            if (!text) {
-              return null;
-            }
-
-            const disabled = isOptionDisabled(option)!;
-
-            return (
+          {columnItems.map((option, index: number) => {
+            const label = getOptionText(option, fieldNames);
+            return label ? (
               <PickerColumnItem
                 key={index}
                 role="button"
-                tabIndex={disabled ? -1 : 0}
-                style={{
-                  height: `${itemHeight}px`
-                }}
+                style={{ height: `${itemHeight}px` }}
                 className={css(classes.item, {
-                  [pickerViewClasses.disabled]: disabled,
+                  [pickerViewClasses.disabled]: isOptionDisabled(option),
                   [pickerViewClasses.selected]: index === state.index
                 })}
                 onClick={onClickItem.bind(null, index)}
               >
-                {text}
+                <Typography color="textPrimary" variant="body2" noWrap>
+                  {onRenderLabel ? onRenderLabel(option) : label}
+                </Typography>
               </PickerColumnItem>
-            );
+            ) : null;
           })}
         </PickerColumnContent>
       </PickerColumnRoot>
