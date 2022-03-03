@@ -36,11 +36,11 @@ export interface ImagePreviewProps {
    */
   visible?: boolean;
   /**
-   * 显示关闭按钮, 不支持touch事件默认显示
+   * 显示关闭按钮
    */
   showCloseButton?: boolean;
   /**
-   * 显示切换按钮, 不支持touch事件默认显示
+   * 显示切换按钮
    */
   showSwitchButtons?: boolean;
   /**

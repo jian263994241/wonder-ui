@@ -36,15 +36,15 @@ export interface ImageProps
    */
   fit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
   /**
-   * 宽度，默认单位为px
+   * 宽度, 支持 px vw vh rem 单位，默认 px
    */
   width?: string | number;
   /**
-   * 高度，默认单位为px
+   * 高度, 支持 px vw vh rem 单位，默认 px
    */
   height?: string | number;
   /**
-   * 圆角大小，默认单位为px
+   * 圆角大小, 支持 px vw vh rem 单位，默认 px
    */
   radius?: string | number;
   /**
@@ -66,7 +66,7 @@ export interface ImageProps
   /**
    * 点击图片时触发
    */
-  onClick?: React.ReactEventHandler<HTMLDivElement>;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
   /**
    * 图片加载完毕时触发
    */

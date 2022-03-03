@@ -37,9 +37,7 @@ const ImagePreviewRoot = styled('div', {
 const ImagePreviewModal = styled(Modal, {
   name: COMPONENT_NAME,
   slot: 'Root'
-})({
-  '--backdrop-color': 'rgba(0, 0, 0, 0.9)'
-});
+})({});
 
 const ImagePreviewSwipe = styled(Swipe, {
   name: COMPONENT_NAME,
@@ -118,6 +116,7 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(
 
     return (
       <ImagePreviewModal
+        BackdropProps={{ opacity: 0.9 }}
         visible={visible}
         ref={ref}
         onTransitionExited={onAfterClose}
@@ -125,7 +124,7 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(
         className={classes.modal}
       >
         <ImagePreviewRoot className={css(classes.root, className)}>
-          {(showCloseButton || !support.touch) &&
+          {showCloseButton &&
             (closeButton || (
               <ImagePreviewClose
                 className={classes.close}
@@ -136,7 +135,7 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(
 
           <ImagePreviewSwipe
             lazyRender
-            showSwitchButtons={showSwitchButtons || !support.touch}
+            showSwitchButtons={showSwitchButtons}
             className={classes.swipe}
             loop={loop}
             ref={swipeRootRef}
