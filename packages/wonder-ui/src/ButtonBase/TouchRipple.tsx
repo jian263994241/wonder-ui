@@ -1,11 +1,10 @@
 import * as React from 'react';
-import Ripple, { RippleProps } from './Ripple';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
+import { animated, Transition } from '@react-spring/web';
 import { css } from '@wonder-ui/utils';
 import { keyframes } from '@wonder-ui/styled';
 import { touchRippleClasses, TouchRippleClasses } from './TouchRippleClasses';
-import { TransitionGroup } from 'react-transition-group';
 import { useForkRef, useSafeState } from '@wonder-ui/hooks';
 
 const DURATION = 550;
@@ -58,11 +57,10 @@ export const TouchRippleRoot = styled('span', {
   borderRadius: 'inherit'
 });
 
-export const TouchRippleRipple = styled(Ripple, {
+export const TouchRippleRipple = styled('span', {
   name: 'MuiTouchRipple',
-  slot: 'Ripple',
-  shouldForwardProp: () => true
-})<RippleProps>`
+  slot: 'Ripple'
+})`
   opacity: 0;
   position: absolute;
   &.${touchRippleClasses.rippleVisible} {
@@ -117,6 +115,13 @@ export interface TouchRippleProps {
   className?: string;
 }
 
+interface RippleProps {
+  pulsate: boolean;
+  rippleSize: number;
+  rippleX: number;
+  rippleY: number;
+}
+
 const TouchRipple: React.FC<TouchRippleProps> = React.forwardRef(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiTouchRipple' });
@@ -128,7 +133,7 @@ const TouchRipple: React.FC<TouchRippleProps> = React.forwardRef(
       ...rest
     } = props;
 
-    const [ripples, setRipples] = useSafeState<Array<React.ReactNode>>([]);
+    const [ripples, setRipples] = useSafeState<RippleProps[]>([]);
     const nextKey = React.useRef(0);
     const rippleCallback = React.useRef<Function | null>(null);
 
@@ -162,34 +167,13 @@ const TouchRipple: React.FC<TouchRippleProps> = React.forwardRef(
 
         setRipples((oldRipples) => [
           ...oldRipples,
-          <TouchRippleRipple
-            key={nextKey.current}
-            classes={{
-              ripple: css(classes.ripple, touchRippleClasses.ripple),
-              rippleVisible: css(
-                classes.rippleVisible,
-                touchRippleClasses.rippleVisible
-              ),
-              ripplePulsate: css(
-                classes.ripplePulsate,
-                touchRippleClasses.ripplePulsate
-              ),
-              child: css(classes.child, touchRippleClasses.child),
-              childLeaving: css(
-                classes.childLeaving,
-                touchRippleClasses.childLeaving
-              ),
-              childPulsate: css(
-                classes.childPulsate,
-                touchRippleClasses.childPulsate
-              )
-            }}
-            timeout={DURATION}
-            pulsate={pulsate}
-            rippleX={rippleX}
-            rippleY={rippleY}
-            rippleSize={rippleSize}
-          />
+          {
+            key: nextKey.current,
+            pulsate,
+            rippleX,
+            rippleY,
+            rippleSize
+          }
         ]);
         nextKey.current += 1;
         rippleCallback.current = cb;
@@ -343,9 +327,47 @@ const TouchRipple: React.FC<TouchRippleProps> = React.forwardRef(
         ref={handleRef}
         {...rest}
       >
-        <TransitionGroup component={null} exit>
-          {ripples}
-        </TransitionGroup>
+        <Transition
+          items={ripples}
+          from={{ opacity: 1 }}
+          enter={{ opacity: 1 }}
+          leave={{ opacity: 0 }}
+          config={{ duration: DURATION }}
+        >
+          {({ opacity }, item) => {
+            return (
+              <TouchRippleRipple
+                style={{
+                  width: item.rippleSize,
+                  height: item.rippleSize,
+                  top: -(item.rippleSize / 2) + item.rippleY,
+                  left: -(item.rippleSize / 2) + item.rippleX
+                }}
+                className={css(
+                  classes.ripple,
+                  touchRippleClasses.ripple,
+                  touchRippleClasses.rippleVisible,
+                  {
+                    [css(
+                      classes.ripplePulsate,
+                      touchRippleClasses.ripplePulsate
+                    )]: item.pulsate
+                  }
+                )}
+              >
+                <animated.div
+                  className={css(classes.child, touchRippleClasses.child, {
+                    [css(
+                      classes.childPulsate,
+                      touchRippleClasses.childPulsate
+                    )]: item.pulsate
+                  })}
+                  style={{ opacity }}
+                />
+              </TouchRippleRipple>
+            );
+          }}
+        </Transition>
       </TouchRippleRoot>
     );
   }

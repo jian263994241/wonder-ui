@@ -67,7 +67,7 @@ const TooltipRoot = styled(Popper, {
   userSelect: 'none'
 }));
 
-const TooltipTooltip = styled('div', {
+const TooltipTooltip = styled(Grow, {
   name: 'WuiTooltip',
   slot: 'Tooltip'
 })(({ theme }) => {
@@ -215,27 +215,23 @@ const Tooltip = React.forwardRef<HTMLElement, TooltipProps>((inProps, ref) => {
         {...rest}
       >
         {({ TransitionProps, attributes, styles }) => (
-          <Grow
-            timeout={theme.transitions.duration.shorter}
+          <TooltipTooltip
+            className={classes.tooltip}
+            theme={theme}
             {...TransitionProps}
+            {...attributes.popper}
           >
-            <TooltipTooltip
-              className={classes.tooltip}
-              theme={theme}
-              {...attributes.popper}
-            >
-              {title}
-              {arrow ? (
-                <TooltipArrow
-                  data-popper-arrow
-                  className={classes.arrow}
-                  style={styles.arrow}
-                  theme={theme}
-                  {...attributes.popper}
-                />
-              ) : null}
-            </TooltipTooltip>
-          </Grow>
+            {title}
+            {arrow ? (
+              <TooltipArrow
+                data-popper-arrow
+                className={classes.arrow}
+                style={styles.arrow}
+                theme={theme}
+                {...attributes.popper}
+              />
+            ) : null}
+          </TooltipTooltip>
         )}
       </TooltipRoot>
     </React.Fragment>

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import ActionSheet from './ActionSheet';
 import { useReactive } from '@wonder-ui/hooks';
 import type { ActionSheetProps } from './ActionSheetTypes';

@@ -14,7 +14,7 @@ const items = Array(6).fill('');
 
 export default () => {
   return (
-    <Swipe autoplay>
+    <Swipe autoplay showSwitchButtons showIndicators>
       {items.map((item, index) => (
         <SwipeItem key={index}>
           <Image>{index + 1}</Image>

@@ -70,6 +70,9 @@ export * from './Container';
 export { default as DatePicker } from './DatePicker';
 export * from './DatePicker';
 
+export { default as DatePickerView } from './DatePickerView';
+export * from './DatePickerView';
+
 export { default as Dialog } from './Dialog';
 export * from './Dialog';
 
@@ -108,6 +111,12 @@ export * from './Grow';
 
 export { default as IconButton } from './IconButton';
 export * from './IconButton';
+
+export { default as Image } from './Image';
+export * from './Image';
+
+export { default as ImagePreview } from './ImagePreview';
+export * from './ImagePreview';
 
 export { default as Input } from './Input';
 export * from './Input';
@@ -246,9 +255,6 @@ export * from './TabPane';
 export { default as Tag } from './Tag';
 export * from './Tag';
 
-export { default as TimePicker } from './TimePicker';
-export * from './TimePicker';
-
 export { default as Toggle } from './Toggle';
 export * from './Toggle';
 
@@ -264,11 +270,11 @@ export * from './WhiteSpace';
 export { default as message } from './message';
 
 export { default as styled } from './styles/styled';
+export { default as ThemeProvider } from './styles/ThemeProvider';
 
-export * from './styles/GlobalStyles';
 export * from './styles/colorManipulator';
 export * from './styles/createTheme';
 export * from './styles/useTheme';
 export * from './styles/useThemeProps';
 
-export { ThemeProvider, css, keyframes } from '@wonder-ui/styled';
+export { GlobalStyles, css, keyframes } from '@wonder-ui/styled';

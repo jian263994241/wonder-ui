@@ -70,7 +70,7 @@ export interface InputAction {
 }
 ```
 
-<API src="./InputBase.tsx" props="actionRef|allowClear|borderless|defaultValue|disabled|maxLength|prefix|suffix|type|multiline|maxRows|minRows|value|onChange|onPressEnter|onRenderPrefix|onRenderSuffix|parser|formatter"></API>
+<API src="./InputBase.tsx"></API>
 
 
 

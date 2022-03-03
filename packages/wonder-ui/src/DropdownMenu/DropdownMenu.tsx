@@ -12,7 +12,7 @@ import {
   IRectangle
 } from '@wonder-ui/utils';
 import { dropdownMenuClasses, useClasses } from './DropdownMenuClasses';
-import { useForkRef, useSafeState } from '@wonder-ui/hooks';
+import { useForkRef, useSafeState, usePrevious } from '@wonder-ui/hooks';
 import Collapse from '../Collapse';
 
 const DropdownMenuRoot = styled('div', {
@@ -53,6 +53,8 @@ const DropdownMenuItemOverlay = styled(Collapse, {
   backgroundColor: theme.palette.background.paper,
   width: '100%',
   position: 'absolute',
+  top: 0,
+  left: 0,
   ...(inProp
     ? {
         zIndex: 2
@@ -110,19 +112,16 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
 
     const classes = useClasses(styleProps);
 
-    const handleEnter = React.useCallback(
-      (node) => {
-        const rootRect = getRect(rootRef.current!) as IRectangle;
+    const handleEnter = React.useCallback(() => {
+      const rootRect = getRect(rootRef.current!) as IRectangle;
 
-        setBackdropStyle({ top: rootRect.top });
+      setBackdropStyle({ top: rootRect.top });
 
-        if (!expanded) {
-          setExpanded(true);
-          disableBodyScroll();
-        }
-      },
-      [expanded]
-    );
+      if (!expanded) {
+        setExpanded(true);
+        disableBodyScroll();
+      }
+    }, [expanded]);
 
     const handleExited = React.useCallback(() => {
       if (currentIndex === -1) {
@@ -160,9 +159,9 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
               allowScrollOnElement(node);
             }}
             in={currentIndex === index}
+            immediate={currentIndex != index && currentIndex != -1}
             onEnter={handleEnter}
             onExited={handleExited}
-            timeout="auto"
           >
             {typeof child.props.overlay === 'function'
               ? child.props.overlay({ onClose })
@@ -197,10 +196,9 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
         {...rest}
       >
         <DropdownMenuBar className={classes.bar}>{children}</DropdownMenuBar>
-
         <DropdownMenuItemOverlayWrapper className={classes.overlayWrapper}>
           <Backdrop
-            classes={{ root: classes.backdrop }}
+            className={classes.backdrop}
             visible={currentIndex != -1}
             onClick={onClose}
             style={backdropStyle}

@@ -2,62 +2,20 @@ import * as React from 'react';
 import Fade from '../Fade';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import {
-  composeClasses,
-  css,
-  forwardRef,
-  generateUtilityClasses
-} from '@wonder-ui/utils';
-import { TransitionProps } from '../Transition';
-import { useForkRef } from '@wonder-ui/hooks';
+import { alpha } from '../styles/colorManipulator';
+import { css, generateUtilityClasses } from '@wonder-ui/utils';
+import { useEventListener, useForkRef } from '@wonder-ui/hooks';
+import type { BackdropProps } from './BackdropTypes';
 
 export const backdropClasses = generateUtilityClasses('WuiBackdrop', [
   'root',
   'invisible'
 ]);
 
-export interface BackdropProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * children
-   */
-  children?: React.ReactNode;
-  /**
-   * Css api
-   */
-  classes?: Partial<typeof backdropClasses>;
-  /**
-   * Root
-   */
-  component?: React.ElementType;
-  /**
-   * 透明
-   * @default false
-   */
-  invisible?: boolean;
-  /**
-   * 是否显示
-   * @default false
-   */
-  visible: boolean;
-  /**
-   * 过渡时间(ms)
-   */
-  transitionDuration?: TransitionProps['timeout'];
-}
-
-export interface BackdropStyleProps extends BackdropProps {}
-
-const useClasses = (styleProps: BackdropStyleProps) => {
-  const { invisible, classes } = styleProps;
-
-  const slots = {
-    root: ['root', invisible && 'invisible']
-  };
-
-  return composeClasses('WuiBackdrop', slots, classes);
-};
-
-const BackdropRoot = styled('div', { name: 'WuiBackdrop', slot: 'Root' })({
+const BackdropRoot = styled(Fade, {
+  name: 'WuiBackdrop',
+  slot: 'Root'
+})<{ styleProps: BackdropProps }>(({ theme, styleProps }) => ({
   zIndex: -1,
   position: 'fixed',
   display: 'flex',
@@ -67,57 +25,64 @@ const BackdropRoot = styled('div', { name: 'WuiBackdrop', slot: 'Root' })({
   bottom: 0,
   top: 0,
   left: 0,
-  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+  touchAction: 'none',
+  backgroundColor: `var(--backdrop-color, ${alpha(
+    theme.palette.common[styleProps.color!] || theme.palette.common.black,
+    styleProps.opacity!
+  )})`,
   WebkitTapHighlightColor: 'transparent',
   [`&.${backdropClasses.invisible}`]: {
     backgroundColor: 'transparent'
   }
-});
+}));
 
-const Backdrop = forwardRef<HTMLElement, BackdropProps>((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiBackdrop' });
-  const {
-    children,
-    className,
-    component,
-    invisible = false,
-    visible,
-    transitionDuration,
-    ...rest
-  } = props;
-  const nodeRef = React.useRef<HTMLElement>(null);
-  const handleRef = useForkRef(nodeRef, ref);
+const Backdrop = React.forwardRef<HTMLDivElement, BackdropProps>(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: 'WuiBackdrop' });
+    const {
+      color = 'black',
+      opacity = 0.4,
+      className,
+      children,
+      invisible = false,
+      visible,
+      duration,
+      style,
+      theme,
+      ...rest
+    } = props;
 
-  const styleProps = { ...props, invisible };
-  const classes = useClasses(styleProps);
+    const rootRef = React.useRef(null);
+    const handleRef = useForkRef(rootRef, ref);
 
-  const disableTouchMove = (e: Event) => e.preventDefault();
+    const disableTouchMove = (e: TouchEvent) => e.preventDefault();
 
-  React.useEffect(() => {
-    if (nodeRef.current) {
-      const root = nodeRef.current;
-      root.addEventListener('touchmove', disableTouchMove, {
-        passive: false
-      });
-      return () => {
-        root.removeEventListener('touchmove', disableTouchMove);
-      };
-    }
-  }, []);
+    useEventListener(rootRef, 'touchmove', disableTouchMove, {
+      passive: false
+    });
 
-  return (
-    <Fade
-      in={visible}
-      timeout={transitionDuration}
-      ref={handleRef}
-      mountOnEnter
-      {...rest}
-    >
-      <BackdropRoot as={component} className={css(classes.root, className)}>
+    const styledProps = {
+      ...props,
+      color,
+      opacity
+    };
+
+    return (
+      <BackdropRoot
+        styleProps={styledProps}
+        in={visible}
+        className={css(backdropClasses.root, className, {
+          [backdropClasses.invisible]: invisible
+        })}
+        style={style}
+        duration={duration}
+        ref={handleRef}
+        {...rest}
+      >
         {children}
       </BackdropRoot>
-    </Fade>
-  );
-});
+    );
+  }
+);
 
 export default Backdrop;

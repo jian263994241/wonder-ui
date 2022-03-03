@@ -4,9 +4,9 @@ import Modal, { ModalProps } from '../Modal';
 import Paper, { PaperProps } from '../Paper';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { BaseTransitionProps, TransitionTimeout } from '../Transition';
 import { css, debounce, ownerDocument, ownerWindow } from '@wonder-ui/utils';
 import { popoverClasses, useClasses } from './PopoverClasses';
+import { TransitionBaseProps } from '../styles/transitions';
 import { useForkRef } from '@wonder-ui/hooks';
 
 type Rect = { width: number; height: number };
@@ -44,9 +44,9 @@ export function getOffsetLeft(rect: Rect, horizontal: Horizontal) {
 }
 
 function getAnchorEl(anchorEl?: AnchorEl) {
-  return (typeof anchorEl === 'function'
-    ? anchorEl()
-    : anchorEl) as HTMLElement;
+  return (
+    typeof anchorEl === 'function' ? anchorEl() : anchorEl
+  ) as HTMLElement;
 }
 
 function getTransformOriginValue(transformOrigin: TransformOrigin) {
@@ -61,7 +61,7 @@ const PopoverRoot = styled(Modal, {
   shouldForwardProp: () => true
 })<ModalProps>({});
 
-const PopoverPaper = styled(Paper, {
+const PopoverPaper = styled(Paper.withComponent(Grow), {
   name: 'WuiPopover',
   slot: 'Paper',
   shouldForwardProp: () => true
@@ -84,14 +84,6 @@ export interface PopoverProps extends Omit<ModalProps, 'children'> {
    * @ignore
    */
   PaperProps?: Partial<PaperProps>;
-  /**
-   * @ignore
-   */
-  TransitionComponent?: React.ComponentType<BaseTransitionProps>;
-  /**
-   * @ignore
-   */
-  TransitionProps?: BaseTransitionProps;
   /**
    * 支持updatePosition（）操作
    */
@@ -146,23 +138,18 @@ export interface PopoverProps extends Omit<ModalProps, 'children'> {
   /**
    * 动画时间
    */
-  transitionDuration?: TransitionTimeout;
+  duration?: TransitionBaseProps['duration'];
   /**
    * 是否显示
    */
   visible?: boolean;
-  /**
-   * @ignore
-   */
-  ref?: React.Ref<any>;
 }
 
 const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiPopover' });
   const {
     PaperProps,
-    TransitionComponent = Grow,
-    TransitionProps: { onEntering, ...TransitionProps } = {},
+    duration,
     actionRef,
     anchorEl,
     anchorOrigin = { vertical: 'top', horizontal: 'left' },
@@ -174,7 +161,6 @@ const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
     elevation = 8,
     marginThreshold = 16,
     transformOrigin = { vertical: 'top', horizontal: 'left' },
-    transitionDuration,
     visible = false,
     ...rest
   } = props;
@@ -183,7 +169,7 @@ const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
 
   const classes = useClasses(styleProps);
 
-  const paperRef = React.useRef<HTMLElement>(null);
+  const paperRef = React.useRef<HTMLDivElement>(null);
   const handdlePaperRef = useForkRef(paperRef, PaperProps?.ref);
 
   const getAnchorOffset = React.useCallback(() => {
@@ -311,10 +297,10 @@ const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
     element.style.transformOrigin = positioning.transformOrigin;
   }, [getPositioningStyle]);
 
-  const handleEntering: typeof onEntering = (element, isAppearing) => {
-    if (onEntering) {
-      onEntering(element, isAppearing);
-    }
+  const handleEntering = () => {
+    // if (onEntering) {
+    //   onEntering(element, isAppearing);
+    // }
     setPositioningStyles();
   };
 
@@ -371,22 +357,17 @@ const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
       {...rest}
       classes={{ root: css(classes.root, className) }}
     >
-      <TransitionComponent
-        appear
+      <PopoverPaper
         in={visible}
-        timeout={transitionDuration}
-        onEntering={handleEntering}
-        {...TransitionProps}
+        onEnter={handleEntering}
+        duration={duration}
+        {...PaperProps}
+        className={css(classes.paper, PaperProps?.className)}
+        elevation={elevation}
+        ref={handdlePaperRef}
       >
-        <PopoverPaper
-          {...PaperProps}
-          className={css(classes.paper, PaperProps?.className)}
-          elevation={elevation}
-          ref={handdlePaperRef}
-        >
-          {children}
-        </PopoverPaper>
-      </TransitionComponent>
+        {children}
+      </PopoverPaper>
     </PopoverRoot>
   );
 });

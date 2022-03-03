@@ -16,9 +16,9 @@ import {
   raf
 } from '@wonder-ui/utils';
 import { darken, lighten } from '../styles/colorManipulator';
-import { useEventCallback, useReactive, useWindowSize } from '@wonder-ui/hooks';
 import { swipeClasses } from '../Swipe/SwipeClasses';
 import { swipeItemClasses } from '../SwipeItem/SwipeItemClasses';
+import { useEventCallback, useReactive, useWindowSize } from '@wonder-ui/hooks';
 
 const COMPONENT_NAME = 'Noticebar';
 
@@ -82,7 +82,7 @@ export interface NoticebarProps {
   /**
    * 通知文本内容
    */
-  text?: string;
+  text?: React.ReactNode;
   /**
    * 图标
    */
@@ -124,7 +124,7 @@ export interface NoticebarProps {
   wrap?: boolean;
 }
 
-const NoticebarRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
+const NoticebarRoot = styled(Fade, { name: COMPONENT_NAME, slot: 'Root' })<{
   styleProps: NoticebarProps;
 }>(({ theme, styleProps }) => {
   const color = theme.palette[styleProps.type || 'warning'].main;
@@ -316,58 +316,57 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
     };
 
     return (
-      <Fade
+      <NoticebarRoot
+        role="alert"
         in={state.show}
-        unmountOnExit
-        style={style}
         className={css(classes.root, className)}
+        style={style}
+        styleProps={styleProps}
+        ref={ref}
+        {...rest}
       >
-        <NoticebarRoot role="alert" styleProps={styleProps} ref={ref} {...rest}>
-          {icon && (
-            <NoticebarIcon className={classes.icon}>{icon}</NoticebarIcon>
-          )}
+        {icon && <NoticebarIcon className={classes.icon}>{icon}</NoticebarIcon>}
 
-          <NoticebarTextWrap
-            ref={wrapRef}
-            role="marquee"
-            className={classes.textWrap}
-          >
-            {children || (
-              <NoticebarText
-                ref={contentRef}
-                className={classes.text}
-                style={trackStyle}
-                styleProps={styleProps}
-                onTransitionEnd={onTransitionEnd}
-              >
-                {text}
-              </NoticebarText>
+        <NoticebarTextWrap
+          ref={wrapRef}
+          role="marquee"
+          className={classes.textWrap}
+        >
+          {children || (
+            <NoticebarText
+              ref={contentRef}
+              className={classes.text}
+              style={trackStyle}
+              styleProps={styleProps}
+              onTransitionEnd={onTransitionEnd}
+            >
+              {text}
+            </NoticebarText>
+          )}
+        </NoticebarTextWrap>
+
+        {(textAfter || mode) && (
+          <NoticebarTextAfter className={classes.textAfter} itemWrap={false}>
+            {textAfter}
+            {mode === 'closeable' && (
+              <CloseButton
+                className={classes.close}
+                color="inherit"
+                onClick={handleClose}
+              />
             )}
-          </NoticebarTextWrap>
-
-          {(textAfter || mode) && (
-            <NoticebarTextAfter className={classes.textAfter} itemWrap={false}>
-              {textAfter}
-              {mode === 'closeable' && (
-                <CloseButton
-                  className={classes.close}
-                  color="inherit"
-                  onClick={handleClose}
-                />
-              )}
-              {mode === 'link' && (
-                <IconButton
-                  className={classes.close}
-                  color="inherit"
-                  onClick={onClick}
-                >
-                  <ArrowForward fontSize="small" />
-                </IconButton>
-              )}
-            </NoticebarTextAfter>
-          )}
-        </NoticebarRoot>
-      </Fade>
+            {mode === 'link' && (
+              <IconButton
+                className={classes.close}
+                color="inherit"
+                onClick={onClick}
+              >
+                <ArrowForward fontSize="small" />
+              </IconButton>
+            )}
+          </NoticebarTextAfter>
+        )}
+      </NoticebarRoot>
     );
   }
 );

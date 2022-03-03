@@ -12,8 +12,7 @@ import {
   useEventCallback,
   useForkRef,
   useId,
-  useUpdateEffect,
-  useWindowSize
+  useResizeEffect
 } from '@wonder-ui/hooks';
 
 const useClasses = (styleProps: TabStyleProps) => {
@@ -192,13 +191,11 @@ const Tab = React.forwardRef<HTMLSpanElement, TabProps>((props, ref) => {
     }
   }, [isActive, children]);
 
-  const windowSize = useWindowSize();
-
-  useUpdateEffect(() => {
+  useResizeEffect(() => {
     if (isActive) {
       setLine(rootRef.current!);
     }
-  }, [windowSize.width]);
+  }, rootRef);
 
   const text = label || children;
 

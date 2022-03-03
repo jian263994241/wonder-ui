@@ -1,6 +1,5 @@
 import * as React from 'react';
 import ClickAwayListener from '../ClickAwayListener';
-import Grow from '../Grow';
 import Portal from '../Portal';
 import SnackbarContent from '../SnackbarContent';
 import styled from '../styles/styled';
@@ -97,9 +96,6 @@ const Snackbar = React.forwardRef<HTMLElement, SnackbarProps>(
         horizontal: 'left'
       },
       ClickAwayListenerProps,
-      ContentProps,
-      TransitionComponent = Grow,
-      TransitionProps: { onEnter, onExited, ...TransitionProps } = {},
       autoHideDuration = null,
       children,
       className,
@@ -179,20 +175,12 @@ const Snackbar = React.forwardRef<HTMLElement, SnackbarProps>(
       handleResume();
     };
 
-    const handleExited = (node: any) => {
+    const handleExited = () => {
       setExited(true);
-
-      if (onExited) {
-        onExited(node);
-      }
     };
 
-    const handleEnter = (node: any, isAppearing: any) => {
+    const handleEnter = () => {
       setExited(false);
-
-      if (onEnter) {
-        onEnter(node, isAppearing);
-      }
     };
 
     React.useEffect(() => {
@@ -233,25 +221,16 @@ const Snackbar = React.forwardRef<HTMLElement, SnackbarProps>(
             ref={handleRef}
             {...rest}
           >
-            <TransitionComponent
-              appear
+            <SnackbarContent
+              message={message}
+              action={action}
+              center={vertical === 'center' && horizontal === 'center'}
+              classes={{ root: classes.content }}
               in={visible}
-              direction={vertical === 'top' ? 'down' : 'up'}
-              timeout={transitionDuration}
+              duration={transitionDuration}
               onEnter={handleEnter}
               onExited={handleExited}
-              {...TransitionProps}
-            >
-              {children || (
-                <SnackbarContent
-                  message={message}
-                  action={action}
-                  center={vertical === 'center' && horizontal === 'center'}
-                  classes={{ root: classes.content }}
-                  {...ContentProps}
-                />
-              )}
-            </TransitionComponent>
+            />
           </SnackbarRoot>
         </ClickAwayListener>
       </Portal>

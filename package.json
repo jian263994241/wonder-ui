@@ -41,7 +41,7 @@
     "@types/react-dom": "^17.0.0",
     "commitizen": "^4.2.2",
     "dayjs": "^1.10.6",
-    "dumi": "^1.1.35",
+    "dumi": "^1.1.38",
     "lcn": "^3.0.2",
     "node-html-parser": "^2.1.0",
     "qrcode.react": "^1.0.1",
@@ -62,8 +62,8 @@
     }
   },
   "resolutions": {
-    "typescript": "^4.3.2",
-    "rollup-plugin-typescript2": "0.30.0"
+    "typescript": "^4.5.5",
+    "rollup-plugin-typescript2": "^0.31.2"
   },
   "config": {
     "commitizen": {

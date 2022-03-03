@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ClearButton from './ClearButton';
 import RevealButton from './RevealButton';
+import Space from '../Space/Space';
 import styled from '../styles/styled';
 import TextareaAutosize from './TextareaAutosize';
 import useThemeProps from '../styles/useThemeProps';
@@ -366,7 +367,7 @@ const InputPrefix = styled('span', {
   }
 }));
 
-const InputSuffix = styled('span', {
+const InputSuffix = styled(Space, {
   name: COMPONENT_NAME,
   slot: 'Suffix'
 })(({ theme }) => ({
@@ -535,7 +536,7 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
 
     const handleReset = useEventCallback(
       (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-        setValueIfunControlled('', () => action.focus(), true);
+        setValueIfunControlled('', () => action.focus());
 
         resolveOnChange(inputRef.current!, e, onChange);
       }

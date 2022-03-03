@@ -2,9 +2,16 @@ import * as React from 'react';
 import Fade from '../Fade';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { forwardRef, getScrollTop, on, scrollTop } from '@wonder-ui/utils';
+import {
+  css,
+  forwardRef,
+  generateUtilityClasses,
+  getScrollTop,
+  scrollTop
+} from '@wonder-ui/utils';
 import {
   useEventCallback,
+  useEventListener,
   useForkRef,
   useSafeState,
   useScrollParent
@@ -12,7 +19,12 @@ import {
 
 const COMPONENT_NAME = 'WuiBackTop';
 
+const backTopClasses = generateUtilityClasses(COMPONENT_NAME, ['root']);
+
 export interface BackTopProps {
+  /**
+   * children
+   */
   children?: React.ReactNode;
   /**
    * 额外的 CSS className
@@ -20,7 +32,7 @@ export interface BackTopProps {
   className?: string;
   /**
    * 回到顶部所需时间（ms）
-   * @default 450
+   * @default 300
    */
   duration?: number;
   /**
@@ -67,7 +79,7 @@ function scrollTo(element: Element | Window, to: number, duration: number) {
   }
 }
 
-const BackTopRoot = styled('div', {
+const BackTopRoot = styled(Fade, {
   name: COMPONENT_NAME,
   slot: 'Root'
 })(({ theme }) => ({
@@ -78,8 +90,7 @@ const BackTopRoot = styled('div', {
   right: 100,
   cursor: 'pointer',
   display: 'flex',
-  transition: theme.transitions.create('opacity'),
-  opacity: 1,
+
   [theme.breakpoints.down('md')]: {
     right: 60
   },
@@ -91,10 +102,13 @@ const BackTopRoot = styled('div', {
 const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
+    className,
     children,
-    duration = 450,
+    duration = 300,
     visibilityHeight = 400,
     onClick,
+    theme,
+    style,
     ...rest
   } = props;
   const [visible, setVisible] = useSafeState(false);
@@ -103,43 +117,34 @@ const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
   const handleRef = useForkRef(rootRef, ref);
   const scrollElementRef = useScrollParent(rootRef);
 
-  const handleScroll = useEventCallback((e) => {
-    const { current: scrollElement } = scrollElementRef;
-
-    const scrollTop = getScrollTop(scrollElement!);
-
-    if (scrollTop >= visibilityHeight) {
-      !visible && setVisible(true);
-    } else {
-      visible && setVisible(false);
-    }
-  });
-
   const handleClick = useEventCallback((e) => {
-    const { current: scrollElement } = scrollElementRef;
-
-    scrollTo(scrollElement!, 0, duration);
-
-    if (onClick) {
-      onClick(e);
-    }
+    scrollTo(scrollElementRef.current!, 0, duration);
+    onClick?.(e);
   });
 
-  React.useEffect(() => {
-    const { current: root } = rootRef;
-    const { current: scrollElement } = scrollElementRef;
+  useEventListener(scrollElementRef, 'scroll', () => {
+    const scrollTop = getScrollTop(scrollElementRef.current!);
 
-    if (root && scrollElement) {
-      return on(scrollElement, 'scroll', handleScroll);
-    }
-  }, []);
+    setVisible(() => {
+      if (scrollTop >= visibilityHeight) {
+        return true;
+      }
+      return false;
+    });
+  });
 
   return (
-    <Fade in={visible}>
-      <BackTopRoot {...rest} onClick={handleClick} ref={handleRef}>
-        {children}
-      </BackTopRoot>
-    </Fade>
+    <BackTopRoot
+      in={visible}
+      className={css(backTopClasses.root, className)}
+      style={style}
+      duration={theme.transitions.duration.shortest}
+      onClick={handleClick}
+      ref={handleRef}
+      {...rest}
+    >
+      {children}
+    </BackTopRoot>
   );
 });
 

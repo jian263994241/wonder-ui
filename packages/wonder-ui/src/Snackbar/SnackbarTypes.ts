@@ -1,14 +1,9 @@
-import { BaseTransitionProps, TransitionTimeout } from '../Transition';
+import { TransitionDuration } from '../styles/transitions';
 import type { ClickAwayListenerProps } from '../ClickAwayListener';
-import type { SnackbarContentProps } from '../SnackbarContent';
 import * as React from 'react';
 
 export interface SnackbarProps {
   ClickAwayListenerProps?: Partial<ClickAwayListenerProps>;
-  ContentProps?: Partial<SnackbarContentProps>;
-  TransitionComponent?: React.ComponentType<BaseTransitionProps>;
-  TransitionProps?: BaseTransitionProps;
-  children?: React.ReactElement;
   className?: string;
   style?: React.CSSProperties;
   disableWindowBlurListener?: boolean;
@@ -16,7 +11,7 @@ export interface SnackbarProps {
   onMouseEnter?: React.MouseEventHandler<HTMLElement>;
   onMouseLeave?: React.MouseEventHandler<HTMLElement>;
   resumeHideDuration?: boolean | null;
-  transitionDuration?: TransitionTimeout;
+  transitionDuration?: TransitionDuration;
   /**
    * 操作区
    */

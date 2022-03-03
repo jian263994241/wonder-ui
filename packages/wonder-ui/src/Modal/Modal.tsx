@@ -1,8 +1,8 @@
 import * as React from 'react';
-import Backdrop, { BackdropProps } from '../Backdrop';
+import Backdrop from '../Backdrop';
 import FocusLock from 'react-focus-lock';
 import ModalManager, { ariaHidden, Modal as ModalType } from './ModalManager';
-import Portal, { Container, getContainer } from '../Portal/Portal';
+import Portal, { getContainer } from '../Portal/Portal';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { createChainedFunction, css, ownerDocument } from '@wonder-ui/utils';
@@ -14,6 +14,7 @@ import {
   useForkRef,
   useSafeState
 } from '@wonder-ui/hooks';
+import type { ModalProps } from './ModalTypes';
 
 // A modal manager used to track and manage the state of open Modals.
 // Modals don't open on the server so this won't conflict with concurrent requests.
@@ -21,118 +22,6 @@ const defaultManager = new ModalManager();
 
 function getHasTransition(props: React.PropsWithChildren<any>) {
   return props.children ? props.children.props.hasOwnProperty('in') : false;
-}
-
-export interface ModalProps {
-  /**
-   * AutoFocus
-   */
-  autoFocus?: boolean;
-  /**
-   * Backdrop Props
-   * @default {}
-   */
-  BackdropProps?: Partial<BackdropProps>;
-  /**
-   * 子节点
-   */
-  children: React.ReactNode;
-  /**
-   * Css api
-   */
-  classes?: Partial<typeof modalClasses>;
-  /**
-   * Root element
-   */
-  component?: React.ElementType;
-  /**
-   * 容器 HTMLElement
-   */
-  container?: Container;
-  /**
-   * @ignore
-   */
-  className?: string;
-  /**
-   * 过渡后关闭
-   * @default false
-   */
-  closeAfterTransition?: boolean;
-
-  /**
-   * 禁用esc按键执行关闭
-   * @default false
-   */
-  disableEscapeKeyDown?: boolean;
-  /**
-   * 禁用FocusLock
-   * @default false
-   */
-  disableFocusLock?: boolean;
-  /**
-   * 禁用 Portal
-   * @default false
-   */
-  disablePortal?: boolean;
-  /**
-   * 禁用滚动锁
-   * @default false
-   */
-  disableScrollLock?: boolean;
-  /**
-   * FocusLock Props
-   * @default {}
-   */
-  FocusLockProps?: Partial<ReactFocusLockProps>;
-  /**
-   * 隐藏Backdrop
-   * @default false
-   */
-  hideBackdrop?: boolean;
-  /**
-   * @ignore
-   */
-  hasTransition?: boolean;
-  /**
-   * 保持Modal节点
-   * @default false
-   */
-  keepMounted?: boolean;
-  /**
-   * @ignore
-   * Modal manager
-   */
-  manager?: InstanceType<typeof ModalManager>;
-  /**
-   * 背景板点击事件
-   */
-  onBackdropClick?(event: React.MouseEvent): void;
-  /**
-   * Modal关闭事件
-   */
-  onClose?<T extends 'backdropClick' | 'escapeKeyDown'>(
-    event: T extends 'escapeKeyDown' ? React.KeyboardEvent : React.MouseEvent,
-    type: T
-  ): void;
-  /**
-   * esc键盘事件
-   */
-  onKeyDown?(event: React.KeyboardEvent): void;
-  /**
-   * 过渡动画事件
-   */
-  onTransitionEnter?(): void;
-  /**
-   * 过渡动画事件
-   */
-  onTransitionExited?(): void;
-
-  style?: React.CSSProperties;
-  /**
-   * 是否显示
-   * @default false
-   */
-  visible?: boolean;
 }
 
 const ModalRoot = styled(FocusLock, {
@@ -216,9 +105,10 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
     }
   };
 
-  const isTopModal = React.useCallback(() => manager.isTopModal(getModal()), [
-    manager
-  ]);
+  const isTopModal = React.useCallback(
+    () => manager.isTopModal(getModal()),
+    [manager]
+  );
 
   const handlePortalRef = useEventCallback((node) => {
     mountNodeRef.current = node;
@@ -375,12 +265,12 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
     >
       <ModalRoot
         returnFocus
+        noFocusGuards
         {...FocusLockProps}
         ref={handleRef}
         as={component}
         className={css(classes.root, className, FocusLockProps?.className)}
         disabled={disableFocusLock}
-        // noFocusGuards={disableFocusLock ? 'tail' : false}
         autoFocus={autoFocus}
         style={style}
       >
@@ -388,7 +278,7 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
           <Backdrop
             visible={visible}
             onClick={handleBackdropClick}
-            classes={{ root: classes.backdrop }}
+            className={classes.backdrop}
             {...BackdropProps}
           />
         )}

@@ -5,7 +5,7 @@ import IconButton from '../IconButton';
 import Navbar, { NavbarProps } from '../Navbar';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { css, mergedRef } from '@wonder-ui/utils';
+import { css, forwardRef, mergedRef } from '@wonder-ui/utils';
 import { navbarClasses } from '../Navbar/NavbarClasses';
 import { pageClasses, useClasses } from './PageClasses';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
@@ -68,6 +68,8 @@ export interface PageProps
    * 自定义导航栏
    */
   navbar?: JSX.Element;
+
+  component?: React.ElementType;
   /**
    * 返回按钮事件
    */
@@ -100,13 +102,14 @@ export interface PageProps
   toolbar?: JSX.Element;
 }
 
-const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
+const Page = forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiPage' });
   const {
     NavbarProps,
     ToolbarProps,
     ContentProps,
     ContentRef,
+    component,
     children,
     className,
     navbar = null,
@@ -159,7 +162,8 @@ const Page = React.forwardRef<HTMLElement, PageProps>((inProps, ref) => {
 
   return (
     <PageRoot
-      ref={ref as React.Ref<HTMLDivElement>}
+      ref={ref}
+      as={component}
       className={css(classes.root, className)}
       {...rest}
     >

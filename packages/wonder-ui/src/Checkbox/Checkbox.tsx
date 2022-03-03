@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { alpha } from '../styles/colorManipulator';
 import { checkboxClasses, useClasses } from './CheckboxClasses';
 import { css } from '@wonder-ui/utils';
 import { useControlled, useForkRef } from '@wonder-ui/hooks';
@@ -156,17 +155,18 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 
     const classes = useClasses(styleProps);
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
-      (e) => {
-        const input = e.target;
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> =
+      React.useCallback(
+        (e) => {
+          const input = e.target;
 
-        setChecked(input.checked);
-        if (onChange) {
-          onChange(e);
-        }
-      },
-      [onChange, indeterminate]
-    );
+          setChecked(input.checked);
+          if (onChange) {
+            onChange(e);
+          }
+        },
+        [onChange, indeterminate]
+      );
 
     if (children) {
       return (

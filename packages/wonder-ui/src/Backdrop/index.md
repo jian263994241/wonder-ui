@@ -8,7 +8,7 @@ group:
   title: 反馈
   order: 5
 ---
-# Backdrop 背板
+# Backdrop 背景
 
 背景暗化组件用于强调特定元素.
 

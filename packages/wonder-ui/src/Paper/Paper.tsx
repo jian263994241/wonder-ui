@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { css } from '@wonder-ui/utils';
+import { css, forwardRef } from '@wonder-ui/utils';
 import { paperClasses, PaperStyleProps, useClasses } from './PaperClasses';
 
 const getOverlayAlpha = (elevation: number): number => {
@@ -32,7 +32,7 @@ const PaperRoot = styled('div', {
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   transition: theme.transitions.create('box-shadow'),
-  borderRadius: theme.shape.borderRadius,
+  borderRadius: `var(--paper-border-radius, ${theme.shape.borderRadius}px)`,
 
   [`&.${paperClasses.square}`]: {
     borderRadius: 0
@@ -53,7 +53,7 @@ const PaperRoot = styled('div', {
   }
 }));
 
-const Paper = React.forwardRef<HTMLElement, PaperProps>((inProps, ref) => {
+const Paper = forwardRef<HTMLDivElement, PaperProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiPaper' });
   const {
     className,
@@ -73,7 +73,7 @@ const Paper = React.forwardRef<HTMLElement, PaperProps>((inProps, ref) => {
       as={component}
       className={css(classes.root, className)}
       styleProps={styleProps}
-      ref={ref as React.Ref<HTMLDivElement>}
+      ref={ref}
       {...rest}
     />
   );

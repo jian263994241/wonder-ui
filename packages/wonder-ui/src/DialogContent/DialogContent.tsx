@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ButtonBase from '../ButtonBase';
 import Divider from '../Divider';
-import Paper, { PaperProps } from '../Paper';
+import Grow from '../Grow';
 import styled from '../styles/styled';
 import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
@@ -12,17 +12,19 @@ import type {
   DialogContentProps
 } from './DialogContentTypes';
 
-const DialogContentRoot = styled(Paper, {
+const DialogContentRoot = styled(Grow, {
   name: 'WuiDialogContent',
   slot: 'Root',
   shouldForwardProp: () => true
-})<PaperProps>(({ theme }) => ({
+})(({ theme }) => ({
   ...theme.typography.body2,
+  backgroundColor: theme.palette.background.paper,
   borderRadius: theme.shape.dialogRadius,
   width: '100%',
   maxWidth: 300,
   userSelect: 'none',
-  overflow: 'hidden'
+  overflow: 'hidden',
+  outline: 'none'
 }));
 
 const DialogContentInner = styled('div', {
@@ -77,7 +79,7 @@ export const DialogButton = styled(ButtonBase, {
   })
 }));
 
-const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
+const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiDialogContent' });
     const {
@@ -86,7 +88,6 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
       className,
       children,
       disableRipple,
-      elevation = 1,
       text,
       textTypographyProps,
       title,
@@ -103,7 +104,6 @@ const DialogContent = React.forwardRef<HTMLElement, DialogContentProps>(
       <DialogContentRoot
         role="presentation"
         className={css(classes.root, className)}
-        elevation={elevation}
         ref={ref}
         {...rest}
       >

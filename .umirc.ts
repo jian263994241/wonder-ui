@@ -12,6 +12,13 @@ export default defineConfig({
       { autoLabel: 'dev-only', sourceMap: true, cssPropOptimization: true }
     ]
   ],
+  metas: [
+    {
+      name: 'viewport',
+      content:
+        'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover'
+    }
+  ],
   locales: [
     ['zh-CN', '中文']
     // ['en-US', 'English']
@@ -77,5 +84,19 @@ export default defineConfig({
       document.body.style.background = '#f5f7fa'
     }`
   ],
-  styles: []
+  styles: [
+    ` html {
+      touch-action: manipulation;
+    }
+    #root .__dumi-default-mobile-demo-layout {
+      padding: 0;
+    }
+    a[title='站长统计'] {
+      display: none;
+    }
+    html {
+      min-height: 100vh;
+    }
+    `
+  ]
 });

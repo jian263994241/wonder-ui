@@ -3,6 +3,7 @@ import { DialogContent } from '@wonder-ui/core';
 export default () => (
   <div style={{ padding: 16 }}>
     <DialogContent
+      in={true}
       style={{ width: '100%' }}
       title="标题"
       text="内容, 内容, 内容..."

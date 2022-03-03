@@ -1,7 +1,4 @@
-/**
- * title: 自定义Modal内容
- * desc:
- */
+import * as React from 'react';
 import {
   Button,
   Fade,
@@ -12,7 +9,6 @@ import {
   Space,
   message
 } from '@wonder-ui/core';
-import { useBoolean } from '@wonder-ui/hooks';
 
 const Demo = styled('div')`
   position: absolute;
@@ -28,21 +24,17 @@ const Demo = styled('div')`
 `;
 
 export default () => {
-  const [visible, { setTrue, setFalse }] = useBoolean();
+  const [visible, setVisible] = React.useState(false);
+
+  const show = () => setVisible(true);
+  const hide = () => setVisible(false);
 
   return (
     <div>
-      <Button variant="contained" onClick={() => setTrue()}>
-        Open
-      </Button>
+      <Button onClick={show}>自定义模态框</Button>
 
-      <Modal
-        visible={visible}
-        onClose={() => setFalse()}
-        BackdropProps={{ transitionDuration: 400 }}
-        autoFocus
-      >
-        <Fade timeout={400}>
+      <Modal visible={visible} onClose={hide}>
+        <Fade in>
           <Demo>
             <Typography variant="h2" gutterBottom>
               模态框标题
@@ -60,7 +52,7 @@ export default () => {
               >
                 确定
               </Button>
-              <Button onClick={() => setFalse()} color="secondary">
+              <Button onClick={hide} color="secondary">
                 取消
               </Button>
             </Space>

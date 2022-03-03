@@ -4,10 +4,9 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { emphasize, alpha } from '../styles/colorManipulator';
 import { snackbarContentClasses, useClasses } from './SnackbarContentClasses';
-export interface SnackbarContentProps {
-  className?: string;
+import Grow, { GrowProps } from '../Grow';
 
-  style?: React.CSSProperties;
+export interface SnackbarContentProps extends GrowProps {
   /**
    * 操作区
    */
@@ -28,11 +27,9 @@ export interface SnackbarContentProps {
    * @ignore
    */
   role?: string;
-  /**@ignore */
-  ref?: React.Ref<any>;
 }
 
-const SnackbarContentRoot = styled(Paper, {
+const SnackbarContentRoot = styled(Paper.withComponent(Grow), {
   name: 'WuiSnackbarContent',
   slot: 'Root',
   shouldForwardProp: () => true
@@ -81,7 +78,7 @@ const SnackbarContentAction = styled('div', {
   marginRight: -8
 });
 
-const SnackbarContent = React.forwardRef<HTMLElement, SnackbarContentProps>(
+const SnackbarContent = React.forwardRef<HTMLDivElement, SnackbarContentProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiSnackbarContent' });
     const {

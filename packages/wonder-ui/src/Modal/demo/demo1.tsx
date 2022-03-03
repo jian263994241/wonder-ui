@@ -1,26 +1,23 @@
-/**
- * title: 基本使用
- * desc: 使用 `Fade` 过渡效果
- */
+import * as React from 'react';
 import { Button, Fade, Modal, ModalContent, Typography } from '@wonder-ui/core';
-import { useBoolean } from '@wonder-ui/hooks';
 
 export default () => {
-  const [visible, { setFalse, setTrue }] = useBoolean();
+  const [visible, setVisible] = React.useState(false);
+
+  const show = () => setVisible(true);
+  const hide = () => setVisible(false);
 
   return (
     <div>
-      <Button variant="contained" onClick={() => setTrue()}>
-        Open
-      </Button>
+      <Button onClick={show}>模态框</Button>
 
-      <Modal autoFocus visible={visible} onClose={() => setFalse()}>
-        <Fade>
+      <Modal visible={visible} onClose={hide}>
+        <Fade in>
           <ModalContent
             title="Modal Title"
-            onOk={() => setFalse()}
-            onClose={() => setFalse()}
-            onCancel={() => setFalse()}
+            onOk={hide}
+            onClose={hide}
+            onCancel={hide}
           >
             <Typography>some contents...</Typography>
             <Typography>some contents...</Typography>

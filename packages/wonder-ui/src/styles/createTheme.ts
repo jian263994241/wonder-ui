@@ -78,4 +78,8 @@ export function createTheme(options: ThemeOptions = {}): Theme {
   return newTheme;
 }
 
+export const getTheme = () => {
+  return Object.keys(defaultTheme).length === 0 ? createTheme() : defaultTheme;
+};
+
 export default createTheme;

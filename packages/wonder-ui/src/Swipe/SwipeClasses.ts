@@ -8,7 +8,9 @@ export const swipeClasses = generateUtilityClasses(COMPONENT_NAME, [
   'container',
   'item',
   'indicators',
-  'indicator'
+  'indicator',
+  'prevButton',
+  'nextBUtton'
 ]);
 
 export type SwipeClasses = typeof swipeClasses;

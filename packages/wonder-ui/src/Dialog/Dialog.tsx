@@ -1,16 +1,12 @@
 import * as React from 'react';
 import DialogContent from '../DialogContent';
-import Grow from '../Grow';
 import Modal, { ModalProps } from '../Modal';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { createChainedFunction, css } from '@wonder-ui/utils';
 import { DialogProps } from './DialogTypes';
-import { duration } from '../styles/transitions';
 import { useClasses } from './DialogClasses';
 import { useControlled } from '@wonder-ui/hooks';
-
-const defaultTransitionDuration = duration.area.medium;
 
 const DialogRoot = styled(Modal, {
   name: 'WuiDialog',
@@ -35,9 +31,6 @@ const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((inProps, ref) => {
     visible: visibleProp = false,
     style,
     buttonsVertical = false,
-    TranstionComponent = Grow,
-    TranstionComponentProps,
-    transitionDuration = defaultTransitionDuration,
     ...rest
   } = props;
 
@@ -69,31 +62,25 @@ const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((inProps, ref) => {
         visible={visible}
         theme={theme}
         className={css(classes.root, className)}
-        BackdropProps={{ transitionDuration, ...ModalProps.BackdropProps }}
+        // BackdropProps={{ duration: transitionDuration, ...ModalProps.BackdropProps }}
         {...ModalProps}
         ref={ref}
       >
-        <TranstionComponent
-          appear
+        <DialogContent
+          {...rest}
           in={visible}
-          timeout={transitionDuration}
-          {...TranstionComponentProps}
-        >
-          <DialogContent
-            {...rest}
-            classes={contentClasses}
-            className={classes.content}
-            buttonsVertical={buttonsVertical}
-            style={{ marginLeft: 10, marginRight: 10 }}
-            buttons={buttons.map((props) => ({
-              ...props,
-              onClick: createChainedFunction(
-                toogleVisibleIfUncontroled,
-                props.onClick
-              )
-            }))}
-          ></DialogContent>
-        </TranstionComponent>
+          classes={contentClasses}
+          className={classes.content}
+          buttonsVertical={buttonsVertical}
+          style={{ marginLeft: 10, marginRight: 10 }}
+          buttons={buttons.map((props) => ({
+            ...props,
+            onClick: createChainedFunction(
+              toogleVisibleIfUncontroled,
+              props.onClick
+            )
+          }))}
+        ></DialogContent>
       </DialogRoot>
     </React.Fragment>
   );

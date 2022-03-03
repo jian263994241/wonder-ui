@@ -31,12 +31,12 @@ function round(value: number) {
 }
 
 function ellipsis(
-  width: string | number,
+  width: string | number = '100%',
   lines: number = 1
 ): Record<string, any> {
   const styles = {
     display: 'inline-block',
-    maxWidth: width || '100%',
+    maxWidth: width,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',

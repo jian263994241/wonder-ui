@@ -10,7 +10,7 @@ import {
   State as PopperState
 } from '@popperjs/core';
 import { ownerDocument, nextTick, setRef } from '@wonder-ui/utils';
-import { TransitionProps } from '../Transition';
+import { TransitionBaseProps } from '../styles/transitions';
 import { useForkRef, useSafeState } from '@wonder-ui/hooks';
 
 type AnchorEl = HTMLElement | null | (() => HTMLElement | null);
@@ -60,7 +60,7 @@ export interface PopperProps<
   anchorEl: AnchorEl;
   children: (childProps: {
     placement: Placement;
-    TransitionProps?: Pick<TransitionProps, 'in' | 'onEnter' | 'onExited'>;
+    TransitionProps?: Pick<TransitionBaseProps, 'in' | 'onEnter' | 'onExited'>;
     attributes: PopperState['attributes'];
     styles: {
       arrow?: any;

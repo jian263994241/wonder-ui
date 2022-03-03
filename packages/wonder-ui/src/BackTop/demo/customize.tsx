@@ -19,7 +19,7 @@ export default () => {
             <Typography key={index}>{index}.text....</Typography>
           ))}
       </Container>
-      <BackTop style={{ bottom: 30 }} visibilityHeight={1}>
+      <BackTop style={{ bottom: 30 }} visibilityHeight={20}>
         <IconButton
           style={{
             backgroundColor: theme.palette.colors.blue.A200,

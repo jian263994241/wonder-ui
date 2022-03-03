@@ -1,18 +1,16 @@
-import { EnKeyboard, useSnackbar } from '@wonder-ui/core';
+import { EnKeyboard, message } from '@wonder-ui/core';
 
 export default () => {
-  const toast = useSnackbar();
-
   return (
     <EnKeyboard
       onInput={(keyText) => {
-        toast(`Input: ${keyText}`);
+        message.toast(`Input: ${keyText}`);
       }}
       onDelete={() => {
-        toast(`Delete`);
+        message.toast(`Delete`);
       }}
       onEnter={() => {
-        toast(`Done`);
+        message.toast(`Done`);
       }}
     />
   );

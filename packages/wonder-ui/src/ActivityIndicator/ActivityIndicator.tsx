@@ -77,7 +77,7 @@ export interface ActivityIndicatorProps {
   className?: string;
   /**
    * 图标尺寸
-   * @default small
+   * @default medium
    */
   iconSize?: 'small' | 'medium' | 'large';
   style?: React.CSSProperties;
@@ -151,7 +151,7 @@ const ActivityIndicator = forwardRef<HTMLDivElement, ActivityIndicatorProps>(
       className,
       type = 'circular',
       text,
-      iconSize = 'small',
+      iconSize = 'medium',
       vertical = false,
       ...rest
     } = props;

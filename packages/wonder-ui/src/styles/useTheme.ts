@@ -1,17 +1,24 @@
 import * as React from 'react';
-import { getDefaultTheme } from './defaultTheme';
-import { ThemeContext } from '@wonder-ui/styled';
+import { getTheme } from './createTheme';
 import type { Theme } from './createTheme';
 
-function isEmpty(obj: object) {
+export const ThemeContext = React.createContext<Theme | null>(null);
+
+function isObjectEmpty(obj: object) {
   return Object.keys(obj).length === 0;
 }
 
-export function useTheme(): Theme {
-  //@ts-expect-error
-  const contextTheme = React.useContext<Theme>(ThemeContext);
+export function useTheme() {
+  const contextTheme = React.useContext(ThemeContext);
 
-  return isEmpty(contextTheme) ? getDefaultTheme() : contextTheme;
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    React.useDebugValue(contextTheme);
+  }
+
+  return !contextTheme || isObjectEmpty(contextTheme)
+    ? getTheme()
+    : contextTheme;
 }
 
 export default useTheme;

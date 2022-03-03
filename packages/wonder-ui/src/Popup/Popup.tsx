@@ -4,15 +4,15 @@ import Page, { PageProps } from '../Page';
 import Slide from '../Slide';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { BaseTransitionProps, TransitionTimeout } from '../Transition';
+import { TransitionDuration, TransitionBaseProps } from '../styles/transitions';
 import { css } from '@wonder-ui/utils';
 import { popupClasses, useClasses } from './PopupClasses';
 
 export interface PopupProps {
   ModalProps?: Partial<ModalProps>;
   PageProps?: Partial<PageProps>;
-  TransitionComponent?: React.ComponentType<BaseTransitionProps>;
-  TransitionProps?: BaseTransitionProps;
+  TransitionComponent?: React.ComponentType<TransitionBaseProps>;
+  TransitionProps?: TransitionBaseProps;
   /**
    * 内容
    */
@@ -30,7 +30,7 @@ export interface PopupProps {
   /**
    * 过渡时长(ms)
    */
-  transitionDuration?: TransitionTimeout;
+  duration?: TransitionDuration;
   /**
    * 显示隐藏
    * @default false
@@ -53,12 +53,12 @@ const PopupRoot = styled(Modal, {
   alignItems: 'center'
 }));
 
-const PopupPage = styled(Page, {
+const PopupPage = styled(Page.withComponent(Slide), {
   name: 'WuiPopup',
   slot: 'Page',
   shouldForwardProp: () => true
 })<PageProps>(({ theme }) => ({
-  position: 'fixed',
+  // position: 'fixed',
   outline: 0,
   [theme.breakpoints.up('md')]: {
     borderRadius: theme.shape.borderRadius,
@@ -67,7 +67,7 @@ const PopupPage = styled(Page, {
   }
 }));
 
-const Popup = React.forwardRef<HTMLElement, PopupProps>((inProps, ref) => {
+const Popup = React.forwardRef<HTMLDivElement, PopupProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiPopup' });
   const {
     ModalProps,
@@ -79,7 +79,7 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((inProps, ref) => {
     onClose,
     TransitionComponent = Slide,
     TransitionProps,
-    transitionDuration,
+    duration,
     keepMounted = false,
     ...rest
   } = props;
@@ -97,27 +97,21 @@ const Popup = React.forwardRef<HTMLElement, PopupProps>((inProps, ref) => {
       keepMounted={keepMounted}
       {...ModalProps}
       {...rest}
-      BackdropProps={{
-        transitionDuration: { enter: 375, exit: 0 },
-        ...ModalProps?.BackdropProps
-      }}
+      BackdropProps={ModalProps?.BackdropProps}
       classes={{ root: css(classes.root, className) }}
     >
-      <TransitionComponent
+      <PopupPage
         direction="up"
-        timeout={transitionDuration}
-        {...TransitionProps}
+        in={visible}
+        duration={duration}
+        showCloseButton
+        title={title}
+        onClose={onClose}
+        classes={{ root: css(classes.page, PageProps?.className) }}
+        {...PageProps}
       >
-        <PopupPage
-          showCloseButton
-          title={title}
-          onClose={onClose}
-          classes={{ root: css(classes.page, PageProps?.className) }}
-          {...PageProps}
-        >
-          {children}
-        </PopupPage>
-      </TransitionComponent>
+        {children}
+      </PopupPage>
     </PopupRoot>
   );
 });

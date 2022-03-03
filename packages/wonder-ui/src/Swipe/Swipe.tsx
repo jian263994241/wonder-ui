@@ -1,4 +1,6 @@
 import * as React from 'react';
+import ArrowForward from '../ArrowForward';
+import IconButton from '../IconButton';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import {
@@ -8,8 +10,7 @@ import {
   css,
   doubleRaf,
   globalClasses,
-  isVisible,
-  preventDefault
+  isVisible
 } from '@wonder-ui/utils';
 import { COMPONENT_NAME } from './SwipeClasses';
 import { ContextValueType, SwipeContext } from './SwipeContext';
@@ -17,12 +18,11 @@ import {
   useCreation,
   useDocumentVisibility,
   useEventCallback,
-  useEventListener,
   useForkRef,
   useReactive,
   useTouch,
-  useWindowSize,
-  useUpdateEffect
+  useUpdateEffect,
+  useResizeEffect
 } from '@wonder-ui/hooks';
 import type { SwipeState, SwipeProps, SwipeToOptions } from './SwipeTypes';
 
@@ -34,7 +34,9 @@ const useClasses = (styleProps: SwipeProps) => {
     container: ['container'],
     item: ['item'],
     indicators: ['indicators'],
-    indicator: ['indicator']
+    indicator: ['indicator'],
+    prevButton: ['prevButton'],
+    nextBUtton: ['nextButton']
   };
 
   return composeClasses('WuiSwipe', slots, classes);
@@ -62,6 +64,28 @@ const SwipeContainer = styled('div', {
     flexDirection: 'column'
   })
 }));
+
+const SwipePrevButton = styled(IconButton, {
+  name: COMPONENT_NAME,
+  slot: 'PrevButton'
+})({
+  position: 'absolute',
+  left: 0,
+  top: '50%',
+  zIndex: 10,
+  transform: 'translateY(-50%)'
+});
+
+const SwipeNextButton = styled(IconButton, {
+  name: COMPONENT_NAME,
+  slot: 'NextButton'
+})({
+  position: 'absolute',
+  right: 0,
+  top: '50%',
+  zIndex: 10,
+  transform: 'translateY(-50%)'
+});
 
 const SwipeIndicators = styled('div', {
   name: COMPONENT_NAME,
@@ -119,7 +143,10 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     loop = true,
     onIndexChange,
     onRenderIndicator,
+    onRenderPrevButton,
+    onRenderNextButton,
     showIndicators = true,
+    showSwitchButtons = false,
     touchable = true,
     vertical = false,
     stopPropagation = true,
@@ -165,7 +192,7 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     [vertical, state.height, state.width]
   );
   const classes = useClasses(styleProps);
-  const windowSize = useWindowSize();
+
   const touch = useTouch();
   const delta = useCreation(
     () => (vertical ? touch.deltaY : touch.deltaX),
@@ -405,18 +432,15 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     correctPosition();
   });
 
-  const onTouchMove = useEventCallback((event: TouchEvent) => {
+  const onTouchMove = useEventCallback((event: React.TouchEvent) => {
     if (touchable && state.swiping) {
       touch.move(event);
 
       if (isCorrectDirection()) {
-        preventDefault(event, stopPropagation);
         move({ offset: delta.current });
       }
     }
   });
-
-  useEventListener(containerRef, 'touchmove', onTouchMove, { passive: false });
 
   const onTouchEnd = useEventCallback(() => {
     if (!touchable || !state.swiping) {
@@ -485,16 +509,10 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
     };
   }, [allowAutoPlay, documentVisible, count]);
 
-  React.useEffect(resize, [windowSize.width, windowSize.height]);
+  useResizeEffect(resize, rootRef);
 
   return (
-    <SwipeContext.Provider
-      value={{
-        props: styleProps,
-        state,
-        store
-      }}
-    >
+    <SwipeContext.Provider value={{ props: styleProps, state, store }}>
       <SwipeRoot
         className={css(classes.root, className)}
         styleProps={styleProps}
@@ -506,17 +524,45 @@ const Swipe = React.forwardRef<HTMLDivElement, SwipeProps>((inProps, ref) => {
           styleProps={styleProps}
           className={classes.container}
           style={{ ...containerStyle, ...trackStyle }}
-          onTouchStart={onTouchStart}
-          // onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          onTouchCancel={onTouchEnd}
+          onTouchStartCapture={onTouchStart}
+          onTouchMoveCapture={onTouchMove}
+          onTouchEndCapture={onTouchEnd}
+          onTouchCancelCapture={onTouchEnd}
         >
           {children}
         </SwipeContainer>
 
+        {showSwitchButtons && (
+          <React.Fragment>
+            {onRenderPrevButton ? (
+              onRenderPrevButton({ action: prev })
+            ) : (
+              <SwipePrevButton
+                onClick={prev}
+                color="light"
+                className={classes.prevButton}
+              >
+                <ArrowForward direction="left" />
+              </SwipePrevButton>
+            )}
+
+            {onRenderNextButton ? (
+              onRenderNextButton({ action: next })
+            ) : (
+              <SwipeNextButton
+                onClick={next}
+                color="light"
+                className={classes.nextBUtton}
+              >
+                <ArrowForward direction="right" />
+              </SwipeNextButton>
+            )}
+          </React.Fragment>
+        )}
+
         {showIndicators &&
           (onRenderIndicator ? (
-            onRenderIndicator(state.activeIndex)
+            onRenderIndicator(state.activeIndex, count)
           ) : (
             <SwipeIndicators
               styleProps={styleProps}

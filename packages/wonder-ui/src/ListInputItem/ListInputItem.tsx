@@ -162,8 +162,8 @@ const ListInputItemInput = styled(InputBase, {
   name: COMPONENT_NAME,
   slot: 'Input'
 })(({ theme }) => ({
-  padding: 0,
-  height: theme.typography.pxToRem(44 - 6 * 2)
+  padding: 0
+  // height: theme.typography.pxToRem(44 - 6 * 2)
 }));
 
 const ListInputItem = forwardRef<HTMLLIElement, ListInputItemProps>(

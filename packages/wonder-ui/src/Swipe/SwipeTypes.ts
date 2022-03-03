@@ -68,6 +68,11 @@ export interface SwipeProps {
    */
   showIndicators?: boolean;
   /**
+   * 显示切换按钮
+   *  @default false
+   */
+  showSwitchButtons?: boolean;
+  /**
    * 是否阻止滑动事件冒泡
    * @default true
    */
@@ -107,7 +112,15 @@ export interface SwipeProps {
   /**
    * 自定义指示器
    */
-  onRenderIndicator?(activeIndex: number): React.ReactNode;
+  onRenderIndicator?(activeIndex: number, count: number): JSX.Element;
+  /**
+   * 自定义Prev按钮
+   */
+  onRenderPrevButton?(props: { action(): void }): JSX.Element;
+  /**
+   * 自定义Next按钮
+   */
+  onRenderNextButton?(props: { action(): void }): JSX.Element;
   /**
    * 每一页轮播结束后触发
    */

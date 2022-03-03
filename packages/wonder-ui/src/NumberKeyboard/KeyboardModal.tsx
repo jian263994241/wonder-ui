@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Divider from '../Divider';
 import Drawer from '../Drawer';
 import {
   doubleRaf,
@@ -9,7 +10,6 @@ import {
   scrollTop
 } from '@wonder-ui/utils';
 import { useClickAway, useReactive } from '@wonder-ui/hooks';
-
 export interface KeyboardModalAction {
   close(): void;
   open(): void;
@@ -32,8 +32,8 @@ export default function KeyboardModal(props: KeyboardModalProps) {
     visible: false
   });
 
-  const rootRef = React.useRef<HTMLElement>(null);
-  const inputRef = React.useRef<HTMLInputElement>();
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const inputScrollParentElement = React.useRef<HTMLElement>();
   const closeListenerRef = React.useRef<Function>();
   const scrollTopStartRef = React.useRef<number>();
@@ -104,7 +104,6 @@ export default function KeyboardModal(props: KeyboardModalProps) {
     });
   };
 
-  //@ts-expect-error
   useClickAway(() => innerClose(), [rootRef, inputRef]);
 
   React.useImperativeHandle(
@@ -137,7 +136,6 @@ export default function KeyboardModal(props: KeyboardModalProps) {
           role="keyboard"
           visible={state.visible}
           anchor="bottom"
-          elevation={0}
           ModalProps={{
             hideBackdrop: true,
             disableFocusLock: true,
@@ -146,6 +144,7 @@ export default function KeyboardModal(props: KeyboardModalProps) {
           }}
           style={{ pointerEvents: 'none' }}
         >
+          <Divider />
           {content}
         </Drawer>
       </React.Fragment>
