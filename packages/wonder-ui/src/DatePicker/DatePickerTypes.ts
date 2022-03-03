@@ -9,6 +9,7 @@ export interface DatePickerProps
       | 'children'
       | 'value'
       | 'defaultValue'
+      | 'fieldNames'
       | 'onChange'
       | 'columns'
     > {
