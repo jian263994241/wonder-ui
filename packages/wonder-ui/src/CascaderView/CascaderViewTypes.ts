@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { cascaderViewClasses } from './CascaderViewClasses';
 
+export type PickerFieldNames = {
+  label: string;
+  value: string;
+  children: string;
+};
+
 export type CscaderViewClassesType = typeof cascaderViewClasses;
 
 export type CascaderOption = {
@@ -21,11 +27,17 @@ export type CascaderTab = {
 };
 
 export type CascaderAction = {
-  getOptions(values?: any[]): CascaderOption[];
-  getValues(): any[];
+  getSelected(params: { final?: boolean }): CascaderOption[] | undefined;
+  getValues(params: { final?: boolean }): any[] | undefined;
 };
 
 export interface CascaderViewProps {
+  cascader?: any;
+  /**
+   * 自定义 options 结构中的字段
+   * @default { label: 'label', value: 'value', children: 'children' }
+   */
+  fieldNames?: Partial<PickerFieldNames>;
   /**
    * 内部方法
    */
@@ -34,11 +46,6 @@ export interface CascaderViewProps {
    * 选中图标
    */
   activeIcon?: JSX.Element;
-  /**
-   * 子项对应的键名
-   * @default children
-   */
-  childrenKey?: string;
   /**
    * 样式名
    */
@@ -80,19 +87,9 @@ export interface CascaderViewProps {
    */
   style?: React.CSSProperties;
   /**
-   * 选项对象中，选项文字对应的键名
-   * @default label
-   */
-  textKey?: string;
-  /**
    * 选中项
    */
   value?: any[];
-  /**
-   * 配置对象中取值键名
-   * @default value
-   */
-  valueKey?: string;
 }
 
 export interface StyleProps extends CascaderViewProps {}

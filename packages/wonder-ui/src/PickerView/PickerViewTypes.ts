@@ -32,7 +32,6 @@ export type PickerObjectColumn = {
 
 export type PickerAction = {
   getValues(): any[];
-  getSelected(): PickerOption[];
   getColumnOptions(index: number): PickerOption[] | undefined;
   setColumnOptions(index: number, options: PickerOption[]): void;
 };
@@ -79,7 +78,7 @@ export interface PickerViewProps {
    */
   defaultValue?: any[];
   /**
-   * 值
+   * 受控值
    */
   value?: any[];
   /**

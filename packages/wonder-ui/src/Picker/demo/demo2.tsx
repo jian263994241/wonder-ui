@@ -14,7 +14,7 @@ export default () => {
         console.log('Finish:', values);
       }}
     >
-      <List style={{ marginBottom: 20 }}>
+      <List>
         <ListHeader>表单</ListHeader>
 
         <Field
@@ -42,10 +42,11 @@ export default () => {
           </Picker>
         </Field>
       </List>
-
-      <Button type="submit" variant="contained" fullWidth>
-        提交
-      </Button>
+      <div style={{ padding: 16 }}>
+        <Button type="submit" variant="contained" fullWidth>
+          提交
+        </Button>
+      </div>
     </Form>
   );
 };

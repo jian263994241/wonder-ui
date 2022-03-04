@@ -6,25 +6,33 @@ export interface PickerPopupProps {
 
   children?: React.ReactNode;
   /**
+   * 禁用按钮波纹
+   */
+  disableRipple?: boolean;
+  /**
    * 顶部栏标题
    */
-  title?: string;
+  title?: React.ReactNode;
   /**
    * 副标题
    */
-  subTitle?: string;
+  subTitle?: React.ReactNode;
   /**
    * 取消按钮文字
    */
-  cancelText?: string;
+  cancelText?: React.ReactNode;
   /**
    * 确定按钮文案
    */
-  confirmText?: string;
+  confirmText?: React.ReactNode;
   /**
    * 控制浮层显示/隐藏
    */
   visible?: boolean;
+  /**
+   * 默认浮层显示
+   */
+  defaultVisible?: boolean;
   /**
    * 关闭浮层触发事件
    */
@@ -47,10 +55,6 @@ export interface PickerProps
     selected?: PickerOption[];
     show: () => void;
   }) => React.ReactNode;
-  /**
-   * 默认浮层显示
-   */
-  defaultVisible?: boolean;
   /**
    * 确认按钮触发事件
    */

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Button, Picker } from '@wonder-ui/core';
 
 const columns = {
@@ -7,16 +6,8 @@ const columns = {
 };
 
 export default () => {
-  const [value, setValue] = React.useState<string[]>();
-
   return (
-    <Picker
-      value={value}
-      columns={columns}
-      onConfirm={(value) => {
-        setValue(value);
-      }}
-    >
+    <Picker columns={columns}>
       {({ selected, show }) => {
         return (
           <Button onClick={show}>

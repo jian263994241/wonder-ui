@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PickerPopup from './PickerPopup';
-import PickerView, { PickerOption } from '../PickerView';
+import PickerView from '../PickerView';
 import usePicker from '../PickerView/usePicker';
 import useThemeProps from '../styles/useThemeProps';
 import { createChainedFunction } from '@wonder-ui/utils';
@@ -27,17 +27,22 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     value,
     defaultValue,
     fieldNames,
+    disableRipple,
     ...pickerViewProp
   } = props;
 
-  const picker = usePicker({ fieldNames, value, defaultValue, columns });
+  const picker = usePicker({
+    fieldNames,
+    value,
+    defaultValue,
+    onConfirm,
+    columns
+  });
 
   const [visible, setVisibleUnControlled] = useControlled({
     value: visibleProp,
     defaultValue: defaultVisible
   });
-
-  const [selected, setSelected] = React.useState<PickerOption[]>();
 
   const show = () => {
     setVisibleUnControlled(true);
@@ -48,26 +53,19 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
   };
 
   const confirm = () => {
-    const callback = createChainedFunction(onConfirm, hide);
+    const callback = createChainedFunction(() => picker.confirm(), hide);
 
-    const values = picker.getValues();
-
-    callback(values);
+    callback();
   };
-
-  const cancel = createChainedFunction(onCancel, hide);
-
-  React.useEffect(() => {
-    if (picker.value.length > 0) {
-      setSelected(picker.getSelected());
-    }
-  }, [picker.value]);
 
   return (
     <React.Fragment>
-      {typeof children === 'function' ? children({ selected, show }) : children}
+      {typeof children === 'function'
+        ? children({ selected: picker.selected, show })
+        : children}
       <PickerPopup
         visible={visible}
+        disableRipple={disableRipple}
         ref={ref}
         className={className}
         style={style}
@@ -76,7 +74,7 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
         cancelText={cancelText}
         confirmText={confirmText}
         onConfirm={confirm}
-        onCancel={cancel}
+        onCancel={hide}
       >
         <PickerView picker={picker} {...pickerViewProp} />
       </PickerPopup>

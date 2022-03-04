@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { getOptionValue } from './PickerColumn';
 import { isObject } from '@wonder-ui/utils';
 import {
@@ -29,6 +30,7 @@ interface usePickerProps {
   value?: any[];
   defaultValue?: any[];
   columns?: PickerColumns | ((values: any[]) => PickerColumns);
+  onConfirm?(values: any[]): void;
 }
 
 export default function usePicker(props: usePickerProps) {
@@ -36,9 +38,13 @@ export default function usePicker(props: usePickerProps) {
     fieldNames: fieldNamesProp,
     defaultValue = [],
     value: valueProp,
-    columns = []
+    columns = [],
+    onConfirm
   } = props;
-  const [value] = useControlled({ defaultValue, value: valueProp });
+  const [value, setValueIfUncontrolled] = useControlled({
+    defaultValue,
+    value: valueProp
+  });
 
   const fieldNames = useCreation(
     () => Object.assign({}, defaultFieldNames, fieldNamesProp),
@@ -46,7 +52,7 @@ export default function usePicker(props: usePickerProps) {
   );
 
   const state = useReactive({
-    selected: [] as PickerOption[],
+    selected: undefined as PickerOption[] | undefined,
     indexes: [] as number[],
     columns: [] as PickerObjectColumn[],
     dataType: 'plain' as PickerDataType
@@ -114,23 +120,7 @@ export default function usePicker(props: usePickerProps) {
     return indexes;
   };
 
-  // get values of all columns
-  const getValues = useEventCallback(() => {
-    const indexes = getIndexes();
-    const result = [];
-
-    for (let columnIndex = 0; columnIndex < indexes.length; columnIndex++) {
-      const options = getColumnOptions(columnIndex);
-      result[columnIndex] = getOptionValue(
-        options[indexes[columnIndex]],
-        fieldNames
-      );
-    }
-
-    return result;
-  });
-
-  const getSelected = () => {
+  const getSlectedOptions = useEventCallback(() => {
     const indexes = getIndexes();
     const result = [];
 
@@ -140,7 +130,13 @@ export default function usePicker(props: usePickerProps) {
     }
 
     return result;
-  };
+  });
+
+  // get values of all columns
+  const getValues = useEventCallback(() => {
+    const options = getSlectedOptions();
+    return options.map((item) => getOptionValue(item, fieldNames));
+  });
 
   // set options of column by index
   const setColumnOptions = (columnIndex: number, options: PickerOption[]) => {
@@ -177,13 +173,32 @@ export default function usePicker(props: usePickerProps) {
     }
   }, [value]);
 
+  const confirm = () => {
+    const values = getValues();
+
+    setValueIfUncontrolled(values);
+    return onConfirm?.(values);
+  };
+
+  useCreation(() => {
+    const selected = getSlectedOptions();
+
+    if (selected.length > 0) {
+      state.selected = selected;
+    } else {
+      state.selected = undefined;
+    }
+  }, [value]);
+
   return {
     value,
     fieldNames,
     indexes: state.indexes,
     columns: state.columns,
+    selected: state.selected,
+    confirm,
+    getSlectedOptions,
     getValues,
-    getSelected,
     setColumns,
     setColumnIndex,
     setColumnOptions,

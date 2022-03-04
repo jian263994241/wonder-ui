@@ -1,142 +1,93 @@
 import * as React from 'react';
-import Button from '../Button';
 import CascaderView from '../CascaderView/CascaderView';
-import Drawer from '../Drawer';
-import IconButton from '../IconButton';
-import Navbar from '../Navbar';
-import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import X from '../icons/X';
 import { CascaderProps } from './CascaderTypes';
-import {
-  CascaderAction,
-  CascaderOption
-} from '../CascaderView/CascaderViewTypes';
 import { COMPONENT_NAME } from './CascaderClasses';
 import { createChainedFunction, isControlled } from '@wonder-ui/utils';
-import { useControlled, useCreation, useForkRef } from '@wonder-ui/hooks';
-
-const CascaderRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })(
-  ({ theme }) => ({
-    backgroundColor: theme.palette.background.paper,
-    paddingBottom: 'env(safe-area-inset-bottom)'
-  })
-);
+import { useControlled, useCreation } from '@wonder-ui/hooks';
+import PickerPopup from '../Picker/PickerPopup';
+import useCascader from '../CascaderView/useCascader';
 
 const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
-      actionRef: actionRefProp,
+      className,
+      style,
       title,
+      subTitle,
       classes,
       cancelText,
-      separator = ',',
+      confirmText,
       disableRipple,
       children,
-      onClose,
       visible: visibleProp,
       defaultVisible = false,
-      textKey = 'label',
-      valueKey = 'value',
-      keepMounted,
       value,
       defaultValue,
       onChange,
-      onRenderChildren,
+      options,
+      fieldNames,
+      onConfirm,
+      onSelect,
       ...rest
     } = props;
-
-    const actionRef = React.useRef<CascaderAction>(null);
-    const handleRef = useForkRef(actionRef, actionRefProp);
 
     const [visible, setVisibleUnControlled] = useControlled({
       value: visibleProp,
       defaultValue: defaultVisible
     });
 
-    const [options, setOptions] = React.useState<CascaderOption[]>([]);
+    const cascader = useCascader({
+      value,
+      defaultValue,
+      options,
+      fieldNames,
+      onChange,
+      onSelect,
+      onConfirm
+    });
 
     const show = () => {
       setVisibleUnControlled(true);
     };
 
-    const cancel = () => {
+    const hide = () => {
       setVisibleUnControlled(false);
-      onClose?.();
     };
 
-    React.useEffect(() => {
-      if (actionRef.current) {
-        if (isControlled(props, 'value') || defaultValue) {
-          const val = value ?? defaultValue;
-          const options = actionRef.current.getOptions(val);
-          setOptions(options);
-        }
-      }
-    }, [defaultValue, value]);
+    const confirm = () => {
+      const callback = createChainedFunction(cascader.confirm, hide);
 
-    const handleChange = (values: CascaderOption[]) => {
-      if (!isControlled(props, 'value')) {
-        setOptions(options);
-      }
-
-      onChange?.(values);
-
-      cancel();
+      callback();
     };
-
-    const displayText = useCreation(() => {
-      return options.map((item) => item[textKey]).join(separator);
-    }, [options, separator, textKey]);
 
     return (
       <React.Fragment>
-        {children &&
-          React.isValidElement(children) &&
-          React.cloneElement(children as JSX.Element, {
-            value: displayText,
-            onClick: createChainedFunction(
-              show,
-              (children.props as any).onClick
-            )
-          })}
-        {!children &&
-          onRenderChildren &&
-          onRenderChildren({ displayText, onClick: show, options })}
-        <Drawer
-          keepMounted={keepMounted}
+        {typeof children === 'function'
+          ? children({ selected: cascader.selected, show })
+          : children}
+        <PickerPopup
           visible={visible}
-          anchor="bottom"
-          onClose={cancel}
+          disableRipple={disableRipple}
+          ref={ref}
+          className={className}
+          style={style}
+          title={title}
+          subTitle={subTitle}
+          cancelText={cancelText}
+          confirmText={confirmText}
+          onConfirm={confirm}
+          onCancel={hide}
         >
-          <CascaderRoot ref={ref}>
-            <Navbar
-              title={title}
-              left={
-                cancelText ? (
-                  <Button disableRipple={disableRipple} onClick={cancel}>
-                    {cancelText}
-                  </Button>
-                ) : (
-                  <IconButton disableRipple={disableRipple} onClick={cancel}>
-                    <X />
-                  </IconButton>
-                )
-              }
-            />
-            <CascaderView
-              actionRef={handleRef}
-              disableRipple={disableRipple}
-              textKey={textKey}
-              valueKey={valueKey}
-              onChange={handleChange}
-              value={value}
-              defaultValue={defaultValue}
-              {...rest}
-            />
-          </CascaderRoot>
-        </Drawer>
+          <CascaderView
+            disableRipple={disableRipple}
+            value={value}
+            defaultValue={defaultValue}
+            {...rest}
+            cascader={cascader}
+          />
+        </PickerPopup>
       </React.Fragment>
     );
   }

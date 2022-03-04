@@ -6,16 +6,11 @@ import Tab from '../Tab';
 import TabContext from '../TabContext';
 import TabPane from '../TabPane';
 import Tabs from '../Tabs';
+import useCascader from './useCascader';
 import useThemeProps from '../styles/useThemeProps';
-import {
-  CascaderOption,
-  CascaderTab,
-  CascaderViewProps,
-  StyleProps
-} from './CascaderViewTypes';
+import { CascaderViewProps, StyleProps } from './CascaderViewTypes';
 import { COMPONENT_NAME } from './CascaderViewClasses';
-import { composeClasses, css, isControlled, isObject } from '@wonder-ui/utils';
-import { useCreation, useEventCallback } from '@wonder-ui/hooks';
+import { composeClasses, css } from '@wonder-ui/utils';
 
 const useClasses = (styleProps: StyleProps) => {
   const { classes } = styleProps;
@@ -54,125 +49,29 @@ const CascaderView = React.forwardRef<HTMLDivElement, CascaderViewProps>(
       className,
       disableRipple,
       divider,
+      fieldNames,
       style,
-      valueKey = 'value',
-      textKey = 'label',
-      childrenKey = 'children',
       value,
       defaultValue,
       options = [],
       placeholder = '请选择',
       onChange,
-      onSelect
+      onSelect,
+      cascader: cascaderProp
     } = props;
 
-    const [innerValue, setInnerValue] = React.useState<CascaderOption[]>([]);
-    const [activeTabIndex, setActiveTabIndex] = React.useState(0);
-
-    React.useEffect(() => {
-      if (isControlled(props, 'value') || defaultValue) {
-        const val = value || defaultValue;
-
-        if (val && val.length > 0) {
-          setInnerValue(isObject(val[0]) ? val : actions.getOptions(val));
-          setActiveTabIndex(val.length - 1);
-        }
-      }
-    }, [value, defaultValue]);
-
-    const getSelectedOptionsByValue = (
-      options: CascaderOption[],
-      value: string | number
-    ): CascaderOption[] | undefined => {
-      for (const option of options) {
-        if (option[valueKey] === value) {
-          return [option];
-        }
-
-        if (option[childrenKey]) {
-          const selectedOptions = getSelectedOptionsByValue(
-            option[childrenKey],
-            value
-          );
-          if (selectedOptions) {
-            return [option, ...selectedOptions];
-          }
-        }
-      }
-    };
-
-    const getSelectedOptionsByValues = (
-      options: CascaderOption[],
-      values: any[] = []
-    ): CascaderTab[] => {
-      const lastValue = values[values.length - 1];
-      const selectedOptions = getSelectedOptionsByValue(options, lastValue);
-
-      if (selectedOptions) {
-        let optionsCursor = options;
-        const tabs: CascaderTab[] = selectedOptions.map((option) => {
-          const tab = { options: optionsCursor, selected: option };
-          const next = optionsCursor.find(
-            (item) => item[valueKey] === option[valueKey]
-          );
-          if (next) {
-            optionsCursor = next[childrenKey];
-          }
-          return tab;
-        });
-        if (optionsCursor) {
-          tabs.push({ options: optionsCursor, selected: null });
-        }
-        return tabs;
-      }
-      return [{ options, selected: null }];
-    };
-
-    const selectedOptions = useCreation(() => {
-      return getSelectedOptionsByValues(
+    const cascader: ReturnType<typeof useCascader> =
+      cascaderProp ??
+      useCascader({
+        defaultValue,
+        value,
         options,
-        innerValue.map((item) => item[valueKey])
-      );
-    }, [innerValue, options]);
+        fieldNames,
+        onChange,
+        onSelect
+      });
 
-    const actions = {
-      getOptions: (values?: any[]) => {
-        return getSelectedOptionsByValues(options, values || innerValue)
-          .map((tab) => tab.selected)
-          .filter(Boolean) as CascaderOption[];
-      },
-      getValues: () => innerValue
-    };
-
-    React.useImperativeHandle(actionRef, () => actions);
-
-    const handleSelect = useEventCallback(
-      (tabIndex: number, value: any, meta: CascaderOption) => {
-        const prevValue = innerValue[tabIndex];
-        const newValue: CascaderOption[] = [];
-        const hasNext = meta.children && meta.children.length > 0;
-
-        if (hasNext) {
-          setActiveTabIndex(tabIndex + 1);
-        }
-
-        if (!prevValue || prevValue[valueKey] != value[0]) {
-          for (let i = 0; i < tabIndex; i++) {
-            newValue[i] = innerValue[i];
-          }
-          newValue[tabIndex] = meta;
-
-          setInnerValue(newValue);
-          onSelect?.(newValue);
-
-          if (!hasNext) {
-            onChange?.(newValue);
-          }
-        }
-      }
-    );
-
-    const onTabChange = (index: number) => setActiveTabIndex(index);
+    React.useImperativeHandle(actionRef, () => cascader);
 
     const classes = useClasses(props);
 
@@ -187,39 +86,39 @@ const CascaderView = React.forwardRef<HTMLDivElement, CascaderViewProps>(
           className={classes.tabs}
           disableRipple={disableRipple}
           variant="scrollable"
-          value={activeTabIndex}
-          onChange={onTabChange}
+          value={cascader.tabIndex}
+          onChange={cascader.switchTab}
         >
-          {selectedOptions.map(({ selected }, index) => (
+          {cascader.tabs.map(({ selected }, index) => (
             <Tab value={index} key={index}>
-              {selected ? selected[textKey] : placeholder}
+              {selected ? selected[cascader.fieldNames.label] : placeholder}
             </Tab>
           ))}
         </Tabs>
-        <TabContext value={activeTabIndex}>
-          {selectedOptions.map((tab, index) => (
+        <TabContext value={cascader.tabIndex}>
+          {cascader.tabs.map((tab, tabIndex) => (
             <CascaderTabPanel
-              value={index}
-              key={index}
+              value={tabIndex}
+              key={tabIndex}
               className={classes.tabPanel}
             >
               <CheckList
                 activeIcon={activeIcon}
-                disableRipple={disableRipple}
-                onChange={handleSelect.bind(null, index)}
+                disableRipple
+                onChange={(value) => cascader.select(value[0])}
                 className={classes.content}
-                value={tab.selected?.[valueKey]}
+                value={tab.selected?.[cascader.fieldNames.value]}
               >
                 {tab.options.map((option, index) => (
                   <CheckListItem
                     disabled={option.disabled}
-                    value={option[valueKey]}
+                    value={option[cascader.fieldNames.value]}
                     key={index}
                     divider={index === tab.options.length - 1 ? false : divider}
                     className={css(classes.item, option.className)}
                     style={option.style}
                     meta={option}
-                    primary={option[textKey]}
+                    primary={option[cascader.fieldNames.label]}
                     secondary={option.description}
                   />
                 ))}

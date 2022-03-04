@@ -55,7 +55,7 @@ const CheckListItem = React.forwardRef<HTMLLIElement, CheckListItemProps>(
     });
 
     const isActive = parentValue.includes(value);
-    const isDisabled = parentDisabled || disabled;
+    const isDisabled = parentDisabled ?? disabled;
 
     return (
       <ListItem

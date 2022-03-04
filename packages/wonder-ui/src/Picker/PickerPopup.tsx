@@ -3,7 +3,6 @@ import Button from '../Button';
 import Drawer from '../Drawer';
 import Navbar from '../Navbar';
 import type { PickerPopupProps } from './PickerTypes';
-import { useMount } from '@wonder-ui/hooks';
 
 const PickerPopup = React.forwardRef<HTMLDivElement, PickerPopupProps>(
   (props, ref) => {
@@ -17,14 +16,12 @@ const PickerPopup = React.forwardRef<HTMLDivElement, PickerPopupProps>(
       confirmText = '确定',
       onCancel,
       onConfirm,
-      visible
+      visible,
+      disableRipple
     } = props;
-
-    const isMounted = useMount();
 
     return (
       <Drawer
-        keepMounted={!isMounted}
         ref={ref}
         anchor="bottom"
         className={className}
@@ -36,12 +33,20 @@ const PickerPopup = React.forwardRef<HTMLDivElement, PickerPopupProps>(
           title={title}
           subTitle={subTitle}
           left={
-            <Button variant="text" onClick={onCancel}>
+            <Button
+              disableRipple={disableRipple}
+              variant="text"
+              onClick={onCancel}
+            >
               {cancelText}
             </Button>
           }
           right={
-            <Button variant="text" onClick={onConfirm}>
+            <Button
+              disableRipple={disableRipple}
+              variant="text"
+              onClick={onConfirm}
+            >
               {confirmText}
             </Button>
           }

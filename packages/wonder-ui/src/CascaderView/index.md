@@ -21,18 +21,23 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-## 内置方法
+
+
+
+
+<API src="./CascaderView.tsx" ></API>
+
+
+## 类型
 
 ```tsx | pure
+// 内置方法
 export type CascaderAction = {
-  getOptions(values?: any[]): CascaderOption[];
-  getValues(): any[];
+  getSelected(params: { final?: boolean }): CascaderOption[] | undefined;
+  getValues(params: { final?: boolean }): any[] | undefined;
 };
-```
 
-## API
-
-```tsx | pure
+//选项
 export type CascaderOption = {
   textKey?: React.ReactNode;
   value?: string | number;
@@ -45,6 +50,3 @@ export type CascaderOption = {
   [key: string]: any;
 };
 ```
-
-<API src="./CascaderView.tsx" hideTitle></API>
-

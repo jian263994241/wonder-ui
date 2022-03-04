@@ -50,8 +50,7 @@ export default () => {
         divider
         value={values}
         options={pca}
-        textKey="name"
-        valueKey="code"
+        fieldNames={{ label: 'name', value: 'code' }}
         onChange={handleChange}
         style={{ '--cascader-content-height': '400px' } as React.CSSProperties}
       />
