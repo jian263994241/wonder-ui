@@ -86,6 +86,8 @@ export default function useCascader(props: useCascaderProps) {
 
         state.tabs = state.tabs.slice(0, state.tabIndex + 1).concat(newTab);
         state.tabIndex++;
+      } else {
+        state.tabs = state.tabs.slice(0, state.tabIndex + 1);
       }
 
       const selected = state.tabs.map((tab) => tab.selected);
@@ -94,8 +96,6 @@ export default function useCascader(props: useCascaderProps) {
       onChange?.(selectedValues.filter(Boolean));
 
       if (!selected.includes(null)) {
-        console.log(selectedValues);
-
         onFinish?.(selectedValues);
       }
     }
