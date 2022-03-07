@@ -13,7 +13,7 @@ export interface ButtonBaseProps
   extends React.HTMLAttributes<HTMLButtonElement> {
   LinkComponent?: React.ElementType;
   TouchRippleProps?: Partial<TouchRippleProps>;
-  actionRef?: React.Ref<ButtonBaseActions>;
+  actionRef?: React.Ref<ButtonBaseActions | undefined>;
   centerRipple?: boolean;
   children?: React.ReactNode;
   classes?: Partial<ButtonBaseClasses>;

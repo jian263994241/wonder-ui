@@ -56,7 +56,7 @@ const CascaderView = React.forwardRef<HTMLDivElement, CascaderViewProps>(
       options = [],
       placeholder = '请选择',
       onChange,
-      onSelect,
+      onFinish,
       cascader: cascaderProp
     } = props;
 
@@ -68,7 +68,7 @@ const CascaderView = React.forwardRef<HTMLDivElement, CascaderViewProps>(
         options,
         fieldNames,
         onChange,
-        onSelect
+        onFinish
       });
 
     React.useImperativeHandle(actionRef, () => cascader);

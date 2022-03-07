@@ -27,7 +27,7 @@ export type TextFieldClasses = typeof textFieldClasses;
 export type TextFieldAction = InputAction;
 
 export interface TextFieldProps {
-  actionRef?: React.Ref<TextFieldAction>;
+  actionRef?: React.Ref<TextFieldAction | undefined>;
   ariaLabel?: string;
   ariaLabelledBy?: string;
   autoComplete?: string;

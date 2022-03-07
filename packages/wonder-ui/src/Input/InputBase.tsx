@@ -61,7 +61,7 @@ export interface InputProps
   /**
    * 内置方法
    */
-  actionRef?: React.Ref<InputAction | null>;
+  actionRef?: React.Ref<InputAction | undefined>;
   /**
    * 清除图标
    */

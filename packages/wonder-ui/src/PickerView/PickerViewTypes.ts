@@ -45,7 +45,7 @@ export type PickerColumns =
   | PickerObjectColumn[];
 
 export interface PickerViewProps {
-  actionRef?: React.Ref<PickerAction | null>;
+  actionRef?: React.Ref<PickerAction | undefined>;
   picker?: any;
   classes?: Partial<PickerViewClassesType>;
   className?: string;

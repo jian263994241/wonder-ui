@@ -3,8 +3,8 @@ import CascaderView from '../CascaderView/CascaderView';
 import useThemeProps from '../styles/useThemeProps';
 import { CascaderProps } from './CascaderTypes';
 import { COMPONENT_NAME } from './CascaderClasses';
-import { createChainedFunction, isControlled } from '@wonder-ui/utils';
-import { useControlled, useCreation } from '@wonder-ui/hooks';
+import { createChainedFunction } from '@wonder-ui/utils';
+import { useControlled } from '@wonder-ui/hooks';
 import PickerPopup from '../Picker/PickerPopup';
 import useCascader from '../CascaderView/useCascader';
 
@@ -29,7 +29,7 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
       options,
       fieldNames,
       onConfirm,
-      onSelect,
+      onFinish,
       ...rest
     } = props;
 
@@ -44,7 +44,7 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
       options,
       fieldNames,
       onChange,
-      onSelect,
+      onFinish,
       onConfirm
     });
 

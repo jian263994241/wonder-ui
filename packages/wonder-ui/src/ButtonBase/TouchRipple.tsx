@@ -109,7 +109,7 @@ export interface TouchRippleAction {
 }
 
 export interface TouchRippleProps {
-  actionRef?: React.Ref<TouchRippleAction>;
+  actionRef?: React.Ref<TouchRippleAction | undefined>;
   center?: boolean;
   classes?: Partial<TouchRippleClasses>;
   className?: string;

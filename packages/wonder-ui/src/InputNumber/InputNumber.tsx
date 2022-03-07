@@ -76,7 +76,7 @@ export interface InputNumberProps
   /**
    * 内置方法
    */
-  actionRef?: React.Ref<InputNumberAction | null>;
+  actionRef?: React.Ref<InputNumberAction | undefined>;
   classes?: Partial<typeof inputClasses & typeof inputNumberClasses>;
   /**
    * 字符值模式，开启后支持高精度小数。同时 onChange 将返回 string 类型
@@ -616,8 +616,8 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
       }
     };
 
-    const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useEventCallback(
-      (event) => {
+    const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> =
+      useEventCallback((event) => {
         userTypingRef.current = true;
 
         if (event.key === 'Enter') {
@@ -640,8 +640,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
           onInternalStep('ArrowUp' === event.key);
           event.preventDefault();
         }
-      }
-    );
+      });
 
     const onKeyUp = () => {
       userTypingRef.current = false;

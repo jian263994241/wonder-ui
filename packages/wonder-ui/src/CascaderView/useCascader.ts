@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useControlled, useCreation, useReactive } from '@wonder-ui/hooks';
+import { useControlled, useReactive } from '@wonder-ui/hooks';
 import type {
   PickerFieldNames,
   CascaderOption,
@@ -18,7 +18,7 @@ interface useCascaderProps {
   defaultValue?: any[];
   options?: CascaderOption[];
   onChange?: (value: CascaderOption[]) => void;
-  onSelect?: (value: CascaderOption[]) => void;
+  onFinish?: (value: CascaderOption[]) => void;
   onConfirm?: (value: any[]) => void;
 }
 
@@ -29,7 +29,7 @@ export default function useCascader(props: useCascaderProps) {
     value: valueProp,
     defaultValue,
     onChange,
-    onSelect,
+    onFinish,
     onConfirm
   } = props;
 
@@ -38,7 +38,7 @@ export default function useCascader(props: useCascaderProps) {
     defaultValue
   });
 
-  const fieldNames = useCreation(
+  const fieldNames = React.useMemo(
     () => Object.assign({}, defaultFieldNames, fieldNamesProp),
     [fieldNamesProp]
   );
@@ -89,11 +89,14 @@ export default function useCascader(props: useCascaderProps) {
       }
 
       const selected = state.tabs.map((tab) => tab.selected);
+      const selectedValues = selected.map((item) => item?.[fieldNames.value]);
 
-      onSelect?.(selected.filter(Boolean) as CascaderOption[]);
+      onChange?.(selectedValues.filter(Boolean));
 
       if (!selected.includes(null)) {
-        onChange?.(selected as CascaderOption[]);
+        console.log(selectedValues);
+
+        onFinish?.(selectedValues);
       }
     }
   };
@@ -110,8 +113,16 @@ export default function useCascader(props: useCascaderProps) {
     }
   };
 
-  useCreation(() => {
+  React.useEffect(() => {
     if (!options || options.length === 0) {
+      return;
+    }
+
+    if (
+      value &&
+      value.length > 0 &&
+      JSON.stringify(getValues({ final: true })) === JSON.stringify(value)
+    ) {
       return;
     }
 
@@ -122,15 +133,11 @@ export default function useCascader(props: useCascaderProps) {
       }
     ];
 
-    if (
-      value &&
-      value.length > 0 &&
-      JSON.stringify(getValues()) != JSON.stringify(value)
-    ) {
+    if (value && value.length > 0) {
       value.forEach((valueItem, index) => {
         if (tabs[index]) {
           const selected = tabs[index].options.find(
-            (item) => item[fieldNames.value] === valueItem
+            (item) => item[fieldNames.value] == valueItem
           );
 
           if (selected) {
@@ -145,12 +152,13 @@ export default function useCascader(props: useCascaderProps) {
           }
         }
       });
+
+      state.tabs = tabs;
       state.tabIndex = tabs.length - 1;
-      state.tabs = tabs;
       state.selected = tabs.map((item) => item.selected as CascaderOption);
-    } else if (!value) {
-      state.selected = undefined;
+    } else {
       state.tabs = tabs;
+      state.selected = undefined;
     }
   }, [value, options]);
 

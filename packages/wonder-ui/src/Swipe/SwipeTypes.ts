@@ -26,7 +26,7 @@ export interface SwipeProps {
   /**
    * 内置方法
    */
-  actionRef?: React.Ref<SwipeAction | null | undefined>;
+  actionRef?: React.Ref<SwipeAction | undefined>;
   /**
    * Css api
    */

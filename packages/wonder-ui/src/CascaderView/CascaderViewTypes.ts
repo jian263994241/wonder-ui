@@ -27,8 +27,8 @@ export type CascaderTab = {
 };
 
 export type CascaderAction = {
-  getSelected(params: { final?: boolean }): CascaderOption[] | undefined;
-  getValues(params: { final?: boolean }): any[] | undefined;
+  getSelected(params?: { final?: boolean }): CascaderOption[] | undefined;
+  getValues(params?: { final?: boolean }): any[] | undefined;
 };
 
 export interface CascaderViewProps {
@@ -41,7 +41,7 @@ export interface CascaderViewProps {
   /**
    * 内部方法
    */
-  actionRef?: React.Ref<CascaderAction | null>;
+  actionRef?: React.Ref<CascaderAction | undefined>;
   /**
    * 选中图标
    */
@@ -69,11 +69,11 @@ export interface CascaderViewProps {
   /**
    * 选择完整时触发
    */
-  onChange?: (value: CascaderOption[]) => void;
+  onFinish?: (value: any[]) => void;
   /**
    * 选择时触发
    */
-  onSelect?: (value: CascaderOption[]) => void;
+  onChange?: (value: any[]) => void;
   /**
    * 配置每一列的选项
    */

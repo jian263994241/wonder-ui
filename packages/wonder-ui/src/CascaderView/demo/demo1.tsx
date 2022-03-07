@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   CascaderOption,
   CascaderView,
+  CascaderAction,
   List,
   ListHeader,
   ListItem,
@@ -12,11 +13,19 @@ import { getPCA } from 'lcn';
 const pca = getPCA({ inland: true });
 
 export default () => {
-  const [values, setValues] = React.useState<CascaderOption[]>([]);
+  const [values, setValues] = React.useState<string[]>();
+  const [options, setOptions] = React.useState<CascaderOption[]>();
+  const actionRef = React.useRef<CascaderAction>();
 
-  const handleChange = (values: CascaderOption[]) => {
+  const handleChange = (values: string[]) => {
     setValues(values);
   };
+
+  React.useEffect(() => {
+    if (actionRef.current) {
+      setOptions(actionRef.current.getSelected());
+    }
+  }, [values]);
 
   return (
     <React.Fragment>
@@ -24,21 +33,14 @@ export default () => {
         <ListHeader>基础用法</ListHeader>
 
         <ListItem
-          extra={
-            values.length > 0
-              ? values.map((val) => val.name).join(',')
-              : '请选择'
-          }
+          divider
+          extra={options ? options.map((val) => val.name).join(',') : '请选择'}
         >
           地区
         </ListItem>
 
         <ListItem
-          extra={
-            values.length > 0
-              ? values.map((val) => val.code).join(',')
-              : '请选择'
-          }
+          extra={options ? options.map((val) => val.code).join(',') : '请选择'}
         >
           地区码
         </ListItem>
@@ -48,10 +50,12 @@ export default () => {
 
       <CascaderView
         divider
+        actionRef={actionRef}
+        defaultValue={['500000', '500100', '500104']}
         value={values}
         options={pca}
         fieldNames={{ label: 'name', value: 'code' }}
-        onChange={handleChange}
+        onFinish={handleChange}
         style={{ '--cascader-content-height': '400px' } as React.CSSProperties}
       />
     </React.Fragment>

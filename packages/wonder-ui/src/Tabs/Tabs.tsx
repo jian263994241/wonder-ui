@@ -60,7 +60,7 @@ const TabsIndicator = styled('span', {
   width: 40,
   height: 2,
   backgroundColor: styleProps.textColor || theme.palette.primary.main,
-  transition: theme.transitions.create(['transform', 'width'], { duration: 0 })
+  transition: theme.transitions.create(['transform'], { duration: 0 })
 }));
 
 const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((inProps, ref) => {
