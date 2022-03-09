@@ -160,6 +160,8 @@ export interface InputNumberProps
     value: any,
     info: { offset: ValueType; type: 'up' | 'down' }
   ) => void;
+
+  onFocus?: React.FocusEventHandler<HTMLInputElement>;
 }
 
 export interface InputNumberStyleProps extends InputNumberProps {
@@ -270,7 +272,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
       onInput,
       onPressEnter,
       onStep,
-
+      onFocus,
       suffix,
       ...rest
     } = props;
@@ -728,8 +730,9 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
           root: css(classes.root, className)
         }}
         style={style}
-        onFocus={() => {
+        onFocus={(e) => {
           setFocus(true);
+          onFocus?.(e);
         }}
         onBlur={onBlur}
         onKeyDown={onKeyDown}

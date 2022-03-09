@@ -37,8 +37,10 @@ export default function KeyboardModal(props: KeyboardModalProps) {
   const inputScrollParentElement = React.useRef<HTMLElement>();
   const closeListenerRef = React.useRef<Function>();
   const scrollTopStartRef = React.useRef<number>();
+  const lockRef = React.useRef(false);
 
   const innerClose = (scroll?: boolean) => {
+    if (!state.visible || lockRef.current) return;
     state.visible = false;
 
     closeListenerRef.current?.();
@@ -58,9 +60,10 @@ export default function KeyboardModal(props: KeyboardModalProps) {
   };
 
   const innerOpen = () => {
-    if (state.visible) return;
+    if (state.visible || lockRef.current) return;
 
     state.visible = true;
+    lockRef.current = true;
 
     doubleRaf(() => {
       const { current: inputElement } = inputRef;
@@ -76,11 +79,10 @@ export default function KeyboardModal(props: KeyboardModalProps) {
 
         const { current: parent } = inputScrollParentElement;
 
-        const inputRect = getRect(inputElement);
-        const keyboardRect = getRect(rootRef.current!);
-
         doubleRaf(() => {
-          const safeArea = keyboardRect.height + inputRect.height + 20;
+          const inputRect = getRect(inputElement);
+          const keyboardRect = getRect(rootRef.current!);
+          const safeArea = keyboardRect.height + inputRect.height + 15;
 
           if (win.innerHeight - inputRect.top < safeArea) {
             const scrollTopStart = scrollTop(parent);
@@ -94,9 +96,9 @@ export default function KeyboardModal(props: KeyboardModalProps) {
           }
 
           doubleRaf(() => {
-            closeListenerRef.current = on(parent, 'scroll', () =>
-              innerClose(true)
-            );
+            closeListenerRef.current = on(parent, 'scroll', () => {
+              innerClose(true);
+            });
             inputElement.focus();
           });
         });
@@ -104,7 +106,9 @@ export default function KeyboardModal(props: KeyboardModalProps) {
     });
   };
 
-  useClickAway(() => innerClose(), [rootRef, inputRef]);
+  useClickAway(() => {
+    innerClose();
+  }, [rootRef, inputRef]);
 
   React.useImperativeHandle(
     actionRef,
@@ -121,6 +125,10 @@ export default function KeyboardModal(props: KeyboardModalProps) {
     []
   );
 
+  const unlock = () => {
+    lockRef.current = false;
+  };
+
   if (React.isValidElement(input)) {
     return (
       <React.Fragment>
@@ -136,6 +144,8 @@ export default function KeyboardModal(props: KeyboardModalProps) {
           role="keyboard"
           visible={state.visible}
           anchor="bottom"
+          onEntered={unlock}
+          onExited={unlock}
           ModalProps={{
             hideBackdrop: true,
             disableFocusLock: true,

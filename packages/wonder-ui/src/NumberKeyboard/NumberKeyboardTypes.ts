@@ -98,7 +98,7 @@ export interface NumberKeyboardProps {
   valuePropName?: string;
   /**
    * 输入框触发键盘显示的事件名
-   * @default onClick
+   * @default onFocus
    */
   triggerName?: string;
   /**

@@ -11,7 +11,6 @@ export interface ListHeaderProps extends React.HTMLAttributes<HTMLLIElement> {
    * 设置position: sticky
    */
   sticky?: boolean;
-  ref?: React.Ref<any>;
 }
 
 const ListHeaderRoot = styled('li', {
@@ -19,7 +18,7 @@ const ListHeaderRoot = styled('li', {
   slot: 'Root'
 })(
   ({ theme }) => ({
-    ...theme.typography.body1,
+    ...theme.typography.subtitle2,
     backgroundColor: theme.palette.background.default,
     width: '100%',
     boxSizing: 'border-box',

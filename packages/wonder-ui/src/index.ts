@@ -169,6 +169,9 @@ export * from './Page';
 export { default as Paper } from './Paper';
 export * from './Paper';
 
+export { default as PasscodeInput } from './PasscodeInput';
+export * from './PasscodeInput';
+
 export { default as Picker } from './Picker';
 export * from './Picker';
 

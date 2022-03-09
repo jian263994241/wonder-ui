@@ -8,7 +8,11 @@ import { drawerClasses, useClasses } from './DrawerClasses';
 import { Theme } from '../styles/createTheme';
 import { TransitionBaseProps } from '../styles/transitions';
 
-export interface DrawerProps {
+export interface DrawerProps
+  extends Pick<
+    TransitionBaseProps,
+    'onEnter' | 'onEntered' | 'onExit' | 'onExited'
+  > {
   role?: string;
   /**
    * 出现的位置
@@ -128,6 +132,10 @@ const Drawer = React.forwardRef<HTMLDivElement, DrawerProps>((inProps, ref) => {
     transitionDuration,
     keepMounted = false,
     ModalProps,
+    onEnter,
+    onEntered,
+    onExit,
+    onExited,
     ...rest
   } = props;
 
@@ -154,6 +162,10 @@ const Drawer = React.forwardRef<HTMLDivElement, DrawerProps>((inProps, ref) => {
         direction={oppositeDirection[anchorInvariant]}
         duration={transitionDuration}
         className={classes.paper}
+        onEnter={onEnter}
+        onEntered={onEntered}
+        onExit={onExit}
+        onExited={onExited}
       >
         {children}
       </DrawerPaper>

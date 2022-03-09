@@ -7,7 +7,6 @@ import KeyboardModal, { KeyboardModalAction } from './KeyboardModal';
 import Navbar from '../Navbar';
 import Row from '../Row';
 import styled from '../styles/styled';
-import SvgIcon from '../SvgIcon';
 import useThemeProps from '../styles/useThemeProps';
 import {
   composeClasses,
@@ -158,7 +157,7 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
       showEnterKey = false,
       showSlidebar = false,
       valuePropName = 'value',
-      triggerName = 'onClick',
+      triggerName = 'onFocus',
       title,
       ...rest
     } = props;
