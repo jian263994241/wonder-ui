@@ -69,11 +69,18 @@ const shakeX = keyframes`
 const PasscodeInputRoot = styled('div', {
   slot: 'Root',
   name: COMPONENT_NAME
-})<StyleProps>(({ styleProps, theme }) => ({
+})({
   position: 'relative',
-  display: 'inline-block',
-  userSelect: 'none',
+  display: 'block',
+  userSelect: 'none'
+});
 
+const PasscodeInputCells = styled('div', {
+  slot: 'Cells',
+  name: COMPONENT_NAME
+})<StyleProps>(({ styleProps, theme }) => ({
+  display: 'inline-flex',
+  verticalAlign: 'top',
   ...(!styleProps.seperated && {
     borderRadius: `var(--passcode-input-border-radius, 8px)`,
     overflow: 'hidden',
@@ -84,8 +91,7 @@ const PasscodeInputRoot = styled('div', {
       outline: 'none'
     })
   }),
-
-  [`&.${passcodeInputClasses.error}`]: {
+  [`.${passcodeInputClasses.error} &`]: {
     ...(styleProps.seperated
       ? {
           animation: `175ms ease-in-out 0s 2 normal none running ${shakeX}`
@@ -97,14 +103,6 @@ const PasscodeInputRoot = styled('div', {
         })
   }
 }));
-
-const PasscodeInputCells = styled('div', {
-  slot: 'Cells',
-  name: COMPONENT_NAME
-})({
-  display: 'inline-flex',
-  verticalAlign: 'top'
-});
 
 const PasscodeInputCell = styled('div', {
   slot: 'Cell',
@@ -276,12 +274,11 @@ const PasscodeInput = React.forwardRef<HTMLDivElement, PasscodeInputProps>(
         className={css(classes.root, className, {
           [classes.focused]: !seperated && focused
         })}
-        styleProps={styleProps}
         onFocus={handleFocus}
         onBlur={handleBlur}
         {...rest}
       >
-        <PasscodeInputCells className={classes.cells}>
+        <PasscodeInputCells className={classes.cells} styleProps={styleProps}>
           {cells.map((cell, index) => (
             <PasscodeInputCell
               key={index}
