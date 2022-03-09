@@ -21,7 +21,7 @@ group:
   --block-title-margin-bottom: 6px;
   --block-padding-horizontal: 16px;
   --block-padding-vertical: 16px;
-  --block-divider-color: 'theme.palette.divider';
+  --block-divider-color: theme.palette.divider;
   --block-inset-side-margin: 16px;
 }
 ```

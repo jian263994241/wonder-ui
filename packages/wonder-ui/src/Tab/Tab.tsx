@@ -123,10 +123,12 @@ const Tab = React.forwardRef<HTMLSpanElement, TabProps>((props, ref) => {
   const isActive = currentValue === itemKey;
 
   React.useEffect(() => {
-    setValueUnControlled((prevValue: any) => {
-      if (!prevValue) return itemKey;
-      return prevValue;
-    });
+    setTimeout(() => {
+      setValueUnControlled((prevValue: any) => {
+        if (!prevValue) return itemKey;
+        return prevValue;
+      });
+    }, 0);
   }, []);
 
   const setLine = (tabNode: HTMLElement) => {

@@ -6,10 +6,10 @@ import { composeClasses, css } from '@wonder-ui/utils';
 import type { ContentBlockProps, StyleProps } from './ContentBlockTypes';
 
 const useClasses = (props: StyleProps) => {
-  const { classes, inset } = props.styleProps;
+  const { classes, inset, strong } = props.styleProps;
 
   const slots = {
-    root: ['root', inset && 'inset'],
+    root: ['root', inset && 'inset', strong && 'strong'],
     title: ['title'],
     content: ['content']
   };
@@ -43,12 +43,22 @@ const ContentBlockContent = styled('div', {
   name: COMPONENT_NAME
 })<StyleProps>(({ theme, styleProps }) => ({
   ...theme.typography.body2,
-  backgroundColor: theme.palette.background.paper,
+
   paddingTop: `var(--block-padding-vertical, ${theme.spacing(2)}px)`,
   paddingBottom: `var(--block-padding-vertical, ${theme.spacing(2)}px)`,
+  ...(styleProps.strong && {
+    backgroundColor: theme.palette.background.paper,
+    ...(styleProps.inset
+      ? {
+          border: `thin solid var(--block-divider-color, ${theme.palette.divider})`
+        }
+      : {
+          borderTop: `thin solid var(--block-divider-color, ${theme.palette.divider})`,
+          borderBottom: `thin solid var(--block-divider-color, ${theme.palette.divider})`
+        })
+  }),
   ...(styleProps.inset
     ? {
-        border: `thin solid var(--block-divider-color, ${theme.palette.divider})`,
         borderRadius: `var(--block-inset-border-radius, 8px)`,
         marginLeft: `calc(var(--block-inset-side-margin, ${theme.spacing(
           2
@@ -60,8 +70,6 @@ const ContentBlockContent = styled('div', {
         paddingRight: `var(--block-padding-horizontal, ${theme.spacing(2)}px)`
       }
     : {
-        borderTop: `thin solid var(--block-divider-color, ${theme.palette.divider})`,
-        borderBottom: `thin solid var(--block-divider-color, ${theme.palette.divider})`,
         paddingLeft: `calc(var(--block-padding-horizontal, ${theme.spacing(
           2
         )}px) + env(safe-area-inset-left, 0px))`,
@@ -74,9 +82,16 @@ const ContentBlockContent = styled('div', {
 const ContentBlock = React.forwardRef<HTMLDivElement, ContentBlockProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
-    const { children, title, inset = false, className, ...rest } = props;
+    const {
+      children,
+      title,
+      inset = false,
+      strong = true,
+      className,
+      ...rest
+    } = props;
 
-    const styleProps = { ...props, inset };
+    const styleProps = { ...props, inset, strong };
 
     const classes = useClasses({ styleProps });
 
@@ -91,12 +106,14 @@ const ContentBlock = React.forwardRef<HTMLDivElement, ContentBlockProps>(
             {title}
           </ContentBlockTitle>
         )}
-        <ContentBlockContent
-          styleProps={styleProps}
-          className={classes.content}
-        >
-          {children}
-        </ContentBlockContent>
+        {children && (
+          <ContentBlockContent
+            styleProps={styleProps}
+            className={classes.content}
+          >
+            {children}
+          </ContentBlockContent>
+        )}
       </ContentBlockRoot>
     );
   }

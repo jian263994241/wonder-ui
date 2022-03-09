@@ -10,17 +10,16 @@ import {
   useCreation,
   useForkRef,
   useInViewport,
+  usePrevious,
   useUpdateEffect
 } from '@wonder-ui/hooks';
-import type { ImageProps } from './ImageTypes';
+import type { ImageProps, StyleProps } from './ImageTypes';
 
-const useClasses = (styleProps: ImageProps) => {
-  const { classes, round } = styleProps;
+const useClasses = (props: StyleProps) => {
+  const { classes, variant } = props.styleProps;
   const slots = {
-    root: ['root', round && 'round'],
-    img: ['img'],
-    placeholder: ['placeholder'],
-    fallback: ['fallback']
+    root: ['root', variant && variant],
+    img: ['img']
   };
 
   return composeClasses(COMPONENT_NAME, slots, classes);
@@ -30,14 +29,18 @@ const ImageRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })({
-  display: 'inline-block',
+  display: 'inline-flex',
+  justifyContent: 'center',
+  alignItems: 'center',
   position: 'relative',
   overflow: 'hidden',
   width: 'var(--image-width, auto)',
   height: 'var(--image-height, auto)',
-  borderRadius: 'var(--image-radius, 0px)',
-  [`&.${imageClasses.round}`]: {
-    borderRadius: `var(--border-radius-max, 50%)`,
+  [`&.${imageClasses.rounded}`]: {
+    borderRadius: 'var(--image-radius, 4px)'
+  },
+  [`&.${imageClasses.circular}`]: {
+    borderRadius: '50%',
     [`.${imageClasses.img}`]: {
       borderRadius: 'inherit'
     }
@@ -54,40 +57,12 @@ const ImageImg = styled('img', {
   WebkitUserDrag: 'none'
 });
 
-const ImagePlaceholder = styled('div', {
-  name: COMPONENT_NAME,
-  slot: 'Placeholder'
-})(({ theme }) => ({
-  position: 'relative',
-  color: `var(--image-placeholder-color, ${theme.palette.text.secondary})`,
-  fontSize: `var(--image-placeholder-size, ${theme.typography.body2})`,
-  height: '100%',
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center'
-}));
-
-const ImageFallback = styled('div', {
-  name: COMPONENT_NAME,
-  slot: 'Fallback'
-})(({ theme }) => ({
-  position: 'relative',
-  color: `var(--image-fallback-color, ${theme.palette.text.secondary})`,
-  fontSize: `var(--image-fallback-size, ${theme.typography.body2})`,
-  height: '100%',
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center'
-}));
-
-const Image = React.forwardRef<HTMLImageElement, ImageProps>((inProps, ref) => {
+const Image = React.forwardRef<HTMLDivElement, ImageProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
     width: widthProp,
     height: heightProp,
-    radius: radiusProp,
+    variant = 'square',
     alt,
     className,
     fit = 'fill',
@@ -101,8 +76,8 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>((inProps, ref) => {
     src,
     style,
     useMap,
-    placeholder = <ImageIcon fontSize="medium" />,
-    fallback = <ImageX fontSize="medium" />,
+    placeholder = <ImageIcon fontSize="medium" color="secondary" />,
+    fallback = <ImageX fontSize="medium" color="secondary" />,
     onClick,
     onLoad,
     onError
@@ -116,13 +91,11 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>((inProps, ref) => {
     () => (heightProp ? addUnit(unitToPx(heightProp)) : heightProp),
     [heightProp]
   );
-  const radius = useCreation(
-    () => (radiusProp ? addUnit(unitToPx(radiusProp)) : radiusProp),
-    [radiusProp]
-  );
+
   const [loaded, setLoaded] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
   const [initialized, setInitialized] = React.useState(!lazy);
+  const prevSrc = usePrevious(src);
 
   const rootRef = React.useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(rootRef, ref);
@@ -135,8 +108,10 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>((inProps, ref) => {
   }, [inViewport]);
 
   useUpdateEffect(() => {
-    setLoaded(false);
-    setFailed(false);
+    if (src != prevSrc) {
+      setLoaded(false);
+      setFailed(false);
+    }
   }, [src]);
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement>) => {
@@ -149,7 +124,9 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>((inProps, ref) => {
     onLoad?.(e);
   };
 
-  const classes = useClasses(props);
+  const styleProps = { ...props, variant };
+
+  const classes = useClasses({ styleProps });
 
   return (
     <ImageRoot
@@ -158,7 +135,6 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>((inProps, ref) => {
         {
           '--image-width': width,
           '--image-height': height,
-          '--image-radius': radius,
           ...style
         } as React.CSSProperties
       }
@@ -166,14 +142,10 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>((inProps, ref) => {
       onClick={onClick}
     >
       {failed ? (
-        <ImageFallback className={classes.fallback}>{fallback}</ImageFallback>
+        fallback
       ) : (
         <React.Fragment>
-          {!loaded && (
-            <ImagePlaceholder className={classes.placeholder}>
-              {placeholder}
-            </ImagePlaceholder>
-          )}
+          {!loaded && placeholder}
           <ImageImg
             alt={alt}
             sizes={sizes}

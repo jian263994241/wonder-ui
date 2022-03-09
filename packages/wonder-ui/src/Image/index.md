@@ -37,3 +37,13 @@ group:
 
 
 <API src="./Image.tsx"></API>
+
+## CSS Variables
+
+```css
+{
+  --image-width: auto;
+  --image-height: auto;
+  --image-radius: 4px;
+}
+```

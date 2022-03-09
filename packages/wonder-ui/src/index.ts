@@ -7,6 +7,9 @@ export * from './ActivityIndicator';
 export { default as ArrowForward } from './ArrowForward';
 export * from './ArrowForward';
 
+export { default as Avatar } from './Avatar';
+export * from './Avatar';
+
 export { default as Backdrop } from './Backdrop';
 export * from './Backdrop';
 
@@ -66,6 +69,9 @@ export * from './Collapse';
 
 export { default as Container } from './Container';
 export * from './Container';
+
+export { default as ContentBlock } from './ContentBlock';
+export * from './ContentBlock';
 
 export { default as DatePicker } from './DatePicker';
 export * from './DatePicker';

@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-  List,
-  ListItem,
-  ListHeader,
-  PasscodeInput,
-  NumberKeyboard
-} from '@wonder-ui/core';
+import { ContentBlock, PasscodeInput, NumberKeyboard } from '@wonder-ui/core';
 
 export default () => {
   const [error, setError] = React.useState(false);
@@ -16,34 +10,27 @@ export default () => {
 
   return (
     <div style={{ paddingBottom: 1000 }}>
-      <List>
-        <ListHeader>基础用法</ListHeader>
-        <ListItem>
-          <PasscodeInput />
-        </ListItem>
+      <ContentBlock title="基本使用">
+        <PasscodeInput />
+      </ContentBlock>
 
-        <ListHeader>显示明文</ListHeader>
-        <ListItem>
-          <PasscodeInput clearText />
-        </ListItem>
+      <ContentBlock title="显示明文">
+        <PasscodeInput clearText />
+      </ContentBlock>
 
-        <ListHeader>格子间距</ListHeader>
-        <ListItem>
-          <PasscodeInput seperated />
-        </ListItem>
+      <ContentBlock title="格子间距">
+        <PasscodeInput seperated />
+      </ContentBlock>
 
-        <ListHeader>错误状态</ListHeader>
-        <ListItem>
-          <PasscodeInput seperated error={error} onChange={onChange} />
-        </ListItem>
+      <ContentBlock title="错误状态">
+        <PasscodeInput seperated error={error} onChange={onChange} />
+      </ContentBlock>
 
-        <ListHeader>使用虚拟键盘</ListHeader>
-        <ListItem>
-          <NumberKeyboard showCloseKey>
-            <PasscodeInput seperated clearText />
-          </NumberKeyboard>
-        </ListItem>
-      </List>
+      <ContentBlock title="使用虚拟键盘">
+        <NumberKeyboard showCloseKey>
+          <PasscodeInput seperated clearText />
+        </NumberKeyboard>
+      </ContentBlock>
     </div>
   );
 };

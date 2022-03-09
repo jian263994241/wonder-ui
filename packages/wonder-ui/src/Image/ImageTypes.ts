@@ -33,6 +33,7 @@ export interface ImageProps
   src?: string;
   /**
    * 图片填充模式
+   * @default fill
    */
   fit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
   /**
@@ -44,13 +45,10 @@ export interface ImageProps
    */
   height?: string | number;
   /**
-   * 圆角大小, 支持 px vw vh rem 单位，默认 px
+   * 图片形状
+   * @default square
    */
-  radius?: string | number;
-  /**
-   * 显示圆形
-   */
-  round?: boolean;
+  variant?: 'circular' | 'rounded' | 'square';
   /**
    * 图片懒加载
    */
@@ -75,4 +73,8 @@ export interface ImageProps
    * 图片加载失败时触发
    */
   onError?: React.ReactEventHandler<HTMLImageElement>;
+}
+
+export interface StyleProps {
+  styleProps: ImageProps;
 }

@@ -23,6 +23,11 @@ export interface ContentBlockProps {
    * 内容
    */
   children?: React.ReactNode;
+  /**
+   * 显示背景,突出内容
+   * @default true
+   */
+  strong?: boolean;
 }
 
 export interface StyleProps {
