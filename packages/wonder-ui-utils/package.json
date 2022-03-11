@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/utils",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "description": "Wonder-UI utils",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -35,7 +35,8 @@
     "csstype": "^3.0.8"
   },
   "peerDependencies": {
-    "react": ">=16.8.0"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "repository": {
     "type": "git",
