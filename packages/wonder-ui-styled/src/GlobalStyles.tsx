@@ -10,7 +10,9 @@ export interface GlobalStylesProps<Theme = object> {
   styles?: Styles | StylesCallback<Theme>;
 }
 
-export default function GlobalStyles(props: GlobalStylesProps): JSX.Element {
+export default function GlobalStyles<T>(
+  props: GlobalStylesProps<T>
+): React.ReactNode {
   const { defaultTheme, styles } = props;
 
   const globalStyles =
@@ -19,5 +21,7 @@ export default function GlobalStyles(props: GlobalStylesProps): JSX.Element {
           styles(isEmpty(themeInput) ? defaultTheme : themeInput)
       : styles;
 
-  return <Global styles={globalStyles} />;
+  const a = React.useMemo(() => globalStyles, []);
+
+  return <Global styles={a} />;
 }

@@ -17,7 +17,9 @@ export const cache = createCache({
   insertionPoint: emotionInsertionPoint
 });
 
-export default function StyledEngineProvider(props: StyledProvider) {
+export default function StyledEngineProvider(
+  props: StyledProvider
+): JSX.Element {
   const { injectFirst, children } = props;
 
   React.useEffect(() => {
@@ -32,9 +34,13 @@ export default function StyledEngineProvider(props: StyledProvider) {
     }
   }, [injectFirst]);
 
-  return injectFirst ? (
-    <CacheProvider value={cache}>{children}</CacheProvider>
-  ) : (
-    children
+  return (
+    <React.Fragment>
+      {injectFirst ? (
+        <CacheProvider value={cache}>{children}</CacheProvider>
+      ) : (
+        children
+      )}
+    </React.Fragment>
   );
 }

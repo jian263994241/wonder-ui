@@ -1,6 +1,6 @@
 {
   "name": "@wonder-ui/styled",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Wonder-UI styled",
   "source": "src/index.ts",
   "main": "dist/index.js",
