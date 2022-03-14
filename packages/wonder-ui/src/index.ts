@@ -285,5 +285,6 @@ export * from './styles/colorManipulator';
 export * from './styles/createTheme';
 export * from './styles/useTheme';
 export * from './styles/useThemeProps';
+export * from './styles/GlobalStyles';
 
-export { GlobalStyles, css, keyframes } from '@wonder-ui/styled';
+export { css, keyframes } from '@wonder-ui/styled';

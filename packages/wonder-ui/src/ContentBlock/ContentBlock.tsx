@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { COMPONENT_NAME } from './ContentBlockClasses';
-import { composeClasses, css } from '@wonder-ui/utils';
+import { createCssVars, composeClasses, css } from '@wonder-ui/utils';
 import type { ContentBlockProps, StyleProps } from './ContentBlockTypes';
 
 const useClasses = (props: StyleProps) => {
@@ -17,10 +17,42 @@ const useClasses = (props: StyleProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
+const {
+  returnCssVarStyles,
+  getCssValue,
+  getCalcValue
+} = createCssVars(COMPONENT_NAME, [
+  'titltMarginTop',
+  'titleMarginBottom',
+  'titleMarginHorizontal',
+  'paddingHorizontal',
+  'paddingVertical',
+  'safeAreaLeft',
+  'safeAreaRight',
+  'dividerColor',
+  'insetSideMargin',
+  'insetBorderRadius'
+]);
+
 const ContentBlockRoot = styled('div', {
   slot: 'Root',
   name: COMPONENT_NAME
-})({});
+})(({ theme }) => {
+  const spacing = theme.spacing(2);
+
+  return returnCssVarStyles({
+    titltMarginTop: 12,
+    titleMarginBottom: 6,
+    titleMarginHorizontal: spacing,
+    paddingHorizontal: spacing,
+    paddingVertical: spacing,
+    safeAreaLeft: 'env(safe-area-inset-left, 0px)',
+    safeAreaRight: 'env(safe-area-inset-right, 0px)',
+    dividerColor: theme.palette.divider,
+    insetSideMargin: spacing,
+    insetBorderRadius: 8
+  });
+});
 
 const ContentBlockTitle = styled('div', {
   slot: 'Title',
@@ -28,14 +60,10 @@ const ContentBlockTitle = styled('div', {
 })(({ theme }) => ({
   ...theme.typography.subtitle2,
   color: theme.palette.text.secondary,
-  marginTop: `var(--block-title-margin-top, 12px)`,
-  marginBottom: `var(--block-title-margin-bottom, 6px)`,
-  paddingLeft: `calc(var(--block-padding-horizontal, ${theme.spacing(
-    2
-  )}px) + env(safe-area-inset-left, 0px))`,
-  paddingRight: `calc(var(--block-padding-horizontal, ${theme.spacing(
-    2
-  )}px) + env(safe-area-inset-right, 0px))`
+  marginTop: getCssValue('titltMarginTop'),
+  marginBottom: getCssValue('titleMarginBottom'),
+  paddingLeft: getCalcValue('+', 'titleMarginHorizontal', 'safeAreaLeft'),
+  paddingRight: getCalcValue('+', 'titleMarginHorizontal', 'safeAreaRight')
 }));
 
 const ContentBlockContent = styled('div', {
@@ -43,39 +71,28 @@ const ContentBlockContent = styled('div', {
   name: COMPONENT_NAME
 })<StyleProps>(({ theme, styleProps }) => ({
   ...theme.typography.body2,
-
-  paddingTop: `var(--block-padding-vertical, ${theme.spacing(2)}px)`,
-  paddingBottom: `var(--block-padding-vertical, ${theme.spacing(2)}px)`,
+  paddingTop: getCssValue('paddingVertical'),
+  paddingBottom: getCssValue('paddingVertical'),
   ...(styleProps.strong && {
     backgroundColor: theme.palette.background.paper,
     ...(styleProps.inset
-      ? {
-          border: `thin solid var(--block-divider-color, ${theme.palette.divider})`
-        }
+      ? { border: `thin solid ${getCssValue('dividerColor')}` }
       : {
-          borderTop: `thin solid var(--block-divider-color, ${theme.palette.divider})`,
-          borderBottom: `thin solid var(--block-divider-color, ${theme.palette.divider})`
+          borderTop: `thin solid ${getCssValue('dividerColor')}`,
+          borderBottom: `thin solid ${getCssValue('dividerColor')}`
         })
   }),
   ...(styleProps.inset
     ? {
-        borderRadius: `var(--block-inset-border-radius, 8px)`,
-        marginLeft: `calc(var(--block-inset-side-margin, ${theme.spacing(
-          2
-        )}px) + env(safe-area-inset-left, 0px))`,
-        marginRight: `calc(var(--block-inset-side-margin, ${theme.spacing(
-          2
-        )}px) + env(safe-area-inset-right, 0px))`,
-        paddingLeft: `var(--block-padding-horizontal, ${theme.spacing(2)}px)`,
-        paddingRight: `var(--block-padding-horizontal, ${theme.spacing(2)}px)`
+        borderRadius: getCssValue('insetBorderRadius'),
+        marginLeft: getCalcValue('+', 'insetSideMargin', 'safeAreaLeft'),
+        marginRight: getCalcValue('+', 'insetSideMargin', 'safeAreaRight'),
+        paddingLeft: getCssValue('paddingHorizontal'),
+        paddingRight: getCssValue('paddingHorizontal')
       }
     : {
-        paddingLeft: `calc(var(--block-padding-horizontal, ${theme.spacing(
-          2
-        )}px) + env(safe-area-inset-left, 0px))`,
-        paddingRight: `calc(var(--block-padding-horizontal, ${theme.spacing(
-          2
-        )}px) + env(safe-area-inset-right, 0px))`
+        paddingLeft: getCalcValue('+', 'paddingHorizontal', 'safeAreaLeft'),
+        paddingRight: getCalcValue('+', 'paddingHorizontal', 'safeAreaRight')
       })
 }));
 

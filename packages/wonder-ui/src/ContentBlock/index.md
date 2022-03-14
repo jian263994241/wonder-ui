@@ -15,13 +15,15 @@ group:
 
 ## CSS Variables
 
-```css
-{
-  --block-title-margin-top: 12px;
-  --block-title-margin-bottom: 6px;
-  --block-padding-horizontal: 16px;
-  --block-padding-vertical: 16px;
-  --block-divider-color: theme.palette.divider;
-  --block-inset-side-margin: 16px;
-}
+```bash
+0: "var(--wui-content-block-titlt-margin-top, 12px)"
+1: "var(--wui-content-block-title-margin-bottom, 6px)"
+2: "var(--wui-content-block-title-margin-horizontal, 16px)"
+3: "var(--wui-content-block-padding-horizontal, 16px)"
+4: "var(--wui-content-block-padding-vertical, 16px)"
+5: "var(--wui-content-block-safe-area-left, env(safe-area-inset-left, 0px))"
+6: "var(--wui-content-block-safe-area-right, env(safe-area-inset-right, 0px))"
+7: "var(--wui-content-block-divider-color, rgba(0, 0, 0, 0.12))"
+8: "var(--wui-content-block-inset-side-margin, 16px)"
+9: "var(--wui-content-block-inset-border-radius, 8px)"
 ```

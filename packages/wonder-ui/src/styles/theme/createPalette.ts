@@ -1,6 +1,6 @@
 import * as colors from './colors';
 import { darken, getContrastRatio, lighten } from '../colorManipulator';
-import { getDevice } from '@wonder-ui/utils';
+import { getDevice, merge } from '@wonder-ui/utils';
 import type { ColorKeys, ColorType } from './colors';
 
 type ColorObj = {
@@ -74,7 +74,7 @@ export interface Palette {
 
 export interface PaletteOptions {
   mode?: Mode | 'auto';
-  common?: Partial<CommonColor>;
+  common?: CommonColor;
   text?: Partial<TextColor>;
   divider?: string;
   background?: Partial<BackgroundColor>;
@@ -185,7 +185,7 @@ function addLightOrDark(
   }
 }
 
-function getMode(mode: PaletteOptions['mode']): Palette['mode'] {
+function getMode(mode: PaletteOptions['mode']): Mode {
   const doc = document;
 
   const prefersColor =
@@ -241,7 +241,8 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
     },
     mode: modeProp = 'light',
     contrastThreshold = 3,
-    tonalOffset = 0.2
+    tonalOffset = 0.2,
+    ...rest
   } = palette;
 
   const mode = getMode(modeProp);
@@ -282,30 +283,34 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
   };
 
   const modes = { dark, light };
-
-  return {
-    mode,
-    common,
-    colors,
-    primary: augmentColor(primary),
-    secondary: augmentColor(secondary),
-    error: augmentColor(error),
-    danger: augmentColor(danger),
-    warning: augmentColor(warning),
-    info: augmentColor(info),
-    success: augmentColor(success),
-    light: augmentColor(lightProp),
-    dark: augmentColor(darkProp),
-    // the background and the text.
-    contrastThreshold,
-    // Takes a background color and returns the text color that maximizes the contrast.
-    getContrastText,
-    // Generate a rich color object.
-    augmentColor,
-    // Used by the functions below to shift a color's luminance by approximately
-    // two indexes within its tonal palette.
-    // E.g., shift from Red 500 to Red 300 or Red 700.
-    tonalOffset,
-    ...modes[mode]
-  };
+  //@ts-expect-error
+  return merge(
+    {
+      //@ts-expect-error
+      mode,
+      common,
+      colors,
+      primary: augmentColor(primary),
+      secondary: augmentColor(secondary),
+      error: augmentColor(error),
+      danger: augmentColor(danger),
+      warning: augmentColor(warning),
+      info: augmentColor(info),
+      success: augmentColor(success),
+      light: augmentColor(lightProp),
+      dark: augmentColor(darkProp),
+      // the background and the text.
+      contrastThreshold,
+      // Takes a background color and returns the text color that maximizes the contrast.
+      getContrastText,
+      // Generate a rich color object.
+      augmentColor,
+      // Used by the functions below to shift a color's luminance by approximately
+      // two indexes within its tonal palette.
+      // E.g., shift from Red 500 to Red 300 or Red 700.
+      tonalOffset,
+      ...modes[mode]
+    },
+    rest
+  );
 }
