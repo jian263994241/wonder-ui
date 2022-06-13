@@ -122,7 +122,7 @@ function isFocusVisible(event: React.FocusEvent) {
 
 export const useIsFocusVisible = () => {
   const eventsRef = React.useRef<Array<Function>>([]);
-  const ref = React.useCallback((node) => {
+  const ref = React.useCallback((node: Element) => {
     if (node != null) {
       eventsRef.current = prepare(ownerDocument(node));
     }
