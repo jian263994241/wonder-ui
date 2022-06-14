@@ -63,7 +63,8 @@
   },
   "resolutions": {
     "typescript": "^4.7.3",
-    "rollup-plugin-typescript2": "^0.32.1"
+    "rollup-plugin-typescript2": "^0.32.1",
+    "react": "^18.1.0"
   },
   "config": {
     "commitizen": {
