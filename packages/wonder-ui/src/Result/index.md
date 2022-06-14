@@ -18,6 +18,10 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
+### 应用
+
+<code src="./demo/demo2.tsx"></code>
+
 <API src="./Result.tsx"></API>
 
 
