@@ -114,7 +114,7 @@ const Tab = React.forwardRef<HTMLSpanElement, TabProps>((props, ref) => {
     currentValue
   } = context;
 
-  const defaultKey = useId('tabItem');
+  const defaultKey = useId();
 
   const itemKey = value ?? defaultKey;
 

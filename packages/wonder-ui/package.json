@@ -34,9 +34,9 @@
   "dependencies": {
     "@popperjs/core": "^2.11.0",
     "@react-spring/web": "^9.4.3",
-    "@wonder-ui/hooks": "^1.2.1",
+    "@wonder-ui/hooks": "^1.2.2",
     "@wonder-ui/styled": "^1.1.2",
-    "@wonder-ui/utils": "^2.3.0",
+    "@wonder-ui/utils": "^2.3.1",
     "bezier-easing": "^2.1.0",
     "dayjs": "^1.10.8",
     "rc-field-form": "^1.24.0",

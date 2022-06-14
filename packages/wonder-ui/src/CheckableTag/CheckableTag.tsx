@@ -74,7 +74,7 @@ const CheckableTag = React.forwardRef<HTMLElement, CheckableTagProps>(
     });
 
     const handleClick = React.useCallback(
-      (e) => {
+      (e: React.MouseEvent<HTMLDivElement>) => {
         const value = !checked;
 
         setCheckedIfunControlled(value);

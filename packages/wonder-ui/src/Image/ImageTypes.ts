@@ -45,6 +45,11 @@ export interface ImageProps
    */
   height?: string | number;
   /**
+   * variant=rounded 的圆角
+   * @default 4
+   */
+  roundedRadius?: number;
+  /**
    * 图片形状
    * @default square
    */

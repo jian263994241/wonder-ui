@@ -1,8 +1,8 @@
 import useDialog from './useDialog';
 import { DialogProps } from './DialogTypes';
-import { useHookOutsideRef } from '@wonder-ui/utils';
+import { createActionFromHookRef } from '@wonder-ui/utils';
 
-const actionRef = useHookOutsideRef(useDialog);
+const actionRef = createActionFromHookRef(useDialog);
 
 export function showDialog(props?: Omit<DialogProps, 'visible'>) {
   actionRef.current?.show(props);

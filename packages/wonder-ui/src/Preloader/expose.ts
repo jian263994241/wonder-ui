@@ -1,8 +1,8 @@
 import usePreloader, { usePreloaderProps } from './usePreloader';
 import { PreloaderProps } from './PreloaderTypes';
-import { useHookOutsideRef } from '@wonder-ui/utils';
+import { createActionFromHookRef } from '@wonder-ui/utils';
 
-const actionRef = useHookOutsideRef<ReturnType<typeof usePreloader>>(
+const actionRef = createActionFromHookRef<ReturnType<typeof usePreloader>>(
   usePreloader,
   { timeout: 0 }
 );

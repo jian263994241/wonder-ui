@@ -13,10 +13,9 @@ export interface PortalProps {
   children: React.ReactElement;
   container?: Container;
   disablePortal?: boolean;
-  ref?: React.Ref<HTMLElement | null>;
 }
 
-const Portal: React.FC<PortalProps> = React.forwardRef((props, ref) => {
+const Portal = React.forwardRef<HTMLElement, PortalProps>((props, ref) => {
   const { children, container, disablePortal = false } = props;
 
   const mountNode = useCreation(() => {
@@ -44,7 +43,7 @@ const Portal: React.FC<PortalProps> = React.forwardRef((props, ref) => {
   }, [ref, mountNode, disablePortal]);
 
   if (disablePortal) {
-    if (React.isValidElement(children)) {
+    if (React.isValidElement<any>(children)) {
       return React.cloneElement(children, { ref: handleRef });
     }
     return children;

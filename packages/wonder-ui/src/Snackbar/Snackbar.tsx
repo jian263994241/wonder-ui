@@ -97,7 +97,6 @@ const Snackbar = React.forwardRef<HTMLElement, SnackbarProps>(
       },
       ClickAwayListenerProps,
       autoHideDuration = null,
-      children,
       className,
       disableWindowBlurListener = false,
       disablePortal = false,

@@ -3,7 +3,13 @@ import ImageIcon from '../icons/Image';
 import ImageX from '../icons/ImageX';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { addUnit, composeClasses, css, unitToPx } from '@wonder-ui/utils';
+import {
+  addUnit,
+  composeClasses,
+  css,
+  unitToPx,
+  createCssVars
+} from '@wonder-ui/utils';
 import { COMPONENT_NAME } from './ImageClasses';
 import { imageClasses } from './ImageClasses';
 import {
@@ -25,19 +31,30 @@ const useClasses = (props: StyleProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
+export const cssVars = createCssVars(COMPONENT_NAME, [
+  'width',
+  'height',
+  'roundedRadius'
+]);
+
 const ImageRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})({
+})<StyleProps>(({ styleProps }) => ({
+  ...cssVars.style({
+    width: styleProps.width ?? 'auto',
+    height: styleProps.height ?? 'auto',
+    roundedRadius: styleProps.roundedRadius ?? 4
+  }),
   display: 'inline-flex',
   justifyContent: 'center',
   alignItems: 'center',
   position: 'relative',
   overflow: 'hidden',
-  width: 'var(--image-width, auto)',
-  height: 'var(--image-height, auto)',
+  width: cssVars.value('width'),
+  height: cssVars.value('height'),
   [`&.${imageClasses.rounded}`]: {
-    borderRadius: 'var(--image-radius, 4px)'
+    borderRadius: cssVars.value('roundedRadius')
   },
   [`&.${imageClasses.circular}`]: {
     borderRadius: '50%',
@@ -45,7 +62,7 @@ const ImageRoot = styled('div', {
       borderRadius: 'inherit'
     }
   }
-});
+}));
 
 const ImageImg = styled('img', {
   name: COMPONENT_NAME,
@@ -62,6 +79,7 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>((inProps, ref) => {
   const {
     width: widthProp,
     height: heightProp,
+    roundedRadius,
     variant = 'square',
     alt,
     className,
@@ -80,7 +98,8 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>((inProps, ref) => {
     fallback = <ImageX fontSize="medium" color="secondary" />,
     onClick,
     onLoad,
-    onError
+    onError,
+    ...rest
   } = props;
 
   const width = useCreation(
@@ -124,22 +143,18 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>((inProps, ref) => {
     onLoad?.(e);
   };
 
-  const styleProps = { ...props, variant };
+  const styleProps = { ...props, width, height, variant, roundedRadius };
 
   const classes = useClasses({ styleProps });
 
   return (
     <ImageRoot
       className={css(classes.root, className)}
-      style={
-        {
-          '--image-width': width,
-          '--image-height': height,
-          ...style
-        } as React.CSSProperties
-      }
+      styleProps={styleProps}
+      style={style}
       ref={handleRef}
       onClick={onClick}
+      {...rest}
     >
       {failed ? (
         fallback

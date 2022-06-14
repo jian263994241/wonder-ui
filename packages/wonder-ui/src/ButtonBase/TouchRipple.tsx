@@ -135,7 +135,7 @@ const TouchRipple: React.FC<TouchRippleProps> = React.forwardRef(
 
     const [ripples, setRipples] = useSafeState<RippleProps[]>([]);
     const nextKey = React.useRef(0);
-    const rippleCallback = React.useRef<Function | null>(null);
+    const rippleCallback = React.useRef<(() => void) | null | undefined>();
 
     React.useEffect(() => {
       if (rippleCallback.current) {
@@ -162,7 +162,7 @@ const TouchRipple: React.FC<TouchRippleProps> = React.forwardRef(
     }, []);
 
     const startCommit = React.useCallback(
-      (params) => {
+      (params: RippleProps & { cb?: () => void }) => {
         const { pulsate, rippleX, rippleY, rippleSize, cb } = params;
 
         setRipples((oldRipples) => [
@@ -288,32 +288,35 @@ const TouchRipple: React.FC<TouchRippleProps> = React.forwardRef(
       start({}, { pulsate: true });
     }, [start]);
 
-    const stop = React.useCallback((event, cb) => {
-      clearTimeout(startTimer.current!);
+    const stop = React.useCallback(
+      (event: React.TouchEvent, cb?: () => void) => {
+        clearTimeout(startTimer.current!);
 
-      // The touch interaction occurs too quickly.
-      // We still want to show ripple effect.
-      if (event.type === 'touchend' && startTimerCommit.current) {
-        startTimerCommit.current();
-        startTimerCommit.current = null;
-        startTimer.current = setTimeout(() => {
-          stop(event, cb);
-        });
-        return;
-      }
-
-      startTimerCommit.current = null;
-
-      setRipples((oldRipples) => {
-        if (oldRipples.length > 0) {
-          return oldRipples.slice(1);
+        // The touch interaction occurs too quickly.
+        // We still want to show ripple effect.
+        if (event.type === 'touchend' && startTimerCommit.current) {
+          startTimerCommit.current();
+          startTimerCommit.current = null;
+          startTimer.current = setTimeout(() => {
+            stop(event, cb);
+          });
+          return;
         }
 
-        return oldRipples;
-      });
+        startTimerCommit.current = null;
 
-      rippleCallback.current = cb;
-    }, []);
+        setRipples((oldRipples) => {
+          if (oldRipples.length > 0) {
+            return oldRipples.slice(1);
+          }
+
+          return oldRipples;
+        });
+
+        rippleCallback.current = cb;
+      },
+      []
+    );
 
     React.useImperativeHandle(actionRef, () => ({ pulsate, start, stop }), [
       pulsate,

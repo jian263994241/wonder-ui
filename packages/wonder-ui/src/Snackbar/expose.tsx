@@ -1,9 +1,9 @@
 import useSnackbar from './useSnackbar';
 import { SnackbarProps } from './SnackbarTypes';
-import { useHookOutsideRef } from '@wonder-ui/utils';
+import { createActionFromHookRef } from '@wonder-ui/utils';
 
 function createSnackbarAction(props?: SnackbarProps) {
-  const actionRef = useHookOutsideRef(useSnackbar, props);
+  const actionRef = createActionFromHookRef(useSnackbar, props);
 
   function showSnackbar(props?: Omit<SnackbarProps, 'visible'>) {
     actionRef.current?.show(props);
@@ -17,7 +17,7 @@ function createSnackbarAction(props?: SnackbarProps) {
 }
 
 const { showSnackbar, hideSnackbar } = createSnackbarAction({
-  autoHideDuration: 1500,
+  autoHideDuration: 1200,
   maskClickable: true
 });
 

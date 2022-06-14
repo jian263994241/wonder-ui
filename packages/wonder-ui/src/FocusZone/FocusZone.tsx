@@ -77,7 +77,7 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
 
     const isRTL = theme.direction === 'rtl';
     const direction = FocusZoneDirection[directionProp];
-    const focuszoneId = useId('FocusZone');
+    const focuszoneId = useId();
 
     const rootRef = React.useRef<HTMLElement>(null);
     // @ts-expect-error
@@ -427,9 +427,11 @@ const FocusZone: React.FC<IFocusZoneProps> = React.forwardRef(
         : null;
 
       do {
-        element = (isForward
-          ? getNextElement(root, element)
-          : getPreviousElement(root, element)) as HTMLElement;
+        element = (
+          isForward
+            ? getNextElement(root, element)
+            : getPreviousElement(root, element)
+        ) as HTMLElement;
 
         if (isBidirectional) {
           if (element) {

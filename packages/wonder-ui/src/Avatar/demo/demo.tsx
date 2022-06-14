@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Avatar,
   ContentBlock,
@@ -28,18 +27,9 @@ export default () => (
 
     <ContentBlock title="自定义大小">
       <Space verticalAlign="start">
-        <Avatar
-          src={demoSrc}
-          style={{ '--avatar-size': '32px' } as React.CSSProperties}
-        />
-        <Avatar
-          src={demoSrc}
-          style={{ '--avatar-size': '48px' } as React.CSSProperties}
-        />
-        <Avatar
-          src={demoSrc}
-          style={{ '--avatar-size': '64px' } as React.CSSProperties}
-        />
+        <Avatar src={demoSrc} size={32} />
+        <Avatar src={demoSrc} size={48} />
+        <Avatar src={demoSrc} size={64} />
       </Space>
     </ContentBlock>
 

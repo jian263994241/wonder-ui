@@ -12,7 +12,7 @@ export interface GlobalStylesProps<Theme = object> {
 
 export default function GlobalStyles<T>(
   props: GlobalStylesProps<T>
-): React.ReactNode {
+): React.ReactElement {
   const { defaultTheme, styles } = props;
 
   const globalStyles =

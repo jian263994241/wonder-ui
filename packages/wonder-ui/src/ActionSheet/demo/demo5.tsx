@@ -11,6 +11,10 @@ export default () => {
     onAction: (action) => {
       message.toast(action.text);
       actionSheet.hide();
+    },
+    onClose: () => {
+      message.toast('onClose');
+      actionSheet.hide();
     }
   });
 

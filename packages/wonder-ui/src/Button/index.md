@@ -26,42 +26,9 @@ group:
 
 <code src="./demo/colors.tsx"></code>
 
-### 按钮标签
-
-按钮标签面几种类型 `a` | `button` | `input`
-
-<code src="./demo/tags.tsx"></code>
-
-### 描边按钮
-
-和实心按钮相比，描边按钮强调的更少；或者和文本按钮相比，描边按钮强调的更多。
-
-<code src="./demo/outlined.tsx"></code>
-
-### 文字按钮
-
-文本按钮强调的最少。
-
-<code src="./demo/text.tsx"></code>
-
-### 按钮形状
-
-按钮分下面几种类型 `default`|`square`|`round`
-
-<code src="./demo/shape.tsx"></code>
-
-### 按钮尺寸
-
-按钮尺寸分下面几种类型 `small` | `medium` | `large`, 默认是 `medium`
+### 按钮形状/尺寸/禁用
 
 <code src="./demo/size.tsx"></code>
-
-### 块状按钮
-
-<code src="./demo/block.tsx"></code>
-### 禁用按钮
-
-<code src="./demo/disabled.tsx"></code>
 
 ### 自定义按钮主题
 
@@ -71,5 +38,12 @@ group:
 <API src="./Button.tsx"></API>
 
 
+
+## CSS Variables
+
+```css
+var(--wui-avatar-size, 44px)
+var(--wui-avatar-border-radius, 4px)
+```
 
 

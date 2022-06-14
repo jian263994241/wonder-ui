@@ -48,7 +48,7 @@ const SwipeItem = React.forwardRef<HTMLDivElement, SwipeItemProps>(
 
     const state = useReactive<SwipeItemState>({ offset: 0 });
 
-    const itemKey = useId('swipe-item-');
+    const itemKey = useId();
 
     store.set(itemKey, state);
 

@@ -7,6 +7,7 @@ import { ButtonProps } from './ButtonTypes';
 import { ButtonGroupContext } from '../ButtonGroup/ButtonGroupContext';
 import { capitalize, composeClasses, css, forwardRef } from '@wonder-ui/utils';
 import { COMPONENT_NAME, buttonClasses } from './buttonClasses';
+import { createCssVars } from '@wonder-ui/utils';
 
 type ButtonStyleProps = ButtonProps &
   Required<Pick<ButtonProps, 'color' | 'size' | 'shape'>>;
@@ -35,6 +36,8 @@ const useClasses = (styleProps: ButtonStyleProps) => {
     ...composeClasses(COMPONENT_NAME, slots, classes)
   };
 };
+
+export const cssVars = createCssVars(COMPONENT_NAME, []);
 
 const ButtonRoot = styled(ButtonBase, {
   name: COMPONENT_NAME,

@@ -17,11 +17,7 @@ const useClasses = (props: StyleProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const {
-  returnCssVarStyles,
-  getCssValue,
-  getCalcValue
-} = createCssVars(COMPONENT_NAME, [
+const cssVars = createCssVars(COMPONENT_NAME, [
   'titltMarginTop',
   'titleMarginBottom',
   'titleMarginHorizontal',
@@ -40,9 +36,9 @@ const ContentBlockRoot = styled('div', {
 })(({ theme }) => {
   const spacing = theme.spacing(2);
 
-  return returnCssVarStyles({
-    titltMarginTop: 12,
-    titleMarginBottom: 6,
+  return cssVars.style({
+    titltMarginTop: 8,
+    titleMarginBottom: 8,
     titleMarginHorizontal: spacing,
     paddingHorizontal: spacing,
     paddingVertical: spacing,
@@ -60,10 +56,10 @@ const ContentBlockTitle = styled('div', {
 })(({ theme }) => ({
   ...theme.typography.subtitle2,
   color: theme.palette.text.secondary,
-  marginTop: getCssValue('titltMarginTop'),
-  marginBottom: getCssValue('titleMarginBottom'),
-  paddingLeft: getCalcValue('+', 'titleMarginHorizontal', 'safeAreaLeft'),
-  paddingRight: getCalcValue('+', 'titleMarginHorizontal', 'safeAreaRight')
+  marginTop: cssVars.value('titltMarginTop'),
+  marginBottom: cssVars.value('titleMarginBottom'),
+  paddingLeft: cssVars.calc('titleMarginHorizontal', '+', 'safeAreaLeft'),
+  paddingRight: cssVars.calc('titleMarginHorizontal', '+', 'safeAreaRight')
 }));
 
 const ContentBlockContent = styled('div', {
@@ -71,28 +67,28 @@ const ContentBlockContent = styled('div', {
   name: COMPONENT_NAME
 })<StyleProps>(({ theme, styleProps }) => ({
   ...theme.typography.body2,
-  paddingTop: getCssValue('paddingVertical'),
-  paddingBottom: getCssValue('paddingVertical'),
+  paddingTop: cssVars.value('paddingVertical'),
+  paddingBottom: cssVars.value('paddingVertical'),
   ...(styleProps.strong && {
     backgroundColor: theme.palette.background.paper,
     ...(styleProps.inset
-      ? { border: `thin solid ${getCssValue('dividerColor')}` }
+      ? { border: `thin solid ${cssVars.value('dividerColor')}` }
       : {
-          borderTop: `thin solid ${getCssValue('dividerColor')}`,
-          borderBottom: `thin solid ${getCssValue('dividerColor')}`
+          borderTop: `thin solid ${cssVars.value('dividerColor')}`,
+          borderBottom: `thin solid ${cssVars.value('dividerColor')}`
         })
   }),
   ...(styleProps.inset
     ? {
-        borderRadius: getCssValue('insetBorderRadius'),
-        marginLeft: getCalcValue('+', 'insetSideMargin', 'safeAreaLeft'),
-        marginRight: getCalcValue('+', 'insetSideMargin', 'safeAreaRight'),
-        paddingLeft: getCssValue('paddingHorizontal'),
-        paddingRight: getCssValue('paddingHorizontal')
+        borderRadius: cssVars.value('insetBorderRadius'),
+        marginLeft: cssVars.calc('insetSideMargin', '+', 'safeAreaLeft'),
+        marginRight: cssVars.calc('insetSideMargin', '+', 'safeAreaRight'),
+        paddingLeft: cssVars.value('paddingHorizontal'),
+        paddingRight: cssVars.value('paddingHorizontal')
       }
     : {
-        paddingLeft: getCalcValue('+', 'paddingHorizontal', 'safeAreaLeft'),
-        paddingRight: getCalcValue('+', 'paddingHorizontal', 'safeAreaRight')
+        paddingLeft: cssVars.calc('paddingHorizontal', '+', 'safeAreaLeft'),
+        paddingRight: cssVars.calc('paddingHorizontal', '+', 'safeAreaRight')
       })
 }));
 

@@ -30,11 +30,11 @@ export interface EllipsisProps
   /**
    * 展开操作文字
    */
-  expandText?: string;
+  expandText?: NonNullable<React.ReactNode>;
   /**
    * 收起操作文字
    */
-  collapseText?: string;
+  collapseText?: NonNullable<React.ReactNode>;
   /**
    * 样式
    */

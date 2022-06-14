@@ -56,7 +56,7 @@ function flipPlacement(placement: Placement, theme: any) {
 
 export interface PopperProps<
   TModifier extends Partial<Modifier<any, any>> = Partial<Modifier<any, any>>
-> extends React.HTMLAttributes<HTMLElement> {
+> extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
   anchorEl: AnchorEl;
   children: (childProps: {
     placement: Placement;
@@ -188,7 +188,7 @@ const Popper = React.forwardRef<HTMLElement, PopperProps>((inProps, ref) => {
   }, [anchorEl, disablePortal, modifiers, open, rtlPlacement, popperOptions]);
 
   const handleRef = React.useCallback(
-    (node) => {
+    (node: HTMLElement) => {
       setRef(ownRef, node);
       handleOpen();
     },

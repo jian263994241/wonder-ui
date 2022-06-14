@@ -1,8 +1,8 @@
 import usePicker from './usePicker';
 import { PickerProps } from './PickerTypes';
-import { useHookOutsideRef } from '@wonder-ui/utils';
+import { createActionFromHookRef } from '@wonder-ui/utils';
 
-const actionRef = useHookOutsideRef(usePicker, {
+const actionRef = createActionFromHookRef(usePicker, {
   DrawerProps: {
     keepMounted: false
   }

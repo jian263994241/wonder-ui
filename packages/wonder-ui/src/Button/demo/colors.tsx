@@ -1,4 +1,4 @@
-import { Button, Space, Paper } from '@wonder-ui/core';
+import { Button, ContentBlock, Space } from '@wonder-ui/core';
 
 const colors = [
   'primary',
@@ -8,13 +8,12 @@ const colors = [
   'warning',
   'info',
   'light',
-  'dark',
-  'inherit'
+  'dark'
 ] as const;
 
 export default () => (
-  <Paper>
-    <Space direction="vertical" gap={20}>
+  <div>
+    <ContentBlock title="实心按钮">
       <Space>
         {colors.map((color, index) => (
           <Button color={color} variant="contained" key={index}>
@@ -22,7 +21,9 @@ export default () => (
           </Button>
         ))}
       </Space>
+    </ContentBlock>
 
+    <ContentBlock title="空心按钮">
       <Space>
         {colors.map((color, index) => (
           <Button color={color} variant="outlined" key={index}>
@@ -30,7 +31,9 @@ export default () => (
           </Button>
         ))}
       </Space>
+    </ContentBlock>
 
+    <ContentBlock title="文字按钮">
       <Space>
         {colors.map((color, index) => (
           <Button color={color} variant="text" key={index}>
@@ -38,6 +41,6 @@ export default () => (
           </Button>
         ))}
       </Space>
-    </Space>
-  </Paper>
+    </ContentBlock>
+  </div>
 );

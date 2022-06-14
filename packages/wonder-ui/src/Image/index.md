@@ -15,25 +15,9 @@ group:
 
 ## 代码演示
 
-### 基本使用
 
 <code src="./demo/demo1.tsx"></code>
 
-### 多种填充模式
-
-<code src="./demo/demo2.tsx"></code>
-
-### 自定义圆角
-
-<code src="./demo/demo3.tsx"></code>
-
-### 通过 CSS 变量统一设置图片
-
-<code src="./demo/demo4.tsx"></code>
-
-### 加载失败
-
-<code src="./demo/demo5.tsx"></code>
 
 
 <API src="./Image.tsx"></API>
@@ -41,9 +25,7 @@ group:
 ## CSS Variables
 
 ```css
-{
-  --image-width: auto;
-  --image-height: auto;
-  --image-radius: 4px;
-}
+var(--wui-image-width, 100px)
+var(--wui-image-height, 100px)
+var(--wui-image-rounded-radius, 4px)
 ```

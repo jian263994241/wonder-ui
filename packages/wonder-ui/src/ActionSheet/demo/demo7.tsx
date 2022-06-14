@@ -20,6 +20,10 @@ export default () => {
             onAction: (action) => {
               message.toast(action.text);
               hideActionSheet();
+            },
+            onClose: () => {
+              message.toast('onClose');
+              hideActionSheet();
             }
           });
         }}
@@ -36,6 +40,10 @@ export default () => {
             ],
             onAction: (action) => {
               message.toast(action.text);
+              hideActionSheet();
+            },
+            onClose: () => {
+              message.toast('onClose');
               hideActionSheet();
             }
           });
