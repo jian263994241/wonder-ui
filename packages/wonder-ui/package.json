@@ -52,7 +52,7 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "tag": "dev",
+    "tag": "latest",
     "access": "public"
   },
   "devDependencies": {}
