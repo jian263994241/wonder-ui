@@ -12,6 +12,10 @@ export default defineConfig({
       { autoLabel: 'dev-only', sourceMap: true, cssPropOptimization: true }
     ]
   ],
+  chainWebpack(memo) {
+    memo.resolve.alias.delete('react-router');
+    memo.resolve.alias.delete('history');
+  },
   metas: [
     {
       name: 'viewport',

@@ -15,117 +15,15 @@ group:
 
 ### 基本使用
 
-案例使用的 `react-router-dom@6` 版本
+案例使用的 `react-router-dom` v6版本
 
-```tsx | pure
-import { Page, RouteTranstion } from '@wonder-ui/core';
-import {
-  HashRouter,
-  Routes,
-  Route,
-  useLocation,
-  useNavigationType,
-  Link
-} from 'react-router-dom';
-
-function PageA() {
-  return (
-    <Page>
-      <Link to="/b">Page</Link>
-    </Page>
-  );
-}
-
-function PageB() {
-  return <Page>PageB</Page>;
-}
-
-function App() {
-  const location = useLocation();
-  const navigationType = useNavigationType();
-
-  return (
-    <RouteTranstion
-      pathname={location.pathname}
-      reverse={navigationType !== 'PUSH'}
-    >
-      <Routes location={location}>
-        <Route path="/" element={<PageA />} />
-        <Route path="/b" element={<PageB />} />
-      </Routes>
-    </RouteTranstion>
-  );
-}
-
-export default () => (
-  <HashRouter>
-    <App />
-  </HashRouter>
-);
-
-```
+<code src="./demo/demo1/index.tsx"></code>
 
 ### Router异步加载 & 持久页面
 
 使用 `React.lazy`  和 `react-activation` 实现
 
-```tsx | pure
-import React from 'react';
-import KeepAlive, { AliveScope } from 'react-activation';
+<code src="./demo/demo2/index.tsx"></code>
 
-const Main = React.lazy(() => import('./pages/main'));
-const Result = React.lazy(() => import('./pages/result'));
-
-const Suspense: React.FC<{ children: React.ReactElement }> = ({ children }) => (
-  <React.Suspense fallback={<>...</>}>{children}</React.Suspense>
-);
-
-//app
-function App() {
-  const location = useLocation();
-  const navigationType = useNavigationType();
-
-  return (
-    <RouteTranstion
-      pathname={location.pathname}
-      reverse={navigationType !== 'PUSH'}
-    >
-      <Routes location={location}>
-        <Route
-          path="/"
-          element={
-            <KeepAlive cacheKey="UNIQUE_ID">
-              <Suspense>
-                <Main />
-              </Suspense>
-            </KeepAlive>
-          }
-        />
-        <Route
-          path="/result"
-          element={
-            <Suspense>
-              <Result />
-            </Suspense>
-          }
-        />
-      </Routes>
-    </RouteTranstion>
-  );
-}
-
-// index
-const root = ReactDOMClient.createRoot(document.getElementById('root')!);
-
-root.render(
-  <React.StrictMode>
-    <HashRouter>
-      <AliveScope>
-        <App />
-      </AliveScope>
-    </HashRouter>
-  </React.StrictMode>
-);
-```
 
 <API src="./RouteTransition.tsx"></API>

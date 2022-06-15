@@ -47,7 +47,9 @@
     "qrcode.react": "^1.0.1",
     "rc-field-form": "^1.22.0",
     "react": "^18.1.0",
+    "react-activation": "^0.11.2",
     "react-dom": "^18.1.0",
+    "react-router-dom-v6": "npm:react-router-dom@6",
     "util-helpers": "^4.0.1"
   },
   "workspaces": [
