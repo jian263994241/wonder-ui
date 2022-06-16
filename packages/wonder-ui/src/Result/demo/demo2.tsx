@@ -1,10 +1,9 @@
 import {
   Button,
   Card,
-  Col,
   Page,
   Result as RcResult,
-  Row,
+  Space,
   Typography,
   WhiteSpace
 } from '@wonder-ui/core';
@@ -33,18 +32,14 @@ export default function ResultPage() {
       <WhiteSpace />
 
       <div style={{ padding: 8 }}>
-        <Row gutter={1}>
-          <Col>
-            <Button fullWidth variant="outlined">
-              完成
-            </Button>
-          </Col>
-          <Col>
-            <Button fullWidth variant="contained">
-              继续报名其他店铺
-            </Button>
-          </Col>
-        </Row>
+        <Space itemEqual>
+          <Button fullWidth variant="outlined">
+            完成
+          </Button>
+          <Button fullWidth variant="contained">
+            继续报名其他店铺
+          </Button>
+        </Space>
       </div>
     </Page>
   );

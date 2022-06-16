@@ -3,8 +3,7 @@ import {
   Page,
   Card,
   Result,
-  Row,
-  Col,
+  Space,
   Typography,
   WhiteSpace
 } from '@wonder-ui/core';
@@ -38,18 +37,18 @@ export default function PageB() {
       <WhiteSpace />
 
       <div style={{ padding: 8 }}>
-        <Row gutter={1}>
-          <Col>
-            <Button fullWidth variant="outlined" onClick={back}>
-              完成
-            </Button>
-          </Col>
-          <Col>
-            <Button fullWidth variant="contained">
-              继续报名其他店铺
-            </Button>
-          </Col>
-        </Row>
+        <Space itemEqual>
+          <Button
+            fullWidth
+            variant="outlined"
+            onClick={() => nav('/c', { replace: true })}
+          >
+            完成
+          </Button>
+          <Button fullWidth variant="contained" onClick={back}>
+            继续报名其他店铺
+          </Button>
+        </Space>
       </div>
     </Page>
   );

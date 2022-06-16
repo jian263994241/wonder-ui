@@ -7,9 +7,9 @@ title: 快速上手
 ## 安装
 
 ```bash
-$ npm install --save @wonder-ui/core@^
+$ npm install --save @wonder-ui/core
 # or
-$ yarn add @wonder-ui/core@^
+$ yarn add @wonder-ui/core
 ```
 
 ## 引入

@@ -35,7 +35,7 @@ export default function RouteTransition(props: RouteTransitionProps) {
     className,
     children: items,
     duration = 375,
-    pathname,
+    childrenKey,
     reverse,
     style,
     ...rest
@@ -49,7 +49,7 @@ export default function RouteTransition(props: RouteTransitionProps) {
   const transitions = useTransition(items, {
     // expires: false,
     config,
-    key: pathname,
+    key: childrenKey,
     delay: 66,
     initial: center,
     ...(reverse

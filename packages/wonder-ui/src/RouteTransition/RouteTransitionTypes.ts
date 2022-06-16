@@ -6,6 +6,8 @@ export interface RouteTransitionProps {
 
   className?: string;
 
+  childrenKey?: string;
+
   style?: React.CSSProperties;
   /**
    * 内容
@@ -17,11 +19,7 @@ export interface RouteTransitionProps {
    */
   duration?: number;
   /**
-   * location.pathname
-   */
-  pathname?: string;
-  /**
-   * 返回动画
+   * 动画(正向/反向)
    */
   reverse?: boolean;
 }

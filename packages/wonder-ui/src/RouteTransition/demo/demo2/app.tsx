@@ -10,6 +10,7 @@ import KeepAlive from 'react-activation';
 
 const PageA = React.lazy(() => import('./pageA'));
 const PageB = React.lazy(() => import('./pageB'));
+const PageC = React.lazy(() => import('./pageC'));
 
 const Suspense: React.FC<{ children: React.ReactElement }> = ({ children }) => (
   <React.Suspense fallback={<>...</>}>{children}</React.Suspense>
@@ -20,10 +21,7 @@ export default function App() {
   const navigationType = useNavigationType();
 
   return (
-    <RouteTransition
-      pathname={location.pathname}
-      reverse={navigationType !== 'PUSH'}
-    >
+    <RouteTransition reverse={navigationType === 'POP'}>
       <Routes location={location}>
         <Route
           path="/"
@@ -40,6 +38,14 @@ export default function App() {
           element={
             <Suspense>
               <PageB />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/c"
+          element={
+            <Suspense>
+              <PageC />
             </Suspense>
           }
         />
