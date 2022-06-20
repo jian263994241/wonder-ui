@@ -99,7 +99,7 @@ export interface PageProps
   /**
    * 自定义工具栏
    */
-  toolbar?: JSX.Element;
+  toolbar?: React.ReactElement;
 }
 
 const Page = forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {

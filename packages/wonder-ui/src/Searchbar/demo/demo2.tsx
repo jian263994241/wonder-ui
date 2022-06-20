@@ -45,7 +45,7 @@ export default () => {
           setDrawerVisible(false);
         }}
       >
-        <Page title="筛选" style={{ width: 200 }}>
+        <Page title="筛选" style={{ width: 200, position: 'relative' }}>
           筛选面板
         </Page>
       </Drawer>

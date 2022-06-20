@@ -22,9 +22,7 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-### 带导航栏的页面
-
-带导航栏的页面
+### 导航&工具栏
 
 <code src="./demo/demo2.tsx"></code>
 
