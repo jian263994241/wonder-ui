@@ -38,9 +38,7 @@ export interface NavbarProps
    * 副标题
    */
   subTitle?: React.ReactNode;
-  /**
-   * @ignore
-   */
+
   ref?: React.Ref<HTMLElement>;
 }
 

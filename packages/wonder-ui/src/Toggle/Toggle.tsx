@@ -19,9 +19,7 @@ export interface ToggleProps
    * @default primary
    */
   color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
-  /**
-   * @ignore
-   */
+
   component?: React.ElementType;
   /**
    * default checked

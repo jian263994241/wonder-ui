@@ -9,19 +9,13 @@ export interface WhiteSpaceProps extends React.HTMLAttributes<HTMLDivElement> {
    * Css api
    */
   classes?: Partial<typeof whiteSpaceClasses>;
-  /**
-   * @ignore
-   */
+
   component?: React.ElementType;
   /**
    * @description 尺寸
    * @default medium
    */
   size?: 'small' | 'medium' | 'large';
-  /**
-   * @ignore
-   */
-  ref?: React.Ref<any>;
 }
 
 const WhiteSpaceRoot = styled('div', {

@@ -31,9 +31,7 @@ export interface ModalProps {
    * 容器 HTMLElement
    */
   container?: Container;
-  /**
-   * @ignore
-   */
+
   className?: string;
   /**
    * 过渡后关闭
@@ -80,7 +78,6 @@ export interface ModalProps {
    */
   keepMounted?: boolean;
   /**
-   * @ignore
    * Modal manager
    */
   manager?: InstanceType<typeof ModalManager>;

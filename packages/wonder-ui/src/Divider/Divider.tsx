@@ -92,13 +92,9 @@ export interface DividerProps {
    * @default center
    */
   textAlign?: 'center' | 'left' | 'right';
-  /**
-   * @ignore
-   */
+
   className?: string;
-  /**
-   * @ignore
-   */
+
   style?: React.CSSProperties;
   /**
    * 内容

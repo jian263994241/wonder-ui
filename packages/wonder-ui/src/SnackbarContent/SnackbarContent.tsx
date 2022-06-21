@@ -11,21 +11,15 @@ export interface SnackbarContentProps extends GrowProps {
    * 操作区
    */
   action?: JSX.Element;
-  /**
-   * @ignore
-   */
+
   classes?: Partial<typeof snackbarContentClasses>;
-  /**
-   * @ignore
-   */
+
   center?: boolean;
   /**
    * 内容
    */
   message?: React.ReactNode;
-  /**
-   * @ignore
-   */
+
   role?: string;
 }
 

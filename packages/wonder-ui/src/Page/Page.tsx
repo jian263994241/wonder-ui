@@ -44,9 +44,6 @@ const PageContent = styled('div', {
 
 export interface PageProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
-  /**
-   * @ignore
-   */
   ContentProps?: React.HTMLAttributes<HTMLDivElement>;
   /**
    * Content ref

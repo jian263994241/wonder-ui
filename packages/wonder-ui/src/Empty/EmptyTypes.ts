@@ -8,9 +8,7 @@ export interface EmptyProps {
    * 额外的 CSS className
    */
   className?: string;
-  /**
-   * @ignore
-   */
+
   classes?: Partial<EmptyClasses>;
   /**
    * 额外的内容

@@ -23,19 +23,11 @@ export interface MenuListProps {
   autoFocusItem?: boolean;
   children?: React.ReactNode;
   component?: React.ElementType;
-  /**
-   * @ignore
-   */
+
   className?: string;
   disabledItemsFocusable?: boolean;
   disableListWrap?: boolean;
-  /**
-   * @ignore
-   */
   onKeyDown?: React.KeyboardEventHandler;
-  /**
-   * @ignore
-   */
   style?: React.CSSProperties;
   /**
    * 菜单类型

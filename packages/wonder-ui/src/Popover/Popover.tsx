@@ -80,9 +80,6 @@ const PopoverPaper = styled(Paper.withComponent(Grow), {
 }));
 
 export interface PopoverProps extends Omit<ModalProps, 'children'> {
-  /**
-   * @ignore
-   */
   PaperProps?: Partial<PaperProps>;
   /**
    * 支持updatePosition（）操作
@@ -109,13 +106,9 @@ export interface PopoverProps extends Omit<ModalProps, 'children'> {
    * 内容
    */
   children?: React.ReactNode;
-  /**
-   * @ignore
-   */
+
   className?: string;
-  /**
-   * @ignore
-   */
+
   classes?: Partial<typeof popoverClasses>;
   /**
    * 边框深度
@@ -127,9 +120,7 @@ export interface PopoverProps extends Omit<ModalProps, 'children'> {
    * @default 16
    */
   marginThreshold?: number;
-  /**
-   * @ignore
-   */
+
   style?: React.CSSProperties;
   /**
    * 附加到锚点的原点

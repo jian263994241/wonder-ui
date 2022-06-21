@@ -35,9 +35,7 @@ export interface ListItemTextProps extends React.HTMLAttributes<HTMLElement> {
    * @default false
    */
   disableTypography?: boolean;
-  /**
-   * @ignore
-   */
+
   ref?: React.Ref<any>;
 }
 

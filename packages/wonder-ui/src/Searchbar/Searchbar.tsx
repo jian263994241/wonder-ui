@@ -51,9 +51,7 @@ export interface SearchbarProps extends React.HTMLAttributes<HTMLDivElement> {
    * 取消按钮文本
    */
   cancelText?: string;
-  /**
-   * @ignore
-   */
+
   classes?: Partial<typeof searchbarClasses>;
   /**
    * 初始值

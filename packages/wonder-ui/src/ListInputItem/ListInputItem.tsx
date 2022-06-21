@@ -49,9 +49,7 @@ export interface ListInputItemProps
    * @default false
    */
   allowClear?: InputProps['allowClear'];
-  /**
-   * @ignore
-   */
+
   classes?: Partial<typeof listInputItemClasses>;
   /**
    * 初始值

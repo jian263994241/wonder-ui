@@ -32,9 +32,7 @@ export interface LinearProgressProps extends React.HTMLAttributes<HTMLElement> {
    * @default primary
    */
   color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
-  /**
-   * @ignore
-   */
+
   component?: React.ElementType;
   /**
    * 值 0-100

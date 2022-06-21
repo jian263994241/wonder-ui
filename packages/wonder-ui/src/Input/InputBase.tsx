@@ -108,9 +108,7 @@ export interface InputProps
    * 只读
    */
   readOnly?: boolean;
-  /**
-   * @ignore
-   */
+
   resizable?: boolean;
   /**
    * 后缀图标
