@@ -26,7 +26,7 @@ export type CascaderTab = {
   selected: CascaderOption | null;
 };
 
-export type CascaderAction = {
+export type CascaderViewAction = {
   getSelected(params?: { final?: boolean }): CascaderOption[] | undefined;
   getValues(params?: { final?: boolean }): any[] | undefined;
 };
@@ -41,7 +41,7 @@ export interface CascaderViewProps {
   /**
    * 内部方法
    */
-  actionRef?: React.Ref<CascaderAction | undefined>;
+  actionRef?: React.Ref<CascaderViewAction | undefined>;
   /**
    * 选中图标
    */

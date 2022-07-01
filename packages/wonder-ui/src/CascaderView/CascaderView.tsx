@@ -35,7 +35,7 @@ const CascaderTabPanel = styled(TabPane, {
   name: COMPONENT_NAME,
   slot: 'TabPanel'
 })({
-  height: 'var(--cascader-content-height, 310px)',
+  height: 'var(--cascader-content-height, 330px)',
   overflowY: 'auto',
   WebkitOverflowScrolling: 'touch'
 });

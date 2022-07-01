@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   CascaderOption,
   CascaderView,
-  CascaderAction,
+  CascaderViewAction,
   List,
   ListHeader,
   ListItem,
@@ -15,7 +15,7 @@ const pca = getPCA({ inland: true });
 export default () => {
   const [values, setValues] = React.useState<string[]>();
   const [options, setOptions] = React.useState<CascaderOption[]>();
-  const actionRef = React.useRef<CascaderAction>();
+  const actionRef = React.useRef<CascaderViewAction>();
 
   const handleChange = (values: string[]) => {
     setValues(values);
@@ -33,7 +33,6 @@ export default () => {
         <ListHeader>基础用法</ListHeader>
 
         <ListItem
-          divider
           extra={options ? options.map((val) => val.name).join(',') : '请选择'}
         >
           地区

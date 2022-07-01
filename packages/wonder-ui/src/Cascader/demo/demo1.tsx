@@ -1,49 +1,73 @@
-import { Button, Cascader, List, ListItem, ListHeader } from '@wonder-ui/core';
+import {
+  Button,
+  Cascader,
+  ListHeader,
+  Form,
+  FormItem,
+  Typography,
+  CascaderAction,
+  useDialog
+} from '@wonder-ui/core';
 import { getPCA } from 'lcn';
-import Form, { Field } from 'rc-field-form';
+import React from 'react';
 
 const pca = getPCA({ inland: true });
 
-export default () => (
-  <Form
-    onFinish={(values) => {
-      console.log(values);
-    }}
-  >
-    <List>
+console.log(pca);
+
+export default () => {
+  const dialog = useDialog();
+  const onFinish = (values: any) => {
+    dialog.show({
+      content: <pre>{JSON.stringify(values, null, 2)}</pre>,
+      buttons: [
+        {
+          text: '关闭',
+          primary: true,
+          onClick: () => {
+            dialog.hide();
+          }
+        }
+      ]
+    });
+  };
+
+  return (
+    <Form
+      footer={
+        <Button variant="contained" size="large" type="submit" fullWidth>
+          提交
+        </Button>
+      }
+      onFinish={onFinish}
+    >
+      {dialog.rendered}
       <ListHeader>基础用法</ListHeader>
-      <Field
-        name={'address'}
-        initialValue={['110000', '110100', '110116']}
+      <FormItem
+        name="city"
+        label="地区"
         trigger="onConfirm"
+        childAlign="right"
+        arrow="horizontal"
+        rules={[{ required: true, message: '请选择所在地区' }]}
+        onClick={(e, childRef: React.RefObject<CascaderAction>) => {
+          childRef.current?.show();
+        }}
       >
         <Cascader
-          title="请选择所在地区"
+          title="省市区"
           options={pca}
           fieldNames={{ label: 'name', value: 'code' }}
         >
-          {({ selected, show }) => (
-            <ListItem
-              button
-              arrow="horizontal"
-              onClick={show}
-              extra={
-                selected
-                  ? selected.map((item: any) => item.name).join(',')
-                  : '请选择'
-              }
-            >
-              地区
-            </ListItem>
-          )}
+          {({ selected }) =>
+            selected ? (
+              selected.map((item: any) => item.name).join(',')
+            ) : (
+              <Typography color="secondary">请选择</Typography>
+            )
+          }
         </Cascader>
-      </Field>
-    </List>
-
-    <div style={{ padding: 16 }}>
-      <Button variant="contained" type="submit" fullWidth>
-        提交
-      </Button>
-    </div>
-  </Form>
-);
+      </FormItem>
+    </Form>
+  );
+};

@@ -9,6 +9,7 @@ import {
 } from '../DatePickerView/utils';
 import { useControlled, useCreation, useEventCallback } from '@wonder-ui/hooks';
 import type { DatePickerProps } from './DatePickerTypes';
+import type { PickerAction } from '../Picker/PickerTypes';
 
 const COMPONENT_NAME = 'WuiDatePicker';
 
@@ -17,7 +18,7 @@ const diffYear = 10;
 const defaultMinDate = new Date(currentYear - diffYear, 0, 1);
 const defaultMaxDate = new Date(currentYear + diffYear, 11, 31);
 
-const DatePicker = React.forwardRef<HTMLDivElement, DatePickerProps>(
+const DatePicker = React.forwardRef<PickerAction, DatePickerProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {

@@ -2,50 +2,72 @@ import * as React from 'react';
 import {
   Button,
   DatePicker,
-  List,
+  PickerAction,
+  Form,
+  FormItem,
   ListHeader,
-  ListItem
+  Typography,
+  useDialog
 } from '@wonder-ui/core';
 import dayjs from 'dayjs';
-import Form, { Field } from 'rc-field-form';
+
+Date.prototype.toISOString = function () {
+  return dayjs(this).format('YYYY-MM-DDTHH:mm:ss');
+};
 
 export default () => {
+  const dialog = useDialog();
+  const onFinish = (values: any) => {
+    dialog.show({
+      content: <pre>{JSON.stringify(values, null, 2)}</pre>,
+      buttons: [
+        {
+          text: '关闭',
+          primary: true,
+          onClick: () => {
+            dialog.hide();
+          }
+        }
+      ]
+    });
+  };
   return (
     <Form
-      onFinish={(values) => {
-        console.log('Finish:', values);
-      }}
+      footer={
+        <Button type="submit" variant="contained" fullWidth>
+          提交
+        </Button>
+      }
+      onFinish={onFinish}
     >
-      <List style={{ marginBottom: 20 }}>
-        <ListHeader>表单</ListHeader>
-        <Field name="date" trigger="onConfirm" initialValue={new Date()}>
-          <DatePicker
-            precision="day"
-            title="选择年月日"
-            minDate={new Date(2020, 0, 1)}
-            maxDate={new Date(2025, 10, 1)}
-          >
-            {({ selected, show }) => {
-              return (
-                <ListItem
-                  button
-                  arrow="horizontal"
-                  onClick={show}
-                  extra={
-                    selected ? dayjs(selected).format('YYYY/MM/DD') : '请选择'
-                  }
-                >
-                  日期
-                </ListItem>
-              );
-            }}
-          </DatePicker>
-        </Field>
-      </List>
-
-      <Button type="submit" variant="contained" fullWidth>
-        提交
-      </Button>
+      {dialog.rendered}
+      <ListHeader>表单</ListHeader>
+      <FormItem
+        label="日期"
+        name="date"
+        trigger="onConfirm"
+        // initialValue={new Date()}
+        arrow="horizontal"
+        childAlign="right"
+        onClick={(e, childRef: React.RefObject<PickerAction>) => {
+          childRef.current.show();
+        }}
+      >
+        <DatePicker
+          precision="second"
+          title="选择年月日"
+          minDate={new Date(2020, 0, 1)}
+          maxDate={new Date(2025, 10, 1)}
+        >
+          {({ selected, show }) => {
+            return selected ? (
+              dayjs(selected).format('YYYY/MM/DD')
+            ) : (
+              <Typography color="secondary">请选择</Typography>
+            );
+          }}
+        </DatePicker>
+      </FormItem>
     </Form>
   );
 };

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import Button from '../Button';
-import Drawer from '../Drawer';
 import Navbar from '../Navbar';
+import Popup from '../Popup/Popup';
 import type { PickerPopupProps } from './PickerTypes';
+import type { PopupAction } from '../Popup/PopupTypes';
 
-const PickerPopup = React.forwardRef<HTMLDivElement, PickerPopupProps>(
+const PickerPopup = React.forwardRef<PopupAction, PickerPopupProps>(
   (props, ref) => {
     const {
       children,
@@ -17,42 +18,45 @@ const PickerPopup = React.forwardRef<HTMLDivElement, PickerPopupProps>(
       onCancel,
       onConfirm,
       visible,
+      defaultVisible,
       disableRipple
     } = props;
 
     return (
-      <Drawer
+      <Popup
+        autoHeight
         ref={ref}
-        anchor="bottom"
         className={className}
         style={style}
         visible={visible}
-        onClose={onCancel}
+        defaultVisible={defaultVisible}
+        navbar={
+          <Navbar
+            title={title}
+            subTitle={subTitle}
+            left={
+              <Button
+                disableRipple={disableRipple}
+                variant="text"
+                onClick={onCancel}
+              >
+                {cancelText}
+              </Button>
+            }
+            right={
+              <Button
+                disableRipple={disableRipple}
+                variant="text"
+                onClick={onConfirm}
+              >
+                {confirmText}
+              </Button>
+            }
+          />
+        }
       >
-        <Navbar
-          title={title}
-          subTitle={subTitle}
-          left={
-            <Button
-              disableRipple={disableRipple}
-              variant="text"
-              onClick={onCancel}
-            >
-              {cancelText}
-            </Button>
-          }
-          right={
-            <Button
-              disableRipple={disableRipple}
-              variant="text"
-              onClick={onConfirm}
-            >
-              {confirmText}
-            </Button>
-          }
-        />
         {children}
-      </Drawer>
+      </Popup>
     );
   }
 );

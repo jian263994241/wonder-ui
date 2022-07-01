@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { PickerViewProps, PickerOption } from '../PickerView';
 
+export interface PickerAction {
+  show: () => void;
+  hide: () => void;
+  confirm: () => void;
+}
+
 export interface PickerPopupProps {
   className?: string;
 
@@ -58,5 +64,5 @@ export interface PickerProps
   /**
    * 确认按钮触发事件
    */
-  onConfirm?(values: any[]): void;
+  onConfirm?: (values: any[]) => void;
 }

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import CascaderView from '../CascaderView/CascaderView';
 import useThemeProps from '../styles/useThemeProps';
-import { CascaderProps } from './CascaderTypes';
+import { CascaderProps, CascaderAction } from './CascaderTypes';
 import { COMPONENT_NAME } from './CascaderClasses';
-import { createChainedFunction } from '@wonder-ui/utils';
-import { useControlled } from '@wonder-ui/hooks';
+import { createChainedFunction, nextTick } from '@wonder-ui/utils';
 import PickerPopup from '../Picker/PickerPopup';
 import useCascader from '../CascaderView/useCascader';
+import type { PopupAction } from '../Popup/PopupTypes';
 
-const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
+const Cascader = React.forwardRef<CascaderAction, CascaderProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
@@ -21,8 +21,8 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
       confirmText,
       disableRipple,
       children,
-      visible: visibleProp,
-      defaultVisible = false,
+      visible,
+      defaultVisible,
       value,
       defaultValue,
       onChange,
@@ -30,13 +30,11 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
       fieldNames,
       onConfirm,
       onFinish,
+      onCancel,
       ...rest
     } = props;
 
-    const [visible, setVisibleUnControlled] = useControlled({
-      value: visibleProp,
-      defaultValue: defaultVisible
-    });
+    const popActionRef = React.useRef<PopupAction>(null);
 
     const cascader = useCascader({
       value,
@@ -49,18 +47,17 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
     });
 
     const show = () => {
-      setVisibleUnControlled(true);
+      popActionRef.current?.show();
     };
 
     const hide = () => {
-      setVisibleUnControlled(false);
+      popActionRef.current?.hide();
+      onCancel?.();
     };
 
-    const confirm = () => {
-      const callback = createChainedFunction(cascader.confirm, hide);
+    const handleConfirm = createChainedFunction(cascader.confirm, hide);
 
-      callback();
-    };
+    React.useImperativeHandle(ref, () => ({ show, hide, confirm }), []);
 
     return (
       <React.Fragment>
@@ -68,16 +65,17 @@ const Cascader = React.forwardRef<HTMLDivElement, CascaderProps>(
           ? children({ selected: cascader.selected, show })
           : children}
         <PickerPopup
+          ref={popActionRef}
           visible={visible}
+          defaultVisible={defaultVisible}
           disableRipple={disableRipple}
-          ref={ref}
           className={className}
           style={style}
           title={title}
           subTitle={subTitle}
           cancelText={cancelText}
           confirmText={confirmText}
-          onConfirm={confirm}
+          onConfirm={handleConfirm}
           onCancel={hide}
         >
           <CascaderView

@@ -3,13 +3,13 @@ import PickerPopup from './PickerPopup';
 import PickerView from '../PickerView';
 import usePicker from '../PickerView/usePicker';
 import useThemeProps from '../styles/useThemeProps';
-import { createChainedFunction } from '@wonder-ui/utils';
-import { PickerProps } from './PickerTypes';
-import { useControlled } from '@wonder-ui/hooks';
+import { createChainedFunction, nextTick } from '@wonder-ui/utils';
+import type { PickerProps, PickerAction } from './PickerTypes';
+import type { PopupAction } from '../Popup/PopupTypes';
 
 const COMPONENT_NAME = 'WuiPicker';
 
-const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
+const Picker = React.forwardRef<PickerAction, PickerProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
     className,
@@ -18,11 +18,11 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     title,
     subTitle,
     columns,
-    cancelText,
-    confirmText,
+    cancelText = '取消',
+    confirmText = '确定',
     onConfirm,
     onCancel,
-    visible: visibleProp,
+    visible,
     defaultVisible,
     value,
     defaultValue,
@@ -39,24 +39,22 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
     columns
   });
 
-  const [visible, setVisibleUnControlled] = useControlled({
-    value: visibleProp,
-    defaultValue: defaultVisible
-  });
+  const popActionRef = React.useRef<PopupAction>(null);
 
   const show = () => {
-    setVisibleUnControlled(true);
+    nextTick(() => {
+      popActionRef.current?.show();
+    });
   };
 
   const hide = () => {
-    setVisibleUnControlled(false);
+    popActionRef.current?.hide();
+    onCancel?.();
   };
 
-  const confirm = () => {
-    const callback = createChainedFunction(() => picker.confirm(), hide);
+  const handleConfirm = createChainedFunction(() => picker.confirm(), hide);
 
-    callback();
-  };
+  React.useImperativeHandle(ref, () => ({ show, hide, confirm }), []);
 
   return (
     <React.Fragment>
@@ -64,17 +62,18 @@ const Picker = React.forwardRef<HTMLDivElement, PickerProps>((inProps, ref) => {
         ? children({ selected: picker.selected, show })
         : children}
       <PickerPopup
-        visible={visible}
-        disableRipple={disableRipple}
-        ref={ref}
-        className={className}
-        style={style}
+        ref={popActionRef}
         title={title}
         subTitle={subTitle}
+        disableRipple={disableRipple}
         cancelText={cancelText}
         confirmText={confirmText}
-        onConfirm={confirm}
         onCancel={hide}
+        onConfirm={handleConfirm}
+        visible={visible}
+        defaultVisible={defaultVisible}
+        className={className}
+        style={style}
       >
         <PickerView picker={picker} {...pickerViewProp} />
       </PickerPopup>

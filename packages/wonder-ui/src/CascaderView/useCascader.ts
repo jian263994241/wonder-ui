@@ -45,6 +45,7 @@ export default function useCascader(props: useCascaderProps) {
 
   const state = useReactive({
     selected: undefined as CascaderOption[] | undefined,
+    isFinished: false,
     tabIndex: 0,
     tabs: [] as CascaderTab[]
   });
@@ -96,7 +97,11 @@ export default function useCascader(props: useCascaderProps) {
       onChange?.(selectedValues.filter(Boolean));
 
       if (!selected.includes(null)) {
+        state.isFinished = true;
+
         onFinish?.(selectedValues);
+      } else {
+        state.isFinished = false;
       }
     }
   };
