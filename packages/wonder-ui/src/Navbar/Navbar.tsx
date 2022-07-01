@@ -1,58 +1,38 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
 import { buttonClasses } from '../Button/buttonClasses';
-import { css } from '@wonder-ui/utils';
-import { navbarClasses, useClasses } from './NavbarClasses';
+import { COMPONENT_NAME } from './NavbarClasses';
+import { composeClasses, css } from '@wonder-ui/utils';
 import { searchbarClasses } from '../Searchbar';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
-export interface NavbarProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
-  /**
-   * 去除背景
-   */
-  backgroundInVisible?: boolean;
-  /**
-   * css api
-   */
-  classes?: Partial<typeof navbarClasses>;
-  /**
-   * Position fixed
-   */
-  fixed?: boolean;
-  /**
-   * 左边的内容
-   */
-  left?: React.ReactNode;
-  /**
-   * 右边的内容
-   */
-  right?: React.ReactNode;
-  /**
-   * 标题
-   */
-  title?: React.ReactNode;
-  /**
-   * 副标题
-   */
-  subTitle?: React.ReactNode;
+import type { NavbarProps, NavbarStyleProps } from './NavbarTypes';
 
-  ref?: React.Ref<HTMLElement>;
-}
+const useClasses = (styleProps: NavbarStyleProps) => {
+  const { classes } = styleProps;
 
-export interface NavbarStyleProps extends NavbarProps {}
+  const slots = {
+    root: ['root'],
+    inner: ['inner'],
+    background: ['background'],
+    title: ['title'],
+    subTitle: ['subTitle'],
+    left: ['left'],
+    right: ['right']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
 
 const NavbarRoot = styled('div', {
-  name: 'WuiNavbar',
+  name: COMPONENT_NAME,
   slot: 'Root'
 })<{ styleProps: NavbarStyleProps }>(({ theme, styleProps }) => {
   return {
     fontFamily: theme.typography.fontFamily,
     fontSize: theme.typography.pxToRem(17),
-    color: theme.palette.text.primary,
-    position: styleProps.fixed ? 'fixed' : 'relative',
+    position: styleProps.absolute ? 'absolute' : 'relative',
     width: '100%',
     zIndex: 99,
     left: 0,
@@ -68,7 +48,7 @@ const NavbarRoot = styled('div', {
   };
 });
 
-const NavbarBg = styled('div', { name: 'WuiNavbar', slot: 'Bg' })(
+const NavbarBg = styled('div', { name: COMPONENT_NAME, slot: 'Bg' })(
   ({ theme }) => {
     const backgroundColor = theme.palette.background.paper;
 
@@ -80,7 +60,7 @@ const NavbarBg = styled('div', { name: 'WuiNavbar', slot: 'Bg' })(
       height: '100%',
       pointerEvents: 'none',
       zIndex: 0,
-      background: alpha(backgroundColor, 0.85),
+      background: alpha(backgroundColor, 0.89),
       transitionProperty: 'transform',
       borderWidth: 0,
       borderStyle: 'solid',
@@ -92,7 +72,7 @@ const NavbarBg = styled('div', { name: 'WuiNavbar', slot: 'Bg' })(
 );
 
 const NavbarInner = styled('div', {
-  name: 'WuiNavbar',
+  name: COMPONENT_NAME,
   slot: 'Inner'
 })(({ theme }) => ({
   position: 'relative',
@@ -110,36 +90,33 @@ const NavbarInner = styled('div', {
   zIndex: 10
 }));
 
-const NavbarTitle = styled(Typography, {
-  name: 'WuiNavbar',
+const NavbarTitle = styled('div', {
+  name: COMPONENT_NAME,
   slot: 'Title'
 })(({ theme }) => ({
+  ...theme.typography.ellipsis('70%', 1),
+  display: 'block',
   position: 'relative',
-  flexShrink: 10,
-  fontWeight: 500,
-  display: 'inline-block',
-  lineHeight: 1.2,
   textAlign: 'center',
-  fontSize: 'inherit',
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),
   color: theme.palette.text.primary
 }));
 
-const NavbarSubTitle = styled('span', {
-  name: 'WuiNavbar',
+const NavbarSubTitle = styled('div', {
+  name: COMPONENT_NAME,
   slot: 'SubTitle'
 })(({ theme }) => ({
+  ...theme.typography.ellipsis('100%', 1),
   display: 'block',
   fontSize: '0.65em',
   fontWeight: 400,
-  textAlign: 'center',
-  lineHeight: 1,
+  lineHeight: 1.2,
   color: theme.palette.text.secondary
 }));
 
-const NavbarLeft = styled('span', {
-  name: 'WuiNavbar',
+const NavbarLeft = styled('div', {
+  name: COMPONENT_NAME,
   slot: 'Left'
 })(({ theme }) => ({
   position: 'relative',
@@ -155,8 +132,8 @@ const NavbarLeft = styled('span', {
   }
 }));
 
-const NavbarRight = styled('span', {
-  name: 'WuiNavbar',
+const NavbarRight = styled('div', {
+  name: COMPONENT_NAME,
   slot: 'Right'
 })(({ theme }) => ({
   position: 'relative',
@@ -172,13 +149,13 @@ const NavbarRight = styled('span', {
   }
 }));
 
-const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiNavbar' });
+const Navbar = React.forwardRef<HTMLDivElement, NavbarProps>((inProps, ref) => {
+  const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
     backgroundInVisible = false,
     children,
     className,
-    fixed = false,
+    absolute = false,
     title,
     subTitle,
     left: barLeft,
@@ -253,36 +230,26 @@ const Navbar = React.forwardRef<HTMLElement, NavbarProps>((inProps, ref) => {
     title
   ]);
 
-  const styleProps = { ...props, fixed };
+  const styleProps = { ...props, absolute };
 
   const classes = useClasses(styleProps);
 
   return (
     <NavbarRoot
-      theme={theme}
       className={css(className, classes.root)}
       {...rest}
       styleProps={styleProps}
       ref={handleRef}
     >
-      {!backgroundInVisible && (
-        <NavbarBg theme={theme} className={classes.background} />
-      )}
+      {!backgroundInVisible && <NavbarBg className={classes.background} />}
 
-      <NavbarInner
-        theme={theme}
-        ref={navbarInnerNodeRef}
-        className={classes.inner}
-      >
+      <NavbarInner ref={navbarInnerNodeRef} className={classes.inner}>
         {barLeft && (
           <NavbarLeft theme={theme} ref={leftNodeRef} className={classes.left}>
             {barLeft}
           </NavbarLeft>
         )}
         <NavbarTitle
-          noWrap
-          component="span"
-          theme={theme}
           ref={titleNodeRef}
           style={{ left: titleLeft }}
           className={classes.title}

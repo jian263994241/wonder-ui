@@ -1,6 +1,7 @@
 import {
   Button,
   Container,
+  Divider,
   Drawer,
   Page,
   Space,
@@ -26,25 +27,15 @@ export default () => {
             showCloseButton
             title="活动承诺函"
             onClose={() => setFalse()}
-            toolbar={
-              <div
-                style={{
-                  position: 'absolute',
-                  width: '100%',
-                  bottom: 0,
-                  zIndex: 3,
-                  backgroundColor: '#fff'
-                }}
-              >
-                <Space itemEqual gap={0}>
-                  <Button fullWidth shape="square">
-                    我再想想
-                  </Button>
-                  <Button fullWidth variant="contained" shape="square">
-                    已阅读并签约
-                  </Button>
-                </Space>
-              </div>
+            footer={
+              <Space itemEqual gap={0} split={<Divider direction="vertical" />}>
+                <Button fullWidth shape="square">
+                  我再想想
+                </Button>
+                <Button fullWidth shape="square">
+                  已阅读并签约
+                </Button>
+              </Space>
             }
           >
             <div style={{ padding: 16 }}>

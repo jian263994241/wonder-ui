@@ -1,4 +1,4 @@
-import { Button, Page, WhiteSpace, Space } from '@wonder-ui/core';
+import { Button, Divider, Page, WhiteSpace, Space } from '@wonder-ui/core';
 import styled from '@wonder-ui/styled';
 
 const Block = styled.div`
@@ -14,21 +14,15 @@ export default () => (
   <Page
     title="导航栏"
     showBackButton
-    toolbar={
-      <div
-        style={{
-          position: 'absolute',
-          width: '100%',
-          bottom: 0,
-          zIndex: 3,
-          backgroundColor: '#fff'
-        }}
-      >
-        <Space itemEqual>
-          <Button fullWidth>我再想想</Button>
-          <Button fullWidth>已阅读并签约</Button>
-        </Space>
-      </div>
+    footer={
+      <Space itemEqual gap={0} split={<Divider direction="vertical" />}>
+        <Button fullWidth shape="square">
+          我再想想
+        </Button>
+        <Button fullWidth shape="square">
+          已阅读并签约
+        </Button>
+      </Space>
     }
   >
     <WhiteSpace />

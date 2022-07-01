@@ -1,2 +1,2 @@
 export { default } from './Popup';
-export type { PopupProps } from './Popup';
+export type { PopupProps, PopupAction } from './PopupTypes';

@@ -48,7 +48,7 @@ const ModalRoot = styled(FocusLock, {
   })
 );
 
-const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
+const Modal = React.forwardRef<HTMLDivElement, ModalProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiModal' });
   const {
     autoFocus = false,
@@ -84,6 +84,7 @@ const Modal = React.forwardRef<HTMLElement, ModalProps>((inProps, ref) => {
   const mountNodeRef = React.useRef(null);
   const modalRef = React.useRef<Element | null>(null);
   const handleRef = useForkRef(modalRef, ref);
+
   const hasTransition =
     hasTransitionProp != undefined
       ? hasTransitionProp

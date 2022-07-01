@@ -10,7 +10,14 @@ group:
 ---
 # Popup 弹窗
 
-Popup 是一个模态窗口，其中包含在 App 的主要内容上弹出的任何 HTML 内容。弹出窗口和所有其他覆盖一样是所谓的“临时视图”的一部分。
+Popup 是一个响应式模态窗口，其中包含在 App 的主要内容上弹出的任何 HTML 内容。弹出窗口和所有其他覆盖一样是所谓的“临时视图”的一部分。
+
+<Alert type="info">
+  使用上和Drawer抽屉组件底部上划一样。
+</Alert>
+
+
+
 
 ## 代码演示
 
@@ -20,5 +27,9 @@ Popup 是一个模态窗口，其中包含在 App 的主要内容上弹出的任
 
 <code src="./demo/demo1.tsx"></code>
 
-<API src="./Popup.tsx" props="children|onClose|title|transitionDuration|visible|keepMounted"></API>
+### 非受控组件
+
+<code src="./demo/demo2.tsx"></code>
+
+<API src="./Popup.tsx" ></API>
 

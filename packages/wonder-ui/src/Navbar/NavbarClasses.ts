@@ -1,6 +1,8 @@
-import { composeClasses, generateUtilityClasses } from '@wonder-ui/utils';
+import { generateUtilityClasses } from '@wonder-ui/utils';
 
-export const navbarClasses = generateUtilityClasses('WuiNavbar', [
+export const COMPONENT_NAME = 'WuiNavbar';
+
+export const navbarClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'inner',
   'background',
@@ -10,22 +12,8 @@ export const navbarClasses = generateUtilityClasses('WuiNavbar', [
   'right'
 ]);
 
+export type NavbarClassesType = typeof navbarClasses;
+
 export interface NavbarStyleProps {
   classes?: Partial<typeof navbarClasses>;
 }
-
-export const useClasses = (styleProps: NavbarStyleProps) => {
-  const { classes } = styleProps;
-
-  const slots = {
-    root: ['root'],
-    inner: ['inner'],
-    background: ['background'],
-    title: ['title'],
-    subTitle: ['subTitle'],
-    left: ['left'],
-    right: ['right']
-  };
-
-  return composeClasses('WuiNavbar', slots, classes);
-};

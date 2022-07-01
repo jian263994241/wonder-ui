@@ -1,65 +1,52 @@
 import * as React from 'react';
-import Modal, { ModalProps } from '../Modal';
+import Modal from '../Modal';
 import Page, { PageProps } from '../Page';
 import Slide from '../Slide';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { TransitionDuration, TransitionBaseProps } from '../styles/transitions';
+import { COMPONENT_NAME } from './PopupClasses';
+import { composeClasses } from '@wonder-ui/utils';
 import { css } from '@wonder-ui/utils';
-import { popupClasses, useClasses } from './PopupClasses';
+import { useControlled } from '@wonder-ui/hooks';
+import type { PopupAction, PopupProps, PopupStyleProps } from './PopupTypes';
 
-export interface PopupProps {
-  ModalProps?: Partial<ModalProps>;
-  PageProps?: Partial<PageProps>;
-  TransitionComponent?: React.ComponentType<TransitionBaseProps>;
-  TransitionProps?: TransitionBaseProps;
-  /**
-   * 内容
-   */
-  children?: React.ReactNode;
-  className?: string;
-  classes?: Partial<typeof popupClasses>;
-  /**
-   * 关闭时触发事件
-   */
-  onClose?: () => void;
-  /**
-   * 标题
-   */
-  title?: React.ReactNode;
-  /**
-   * 过渡时长(ms)
-   */
-  duration?: TransitionDuration;
-  /**
-   * 显示隐藏
-   * @default false
-   */
-  visible?: boolean;
-  /**
-   * 保持节点
-   */
-  keepMounted?: ModalProps['keepMounted'];
-}
+const useClasses = (styleProps: PopupStyleProps) => {
+  const { classes, autoHeight } = styleProps;
+
+  const slots = {
+    root: ['root', autoHeight && 'autoHeight'],
+    page: ['page']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
 
 const PopupRoot = styled(Modal, {
-  name: 'WuiPopup',
+  name: COMPONENT_NAME,
   slot: 'Root',
   shouldForwardProp: () => true
-})<ModalProps>(({ theme }) => ({
+})(({ theme }) => ({
   zIndex: theme.zIndex.fixed,
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center'
+  alignItems: 'flex-end',
+  [theme.breakpoints.up('md')]: {
+    alignItems: 'center'
+  }
 }));
 
-const PopupPage = styled(Page.withComponent(Slide), {
-  name: 'WuiPopup',
-  slot: 'Page',
-  shouldForwardProp: () => true
-})<PageProps>(({ theme }) => ({
-  // position: 'fixed',
+const PopupPage = styled(Slide, {
+  name: COMPONENT_NAME,
+  slot: 'Page'
+})<{ styleProps: PopupStyleProps }>(({ theme, styleProps }) => ({
+  position: 'fixed',
+  overflow: 'hidden',
   outline: 0,
+
+  ...(styleProps.autoHeight && {
+    height: 'auto'
+  }),
+
   [theme.breakpoints.up('md')]: {
     borderRadius: theme.shape.borderRadius,
     width: 630,
@@ -67,48 +54,75 @@ const PopupPage = styled(Page.withComponent(Slide), {
   }
 }));
 
-const Popup = React.forwardRef<HTMLDivElement, PopupProps>((inProps, ref) => {
+const Popup = React.forwardRef<PopupAction, PopupProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiPopup' });
   const {
-    ModalProps,
-    PageProps,
+    autoHeight = false,
     children,
     className,
-    visible = false,
+    visible: visibleProp,
+    defaultVisible = false,
     title,
     onClose,
-    TransitionComponent = Slide,
-    TransitionProps,
-    duration,
+    onExited,
+    onBackdropClick,
     keepMounted = false,
-    ...rest
+    htmlRef,
+    ...PageProps
   } = props;
 
-  const styleProps = { ...props };
+  const [visible, setVisibleIfUnControlled] = useControlled({
+    value: visibleProp,
+    defaultValue: defaultVisible
+  });
 
+  const show = () => {
+    setVisibleIfUnControlled(true);
+  };
+
+  const hide = () => {
+    setVisibleIfUnControlled(false);
+  };
+
+  React.useImperativeHandle(ref, () => ({ show, hide }), []);
+
+  const styleProps = { ...props, autoHeight };
   const classes = useClasses(styleProps);
+
+  const handleClose = () => {
+    hide();
+    onClose?.();
+  };
+
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    hide();
+    onBackdropClick?.(e);
+  };
 
   return (
     <PopupRoot
       autoFocus
-      visible={visible}
-      onClose={onClose}
-      ref={ref}
-      keepMounted={keepMounted}
-      {...ModalProps}
-      {...rest}
-      BackdropProps={ModalProps?.BackdropProps}
+      ref={htmlRef}
       classes={{ root: css(classes.root, className) }}
+      visible={visible}
+      onBackdropClick={handleBackdropClick}
+      keepMounted={keepMounted}
     >
       <PopupPage
-        direction="up"
         in={visible}
-        duration={duration}
-        showCloseButton
-        title={title}
-        onClose={onClose}
-        classes={{ root: css(classes.page, PageProps?.className) }}
-        {...PageProps}
+        styleProps={styleProps}
+        direction="up"
+        onExited={onExited}
+        component={Page}
+        componentProps={
+          {
+            className: classes.page,
+            showCloseButton: true,
+            title,
+            onClose: handleClose,
+            ...PageProps
+          } as PageProps
+        }
       >
         {children}
       </PopupPage>

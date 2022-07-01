@@ -2,22 +2,39 @@ import * as React from 'react';
 import ArrowForward from '../ArrowForward';
 import CloseButton from '../CloseButton';
 import IconButton from '../IconButton';
-import Navbar, { NavbarProps } from '../Navbar';
+import Navbar from '../Navbar';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { css, forwardRef, mergedRef } from '@wonder-ui/utils';
+import { alpha } from '../styles/colorManipulator';
+import { COMPONENT_NAME } from './PageClasses';
+import { composeClasses, css, mergedRef } from '@wonder-ui/utils';
 import { navbarClasses } from '../Navbar/NavbarClasses';
-import { pageClasses, useClasses } from './PageClasses';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
+import type { PageProps, PageStyleProps } from './PageTypes';
+
+export const useClasses = (styleProps: PageStyleProps) => {
+  const { classes } = styleProps;
+
+  const slots = {
+    root: ['root'],
+    content: ['content'],
+    navbar: ['navbar'],
+    toolbar: ['toolbar']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
 
 const PageRoot = styled('div', {
-  name: 'WuiPage',
+  name: COMPONENT_NAME,
   slot: 'Root'
 })(({ theme }) => ({
   boxSizing: 'border-box',
   position: 'absolute',
   width: '100%',
   height: '100%',
+  maxHeight: '100%',
+  display: 'flex',
   transform: 'none',
   zIndex: 1,
   backgroundColor: theme.palette.background.default,
@@ -27,13 +44,14 @@ const PageRoot = styled('div', {
 }));
 
 const PageContent = styled('div', {
-  name: 'WuiPage',
+  name: COMPONENT_NAME,
   slot: 'Content'
 })(({ theme }) => ({
   ...theme.typography.body1,
   overflowY: 'auto',
   boxSizing: 'border-box',
-  height: '100%',
+  minHeight: '100%',
+  maxHeight: '100%',
   width: '100%',
   position: 'relative',
   zIndex: 1,
@@ -42,68 +60,22 @@ const PageContent = styled('div', {
   paddingBottom: 'env(safe-area-inset-bottom)'
 }));
 
-export interface PageProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
-  ContentProps?: React.HTMLAttributes<HTMLDivElement>;
-  /**
-   * Content ref
-   */
-  ContentRef?: React.Ref<HTMLDivElement>;
-  /**
-   * 导航栏属性
-   */
-  NavbarProps?: Partial<NavbarProps>;
-  /**
-   * 工具栏属性
-   */
-  ToolbarProps?: object;
-  /**
-   * css
-   */
-  classes?: Partial<typeof pageClasses>;
-  /**
-   * 自定义导航栏
-   */
-  navbar?: JSX.Element;
+const PageFooter = styled('div', {
+  name: COMPONENT_NAME,
+  slot: 'Footer'
+})(({ theme }) => ({
+  width: '100%',
+  background: alpha(theme.palette.background.paper, 0.89),
+  backdropFilter: 'saturate(180%) blur(20px)',
+  position: 'absolute',
+  bottom: 0,
+  zIndex: 2
+}));
 
-  component?: React.ElementType;
-  /**
-   * 返回按钮事件
-   */
-  onBack?: () => void;
-  /**
-   * 关闭按钮事件
-   */
-  onClose?: () => void;
-  /**
-   * 显示返回按钮
-   * @default false
-   */
-  showBackButton?: boolean;
-  /**
-   * 显示关闭按钮
-   * @default false
-   */
-  showCloseButton?: boolean;
-  /**
-   * 副标题
-   */
-  subTitle?: React.ReactNode;
-  /**
-   * 标题
-   */
-  title?: React.ReactNode;
-  /**
-   * 自定义工具栏
-   */
-  toolbar?: React.ReactElement;
-}
-
-const Page = forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiPage' });
+const Page = React.forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
+  const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
     NavbarProps,
-    ToolbarProps,
     ContentProps,
     ContentRef,
     component,
@@ -116,7 +88,9 @@ const Page = forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
     showCloseButton = false,
     subTitle,
     title,
-    toolbar = null,
+    barLeft,
+    barRight,
+    footer = null,
     ...rest
   } = props;
 
@@ -129,9 +103,7 @@ const Page = forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
     //@ts-expect-error
     navbar ? navbar.ref : NavbarProps?.ref
   );
-  const toolbarRef = React.useRef<HTMLElement>(null);
-  //@ts-expect-error
-  const handleToolbarRef = useForkRef(toolbarRef, toolbar?.ref);
+  const toolbarRef = React.useRef<HTMLDivElement>(null);
 
   const { height: navbarHeight = 0 } = useSize(navbarRef);
   const { height: toolbarHeight = 0 } = useSize(toolbarRef);
@@ -144,18 +116,58 @@ const Page = forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
     return `calc(${toolbarHeight}px + env(safe-area-inset-bottom))`;
   }, [toolbarHeight]);
 
-  const barLeft =
-    showBackButton || showCloseButton ? (
+  const renderBarLeft = () => {
+    return (
       <React.Fragment>
         {showBackButton && (
-          <IconButton disableRipple onClick={onBack}>
+          <IconButton onClick={onBack}>
             <ArrowForward fontSize="inherit" direction="left" />
           </IconButton>
         )}
-
-        {showCloseButton && <CloseButton disableRipple onClick={onClose} />}
+        {showCloseButton && <CloseButton onClick={onClose} />}
+        {barLeft}
       </React.Fragment>
-    ) : null;
+    );
+  };
+
+  const renderNavBar = () => {
+    if (React.isValidElement(navbar)) {
+      return React.cloneElement(navbar, {
+        title,
+        left: barLeft,
+        right: barRight,
+        ...navbar.props,
+        ...NavbarProps,
+        className: css(
+          navbar.props.className,
+          classes.navbar,
+          NavbarProps?.className
+        ),
+        ref: handleNavbarRef
+      });
+    }
+
+    const hasLeft = barLeft || showCloseButton || showCloseButton;
+
+    if (!navbar && (title || hasLeft || barRight)) {
+      return (
+        <Navbar
+          title={title}
+          subTitle={subTitle}
+          left={renderBarLeft()}
+          right={barRight}
+          {...NavbarProps}
+          classes={{
+            ...NavbarProps?.classes,
+            root: css(classes.navbar, NavbarProps?.className)
+          }}
+          ref={handleNavbarRef}
+        />
+      );
+    }
+
+    return navbar;
+  };
 
   return (
     <PageRoot
@@ -164,36 +176,8 @@ const Page = forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
       className={css(classes.root, className)}
       {...rest}
     >
-      {navbar ? (
-        React.cloneElement(navbar, {
-          ...NavbarProps,
-          className: css(
-            navbar.props.className,
-            classes.navbar,
-            NavbarProps?.className
-          ),
-          ref: handleNavbarRef
-        })
-      ) : title || barLeft ? (
-        <Navbar
-          title={title}
-          subTitle={subTitle}
-          left={barLeft}
-          {...NavbarProps}
-          classes={{
-            ...NavbarProps?.classes,
-            root: css(classes.navbar, NavbarProps?.className)
-          }}
-          ref={handleNavbarRef}
-        />
-      ) : null}
-
-      {toolbar
-        ? React.cloneElement(toolbar, {
-            ...ToolbarProps,
-            ref: handleToolbarRef
-          })
-        : null}
+      {renderNavBar()}
+      {footer && <PageFooter ref={toolbarRef}>{footer}</PageFooter>}
 
       <PageContent
         {...ContentProps}

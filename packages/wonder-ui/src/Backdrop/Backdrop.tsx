@@ -3,20 +3,29 @@ import Fade from '../Fade';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { css, generateUtilityClasses } from '@wonder-ui/utils';
+import {
+  css,
+  createCssVars,
+  generateUtilityClasses,
+  withStopPropagation
+} from '@wonder-ui/utils';
 import { useEventListener, useForkRef } from '@wonder-ui/hooks';
 import type { BackdropProps } from './BackdropTypes';
 
-export const backdropClasses = generateUtilityClasses('WuiBackdrop', [
+const COMPONENT_NAME = 'WuiBackdrop';
+
+export const backdropClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'invisible'
 ]);
 
+const cssVars = createCssVars(COMPONENT_NAME, ['zIndex']);
+
 const BackdropRoot = styled(Fade, {
-  name: 'WuiBackdrop',
+  name: COMPONENT_NAME,
   slot: 'Root'
 })<{ styleProps: BackdropProps }>(({ theme, styleProps }) => ({
-  zIndex: -1,
+  zIndex: cssVars.value('zIndex', -1),
   position: 'fixed',
   display: 'flex',
   alignItems: 'center',
@@ -38,7 +47,7 @@ const BackdropRoot = styled(Fade, {
 
 const Backdrop = React.forwardRef<HTMLDivElement, BackdropProps>(
   (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiBackdrop' });
+    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
       color = 'black',
       opacity = 0.4,
@@ -61,15 +70,15 @@ const Backdrop = React.forwardRef<HTMLDivElement, BackdropProps>(
       passive: false
     });
 
-    const styledProps = {
+    const styleProps = {
       ...props,
       color,
       opacity
     };
 
-    return (
+    return withStopPropagation(
       <BackdropRoot
-        styleProps={styledProps}
+        styleProps={styleProps}
         in={visible}
         className={css(backdropClasses.root, className, {
           [backdropClasses.invisible]: invisible

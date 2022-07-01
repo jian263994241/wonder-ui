@@ -1,25 +1,12 @@
-import { composeClasses, generateUtilityClasses } from '@wonder-ui/utils';
+import { generateUtilityClasses } from '@wonder-ui/utils';
 
-export const pageClasses = generateUtilityClasses('WuiPage', [
+export const COMPONENT_NAME = 'WuiPage';
+
+export const pageClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'content',
   'navbar',
-  'toolbar'
+  'footer'
 ]);
 
-export interface PageStyleProps {
-  classes?: Partial<typeof pageClasses>;
-}
-
-export const useClasses = (styleProps: PageStyleProps) => {
-  const { classes } = styleProps;
-
-  const slots = {
-    root: ['root'],
-    content: ['content'],
-    navbar: ['navbar'],
-    toolbar: ['toolbar']
-  };
-
-  return composeClasses('WuiPage', slots, classes);
-};
+export type PageClassesType = typeof pageClasses;
