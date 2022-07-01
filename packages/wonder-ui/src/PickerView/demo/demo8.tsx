@@ -5,7 +5,7 @@ import {
   ListHeader,
   ListInputItem,
   Page,
-  PickerAction,
+  PickerViewAction,
   PickerObjectOption,
   PickerView,
   WhiteSpace
@@ -14,7 +14,7 @@ import {
 const pca = getPCA({ inland: true });
 
 export default () => {
-  const actionRef = React.useRef<PickerAction>(null);
+  const actionRef = React.useRef<PickerViewAction>(null);
   const [displayText, setDisplayText] = React.useState('');
 
   const setValues = () => {

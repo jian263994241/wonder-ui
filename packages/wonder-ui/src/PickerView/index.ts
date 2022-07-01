@@ -1,6 +1,6 @@
 export { default } from './PickerView';
 export type {
-  PickerAction,
+  PickerViewAction,
   PickerViewProps,
   PickerOption,
   PickerObjectOption,

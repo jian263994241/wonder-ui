@@ -147,7 +147,7 @@ const data2 = [
 通过 `actionRef` 可以获取到 PickerView 内置方法 `PickerAction`
 
 ```ts prue
-export type PickerAction = {
+export type PickerViewAction = {
   getValues(): PickerOption[];
   getIndexes(): number[];
   getColumnValue(columnIndex: number): PickerOption | undefined;

@@ -30,7 +30,7 @@ export type PickerObjectColumn = {
   [key: string]: any;
 };
 
-export type PickerAction = {
+export type PickerViewAction = {
   getValues(): any[];
   getColumnOptions(index: number): PickerOption[] | undefined;
   setColumnOptions(index: number, options: PickerOption[]): void;
@@ -45,7 +45,7 @@ export type PickerColumns =
   | PickerObjectColumn[];
 
 export interface PickerViewProps {
-  actionRef?: React.Ref<PickerAction | undefined>;
+  actionRef?: React.Ref<PickerViewAction | undefined>;
   picker?: any;
   classes?: Partial<PickerViewClassesType>;
   className?: string;
@@ -88,7 +88,7 @@ export interface PickerViewProps {
   /**
    * 改变回调
    */
-  onChange?(values: any[], picker: PickerAction): void;
+  onChange?(values: any[], picker: PickerViewAction): void;
 }
 
 export interface ColumnProps {

@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { getOptionValue } from './PickerColumn';
 import { isObject } from '@wonder-ui/utils';
-import {
-  useControlled,
-  useCreation,
-  useEventCallback,
-  useReactive
-} from '@wonder-ui/hooks';
+import { useControlled, useEventCallback, useReactive } from '@wonder-ui/hooks';
 import type {
   PickerFieldNames,
   PickerObjectColumn,
@@ -46,7 +41,7 @@ export default function usePicker(props: usePickerProps) {
     value: valueProp
   });
 
-  const fieldNames = useCreation(
+  const fieldNames = React.useMemo(
     () => Object.assign({}, defaultFieldNames, fieldNamesProp),
     [fieldNamesProp]
   );
@@ -161,11 +156,11 @@ export default function usePicker(props: usePickerProps) {
     }
   };
 
-  useCreation(() => {
+  React.useEffect(() => {
     setColumns(columns);
   }, [columns, value]);
 
-  useCreation(() => {
+  React.useEffect(() => {
     const nextIndexes = getIndexesByValue(value);
 
     if (JSON.stringify(nextIndexes) != JSON.stringify(state.indexes)) {
@@ -180,10 +175,10 @@ export default function usePicker(props: usePickerProps) {
     return onConfirm?.(values);
   };
 
-  useCreation(() => {
+  React.useEffect(() => {
     const selected = getSlectedOptions();
 
-    if (selected.length > 0) {
+    if (value.length > 0) {
       state.selected = selected;
     } else {
       state.selected = undefined;
