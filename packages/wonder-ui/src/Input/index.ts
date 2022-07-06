@@ -1,2 +1,2 @@
-export { default, inputClasses } from './InputBase';
-export type { InputProps, InputAction } from './InputBase';
+export { default } from './InputBase';
+export type { InputProps, InputAction } from './InputTypes';

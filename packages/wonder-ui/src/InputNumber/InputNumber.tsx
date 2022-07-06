@@ -5,7 +5,7 @@ import getMiniDecimal, {
   toFixed,
   ValueType
 } from './utils/MiniDecimal';
-import Input, { InputAction, inputClasses, InputProps } from '../Input';
+import Input from '../Input/InputBase';
 import StepButton from '../StepButton';
 import styled from '../styles/styled';
 import {
@@ -21,12 +21,14 @@ import {
   num2str,
   validateNumber
 } from './utils/numberUtil';
+import { inputClasses } from '../Input/InputClasses';
 import {
   useCursor,
   useEventCallback,
   useSafeState,
   useUpdateEffect
 } from '@wonder-ui/hooks';
+import type { InputAction, InputProps } from '../Input/InputTypes';
 // https://github.com/react-component/input-number/blob/master/src/InputNumber.tsx
 
 /**

@@ -1,7 +1,15 @@
 import * as React from 'react';
-import { debounce, ownerWindow, nextTick } from '@wonder-ui/utils';
-import { useForkRef, useSafeState } from '@wonder-ui/hooks';
 import styled from '../styles/styled';
+import Typography from '../Typography';
+import {
+  css,
+  debounce,
+  generateUtilityClasses,
+  nextTick,
+  ownerWindow
+} from '@wonder-ui/utils';
+import { useForkRef, useReactive } from '@wonder-ui/hooks';
+import type { TextareaAutosizeProps } from './InputTypes';
 
 function getStyleValue(computedStyle: Record<string, any>, property: string) {
   return parseInt(computedStyle[property], 10) || 0;
@@ -24,24 +32,25 @@ const styles: Record<string, React.CSSProperties> = {
   }
 };
 
-export interface TextareaAutosizeProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  maxRows?: number;
-  minRows?: number;
-}
-
 const COMPONENT_NAME = 'WuiTextareaAutosize';
+
+const classes = generateUtilityClasses(COMPONENT_NAME, [
+  'root',
+  'textarea',
+  'count'
+]);
 
 const TextareaAutosizeRoot = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })({
-  display: 'inline-flex',
-  alignItems: 'center',
+  // display: 'inline-flex',
+  // alignItems: 'center',
   paddingTop: 4,
   width: '100%',
   '& > textarea': {
     border: 0,
+    padding: 0,
     resize: 'inherit',
     width: 'inherit',
     outline: 'inherit',
@@ -64,6 +73,8 @@ const TextareaAutosize = React.forwardRef<
     minRows = 1,
     className,
     style,
+    showCount,
+    maxLength,
     ...rest
   } = props;
 
@@ -72,10 +83,11 @@ const TextareaAutosize = React.forwardRef<
   const handleRef = useForkRef(ref, inputRef);
   const shadowRef = React.useRef<HTMLTextAreaElement>(null);
   const renders = React.useRef(0);
-  const [state, setState] = useSafeState<{
-    outerHeightStyle?: number;
-    overflow?: boolean;
-  }>({});
+
+  const state = useReactive({
+    outerHeightStyle: 0,
+    overflow: false
+  });
 
   const syncHeight = React.useCallback(() => {
     const input = inputRef.current!;
@@ -128,24 +140,19 @@ const TextareaAutosize = React.forwardRef<
       outerHeight + (boxSizing === 'border-box' ? padding + border : 0);
     const overflow = Math.abs(outerHeight - innerHeight) <= 1;
 
-    setState((prevState) => {
-      // Need a large enough difference to update the height.
-      // This prevents infinite rendering loop.
-      if (
-        renders.current < 20 &&
-        ((outerHeightStyle > 0 &&
-          Math.abs((prevState.outerHeightStyle || 0) - outerHeightStyle) > 1) ||
-          prevState.overflow !== overflow)
-      ) {
-        renders.current += 1;
-        return {
-          overflow,
-          outerHeightStyle
-        };
-      }
+    // Need a large enough difference to update the height.
+    // This prevents infinite rendering loop.
+    if (
+      renders.current < 20 &&
+      ((outerHeightStyle > 0 &&
+        Math.abs((state.outerHeightStyle || 0) - outerHeightStyle) > 1) ||
+        state.overflow !== overflow)
+    ) {
+      renders.current += 1;
 
-      return prevState;
-    });
+      state.outerHeightStyle = outerHeightStyle;
+      state.overflow = overflow;
+    }
   }, [maxRows, minRows]);
 
   React.useEffect(() => {
@@ -184,13 +191,17 @@ const TextareaAutosize = React.forwardRef<
     }
   };
 
+  const conut = value ? value.length : 0;
+  const countDisplay = maxLength ? `${conut}/${maxLength}` : conut;
+
   return (
-    <TextareaAutosizeRoot>
+    <TextareaAutosizeRoot className={css(classes.root, className)}>
       <textarea
+        className={classes.textarea}
+        maxLength={maxLength}
         value={value}
         onChange={handleChange}
         ref={handleRef}
-        className={className}
         // Apply the rows prop to get a "correct" first SSR paint
         rows={minRows}
         style={{
@@ -204,12 +215,23 @@ const TextareaAutosize = React.forwardRef<
       />
       <textarea
         aria-hidden
-        className={props.className}
+        maxLength={maxLength}
         readOnly
         ref={shadowRef}
         tabIndex={-1}
         style={styles.shadow}
       />
+
+      {showCount && (
+        <Typography
+          className={classes.count}
+          variant="body2"
+          color="textSecondary"
+          align="right"
+        >
+          {countDisplay}
+        </Typography>
+      )}
     </TextareaAutosizeRoot>
   );
 });

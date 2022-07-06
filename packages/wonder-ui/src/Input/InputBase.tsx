@@ -6,156 +6,27 @@ import styled from '../styles/styled';
 import TextareaAutosize from './TextareaAutosize';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { composeClasses, css, generateUtilityClasses } from '@wonder-ui/utils';
-import { InputFocusOptions, resolveOnChange, triggerFocus } from './inputUtils';
+import { COMPONENT_NAME } from './InputClasses';
+import { composeClasses, css } from '@wonder-ui/utils';
+import { resolveOnChange, triggerFocus } from './inputUtils';
 import {
   useControlled,
   useEventCallback,
   useForkRef,
   useSafeState
 } from '@wonder-ui/hooks';
-
-export interface InputAction {
-  focus(option?: InputFocusOptions): void;
-  blur(): void;
-  select(): void;
-  setSelectionRange(
-    start: number,
-    end: number,
-    direction?: 'forward' | 'backward' | 'none'
-  ): void;
-}
-
-const COMPONENT_NAME = 'WuiInput';
+import { useListContext } from '../List/ListContext';
+import type {
+  InputFocusOptions,
+  InputProps,
+  InputStyleProps
+} from './InputTypes';
 
 const SIZE = {
   large: 40,
   middle: 32,
   small: 24
 };
-
-export const inputClasses = generateUtilityClasses(COMPONENT_NAME, [
-  'root',
-  'input',
-  'prefix',
-  'suffix',
-  'clearButton',
-  'revealButton',
-  'borderless',
-  'multiline',
-  'disabled',
-  'focused',
-  'resizable',
-  'readonly',
-  'hasError'
-]);
-
-type RevealButtonProps = {
-  className: string;
-  visible: boolean;
-  onClick: React.MouseEventHandler<any>;
-};
-
-export interface InputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'size'> {
-  /**
-   * 内置方法
-   */
-  actionRef?: React.Ref<InputAction | undefined>;
-  /**
-   * 清除图标
-   */
-  allowClear?: boolean;
-  /**
-   * 去除边框
-   */
-  borderless?: boolean;
-  classes?: Partial<typeof inputClasses>;
-  component?: React.ElementType;
-  /**
-   * 禁用
-   */
-  disabled?: boolean;
-  /**
-   * 禁用激活样式
-   */
-  disabledActiveStyle?: boolean;
-  /**
-   * 最大长度
-   */
-  maxLength?: number;
-  /**
-   * 错误状态
-   */
-  error?: boolean;
-  /**
-   * 多行
-   */
-  multiline?: boolean;
-  /**
-   * 多行时的最大行数
-   */
-  maxRows?: number;
-  /**
-   * 多行时的最小行数
-   */
-  minRows?: number;
-  /**
-   * 前缀图标的
-   */
-  prefix?: React.ReactNode;
-  /**
-   * 只读
-   */
-  readOnly?: boolean;
-
-  resizable?: boolean;
-  /**
-   * 后缀图标
-   */
-  suffix?: React.ReactNode;
-  /**
-   * 控件大小。
-   * @default middle
-   */
-  size?: 'large' | 'middle' | 'small';
-  /**
-   * 前缀图标的
-   */
-  onRenderPrefix?(props: InputProps): React.ReactNode;
-  /**
-   * 后缀图标
-   */
-  onRenderSuffix?(props: InputProps): React.ReactNode;
-  /**
-   * 自定义显示密码按钮
-   */
-  onRenderRevealButton?(props: RevealButtonProps): React.ReactNode;
-  /**
-   * 按下回车的回调
-   */
-  onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;
-  /**
-   * 输入框内容变化时的回调
-   */
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  /**
-   * 输入框内容
-   */
-  value?: string | ReadonlyArray<string> | number;
-  /**
-   * 输入框默认内容
-   */
-  defaultValue?: string | ReadonlyArray<string> | number;
-  // /** Transform `display value` to value */
-  // parser?: (displayValue: any) => any;
-  // /** Transform `value` to display value show in input */
-  // formatter?: (value: any) => string;
-}
-
-export interface InputStyleProps extends InputProps {
-  focused?: boolean;
-}
 
 const useClasses = (styleProps: InputStyleProps) => {
   const {
@@ -206,20 +77,20 @@ const InputRoot = styled('div', {
   WebkitTapHighlightColor: 'transparent',
   width: '100%',
   height: theme.typography.pxToRem(SIZE[styleProps.size!]),
-  padding: theme.spacing(0, 1),
+  padding: 0,
   margin: 0,
   transition: theme.transitions.create(['border-color', 'box-shadow']),
   backgroundColor: theme.palette.background.paper,
 
   ...(styleProps.multiline && {
-    height: 'auto',
-    padding: theme.spacing(0.5, 1)
+    height: 'auto'
   }),
 
   ...(!styleProps.borderless && {
     border: 'thin solid',
     borderColor: theme.palette.divider,
     borderRadius: theme.shape.borderRadius,
+    padding: styleProps.multiline ? theme.spacing(0.5, 1) : theme.spacing(0, 1),
 
     ...(styleProps.error && {
       borderColor: theme.palette.error.main
@@ -233,6 +104,7 @@ const InputRoot = styled('div', {
         })
       })
   }),
+
   ...(styleProps.readOnly && {
     cursor: 'default'
   }),
@@ -288,6 +160,10 @@ const InputInput = styled('input', {
     '&::-webkit-input-placeholder': placeholder,
     '&::-moz-placeholder': placeholder, // Firefox 19+
     '&::-ms-input-placeholder': placeholder, // Edge
+
+    '& > textarea::-webkit-input-placeholder': placeholder,
+    '& > textarea::-moz-placeholder': placeholder, // Firefox 19+
+    '& > textarea::-ms-input-placeholder': placeholder, // Edge
 
     '&:focus': {
       outline: 0
@@ -381,11 +257,14 @@ const InputSuffix = styled(Space, {
 const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
+    const listContext = useListContext();
+    const inList = listContext != null;
+
     const {
       actionRef,
       allowClear = false,
       autoComplete = 'off',
-      borderless = false,
+      borderless = inList ? true : false,
       className,
       component,
       defaultValue = '',
@@ -411,7 +290,7 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       readOnly = false,
       required,
       resizable = false,
-      size = 'middle',
+      size = inList ? 'small' : 'middle',
       style,
       suffix,
       tabIndex,
