@@ -1,44 +1,34 @@
+import React from 'react';
 import {
-  Button,
-  Space,
   Collapse,
-  Typography,
-  WhiteSpace
+  ContentBlock,
+  List,
+  ListHeader,
+  ListItem,
+  Toggle
 } from '@wonder-ui/core';
-import { useBoolean } from '@wonder-ui/hooks';
 
 export default () => {
-  const [visible, { setTrue, setFalse, toggle }] = useBoolean(false);
+  const [visible, setVisible] = React.useState(false);
 
   return (
     <div>
-      <Space>
-        <Button variant="contained" onClick={() => setTrue()}>
-          Open
-        </Button>
-        <Button variant="contained" onClick={() => setFalse()}>
-          Close
-        </Button>
-        <Button variant="contained" onClick={() => toggle()}>
-          Toggle
-        </Button>
-      </Space>
-      <WhiteSpace />
+      <List>
+        <ListHeader>设置折叠高度</ListHeader>
+        <ListItem
+          primary="展开"
+          extra={
+            <Toggle checked={visible} onChange={() => setVisible(!visible)} />
+          }
+        />
+      </List>
+
       <Collapse in={visible} collapsedSize={30}>
-        <Typography paragraph>default view text</Typography>
-        <div
-          style={{
-            border: '1px solid #ccc',
-            padding: 16,
-            boxSizing: 'border-box'
-          }}
-        >
-          <Typography>
-            Some placeholder content for the collapse component. This panel is
-            hidden by default but revealed when the user activates the relevant
-            trigger.
-          </Typography>
-        </div>
+        <ContentBlock title="展现的内容">
+          Some placeholder content for the collapse component. This panel is
+          hidden by default but revealed when the user activates the relevant
+          trigger.
+        </ContentBlock>
       </Collapse>
     </div>
   );

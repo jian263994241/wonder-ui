@@ -1,109 +1,93 @@
 import * as React from 'react';
-import { animated, useSpring } from '@react-spring/web';
-import {
-  getAutoHeightDuration,
-  getDuration,
-  springConfig,
-  TransitionBaseProps
-} from '../styles/transitions';
-import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
+import { animated, useTransition } from '@react-spring/web';
+import { springConfig, TransitionProps } from '../styles/transitions';
+import { css, withStopPropagation } from '@wonder-ui/utils';
+import { useEventCallback } from '@wonder-ui/hooks';
 
 function getScale(value: number) {
   return { scaleX: value, scaleY: value ** 2 };
 }
 
-export interface GrowProps extends Omit<TransitionBaseProps, 'duration'> {
-  /**
-   * 动画时间 ms
-   * @default auto
-   */
-  duration?: 'auto' | number | { enter: number; exit: number };
-}
+export interface GrowProps<C extends React.ElementType = React.ElementType>
+  extends TransitionProps<C> {}
 
 /**
  * The Grow transition is used by the [Tooltip](/components/tooltips/) and
  * [Popover](/components/popover/) components.
  * It uses [react-transition-group](https://github.com/reactjs/react-transition-group) internally.
  */
-const Grow = React.forwardRef<HTMLDivElement, GrowProps>((props, ref) => {
+export default function Grow<C extends React.ElementType = React.ElementType>(
+  props: GrowProps<C>
+) {
   const {
+    className,
     children,
-    in: inProp,
+    component = 'div',
+    componentProps,
+    in: visible = false,
+    keepMounted = false,
+    duration,
+    propagationEvent,
+    style,
+    delay,
     onEnter,
     onEntered,
     onExit,
     onExited,
-    duration: durationProp,
-    style,
-    immediate,
-    delay,
     ...rest
   } = props;
 
-  const nodeRef = React.useRef<HTMLDivElement>(null);
-  const handleRef = useForkRef(nodeRef, ref);
-
-  const onStart = useEventCallback(() => {
-    if (inProp) {
+  const handleStart = useEventCallback(() => {
+    if (visible) {
+      setExited(false);
       onEnter?.();
     } else {
       onExit?.();
     }
   });
 
-  const onRest = useEventCallback(() => {
-    if (inProp) {
+  const handleRest = useEventCallback(() => {
+    if (visible) {
       onEntered?.();
     } else {
+      setExited(true);
       onExited?.();
     }
   });
 
-  const [styles, api] = useSpring(() => {
-    return {
-      opacity: 0,
-      ...getScale(0.75),
-      cancel: true,
-      onStart,
-      onRest
-    };
+  const [isExited, setExited] = React.useState(!visible);
+
+  const exitedState = { opacity: 0, ...getScale(0.75) };
+  const enteredState = { opacity: 1, ...getScale(1) };
+
+  const transitions = useTransition(visible, {
+    delay,
+    expires: !keepMounted,
+    config: springConfig({ in: visible, duration }),
+    reverse: visible,
+    from: exitedState,
+    enter: enteredState,
+    leave: exitedState,
+    onStart: handleStart,
+    onRest: handleRest
   });
 
-  React.useEffect(() => {
-    const { current: node } = nodeRef;
+  const AnimatedBox = React.useMemo(() => animated(component), [component]);
+  const rootProps = { ...rest, ...componentProps } as any;
 
-    let duration: number;
-
-    if (node) {
-      if (durationProp === 'auto') {
-        duration = getAutoHeightDuration(node.clientHeight);
-      } else {
-        duration = getDuration(durationProp, inProp);
-      }
-
-      api.start({
-        ...(inProp
-          ? { opacity: 1, ...getScale(1) }
-          : { opacity: 0, ...getScale(0.75) }),
-        immediate,
-        delay,
-        config: springConfig({ in: inProp, duration })
-      });
-    }
-  }, [inProp, immediate, delay]);
-
-  return (
-    <animated.div
-      ref={handleRef}
-      style={{
-        ...style,
-        ...styles
-      }}
-      {...rest}
-    >
-      {children}
-    </animated.div>
+  return transitions(
+    (styles, item) =>
+      item &&
+      withStopPropagation(
+        propagationEvent,
+        <AnimatedBox
+          {...rootProps}
+          hidden={isExited}
+          className={css(className, rootProps.className)}
+          style={{ ...style, ...rootProps.style, ...styles }}
+        >
+          {children}
+        </AnimatedBox>
+      )
   );
-});
-
-export default Grow;
+}

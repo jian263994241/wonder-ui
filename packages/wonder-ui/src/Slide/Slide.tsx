@@ -1,10 +1,21 @@
 import * as React from 'react';
-import { animated, useSpring } from '@react-spring/web';
-import { getRect, ownerWindow } from '@wonder-ui/utils';
-import { springConfig, TransitionBaseProps } from '../styles/transitions';
-import { useEventCallback, useForkRef } from '@wonder-ui/hooks';
+import { animated, useTransition } from '@react-spring/web';
+import { css } from '@wonder-ui/utils';
+import {
+  getRect,
+  mergedRef,
+  ownerWindow,
+  withStopPropagation
+} from '@wonder-ui/utils';
+import { springConfig, TransitionProps } from '../styles/transitions';
+import { useEventCallback } from '@wonder-ui/hooks';
 
-export interface SlideProps extends TransitionBaseProps {
+export interface SlideProps<C extends React.ElementType = React.ElementType>
+  extends TransitionProps<C> {
+  /**
+   * 方向
+   * @default down
+   */
   direction?: 'down' | 'left' | 'right' | 'up';
 }
 
@@ -88,71 +99,95 @@ function getTranslateValue(
   };
 }
 
-const Slide = React.forwardRef<HTMLDivElement, SlideProps>((props, ref) => {
+export default function Slide<C extends React.ElementType>(
+  props: SlideProps<C>
+) {
   const {
     children,
+    component = 'div',
+    className,
+    componentProps,
     direction = 'down',
     duration: durationProp,
     delay,
-    in: inProp,
-    immediate,
+    in: visible = false,
     onEnter,
     onEntered,
     onExit,
     onExited,
     style,
+    keepMounted = false,
+    propagationEvent,
     ...rest
   } = props;
 
   const nodeRef = React.useRef<HTMLElement>(null);
-  const handleRef = useForkRef(nodeRef, ref);
 
-  const onStart = useEventCallback(() => {
-    if (inProp) {
+  const [isExited, setExited] = React.useState(false);
+
+  const handleStart = useEventCallback(() => {
+    if (visible) {
+      setExited(false);
       onEnter?.();
     } else {
       onExit?.();
     }
   });
 
-  const onRest = useEventCallback(() => {
-    if (inProp) {
+  const handleRest = useEventCallback(() => {
+    if (visible) {
       onEntered?.();
     } else {
+      setExited(true);
       onExited?.();
     }
   });
 
-  const [styles, api] = useSpring(() => {
-    return {
-      x: 0,
-      y: 0,
-      cancel: true,
-      onStart,
-      onRest
-    };
+  const transitions = useTransition(visible, {
+    delay,
+    expires: !keepMounted,
+    config: springConfig({ in: visible, duration: durationProp }),
+    reverse: visible,
+
+    enter: (item) => async (next, cancel) => {
+      const { current: node } = nodeRef;
+      if (node) {
+        const state = getTranslateValue(direction, node);
+
+        node.style.transform = `translate(${state.x}px, ${state.y}px)`;
+        await next(state);
+        await next({ x: 0, y: 0, visibility: 'unset' });
+      }
+    },
+
+    leave: (item) => async (next, cancel) => {
+      const { current: node } = nodeRef;
+      if (node) {
+        await next(getTranslateValue(direction, node));
+      }
+    },
+
+    onStart: handleStart,
+    onRest: handleRest
   });
 
-  React.useEffect(() => {
-    const { current: node } = nodeRef;
+  const AnimatedBox = React.useMemo(() => animated(component), [component]);
+  const rootProps = { ...rest, ...componentProps } as any;
 
-    if (node) {
-      api.start({
-        from: getTranslateValue(direction, node),
-        to: { x: 0, y: 0 },
-        reverse: !inProp,
-        delay,
-        immediate,
-        config: springConfig({ in: inProp, duration: durationProp })
-      });
-    }
-  }, [inProp, delay, immediate, durationProp]);
-
-  return (
-    <animated.div style={{ ...style, ...styles }} ref={handleRef} {...rest}>
-      {children}
-    </animated.div>
+  return transitions(
+    (styles, item) =>
+      item &&
+      withStopPropagation(
+        propagationEvent,
+        <AnimatedBox
+          {...rootProps}
+          hidden={isExited}
+          className={css(className, rootProps?.className)}
+          style={{ ...style, ...styles }}
+          ref={mergedRef(nodeRef, rootProps.ref)}
+        >
+          {children}
+        </AnimatedBox>
+      )
   );
-});
-
-export default Slide;
+}

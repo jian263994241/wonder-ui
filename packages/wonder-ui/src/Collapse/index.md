@@ -4,9 +4,9 @@ toc: menu
 nav:
   path: /components
 group:
-  path: /data-display
-  title: 数据展示
-  order: 4
+  path: /transition
+  title: 过度效果
+  order: 5
 ---
 # Collapse 折叠
 
@@ -28,6 +28,10 @@ group:
 ### 水平方向折叠
 
 <code src="./demo/demo3.tsx"></code>
+
+### 折叠列表
+
+<code src="../List/demo/demo2.tsx"></code>
 
 <API src="./Collapse.tsx" ></API>
 

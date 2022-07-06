@@ -1,17 +1,23 @@
 import * as React from 'react';
-import { animated, useSpring } from '@react-spring/web';
-import { springConfig, TransitionBaseProps } from '../styles/transitions';
+import { animated, useTransition } from '@react-spring/web';
+import { css, withStopPropagation } from '@wonder-ui/utils';
+import { springConfig, TransitionProps } from '../styles/transitions';
 import { useEventCallback } from '@wonder-ui/hooks';
 
-export interface FadeProps extends TransitionBaseProps {}
+export interface FadeProps<C extends React.ElementType = React.ElementType>
+  extends TransitionProps<C> {}
 
-const Fade = React.forwardRef<HTMLDivElement, FadeProps>((props, ref) => {
+export default function Fade<C extends React.ElementType>(props: FadeProps<C>) {
   const {
+    className,
     children,
+    component = 'div',
+    componentProps,
     duration: durationProp,
     delay,
-    in: inProp,
-    immediate,
+    in: visible = false,
+    keepMounted = false,
+    propagationEvent,
     style,
     onEnter,
     onEntered,
@@ -20,51 +26,54 @@ const Fade = React.forwardRef<HTMLDivElement, FadeProps>((props, ref) => {
     ...rest
   } = props;
 
-  const onStart = useEventCallback(() => {
-    if (inProp) {
+  const [isExited, setExited] = React.useState(!visible);
+
+  const handleStart = useEventCallback(() => {
+    if (visible) {
+      setExited(false);
       onEnter?.();
     } else {
       onExit?.();
     }
   });
 
-  const onRest = useEventCallback(() => {
-    if (inProp) {
+  const handleRest = useEventCallback(() => {
+    if (visible) {
       onEntered?.();
     } else {
+      setExited(true);
       onExited?.();
     }
   });
 
-  const [styles, api] = useSpring(() => {
-    return { cancel: true, opacity: 0, onStart, onRest };
+  const transitions = useTransition(visible, {
+    delay,
+    expires: !keepMounted,
+    config: springConfig({ in: visible, duration: durationProp }),
+    reverse: visible,
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    onStart: handleStart,
+    onRest: handleRest
   });
 
-  React.useEffect(() => {
-    api.start({
-      opacity: inProp ? 1 : 0,
-      delay,
-      immediate,
-      config: springConfig({ in: inProp, duration: durationProp })
-    });
-  }, [inProp, delay, immediate, durationProp]);
+  const AnimatedBox = React.useMemo(() => animated(component), [component]);
+  const rootProps = { ...rest, ...componentProps } as any;
 
-  return (
-    <animated.div
-      style={{
-        ...style,
-        opacity: styles.opacity,
-        //@ts-expect-error
-        display: styles.opacity.to((o) => {
-          return o === 0 ? 'none' : style?.display;
-        })
-      }}
-      ref={ref}
-      {...rest}
-    >
-      {children}
-    </animated.div>
+  return transitions(
+    (styles, item) =>
+      item &&
+      withStopPropagation(
+        propagationEvent,
+        <AnimatedBox
+          {...rootProps}
+          hidden={isExited}
+          className={css(className, rootProps.className)}
+          style={{ ...style, ...rootProps.style, ...styles }}
+        >
+          {children}
+        </AnimatedBox>
+      )
   );
-});
-
-export default Fade;
+}
