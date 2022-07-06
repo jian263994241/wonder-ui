@@ -1,6 +1,7 @@
 import * as React from 'react';
 import DialogContent from '../DialogContent';
-import Modal, { ModalProps } from '../Modal';
+import Grow from '../Grow/Grow';
+import Modal from '../Modal';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { createChainedFunction, css } from '@wonder-ui/utils';
@@ -11,7 +12,7 @@ import { useControlled } from '@wonder-ui/hooks';
 const DialogRoot = styled(Modal, {
   name: 'WuiDialog',
   slot: 'Root'
-})<ModalProps>(({ theme }) => ({
+})(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -59,28 +60,30 @@ const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((inProps, ref) => {
           )
         })}
       <DialogRoot
+        {...ModalProps}
+        hasTransition
         visible={visible}
         theme={theme}
         className={css(classes.root, className)}
-        // BackdropProps={{ duration: transitionDuration, ...ModalProps.BackdropProps }}
-        {...ModalProps}
         ref={ref}
+        // BackdropProps={{ duration: transitionDuration, ...ModalProps.BackdropProps }}
       >
-        <DialogContent
-          {...rest}
-          in={visible}
-          classes={contentClasses}
-          className={classes.content}
-          buttonsVertical={buttonsVertical}
+        <Grow
           style={{ marginLeft: 10, marginRight: 10 }}
-          buttons={buttons.map((props) => ({
-            ...props,
-            onClick: createChainedFunction(
-              toogleVisibleIfUncontroled,
-              props.onClick
-            )
-          }))}
-        ></DialogContent>
+          component={DialogContent}
+          componentProps={{
+            buttonsVertical,
+            buttons: buttons.map((props) => ({
+              ...props,
+              onClick: createChainedFunction(
+                toogleVisibleIfUncontroled,
+                props.onClick
+              )
+            })),
+            classes: contentClasses,
+            ...rest
+          }}
+        />
       </DialogRoot>
     </React.Fragment>
   );

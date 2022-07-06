@@ -38,6 +38,10 @@ export interface BackdropProps {
    */
   duration?: TransitionDuration;
   /**
+   * 延迟出现
+   */
+  delay?: number;
+  /**
    * 点击事件
    */
   onClick?: React.MouseEventHandler<HTMLDivElement>;

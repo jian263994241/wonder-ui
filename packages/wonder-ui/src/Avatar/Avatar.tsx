@@ -22,10 +22,15 @@ const AvatarRoot = styled(Image, {
   name: COMPONENT_NAME,
   slot: 'Root'
 })<StyleProps>(({ styleProps }) => ({
+  ...cssVars.style({
+    size: styleProps.size,
+    borderRadius: 4
+  }),
+
   ...imageCssVars.style({
-    width: cssVars.toVar('size', styleProps.size!),
-    height: cssVars.toVar('size', styleProps.size!),
-    roundedRadius: cssVars.toVar('borderRadius', 4)
+    width: cssVars.value('size'),
+    height: cssVars.value('size'),
+    roundedRadius: cssVars.value('borderRadius')
   })
 }));
 
@@ -36,16 +41,17 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>((inProps, ref) => {
     fallback = <Fallback />,
     size = 44,
     className,
+    variant = 'rounded',
     ...rest
   } = props;
 
-  const styleProps = { ...props, fit, fallback, size };
+  const styleProps = { ...props, fit, fallback, size, variant };
   const classes = useClasses({ styleProps });
 
   return (
     <AvatarRoot
       fit={fit}
-      variant="rounded"
+      variant={variant}
       styleProps={styleProps}
       className={css(classes.root, className)}
       ref={ref}

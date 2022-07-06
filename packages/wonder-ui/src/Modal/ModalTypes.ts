@@ -18,7 +18,7 @@ export interface ModalProps {
   /**
    * 子节点
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
   /**
    * Css api
    */

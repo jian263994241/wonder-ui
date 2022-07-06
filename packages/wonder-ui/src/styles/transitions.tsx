@@ -1,4 +1,5 @@
 import BezierEasing from 'bezier-easing';
+import { PropagationEvent } from '@wonder-ui/utils';
 
 export const easing = {
   // This is the most common easing curve.
@@ -39,10 +40,10 @@ export const duration = {
 
 export type TransitionDuration = number | { enter: number; exit: number };
 
-export interface TransitionBaseProps
-  extends React.AriaAttributes,
-    React.DOMAttributes<HTMLDivElement> {
-  role?: string;
+export interface TransitionProps<
+  C extends React.ElementType = React.ElementType,
+  P = React.ComponentProps<C>
+> {
   /**
    * className
    */
@@ -52,25 +53,41 @@ export interface TransitionBaseProps
    */
   children?: React.ReactNode;
   /**
+   * Element
+   * @default 'div'
+   */
+  component?: C;
+  /**
+   * Element props
+   */
+  componentProps?: P;
+  /**
+   * 组件保持挂载, 退出时不销毁
+   * @default false
+   */
+  keepMounted?: boolean;
+  /**
    * style
    */
   style?: React.CSSProperties;
   /**
-   * 过度时间 ms
+   * 持续时间毫秒(ms)
    */
   duration?: TransitionDuration;
   /**
-   * 延迟
+   * 动画开始前的延迟毫秒(ms)
    */
   delay?: number;
   /**
-   * 显示
+   * 是否显示
+   * @default false
    */
   in?: boolean;
   /**
-   * 立即完成过度
+   * 阻止某些事件的冒泡
+   * @default ['click']
    */
-  immediate?: boolean;
+  propagationEvent?: PropagationEvent[];
   /**
    * transition event
    */
@@ -91,25 +108,36 @@ export interface TransitionBaseProps
 
 export const getDuration = (
   durationProp?: TransitionDuration,
-  enter?: boolean
+  visible?: boolean
 ) => {
+  let timeout = {
+    enter: duration.enteringScreen,
+    exit: duration.leavingScreen
+  };
+
   if (typeof durationProp === 'number') {
-    return durationProp;
+    Object.assign(timeout, {
+      enter: durationProp,
+      exit: durationProp
+    });
   }
 
   if (typeof durationProp === 'object') {
-    return enter
-      ? durationProp.enter ?? duration.enteringScreen
-      : durationProp.exit ?? duration.leavingScreen;
+    Object.assign(timeout, durationProp);
   }
 
-  return enter ? duration.enteringScreen : duration.leavingScreen;
+  return visible ? duration.enteringScreen : duration.leavingScreen;
 };
 
-export const springConfig = (props: TransitionBaseProps) => {
+export const springConfig = (props: {
+  duration?: TransitionDuration;
+  in?: boolean;
+  easing?: BezierEasing.EasingFunction;
+}) => {
   return {
     duration: getDuration(props.duration, props.in),
-    easing: props.in ? easingFunction.easeOut : easingFunction.sharp
+    easing:
+      props.easing ?? (props.in ? easingFunction.easeOut : easingFunction.sharp)
   };
 };
 

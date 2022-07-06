@@ -12,7 +12,7 @@ import {
   IRectangle
 } from '@wonder-ui/utils';
 import { dropdownMenuClasses, useClasses } from './DropdownMenuClasses';
-import { useForkRef, useSafeState, usePrevious } from '@wonder-ui/hooks';
+import { useForkRef, useSafeState } from '@wonder-ui/hooks';
 import Collapse from '../Collapse';
 
 const DropdownMenuRoot = styled('div', {
@@ -45,23 +45,15 @@ const DropdownMenuBar = styled('div', {
   }
 }));
 
-const DropdownMenuItemOverlay = styled(Collapse, {
+const DropdownMenuItemOverlay = styled('div', {
   name: 'WuiDropdownMenuItem',
-  slot: 'Overlay',
-  shouldForwardProp: () => true
-})(({ theme, in: inProp }) => ({
+  slot: 'Overlay'
+})(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   width: '100%',
   position: 'absolute',
   top: 0,
-  left: 0,
-  ...(inProp
-    ? {
-        zIndex: 2
-      }
-    : {
-        zIndex: 1
-      })
+  left: 0
 }));
 
 const DropdownMenuItemOverlayWrapper = styled('div', {
@@ -152,21 +144,24 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
     const overlays = React.Children.map(childrenProp, (child, index) => {
       if (React.isValidElement(child) && child.props.overlay) {
         return (
-          <DropdownMenuItemOverlay
-            className={classes.overlay}
+          <Collapse
             key={index}
-            ref={(node) => {
-              allowScrollOnElement(node);
-            }}
+            className={classes.overlay}
             in={currentIndex === index}
             immediate={currentIndex != index && currentIndex != -1}
             onEnter={handleEnter}
             onExited={handleExited}
+            component={DropdownMenuItemOverlay}
+            componentProps={{
+              ref: (node) => {
+                allowScrollOnElement(node);
+              }
+            }}
           >
             {typeof child.props.overlay === 'function'
               ? child.props.overlay({ onClose })
               : child.props.overlay}
-          </DropdownMenuItemOverlay>
+          </Collapse>
         );
       }
       return null;
@@ -202,6 +197,8 @@ const DropdownMenu = React.forwardRef<HTMLElement, DropdownMenuProps>(
             visible={currentIndex != -1}
             onClick={onClose}
             style={backdropStyle}
+            delay={16}
+            // style={{ position: 'absolute', height: '100vh' }}
           />
           {overlays}
         </DropdownMenuItemOverlayWrapper>

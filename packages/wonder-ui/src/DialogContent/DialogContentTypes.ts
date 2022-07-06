@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { TypographyProps } from '../Typography';
 import { dialogContentClasses } from './DialogContentClasses';
-import type { GrowProps } from '../Grow';
 
 export type DialogContentClassesType = typeof dialogContentClasses;
 
@@ -14,7 +13,10 @@ export interface DialogButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export interface DialogContentProps extends Omit<GrowProps, 'title'> {
+export interface DialogContentProps {
+  className?: string;
+  children?: React.ReactNode;
+  style?: React.CSSProperties;
   /**
    * 按钮垂直排列
    */

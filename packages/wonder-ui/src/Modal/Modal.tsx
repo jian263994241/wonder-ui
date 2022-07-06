@@ -85,10 +85,7 @@ const Modal = React.forwardRef<HTMLDivElement, ModalProps>((inProps, ref) => {
   const modalRef = React.useRef<Element | null>(null);
   const handleRef = useForkRef(modalRef, ref);
 
-  const hasTransition =
-    hasTransitionProp != undefined
-      ? hasTransitionProp
-      : getHasTransition(props);
+  const hasTransition = hasTransitionProp ?? getHasTransition(props);
 
   const getDoc = () => ownerDocument(mountNodeRef.current);
   const getModal = () => {

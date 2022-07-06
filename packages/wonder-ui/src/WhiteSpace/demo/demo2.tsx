@@ -21,7 +21,7 @@ export default () => (
       <ListItem>
         <ListItemText>Item 2</ListItemText>
       </ListItem>
-      <WhiteSpace component="li" />
+      <WhiteSpace />
       <ListItem>
         <ListItemText>Item 3</ListItemText>
       </ListItem>

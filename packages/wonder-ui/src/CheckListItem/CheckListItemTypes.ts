@@ -25,7 +25,7 @@ export interface CheckListItemProps {
   /**
    * 小图
    */
-  media?: React.ReactNode;
+  prefix?: React.ReactNode;
   /**
    * 主要文字
    */

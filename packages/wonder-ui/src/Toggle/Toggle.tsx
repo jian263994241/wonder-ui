@@ -4,6 +4,8 @@ import useThemeProps from '../styles/useThemeProps';
 import { toggleClasses, ToggleStyleProps, useClasses } from './ToggleClasses';
 import { useControlled, useEventCallback } from '@wonder-ui/hooks';
 import { css } from '@wonder-ui/utils';
+
+export const COMPONENT_NAME = 'WuiToggle';
 export interface ToggleProps
   extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> {
   /**
@@ -75,7 +77,7 @@ export interface ToggleProps
 }
 
 const ToggleRoot = styled('label', {
-  name: 'WuiSwitch',
+  name: COMPONENT_NAME,
   slot: 'Root'
 })({
   alignSelf: 'center',
@@ -87,17 +89,18 @@ const ToggleRoot = styled('label', {
   verticalAlign: 'middle',
   zIndex: 0,
   cursor: 'pointer',
+  WebkitTapHighlightColor: 'transparent',
   [`&.${toggleClasses.disabled}`]: {
     pointerEvents: 'none'
   }
 });
 
-const ToggleInput = styled('input', { name: 'WuiSwitch', slot: 'Input' })({
+const ToggleInput = styled('input', { name: COMPONENT_NAME, slot: 'Input' })({
   display: 'none'
 });
 
 const ToggleIcon = styled('span', {
-  name: 'WuiSwitch',
+  name: COMPONENT_NAME,
   slot: 'Icon'
 })<{ styleProps: ToggleStyleProps }>(
   ({ theme }) => {
@@ -111,6 +114,7 @@ const ToggleIcon = styled('span', {
       transition: theme.transitions.create(['background-color']),
       boxSizing: 'border-box',
       display: 'block',
+
       '&:before': {
         boxSizing: 'border-box',
         content: '""',
@@ -139,7 +143,7 @@ const ToggleIcon = styled('span', {
   },
   ({ theme, styleProps }) => {
     const { switchWidth, switchHeight } = {
-      medium: { switchWidth: 52, switchHeight: 32 },
+      medium: { switchWidth: 50, switchHeight: 30 },
       small: { switchWidth: 40, switchHeight: 20 }
     }[styleProps.size!];
 
@@ -190,7 +194,7 @@ const ToggleIcon = styled('span', {
 );
 
 const Toggle = React.forwardRef<HTMLElement, ToggleProps>((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiToggle' });
+  const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
     checked: checkedProp,
     checkedIcon,

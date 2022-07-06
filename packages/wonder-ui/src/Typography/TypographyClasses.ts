@@ -4,7 +4,7 @@ import {
   generateUtilityClasses,
   upperFirst
 } from '@wonder-ui/utils';
-import type { TypographyClasses, TypographyProps } from './TypographyTypes';
+import type { TypographyProps } from './TypographyTypes';
 
 export const defaultVariantMapping = {
   h1: 'h1',
@@ -20,40 +20,40 @@ export const defaultVariantMapping = {
   inherit: 'div'
 };
 
-export const typographyClasses: TypographyClasses = generateUtilityClasses(
-  'WuiTypography',
-  [
-    'root',
-    'h1',
-    'h2',
-    'h3',
-    'h4',
-    'h5',
-    'h6',
-    'subtitle1',
-    'subtitle2',
-    'body1',
-    'body2',
-    'inherit',
-    'inline',
-    'button',
-    'caption',
-    'overline',
-    'alignLeft',
-    'alignRight',
-    'alignCenter',
-    'alignJustify',
-    'colorPrimary',
-    'colorSecondary',
-    'colorTextPrimary',
-    'colorTextSecondary',
-    'colorError',
-    'noWrap',
-    'gutterBottom',
-    'paragraph',
-    'lineClamp'
-  ]
-);
+export const typographyClasses = generateUtilityClasses('WuiTypography', [
+  'root',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'subtitle1',
+  'subtitle2',
+  'body1',
+  'body2',
+  'inherit',
+  'inline',
+  'button',
+  'caption',
+  'overline',
+  'alignLeft',
+  'alignRight',
+  'alignCenter',
+  'alignJustify',
+  'colorPrimary',
+  'colorSecondary',
+  'colorTextPrimary',
+  'colorTextSecondary',
+  'colorError',
+  'colorWarning',
+  'noWrap',
+  'gutterBottom',
+  'paragraph',
+  'lineClamp'
+]);
+
+export type TypographyClassesType = typeof typographyClasses;
 
 export const useClasses = (styleProps: TypographyProps) => {
   const {

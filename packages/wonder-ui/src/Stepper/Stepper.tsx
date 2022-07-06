@@ -110,6 +110,7 @@ const commomButtonStyles = (theme: Theme): CSSObject => ({
   border: 0,
   backgroundColor: theme.palette.background.default,
   opacity: 1,
+  cursor: 'pointer',
   transition: theme.transitions.create('opacity', {
     duration: theme.transitions.duration.shortest
   }),

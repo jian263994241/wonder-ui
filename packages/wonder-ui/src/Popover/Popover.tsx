@@ -6,7 +6,7 @@ import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { css, debounce, ownerDocument, ownerWindow } from '@wonder-ui/utils';
 import { popoverClasses, useClasses } from './PopoverClasses';
-import { TransitionBaseProps } from '../styles/transitions';
+import { TransitionDuration } from '../styles/transitions';
 import { useForkRef } from '@wonder-ui/hooks';
 
 type Rect = { width: number; height: number };
@@ -129,7 +129,7 @@ export interface PopoverProps extends Omit<ModalProps, 'children'> {
   /**
    * 动画时间
    */
-  duration?: TransitionBaseProps['duration'];
+  duration?: TransitionDuration;
   /**
    * 是否显示
    */
@@ -344,7 +344,7 @@ const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
       BackdropProps={{ invisible: true }}
       container={container}
       visible={visible}
-      ref={ref}
+      // ref={ref}
       {...rest}
       classes={{ root: css(classes.root, className) }}
     >

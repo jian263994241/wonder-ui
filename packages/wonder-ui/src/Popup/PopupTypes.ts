@@ -41,10 +41,6 @@ export interface PopupProps
    * ref被占用,原 `ref -> htmlRef`
    */
   htmlRef?: React.ForwardedRef<HTMLDivElement>;
-  /**
-   * PopupAction
-   */
-  ref?: React.ForwardedRef<PopupAction>;
 }
 
 export interface PopupAction {

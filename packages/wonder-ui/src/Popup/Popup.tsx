@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Modal from '../Modal';
-import Page, { PageProps } from '../Page';
+import Page from '../Page';
 import Slide from '../Slide';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { COMPONENT_NAME } from './PopupClasses';
 import { composeClasses } from '@wonder-ui/utils';
-import { css } from '@wonder-ui/utils';
+import { css, allPropagationEvent } from '@wonder-ui/utils';
 import { useControlled } from '@wonder-ui/hooks';
 import type { PopupAction, PopupProps, PopupStyleProps } from './PopupTypes';
 
@@ -35,7 +35,7 @@ const PopupRoot = styled(Modal, {
   }
 }));
 
-const PopupPage = styled(Slide, {
+const PopupPage = styled(Page, {
   name: COMPONENT_NAME,
   slot: 'Page'
 })<{ styleProps: PopupStyleProps }>(({ theme, styleProps }) => ({
@@ -108,24 +108,23 @@ const Popup = React.forwardRef<PopupAction, PopupProps>((inProps, ref) => {
       onBackdropClick={handleBackdropClick}
       keepMounted={keepMounted}
     >
-      <PopupPage
+      <Slide
         in={visible}
-        styleProps={styleProps}
         direction="up"
+        propagationEvent={allPropagationEvent}
         onExited={onExited}
-        component={Page}
-        componentProps={
-          {
-            className: classes.page,
-            showCloseButton: true,
-            title,
-            onClose: handleClose,
-            ...PageProps
-          } as PageProps
-        }
+        component={PopupPage}
+        componentProps={{
+          className: classes.page,
+          showCloseButton: true,
+          title,
+          onClose: handleClose,
+          styleProps,
+          ...PageProps
+        }}
       >
         {children}
-      </PopupPage>
+      </Slide>
     </PopupRoot>
   );
 });

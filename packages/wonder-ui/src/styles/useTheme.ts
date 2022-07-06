@@ -11,11 +11,6 @@ function isObjectEmpty(obj: object) {
 export function useTheme() {
   const contextTheme = React.useContext(ThemeContext);
 
-  if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    React.useDebugValue(contextTheme);
-  }
-
   return !contextTheme || isObjectEmpty(contextTheme)
     ? getTheme()
     : contextTheme;

@@ -3,12 +3,7 @@ import Fade from '../Fade';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import {
-  css,
-  createCssVars,
-  generateUtilityClasses,
-  withStopPropagation
-} from '@wonder-ui/utils';
+import { createCssVars, css, generateUtilityClasses } from '@wonder-ui/utils';
 import { useEventListener, useForkRef } from '@wonder-ui/hooks';
 import type { BackdropProps } from './BackdropTypes';
 
@@ -19,9 +14,9 @@ export const backdropClasses = generateUtilityClasses(COMPONENT_NAME, [
   'invisible'
 ]);
 
-const cssVars = createCssVars(COMPONENT_NAME, ['zIndex']);
+const cssVars = createCssVars(COMPONENT_NAME, ['zIndex', 'color']);
 
-const BackdropRoot = styled(Fade, {
+const BackdropRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })<{ styleProps: BackdropProps }>(({ theme, styleProps }) => ({
@@ -35,10 +30,13 @@ const BackdropRoot = styled(Fade, {
   top: 0,
   left: 0,
   touchAction: 'none',
-  backgroundColor: `var(--backdrop-color, ${alpha(
-    theme.palette.common[styleProps.color!] || theme.palette.common.black,
-    styleProps.opacity!
-  )})`,
+  backgroundColor: cssVars.value(
+    'color',
+    alpha(
+      theme.palette.common[styleProps.color!] || theme.palette.common.black,
+      styleProps.opacity!
+    )
+  ),
   WebkitTapHighlightColor: 'transparent',
   [`&.${backdropClasses.invisible}`]: {
     backgroundColor: 'transparent'
@@ -56,6 +54,7 @@ const Backdrop = React.forwardRef<HTMLDivElement, BackdropProps>(
       invisible = false,
       visible,
       duration,
+      delay,
       style,
       theme,
       ...rest
@@ -76,20 +75,24 @@ const Backdrop = React.forwardRef<HTMLDivElement, BackdropProps>(
       opacity
     };
 
-    return withStopPropagation(
-      <BackdropRoot
-        styleProps={styleProps}
+    return (
+      <Fade
         in={visible}
         className={css(backdropClasses.root, className, {
           [backdropClasses.invisible]: invisible
         })}
-        style={style}
         duration={duration}
-        ref={handleRef}
-        {...rest}
+        delay={delay}
+        style={style}
+        component={BackdropRoot}
+        componentProps={{
+          styleProps,
+          ref: handleRef,
+          ...rest
+        }}
       >
         {children}
-      </BackdropRoot>
+      </Fade>
     );
   }
 );

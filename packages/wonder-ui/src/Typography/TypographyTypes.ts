@@ -1,4 +1,5 @@
 import { TypographyVariants } from '../styles/theme/createTypography';
+import { TypographyClassesType } from './TypographyClasses';
 
 type TypographyVariants2 = Pick<
   TypographyVariants,
@@ -14,39 +15,6 @@ type TypographyVariants2 = Pick<
   | 'body2'
 >;
 
-export type TypographyClasses = Record<
-  | 'root'
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
-  | 'subtitle1'
-  | 'subtitle2'
-  | 'body1'
-  | 'body2'
-  | 'inherit'
-  | 'inline'
-  | 'button'
-  | 'caption'
-  | 'overline'
-  | 'alignLeft'
-  | 'alignRight'
-  | 'alignCenter'
-  | 'alignJustify'
-  | 'colorPrimary'
-  | 'colorSecondary'
-  | 'colorTextPrimary'
-  | 'colorTextSecondary'
-  | 'colorError'
-  | 'noWrap'
-  | 'gutterBottom'
-  | 'paragraph'
-  | 'lineClamp',
-  string
->;
-
 export interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * @description 对齐
@@ -56,7 +24,7 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * class
    */
-  classes?: Partial<TypographyClasses>;
+  classes?: Partial<TypographyClassesType>;
   /**
    * @description 颜色
    * @default inherit
@@ -67,7 +35,8 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
     | 'secondary'
     | 'textPrimary'
     | 'textSecondary'
-    | 'error';
+    | 'error'
+    | 'warning';
   /**
    * Root element
    */

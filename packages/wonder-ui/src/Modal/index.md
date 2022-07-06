@@ -23,9 +23,7 @@ group:
 <code src="./demo/demo1.tsx"></code>
 
 
-### 自定义浮层
-
-借助 `Modal` 组件创建一个自己的Modal框:
+### 过度动画
 
 <code src="./demo/demo2.tsx"></code>
 

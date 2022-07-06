@@ -34,7 +34,7 @@ const ContentBlockRoot = styled('div', {
   slot: 'Root',
   name: COMPONENT_NAME
 })(({ theme }) => {
-  const spacing = theme.spacing(2);
+  const spacing = 12;
 
   return cssVars.style({
     titltMarginTop: 8,

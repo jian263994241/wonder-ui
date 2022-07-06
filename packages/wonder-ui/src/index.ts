@@ -112,6 +112,12 @@ export * from './Fade';
 export { default as FocusZone } from './FocusZone';
 export * from './FocusZone';
 
+export { default as Form, useForm, useWatch } from './Form';
+export * from './Form';
+
+export { default as FormItem } from './FormItem';
+export * from './FormItem';
+
 export { default as Grow } from './Grow';
 export * from './Grow';
 
@@ -130,8 +136,8 @@ export * from './Input';
 export { default as InputNumber } from './InputNumber';
 export * from './InputNumber';
 
-export { default as Label } from './Label';
-export * from './Label';
+export { default as FormLabel } from './FormLabel';
+export * from './FormLabel';
 
 export { default as LinearProgress } from './LinearProgress';
 export * from './LinearProgress';

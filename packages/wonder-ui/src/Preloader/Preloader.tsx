@@ -47,7 +47,7 @@ export type PreloaderActions = {
   hide: () => void;
 };
 
-const Preloader = React.forwardRef<HTMLElement, PreloaderProps>(
+const Preloader = React.forwardRef<HTMLDivElement, PreloaderProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiPreloader' });
     const {

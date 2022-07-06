@@ -1,12 +1,12 @@
 ---
-mobile: true
+mobile: false
 toc: menu
 nav:
   path: /components
 group:
-  path: /layout
-  title: 布局
-  order: 1
+  path: /transition
+  title: 过度效果
+  order: 5
 ---
 
 # RouteTransition 页面过度

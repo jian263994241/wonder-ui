@@ -47,7 +47,7 @@ export interface BackTopProps {
   /**
    * 点击事件
    */
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 function scrollTo(element: Element | Window, to: number, duration: number) {
@@ -79,7 +79,7 @@ function scrollTo(element: Element | Window, to: number, duration: number) {
   }
 }
 
-const BackTopRoot = styled(Fade, {
+const BackTopRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })(({ theme }) => ({
@@ -117,7 +117,7 @@ const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
   const handleRef = useForkRef(rootRef, ref);
   const scrollElementRef = useScrollParent(rootRef);
 
-  const handleClick = useEventCallback((e) => {
+  const handleClick = useEventCallback((e: React.MouseEvent) => {
     scrollTo(scrollElementRef.current!, 0, duration);
     onClick?.(e);
   });
@@ -135,15 +135,15 @@ const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
 
   return (
     <BackTopRoot
-      in={visible}
+      ref={handleRef}
       className={css(backTopClasses.root, className)}
       style={style}
-      duration={theme.transitions.duration.shortest}
       onClick={handleClick}
-      ref={handleRef}
       {...rest}
     >
-      {children}
+      <Fade in={visible} propagationEvent={[]}>
+        {children}
+      </Fade>
     </BackTopRoot>
   );
 });

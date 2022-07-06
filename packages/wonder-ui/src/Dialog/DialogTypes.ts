@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   DialogContentClassesType,
   DialogContentProps
@@ -7,7 +8,6 @@ import { ModalProps } from '../Modal';
 export interface DialogProps
   extends Omit<DialogContentProps, 'classes' | 'children'> {
   ModalProps?: Partial<ModalProps>;
-
   /**
    * dialog content classes
    */
@@ -15,7 +15,7 @@ export interface DialogProps
   /**
    * 触发按钮
    */
-  children?: JSX.Element;
+  children?: React.ReactElement;
   /**
    * 是否显示
    */

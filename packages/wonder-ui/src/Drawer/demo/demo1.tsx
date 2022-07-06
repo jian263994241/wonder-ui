@@ -1,36 +1,47 @@
 import * as React from 'react';
-import { Button, Drawer, DrawerProps, Page, Space } from '@wonder-ui/core';
-import { useToggle } from '@wonder-ui/hooks';
+import {
+  Drawer,
+  DrawerProps,
+  List,
+  ListHeader,
+  ListItem,
+  Page
+} from '@wonder-ui/core';
 
 type Anchor = DrawerProps['anchor'];
 
 export default () => {
-  const [visible, { toggle: toggleVisible }] = useToggle(false);
-  const [anchor, { toggle }] = useToggle<Anchor>('left');
+  const [visible, setVisible] = React.useState(false);
+  const [anchor, setAnchor] = React.useState<Anchor>('left');
 
   const open = (anchor: Anchor) => {
-    toggle(anchor);
-    toggleVisible();
+    setAnchor(anchor);
+    setVisible(true);
   };
 
   return (
     <React.Fragment>
-      <Space>
-        <Button variant="contained" onClick={() => open('left')}>
-          左
-        </Button>
-        <Button variant="contained" onClick={() => open('right')}>
-          右
-        </Button>
-        <Button variant="contained" onClick={() => open('top')}>
-          上
-        </Button>
-        <Button variant="contained" onClick={() => open('bottom')}>
-          下
-        </Button>
-      </Space>
+      <List>
+        <ListHeader>基本使用</ListHeader>
+        <ListItem arrow="horizontal" onClick={() => open('left')}>
+          弹出(左)
+        </ListItem>
+        <ListItem arrow="horizontal" onClick={() => open('right')}>
+          弹出(右)
+        </ListItem>
+        <ListItem arrow="horizontal" onClick={() => open('top')}>
+          弹出(上)
+        </ListItem>
+        <ListItem arrow="horizontal" onClick={() => open('bottom')}>
+          弹出(下)
+        </ListItem>
+      </List>
 
-      <Drawer anchor={anchor} visible={visible} onClose={() => toggleVisible()}>
+      <Drawer
+        anchor={anchor}
+        visible={visible}
+        onClose={() => setVisible(false)}
+      >
         <Page
           title="Basic Drawer"
           style={{

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  CheckList,
-  CheckListItem,
-  ContentBlock,
-  Avatar
-} from '@wonder-ui/core';
+import { CheckList, CheckListItem, Avatar } from '@wonder-ui/core';
 import { EmojiDizzyFill } from '@wonder-ui/icons';
 
 const image =
@@ -19,74 +14,63 @@ export default () => (
       } as React.CSSProperties
     }
   >
-    <ContentBlock title="基本使用">
-      <CheckList defaultValue={['B']}>
-        <CheckListItem value="A">A</CheckListItem>
-        <CheckListItem value="B">B</CheckListItem>
-        <CheckListItem value="C">C</CheckListItem>
-      </CheckList>
-    </ContentBlock>
+    <CheckList defaultValue={['B']} header="基本使用">
+      <CheckListItem value="A">A</CheckListItem>
+      <CheckListItem value="B">B</CheckListItem>
+      <CheckListItem value="C">C</CheckListItem>
+    </CheckList>
 
-    <ContentBlock title="多选">
-      <CheckList multiple defaultValue={['B', 'C']}>
-        <CheckListItem value="A">A</CheckListItem>
-        <CheckListItem value="B">B</CheckListItem>
-        <CheckListItem value="C">C</CheckListItem>
-      </CheckList>
-    </ContentBlock>
+    <CheckList multiple defaultValue={['B', 'C']} header="多选">
+      <CheckListItem value="A">A</CheckListItem>
+      <CheckListItem value="B">B</CheckListItem>
+      <CheckListItem value="C">C</CheckListItem>
+    </CheckList>
 
-    <ContentBlock title="完成显示">
-      <CheckList defaultValue={['A']}>
-        <CheckListItem
-          divider
-          value="A"
-          media={<Avatar src={image} />}
-          primary="Novalee Spicer A"
-          secondary="Deserunt dolor ea eaque eos"
-        />
-        <CheckListItem
-          divider
-          value="B"
-          media={<Avatar src={image} />}
-          primary="Novalee Spicer B"
-          secondary="Deserunt dolor ea eaque eos"
-        />
-        <CheckListItem
-          value="C"
-          media={<Avatar src={image} />}
-          primary="Novalee Spicer C"
-          secondary="Deserunt dolor ea eaque eos"
-        />
-      </CheckList>
-    </ContentBlock>
+    <CheckList defaultValue={['A']} header="完成显示">
+      <CheckListItem
+        divider
+        value="A"
+        prefix={<Avatar src={image} />}
+        primary="Novalee Spicer A"
+        secondary="Deserunt dolor ea eaque eos"
+      />
+      <CheckListItem
+        divider
+        value="B"
+        prefix={<Avatar src={image} />}
+        primary="Novalee Spicer B"
+        secondary="Deserunt dolor ea eaque eos"
+      />
+      <CheckListItem
+        value="C"
+        prefix={<Avatar src={image} />}
+        primary="Novalee Spicer C"
+        secondary="Deserunt dolor ea eaque eos"
+      />
+    </CheckList>
 
-    <ContentBlock title="整组禁用">
-      <CheckList disabled defaultValue={['A']}>
-        <CheckListItem value="A">A</CheckListItem>
-        <CheckListItem value="B">B</CheckListItem>
-        <CheckListItem value="C">C</CheckListItem>
-      </CheckList>
-    </ContentBlock>
+    <CheckList disabled defaultValue={['A']} header="整组禁用">
+      <CheckListItem value="A">A</CheckListItem>
+      <CheckListItem value="B">B</CheckListItem>
+      <CheckListItem value="C">C</CheckListItem>
+    </CheckList>
 
-    <ContentBlock title="局部禁用">
-      <CheckList defaultValue={['A']}>
-        <CheckListItem value="A">A</CheckListItem>
-        <CheckListItem value="B" disabled>
-          B
-        </CheckListItem>
-        <CheckListItem value="C">C</CheckListItem>
-      </CheckList>
-    </ContentBlock>
+    <CheckList defaultValue={['A']} header="局部禁用">
+      <CheckListItem value="A">A</CheckListItem>
+      <CheckListItem value="B" disabled>
+        B
+      </CheckListItem>
+      <CheckListItem value="C">C</CheckListItem>
+    </CheckList>
 
-    <ContentBlock title="自定义选中图标">
-      <CheckList
-        defaultValue={['B']}
-        activeIcon={<EmojiDizzyFill color="primary" fontSize="medium" />}
-      >
-        <CheckListItem value="A">A</CheckListItem>
-        <CheckListItem value="B">B</CheckListItem>
-        <CheckListItem value="C">C</CheckListItem>
-      </CheckList>
-    </ContentBlock>
+    <CheckList
+      defaultValue={['B']}
+      activeIcon={<EmojiDizzyFill color="primary" fontSize="medium" />}
+      header="自定义选中图标"
+    >
+      <CheckListItem value="A">A</CheckListItem>
+      <CheckListItem value="B">B</CheckListItem>
+      <CheckListItem value="C">C</CheckListItem>
+    </CheckList>
   </div>
 );

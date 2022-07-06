@@ -46,7 +46,7 @@ const ImageRoot = styled('div', {
     height: styleProps.height ?? 'auto',
     roundedRadius: styleProps.roundedRadius ?? 4
   }),
-  display: 'inline-flex',
+  display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   position: 'relative',

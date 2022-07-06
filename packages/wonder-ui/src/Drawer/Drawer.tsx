@@ -6,12 +6,12 @@ import useThemeProps from '../styles/useThemeProps';
 import { css } from '@wonder-ui/utils';
 import { drawerClasses, useClasses } from './DrawerClasses';
 import { Theme } from '../styles/createTheme';
-import { TransitionBaseProps } from '../styles/transitions';
+import { TransitionDuration, TransitionProps } from '../styles/transitions';
 
 export interface DrawerProps
   extends Pick<
-    TransitionBaseProps,
-    'onEnter' | 'onEntered' | 'onExit' | 'onExited'
+    TransitionProps,
+    'onEnter' | 'onEntered' | 'onExit' | 'onExited' | 'keepMounted'
   > {
   role?: string;
   /**
@@ -42,13 +42,9 @@ export interface DrawerProps
    */
   ModalProps?: Partial<ModalProps>;
   /**
-   * 保持节点存在
-   */
-  keepMounted?: ModalProps['keepMounted'];
-  /**
    * 过度动画时间
    */
-  transitionDuration?: TransitionBaseProps['duration'];
+  transitionDuration?: TransitionDuration;
 }
 
 const DrawerRoot = styled(Modal, {
@@ -59,10 +55,9 @@ const DrawerRoot = styled(Modal, {
   zIndex: theme.zIndex.drawer
 }));
 
-const DrawerPaper = styled(Slide, {
+const DrawerPaper = styled('div', {
   name: 'Drawer',
-  slot: 'Paper',
-  shouldForwardProp: () => true
+  slot: 'Paper'
 })(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
@@ -156,19 +151,20 @@ const Drawer = React.forwardRef<HTMLDivElement, DrawerProps>((inProps, ref) => {
       {...rest}
       {...ModalProps}
     >
-      <DrawerPaper
-        ref={ref}
+      <Slide
         in={visible}
-        direction={oppositeDirection[anchorInvariant]}
         duration={transitionDuration}
         className={classes.paper}
         onEnter={onEnter}
         onEntered={onEntered}
         onExit={onExit}
         onExited={onExited}
+        direction={oppositeDirection[anchorInvariant]}
+        component={DrawerPaper}
+        componentProps={{ ref }}
       >
         {children}
-      </DrawerPaper>
+      </Slide>
     </DrawerRoot>
   );
 });

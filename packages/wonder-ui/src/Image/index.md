@@ -25,7 +25,7 @@ group:
 ## CSS Variables
 
 ```css
-var(--wui-image-width, 100px)
-var(--wui-image-height, 100px)
-var(--wui-image-rounded-radius, 4px)
+--wui-image-width: auto;
+--wui-image-height: auto;
+--wui-image-rounded-radius: 4px;
 ```

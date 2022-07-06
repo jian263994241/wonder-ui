@@ -17,6 +17,6 @@ group:
 ## CSS Variables
 
 ```css
-var(--wui-avatar-size, 44px)
-var(--wui-avatar-border-radius, 4px)
+--wui-avatar-size: 44px;
+--wui-avatar-border-radius: 4px;
 ```

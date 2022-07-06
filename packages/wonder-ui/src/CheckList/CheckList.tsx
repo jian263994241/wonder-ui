@@ -1,13 +1,14 @@
 import * as React from 'react';
 import CheckListContext from './CheckListContext';
 import List from '../List';
+import ListHeader from '../ListHeader';
 import useThemeProps from '../styles/useThemeProps';
 import { useControlled } from '@wonder-ui/hooks';
 import type { CheckListProps } from './CheckListTypes';
 
 const COMPONENT_NAME = 'WuiCheckList';
 
-const CheckList = React.forwardRef<HTMLUListElement, CheckListProps>(
+const CheckList = React.forwardRef<HTMLDivElement, CheckListProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
@@ -16,6 +17,7 @@ const CheckList = React.forwardRef<HTMLUListElement, CheckListProps>(
       defaultValue = [],
       disableRipple,
       disabled,
+      header,
       multiple,
       onChange,
       readOnly,
@@ -60,6 +62,7 @@ const CheckList = React.forwardRef<HTMLUListElement, CheckListProps>(
     return (
       <CheckListContext.Provider value={contextValue}>
         <List ref={ref} role="menu" {...rest}>
+          {header && <ListHeader>{header}</ListHeader>}
           {children}
         </List>
       </CheckListContext.Provider>

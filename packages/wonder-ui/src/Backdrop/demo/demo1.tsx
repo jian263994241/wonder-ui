@@ -1,8 +1,7 @@
-import { Button, Backdrop, CircularProgress, useTheme } from '@wonder-ui/core';
+import { Button, Backdrop, CircularProgress } from '@wonder-ui/core';
 import { useToggle } from '@wonder-ui/hooks';
 
 export default () => {
-  const theme = useTheme();
   const [visible, { toggle }] = useToggle();
 
   return (
@@ -11,11 +10,7 @@ export default () => {
         Show Backdrop
       </Button>
 
-      <Backdrop
-        visible={visible}
-        onClick={() => toggle()}
-        style={{ zIndex: theme.zIndex.fixed }}
-      >
+      <Backdrop visible={visible} onClick={() => toggle()}>
         <CircularProgress color="light" />
       </Backdrop>
     </div>

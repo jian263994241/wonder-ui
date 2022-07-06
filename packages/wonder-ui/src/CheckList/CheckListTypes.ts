@@ -52,6 +52,10 @@ export interface CheckListProps {
    * 选中项
    */
   value?: string[];
+  /**
+   * 标题
+   */
+  header?: React.ReactNode;
 }
 
 export interface CheckListContextType {

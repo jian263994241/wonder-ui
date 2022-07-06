@@ -19,7 +19,7 @@ const CheckListItem = React.forwardRef<HTMLLIElement, CheckListItemProps>(
       primary,
       secondary,
       value,
-      media,
+      prefix,
       readOnly,
       onClick,
       meta = {},
@@ -59,17 +59,16 @@ const CheckListItem = React.forwardRef<HTMLLIElement, CheckListItemProps>(
 
     return (
       <ListItem
+        button
         role="menuitem"
         aria-checked={isActive}
         aria-disabled={isDisabled}
         tabIndex={isDisabled ? undefined : isActive ? 0 : -1}
-        button={!isReadOnly}
-        divider={divider}
         extra={isActive ? itemActiveIcon : null}
         onClick={handleChange}
         disableRipple={disableRipple}
         disabled={isDisabled}
-        media={media}
+        prefix={prefix}
         primary={primary}
         secondary={secondary}
         children={children}

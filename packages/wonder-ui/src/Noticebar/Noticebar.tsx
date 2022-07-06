@@ -124,7 +124,7 @@ export interface NoticebarProps {
   wrap?: boolean;
 }
 
-const NoticebarRoot = styled(Fade, { name: COMPONENT_NAME, slot: 'Root' })<{
+const NoticebarRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
   styleProps: NoticebarProps;
 }>(({ theme, styleProps }) => {
   const color = theme.palette[styleProps.type || 'warning'].main;
@@ -316,14 +316,17 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
     };
 
     return (
-      <NoticebarRoot
-        role="alert"
+      <Fade
         in={state.show}
+        component={NoticebarRoot}
+        componentProps={{
+          styleProps,
+          ref,
+          role: 'alert',
+          ...rest
+        }}
         className={css(classes.root, className)}
         style={style}
-        styleProps={styleProps}
-        ref={ref}
-        {...rest}
       >
         {icon && <NoticebarIcon className={classes.icon}>{icon}</NoticebarIcon>}
 
@@ -366,7 +369,7 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
             )}
           </NoticebarTextAfter>
         )}
-      </NoticebarRoot>
+      </Fade>
     );
   }
 );

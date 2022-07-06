@@ -1,7 +1,6 @@
 import * as React from 'react';
 import ButtonBase from '../ButtonBase';
 import Divider from '../Divider';
-import Grow from '../Grow';
 import styled from '../styles/styled';
 import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
@@ -12,7 +11,7 @@ import type {
   DialogContentProps
 } from './DialogContentTypes';
 
-const DialogContentRoot = styled(Grow, {
+const DialogContentRoot = styled('div', {
   name: 'WuiDialogContent',
   slot: 'Root',
   shouldForwardProp: () => true

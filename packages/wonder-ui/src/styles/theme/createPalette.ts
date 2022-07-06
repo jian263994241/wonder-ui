@@ -97,13 +97,13 @@ const common = {
   white: '#fff'
 };
 
-const defaultPrimary = '#2979ff';
+const defaultPrimary = '#1677ff';
 const defaultSecondary = '#6c757d';
-const defaultError = '#ee0a24';
-const defaultDanger = '#dc3545';
-const defaultWarning = '#ffc107';
+const defaultError = '#ff3141';
+const defaultDanger = '#ff3141';
+const defaultWarning = '#ff8f1f';
 const defaultInfo = '#0dcaf0';
-const defaultSuccess = '#039245';
+const defaultSuccess = '#00b578';
 const defaultLight = '#eee';
 const defaultDark = '#000';
 

@@ -36,6 +36,9 @@ const TypographyRoot = styled('span', {
   [`&.${typographyClasses.colorError}`]: {
     color: theme.palette.error.main
   },
+  [`&.${typographyClasses.colorWarning}`]: {
+    color: theme.palette.warning.main
+  },
   [`&.${typographyClasses.lineClamp}`]: {
     display: '-webkit-box',
     WebkitBoxOrient: 'vertical',
