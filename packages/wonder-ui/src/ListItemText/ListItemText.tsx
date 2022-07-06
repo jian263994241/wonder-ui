@@ -2,10 +2,15 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import Typography, { TypographyProps } from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
+import {
+  COMPONENT_NAME,
+  listItemTextClasses,
+  useClasses
+} from './ListItemTextClasses';
 import { forwardRef } from '@wonder-ui/utils';
-import { listItemTextClasses, useClasses } from './ListItemTextClasses';
 
-export interface ListItemTextProps extends React.HTMLAttributes<HTMLElement> {
+export interface ListItemTextProps
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   /**
    *  Css api
    */
@@ -14,24 +19,25 @@ export interface ListItemTextProps extends React.HTMLAttributes<HTMLElement> {
    * Root element
    */
   component?: React.ElementType;
+
   /**
-   * @description Primary text
+   * Primary text
    */
   primary?: React.ReactNode;
   /**
-   * @description Primary TypographyProps
+   * Primary TypographyProps
    */
   primaryTypographyProps?: TypographyProps;
   /**
-   * @description Secondary text
+   * Secondary text
    */
   secondary?: React.ReactNode;
   /**
-   * @description Secondary TypographyProps
+   * Secondary TypographyProps
    */
   secondaryTypographyProps?: TypographyProps;
   /**
-   * @description Disable Typography
+   * Disable Typography
    * @default false
    */
   disableTypography?: boolean;
@@ -40,19 +46,17 @@ export interface ListItemTextProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const ListItemTextRoot = styled('div', {
-  name: 'WuiListItemText',
+  name: COMPONENT_NAME,
   slot: 'Root'
 })(({ theme }) => ({
   ...theme.typography.subtitle1,
   color: 'inherit',
-  flex: '1 1 auto',
-  paddingTop: theme.spacing(1),
-  paddingBottom: theme.spacing(1)
+  flex: '1 1 auto'
 }));
 
 const ListItemText = forwardRef<HTMLElement, ListItemTextProps>(
   (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiListItemText' });
+    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
       children,
       className,
@@ -76,8 +80,8 @@ const ListItemText = forwardRef<HTMLElement, ListItemTextProps>(
       primary = (
         <Typography
           variant="body1"
-          classes={{ root: classes.textPrimary }}
-          component="span"
+          className={classes.textPrimary}
+          component="div"
           color="textPrimary"
           {...primaryTypographyProps}
         >
@@ -95,7 +99,7 @@ const ListItemText = forwardRef<HTMLElement, ListItemTextProps>(
         <Typography
           variant="body2"
           component="div"
-          classes={{ root: classes.textSecondary }}
+          className={classes.textSecondary}
           color="textSecondary"
           {...secondaryTypographyProps}
         >

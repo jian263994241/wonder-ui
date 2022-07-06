@@ -1,6 +1,8 @@
 import { composeClasses, generateUtilityClasses } from '@wonder-ui/utils';
 
-export const listHeaderClasses = generateUtilityClasses('WuiListHeader', [
+export const COMPONENT_NAME = 'WuiListHeader';
+
+export const listHeaderClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'sticky'
 ]);
@@ -17,5 +19,5 @@ export const useClasses = (styleProps: ListHeaderStyleProps) => {
     root: ['root', sticky && 'sticky']
   };
 
-  return composeClasses('WuiListHeader', slots, classes);
+  return composeClasses(COMPONENT_NAME, slots, classes);
 };

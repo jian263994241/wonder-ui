@@ -1,12 +1,4 @@
-import {
-  Page,
-  List,
-  ListInputItem,
-  ListHeader,
-  IconButton,
-  Button
-} from '@wonder-ui/core';
-import { Person, InfoCircle } from '@wonder-ui/icons';
+import { Page, List, ListInputItem, ListHeader, Button } from '@wonder-ui/core';
 
 export default () => {
   return (
@@ -30,18 +22,21 @@ export default () => {
           type="password"
           label="密码"
           placeholder="请输入密码"
+          help="密码"
           required
         />
         <ListInputItem
           divider
           type="tel"
           label="手机号"
+          help="联系人的手机号"
           placeholder="请输入手机号"
         />
         <ListInputItem
           divider
           type="email"
           label="邮箱"
+          help="公司邮箱"
           placeholder="请输入邮箱"
         />
         <ListInputItem
@@ -59,29 +54,9 @@ export default () => {
 
       <List>
         <ListHeader>图标</ListHeader>
-        <ListInputItem
-          divider
-          label="文本"
-          prefix={<Person fontSize="small" />}
-          placeholder="请输入文本"
-        />
-        <ListInputItem
-          divider
-          label="文本"
-          prefix={<Person fontSize="small" />}
-          suffix={
-            <IconButton edge="end" size="small">
-              <InfoCircle fontSize="small" />
-            </IconButton>
-          }
-          placeholder="请输入文本"
-        />
-        <ListInputItem
-          allowClear
-          label="文本"
-          prefix={<Person fontSize="small" />}
-          placeholder="显示清除图标"
-        />
+        <ListInputItem divider label="文本" placeholder="请输入文本" />
+        <ListInputItem divider label="文本" placeholder="请输入文本" />
+        <ListInputItem allowClear label="文本" placeholder="显示清除图标" />
       </List>
 
       <List>
@@ -122,11 +97,6 @@ export default () => {
           label="文本"
           placeholder="请输入文本"
           description="信息提示"
-          suffix={
-            <IconButton edge="end" size="small">
-              <InfoCircle fontSize="small" />
-            </IconButton>
-          }
         />
         <ListInputItem
           label="文本"

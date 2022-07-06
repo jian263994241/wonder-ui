@@ -9,14 +9,10 @@ export default () => (
       {dataList.map((item, index) => (
         <ListItem key={index}>Item {index}</ListItem>
       ))}
-    </List>
-    <List>
       <ListHeader sticky>sticky 1</ListHeader>
       {dataList.map((item, index) => (
         <ListItem key={index}>Item {index}</ListItem>
       ))}
-    </List>
-    <List>
       <ListHeader sticky>sticky 2</ListHeader>
       {dataList.map((item, index) => (
         <ListItem key={index}>Item {index}</ListItem>

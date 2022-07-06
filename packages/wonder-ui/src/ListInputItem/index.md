@@ -1,4 +1,5 @@
 ---
+hide: true
 mobile: true
 toc: menu
 nav:
@@ -11,7 +12,13 @@ group:
 
 # ListInputItem 列表输入框
 
+<Alert type="warning">
+  不要使用该组件, 未来将移除. 请使用 Form 组件
+</Alert>
+
 表单中的输入框组件。
+
+
 
 ## 代码演示
 
@@ -19,13 +26,8 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-### 自定义
-
-利用 `ListItem`, `Input`, `Label` 实现一个 `ListInputItem`
-
-<code src="./demo/demo2.tsx"></code>
 
 
-<API src="./ListInputItem.tsx" props="InputProps|allowClear|defaultValue|description|disabled|divider|errorMessage|label|labelAlign|labelWidth|maxLength|multiline|onChange|placeholder|prefix|readOnly|required|suffix|type|value"></API>
+<API src="./ListInputItem.tsx" ></API>
 
 

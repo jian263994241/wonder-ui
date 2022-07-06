@@ -1,67 +1,98 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { css } from '@wonder-ui/utils';
-import {
-  listClasses,
-  useClasses,
-  ListClassesType,
-  ListStyleProps
-} from './ListClasses';
+import { COMPONENT_NAME } from './ListClasses';
+import { composeClasses, createCssVars, css } from '@wonder-ui/utils';
+import { listItemClasses } from '../ListItem/ListItemClasses';
+import type { ListProps, ListStyleProps } from './ListTypes';
+import { ListContext } from './ListContext';
 
-export interface ListProps extends React.HTMLAttributes<HTMLElement> {
-  component?: React.ElementType;
-  classes?: Partial<ListClassesType>;
-  /**
-   * 内嵌样式
-   * @default false
-   */
-  inset?: boolean;
-  ref?: React.Ref<HTMLElement>;
-}
+export const useClasses = (styleProps: ListStyleProps) => {
+  const { classes, mode } = styleProps;
 
-const ListRoot = styled('ul', {
-  name: 'WuiList',
+  const slots = {
+    root: ['root', mode === 'card' && 'card']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
+
+export const cssVars = createCssVars(COMPONENT_NAME, [
+  'paddingLeft',
+  'paddingRight',
+  'paddingTop',
+  'paddingBottom',
+  'prefixWidth',
+  'prefixPaddingRight',
+  'alignItems',
+  'extraMaxWidth',
+  'extraPaddingLeft',
+  'borderRadius',
+  'background',
+  'titleBackground',
+  'divider'
+]);
+
+const ListRoot = styled('div', {
+  name: COMPONENT_NAME,
   slot: 'Root'
 })<{ styleProps: ListStyleProps }>(({ theme, styleProps }) => ({
-  ...theme.typography.body1,
-  listStyle: 'none',
-  margin: 0,
-  padding: 0,
-  position: 'relative',
-  // backgroundColor: theme.palette.background.paper,
-
-  ...(styleProps.inset && {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
+  ...cssVars.style({
+    prefixWidth: 'auto',
+    prefixPaddingRight: 12,
+    paddingLeft: 12,
+    paddingRight: 12,
+    paddingTop: 10,
+    paddingBottom: 10,
+    extraMaxWidth: '70%',
+    extraPaddingLeft: 12,
+    alignItems: 'center',
+    divider: `thin solid ${theme.palette.divider}`,
     borderRadius: 8,
-    overflow: 'hidden'
+    background: theme.palette.background.paper,
+    titleBackground: theme.palette.background.default
   }),
-  /** 嵌套 */
-  [`&.${listClasses.root} .${listClasses.root}`]: {
-    paddingLeft: theme.spacing(2),
-    backgroundColor: theme.palette.background.paper
-  }
+
+  position: 'relative',
+
+  ...(styleProps.mode === 'card'
+    ? {
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
+        [`& .${listItemClasses.start}`]: {
+          borderTopLeftRadius: cssVars.value('borderRadius'),
+          borderTopRightRadius: cssVars.value('borderRadius')
+        },
+        [`& .${listItemClasses.end}`]: {
+          borderBottomLeftRadius: cssVars.value('borderRadius'),
+          borderBottomRightRadius: cssVars.value('borderRadius')
+        }
+      }
+    : {})
 }));
 
-const List = React.forwardRef<HTMLElement, ListProps>((inProps, ref) => {
-  const props = useThemeProps({ name: 'WuiList', props: inProps });
-  const { children, className, component, inset = false, ...rest } = props;
+const List = React.forwardRef<HTMLDivElement, ListProps>((inProps, ref) => {
+  const props = useThemeProps({ name: COMPONENT_NAME, props: inProps });
+  const { children, className, component, mode, ...rest } = props;
 
-  const styleProps = { ...props, inset };
+  const styleProps = { ...props };
 
   const classes = useClasses(styleProps);
 
+  const contextValue = { ...props };
+
   return (
-    <ListRoot
-      className={css(classes.root, className)}
-      {...rest}
-      as={component}
-      ref={ref as React.Ref<HTMLUListElement>}
-      styleProps={styleProps}
-    >
-      {children}
-    </ListRoot>
+    <ListContext.Provider value={contextValue}>
+      <ListRoot
+        className={css(classes.root, className)}
+        as={component}
+        ref={ref}
+        styleProps={styleProps}
+        {...rest}
+      >
+        {children}
+      </ListRoot>
+    </ListContext.Provider>
   );
 });
 

@@ -1,7 +1,10 @@
 import { composeClasses, generateUtilityClasses } from '@wonder-ui/utils';
 
-export const listItemTextClasses = generateUtilityClasses('WuiListItemText', [
+export const COMPONENT_NAME = 'WuiListItemText';
+
+export const listItemTextClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
+  'title',
   'textPrimary',
   'textSecondary'
 ]);
@@ -17,9 +20,10 @@ export const useClasses = (styleProps: ListItemTextStyleProps) => {
 
   const slots = {
     root: ['root'],
+    title: ['title'],
     textPrimary: ['textPrimary'],
     textSecondary: ['textSecondary']
   };
 
-  return composeClasses('WuiListItemText', slots, classes);
+  return composeClasses(COMPONENT_NAME, slots, classes);
 };

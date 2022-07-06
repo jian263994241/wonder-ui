@@ -1,11 +1,12 @@
 import * as React from 'react';
 import InputBase, { InputProps } from '../Input';
-import Label from '../Label';
+import Label from '../FormLabel';
 import ListItem, { ListItemProps } from '../ListItem';
 import styled from '../styles/styled';
 import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { listItemClasses } from '../ListItem/ListItemClasses';
+import { cssVars } from '../List/List';
 import {
   composeClasses,
   css,
@@ -76,14 +77,9 @@ export interface ListInputItemProps
    */
   label?: React.ReactNode;
   /**
-   * 标签对齐
+   * 提示信息
    */
-  labelAlign?: 'left' | 'right';
-  /**
-   * 标签宽度
-   * @default 6
-   */
-  labelWidth?: number;
+  help?: string;
   /**
    * 输入字段长度
    */
@@ -133,19 +129,20 @@ const ListInputItemRoot = styled(ListItem, {
   name: COMPONENT_NAME,
   slot: 'Root'
 })({
-  [`.${listItemClasses.body}`]: {
-    display: 'flex'
+  ...cssVars.style({
+    alignItems: 'stretch',
+    prefixWidth: '5.8em'
+  }),
+  [`.${listItemClasses.prefix}`]: {
+    paddingTop: 12,
+    paddingBottom: 12
   }
 });
 
 const ListInputItemLabel = styled(Label, {
   name: COMPONENT_NAME,
   slot: 'Label'
-})(({ theme }) => ({
-  height: theme.typography.pxToRem(44),
-  paddingTop: theme.typography.pxToRem(10),
-  alignSelf: 'flex-start'
-}));
+})({});
 
 const ListInputItemInputWrap = styled('span', {
   name: COMPONENT_NAME,
@@ -175,8 +172,6 @@ const ListInputItem = forwardRef<HTMLLIElement, ListInputItemProps>(
       required = false,
       readOnly = false,
       label,
-      labelAlign,
-      labelWidth = 6,
       placeholder,
       multiline,
       maxLength,
@@ -190,6 +185,7 @@ const ListInputItem = forwardRef<HTMLLIElement, ListInputItemProps>(
       onChange,
       description,
       errorMessage,
+      help,
       ...rest
     } = props;
 
@@ -215,26 +211,27 @@ const ListInputItem = forwardRef<HTMLLIElement, ListInputItemProps>(
 
     return (
       <ListInputItemRoot
-        divider={divider}
         className={css(classes.root, className)}
         style={style}
         ref={ref}
-        media={prefix}
+        prefix={
+          <React.Fragment>
+            {prefix}
+            {label && (
+              <ListInputItemLabel
+                className={classes.label}
+                required={required}
+                htmlFor={InputProps?.id}
+                help={help}
+              >
+                {label}
+              </ListInputItemLabel>
+            )}
+          </React.Fragment>
+        }
         extra={suffix}
         {...rest}
       >
-        {label && (
-          <ListInputItemLabel
-            className={classes.label}
-            required={required}
-            disalbed={disabled}
-            labelAlign={labelAlign}
-            width={labelWidth}
-            htmlFor={InputProps?.id}
-          >
-            {label}
-          </ListInputItemLabel>
-        )}
         <ListInputItemInputWrap className={classes.inputWrap}>
           <ListInputItemInput
             className={css(classes.input, InputProps?.className)}

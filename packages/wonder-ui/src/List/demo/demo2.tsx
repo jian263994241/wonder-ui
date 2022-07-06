@@ -11,27 +11,25 @@ export default () => {
   return (
     <List>
       <ListHeader>嵌套列表</ListHeader>
-      <ListItem divider>Item 1</ListItem>
-      <ListItem divider>Item 2</ListItem>
+      <ListItem>Item 1</ListItem>
+      <ListItem>Item 2</ListItem>
 
       <ListItem
-        button
-        divider
         arrow={visible ? 'vertical-up' : 'vertical'}
         onClick={() => toggle()}
       >
         Item 3
       </ListItem>
 
-      <Collapse in={visible}>
+      <Collapse in={visible} component={ListItem}>
         <List>
-          <ListItem divider>Nested Item 1</ListItem>
-          <ListItem divider>NestedItem 2</ListItem>
+          <ListItem>Nested Item 1</ListItem>
+          <ListItem>NestedItem 2</ListItem>
           <ListItem>NestedItem 3</ListItem>
         </List>
       </Collapse>
 
-      <ListItem divider>Item 4</ListItem>
+      <ListItem>Item 4</ListItem>
       <ListItem>Item 5</ListItem>
     </List>
   );

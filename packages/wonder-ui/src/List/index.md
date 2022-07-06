@@ -13,16 +13,11 @@ group:
 
 ## 代码演示
 
-### 简易列表
+### 基本使用
 
 可以设置一个空的`WhiteSpace`做间隔符
 
 <code src="./demo/demo1.tsx"></code>
-
-### 列表链接
-
-<code src="./demo/listLink.tsx"></code>
-
 
 ### 嵌套列表
 
@@ -30,44 +25,16 @@ group:
 
 <code src="./demo/demo2.tsx"></code>
 
-### 内嵌列表
-
-<code src="./demo/demo8.tsx"></code>
-
-### 媒体列表
-
-<code src="./demo/demo3.tsx"></code>
-
-### 交互演示
-
-下面是一些常见交互的演示：
+### 卡片样式
 
 <code src="./demo/demo4.tsx"></code>
 
+### 用户列表
 
-### 对齐列表项
+<code src="./demo/demo3.tsx"></code>
 
-显示 3 行或者更多行时，你应该改变列表项的对齐方式，将 `alignItems` 属性值设置为 "flex-start"
-
-<code src="./demo/demo6.tsx"></code>
-
-
-
-### 列表控件
-
-#### Checkbox 选择框
-
-<code src="./demo/checkbox.tsx"></code>
-
-#### Toggle 开关
-
-该开关作用为一个辅助操作和一个单独的目标。
-
-<code  src="./demo/switch.tsx"></code>
 
 ### 固定的副标题列表
-
-在滚动列表时，子标题保持固定在屏幕的顶端，直到被下一个子标题推离屏幕。 此性能由 CSS sticky 位置实现, 可以通过`disableSticky`禁用此选项
 
 <code  src="./demo/sticky.tsx"></code>
 
@@ -80,6 +47,13 @@ group:
 `useVirtualList` 与 List 组件一起使用。 优化长列表的性能。
 
 <code  src="./demo/virtualList.tsx"></code>
+
+### 拖拽排序
+
+结合 `react-beautiful-dnd` 实现拖拽排序
+
+<code src="./demo/demo5.tsx"></code>
+
 
 ## API
 
@@ -95,3 +69,17 @@ group:
 
 <API src="../ListItem/ListItem.tsx" hideTitle></API>
 
+## CSS Variables
+
+```css
+--wui-list-padding-left: 12px;
+--wui-list-padding-right: 12px;
+--wui-list-padding-top: 10px;
+--wui-list-padding-bottom: 10px;
+--wui-list-extra-max-width: 70%;
+--wui-list-align-items: center;
+--wui-list-divider: thin solid rgba(0, 0, 0, 0.12);
+--wui-list-border-radius: 8px;
+--wui-list-background: #fff;
+--wui-list-title-background: #f7f7fa;
+```

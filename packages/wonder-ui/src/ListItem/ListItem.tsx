@@ -1,187 +1,90 @@
 import * as React from 'react';
 import ArrowForward from '../ArrowForward';
 import ButtonBase from '../ButtonBase';
+import ListItemText from '../ListItemText';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
+import { COMPONENT_NAME, listItemClasses, useClasses } from './ListItemClasses';
 import { css, forwardRef } from '@wonder-ui/utils';
-import {
-  ListItemClassesType,
-  listItemClasses,
-  useClasses
-} from './ListItemClasses';
-import Typography from '../Typography';
+import { cssVars } from '../List/List';
+import { useForkRef, useReactive } from '@wonder-ui/hooks';
+import type { ListItemProps } from './ListItemTypes';
+import { useListContext } from '../List/ListContext';
 
-export interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
-  /**
-   * 水平对齐
-   */
-  alignItems?: 'flex-start' | 'center';
-  /**
-   * 箭头
-   */
-  arrow?: 'empty' | 'horizontal' | 'vertical' | 'vertical-up';
-  /**
-   * 内容
-   */
-  children?: React.ReactNode;
-  /**
-   * Css api
-   */
-  classes?: Partial<ListItemClassesType>;
-  /**
-   * Root element
-   */
-  component?: React.ElementType;
-  /**
-   * 分割线
-   */
-  divider?: boolean;
-  /**
-   * Disabled
-   */
-  disabled?: boolean;
-  /**
-   * Disabled ripple
-   */
-  disableRipple?: boolean;
-  /**
-   * 选中状态
-   * @default false
-   */
-  selected?: boolean;
-  /**
-   * 是否展示点击状态
-   * @default false
-   */
-  button?: boolean;
-  /**
-   * 主要文字
-   */
-  primary?: React.ReactNode;
-  /**
-   * 次要文字
-   */
-  secondary?: React.ReactNode;
-  /**
-   * 前面的类容
-   */
-  media?: React.ReactNode;
-  /**
-   * 额外的类容
-   */
-  extra?: React.ReactNode;
-}
-
-interface ListItemStyleProps extends ListItemProps {}
-
-const ListItemRoot = styled('li', {
-  name: 'WuiListItem',
+const ListItemRoot = styled('div', {
+  name: COMPONENT_NAME,
   slot: 'Root'
-})<{ styleProps: ListItemStyleProps }>(({ theme, styleProps }) => ({
-  overflow: 'hidden',
+})(({ theme, hidden }) => ({
+  display: hidden ? 'none' : 'block',
   position: 'relative',
-  transition: 'background-color 200ms',
-  boxSizing: 'border-box',
-  WebkitTapHighlightColor: 'transparent',
-  backgroundColor: theme.palette.background.paper,
-  color: theme.palette.text.primary,
-  outline: 0,
-  border: 0,
-  display: 'flex',
-  alignItems: styleProps.alignItems || 'center',
-  textDecoration: 'none',
-  paddingLeft: theme.spacing(2),
-  cursor: 'auto',
-  whiteSpace: 'unset',
-  ...(styleProps.button && {
-    cursor: 'pointer'
-  }),
-  ...(styleProps.disabled && {
+  backgroundColor: cssVars.value('background'),
+  paddingLeft: cssVars.value('paddingLeft'),
+
+  [`&.${listItemClasses.end} > .${listItemClasses.content}`]: {
+    border: 'none'
+  },
+
+  [`&.${listItemClasses.disabled}`]: {
+    cursor: 'not-allowed'
+  },
+
+  [`&.${listItemClasses.disabled} .${listItemClasses.content} > *`]: {
     opacity: theme.palette.action.disabledOpacity,
     pointerEvents: 'none'
-  })
+  }
 }));
 
-const ListItemInner = styled('div', {
-  name: 'WuiListItem',
-  slot: 'Inner'
-})<{ styleProps: ListItemStyleProps }>(({ theme, styleProps }) => ({
-  width: '100%',
-  minHeight: theme.typography.pxToRem(44),
+const ListItemContent = styled('div', {
+  name: COMPONENT_NAME,
+  slot: 'Content'
+})({
   display: 'flex',
-  alignItems: 'inherit',
-  alignSelf: 'stretch',
-  color: 'inherit',
-  boxSizing: 'border-box',
-  paddingRight: 12,
-  ...(styleProps.divider && {
-    borderWidth: 0,
-    borderStyle: 'solid',
-    borderColor: theme.palette.divider,
-    borderBottomWidth: 'thin'
-  })
-}));
+  alignItems: cssVars.value('alignItems'),
+  paddingRight: cssVars.value('paddingRight'),
+  borderBottom: cssVars.value('divider')
+});
 
 const ListItemBody = styled('div', {
-  name: 'WuiListItem',
+  name: COMPONENT_NAME,
   slot: 'Body'
-})(({ theme }) => ({
-  ...theme.typography.body1,
-  color: theme.palette.text.primary,
-  width: '100%',
-  boxSizing: 'border-box'
-}));
+})({
+  flex: 'auto',
+  paddingTop: cssVars.value('paddingTop'),
+  paddingBottom: cssVars.value('paddingBottom')
+});
 
-const ListItemArrow = styled('span', {
-  name: 'WuiListItem',
-  slot: 'Arrow'
-})(({ theme }) => ({
-  color: alpha(theme.palette.text.primary, 0.3),
-  pointerEvents: 'none',
-  width: 8,
-  height: 18,
-  display: 'flex',
-  alignItems: 'center',
+const ListItemPrefix = styled('div', {
+  name: COMPONENT_NAME,
+  slot: 'Prefix'
+})({
+  flex: 'none',
+  paddingRight: cssVars.value('prefixPaddingRight'),
+  width: cssVars.value('prefixWidth')
+});
 
-  margin: theme.spacing(1, 0, 1, 0.5),
-  '& > svg': {
-    display: 'block',
-    fontSize: theme.typography.pxToRem(14)
-  }
-}));
-
-const ListItemMedia = styled('div', {
-  name: 'WuiListItem',
-  slot: 'Media'
-})(({ theme }) => ({
-  userSelect: 'none',
-  display: 'flex',
-  flexShrink: 0,
-  flexWrap: 'nowrap',
-  alignItems: 'center',
-  boxSizing: 'border-box',
-  paddingTop: theme.spacing(1),
-  paddingBottom: theme.spacing(1),
-  marginRight: theme.spacing(2),
-  minHeight: theme.typography.pxToRem(44),
-
-  [`.${listItemClasses.disabled} &`]: {
-    opacity: theme.palette.action.disabledOpacity
-  }
-}));
-
-const ListItemExtra = styled('span', {
-  name: 'WuiListItem',
+const ListItemExtra = styled('div', {
+  name: COMPONENT_NAME,
   slot: 'Extra'
 })(({ theme }) => ({
-  ...theme.typography.body1,
   color: theme.palette.text.secondary,
-  flexShrink: 0,
-  display: 'flex',
-  verticalAlign: 'middle',
-  userSelect: 'none',
-  padding: theme.spacing(1, 0, 1, 1)
+  flex: 'none',
+  paddingLeft: cssVars.value('extraPaddingLeft'),
+  maxWidth: cssVars.value('extraMaxWidth'),
+  paddingTop: cssVars.value('paddingTop'),
+  paddingBottom: cssVars.value('paddingBottom')
+}));
+
+const ListItemArrow = styled('div', {
+  name: COMPONENT_NAME,
+  slot: 'Arrow'
+})(({ theme }) => ({
+  fontSize: theme.typography.pxToRem(19),
+  color: alpha(theme.palette.text.secondary, 0.3),
+  flex: 'none',
+  marginLeft: 4,
+  paddingTop: cssVars.value('paddingTop'),
+  paddingBottom: cssVars.value('paddingBottom')
 }));
 
 const direction = {
@@ -191,98 +94,124 @@ const direction = {
 } as const;
 
 const ListItem = forwardRef<HTMLElement, ListItemProps>((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiListItem' });
+  const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
+  const context = useListContext();
 
   const {
-    alignItems = 'center',
-    arrow = 'empty',
-    button = false,
+    arrow,
     children,
     className,
-    divider = false,
-    disabled = false,
-    disableRipple = false,
-    component = 'li',
+    disabled = context?.disabled,
+    disableRipple = context?.disableRipple,
+    component,
     selected = false,
     primary,
     secondary,
     extra,
-    media,
+    prefix,
+    button = !!arrow,
     ...rest
   } = props;
 
+  const state = useReactive({
+    start: false,
+    end: false
+  });
+
   const styleProps = {
     ...props,
-    alignItems,
-    button,
-    divider,
     disabled,
-    selected
+    selected,
+    end: state.end,
+    start: state.start
   };
 
   const classes = useClasses(styleProps);
 
-  let rootProps: any = {};
+  let rootProps: any = { ...rest };
 
   if (button) {
     rootProps = {
       as: ButtonBase,
-      component,
+      component: component || 'div',
       disableRipple,
       disabled,
-      selected,
-      ...rest
+      selected
     };
   }
+
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const handleRef = useForkRef(rootRef, ref);
+
+  React.useEffect(() => {
+    const { current: root } = rootRef;
+
+    if (root) {
+      const { nextElementSibling, previousElementSibling } = root;
+
+      if (
+        !previousElementSibling ||
+        !previousElementSibling.classList.contains(listItemClasses.root)
+      ) {
+        state.start = true;
+      }
+
+      if (
+        !nextElementSibling ||
+        !nextElementSibling.classList.contains(listItemClasses.root)
+      ) {
+        state.end = true;
+      }
+    }
+  }, []);
+
+  const renderArrow = () => {
+    if (!arrow) return null;
+
+    let arrowElement: React.ReactElement;
+
+    if (React.isValidElement(arrow)) {
+      arrowElement = arrow;
+    } else if (arrow === true) {
+      arrowElement = <ArrowForward direction="right" />;
+    } else {
+      arrowElement = <ArrowForward direction={direction[arrow]} />;
+    }
+
+    return (
+      <ListItemArrow className={classes.arrow}>{arrowElement}</ListItemArrow>
+    );
+  };
 
   return (
     <ListItemRoot
       as={component}
       className={css(classes.root, className)}
-      styleProps={styleProps}
-      ref={ref as React.Ref<any>}
-      {...rest}
+      ref={handleRef}
       {...rootProps}
     >
-      {media && (
-        <ListItemMedia className={classes.media}>{media}</ListItemMedia>
-      )}
-
-      <ListItemInner styleProps={styleProps} className={classes.inner}>
+      <ListItemContent className={classes.content}>
+        {prefix && (
+          <ListItemPrefix className={classes.prefix}>{prefix}</ListItemPrefix>
+        )}
         <ListItemBody className={classes.body}>
-          {primary && (
-            <Typography
-              variant="body1"
-              classes={{ root: classes.textPrimary }}
-              component="span"
-              color="textPrimary"
-            >
-              {primary}
-            </Typography>
-          )}
-          {secondary && (
-            <Typography
-              variant="body2"
-              component="div"
-              classes={{ root: classes.textSecondary }}
-              color="textSecondary"
-            >
-              {secondary}
-            </Typography>
+          {(primary || secondary) && (
+            <ListItemText
+              primary={primary}
+              secondary={secondary}
+              classes={{
+                textPrimary: classes.textPrimary,
+                textSecondary: classes.textSecondary
+              }}
+            />
           )}
           {children}
         </ListItemBody>
-
         {extra && (
           <ListItemExtra className={classes.extra}>{extra}</ListItemExtra>
         )}
-
-        {arrow && arrow != 'empty' && (
-          <ListItemArrow className={classes.arrow}>
-            <ArrowForward direction={direction[arrow]} />
-          </ListItemArrow>
-        )}
-      </ListItemInner>
+        {renderArrow()}
+      </ListItemContent>
     </ListItemRoot>
   );
 });
