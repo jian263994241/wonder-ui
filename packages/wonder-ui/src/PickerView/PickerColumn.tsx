@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import Typography from '../Typography';
-import { clamp, css, isObject, preventDefault } from '@wonder-ui/utils';
+import { clamp, css, isObject, preventDefault, warn } from '@wonder-ui/utils';
 import { ColumnProps, PickerFieldNames, PickerOption } from './PickerViewTypes';
 import { COMPONENT_NAME, pickerViewClasses } from './PickerViewClasses';
 import { easing } from '../styles/transitions';
@@ -74,8 +74,7 @@ export const getOptionText = (
   } else if (typeof option === 'string' || typeof option === 'number') {
     return option;
   } else {
-    console.log(fieldNames);
-    console.warn(
+    warn(
       `Picker error: fieldNames.label [${fieldNames.label}] is not is col columns`
     );
   }

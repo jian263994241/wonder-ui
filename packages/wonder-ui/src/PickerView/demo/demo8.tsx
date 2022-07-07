@@ -6,7 +6,6 @@ import {
   ListInputItem,
   Page,
   PickerViewAction,
-  PickerObjectOption,
   PickerView,
   WhiteSpace
 } from '@wonder-ui/core';
@@ -17,19 +16,13 @@ export default () => {
   const actionRef = React.useRef<PickerViewAction>(null);
   const [displayText, setDisplayText] = React.useState('');
 
-  const setValues = () => {
+  const getValues = () => {
     const values = actionRef.current?.getValues() || [];
 
-    const displayText = values
-      .map((item) => (item as PickerObjectOption).name)
-      .join(',');
+    const displayText = values.join(',');
 
     setDisplayText(displayText);
   };
-
-  React.useEffect(() => {
-    setValues();
-  }, []);
 
   return (
     <Page>
@@ -47,10 +40,12 @@ export default () => {
 
       <PickerView
         actionRef={actionRef}
-        textKey="name"
+        fieldNames={{
+          label: 'name'
+        }}
         columns={pca}
         onChange={() => {
-          setValues();
+          getValues();
         }}
       />
     </Page>

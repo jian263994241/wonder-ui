@@ -75,6 +75,8 @@ export default function usePicker(props: usePickerProps) {
       if (fieldNames.values in firstColumn) {
         dataType = 'object';
         formattedColumns = columns as PickerObjectColumn[];
+      } else {
+        formattedColumns = [{ [fieldNames.values]: columns }];
       }
     } else {
       formattedColumns = [{ [fieldNames.values]: columns }];
