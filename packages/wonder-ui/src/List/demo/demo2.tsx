@@ -5,7 +5,7 @@ export default () => {
   const [visible, setVisible] = React.useState(true);
 
   const toggle = () => {
-    setVisible((show) => !show);
+    setVisible((visible) => !visible);
   };
 
   return (
@@ -14,10 +14,7 @@ export default () => {
       <ListItem>Item 1</ListItem>
       <ListItem>Item 2</ListItem>
 
-      <ListItem
-        arrow={visible ? 'vertical-up' : 'vertical'}
-        onClick={() => toggle()}
-      >
+      <ListItem arrow={visible ? 'vertical-up' : 'vertical'} onClick={toggle}>
         Item 3
       </ListItem>
 

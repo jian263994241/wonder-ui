@@ -1,10 +1,11 @@
 import React from 'react';
 import type { ListItemClassesType } from './ListItemClasses';
+import type { ListMode } from '../List/ListTypes';
 
 export type ArrowDirection = 'horizontal' | 'vertical' | 'vertical-up';
 
 export interface ListItemProps
-  extends Omit<React.HTMLAttributes<HTMLLIElement>, 'prefix'> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'prefix'> {
   /**
    * 箭头
    */
@@ -29,7 +30,9 @@ export interface ListItemProps
   disableRipple?: boolean;
 
   selected?: boolean;
-
+  /**
+   * 可以点击列表
+   */
   button?: boolean;
   /**
    * 主要文字
@@ -47,4 +50,8 @@ export interface ListItemProps
    * 额外的类容
    */
   extra?: React.ReactNode;
+}
+
+export interface ListItemStyleProps extends ListItemProps {
+  mode?: ListMode;
 }

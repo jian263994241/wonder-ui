@@ -56,7 +56,12 @@ export default () => {
                       {...provided.dragHandleProps}
                       style={{
                         ...provided.draggableProps.style,
-                        opacity: snapshot.isDragging ? 0.8 : 1
+                        ...(snapshot.isDragging
+                          ? {
+                              '--wui-list-divider': 'none',
+                              opacity: 0.6
+                            }
+                          : { opacity: 1 })
                       }}
                       key={item.name}
                       prefix={

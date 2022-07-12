@@ -26,4 +26,5 @@ export interface ListStyleProps extends ListProps {}
 export interface ContextValue {
   disabled?: boolean;
   disableRipple?: boolean;
+  mode?: ListMode;
 }

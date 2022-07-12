@@ -55,20 +55,10 @@ const ListRoot = styled('div', {
 
   position: 'relative',
 
-  ...(styleProps.mode === 'card'
-    ? {
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
-        [`& .${listItemClasses.start}`]: {
-          borderTopLeftRadius: cssVars.value('borderRadius'),
-          borderTopRightRadius: cssVars.value('borderRadius')
-        },
-        [`& .${listItemClasses.end}`]: {
-          borderBottomLeftRadius: cssVars.value('borderRadius'),
-          borderBottomRightRadius: cssVars.value('borderRadius')
-        }
-      }
-    : {})
+  ...(styleProps.mode === 'card' && {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
+  })
 }));
 
 const List = React.forwardRef<HTMLDivElement, ListProps>((inProps, ref) => {

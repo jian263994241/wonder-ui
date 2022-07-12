@@ -5,25 +5,57 @@ import ListItemText from '../ListItemText';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { COMPONENT_NAME, listItemClasses, useClasses } from './ListItemClasses';
-import { css, forwardRef } from '@wonder-ui/utils';
+import { COMPONENT_NAME, listItemClasses } from './ListItemClasses';
+import { composeClasses, css, forwardRef } from '@wonder-ui/utils';
 import { cssVars } from '../List/List';
-import { useForkRef, useReactive } from '@wonder-ui/hooks';
-import type { ListItemProps } from './ListItemTypes';
+import { listHeaderClasses } from '../ListHeader/ListHeaderClasses';
 import { useListContext } from '../List/ListContext';
+import { whiteSpaceClasses } from '../WhiteSpace/WhiteSpaceClasses';
+import type { ListItemProps, ListItemStyleProps } from './ListItemTypes';
+
+const useClasses = (styleProps: ListItemStyleProps) => {
+  const { classes, disabled, button } = styleProps;
+
+  const slots = {
+    root: ['root', disabled && 'disabled', button && 'button'],
+    content: ['content'],
+    body: ['body'],
+    arrow: ['arrow'],
+    prefix: ['prefix'],
+    extra: ['extra'],
+    textPrimary: ['textPrimary'],
+    textSecondary: ['textSecondary']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
 
 const ListItemRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})(({ theme, hidden }) => ({
+})<{ styleProps: ListItemStyleProps }>(({ theme, hidden, styleProps }) => ({
   display: hidden ? 'none' : 'block',
   position: 'relative',
   backgroundColor: cssVars.value('background'),
   paddingLeft: cssVars.value('paddingLeft'),
 
-  [`&.${listItemClasses.end} > .${listItemClasses.content}`]: {
-    border: 'none'
-  },
+  ...(styleProps.mode === 'card' && {
+    // borderTopLeftRadius: cssVars.value('borderRadius'),
+    // borderTopRightRadius: cssVars.value('borderRadius'),
+    // borderBottomLeftRadius: cssVars.value('borderRadius'),
+    // borderBottomRightRadius: cssVars.value('borderRadius'),
+
+    [`&:first-of-type, .${listHeaderClasses.root} + &, .${whiteSpaceClasses.root} + &`]:
+      {
+        borderTopLeftRadius: cssVars.value('borderRadius'),
+        borderTopRightRadius: cssVars.value('borderRadius')
+      },
+
+    [`&:last-of-type`]: {
+      borderBottomLeftRadius: cssVars.value('borderRadius'),
+      borderBottomRightRadius: cssVars.value('borderRadius')
+    }
+  }),
 
   [`&.${listItemClasses.disabled}`]: {
     cursor: 'not-allowed'
@@ -42,7 +74,14 @@ const ListItemContent = styled('div', {
   display: 'flex',
   alignItems: cssVars.value('alignItems'),
   paddingRight: cssVars.value('paddingRight'),
-  borderBottom: cssVars.value('divider')
+  borderTop: cssVars.value('divider'),
+
+  [`.${listItemClasses.root}:first-of-type > &
+    , .${listHeaderClasses.root} + .${listItemClasses.root} > &
+    , .${whiteSpaceClasses.root} + .${listItemClasses.root} > &
+  `]: {
+    border: 'none'
+  }
 });
 
 const ListItemBody = styled('div', {
@@ -113,17 +152,11 @@ const ListItem = forwardRef<HTMLElement, ListItemProps>((inProps, ref) => {
     ...rest
   } = props;
 
-  const state = useReactive({
-    start: false,
-    end: false
-  });
-
   const styleProps = {
     ...props,
     disabled,
     selected,
-    end: state.end,
-    start: state.start
+    mode: context?.mode
   };
 
   const classes = useClasses(styleProps);
@@ -136,34 +169,10 @@ const ListItem = forwardRef<HTMLElement, ListItemProps>((inProps, ref) => {
       component: component || 'div',
       disableRipple,
       disabled,
-      selected
+      selected,
+      ...rest
     };
   }
-
-  const rootRef = React.useRef<HTMLDivElement>(null);
-  const handleRef = useForkRef(rootRef, ref);
-
-  React.useEffect(() => {
-    const { current: root } = rootRef;
-
-    if (root) {
-      const { nextElementSibling, previousElementSibling } = root;
-
-      if (
-        !previousElementSibling ||
-        !previousElementSibling.classList.contains(listItemClasses.root)
-      ) {
-        state.start = true;
-      }
-
-      if (
-        !nextElementSibling ||
-        !nextElementSibling.classList.contains(listItemClasses.root)
-      ) {
-        state.end = true;
-      }
-    }
-  }, []);
 
   const renderArrow = () => {
     if (!arrow) return null;
@@ -187,7 +196,8 @@ const ListItem = forwardRef<HTMLElement, ListItemProps>((inProps, ref) => {
     <ListItemRoot
       as={component}
       className={css(classes.root, className)}
-      ref={handleRef}
+      ref={ref}
+      styleProps={styleProps}
       {...rootProps}
     >
       <ListItemContent className={classes.content}>
