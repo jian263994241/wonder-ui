@@ -19,6 +19,7 @@ type TextColor = {
   primary: string;
   secondary: string;
   disabled: string;
+  icon: string;
 };
 
 type BackgroundColor = {
@@ -111,9 +112,10 @@ const darkenCoefficient = 0.08;
 
 export const light = {
   text: {
-    primary: 'rgba(0, 0, 0, 0.87)',
+    primary: 'rgba(0, 0, 0, 0.85)',
     secondary: 'rgba(0, 0, 0, 0.45)',
-    disabled: 'rgba(0, 0, 0, 0.38)'
+    disabled: 'rgba(0, 0, 0, 0.38)',
+    icon: 'rgba(0, 0, 0, 0.4)'
   },
   divider: 'rgba(0, 0, 0, 0.12)',
   background: {
@@ -283,10 +285,10 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
   };
 
   const modes = { dark, light };
-  //@ts-expect-error
+  //@ts-ignore
   return merge(
     {
-      //@ts-expect-error
+      //@ts-ignore
       mode,
       common,
       colors,
@@ -311,6 +313,7 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
       tonalOffset,
       ...modes[mode]
     },
+    //@ts-ignore
     rest
   );
 }

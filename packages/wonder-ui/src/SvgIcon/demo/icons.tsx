@@ -51,7 +51,8 @@ const StyledRow = styled(Row)({
     borderRadius: '0.25rem',
     padding: '1.5rem 1rem',
     marginBottom: '0.5rem',
-    transition: 'all 300ms'
+    transition: 'all 300ms',
+    fontSize: 36
   },
   '.icon:hover': {
     background: '#e3e5e7',
@@ -76,7 +77,7 @@ const IconItem: React.FC<any> = ({ Icon, onOpen }) => {
     }
   }, [_visible]);
 
-  const clickHandler = React.useCallback((e) => {
+  const clickHandler = React.useCallback((e: any) => {
     onOpen({
       anchorPosition: {
         top: e.clientY,
@@ -91,7 +92,7 @@ const IconItem: React.FC<any> = ({ Icon, onOpen }) => {
       {visible && (
         <>
           <div className="icon" onClick={clickHandler}>
-            <Icon fontSize="large" />
+            <Icon />
           </div>
           <div className="name">{Icon.displayName}</div>
         </>

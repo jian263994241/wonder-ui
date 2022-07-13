@@ -18,7 +18,7 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-### 不确定的状态
+### 选项组
 
 <code src="./demo/demo2.tsx"></code>
 
@@ -26,19 +26,9 @@ group:
 
 <code src="./demo/demo3.tsx"></code>
 
-### 选择框组
-
-使用 `CheckableGroup` 完成逻辑编组
-
-<code src="./demo/demo4.tsx"></code>
-
-### 自定义
-
-组件提供了一些CSS变量快速定义样式, 如果想要自定义图标可以直接用`CheckableGroup` + icon 实现
-
-<code src="./demo/demo5.tsx"></code>
-
 
 <API src="./Checkbox.tsx"></API>
 
+### CheckboxGroup
 
+<API src="../CheckboxGroup/CheckboxGroup.tsx" hideTitle></API>

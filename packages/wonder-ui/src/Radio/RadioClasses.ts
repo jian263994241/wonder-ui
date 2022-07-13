@@ -1,27 +1,16 @@
-import {
-  capitalize,
-  composeClasses,
-  generateUtilityClasses
-} from '@wonder-ui/utils';
+import { generateUtilityClasses } from '@wonder-ui/utils';
 
-export const radioClasses = generateUtilityClasses('WuiRadio', [
+export const COMPONENT_NAME = 'WuiRadio';
+
+export const radioClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
+  'block',
   'input',
-  'colorPrimary',
-  'colorSecondary'
+  'icon',
+  'content',
+  'checked',
+  'indeterminate',
+  'disabled'
 ]);
 
-export interface RadioStyleProps {
-  classes?: Partial<typeof radioClasses>;
-  color?: 'primary' | 'secondary';
-}
-
-export const useClasses = (styleProps: RadioStyleProps) => {
-  const { classes, color } = styleProps;
-
-  const slots = {
-    root: ['root', color && `color${capitalize(color)}`],
-    input: ['input']
-  };
-  return composeClasses('WuiRadio', slots, classes);
-};
+export type RadioClassesType = typeof radioClasses;

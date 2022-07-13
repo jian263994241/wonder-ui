@@ -44,7 +44,7 @@ const ContentBlockRoot = styled('div', {
     paddingVertical: spacing,
     safeAreaLeft: 'env(safe-area-inset-left, 0px)',
     safeAreaRight: 'env(safe-area-inset-right, 0px)',
-    dividerColor: theme.palette.divider,
+    // dividerColor: theme.palette.divider,
     insetSideMargin: spacing,
     insetBorderRadius: 8
   });
@@ -70,13 +70,13 @@ const ContentBlockContent = styled('div', {
   paddingTop: cssVars.value('paddingVertical'),
   paddingBottom: cssVars.value('paddingVertical'),
   ...(styleProps.strong && {
-    backgroundColor: theme.palette.background.paper,
-    ...(styleProps.inset
-      ? { border: `thin solid ${cssVars.value('dividerColor')}` }
-      : {
-          borderTop: `thin solid ${cssVars.value('dividerColor')}`,
-          borderBottom: `thin solid ${cssVars.value('dividerColor')}`
-        })
+    backgroundColor: theme.palette.background.paper
+    // ...(styleProps.inset
+    //   ? { border: `thin solid ${cssVars.value('dividerColor')}` }
+    //   : {
+    //       borderTop: `thin solid ${cssVars.value('dividerColor')}`,
+    //       borderBottom: `thin solid ${cssVars.value('dividerColor')}`
+    //     })
   }),
   ...(styleProps.inset
     ? {

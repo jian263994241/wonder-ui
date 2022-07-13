@@ -46,6 +46,9 @@ export * from './CheckableTag';
 export { default as Checkbox } from './Checkbox';
 export * from './Checkbox';
 
+export { default as CheckboxGroup } from './CheckboxGroup';
+export * from './CheckboxGroup';
+
 export { default as CheckList } from './CheckList';
 export * from './CheckList';
 
@@ -210,6 +213,9 @@ export * from './PullRefresh';
 
 export { default as Radio } from './Radio';
 export * from './Radio';
+
+export { default as RadioGroup } from './RadioGroup';
+export * from './RadioGroup';
 
 export { default as Result } from './Result';
 export * from './Result';

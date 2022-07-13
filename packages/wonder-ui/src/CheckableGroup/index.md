@@ -1,4 +1,5 @@
 ---
+hide: true
 mobile: false
 toc: menu
 nav:

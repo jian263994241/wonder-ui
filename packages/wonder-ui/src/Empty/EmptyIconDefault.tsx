@@ -1,7 +1,7 @@
 import * as React from 'react';
 import SvgIcon, { SvgIconProps } from '../SvgIcon';
 
-const EmptyIconDefault = React.forwardRef<Element, SvgIconProps>(
+const EmptyIconDefault = React.forwardRef<SVGSVGElement, SvgIconProps>(
   (props, ref) => {
     return (
       <SvgIcon

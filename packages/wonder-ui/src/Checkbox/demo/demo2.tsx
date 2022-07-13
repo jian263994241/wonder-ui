@@ -1,58 +1,62 @@
-/**
- * background: '#f5f5f5'
- */
 import {
-  Container,
+  Button,
   Checkbox,
-  List,
-  ListItem,
-  ListItemText
+  CheckboxGroup,
+  Space,
+  Form,
+  FormItem,
+  ListHeader,
+  useDialog
 } from '@wonder-ui/core';
-import { useSelections } from '@wonder-ui/hooks';
-
-const dataList = [1, 2, 3];
 
 export default () => {
-  const { allSelected, isSelected, toggleAll, toggle, partiallySelected } =
-    useSelections(dataList);
+  const dialog = useDialog();
+  const onFinish = (values: any) => {
+    dialog.show({
+      content: <pre>{JSON.stringify(values, null, 2)}</pre>,
+      buttons: [
+        {
+          text: '关闭',
+          primary: true,
+          onClick: () => {
+            dialog.hide();
+          }
+        }
+      ]
+    });
+  };
 
   return (
-    <Container size="sm">
-      <List component="div">
-        <ListItem
-          component="label"
-          media={
-            <Checkbox
-              circle
-              name="demo-checkbox"
-              indeterminate={partiallySelected}
-              checked={allSelected}
-              onChange={() => toggleAll()}
-            />
-          }
-        >
-          <ListItemText>Movies</ListItemText>
-        </ListItem>
-        <List component="div">
-          {dataList.map((item, index) => (
-            <ListItem
-              component="label"
-              key={index}
-              media={
-                <Checkbox
-                  circle
-                  name="demo-checkbox"
-                  value={`move ${item}`}
-                  checked={isSelected(item)}
-                  onChange={() => toggle(item)}
-                />
-              }
-            >
-              <ListItemText secondary="Click me!" primary={`Movie ${item}`} />
-            </ListItem>
-          ))}
-        </List>
-      </List>
-    </Container>
+    <Form
+      layout="vertical"
+      onFinish={onFinish}
+      footer={
+        <Button fullWidth variant="contained" size="large" type="submit">
+          提交
+        </Button>
+      }
+    >
+      {dialog.rendered}
+      <ListHeader>基础用法</ListHeader>
+      <FormItem label="选项组" name="options" initialValue={['apple']}>
+        <CheckboxGroup>
+          <Space direction="vertical">
+            <Checkbox value="apple">苹果</Checkbox>
+            <Checkbox value="orange">橘子</Checkbox>
+            <Checkbox value="banana">香蕉</Checkbox>
+          </Space>
+        </CheckboxGroup>
+      </FormItem>
+
+      <FormItem label="禁用选项组" name="options2">
+        <CheckboxGroup disabled>
+          <Space direction="vertical">
+            <Checkbox value="apple">苹果</Checkbox>
+            <Checkbox value="orange">橘子</Checkbox>
+            <Checkbox value="banana">香蕉</Checkbox>
+          </Space>
+        </CheckboxGroup>
+      </FormItem>
+    </Form>
   );
 };

@@ -1,7 +1,7 @@
 {
   "name": "wonder-ui",
   "private": true,
-  "version": "2.1.0",
+  "version": "2.1.1",
   "scripts": {
     "commit": "cz",
     "build": "build:core & build:styled & build:icons",

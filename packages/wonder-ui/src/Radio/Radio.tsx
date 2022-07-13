@@ -1,129 +1,179 @@
 import * as React from 'react';
+import CheckCircleFill from '../icons/CheckCircleFill';
+import Circle from '../icons/Circle';
+import RecordCircle from '../icons/RecordCircle';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { alpha } from '../styles/colorManipulator';
-import { radioClasses, useClasses } from './RadioClasses';
-import { css } from '@wonder-ui/utils';
+import { COMPONENT_NAME, radioClasses } from './RadioClasses';
+import { composeClasses, createCssVars, css } from '@wonder-ui/utils';
+import { RadioGroupContext } from '../RadioGroup/RadioGroupContext';
+import { useControlled, useEventCallback } from '@wonder-ui/hooks';
+import type { RadioProps, RadioStyleProps } from './RadioTypes';
 
-export interface RadioProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  /**
-   * @description 颜色
-   * @default primary
-   */
-  color?: 'primary' | 'secondary';
-  /**
-   * 标签
-   */
-  children?: React.ReactNode;
-}
+const useClasses = (styleProps: RadioStyleProps) => {
+  const { block, classes, checked, indeterminate, disabled } = styleProps;
 
-export interface RadioStyleProps extends RadioProps {}
+  const slots = {
+    root: [
+      'root',
+      block && 'block',
+      indeterminate && 'indeterminate',
+      checked && 'checked',
+      disabled && 'disabled'
+    ],
+    input: ['input'],
+    icon: ['icon'],
+    content: ['content']
+  };
 
-const RadioWrapper = styled('label', {
-  name: 'WuiCheckbox',
-  slot: 'Wrapper'
-})<{ styleProps: RadioStyleProps }>(({ theme, styleProps }) => ({
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
+
+const cssVars = createCssVars(COMPONENT_NAME, ['iconSize', 'gap']);
+
+const CheckboxRoot = styled('label', {
+  name: COMPONENT_NAME,
+  slot: 'Root'
+})(({ theme }) => ({
+  ...cssVars.style({
+    iconSize: 22,
+    gap: theme.spacing(1)
+  }),
+  ...theme.typography.body1,
   display: 'inline-flex',
-  alignItems: 'baseline',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
   cursor: 'pointer',
   WebkitTapHighlightColor: 'transparent',
-  ...(styleProps.disabled && {
-    color: theme.palette.action.disabled,
+
+  [`&.${radioClasses.block}`]: {
+    display: 'flex'
+  },
+
+  [`&.${radioClasses.disabled}`]: {
+    opacity: theme.palette.action.disabledOpacity,
     cursor: 'not-allowed'
-  }),
-  [`& .${radioClasses.input}`]: {
-    top: 2
-  },
-  [`& > span`]: {
-    paddingLeft: '.3em'
   }
 }));
 
-const RadioRoot = styled('input', { name: 'WuiRadio', slot: 'Root' })<{
-  styleProps: RadioStyleProps;
-}>(({ theme, styleProps }) => ({
-  appearance: 'none',
-  margin: 0,
-  padding: 0,
-  colorAdjust: 'exact',
-  width: `var(--radio-size, 1em)`,
-  height: `var(--radio-size, 1em)`,
-  fontSize: 'inherit',
-  verticalAlign: 'middle',
-  backgroundColor: `var(--radio-bg-color, ${theme.palette.background.paper})`,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'contain',
-  borderWidth: 1,
-  borderStyle: 'solid',
-  borderColor: `var(--radio-border-color, ${theme.palette.divider})`,
-  borderRadius: '50%',
-  position: 'relative',
-  transition: theme.transitions.create(
-    ['border-color', 'background-color', 'box-shadow', 'opacity'],
-    {
-      duration: theme.transitions.duration.shortest
-    }
-  ),
-  '&:checked': {
-    borderColor: `var(--radio-${styleProps.color}-color,${
-      theme.palette[styleProps.color!].main
-    })`,
-    backgroundColor: `var(--radio-${styleProps.color}-color,${
-      theme.palette[styleProps.color!].main
-    })`,
-    backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
-      `<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='${
-        theme.palette[styleProps.color!].contrastText
-      }'/></svg>`
-    )}")`
+const CheckboxIcon = styled('div', {
+  name: COMPONENT_NAME,
+  slot: 'Icon'
+})(({ theme }) => ({
+  flex: 'none',
+  color: theme.palette.text.icon,
+  width: cssVars.value('iconSize'),
+  height: cssVars.value('iconSize'),
+  ['& > *']: { display: 'block', width: '100%', height: '100%' },
+  [`.${radioClasses.checked} > &, .${radioClasses.indeterminate} > &`]: {
+    color: theme.palette.primary.main
   },
-
-  '&:disabled': {
-    pointerEvents: 'none',
-    filter: 'none',
-    opacity: theme.palette.action.disabledOpacity
+  [`.${radioClasses.disabled} > & `]: {
+    color: theme.palette.action.disabled
   }
 }));
 
-const Radio = React.forwardRef<HTMLInputElement, RadioProps>((inProps, ref) => {
-  const props = useThemeProps({ props: inProps, name: 'WuiRadio' });
-  const { className, children, color = 'primary', style, ...rest } = props;
-
-  const styleProps = { ...props, color };
-
-  const classes = useClasses(styleProps);
-
-  if (children) {
-    return (
-      <RadioWrapper
-        className={css(classes.root, className)}
-        style={style}
-        styleProps={styleProps}
-      >
-        <RadioRoot
-          className={classes.input}
-          ref={ref}
-          type="radio"
-          styleProps={styleProps}
-          {...rest}
-        />
-        <span>{children}</span>
-      </RadioWrapper>
-    );
-  }
-
-  return (
-    <RadioRoot
-      className={css(classes.root, className)}
-      ref={ref}
-      type="radio"
-      styleProps={styleProps}
-      style={style}
-      {...rest}
-    />
-  );
+const CheckboxInput = styled('input', {
+  name: COMPONENT_NAME,
+  slot: 'Input'
+})({
+  display: 'none'
 });
 
-export default Radio;
+const CheckboxContent = styled('div', {
+  name: COMPONENT_NAME,
+  slot: 'Content'
+})({
+  flex: '0 1 auto',
+  fontSize: 'inherit',
+  paddingLeft: cssVars.value('gap')
+});
+
+const Checkbox = React.forwardRef<HTMLLabelElement, RadioProps>(
+  (inProps, ref) => {
+    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
+    const {
+      children,
+      checked: checkedProp,
+      className,
+      defaultChecked: defaultCheckedProp = false,
+      disabled: disabledProp,
+      indeterminate = false,
+      icon,
+      id,
+      name,
+      onChange,
+      style,
+      value,
+      ...rest
+    } = props;
+
+    const context = React.useContext(RadioGroupContext);
+
+    const [_checked, setCheckedIfUncontrolled] = useControlled({
+      value: checkedProp,
+      defaultValue: defaultCheckedProp
+    });
+
+    const checked = context ? context.isValueSelected(value) : _checked;
+    const disabled = context ? context.disabled ?? disabledProp : disabledProp;
+
+    const styleProps = { ...props, indeterminate, checked, disabled };
+
+    const classes = useClasses(styleProps);
+
+    const handleChange = useEventCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCheckedIfUncontrolled(e.target.checked);
+
+        if (onChange) {
+          onChange(e);
+        }
+
+        if (context && value != undefined) {
+          context.handleChange(value);
+        }
+      }
+    );
+
+    const renderIcon = () => {
+      if (typeof icon === 'function') {
+        return icon(checked, indeterminate);
+      }
+      if (checked) {
+        return <CheckCircleFill />;
+      } else if (indeterminate) {
+        return <RecordCircle />;
+      } else {
+        return <Circle />;
+      }
+    };
+
+    return (
+      <CheckboxRoot
+        className={css(classes.root, className)}
+        style={style}
+        ref={ref}
+        {...rest}
+      >
+        <CheckboxInput
+          type="radio"
+          id={id}
+          name={name}
+          className={classes.input}
+          checked={checked}
+          disabled={disabled}
+          onChange={handleChange}
+        />
+        <CheckboxIcon className={classes.icon}>{renderIcon()}</CheckboxIcon>
+        {children && (
+          <CheckboxContent className={classes.content}>
+            {children}
+          </CheckboxContent>
+        )}
+      </CheckboxRoot>
+    );
+  }
+);
+
+export default Checkbox;

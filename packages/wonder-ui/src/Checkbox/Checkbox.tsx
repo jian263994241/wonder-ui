@@ -1,207 +1,177 @@
 import * as React from 'react';
+import CheckCircleFill from '../icons/CheckCircleFill';
+import Circle from '../icons/Circle';
+import RecordCircle from '../icons/RecordCircle';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { checkboxClasses, useClasses } from './CheckboxClasses';
-import { css } from '@wonder-ui/utils';
-import { useControlled, useForkRef } from '@wonder-ui/hooks';
+import { checkboxClasses, COMPONENT_NAME } from './CheckboxClasses';
+import { CheckboxGroupContext } from '../CheckboxGroup/CheckboxGroupContext';
+import { composeClasses, createCssVars, css } from '@wonder-ui/utils';
+import { useControlled, useEventCallback } from '@wonder-ui/hooks';
+import type { CheckboxProps, CheckboxStyleProps } from './CheckboxTypes';
 
-export interface CheckboxProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  /**
-   * @description 圆形
-   * @default false
-   */
-  circle?: boolean;
-  /**
-   * @description 颜色
-   * @default primary
-   */
-  color?: 'primary' | 'secondary';
-  /**
-   * 选中
-   */
-  checked?: boolean;
-  /**
-   * 默认选中
-   */
-  defaultChecked?: boolean;
-  /**
-   * 禁用
-   */
-  disabled?: boolean;
-  /**
-   * @description 不明确的
-   * @default false
-   */
-  indeterminate?: boolean;
-}
+const useClasses = (styleProps: CheckboxStyleProps) => {
+  const { block, classes, checked, indeterminate, disabled } = styleProps;
 
-export interface CheckboxStyleProps extends CheckboxProps {}
+  const slots = {
+    root: [
+      'root',
+      block && 'block',
+      indeterminate && 'indeterminate',
+      checked && 'checked',
+      disabled && 'disabled'
+    ],
+    input: ['input'],
+    icon: ['icon'],
+    content: ['content']
+  };
 
-const CheckboxWrapper = styled('label', {
-  name: 'WuiCheckbox',
-  slot: 'Wrapper'
-})<{ styleProps: CheckboxStyleProps }>(({ theme, styleProps }) => ({
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
+
+const cssVars = createCssVars(COMPONENT_NAME, ['iconSize', 'gap']);
+
+const CheckboxRoot = styled('label', {
+  name: COMPONENT_NAME,
+  slot: 'Root'
+})(({ theme }) => ({
+  ...cssVars.style({
+    iconSize: 22,
+    gap: theme.spacing(1)
+  }),
+  ...theme.typography.body1,
   display: 'inline-flex',
-  alignItems: 'baseline',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
   cursor: 'pointer',
   WebkitTapHighlightColor: 'transparent',
-  ...(styleProps.disabled && {
-    color: theme.palette.action.disabled,
+
+  [`&.${checkboxClasses.block}`]: {
+    display: 'flex'
+  },
+
+  [`&.${checkboxClasses.disabled}`]: {
+    opacity: theme.palette.action.disabledOpacity,
     cursor: 'not-allowed'
-  }),
-
-  [`& .${checkboxClasses.input}`]: {
-    top: 2
-  },
-
-  [`& > span`]: {
-    paddingLeft: '.3em'
   }
 }));
 
-const CheckboxRoot = styled('input', { name: 'WuiCheckbox', slot: 'Root' })<{
-  styleProps: CheckboxStyleProps;
-}>(({ theme, styleProps }) => ({
-  appearance: 'none',
-  padding: 0,
-  margin: 0,
-  colorAdjust: 'exact',
-  width: `var(--checkbox-size, 1em)`,
-  height: `var(--checkbox-size, 1em)`,
+const CheckboxIcon = styled('div', {
+  name: COMPONENT_NAME,
+  slot: 'Icon'
+})(({ theme }) => ({
+  flex: 'none',
+  color: theme.palette.text.icon,
+  width: cssVars.value('iconSize'),
+  height: cssVars.value('iconSize'),
+  ['& > *']: { display: 'block', width: '100%', height: '100%' },
+  [`.${checkboxClasses.checked} > &, .${checkboxClasses.indeterminate} > &`]: {
+    color: theme.palette.primary.main
+  },
+  [`.${checkboxClasses.disabled} > & `]: {
+    color: theme.palette.action.disabled
+  }
+}));
+
+const CheckboxInput = styled('input', {
+  name: COMPONENT_NAME,
+  slot: 'Input'
+})({
+  display: 'none'
+});
+
+const CheckboxContent = styled('div', {
+  name: COMPONENT_NAME,
+  slot: 'Content'
+})({
+  flex: '0 1 auto',
   fontSize: 'inherit',
-  outline: 0,
-  verticalAlign: 'middle',
-  position: 'relative',
-  backgroundColor: `var(--checkobx-bg-color, ${theme.palette.background.paper})`,
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'contain',
-  borderWidth: 1,
-  borderStyle: 'solid',
-  borderColor: `var(--checkbox-border-color, ${theme.palette.divider})`,
-  borderRadius: '.25em',
-  cursor: 'pointer',
-  transition: theme.transitions.create(
-    ['border-color', 'background-color', 'box-shadow', 'opacity'],
-    { duration: theme.transitions.duration.shortest }
-  ),
-  '&:checked': {
-    borderColor: `var(--checkbox-${styleProps.color}-color, ${
-      theme.palette[styleProps.color!].main
-    })`,
-    backgroundColor: `var(--checkbox-${styleProps.color}-color, ${
-      theme.palette[styleProps.color!].main
-    })`,
-    backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
-      `<svg xmlns="http://www.w3.org/2000/svg" fill="${
-        theme.palette[styleProps.color!].contrastText
-      }"  viewBox="0 0 16 16" ><path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"></path></svg>`
-    )}")`
-  },
-  [`&.${checkboxClasses.indeterminate}, &:indeterminate`]: {
-    borderColor: `var(--checkbox-${styleProps.color}-color, ${
-      theme.palette[styleProps.color!].main
-    })`,
-    backgroundColor: `var(--checkbox-${styleProps.color}-color, ${
-      theme.palette[styleProps.color!].main
-    })`,
-    backgroundImage: `url("data:image/svg+xml, ${encodeURIComponent(
-      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="none" stroke="${
-        theme.palette[styleProps.color!].contrastText
-      }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 10h8"/></svg>`
-    )}")`
-  },
-  '&:disabled': {
-    pointerEvents: 'none',
-    cursor: 'not-allowed',
-    filter: 'none',
-    opacity: theme.palette.action.disabledOpacity
-  },
-  [`&.${checkboxClasses.circle}`]: {
-    width: 20,
-    height: 20,
-    borderRadius: '50%'
-  }
-}));
+  paddingLeft: cssVars.value('gap')
+});
 
-const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
+const Checkbox = React.forwardRef<HTMLLabelElement, CheckboxProps>(
   (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiCheckbox' });
-
+    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
       children,
       checked: checkedProp,
-      circle = false,
       className,
-      color = 'primary',
       defaultChecked: defaultCheckedProp = false,
-      disabled,
+      disabled: disabledProp,
       indeterminate = false,
+      icon,
       onChange,
       style,
+      value,
+      id,
+      name,
       ...rest
     } = props;
 
-    const [checked, setChecked] = useControlled({
+    const context = React.useContext(CheckboxGroupContext);
+
+    const [_checked, setCheckedIfUncontrolled] = useControlled({
       value: checkedProp,
       defaultValue: defaultCheckedProp
     });
 
-    const rootRef = React.useRef<HTMLInputElement>(null);
-    const hadnleRef = useForkRef(rootRef, ref);
+    const checked = context ? context.isValueSelected(value) : _checked;
+    const disabled = context ? context.disabled ?? disabledProp : disabledProp;
 
-    const styleProps = { ...props, color, circle, indeterminate };
+    const styleProps = { ...props, indeterminate, checked, disabled };
 
     const classes = useClasses(styleProps);
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> =
-      React.useCallback(
-        (e) => {
-          const input = e.target;
+    const handleChange = useEventCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCheckedIfUncontrolled(e.target.checked);
 
-          setChecked(input.checked);
-          if (onChange) {
-            onChange(e);
-          }
-        },
-        [onChange, indeterminate]
-      );
+        if (onChange) {
+          onChange(e);
+        }
 
-    if (children) {
-      return (
-        <CheckboxWrapper
-          className={css(classes.root, className)}
-          styleProps={styleProps}
-          style={style}
-        >
-          <CheckboxRoot
-            checked={checked}
-            className={classes.input}
-            disabled={disabled}
-            onChange={handleChange}
-            ref={hadnleRef}
-            type="checkbox"
-            styleProps={styleProps}
-            {...rest}
-          />
-          <span>{children}</span>
-        </CheckboxWrapper>
-      );
-    }
+        if (context && value != undefined) {
+          context.handleChange(value);
+        }
+      }
+    );
+
+    const renderIcon = () => {
+      if (typeof icon === 'function') {
+        return icon(checked, indeterminate);
+      }
+      if (checked) {
+        return <CheckCircleFill />;
+      } else if (indeterminate) {
+        return <RecordCircle />;
+      } else {
+        return <Circle />;
+      }
+    };
 
     return (
       <CheckboxRoot
-        checked={checked}
         className={css(classes.root, className)}
-        disabled={disabled}
-        onChange={handleChange}
-        ref={hadnleRef}
-        type="checkbox"
-        styleProps={styleProps}
         style={style}
+        ref={ref}
         {...rest}
-      />
+      >
+        <CheckboxInput
+          type="checkbox"
+          className={classes.input}
+          checked={checked}
+          disabled={disabled}
+          onChange={handleChange}
+          id={id}
+          name={name}
+        />
+        <CheckboxIcon className={classes.icon}>{renderIcon()}</CheckboxIcon>
+        {children && (
+          <CheckboxContent className={classes.content}>
+            {children}
+          </CheckboxContent>
+        )}
+      </CheckboxRoot>
     );
   }
 );

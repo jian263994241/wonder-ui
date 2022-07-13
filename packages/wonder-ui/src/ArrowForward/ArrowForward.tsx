@@ -9,7 +9,7 @@ export interface ArrowForwardProps extends SvgIconProps {
   direction?: 'left' | 'right' | 'up' | 'down';
 }
 
-const ArrowForward = React.forwardRef<Element, ArrowForwardProps>(
+const ArrowForward = React.forwardRef<SVGSVGElement, ArrowForwardProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiArrowForward' });
     const { direction = 'right', ...rest } = props;
