@@ -1,10 +1,11 @@
 import * as React from 'react';
+import Grow, { GrowProps } from '../Grow';
 import Paper from '../Paper';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
-import { emphasize, alpha } from '../styles/colorManipulator';
+import { alpha, emphasize } from '../styles/colorManipulator';
 import { snackbarContentClasses, useClasses } from './SnackbarContentClasses';
-import Grow, { GrowProps } from '../Grow';
 
 export interface SnackbarContentProps extends GrowProps {
   /**
@@ -32,7 +33,6 @@ const SnackbarContentRoot = styled(Paper.withComponent(Grow), {
   const backgroundColor = emphasize(theme.palette.background.default, emphasis);
 
   return {
-    ...theme.typography.body2,
     color: theme.palette.getContrastText(backgroundColor),
     backgroundColor: alpha(backgroundColor, 0.92),
     padding: '6px 16px',
@@ -54,7 +54,7 @@ const SnackbarContentRoot = styled(Paper.withComponent(Grow), {
   };
 });
 
-const SnackbarContentMessage = styled('div', {
+const SnackbarContentMessage = styled(Typography, {
   name: 'WuiSnackbarContent',
   slot: 'Message'
 })({
@@ -89,7 +89,7 @@ const SnackbarContent = React.forwardRef<HTMLDivElement, SnackbarContentProps>(
 
     return (
       <SnackbarContentRoot ref={ref} {...rest} classes={{ root: classes.root }}>
-        <SnackbarContentMessage className={classes.message}>
+        <SnackbarContentMessage variant="body2" className={classes.message}>
           {message}
         </SnackbarContentMessage>
         {action && (

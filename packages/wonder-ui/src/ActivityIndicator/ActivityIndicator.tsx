@@ -1,153 +1,110 @@
-import * as React from 'react';
 import CircularProgress from '../CircularProgress';
 import Indicator from './Indicator';
 import styled from '../styles/styled';
 import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
 import {
+  activityIndicatorClasses,
+  COMPONENT_NAME
+} from './ActivityIndicatorClasses';
+import {
   capitalize,
   composeClasses,
+  createCssVars,
   css,
-  forwardRef,
-  generateUtilityClasses
+  forwardRef
 } from '@wonder-ui/utils';
+import type { ActivityIndicatorProps } from './ActivityIndicatorTypes';
+import Circular from '../CircularProgress/Circular';
 
-const COMPONENT_NAME = 'WuiActivityIndicator';
-
-const activityIndicatorClasses = generateUtilityClasses(COMPONENT_NAME, [
-  'root',
-  'icon',
-  'text',
-  'vertical',
-  'spinner',
-  'circular',
+const cssVars = createCssVars(COMPONENT_NAME, [
   'iconSizeSmall',
   'iconSizeMedium',
   'iconSizeLarge',
-  'colorInherit',
   'colorPrimary',
   'colorSecondary',
-  'colorSuccess',
-  'colorDanger',
-  'colorWarning',
-  'colorInfo',
   'colorLight',
-  'colorDark'
+  'colorDark',
+  'gap'
 ]);
 
-const useClasses = (styleProps: ActivityIndicatorStyleProps) => {
+const useClasses = (styleProps: ActivityIndicatorProps) => {
   const { classes, vertical, color, iconSize, type } = styleProps;
 
   const slots = {
-    root: [
-      'root',
-      vertical && 'vertical',
-      type && type,
+    root: ['root', vertical && 'vertical', type && type],
+    icon: [
+      'icon',
+      iconSize && `iconSize${capitalize(iconSize)}`,
       color && `color${capitalize(color)}`
     ],
-    icon: ['icon', iconSize && `iconSize${capitalize(iconSize)}`],
     text: ['text']
   };
 
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const SIZE = {
-  small: 16,
-  medium: 24,
-  large: 35
-} as const;
-
-export interface ActivityIndicatorProps {
-  /**
-   * 按钮颜色
-   * @default inherit
-   */
-  color?:
-    | 'inherit'
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info'
-    | 'light'
-    | 'dark';
-  classes?: Partial<typeof activityIndicatorClasses>;
-  className?: string;
-  /**
-   * 图标尺寸
-   * @default medium
-   */
-  iconSize?: 'small' | 'medium' | 'large';
-  style?: React.CSSProperties;
-  /**
-   * 文字
-   *
-   */
-  text?: string;
-  /**
-   * 类型
-   * @default circular
-   */
-  type?: 'spinner' | 'circular';
-  /**
-   * 垂直布局
-   * @default false
-   */
-  vertical?: boolean;
-}
-
-interface ActivityIndicatorStyleProps extends ActivityIndicatorProps {}
-
 const ActivityIndicatorRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})<{ styleProps: ActivityIndicatorStyleProps }>(({ theme, styleProps }) => ({
+})<{ styleProps: ActivityIndicatorProps }>(({ theme, styleProps }) => ({
+  ...cssVars.style({
+    iconSizeLarge: 36,
+    iconSizeMedium: 24,
+    iconSizeSmall: 16,
+    colorPrimary: theme.palette.primary.main,
+    colorSecondary: theme.palette.secondary.main,
+    colorLight: theme.palette.light.main,
+    colorDark: theme.palette.dark.main,
+    gap: theme.spacing(1)
+  }),
   display: 'flex',
   alignItems: 'center',
-  ...(styleProps.vertical
-    ? {
-        flexDirection: 'column',
-        '& > span + span': {
-          marginTop: theme.spacing(1)
-        }
-      }
-    : {
-        flexWrap: 'nowrap',
-
-        '& > span + span': {
-          marginLeft: theme.spacing(1)
-        }
-      })
+  [`&.${activityIndicatorClasses.vertical}`]: {
+    flexDirection: 'column'
+  },
+  [`& > .${activityIndicatorClasses.text}`]: {
+    marginLeft: cssVars.value('gap')
+  },
+  [`&.${activityIndicatorClasses.vertical} > .${activityIndicatorClasses.text}`]:
+    {
+      marginTop: cssVars.value('gap'),
+      marginLeft: 0
+    }
 }));
 
-const ActivityIndicatorIcon = styled('span', {
+const ActivityIndicatorIcon = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Icon'
-})<{ styleProps: ActivityIndicatorStyleProps }>(({ theme, styleProps }) => ({
-  display: 'block',
-  fontSize: theme.typography.pxToRem(SIZE[styleProps.iconSize!]),
-  ...(styleProps.color != 'inherit' && {
-    color: theme.palette[styleProps.color!]?.dark
-  }),
-  '& > *': {
-    display: 'block!important'
-  }
-}));
-
-const ActivityIndicatorText = styled(Typography, {
-  name: COMPONENT_NAME,
-  slot: 'Text'
 })({
-  // color: 'inherit'
+  [`&.${activityIndicatorClasses.iconSizeLarge}`]: {
+    fontSize: cssVars.value('iconSizeLarge')
+  },
+  [`&.${activityIndicatorClasses.iconSizeMedium}`]: {
+    fontSize: cssVars.value('iconSizeMedium')
+  },
+  [`&.${activityIndicatorClasses.iconSizeSmall}`]: {
+    fontSize: cssVars.value('iconSizeSmall')
+  },
+  [`&.${activityIndicatorClasses.colorPrimary}`]: {
+    color: cssVars.value('colorPrimary')
+  },
+  [`&.${activityIndicatorClasses.colorSecondary}`]: {
+    color: cssVars.value('colorSecondary')
+  },
+  [`&.${activityIndicatorClasses.colorLight}`]: {
+    color: cssVars.value('colorLight')
+  },
+  [`&.${activityIndicatorClasses.colorDark}`]: {
+    color: cssVars.value('colorDark')
+  }
 });
 
 const ActivityIndicator = forwardRef<HTMLDivElement, ActivityIndicatorProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
-      color = 'inherit',
+      color = 'primary',
       className,
       type = 'circular',
       text,
@@ -167,22 +124,18 @@ const ActivityIndicator = forwardRef<HTMLDivElement, ActivityIndicatorProps>(
         styleProps={styleProps}
         {...rest}
       >
-        <ActivityIndicatorIcon className={classes.icon} styleProps={styleProps}>
-          {type === 'circular' ? (
-            <CircularProgress size={SIZE[iconSize]} color={color} />
-          ) : (
-            <Indicator />
-          )}
+        <ActivityIndicatorIcon className={classes.icon}>
+          {type === 'circular' ? <Circular /> : <Indicator />}
         </ActivityIndicatorIcon>
         {text && (
-          <ActivityIndicatorText
+          <Typography
+            noWrap
             className={classes.text}
-            component="span"
             variant="body2"
-            color="inherit"
+            color="textSecondary"
           >
             {text}
-          </ActivityIndicatorText>
+          </Typography>
         )}
       </ActivityIndicatorRoot>
     );

@@ -30,13 +30,8 @@ interface StyleProps extends ButtonBaseProps {
 }
 
 export const useClasses = (styleProps: StyleProps) => {
-  const {
-    active,
-    disabled,
-    focusVisible,
-    focusVisibleClassName,
-    classes
-  } = styleProps;
+  const { active, disabled, focusVisible, focusVisibleClassName, classes } =
+    styleProps;
 
   const slots = {
     root: [
@@ -54,7 +49,11 @@ export const useClasses = (styleProps: StyleProps) => {
 const ButtonBaseRoot = styled('button', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})({
+})(({ theme }) => ({
+  fontFamily: theme.typography.fontFamily,
+  fontSize: theme.typography.pxToRem(14),
+  fontWeight: theme.typography.fontWeightMedium,
+  lineHeight: 1.75,
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -89,7 +88,7 @@ const ButtonBaseRoot = styled('button', {
   '@media print': {
     colorAdjust: 'exact'
   }
-});
+}));
 
 const ButtonBase = forwardRef<HTMLElement, ButtonBaseProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });

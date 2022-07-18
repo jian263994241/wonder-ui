@@ -19,7 +19,6 @@ export interface ListItemTextProps
    * Root element
    */
   component?: React.ElementType;
-
   /**
    * Primary text
    */
@@ -48,11 +47,10 @@ export interface ListItemTextProps
 const ListItemTextRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})(({ theme }) => ({
-  ...theme.typography.subtitle1,
+})({
   color: 'inherit',
   flex: '1 1 auto'
-}));
+});
 
 const ListItemText = forwardRef<HTMLElement, ListItemTextProps>(
   (inProps, ref) => {

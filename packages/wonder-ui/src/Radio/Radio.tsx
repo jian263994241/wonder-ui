@@ -3,6 +3,7 @@ import CheckCircleFill from '../icons/CheckCircleFill';
 import Circle from '../icons/Circle';
 import RecordCircle from '../icons/RecordCircle';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { COMPONENT_NAME, radioClasses } from './RadioClasses';
 import { composeClasses, createCssVars, css } from '@wonder-ui/utils';
@@ -39,7 +40,7 @@ const CheckboxRoot = styled('label', {
     iconSize: 22,
     gap: theme.spacing(1)
   }),
-  ...theme.typography.body1,
+
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
@@ -80,7 +81,7 @@ const CheckboxInput = styled('input', {
   display: 'none'
 });
 
-const CheckboxContent = styled('div', {
+const CheckboxContent = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Content'
 })({
@@ -167,7 +168,7 @@ const Checkbox = React.forwardRef<HTMLLabelElement, RadioProps>(
         />
         <CheckboxIcon className={classes.icon}>{renderIcon()}</CheckboxIcon>
         {children && (
-          <CheckboxContent className={classes.content}>
+          <CheckboxContent className={classes.content} variant="body1">
             {children}
           </CheckboxContent>
         )}

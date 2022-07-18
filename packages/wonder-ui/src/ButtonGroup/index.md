@@ -1,12 +1,13 @@
 ---
+hide: true
 mobile: false
 toc: menu
 nav:
   path: /components
 group:
-  path: /general
-  title: 通用
-  order: 0
+  path: /will-remove
+  title: 弃用
+  order: 999
 ---
 
 # ButtonGroup 按钮组

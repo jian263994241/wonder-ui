@@ -1,8 +1,6 @@
-import { TypographyVariants } from '../styles/theme/createTypography';
 import { TypographyClassesType } from './TypographyClasses';
 
-type TypographyVariants2 = Pick<
-  TypographyVariants,
+export type TypographyVariantKeys =
   | 'h1'
   | 'h2'
   | 'h3'
@@ -13,34 +11,28 @@ type TypographyVariants2 = Pick<
   | 'subtitle2'
   | 'body1'
   | 'body2'
->;
+  | 'caption';
 
-export interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TypographyProps
+  extends Omit<React.AllHTMLAttributes<any>, 'as'> {
+  classes?: Partial<TypographyClassesType>;
+  component?: React.ElementType;
   /**
    * @description 对齐
-   * @default inherit
    */
-  align?: 'center' | 'inherit' | 'justify' | 'left' | 'right';
-  /**
-   * class
-   */
-  classes?: Partial<TypographyClassesType>;
+  align?: 'center' | 'justify' | 'left' | 'right';
   /**
    * @description 颜色
-   * @default inherit
    */
   color?:
-    | 'inherit'
     | 'primary'
     | 'secondary'
-    | 'textPrimary'
-    | 'textSecondary'
+    | 'success'
     | 'error'
-    | 'warning';
-  /**
-   * Root element
-   */
-  component?: React.ElementType;
+    | 'warning'
+    | 'textPrimary'
+    | 'textSecondary';
+
   /**
    * @description 不换行
    * @default false
@@ -65,5 +57,5 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
    * @description 样式类型
    * @default body1
    */
-  variant?: keyof TypographyVariants2 | 'inherit';
+  variant?: TypographyVariantKeys;
 }

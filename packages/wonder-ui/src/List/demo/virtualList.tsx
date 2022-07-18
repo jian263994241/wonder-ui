@@ -12,7 +12,7 @@ export default () => {
   return (
     <Page ContentProps={containerProps}>
       <div style={{ padding: 20 }}>
-        <Typography paragraph>
+        <Typography gutterBottom>
           This example shows how to use Virtual List
         </Typography>
       </div>

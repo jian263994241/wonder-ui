@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import {
   COMPONENT_NAME,
@@ -18,19 +19,17 @@ export interface ListHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   sticky?: boolean;
 }
 
-const ListHeaderRoot = styled('div', {
+const ListHeaderRoot = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Root'
 })(
-  ({ theme }) => ({
-    ...theme.typography.subtitle2,
-    color: theme.palette.text.secondary,
+  {
     paddingTop: 8,
     paddingBlock: 8,
     paddingLeft: cssVars.value('paddingLeft'),
     paddingRight: cssVars.value('paddingRight'),
     backgroundColor: cssVars.value('titleBackground')
-  }),
+  },
 
   `
   &.${listHeaderClasses.sticky} {
@@ -57,6 +56,8 @@ const ListHeader = React.forwardRef<HTMLDivElement, ListHeaderProps>(
         as={component}
         ref={ref}
         {...rest}
+        variant="subtitle2"
+        color="textSecondary"
       >
         {children}
       </ListHeaderRoot>

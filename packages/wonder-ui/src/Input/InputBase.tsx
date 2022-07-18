@@ -232,6 +232,7 @@ const InputPrefix = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Prefix'
 })(({ theme }) => ({
+  color: theme.palette.text.icon,
   display: 'flex',
   alignItems: 'center',
   flexShrink: 0,

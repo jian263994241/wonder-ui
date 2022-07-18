@@ -5,6 +5,7 @@ import Fade from '../Fade';
 import IconButton from '../IconButton';
 import Space from '../Space';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import {
   capitalize,
@@ -132,7 +133,6 @@ const NoticebarRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
   const textColor = darken(color, 0.2);
 
   return {
-    ...theme.typography.body2,
     margin: 0,
     boxSizing: 'border-box',
     width: '100%',
@@ -181,7 +181,7 @@ const NoticebarTextWrap = styled('div', {
   overflow: 'hidden'
 });
 
-const NoticebarText = styled('span', {
+const NoticebarText = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Text'
 })<{
@@ -342,6 +342,7 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
               style={trackStyle}
               styleProps={styleProps}
               onTransitionEnd={onTransitionEnd}
+              variant="body2"
             >
               {text}
             </NoticebarText>

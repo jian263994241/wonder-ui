@@ -1,10 +1,11 @@
-import * as defaultIcons from './defaultIcons';
 import * as React from 'react';
+import statusIcons from './defaultIcons';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { COMPONENT_NAME, resultClasses } from './ResultClasses';
-import { ResultProps } from './ResultTypes';
 import { composeClasses, css } from '@wonder-ui/utils';
+import { ResultProps } from './ResultTypes';
 
 const useClasses = (styleProps: ResultProps) => {
   const { classes, status } = styleProps;
@@ -21,10 +22,9 @@ const useClasses = (styleProps: ResultProps) => {
 const ResultRoot = styled('div', {
   slot: 'Root',
   name: COMPONENT_NAME
-})(({ theme }) => ({
-  ...theme.typography.body1,
+})({
   padding: '32px 12px'
-}));
+});
 
 const ResultIcon = styled('div', {
   slot: 'Icon',
@@ -53,23 +53,16 @@ const ResultIcon = styled('div', {
   }
 }));
 
-const ResultTitle = styled('div', {
+const ResultTitle = styled(Typography, {
   slot: 'Title',
   name: COMPONENT_NAME
-})(({ theme }) => ({
-  fontSize: theme.typography.pxToRem(18),
-  textAlign: 'center',
-  color: theme.palette.text.primary
-}));
+})({});
 
-const ResultDescription = styled('div', {
+const ResultDescription = styled(Typography, {
   slot: 'Description',
   name: COMPONENT_NAME
 })(({ theme }) => ({
-  fontSize: theme.typography.pxToRem(13),
-  textAlign: 'center',
-  marginTop: 8,
-  color: theme.palette.text.secondary
+  marginTop: 8
 }));
 
 const Result = React.forwardRef<HTMLDivElement, ResultProps>((inProps, ref) => {
@@ -83,14 +76,26 @@ const Result = React.forwardRef<HTMLDivElement, ResultProps>((inProps, ref) => {
 
   const resultIcon =
     icon ||
-    (defaultIcons[status] ? React.createElement(defaultIcons[status]) : null);
+    (statusIcons[status] ? React.createElement(statusIcons[status]) : null);
 
   return (
     <ResultRoot ref={ref} className={css(classes.root, className)} {...rest}>
       <ResultIcon className={classes.icon}>{resultIcon}</ResultIcon>
-      <ResultTitle className={classes.title}>{title}</ResultTitle>
+      <ResultTitle
+        className={classes.title}
+        variant="subtitle1"
+        color="textPrimary"
+        align="center"
+      >
+        {title}
+      </ResultTitle>
       {description && (
-        <ResultDescription className={classes.description}>
+        <ResultDescription
+          className={classes.description}
+          variant="caption"
+          color="textSecondary"
+          align="center"
+        >
           {description}
         </ResultDescription>
       )}

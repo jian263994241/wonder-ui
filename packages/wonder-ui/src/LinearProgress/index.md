@@ -1,17 +1,20 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /fb
+  title: 反馈
+  order: 5
 ---
+### LinearProgress 进度条
 
-### LinearProgress
-
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
-
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| animated | 条纹动画 | boolean |
-| classes | css |  |
-| color | 颜色 | 'primary' \| 'secondary' \| 'success' \| 'error' \| 'danger' \| 'warning' \| 'info' | primary
-| value | 值 | number |
-| variant | 类型 | 'determinate' \| 'indeterminate' | indeterminate
+进度条表示了一个不明确的等待时间，或者显示处理过程的时间长短
 
 
+## 代码演示
+
+### 基本使用
+
+<code src="./demo/demo1.tsx"></code>

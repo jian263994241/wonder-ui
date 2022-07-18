@@ -30,6 +30,12 @@ group:
 
 <code src="../CheckableTag/demo/demo1.tsx"></code>
 
-<API src="./Tag.tsx" props="color|variant|closable|onClose"></API>
+## API
 
-<API src="../CheckableTag/CheckableTag.tsx" props="checked|defaultChecked|onChange"></API>
+### Tag
+
+<API src="./Tag.tsx" hideTitle></API>
+
+### CheckableTag
+
+<API src="../CheckableTag/CheckableTag.tsx" hideTitle></API>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import XIcon from '../icons/X';
 import { alpha } from '../styles/colorManipulator';
@@ -17,7 +18,7 @@ export interface TagProps extends React.HTMLAttributes<HTMLElement> {
     | 'primary'
     | 'secondary'
     | 'success'
-    | 'danger'
+    | 'error'
     | 'warning'
     | 'info'
     | 'light'
@@ -38,11 +39,10 @@ export interface TagProps extends React.HTMLAttributes<HTMLElement> {
   onClose?: () => void;
 }
 
-const TagRoot = styled('span', {
+const TagRoot = styled(Typography, {
   name: 'WuiTag',
   slot: 'Root'
 })<{ styleProps: TagProps }>(({ theme, styleProps }) => ({
-  ...theme.typography.body2,
   boxSizing: 'border-box',
   listStyle: 'none',
   display: 'inline-block',
@@ -100,10 +100,11 @@ const Tag = React.forwardRef<HTMLElement, TagProps>((inProps, ref) => {
 
   return (
     <TagRoot
+      {...rest}
       ref={ref}
       className={css(classes.root, className)}
       styleProps={styleProps}
-      {...rest}
+      variant="body2"
     >
       {children}
       {closable && (

@@ -57,7 +57,6 @@ const ButtonRoot = styled(ButtonBase, {
         : undefined;
 
     return {
-      ...theme.typography.button,
       backgroundColor: 'transparent',
       border: 'thin solid transparent',
       ...(styleProps.shape === 'default' && {

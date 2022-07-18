@@ -1,13 +1,15 @@
 import * as React from 'react';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
-import { css } from '@wonder-ui/utils';
 import { checkableTagClasses, useClasses } from './CheckableTagClasses';
+import { css } from '@wonder-ui/utils';
 import { useControlled } from '@wonder-ui/hooks';
 
-export interface CheckableTagProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface CheckableTagProps {
+  className?: string;
   classes?: Partial<typeof checkableTagClasses>;
+  children?: React.ReactNode;
   /**
    * 选中
    */
@@ -20,13 +22,14 @@ export interface CheckableTagProps
    * 值改变时回调
    */
   onChange?: (checked: boolean) => void;
+
+  onClick?: React.MouseEventHandler;
 }
 
-const CheckableTagRoot = styled('span', {
+const CheckableTagRoot = styled(Typography, {
   name: 'WuiCheckableTag',
   slot: 'Root'
 })(({ theme }) => ({
-  ...theme.typography.body2,
   boxSizing: 'border-box',
   listStyle: 'none',
   display: 'inline-block',
@@ -100,6 +103,7 @@ const CheckableTag = React.forwardRef<HTMLElement, CheckableTagProps>(
         className={css(classes.root, className)}
         onClick={handleClick}
         {...rest}
+        variant="body2"
       >
         {children}
       </CheckableTagRoot>

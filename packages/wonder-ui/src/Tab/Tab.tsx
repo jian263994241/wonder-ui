@@ -208,7 +208,6 @@ const Tab = React.forwardRef<HTMLSpanElement, TabProps>((props, ref) => {
       <TabLabel
         className={classes.label}
         variant="body1"
-        color="inherit"
         align="center"
         noWrap={!wrapped}
       >

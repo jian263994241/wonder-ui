@@ -94,7 +94,7 @@ const NavbarTitle = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Title'
 })(({ theme }) => ({
-  ...theme.typography.ellipsis('70%', 1),
+  ...theme.typography.ellipsis(1, '70%'),
   display: 'block',
   position: 'relative',
   textAlign: 'center',
@@ -107,7 +107,7 @@ const NavbarSubTitle = styled('div', {
   name: COMPONENT_NAME,
   slot: 'SubTitle'
 })(({ theme }) => ({
-  ...theme.typography.ellipsis('100%', 1),
+  ...theme.typography.ellipsis(1),
   display: 'block',
   fontSize: '0.65em',
   fontWeight: 400,

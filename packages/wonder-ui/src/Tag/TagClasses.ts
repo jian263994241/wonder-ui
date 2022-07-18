@@ -13,7 +13,6 @@ export const tagClasses = generateUtilityClasses('WuiTag', [
   'colorSecondary',
   'colorSuccess',
   'colorError',
-  'colorDanger',
   'colorWarning',
   'colorInfo',
   'colorLight',
@@ -27,7 +26,7 @@ export interface TagStyleProps {
     | 'primary'
     | 'secondary'
     | 'success'
-    | 'danger'
+    | 'error'
     | 'warning'
     | 'info'
     | 'light'

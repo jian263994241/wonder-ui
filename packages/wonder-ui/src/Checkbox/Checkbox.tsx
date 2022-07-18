@@ -3,6 +3,7 @@ import CheckCircleFill from '../icons/CheckCircleFill';
 import Circle from '../icons/Circle';
 import RecordCircle from '../icons/RecordCircle';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { checkboxClasses, COMPONENT_NAME } from './CheckboxClasses';
 import { CheckboxGroupContext } from '../CheckboxGroup/CheckboxGroupContext';
@@ -39,7 +40,7 @@ const CheckboxRoot = styled('label', {
     iconSize: 22,
     gap: theme.spacing(1)
   }),
-  ...theme.typography.body1,
+
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
@@ -80,12 +81,11 @@ const CheckboxInput = styled('input', {
   display: 'none'
 });
 
-const CheckboxContent = styled('div', {
+const CheckboxContent = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Content'
 })({
   flex: '0 1 auto',
-  fontSize: 'inherit',
   paddingLeft: cssVars.value('gap')
 });
 
@@ -167,7 +167,7 @@ const Checkbox = React.forwardRef<HTMLLabelElement, CheckboxProps>(
         />
         <CheckboxIcon className={classes.icon}>{renderIcon()}</CheckboxIcon>
         {children && (
-          <CheckboxContent className={classes.content}>
+          <CheckboxContent className={classes.content} variant="body1">
             {children}
           </CheckboxContent>
         )}

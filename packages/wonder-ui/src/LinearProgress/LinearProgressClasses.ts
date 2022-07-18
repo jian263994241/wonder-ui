@@ -1,42 +1,20 @@
-import {
-  capitalize,
-  composeClasses,
-  generateUtilityClasses
-} from '@wonder-ui/utils';
+import { generateUtilityClasses } from '@wonder-ui/utils';
 
-export const linearProgressClasses = generateUtilityClasses(
-  'WuiLinearProgress',
-  [
-    'root',
-    'inner',
-    'bar',
-    'info',
-    'animated',
-    'colorPrimary',
-    'colorSecondary',
-    'colorSuccess',
-    'colorError',
-    'colorDanger',
-    'colorWarning',
-    'colorInfo'
-  ]
-);
+export const COMPONENT_NAME = 'WuiLinearProgress';
 
-export interface linearProgressStyleProps {
-  animated?: boolean;
-  classes?: Partial<typeof linearProgressClasses>;
-  color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
-}
+export const linearProgressClasses = generateUtilityClasses(COMPONENT_NAME, [
+  'root',
+  'inner',
+  'bar',
+  'text',
+  'animated',
+  'colorPrimary',
+  'colorSecondary',
+  'colorSuccess',
+  'colorError',
+  'colorWarning',
+  'colorLight',
+  'colorDark'
+]);
 
-export const useClasses = (styleProps: linearProgressStyleProps) => {
-  const { animated, classes, color } = styleProps;
-
-  const slots = {
-    root: ['root'],
-    inner: ['inner'],
-    bar: ['bar', animated && 'animated', color && `color${capitalize(color)}`],
-    info: ['info']
-  };
-
-  return composeClasses('WuiLinearProgress', slots, classes);
-};
+export type LinearProgressClassesType = typeof linearProgressClasses;

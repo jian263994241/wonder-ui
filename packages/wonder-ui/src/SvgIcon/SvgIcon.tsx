@@ -11,6 +11,10 @@ export interface SvgIconProps extends React.SVGAttributes<SVGSVGElement> {
   classes?: Partial<typeof svgIconClasses>;
   titleAccess?: string;
   /**
+   * 块状显示
+   */
+  block?: boolean;
+  /**
    * Root className
    */
   className?: string;
@@ -31,10 +35,10 @@ export interface SvgIconProps extends React.SVGAttributes<SVGSVGElement> {
 }
 
 const useClasses = (styleProps: SvgIconProps) => {
-  const { classes, spin } = styleProps;
+  const { classes, spin, block } = styleProps;
 
   const slots = {
-    root: ['root', spin && 'spin']
+    root: ['root', spin && 'spin', block && 'block']
   };
 
   return composeClasses('WuiSvgIcon', slots, classes);
@@ -49,6 +53,10 @@ const spin = keyframes({
 const SvgIconRoot = styled('svg', { name: COMPONENT_NAME, slot: 'Root' })({
   fill: 'currentColor',
 
+  [`&.${svgIconClasses.block}`]: {
+    display: 'block'
+  },
+
   [`&.${svgIconClasses.spin}`]: {
     animation: `${spin} 1s steps(12, end) infinite`
   }
@@ -62,10 +70,11 @@ const SvgIcon = forwardRef<SVGSVGElement, SvgIconProps>((inProps, ref) => {
     titleAccess,
     spin = false,
     viewBox = '0 0 16 16',
+    block = false,
     ...rest
   } = props;
 
-  const styleProps = { ...props, spin };
+  const styleProps = { ...props, spin, block };
 
   const classes = useClasses(styleProps);
 

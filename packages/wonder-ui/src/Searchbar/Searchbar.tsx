@@ -101,12 +101,12 @@ const useClasses = (styleProps: SearchbarStyleProps) => {
 const SearchbarRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})(({ theme }) => ({
+})({
   width: '100%',
-  height: theme.typography.pxToRem(44),
+  height: 44,
   position: 'relative',
   boxSizing: 'border-box'
-}));
+});
 
 const SearchbarInner = styled('div', {
   name: 'WuiNavbar',
@@ -152,7 +152,9 @@ const SearchbarInput = styled(Input, {
   slot: 'Input'
 })<{ styleProps: SearchbarStyleProps }>(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
-  borderRadius: theme.shape.borderRadius
+  borderRadius: theme.shape.borderRadius,
+  paddingLeft: 8,
+  paddingRight: 8
 }));
 
 const SearchbarCancelButton = styled(ButtonBase, {

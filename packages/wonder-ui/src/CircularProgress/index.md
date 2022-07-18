@@ -1,20 +1,24 @@
 ---
-sidemenu: false
+mobile: false
+toc: menu
+nav:
+  path: /components
+group:
+  path: /fb
+  title: 反馈
+  order: 5
 ---
 
-### CircularProgress
+# CircularProgress 进度环
 
-除了支持 `HTMLElement` 所有属性, 还支持以下属性:
+进度条表示了一个不明确的等待时间，或者显示处理过程的时间长短
 
-| 参数	|说明	|类型	|默认值
-| --- | --- | --- | ---
-| color | 颜色 | 'primary' \| 'secondary' \| 'success' \| 'error' \| 'danger' \| 'warning' \| 'info' | primary
-| component | root element | ElementType | span
-| classes | css |  |
-| label | 标签 | ReactNode |
-| size | 尺寸 | number | 40
-| thickness | 粗细 | number | 3.6
-| value | 值 | number |
-| variant | 类型 | 'determinate' \| 'indeterminate' | indeterminate
+## 代码演示
+
+### 基本使用
+
+<code src="./demo/demo1.tsx"></code>
+
+<API src="./CircularProgress.tsx" ></API>
 
 

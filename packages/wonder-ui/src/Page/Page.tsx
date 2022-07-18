@@ -47,7 +47,6 @@ const PageContent = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Content'
 })(({ theme }) => ({
-  ...theme.typography.body1,
   overflowY: 'auto',
   boxSizing: 'border-box',
   minHeight: '100%',

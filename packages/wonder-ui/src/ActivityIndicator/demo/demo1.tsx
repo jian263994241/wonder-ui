@@ -1,67 +1,59 @@
-import { ActivityIndicator, Space, Label } from '@wonder-ui/core';
+import {
+  ActivityIndicator,
+  ContentBlock,
+  Space,
+  WhiteSpace
+} from '@wonder-ui/core';
 
 export default () => (
-  <Space direction="vertical">
-    <Space direction="vertical">
-      <Label colon>加载类型</Label>
+  <div>
+    <ContentBlock title="样式">
       <Space>
         <ActivityIndicator />
         <ActivityIndicator type="spinner" />
       </Space>
-    </Space>
+    </ContentBlock>
 
-    <Space direction="vertical">
-      <Label colon>尺寸</Label>
+    <ContentBlock title="尺寸">
       <Space>
-        <ActivityIndicator iconSize="small" />
-        <ActivityIndicator iconSize="medium" />
         <ActivityIndicator iconSize="large" />
+        <ActivityIndicator iconSize="medium" />
+        <ActivityIndicator iconSize="small" />
       </Space>
+      <WhiteSpace />
       <Space>
-        <ActivityIndicator type="spinner" iconSize="small" />
-        <ActivityIndicator type="spinner" iconSize="medium" />
         <ActivityIndicator type="spinner" iconSize="large" />
+        <ActivityIndicator type="spinner" iconSize="medium" />
+        <ActivityIndicator type="spinner" iconSize="small" />
       </Space>
-    </Space>
+    </ContentBlock>
 
-    <Space direction="vertical">
-      <Label colon>颜色</Label>
+    <ContentBlock title="颜色">
       <Space>
         <ActivityIndicator color="primary" />
         <ActivityIndicator color="secondary" />
-        <ActivityIndicator color="success" />
-        <ActivityIndicator color="danger" />
-        <ActivityIndicator color="warning" />
-        <ActivityIndicator color="info" />
         <ActivityIndicator color="light" />
         <ActivityIndicator color="dark" />
       </Space>
+      <WhiteSpace />
       <Space>
         <ActivityIndicator type="spinner" color="primary" />
         <ActivityIndicator type="spinner" color="secondary" />
-        <ActivityIndicator type="spinner" color="success" />
-        <ActivityIndicator type="spinner" color="danger" />
-        <ActivityIndicator type="spinner" color="warning" />
-        <ActivityIndicator type="spinner" color="info" />
         <ActivityIndicator type="spinner" color="light" />
         <ActivityIndicator type="spinner" color="dark" />
       </Space>
-    </Space>
+    </ContentBlock>
 
-    <Space direction="vertical">
-      <Label colon>文案</Label>
+    <ContentBlock title="文案">
       <Space>
         <ActivityIndicator text="加载中..." />
         <ActivityIndicator type="spinner" text="加载中..." />
       </Space>
-    </Space>
-
-    <Space direction="vertical">
-      <Label colon>垂直文案</Label>
+      <WhiteSpace />
       <Space>
         <ActivityIndicator text="加载中..." vertical />
         <ActivityIndicator type="spinner" text="加载中..." vertical />
       </Space>
-    </Space>
-  </Space>
+    </ContentBlock>
+  </div>
 );

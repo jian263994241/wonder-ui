@@ -6,7 +6,10 @@ import createBreakpoints, {
 } from './theme/createBreakpoints';
 import createPalette, { Palette, PaletteOptions } from './theme/createPalette';
 import createSpacing, { Spacing, SpacingConfig } from './theme/createSpacing';
-import createTypography, { TypographyOptions } from './theme/createTypography';
+import createTypography, {
+  Typography,
+  TypographyOptions
+} from './theme/createTypography';
 import shadows from './theme/shadows';
 import shape, { Shape } from './theme/shape';
 import zIndex from './theme/zIndex';
@@ -40,7 +43,7 @@ export interface Theme extends ThemeComponents {
   palette: Palette;
   spacing: Spacing;
   transitions: typeof transitions;
-  typography: ReturnType<typeof createTypography>;
+  typography: Typography;
   shadows: string[];
   shape: Shape;
   zIndex: typeof zIndex;

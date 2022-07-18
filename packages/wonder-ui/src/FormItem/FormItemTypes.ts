@@ -2,22 +2,25 @@ import React from 'react';
 import { FieldProps } from 'rc-field-form/es/Field';
 import type { FormLaout } from '../Form/FormTypes';
 import type { ArrowDirection } from '../ListItem/ListItemTypes';
+import type { FormItemClassesType } from './FormItemClasses';
 
 export interface FormItemProps extends FieldProps {
+  className?: string;
+  classes?: Partial<FormItemClassesType>;
+  style?: React.CSSProperties;
+
   /**
    * 箭头的部分
    */
   arrow?: boolean | ArrowDirection | React.ReactElement;
-
-  className?: string;
-
-  style?: React.CSSProperties;
   /**
    * 表单控件部分的位置
    * @default 'left'
    */
   childAlign?: 'left' | 'right';
-
+  /**
+   * 文字描述
+   */
   description?: string;
   /**
    * 是否禁用, 继承父级Form属性

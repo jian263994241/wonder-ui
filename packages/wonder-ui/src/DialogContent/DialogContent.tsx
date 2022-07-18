@@ -2,10 +2,11 @@ import * as React from 'react';
 import ButtonBase from '../ButtonBase';
 import Divider from '../Divider';
 import styled from '../styles/styled';
-import Typography from '../Typography';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { css } from '@wonder-ui/utils';
 import { dialogContentClasses, useClasses } from './DialogContentClasses';
+
 import type {
   DialogButtonProps,
   DialogContentProps
@@ -16,7 +17,6 @@ const DialogContentRoot = styled('div', {
   slot: 'Root',
   shouldForwardProp: () => true
 })(({ theme }) => ({
-  ...theme.typography.body2,
   backgroundColor: theme.palette.background.paper,
   borderRadius: theme.shape.dialogRadius,
   width: '100%',
@@ -56,7 +56,6 @@ export const DialogButton = styled(ButtonBase, {
   slot: 'button',
   shouldForwardProp: (prop) => prop != 'primary' && prop != 'danger'
 })<DialogButtonProps>(({ theme, primary, danger }) => ({
-  ...theme.typography.button,
   width: '100%',
   height: 44,
   fontWeight: 400,

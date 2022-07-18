@@ -15,17 +15,11 @@ group:
 
 ## 代码演示
 
-### 标题
+### 基本使用
 
-html的所有标题 `h1`~`h6`
+<code src="./demo/demo1.tsx"></code>
 
-<code src="./demo/title.tsx"></code>
 
-### 文字排版
-
-文字其他属性 `noWrap`, `paragraph`, `gutterBottom`, `align`
-
-<code src="./demo/paragraph.tsx"></code>
 
 <API src="./Typography.tsx"></API>
 

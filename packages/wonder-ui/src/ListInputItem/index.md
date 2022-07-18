@@ -1,14 +1,15 @@
 ---
 hide: true
-mobile: true
+mobile: false
 toc: menu
 nav:
   path: /components
 group:
-  path: /data-input
-  title: 数据录入
-  order: 3
+  path: /will-remove
+  title: 弃用
+  order: 999
 ---
+
 
 # ListInputItem 列表输入框
 

@@ -24,7 +24,7 @@ const LabelRoot = styled('label', { name: COMPONENT_NAME, slot: 'Root' })<{
   boxSizing: 'border-box',
   color: theme.palette.text.primary,
 
-  ...theme.typography.ellipsis('100%', 1),
+  ...theme.typography.ellipsis(1),
 
   ...(styleProps.colon && {
     '&::after': {

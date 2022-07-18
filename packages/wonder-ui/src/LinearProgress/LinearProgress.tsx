@@ -1,10 +1,25 @@
 import * as React from 'react';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
-import { css, forwardRef } from '@wonder-ui/utils';
-import { keyframes } from '@wonder-ui/styled';
 import { alpha } from '../styles/colorManipulator';
-import { linearProgressClasses, useClasses } from './LinearProgressClasses';
+import { capitalize, composeClasses, css, forwardRef } from '@wonder-ui/utils';
+import { COMPONENT_NAME, linearProgressClasses } from './LinearProgressClasses';
+import { keyframes } from '@wonder-ui/styled';
+import type { LinearProgressProps } from './LinearProgressTypes';
+
+export const useClasses = (styleProps: LinearProgressProps) => {
+  const { animated, classes, color } = styleProps;
+
+  const slots = {
+    root: ['root'],
+    inner: ['inner'],
+    bar: ['bar', animated && 'animated', color && `color${capitalize(color)}`],
+    text: ['text']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
 
 const progressActiveKeyframes = keyframes`
   0%{width:0;opacity:.1}
@@ -17,44 +32,17 @@ const indeterminateKeyframes = keyframes`
 100% { left: 100%; }
 `;
 
-export interface LinearProgressProps extends React.HTMLAttributes<HTMLElement> {
-  /**
-   * 动画
-   * @default false
-   */
-  animated?: boolean;
-  /**
-   * css api
-   */
-  classes?: Partial<typeof linearProgressClasses>;
-  /**
-   * 颜色
-   * @default primary
-   */
-  color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
-
-  component?: React.ElementType;
-  /**
-   * 值 0-100
-   */
-  value?: number;
-  /**
-   * 类型
-   */
-  variant?: 'determinate' | 'indeterminate';
-}
-
 const LinearProgressRoot = styled('div', {
-  name: 'WuiLinearProgress',
+  name: COMPONENT_NAME,
   slot: 'Root'
 })({
   display: 'flex',
   alignItems: 'center'
 });
 
-const LinearProgressInfo = styled('div', {
-  name: 'WuiLinearProgress',
-  slot: 'Info'
+const LinearProgressText = styled(Typography, {
+  name: COMPONENT_NAME,
+  slot: 'Text'
 })({
   display: 'block',
   width: '2em',
@@ -72,7 +60,7 @@ const LinearProgressInfo = styled('div', {
 });
 
 const LinearProgressInner = styled('div', {
-  name: 'WuiLinearProgress',
+  name: COMPONENT_NAME,
   slot: 'Inner'
 })({
   display: 'flex',
@@ -85,7 +73,7 @@ const LinearProgressInner = styled('div', {
 });
 
 const LinearProgressBar = styled('span', {
-  name: 'WuiLinearProgress',
+  name: COMPONENT_NAME,
   slot: 'Bar'
 })<{ styleProps: LinearProgressProps }>(({ theme, styleProps }) => ({
   alignSelf: 'stretch',
@@ -128,16 +116,15 @@ const LinearProgressBar = styled('span', {
   }
 }));
 
-const LinearProgress = forwardRef<HTMLElement, LinearProgressProps>(
+const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
   (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: 'WuiLinearProgress' });
+    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
     const {
       animated = false,
       className,
       color = 'primary',
-      component,
       value = 0,
-      variant = 'indeterminate',
+      variant = 'determinate',
       children,
       ...rest
     } = props;
@@ -148,10 +135,9 @@ const LinearProgress = forwardRef<HTMLElement, LinearProgressProps>(
 
     return (
       <LinearProgressRoot
-        as={component}
         role="progressbar"
         className={css(classes.root, className)}
-        ref={ref as React.Ref<HTMLDivElement>}
+        ref={ref}
         {...rest}
       >
         <LinearProgressInner className={classes.inner}>
@@ -164,9 +150,9 @@ const LinearProgress = forwardRef<HTMLElement, LinearProgressProps>(
           />
         </LinearProgressInner>
         {children && (
-          <LinearProgressInfo className={classes.info}>
+          <LinearProgressText className={classes.text}>
             {children}
-          </LinearProgressInfo>
+          </LinearProgressText>
         )}
       </LinearProgressRoot>
     );

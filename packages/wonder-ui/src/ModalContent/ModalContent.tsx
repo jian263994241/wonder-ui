@@ -70,7 +70,6 @@ const ModalContentRoot = styled('div', {
   name: 'ModalContent',
   slot: 'Root'
 })(({ theme }) => ({
-  ...theme.typography.body2,
   boxSizing: 'border-box',
   outline: 0,
   position: 'relative',

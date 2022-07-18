@@ -8,6 +8,7 @@ const IndicatorLine = (props: { opacity?: string; transform?: string }) => (
 const Indicator = React.forwardRef<SVGSVGElement, SvgIconProps>(
   (props, ref) => (
     <SvgIcon
+      block
       spin
       viewBox="0 0 120 120"
       titleAccess="indicator"

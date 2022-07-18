@@ -2,13 +2,14 @@ import * as React from 'react';
 import CircularProgress from '../CircularProgress';
 import Space from '../Space';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import {
-  forwardRef,
-  getScrollTop,
-  generateUtilityClasses,
   composeClasses,
-  css
+  css,
+  forwardRef,
+  generateUtilityClasses,
+  getScrollTop
 } from '@wonder-ui/utils';
 import {
   useEventCallback,
@@ -143,8 +144,7 @@ const PullRefreshTrack = styled('div', { name: componentName, slot: 'Track' })(
 const PullRefreshIndicator = styled('div', {
   name: componentName,
   slot: 'Indicator'
-})(({ theme }) => ({
-  ...theme.typography.body2,
+})({
   position: 'absolute',
   left: 0,
   width: '100%',
@@ -154,7 +154,7 @@ const PullRefreshIndicator = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center'
-}));
+});
 
 const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
   (inProps, ref) => {
@@ -258,9 +258,14 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
 
       if (['pulling', 'loosing', 'success'].includes(status)) {
         nodes.push(
-          <div className={classes.text} key="text">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            className={classes.text}
+            key={status}
+          >
             {getStatusText()}
-          </div>
+          </Typography>
         );
       }
       if (status === 'loading') {
@@ -271,7 +276,14 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
             className={classes.text}
             horizontalAlign="center"
           >
-            <CircularProgress size={16} /> {getStatusText()}
+            <CircularProgress size={16} />
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              className={classes.text}
+            >
+              {getStatusText()}
+            </Typography>
           </Space>
         );
       }

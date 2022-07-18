@@ -7,7 +7,7 @@ import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import WhiteSpace from '../WhiteSpace/WhiteSpace';
 import { COMPONENT_NAME } from './ActionSheetClasses';
-import { createChainedFunction, composeClasses, css } from '@wonder-ui/utils';
+import { composeClasses, createChainedFunction, css } from '@wonder-ui/utils';
 import { drawerClasses } from '../Drawer/DrawerClasses';
 import { useControlled } from '@wonder-ui/hooks';
 import { whiteSpaceClasses } from '../WhiteSpace/WhiteSpaceClasses';
@@ -41,12 +41,10 @@ const ActionSheetRoot = styled(Drawer, {
   }
 }));
 
-const ActionSheetTitle = styled('div', {
+const ActionSheetTitle = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Title'
 })(({ theme }) => ({
-  ...theme.typography.body2,
-  color: theme.palette.text.secondary,
   padding: '20px 16px',
   textAlign: 'center',
   borderBottom: `thin solid ${theme.palette.divider}`
@@ -55,12 +53,11 @@ const ActionSheetTitle = styled('div', {
 const ActionSheetAction = styled(Button, {
   name: COMPONENT_NAME,
   slot: 'Action'
-})(({ theme }) => ({
-  ...theme.typography.body1,
+})({
   width: '100%',
   padding: '14px 16px',
   display: 'block'
-}));
+});
 
 const ActionSheet = React.forwardRef<HTMLDivElement, ActionSheetProps>(
   (inProps, ref) => {
@@ -115,7 +112,11 @@ const ActionSheet = React.forwardRef<HTMLDivElement, ActionSheetProps>(
           style={style}
         >
           {title && (
-            <ActionSheetTitle className={classes.title}>
+            <ActionSheetTitle
+              className={classes.title}
+              color="textSecondary"
+              variant="subtitle2"
+            >
               {title}
             </ActionSheetTitle>
           )}

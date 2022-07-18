@@ -1,9 +1,10 @@
 import * as React from 'react';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
-import type { CardProps } from './CardTypes';
 import { COMPONENT_NAME } from './CardClasses';
 import { composeClasses, css } from '@wonder-ui/utils';
+import type { CardProps } from './CardTypes';
 
 const useClasses = (props: CardProps) => {
   const { classes } = props;
@@ -42,18 +43,15 @@ const CardHeader = styled('div', {
   }
 }));
 
-const CardTitle = styled('div', {
+const CardTitle = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Title'
-})(({ theme }) => ({
-  ...theme.typography.h6
-}));
+})({});
 
-const CardBody = styled('div', {
+const CardBody = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Body'
 })(({ theme }) => ({
-  ...theme.typography.body2,
   padding: theme.spacing(1.5, 0)
 }));
 
@@ -75,12 +73,18 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>((inProps, ref) => {
     <CardRoot ref={ref} className={css(classes.root, className)} {...rest}>
       {(title || extra) && (
         <CardHeader className={classes.header} onClick={onHeaderClick}>
-          <CardTitle className={classes.title}>{title}</CardTitle>
+          <CardTitle className={classes.title} variant="subtitle1">
+            {title}
+          </CardTitle>
           {extra}
         </CardHeader>
       )}
       {children && (
-        <CardBody className={classes.body} onClick={onBodyClick}>
+        <CardBody
+          className={classes.body}
+          onClick={onBodyClick}
+          variant="body1"
+        >
           {children}
         </CardBody>
       )}

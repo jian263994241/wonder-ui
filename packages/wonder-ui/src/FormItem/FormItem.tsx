@@ -4,15 +4,34 @@ import ListItem from '../ListItem';
 import styled from '../styles/styled';
 import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
-import { createChainedFunction, mergedRef } from '@wonder-ui/utils';
+import { COMPONENT_NAME } from './FormItemClasses';
 import { cssVars as listCssVars } from '../List/List';
 import { Field } from 'rc-field-form';
 import { formLabelClasses } from '../FormLabel/FormLabelClasses';
 import { listItemClasses } from '../ListItem/ListItemClasses';
 import { useFormContext } from '../Form/FormContext';
+import {
+  createChainedFunction,
+  mergedRef,
+  composeClasses,
+  css
+} from '@wonder-ui/utils';
 import type { FormItemProps, FormItemStyleProps } from './FormItemTypes';
 
-const COMPONENT_NAME = 'WuiFormItem';
+const useClasses = (styleProps: FormItemProps) => {
+  const { classes } = styleProps;
+
+  const slots = {
+    root: ['root'],
+    label: ['label'],
+    child: ['child'],
+    description: ['description'],
+    warning: ['warning'],
+    error: ['error']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
 
 const FormItemRoot = styled(ListItem, {
   name: COMPONENT_NAME,
@@ -45,7 +64,11 @@ const FormChild = styled('div', {
   ...(styleProps.childAlign === 'right' && {
     display: 'flex',
     justifyContent: 'flex-end'
-  })
+  }),
+
+  [`.${formLabelClasses.root} + &`]: {
+    marginTop: 10
+  }
 }));
 
 const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>(
@@ -87,6 +110,8 @@ const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>(
       hasFeedback
     };
 
+    const classes = useClasses(styleProps);
+
     const isRequired =
       required !== undefined
         ? required
@@ -97,6 +122,7 @@ const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>(
 
     const labelElement = label && (
       <FormLabel
+        className={classes.label}
         required={isRequired}
         requiredMarkType={formContext.requiredMarkType}
         help={help}
@@ -113,17 +139,29 @@ const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>(
       return (
         <React.Fragment>
           {data.description && (
-            <Typography variant="body2" component="div" color="textSecondary">
+            <Typography
+              className={classes.description}
+              variant="caption"
+              color="textSecondary"
+            >
               {data.description}
             </Typography>
           )}
           {data.error && (
-            <Typography variant="body2" component="div" color="error">
+            <Typography
+              className={classes.error}
+              variant="caption"
+              color="error"
+            >
               {data.error}
             </Typography>
           )}
           {data.warning && (
-            <Typography variant="body2" component="div" color="warning">
+            <Typography
+              className={classes.warning}
+              variant="caption"
+              color="warning"
+            >
               {data.warning}
             </Typography>
           )}
@@ -141,7 +179,7 @@ const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>(
         extra={extra}
         disabled={disabled}
         onClick={(e) => onClick?.(e, childRef)}
-        className={className}
+        className={css(classes.root, className)}
         styleProps={styleProps}
         style={style}
         hidden={hidden}
@@ -186,7 +224,9 @@ const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>(
 
             return (
               <React.Fragment>
-                <FormChild styleProps={styleProps}>{childElement}</FormChild>
+                <FormChild styleProps={styleProps} className={classes.child}>
+                  {childElement}
+                </FormChild>
                 {renderSubText({
                   description,
                   error: feedbackError,

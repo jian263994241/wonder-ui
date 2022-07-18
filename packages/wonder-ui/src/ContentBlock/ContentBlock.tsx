@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { COMPONENT_NAME } from './ContentBlockClasses';
-import { createCssVars, composeClasses, css } from '@wonder-ui/utils';
+import { composeClasses, createCssVars, css } from '@wonder-ui/utils';
 import type { ContentBlockProps, StyleProps } from './ContentBlockTypes';
 
 const useClasses = (props: StyleProps) => {
@@ -34,7 +35,7 @@ const ContentBlockRoot = styled('div', {
   slot: 'Root',
   name: COMPONENT_NAME
 })(({ theme }) => {
-  const spacing = 12;
+  const spacing = theme.spacing(1.5);
 
   return cssVars.style({
     titltMarginTop: 8,
@@ -50,33 +51,24 @@ const ContentBlockRoot = styled('div', {
   });
 });
 
-const ContentBlockTitle = styled('div', {
+const ContentBlockTitle = styled(Typography, {
   slot: 'Title',
   name: COMPONENT_NAME
-})(({ theme }) => ({
-  ...theme.typography.subtitle2,
-  color: theme.palette.text.secondary,
+})({
   marginTop: cssVars.value('titltMarginTop'),
   marginBottom: cssVars.value('titleMarginBottom'),
   paddingLeft: cssVars.calc('titleMarginHorizontal', '+', 'safeAreaLeft'),
   paddingRight: cssVars.calc('titleMarginHorizontal', '+', 'safeAreaRight')
-}));
+});
 
-const ContentBlockContent = styled('div', {
+const ContentBlockContent = styled(Typography, {
   slot: 'Content',
   name: COMPONENT_NAME
 })<StyleProps>(({ theme, styleProps }) => ({
-  ...theme.typography.body2,
   paddingTop: cssVars.value('paddingVertical'),
   paddingBottom: cssVars.value('paddingVertical'),
   ...(styleProps.strong && {
     backgroundColor: theme.palette.background.paper
-    // ...(styleProps.inset
-    //   ? { border: `thin solid ${cssVars.value('dividerColor')}` }
-    //   : {
-    //       borderTop: `thin solid ${cssVars.value('dividerColor')}`,
-    //       borderBottom: `thin solid ${cssVars.value('dividerColor')}`
-    //     })
   }),
   ...(styleProps.inset
     ? {
@@ -115,7 +107,11 @@ const ContentBlock = React.forwardRef<HTMLDivElement, ContentBlockProps>(
         {...rest}
       >
         {title && (
-          <ContentBlockTitle className={classes.title}>
+          <ContentBlockTitle
+            className={classes.title}
+            variant="subtitle2"
+            color="textSecondary"
+          >
             {title}
           </ContentBlockTitle>
         )}
@@ -123,6 +119,7 @@ const ContentBlock = React.forwardRef<HTMLDivElement, ContentBlockProps>(
           <ContentBlockContent
             styleProps={styleProps}
             className={classes.content}
+            variant="body2"
           >
             {children}
           </ContentBlockContent>
