@@ -1,27 +1,19 @@
-import * as React from 'react';
-import { Global, CSSObject } from '@emotion/react';
+import React from 'react';
+import { Global, GlobalProps, Theme } from '@emotion/react';
 import { isEmpty } from './utils';
 
-type Styles = string | CSSObject;
-type StylesCallback<Theme> = (theme: Theme) => Styles;
-
-export interface GlobalStylesProps<Theme = object> {
+export interface GlobalStylesProps extends GlobalProps {
   defaultTheme?: Theme;
-  styles?: Styles | StylesCallback<Theme>;
 }
 
-export default function GlobalStyles<T>(
-  props: GlobalStylesProps<T>
-): React.ReactElement {
-  const { defaultTheme, styles } = props;
+export default function GlobalStyles(props: GlobalStylesProps) {
+  const { defaultTheme = {}, styles } = props;
 
   const globalStyles =
     typeof styles === 'function'
-      ? (themeInput: any) =>
-          styles(isEmpty(themeInput) ? defaultTheme : themeInput)
+      ? (contextTheme: Theme) =>
+          styles(isEmpty(contextTheme) ? defaultTheme : contextTheme)
       : styles;
 
-  const a = React.useMemo(() => globalStyles, []);
-
-  return <Global styles={a} />;
+  return <Global styles={globalStyles} />;
 }
