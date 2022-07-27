@@ -39,6 +39,9 @@ const { outlinedIcons, filledIcons } = (() => {
 })();
 
 const StyledRow = styled(Row)({
+  '--wui-row-gutter-x': '16px',
+  '--wui-row-gutter-y': '16px',
+  '--wui-svg-icon-size': '36px',
   '.col': {
     textAlign: 'center',
     height: 125
@@ -51,8 +54,7 @@ const StyledRow = styled(Row)({
     borderRadius: '0.25rem',
     padding: '1.5rem 1rem',
     marginBottom: '0.5rem',
-    transition: 'all 300ms',
-    fontSize: 36
+    transition: 'all 300ms'
   },
   '.icon:hover': {
     background: '#e3e5e7',
@@ -173,7 +175,7 @@ export default () => {
 
         {searching &&
           (searchResult && searchResult.length > 0 ? (
-            <StyledRow rowCols={{ xs: 2, sm: 3, md: 4 }} gutter={[2, 2]}>
+            <StyledRow rowCols={{ xs: 2, sm: 3, md: 4 }}>
               {searchResult.map((key, index) => {
                 //@ts-expect-error
                 const Icon = icons[key];
@@ -191,7 +193,7 @@ export default () => {
         >
           <TabContext value={tabIndex}>
             <TabPane value={0}>
-              <StyledRow rowCols={{ xs: 2, sm: 3, md: 4 }} gutter={[2, 2]}>
+              <StyledRow rowCols={{ xs: 2, sm: 3, md: 4 }}>
                 {outlinedIcons.map((key, index) => {
                   //@ts-expect-error
                   const Icon = icons[key];
@@ -200,7 +202,7 @@ export default () => {
               </StyledRow>
             </TabPane>
             <TabPane value={1}>
-              <StyledRow rowCols={{ xs: 2, sm: 3, md: 4 }} gutter={[2, 2]}>
+              <StyledRow rowCols={{ xs: 2, sm: 3, md: 4 }}>
                 {filledIcons.map((key, index) => {
                   //@ts-expect-error
                   const Icon = icons[key];

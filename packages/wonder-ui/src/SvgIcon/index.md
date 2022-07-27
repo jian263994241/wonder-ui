@@ -27,6 +27,13 @@ import { Alarm } from '@wonder-ui/icons';
 
 <API src="./SvgIcon.tsx"></API>
 
+## CSS 变量
+
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-svg-icon-color | 颜色 | currentColor
+| --wui-svg-icon-size | 尺寸 | 1em
+
 ## 图标列表
 
 <code src="./demo/icons.tsx"></code>

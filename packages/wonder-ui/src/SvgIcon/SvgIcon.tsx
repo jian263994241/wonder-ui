@@ -1,32 +1,29 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
+import {
+  COMPONENT_NAME,
+  svgIconClasses,
+  SvgIconClassesType,
+  svgIconCssVars
+} from './SvgIconClasses';
 import { composeClasses, css, forwardRef } from '@wonder-ui/utils';
 import { keyframes } from '@wonder-ui/styled';
-import { svgIconClasses } from './SvgIconClasses';
-
-const COMPONENT_NAME = 'WuiSvgIcon';
 
 export interface SvgIconProps extends React.SVGAttributes<SVGSVGElement> {
-  classes?: Partial<typeof svgIconClasses>;
+  classes?: Partial<SvgIconClassesType>;
+  className?: string;
+  style?: React.CSSProperties;
   titleAccess?: string;
   /**
    * 块状显示
    */
   block?: boolean;
   /**
-   * Root className
-   */
-  className?: string;
-  /**
    * 旋转动画
    * @default false
    */
   spin?: boolean;
-  /**
-   * Root style
-   */
-  style?: React.CSSProperties;
   /**
    * viewBox
    * @default `0 0 16 16`
@@ -51,8 +48,9 @@ const spin = keyframes({
 });
 
 const SvgIconRoot = styled('svg', { name: COMPONENT_NAME, slot: 'Root' })({
-  fill: 'currentColor',
-
+  fill: svgIconCssVars.value('color', 'currentColor'),
+  width: svgIconCssVars.value('size', '1em'),
+  height: svgIconCssVars.value('size', '1em'),
   [`&.${svgIconClasses.block}`]: {
     display: 'block'
   },
@@ -86,8 +84,6 @@ const SvgIcon = forwardRef<SVGSVGElement, SvgIconProps>((inProps, ref) => {
       ref={ref}
       role={titleAccess ? 'img' : undefined}
       viewBox={viewBox}
-      width="1em"
-      height="1em"
       {...rest}
     >
       {children}

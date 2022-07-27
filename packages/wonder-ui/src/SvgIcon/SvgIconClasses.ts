@@ -1,7 +1,13 @@
-import { generateUtilityClasses } from '@wonder-ui/utils';
+import { createCssVars, generateUtilityClasses } from '@wonder-ui/utils';
 
-export const svgIconClasses = generateUtilityClasses('WuiSvgIcon', [
+export const COMPONENT_NAME = 'WuiSvgIcon';
+
+export const svgIconClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'block',
   'spin'
 ]);
+
+export const svgIconCssVars = createCssVars(COMPONENT_NAME, ['color', 'size']);
+
+export type SvgIconClassesType = typeof svgIconClasses;
