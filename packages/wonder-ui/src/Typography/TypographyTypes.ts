@@ -55,7 +55,6 @@ export interface TypographyProps
   gutterBottom?: boolean;
   /**
    * @description 样式类型
-   * @default body1
    */
   variant?: TypographyVariantKeys | 'inherit';
 }

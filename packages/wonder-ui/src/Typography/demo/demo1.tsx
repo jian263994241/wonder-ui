@@ -1,4 +1,4 @@
-import { ContentBlock, Typography } from '@wonder-ui/core';
+import { ContentBlock, Space, Typography } from '@wonder-ui/core';
 
 export default () => (
   <div>
@@ -19,6 +19,18 @@ export default () => (
       <Typography variant="body2">内容2</Typography>
 
       <Typography variant="caption">描述文字</Typography>
+    </ContentBlock>
+
+    <ContentBlock title="颜色">
+      <Space>
+        <Typography color="primary">主要</Typography>
+        <Typography color="secondary">次要</Typography>
+        <Typography color="success">成功</Typography>
+        <Typography color="error">失败</Typography>
+        <Typography color="warning">警告</Typography>
+        <Typography color="textPrimary">主要内容</Typography>
+        <Typography color="textSecondary">次要内容</Typography>
+      </Space>
     </ContentBlock>
 
     <ContentBlock title="对齐">
