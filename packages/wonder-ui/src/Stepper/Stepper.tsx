@@ -6,114 +6,62 @@ import InputNumber, {
 import StepButton from '../StepButton';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { css } from '@wonder-ui/utils';
+import {
+  COMPONENT_NAME,
+  useStepperCssVars,
+  stepperCssVars
+} from './StepperClasses';
+import { composeClasses, css } from '@wonder-ui/utils';
 import { CSSObject } from '@wonder-ui/styled';
-import { stepperClasses, useClasses } from './StepperClasses';
-import { Theme } from '../styles/createTheme';
 import { useControlled } from '@wonder-ui/hooks';
+import type { StepperProps } from './StepperTypes';
 
-export interface StepperProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
-  /**
-   * InputNumber 属性
-   */
-  InputNumberProps?: Partial<InputNumberProps>;
-  classes?: Partial<typeof stepperClasses>;
-  /**
-   * 初始值
-   */
-  defaultValue?: number | string;
-  /**
-   * 禁用输入框
-   */
-  disableInput?: boolean;
-  /**
-   * 禁用减
-   */
-  disableMinusButton?: boolean;
-  /**
-   * 禁用加
-   */
-  disablePlusButton?: boolean;
-  /**
-   * 禁用
-   */
-  disabled?: boolean;
-  /**
-   * 隐藏输入框
-   */
-  hideInput?: boolean;
-  /**
-   * 隐藏减
-   */
-  hideMinusButton?: boolean;
-  /**
-   * 隐藏加
-   */
-  hidePlusButton?: boolean;
-  /**
-   * 最大值
-   */
-  max?: number | string;
-  /**
-   * 最小值
-   * @default 0
-   */
-  min?: number | string;
-  /**
-   * 值改变的时候回调
-   */
-  onChange?: (value: number) => void;
-  /**
-   * 步长
-   * @default 1
-   */
-  step?: number | string;
-  /**
-   * 按钮长按触发的时长(ms)
-   * @default 800
-   */
-  stepDelay?: number;
-  /**
-   * 连续增长的时间间隔(ms)
-   * @default 150
-   */
-  stepInterval?: number;
-  /**
-   * 当前值
-   */
-  value?: number | string;
-}
+const useClasses = (styleProps: StepperProps) => {
+  const {
+    classes,
+    disabled,
+    disableInput,
+    disableMinusButton,
+    disablePlusButton
+  } = styleProps;
 
-export interface StepperStyleProps extends StepperProps {}
+  const slots = {
+    root: ['root', disabled && 'disabled'],
+    input: ['input', disableInput && 'disableInput'],
+    minus: [
+      'button',
+      'minus',
+      disableMinusButton && 'disabled',
+      disableMinusButton && 'disableMinusButton'
+    ],
+    plus: [
+      'button',
+      'plus',
+      disablePlusButton && 'disabled',
+      disablePlusButton && 'disablePlusButton'
+    ]
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
 
 const StepperRoot = styled('div', {
-  name: 'Stepper',
+  name: COMPONENT_NAME,
   slot: 'Root'
-})<{ styleProps: StepperStyleProps }>(({ styleProps }) => ({
+})<{ styleProps: StepperProps }>(({ theme, styleProps }) => ({
   display: 'inline-flex',
   ...(styleProps.disabled && {
-    opacity: 0.3,
+    opacity: theme.palette.action.disabledOpacity,
     pointerEvents: 'none'
   })
 }));
 
-const commomButtonStyles = (theme: Theme): CSSObject => ({
-  display: 'inline-block',
-  position: 'relative',
-  boxSizing: 'border-box',
-  width: 28,
-  height: 28,
-  margin: 0,
-  padding: 0,
-  verticalAlign: 'middle',
-  border: 0,
-  backgroundColor: theme.palette.background.default,
-  opacity: 1,
-  cursor: 'pointer',
-  transition: theme.transitions.create('opacity', {
-    duration: theme.transitions.duration.shortest
-  }),
+const commomButtonStyles: CSSObject = {
+  width: stepperCssVars.value('height'),
+  height: stepperCssVars.value('height'),
+  backgroundColor: stepperCssVars.value('bgColor'),
+  borderRadius: stepperCssVars.value('borderRadius'),
+
   '&:active': {
     opacity: 0.7
   },
@@ -121,67 +69,59 @@ const commomButtonStyles = (theme: Theme): CSSObject => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
-    backgroundColor: 'currentColor',
+    backgroundColor: stepperCssVars.value('buttonColor'),
     transform: 'translate(-50%, -50%)',
     content: '""',
     width: '50%',
     height: 1
   }
-});
+};
 
 const StepperMinus = styled(StepButton, {
-  name: 'Stepper',
+  name: COMPONENT_NAME,
   slot: 'Minus'
-})<{ styleProps: StepperStyleProps }>(({ theme, styleProps }) => ({
-  ...commomButtonStyles(theme),
-  borderTopLeftRadius: theme.shape.borderRadius,
-  borderBottomLeftRadius: theme.shape.borderRadius,
+})<{ styleProps: StepperProps }>(({ styleProps }) => ({
+  ...commomButtonStyles,
+
+  ...((!styleProps.hideInput || !styleProps.hidePlusButton) && {
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0
+  }),
+
   '&:after': {
     display: 'none'
-  },
-  ...(styleProps.disableMinusButton && {
-    opacity: 0.5,
-    pointerEvents: 'none'
-  })
+  }
 }));
 
 const StepperPlus = styled(StepButton, {
-  name: 'Stepper',
+  name: COMPONENT_NAME,
   slot: 'Plus'
-})<{ styleProps: StepperStyleProps }>(({ theme, styleProps }) => ({
-  ...commomButtonStyles(theme),
-  borderTopRightRadius: theme.shape.borderRadius,
-  borderBottomRightRadius: theme.shape.borderRadius,
+})<{ styleProps: StepperProps }>(({ styleProps }) => ({
+  ...commomButtonStyles,
+
+  ...((!styleProps.hideInput || !styleProps.hideMinusButton) && {
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0
+  }),
+
   '&:after': {
     height: '50%',
     width: 1
-  },
-  ...(styleProps.disablePlusButton && {
-    opacity: 0.5,
-    pointerEvents: 'none'
-  })
+  }
 }));
 
 const StepperInputNumber = styled(InputNumber, {
-  name: 'Stepper',
+  name: COMPONENT_NAME,
   slot: 'InputNumber'
-})<{ styleProps: StepperStyleProps }>(({ theme, styleProps }) => ({
-  boxSizing: 'border-box',
-  width: 32,
-  height: 28,
-  margin: '0 2px',
-  padding: 0,
-  color: theme.palette.text.primary,
-  fontSize: 14,
-  lineHeight: 'normal',
+})<{ styleProps: StepperProps }>(({ styleProps }) => ({
+  width: `calc(${stepperCssVars.value('height')} * 1.5)`,
+  height: stepperCssVars.value('height'),
+  margin: `0 ${stepperCssVars.value('gap')}`,
+  color: stepperCssVars.value('textColor'),
+  fontSize: stepperCssVars.value('fontSize'),
   textAlign: 'center',
-  verticalAlign: 'middle',
-  backgroundColor: theme.palette.background.default,
-  border: 0,
-  borderWidth: '1px 0',
-  borderRadius: 0,
-  appearance: 'none',
-  outline: 0,
+  backgroundColor: stepperCssVars.value('bgColor'),
+
   ...(styleProps.disableInput && {
     pointerEvents: 'none'
   })
@@ -233,10 +173,15 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
     disabled,
     disableInput,
     disableMinusButton: disableMinusButton || value <= min,
-    disablePlusButton: disablePlusButton || value >= max
+    disablePlusButton: disablePlusButton || value >= max,
+    hideMinusButton,
+    hidePlusButton,
+    hideInput
   };
 
   const classes = useClasses(styleProps);
+
+  useStepperCssVars();
 
   return (
     <StepperRoot
@@ -251,10 +196,12 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
           onStep={handleMinus}
           interval={stepInterval}
           delay={stepDelay}
+          disabled={disableMinusButton}
           styleProps={styleProps}
         />
       )}
       <StepperInputNumber
+        borderless
         type="number"
         role="spinbutton"
         inputMode="decimal"
@@ -269,9 +216,6 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
         styleProps={styleProps}
         disableStepHandler
         value={value}
-        defaultValue={defaultValue}
-        // onChange={onChange}
-        disabledActiveStyle
         step={step}
         min={min}
         max={max}
@@ -282,6 +226,7 @@ const Stepper = React.forwardRef<HTMLElement, StepperProps>((inProps, ref) => {
           onStep={handlePlus}
           interval={stepInterval}
           delay={stepDelay}
+          disabled={disablePlusButton}
           styleProps={styleProps}
         />
       )}

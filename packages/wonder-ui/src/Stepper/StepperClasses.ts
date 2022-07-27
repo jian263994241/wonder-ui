@@ -1,6 +1,9 @@
-import { composeClasses, generateUtilityClasses } from '@wonder-ui/utils';
+import useRootCssVars from '../styles/useRootCssVars';
+import { createCssVars, generateUtilityClasses } from '@wonder-ui/utils';
 
-export const stepperClasses = generateUtilityClasses('WuiStepper', [
+export const COMPONENT_NAME = 'WuiStepper';
+
+export const stepperClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'input',
   'button',
@@ -12,39 +15,28 @@ export const stepperClasses = generateUtilityClasses('WuiStepper', [
   'disablePlusButton'
 ]);
 
-export interface StepperStyleProps {
-  classes?: Partial<typeof stepperClasses>;
-  disabled?: boolean;
-  disableInput?: boolean;
-  disableMinusButton?: boolean;
-  disablePlusButton?: boolean;
-}
+export const stepperCssVars = createCssVars(COMPONENT_NAME, [
+  'height',
+  'borderRadius',
+  'bgColor',
+  'buttonColor',
+  'fontSize',
+  'gap',
+  'textColor'
+]);
 
-export const useClasses = (styleProps: StepperStyleProps) => {
-  const {
-    classes,
-    disabled,
-    disableInput,
-    disableMinusButton,
-    disablePlusButton
-  } = styleProps;
-
-  const slots = {
-    root: ['root', disabled && 'disabled'],
-    input: ['input', disableInput && 'disableInput'],
-    minus: [
-      'button',
-      'minus',
-      disableMinusButton && 'disabled',
-      disableMinusButton && 'disableMinusButton'
-    ],
-    plus: [
-      'button',
-      'plus',
-      disablePlusButton && 'disabled',
-      disablePlusButton && 'disablePlusButton'
-    ]
-  };
-
-  return composeClasses('WuiStepper', slots, classes);
+export const useStepperCssVars = () => {
+  useRootCssVars((theme) =>
+    stepperCssVars.style({
+      height: 28,
+      borderRadius: theme.shape.borderRadius,
+      bgColor: theme.palette.background.default,
+      buttonColor: theme.palette.primary.main,
+      fontSize: theme.typography.pxToRem(14),
+      textColor: theme.palette.text.primary,
+      gap: 2
+    })
+  );
 };
+
+export type StepperClassesType = typeof stepperClasses;

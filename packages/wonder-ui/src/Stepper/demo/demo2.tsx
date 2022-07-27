@@ -1,68 +1,42 @@
 import * as React from 'react';
-import { Badge, Space, Stepper, styled } from '@wonder-ui/core';
+import { Badge, ContentBlock, Stepper, styled } from '@wonder-ui/core';
 
-const sizeValues = { sm: 20, md: 30, lg: 40 };
-
-type SizeKey = keyof typeof sizeValues;
-
-const UIStepper = styled(Stepper)<{ size?: SizeKey }>`
-  .WuiStepper-button {
-    border-radius: 50%;
-    background-color: ${({ theme }) => theme.palette.primary.main};
-    color: #fff;
-    width: ${({ size = 'md' }) => sizeValues[size] + 'px'};
-    height: ${({ size = 'md' }) => sizeValues[size] + 'px'};
-  }
-  .WuiStepper-input {
-    height: ${({ size = 'md' }) => sizeValues[size] + 'px'};
-  }
-
-  .WuiStepper-minus {
-    background-color: ${({ theme }) => theme.palette.secondary.main};
-  }
-
-  .WuiStepper-input {
-    background-color: transparent;
-  }
+const UIStepper = styled(Stepper)`
+  --wui-stepper-font-size: 20px;
+  --wui-stepper-height: 44px;
+  --wui-stepper-border-radius: 20px;
+  --wui-stepper-bg-color: #000;
+  --wui-stepper-button-color: #fff;
+  --wui-stepper-text-color: #fff;
 `;
 
 export default () => {
   const [value, setValue] = React.useState(0);
   const [value2, setValue2] = React.useState(0);
   return (
-    <Space gap={20} direction="vertical">
-      <UIStepper
-        size="sm"
-        value={value}
-        hideInput={value === 0}
-        hideMinusButton={value === 0}
-        onChange={(val) => {
-          setValue(val);
-        }}
-      />
-
-      <Badge text={value2} color="danger" hideContent={value2 == 0}>
+    <>
+      <ContentBlock title="购物车单品数量">
         <UIStepper
-          value={value2}
-          hideInput
-          hideMinusButton
+          value={value}
+          hideInput={value === 0}
+          hideMinusButton={value === 0}
           onChange={(val) => {
-            setValue2(val);
+            setValue(val);
           }}
         />
-      </Badge>
-
-      <Badge text={value2} color="danger" hideContent={value2 == 0}>
-        <UIStepper
-          size="lg"
-          value={value2}
-          hideInput
-          hideMinusButton
-          onChange={(val) => {
-            setValue2(val);
-          }}
-        />
-      </Badge>
-    </Space>
+      </ContentBlock>
+      <ContentBlock title="纯按钮">
+        <Badge text={value2} color="danger" hideContent={value2 == 0}>
+          <UIStepper
+            value={value2}
+            hideInput
+            hideMinusButton
+            onChange={(val) => {
+              setValue2(val);
+            }}
+          />
+        </Badge>
+      </ContentBlock>
+    </>
   );
 };

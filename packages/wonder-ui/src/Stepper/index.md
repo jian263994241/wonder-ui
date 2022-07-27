@@ -27,3 +27,14 @@ group:
 
 <API src="./Stepper.tsx"></API>
 
+## CSS 变量
+
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-stepper-height | 高度 | 28px
+| --wui-stepper-border-radius | 圆角 | `theme.shape.borderRadius`
+| --wui-stepper-bg-color | 背景色 | `theme.palette.background.default`
+| --wui-stepper-button-color | 按钮颜色 | `theme.palette.primary.main`
+| --wui-stepper-font-size | 文字大小 | `14px`
+| --wui-stepper-text-color | 文字颜色 | `theme.palette.text.primary`
+| --wui-stepper-gap | 间隙 | 2px

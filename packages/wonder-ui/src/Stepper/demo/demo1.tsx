@@ -1,32 +1,31 @@
-import { List, ListItem, ListItemText, Page, Stepper } from '@wonder-ui/core';
+import { Form, FormItem, ListHeader, Stepper } from '@wonder-ui/core';
 
 export default () => (
-  <Page title="Stepper">
-    <List>
-      <ListItem extra={<Stepper />}>
-        <ListItemText>默认</ListItemText>
-      </ListItem>
-      <ListItem extra={<Stepper step={3} />}>
-        <ListItemText>步长设置</ListItemText>
-      </ListItem>
-      <ListItem extra={<Stepper min={1} max={8} />}>
-        <ListItemText>限制输入范围</ListItemText>
-      </ListItem>
-      <ListItem extra={<Stepper step={1} min={1} />}>
-        <ListItemText>限制输入整数</ListItemText>
-      </ListItem>
-      <ListItem extra={<Stepper disabled />}>
-        <ListItemText>禁用状态</ListItemText>
-      </ListItem>
-      <ListItem extra={<Stepper disableInput />}>
-        <ListItemText>禁用输入框</ListItemText>
-      </ListItem>
-      <ListItem extra={<Stepper step={0.1} min={1} />}>
-        <ListItemText>固定小数位数</ListItemText>
-      </ListItem>
-      <ListItem extra={<Stepper hideInput />}>
-        <ListItemText>隐藏输入框</ListItemText>
-      </ListItem>
-    </List>
-  </Page>
+  <Form>
+    <ListHeader>基本使用</ListHeader>
+    <FormItem label="默认" childAlign="right">
+      <Stepper />
+    </FormItem>
+    <FormItem label="步长设置" childAlign="right">
+      <Stepper step={3} />
+    </FormItem>
+    <FormItem label="限制输入范围" childAlign="right">
+      <Stepper min={1} max={8} />
+    </FormItem>
+    <FormItem label="限制输入整数" childAlign="right">
+      <Stepper step={1} min={1} />
+    </FormItem>
+    <FormItem label="禁用状态" childAlign="right">
+      <Stepper disabled />
+    </FormItem>
+    <FormItem label="禁用输入框" childAlign="right">
+      <Stepper disableInput />
+    </FormItem>
+    <FormItem label="固定小数位数" childAlign="right">
+      <Stepper step={0.1} min={1} />
+    </FormItem>
+    <FormItem label="隐藏输入框" childAlign="right">
+      <Stepper hideInput />
+    </FormItem>
+  </Form>
 );

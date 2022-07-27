@@ -8,6 +8,7 @@ import {
   getDevice,
   composeClasses
 } from '@wonder-ui/utils';
+import ButtonBase from '../ButtonBase/ButtonBase';
 /**
  * When click and hold on a button - the speed of auto changing the value.
  */
@@ -47,22 +48,18 @@ const useClasses = (styleProps: StepButtonProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const StepButtonRoot = styled('span', { name: COMPONENT_NAME, slot: 'Root' })<{
+const StepButtonRoot = styled(ButtonBase, {
+  name: COMPONENT_NAME,
+  slot: 'Root'
+})<{
   styleProps: StepButtonProps;
-}>(({ styleProps }) => ({
-  touchAction: 'manipulation',
-  userSelect: 'none',
-
-  ...(styleProps.disabled && {
-    pointerEvents: 'none'
-  })
-}));
+}>({});
 
 const StepButton = forwardRef<HTMLElement, StepButtonProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
     className,
-    component = 'span',
+    component,
     delay = STEP_DELAY,
     disabled = false,
     interval = STEP_INTERVAL,
@@ -122,9 +119,10 @@ const StepButton = forwardRef<HTMLElement, StepButtonProps>((inProps, ref) => {
   return (
     <StepButtonRoot
       aria-disabled={disabled}
-      as={component}
+      component={component}
       role="button"
-      className={css(className, classes.root)}
+      className={css(classes.root, className)}
+      disableRipple
       {...rest}
       {...handleProps}
       styleProps={styleProps}
