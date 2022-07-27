@@ -1,26 +1,22 @@
 export type SpacingConfig = number | ((factor: number) => number);
 
-export type Spacing = ((
-  p1: number,
-  p2: number,
-  p3?: number,
-  p4?: number
-) => string) &
-  ((p?: number) => number);
+export interface Spacing {
+  (p?: number): number;
+  (p1: number, p2: number, p3?: number, p4?: number): string;
+}
 
-export default function createSpacing(
-  spacingInput: SpacingConfig = 8
-): Spacing {
-  const transform =
-    typeof spacingInput === 'function'
-      ? (spacingInput as () => number)
-      : (factor: number): number => {
-          return spacingInput * factor;
-        };
+export default function createSpacing(space: SpacingConfig = 8): Spacing {
+  const transform = (factor: number) => {
+    if (typeof space === 'function') {
+      return space(factor);
+    }
+    if (typeof space === 'number') {
+      return space * factor;
+    }
+    return 0;
+  };
 
-  function spacing(p?: number): number;
-  function spacing(p1: number, p2: number, p3?: number, p4?: number): string;
-  function spacing(...args: any[]): any {
+  return (...args: any[]): any => {
     if (args.length === 0) {
       return transform(1);
     }
@@ -35,7 +31,5 @@ export default function createSpacing(
         return typeof output === 'number' ? `${output}px` : output;
       })
       .join(' ');
-  }
-
-  return spacing;
+  };
 }

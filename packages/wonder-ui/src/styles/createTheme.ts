@@ -1,4 +1,3 @@
-import * as React from 'react';
 import * as transitions from './transitions';
 import createBreakpoints, {
   Breakpoints,
@@ -10,9 +9,9 @@ import createTypography, {
   Typography,
   TypographyOptions
 } from './theme/createTypography';
-import shadows from './theme/shadows';
+import React from 'react';
 import shape, { Shape } from './theme/shape';
-import zIndex from './theme/zIndex';
+import zIndex, { ZIndex } from './theme/zIndex';
 import type { CSSObject } from '@wonder-ui/styled';
 
 interface ThemeComponents {
@@ -26,30 +25,28 @@ interface ThemeComponents {
   };
 }
 
+type Direction = 'ltr' | 'rtl';
+
 interface ThemeOptions extends ThemeComponents {
   breakpoints?: BreakpointsOptions;
-  direction?: 'ltr' | 'rtl';
+  direction?: Direction;
   palette?: PaletteOptions;
   spacing?: SpacingConfig;
   typography?: TypographyOptions;
-  shadows?: string[];
   shape?: Partial<Shape>;
-  zIndex?: Partial<typeof zIndex>;
+  zIndex?: Partial<ZIndex>;
 }
 
 export interface Theme extends ThemeComponents {
   breakpoints: Breakpoints;
-  direction: 'ltr' | 'rtl';
+  direction: Direction;
   palette: Palette;
   spacing: Spacing;
   transitions: typeof transitions;
   typography: Typography;
-  shadows: string[];
   shape: Shape;
-  zIndex: typeof zIndex;
+  zIndex: ZIndex;
 }
-
-export const defaultTheme = {} as Theme;
 
 export function createTheme(options: ThemeOptions = {}): Theme {
   const {
@@ -67,7 +64,6 @@ export function createTheme(options: ThemeOptions = {}): Theme {
     breakpoints: createBreakpoints(breakpointsInput),
     direction,
     palette: createPalette(paletteInput),
-    shadows,
     shape: { ...shape, ...shapeInput },
     spacing: createSpacing(spacing),
     transitions,
@@ -76,13 +72,9 @@ export function createTheme(options: ThemeOptions = {}): Theme {
     ...rest
   };
 
-  Object.assign(defaultTheme, newTheme);
-
   return newTheme;
 }
 
-export const getTheme = () => {
-  return Object.keys(defaultTheme).length === 0 ? createTheme() : defaultTheme;
-};
-
 export default createTheme;
+
+export const defaultTheme = createTheme();

@@ -1,16 +1,15 @@
-import { getTheme } from './createTheme';
 import styled, { CreateStyled, CSSObject } from '@wonder-ui/styled';
+import { defaultTheme } from './createTheme';
 import { Theme as WuiTheme } from './createTheme';
 
 declare module '@wonder-ui/styled' {
   export interface Theme extends WuiTheme {}
+  export interface StyledOptions {
+    name?: string;
+    slot?: string;
+    overridesResolver?: (props: any, styleOverrides: any) => CSSObject;
+  }
 }
-
-type Options = {
-  name?: string;
-  slot?: string;
-  overridesResolver?: (props: any, styleOverrides: any) => CSSObject;
-};
 
 export const shouldForwardProp = (prop: string) =>
   prop !== 'styleProps' &&
@@ -40,7 +39,7 @@ function isEmpty(obj: object) {
   return Object.keys(obj).length === 0;
 }
 
-const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
+const wuiStyled: CreateStyled = (tag: any, options: any = {}) => {
   const {
     name: componentName,
     slot: componentSlot,
@@ -48,8 +47,8 @@ const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
     ...styledOptions
   } = options;
 
-  let displayName: string | undefined = tag.displayName
-    ? `styled(${tag.displayName})`
+  let displayName: string | undefined = (tag as any).displayName
+    ? `styled(${(tag as any).displayName})`
     : undefined;
   let name: string | undefined;
   let className: string | undefined;
@@ -63,7 +62,7 @@ const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
     )}`;
   }
 
-  const defaultStyledResolver = styled(tag, {
+  const defaultStyledResolver = styled(tag as any, {
     shouldForwardProp: (prop: string) => shouldForwardProp(prop),
     label: className || componentName || '',
     // target: className,
@@ -76,7 +75,7 @@ const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
         ? (props: any) => {
             return stylesArg({
               ...props,
-              theme: isEmpty(props.theme) ? getTheme() : props.theme
+              theme: isEmpty(props.theme) ? defaultTheme : props.theme
             });
           }
         : stylesArg;
@@ -84,7 +83,7 @@ const wuiStyled: CreateStyled<Options> = (tag: any, options: any = {}) => {
 
     if (name && overridesResolver) {
       styleArgsWithDefaultTheme.push((props: any) => {
-        const theme = isEmpty(props.theme) ? getTheme() : props.theme;
+        const theme = isEmpty(props.theme) ? defaultTheme : props.theme;
         const styleOverrides = getStyleOverrides(name as string, theme);
 
         if (styleOverrides) {

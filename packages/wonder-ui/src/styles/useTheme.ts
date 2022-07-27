@@ -1,19 +1,14 @@
-import * as React from 'react';
-import { getTheme } from './createTheme';
-import type { Theme } from './createTheme';
+import { defaultTheme } from './createTheme';
+import { useTheme as useContextTheme } from '@wonder-ui/styled';
 
-export const ThemeContext = React.createContext<Theme | null>(null);
-
-function isObjectEmpty(obj: object) {
+function isEmpty(obj: object) {
   return Object.keys(obj).length === 0;
 }
 
 export function useTheme() {
-  const contextTheme = React.useContext(ThemeContext);
+  const contextTheme = useContextTheme();
 
-  return !contextTheme || isObjectEmpty(contextTheme)
-    ? getTheme()
-    : contextTheme;
+  return !contextTheme || isEmpty(contextTheme) ? defaultTheme : contextTheme;
 }
 
 export default useTheme;

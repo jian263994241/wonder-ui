@@ -1,7 +1,25 @@
-import * as colors from './colors';
 import { darken, getContrastRatio, lighten } from '../colorManipulator';
 import { getDevice, merge } from '@wonder-ui/utils';
-import type { ColorKeys, ColorType } from './colors';
+
+export type ColorKeys =
+  | '50'
+  | '100'
+  | '200'
+  | '300'
+  | '400'
+  | '500'
+  | '600'
+  | '700'
+  | '800'
+  | '900'
+  | 'A100'
+  | 'A200'
+  | 'A400'
+  | 'A700';
+
+export type ColorType = {
+  [K in ColorKeys]: string;
+};
 
 type ColorObj = {
   main: string;
@@ -47,7 +65,6 @@ type ColorIntent = Partial<ColorObj> & Partial<ColorType>;
 
 export interface Palette {
   common: CommonColor;
-  colors: typeof colors;
   text: TextColor;
   divider: string;
   background: BackgroundColor;
@@ -64,12 +81,6 @@ export interface Palette {
   mode: Mode;
   contrastThreshold: number;
   tonalOffset: number;
-  augmentColor: (
-    color: ColorIntent,
-    mainShade?: ColorKeys,
-    lightShade?: ColorKeys,
-    darkShade?: ColorKeys
-  ) => ColorObj;
   getContrastText: (background: string) => string;
 }
 
@@ -114,8 +125,8 @@ export const light = {
   text: {
     primary: 'rgba(0, 0, 0, 0.85)',
     secondary: 'rgba(0, 0, 0, 0.45)',
-    disabled: 'rgba(0, 0, 0, 0.38)',
-    icon: 'rgba(0, 0, 0, 0.4)'
+    disabled: 'rgba(0, 0, 0, 0.25)',
+    icon: 'rgba(0, 0, 0, 0.3)'
   },
   divider: 'rgba(0, 0, 0, 0.12)',
   background: {
@@ -134,7 +145,7 @@ export const light = {
     // The color of a disabled action.
     disabled: 'rgba(0, 0, 0, 0.26)',
     // The color of a disabled action.
-    disabledOpacity: 0.26,
+    disabledOpacity: 0.38,
     // The background color of a disabled action.
     disabledBackground: 'rgba(0, 0, 0, 0.12)',
     focus: 'rgba(0, 0, 0, 0.12)',
@@ -146,9 +157,9 @@ export const light = {
 export const dark = {
   text: {
     primary: 'rgba(255, 255, 255, 0.85)',
-    secondary: 'rgba(255, 255, 255, 0.65)',
-    disabled: 'rgba(255, 255, 255, 0.5)',
-    icon: 'rgba(255, 255, 255, 0.5)'
+    secondary: 'rgba(255, 255, 255, 0.45)',
+    disabled: 'rgba(255, 255, 255, 0.25)',
+    icon: 'rgba(255, 255, 255, 0.3)'
   },
   divider: 'rgba(255, 255, 255, 0.12)',
   background: {
@@ -172,7 +183,7 @@ export const dark = {
 
 function addLightOrDark(
   intent: ColorIntent,
-  direction: Palette['mode'],
+  direction: Mode,
   shade: ColorKeys,
   tonalOffset: number
 ) {
@@ -187,7 +198,7 @@ function addLightOrDark(
   }
 }
 
-function getMode(mode: PaletteOptions['mode']): Mode {
+function getMode(mode: Mode | 'auto'): Mode {
   const doc = document;
 
   const prefersColor =
@@ -242,9 +253,8 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
       dark: darken(defaultDark, darkenCoefficient)
     },
     mode: modeProp = 'light',
-    contrastThreshold = 3,
-    tonalOffset = 0.2,
-    ...rest
+    contrastThreshold = 2.2,
+    tonalOffset = 0.2
   } = palette;
 
   const mode = getMode(modeProp);
@@ -258,12 +268,12 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
     return contrastText;
   }
 
-  const augmentColor: Palette['augmentColor'] = (
-    color,
-    mainShade = '500',
-    lightShade = '300',
-    darkShade = '700'
-  ) => {
+  const augmentColor = (
+    color: ColorIntent,
+    mainShade: ColorKeys = '500',
+    lightShade: ColorKeys = '300',
+    darkShade: ColorKeys = '700'
+  ): ColorObj => {
     color = { ...color };
 
     if (!color.main) {
@@ -285,35 +295,27 @@ export default function createPalette(palette: PaletteOptions = {}): Palette {
   };
 
   const modes = { dark, light };
-  //@ts-ignore
-  return merge(
-    {
-      //@ts-ignore
-      mode,
-      common,
-      colors,
-      primary: augmentColor(primary),
-      secondary: augmentColor(secondary),
-      error: augmentColor(error),
-      danger: augmentColor(danger),
-      warning: augmentColor(warning),
-      info: augmentColor(info),
-      success: augmentColor(success),
-      light: augmentColor(lightProp),
-      dark: augmentColor(darkProp),
-      // the background and the text.
-      contrastThreshold,
-      // Takes a background color and returns the text color that maximizes the contrast.
-      getContrastText,
-      // Generate a rich color object.
-      augmentColor,
-      // Used by the functions below to shift a color's luminance by approximately
-      // two indexes within its tonal palette.
-      // E.g., shift from Red 500 to Red 300 or Red 700.
-      tonalOffset,
-      ...modes[mode]
-    },
-    //@ts-ignore
-    rest
-  );
+
+  return {
+    mode,
+    common,
+    primary: augmentColor(primary),
+    secondary: augmentColor(secondary),
+    error: augmentColor(error),
+    danger: augmentColor(danger),
+    warning: augmentColor(warning),
+    info: augmentColor(info),
+    success: augmentColor(success),
+    light: augmentColor(lightProp),
+    dark: augmentColor(darkProp),
+    // the background and the text.
+    contrastThreshold,
+    // Takes a background color and returns the text color that maximizes the contrast.
+    getContrastText,
+    // Used by the functions below to shift a color's luminance by approximately
+    // two indexes within its tonal palette.
+    // E.g., shift from Red 500 to Red 300 or Red 700.
+    tonalOffset,
+    ...modes[mode]
+  };
 }

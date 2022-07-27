@@ -1,6 +1,7 @@
 import * as React from 'react';
-import useTheme, { ThemeContext } from './useTheme';
+import useTheme from './useTheme';
 import { Theme } from './createTheme';
+import { ThemeProvider as ThemeProviderDefault } from '@wonder-ui/styled';
 
 function mergeOuterLocalTheme<T>(
   outerTheme: T,
@@ -46,9 +47,7 @@ function ThemeProvider<T = Theme>(
     return output;
   }, [localTheme, outerTheme]);
 
-  return (
-    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
-  );
+  return <ThemeProviderDefault theme={theme}>{children}</ThemeProviderDefault>;
 }
 
 export default ThemeProvider;

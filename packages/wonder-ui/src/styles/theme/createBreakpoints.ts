@@ -1,52 +1,50 @@
-export const breakpointKeys = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
-
 export type BreakpointKeys = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-export interface Breakpoints<Key extends string = BreakpointKeys> {
-  values: Record<Key, number>;
-  keys: Key[];
-  up: (key: Key | number) => string;
-  down: (key: Key | number) => string;
-  between: (start: Key | number, end: Key | number) => string;
-  only: (key: Key) => string;
-  width: (key: Key) => number;
+type KeysOrNumber = BreakpointKeys | number;
+export interface Breakpoints {
+  values: Record<BreakpointKeys, number>;
+  keys: BreakpointKeys[];
+  up: (key: KeysOrNumber) => string;
+  down: (key: KeysOrNumber) => string;
+  between: (start: KeysOrNumber, end: KeysOrNumber) => string;
+  only: (key: BreakpointKeys) => string;
+  width: (key: BreakpointKeys) => number;
   unit: string;
 }
 
-export interface BreakpointsOptions extends Partial<Breakpoints> {}
+export type BreakpointsOptions = Partial<Pick<Breakpoints, 'values' | 'unit'>>;
 
 const step = 5;
 
 export default function createBreakpoints(
   breakpoints: BreakpointsOptions = {}
 ): Breakpoints {
-  const {
-    // The breakpoint **start** at this value.
-    // For instance with the first breakpoint xs: [xs, sm).
-    values = {
+  const { values: valuesProp, unit = 'px' } = breakpoints;
+
+  const values = Object.assign(
+    {
       xs: 0,
       sm: 576,
       md: 768,
       lg: 992,
       xl: 1200
     },
-    unit = 'px',
-    ...rest
-  } = breakpoints;
+    valuesProp
+  );
 
-  const keys = Object.keys(values) as Breakpoints['keys'];
+  const keys = Object.keys(values) as BreakpointKeys[];
 
-  const up: Breakpoints['up'] = (key) => {
+  const up = (key: KeysOrNumber) => {
     const value = typeof key != 'number' ? values[key] : key;
     return `@media (min-width:${value}${unit})`;
   };
 
-  const down: Breakpoints['down'] = (key) => {
+  const down = (key: KeysOrNumber) => {
     const value = typeof key != 'number' ? values[key] : key;
     return `@media (max-width:${value - step / 100}${unit})`;
   };
 
-  const between: Breakpoints['between'] = (start, end) => {
+  const between = (start: KeysOrNumber, end: KeysOrNumber) => {
     const startValue = typeof start != 'number' ? values[start] : start;
     const endValue = typeof end != 'number' ? values[end] : end;
 
@@ -56,7 +54,7 @@ export default function createBreakpoints(
     );
   };
 
-  const only: Breakpoints['only'] = (key) => {
+  const only = (key: BreakpointKeys) => {
     if (keys.indexOf(key) + 1 < keys.length) {
       return between(key, keys[keys.indexOf(key) + 1]);
     }
@@ -64,7 +62,7 @@ export default function createBreakpoints(
     return up(key);
   };
 
-  const width: Breakpoints['width'] = (key) => {
+  const width = (key: BreakpointKeys) => {
     return values[key];
   };
 
@@ -76,7 +74,6 @@ export default function createBreakpoints(
     between,
     only,
     width,
-    unit,
-    ...rest
+    unit
   };
 }
