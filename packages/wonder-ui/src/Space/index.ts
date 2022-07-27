@@ -1,2 +1,2 @@
 export { default } from './Space';
-export type { SpaceProps } from './Space';
+export type { SpaceProps } from './SpaceTypes';

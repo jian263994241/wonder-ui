@@ -1,26 +1,17 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { checkFlexGap, getSize, Gap } from './SpaceUtils';
+import { addUnit, composeClasses, css, forwardRef } from '@wonder-ui/utils';
+import { checkFlexGap } from './SpaceUtils';
 import {
-  composeClasses,
-  css,
-  forwardRef,
-  generateUtilityClasses
-} from '@wonder-ui/utils';
+  COMPONENT_NAME,
+  spaceClasses,
+  spaceCssVars,
+  useSpaceCssVars
+} from './SpaceClasses';
+import type { SpaceProps } from './SpaceTypes';
 
-const COMPONENT_NAME = 'WuiSpace';
-
-export const spaceClasses = generateUtilityClasses(COMPONENT_NAME, [
-  'root',
-  'item',
-  'vertical',
-  'horizontal',
-  'split',
-  'nowrap'
-]);
-
-const useClasses = (styleProps: SpaceStyleProps) => {
+const useClasses = (styleProps: SpaceProps) => {
   const { classes, direction, nowrap } = styleProps;
 
   const slots = {
@@ -32,74 +23,6 @@ const useClasses = (styleProps: SpaceStyleProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-type Alignment =
-  | 'start'
-  | 'end'
-  | 'center'
-  | 'space-between'
-  | 'space-around'
-  | 'space-evenly'
-  | 'baseline'
-  | 'stretch';
-
-export interface SpaceProps extends React.HTMLAttributes<HTMLElement> {
-  /**
-   * Css api
-   */
-  classes?: Partial<typeof spaceClasses>;
-  /**
-   * 节点
-   */
-  component?: React.ElementType;
-  /**
-   * 方向
-   * @default horizontal
-   */
-  direction?: 'horizontal' | 'vertical';
-  /**
-   * SpaceItem 包裹
-   */
-  itemWrap?: boolean;
-  /**
-   * 间距
-   * @default medium
-   */
-  gap?: Gap;
-  /**
-   * 水平对齐
-   */
-  horizontalAlign?: Alignment;
-  /**
-   * reversed
-   * @default false
-   */
-  reversed?: boolean;
-  /**
-   * 分隔符
-   */
-  split?: React.ReactNode;
-  /**
-   * 垂直对齐
-   */
-  verticalAlign?: Alignment;
-  /**
-   * 100%高度
-   */
-  verticalFill?: boolean;
-  /**
-   * 不换行
-   * @default false
-   */
-  nowrap?: boolean;
-  /**
-   * 等分容器
-   * @default false
-   */
-  itemEqual?: boolean;
-}
-
-interface SpaceStyleProps extends SpaceProps {}
-
 const nameMap: { [key: string]: string } = {
   start: 'flex-start',
   end: 'flex-end'
@@ -108,10 +31,9 @@ const nameMap: { [key: string]: string } = {
 const supportGap = checkFlexGap();
 
 const SpaceRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
-  styleProps: SpaceStyleProps;
-}>(({ theme, styleProps }) => {
-  const { rowGap, columnGap } = getSize(styleProps.gap!, theme);
-  const horizontal = styleProps.direction === 'horizontal';
+  styleProps: SpaceProps;
+}>(({ styleProps }) => {
+  const isHorizontal = styleProps.direction === 'horizontal';
 
   return {
     boxSizing: 'border-box',
@@ -119,72 +41,75 @@ const SpaceRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
     margin: 0,
     display: 'flex',
 
+    flexWrap: styleProps.reversed ? 'wrap-reverse' : 'wrap',
+
     '& > *': {
-      flexShrink: 1,
-      textOverflow: 'ellipsis'
+      flexShrink: 0
     },
 
-    flexWrap: styleProps.nowrap ? 'nowrap' : 'wrap',
+    [`&.${spaceClasses.nowrap}`]: {
+      flexWrap: 'nowrap'
+    },
+
     ...(styleProps.verticalAlign && {
-      [horizontal ? 'alignItems' : 'justifyContent']:
+      [isHorizontal ? 'alignItems' : 'justifyContent']:
         nameMap[styleProps.verticalAlign] || styleProps.verticalAlign
     }),
     ...(styleProps.horizontalAlign && {
-      [horizontal ? 'justifyContent' : 'alignItems']:
+      [isHorizontal ? 'justifyContent' : 'alignItems']:
         nameMap[styleProps.horizontalAlign!] || styleProps.horizontalAlign
     }),
-    ...(horizontal && {
+    ...(isHorizontal && {
       flexDirection: styleProps.reversed ? 'row-reverse' : 'row',
       height: styleProps.verticalFill ? '100%' : 'auto'
     }),
-    ...(!horizontal && {
+    ...(!isHorizontal && {
       flexDirection: styleProps.reversed ? 'column-reverse' : 'column'
     }),
 
     ...(supportGap
       ? {
-          rowGap,
-          columnGap
+          rowGap: spaceCssVars.value('gapVertical'),
+          columnGap: spaceCssVars.value('gapHorizontal')
         }
       : {
           '& > *': {
-            ...(horizontal && {
-              marginBottom: rowGap
+            ...(isHorizontal && {
+              marginBottom: spaceCssVars.value('gapVertical')
             })
           },
-          ...(horizontal && {
-            marginBottom: -rowGap
+          ...(isHorizontal && {
+            marginBottom: `calc( 0px - ${spaceCssVars.getName('gapVertical')})`
           }),
           [styleProps.reversed
             ? '&> *:not(:first-child)'
             : '&> *:not(:last-child)']: [
-            horizontal
+            isHorizontal
               ? {
-                  marginRight: columnGap
+                  marginRight: spaceCssVars.value('gapHorizontal')
                 }
               : {
-                  marginBottom: rowGap
+                  marginBottom: spaceCssVars.value('gapVertical')
                 }
           ]
         })
   };
 });
 
-const SpaceItem = styled('span', { name: COMPONENT_NAME, slot: 'Item' })<{
-  styleProps: SpaceStyleProps;
+const SpaceItem = styled('div', { name: COMPONENT_NAME, slot: 'Item' })<{
+  styleProps: SpaceProps;
 }>(({ styleProps }) => ({
   ...(styleProps.itemEqual && {
     flex: 1
   })
 }));
 
-const SpaceSplit = styled('span', {
+const SpaceSplit = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Split'
 })({
   display: 'flex',
-  alignSelf: 'stretch',
-  alignItems: 'center'
+  alignSelf: 'stretch'
 });
 
 const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
@@ -196,7 +121,7 @@ const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
     component,
     direction = 'horizontal',
     reversed = false,
-    gap = 'medium',
+    gap,
     split,
     horizontalAlign,
     verticalAlign = 'center',
@@ -204,6 +129,7 @@ const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
     nowrap = false,
     itemWrap = true,
     itemEqual = false,
+    style,
     ...rest
   } = props;
 
@@ -211,7 +137,6 @@ const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
   const styleProps = {
     ...props,
     direction,
-    gap,
     nowrap,
     verticalAlign,
     verticalFill,
@@ -222,12 +147,25 @@ const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
 
   const classes = useClasses(styleProps);
 
+  useSpaceCssVars();
+
   return (
     <SpaceRoot
       as={component}
       className={css(className, classes.root)}
       ref={ref as React.Ref<HTMLDivElement>}
       styleProps={styleProps}
+      style={{
+        ...(Array.isArray(gap)
+          ? {
+              [spaceCssVars.getName('gapHorizontal')]: addUnit(gap[0]),
+              [spaceCssVars.getName('gapVertical')]: addUnit(gap[1])
+            }
+          : {
+              [spaceCssVars.getName('gap')]: addUnit(gap)
+            }),
+        ...style
+      }}
       {...rest}
     >
       {childrenArray.map((child, index) => (

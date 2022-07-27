@@ -2,10 +2,11 @@
  * title: 水平方向-水平对齐
  * desc:
  */
-import { Space, styled } from '@wonder-ui/core';
+import { ContentBlock, Space, styled } from '@wonder-ui/core';
 
 const SpaceDemo = styled(Space)`
   background: #eee;
+  height: 100px;
 `;
 
 const Box = styled('div')`
@@ -19,42 +20,77 @@ const Box = styled('div')`
 `;
 
 export default () => (
-  <Space direction="vertical">
-    Start:
-    <SpaceDemo horizontalAlign="start">
-      <Box>1</Box>
-      <Box>2</Box>
-      <Box>3</Box>
-    </SpaceDemo>
-    Center:
-    <SpaceDemo horizontalAlign="center">
-      <Box>1</Box>
-      <Box>2</Box>
-      <Box>3</Box>
-    </SpaceDemo>
-    End:
-    <SpaceDemo horizontalAlign="end">
-      <Box>1</Box>
-      <Box>2</Box>
-      <Box>3</Box>
-    </SpaceDemo>
-    Space around:
-    <SpaceDemo horizontalAlign="space-around">
-      <Box>1</Box>
-      <Box>2</Box>
-      <Box>3</Box>
-    </SpaceDemo>
-    Space between:
-    <SpaceDemo horizontalAlign="space-between">
-      <Box>1</Box>
-      <Box>2</Box>
-      <Box>3</Box>
-    </SpaceDemo>
-    Space evenly:
-    <SpaceDemo horizontalAlign="space-evenly">
-      <Box>1</Box>
-      <Box>2</Box>
-      <Box>3</Box>
-    </SpaceDemo>
-  </Space>
+  <>
+    <ContentBlock title="horizontalAlign: start">
+      <SpaceDemo horizontalAlign="start">
+        <Box>1</Box>
+        <Box>2</Box>
+        <Box>3</Box>
+      </SpaceDemo>
+    </ContentBlock>
+
+    <ContentBlock title="horizontalAlign: center">
+      <SpaceDemo horizontalAlign="center">
+        <Box>1</Box>
+        <Box>2</Box>
+        <Box>3</Box>
+      </SpaceDemo>
+    </ContentBlock>
+
+    <ContentBlock title="horizontalAlign: end">
+      <SpaceDemo horizontalAlign="end">
+        <Box>1</Box>
+        <Box>2</Box>
+        <Box>3</Box>
+      </SpaceDemo>
+    </ContentBlock>
+
+    <ContentBlock title="horizontalAlign: space-around">
+      <SpaceDemo horizontalAlign="space-around">
+        <Box>1</Box>
+        <Box>2</Box>
+        <Box>3</Box>
+      </SpaceDemo>
+    </ContentBlock>
+
+    <ContentBlock title="horizontalAlign: space-between">
+      <SpaceDemo horizontalAlign="space-between">
+        <Box>1</Box>
+        <Box>2</Box>
+        <Box>3</Box>
+      </SpaceDemo>
+    </ContentBlock>
+
+    <ContentBlock title="horizontalAlign: space-evenly">
+      <SpaceDemo horizontalAlign="space-evenly">
+        <Box>1</Box>
+        <Box>2</Box>
+        <Box>3</Box>
+      </SpaceDemo>
+    </ContentBlock>
+
+    <ContentBlock title="verticalAlign: start">
+      <SpaceDemo verticalAlign="start">
+        <Box>1</Box>
+        <Box>2</Box>
+        <Box>3</Box>
+      </SpaceDemo>
+    </ContentBlock>
+
+    <ContentBlock title="verticalAlign: center">
+      <SpaceDemo verticalAlign="center">
+        <Box>1</Box>
+        <Box>2</Box>
+        <Box>3</Box>
+      </SpaceDemo>
+    </ContentBlock>
+
+    <ContentBlock title="verticalAlign: end">
+      <SpaceDemo verticalAlign="end">
+        <Box>1</Box>
+        <Box>2</Box>
+        <Box>3</Box>
+      </SpaceDemo>
+    </ContentBlock>
+  </>
 );

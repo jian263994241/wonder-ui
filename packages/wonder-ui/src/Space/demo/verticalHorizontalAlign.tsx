@@ -1,8 +1,4 @@
-/**
- * title: 垂直方向-水平对齐
- * desc:
- */
-import { Space, styled } from '@wonder-ui/core';
+import { ContentBlock, Space, styled } from '@wonder-ui/core';
 
 const SpaceDemo = styled(Space)`
   background: #eee;
@@ -19,21 +15,24 @@ const Box = styled('div')`
 `;
 
 export default () => (
-  <Space direction="vertical">
-    Start:
-    <SpaceDemo direction="vertical" horizontalAlign="start">
-      <Box>1</Box>
-      <Box>2</Box>
-    </SpaceDemo>
-    <div>Center:</div>
-    <SpaceDemo direction="vertical" horizontalAlign="center">
-      <Box>1</Box>
-      <Box>2</Box>
-    </SpaceDemo>
-    End:
-    <SpaceDemo direction="vertical" horizontalAlign="end">
-      <Box>1</Box>
-      <Box>2</Box>
-    </SpaceDemo>
-  </Space>
+  <>
+    <ContentBlock title="horizontalAlign: start">
+      <SpaceDemo direction="vertical" horizontalAlign="start">
+        <Box>1</Box>
+        <Box>2</Box>
+      </SpaceDemo>
+    </ContentBlock>
+    <ContentBlock title="horizontalAlign: center">
+      <SpaceDemo direction="vertical" horizontalAlign="center">
+        <Box>1</Box>
+        <Box>2</Box>
+      </SpaceDemo>
+    </ContentBlock>
+    <ContentBlock title="horizontalAlign: end">
+      <SpaceDemo direction="vertical" horizontalAlign="end">
+        <Box>1</Box>
+        <Box>2</Box>
+      </SpaceDemo>
+    </ContentBlock>
+  </>
 );

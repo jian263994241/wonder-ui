@@ -20,48 +20,31 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-### 设置分隔符
 
-<code src="./demo/spaceSplit.tsx"></code>
-
-### 行间距
-
-<code src="./demo/wrap.tsx"></code>
-
-### 等分容器
-
-设置`itemEqual`属性实现等分内容
-
-<code src="./demo/itemEqual.tsx"></code>
-
-### 水平方向-水平对齐
+### 水平方向对齐
 
 <code src="./demo/horizontalAlign.tsx"></code>
 
-### 水平方向-垂直对齐
-
-<code src="./demo/verticalAlignments.tsx"></code>
-
-### 垂直方向-水平对齐
+### 垂直方向对齐
 
 <code src="./demo/verticalHorizontalAlign.tsx"></code>
 
-### 垂直方向-垂直对齐
 
-<code src="./demo/verticalVerticalAlignments.tsx"></code>
+
+<API src="./Space.tsx"></API>
 
 
 
 ## 类型
 
 ```typescript
-type SpaceSize = 'small' | 'medium' | 'large' | number;
-type Gap = SpaceSize | [SpaceSize, SpaceSize];
 type Alignment = 'start' | 'end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'baseline' | 'stretch';
-type SpaceSize = 'small' | 'medium' | 'large' | number;
 ```
 
-<API src="./Space.tsx"></API>
+## CSS 变量
 
-
-
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-space-gap | 间距 | `theme.space(1)`
+| --wui-space-gap-horizontal | 水平间距 | var(--wui-space-gap)
+| --wui-space-gap-vertical | 垂直间距 | var(--wui-space-gap)
