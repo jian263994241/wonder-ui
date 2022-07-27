@@ -3,15 +3,13 @@ import ImageIcon from '../icons/Image';
 import ImageX from '../icons/ImageX';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
+import { addUnit, composeClasses, css, unitToPx } from '@wonder-ui/utils';
 import {
-  addUnit,
-  composeClasses,
-  css,
-  unitToPx,
-  createCssVars
-} from '@wonder-ui/utils';
-import { COMPONENT_NAME } from './ImageClasses';
-import { imageClasses } from './ImageClasses';
+  COMPONENT_NAME,
+  imageClasses,
+  imageCssVars,
+  useImageCssVars
+} from './ImageClasses';
 import {
   useCreation,
   useForkRef,
@@ -19,10 +17,10 @@ import {
   usePrevious,
   useUpdateEffect
 } from '@wonder-ui/hooks';
-import type { ImageProps, StyleProps } from './ImageTypes';
+import type { ImageProps } from './ImageTypes';
 
-const useClasses = (props: StyleProps) => {
-  const { classes, variant } = props.styleProps;
+const useClasses = (styleProps: ImageProps) => {
+  const { classes, variant } = styleProps;
   const slots = {
     root: ['root', variant && variant],
     img: ['img']
@@ -31,30 +29,19 @@ const useClasses = (props: StyleProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-export const cssVars = createCssVars(COMPONENT_NAME, [
-  'width',
-  'height',
-  'roundedRadius'
-]);
-
 const ImageRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})<StyleProps>(({ styleProps }) => ({
-  ...cssVars.style({
-    width: styleProps.width ?? 'auto',
-    height: styleProps.height ?? 'auto',
-    roundedRadius: styleProps.roundedRadius ?? 4
-  }),
+})(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   position: 'relative',
   overflow: 'hidden',
-  width: cssVars.value('width'),
-  height: cssVars.value('height'),
+  width: imageCssVars.value('width'),
+  height: imageCssVars.value('height'),
   [`&.${imageClasses.rounded}`]: {
-    borderRadius: cssVars.value('roundedRadius')
+    borderRadius: imageCssVars.value('roundedRadius')
   },
   [`&.${imageClasses.circular}`]: {
     borderRadius: '50%',
@@ -67,12 +54,13 @@ const ImageRoot = styled('div', {
 const ImageImg = styled('img', {
   name: COMPONENT_NAME,
   slot: 'Img'
-})({
+})<{ styleProps: ImageProps }>(({ styleProps }) => ({
   width: '100%',
   height: '100%',
   display: 'block',
-  WebkitUserDrag: 'none'
-});
+  WebkitUserDrag: 'none',
+  objectFit: imageCssVars.value('objectFit') as any
+}));
 
 const Image = React.forwardRef<HTMLDivElement, ImageProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
@@ -83,7 +71,7 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>((inProps, ref) => {
     variant = 'square',
     alt,
     className,
-    fit = 'fill',
+    fit,
     lazy = false,
     crossOrigin,
     decoding,
@@ -143,15 +131,24 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>((inProps, ref) => {
     onLoad?.(e);
   };
 
-  const styleProps = { ...props, width, height, variant, roundedRadius };
+  const styleProps = { ...props, fit, width, height, variant, roundedRadius };
 
-  const classes = useClasses({ styleProps });
+  const classes = useClasses(styleProps);
+
+  useImageCssVars();
 
   return (
     <ImageRoot
       className={css(classes.root, className)}
-      styleProps={styleProps}
-      style={style}
+      style={{
+        ...imageCssVars.style({
+          width,
+          height,
+          roundedRadius,
+          objectFit: fit
+        }),
+        ...style
+      }}
       ref={handleRef}
       onClick={onClick}
       {...rest}
@@ -173,8 +170,9 @@ const Image = React.forwardRef<HTMLDivElement, ImageProps>((inProps, ref) => {
             useMap={useMap}
             onError={handleError}
             onLoad={handleLoad}
-            style={{ objectFit: fit, display: loaded ? 'block' : 'none' }}
             className={classes.img}
+            styleProps={styleProps}
+            hidden={!loaded}
           />
         </React.Fragment>
       )}

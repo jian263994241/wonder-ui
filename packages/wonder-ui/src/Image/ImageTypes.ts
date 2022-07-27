@@ -1,7 +1,5 @@
-import * as React from 'react';
-import { imageClasses } from './ImageClasses';
-
-export type ImageClassesType = typeof imageClasses;
+import React from 'react';
+import type { ImageClassesType } from './ImageClasses';
 
 export interface ImageProps
   extends Pick<
@@ -15,17 +13,8 @@ export interface ImageProps
     | 'useMap'
     | 'alt'
   > {
-  /**
-   * Css api
-   */
   classes?: Partial<ImageClassesType>;
-  /**
-   * 样式名
-   */
   className?: string;
-  /**
-   * 样式
-   */
   style?: React.CSSProperties;
   /**
    * 图片链接
@@ -33,7 +22,6 @@ export interface ImageProps
   src?: string;
   /**
    * 图片填充模式
-   * @default fill
    */
   fit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
   /**
@@ -78,8 +66,4 @@ export interface ImageProps
    * 图片加载失败时触发
    */
   onError?: React.ReactEventHandler<HTMLImageElement>;
-}
-
-export interface StyleProps {
-  styleProps: ImageProps;
 }

@@ -22,10 +22,12 @@ group:
 
 <API src="./Image.tsx"></API>
 
-## CSS Variables
+## CSS 变量
 
-```css
---wui-image-width: auto;
---wui-image-height: auto;
---wui-image-rounded-radius: 4px;
-```
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-image-height | 图片高度 | auto
+| --wui-image-object-fit | 填充模式 | cover
+| --wui-image-rounded-radius | 图标圆角 | `theme.shape.borderRadius`
+| --wui-image-width | 图片宽度 | auto
+
