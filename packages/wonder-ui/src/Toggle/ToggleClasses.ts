@@ -1,41 +1,38 @@
-import {
-  capitalize,
-  composeClasses,
-  generateUtilityClasses
-} from '@wonder-ui/utils';
+import useRootCssVars from '../styles/useRootCssVars';
+import { createCssVars, generateUtilityClasses } from '@wonder-ui/utils';
 
-export const toggleClasses = generateUtilityClasses('WuiToggle', [
+export const COMPONENT_NAME = 'WuiToggle';
+
+export const toggleClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'input',
   'icon',
   'disabled',
-  'checked',
-  'sizeMedium',
-  'sizeSmall'
+  'checked'
 ]);
 
-export interface ToggleStyleProps {
-  checked?: boolean;
-  classes?: Partial<typeof toggleClasses>;
-  color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
-  disabled?: boolean;
-  size?: 'medium' | 'small';
-}
+export const toggleCssVars = createCssVars(COMPONENT_NAME, [
+  'width',
+  'height',
+  'borderColor',
+  'borderWidth',
+  'inactiveColor',
+  'color',
+  'handleColor'
+]);
 
-export const useClasses = (styleProps: ToggleStyleProps) => {
-  const { checked, classes, color, disabled, size } = styleProps;
-
-  const slots = {
-    root: [
-      'root',
-      color && `color${capitalize(color)}`,
-      size && `color${capitalize(size)}`,
-      checked && 'checked',
-      disabled && 'disabled'
-    ],
-    icon: ['icon'],
-    input: ['input']
-  };
-
-  return composeClasses('WuiToggle', slots, classes);
+export const useToggleCssVars = () => {
+  useRootCssVars((theme) =>
+    toggleCssVars.style({
+      width: 52,
+      height: 32,
+      borderWidth: 2,
+      borderColor: theme.palette.divider,
+      inactiveColor: theme.palette.background.paper,
+      handleColor: theme.palette.background.paper,
+      color: theme.palette.primary.main
+    })
+  );
 };
+
+export type ToggleClassesType = typeof toggleClasses;

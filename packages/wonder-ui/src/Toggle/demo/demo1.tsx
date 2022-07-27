@@ -1,14 +1,19 @@
-/**
- * title: 基本的开关
- * desc:
- *
- */
-import { Space, Toggle, Container } from '@wonder-ui/core';
+import {
+  ContentBlock,
+  Space,
+  Toggle,
+  List,
+  ListItem,
+  ListHeader,
+  Form,
+  FormItem
+} from '@wonder-ui/core';
+import { CheckCircle, CheckCircleFill } from '@wonder-ui/icons';
 
 export default function Example() {
   return (
-    <Container>
-      <Space direction="vertical">
+    <div>
+      <ContentBlock title="颜色">
         <Space>
           <Toggle defaultChecked />
           <Toggle defaultChecked color="secondary" />
@@ -16,15 +21,38 @@ export default function Example() {
           <Toggle defaultChecked color="warning" />
           <Toggle defaultChecked color="info" />
         </Space>
+      </ContentBlock>
 
+      <ContentBlock title="禁用">
         <Space>
+          <Toggle disabled />
           <Toggle disabled defaultChecked />
-          <Toggle disabled defaultChecked color="secondary" />
-          <Toggle disabled defaultChecked color="danger" />
-          <Toggle disabled defaultChecked color="warning" />
-          <Toggle disabled defaultChecked color="info" />
         </Space>
-      </Space>
-    </Container>
+      </ContentBlock>
+
+      <ContentBlock title="自定义">
+        <Toggle
+          icon={(checked) => (checked ? <CheckCircleFill /> : <CheckCircle />)}
+        />
+      </ContentBlock>
+
+      <List>
+        <ListHeader>列表内使用</ListHeader>
+        <ListItem extra={<Toggle />}>开关</ListItem>
+      </List>
+
+      <Form>
+        <ListHeader>Form内使用</ListHeader>
+        <FormItem
+          label="开关"
+          name="switch"
+          childAlign="right"
+          initialValue={true}
+          valuePropName="checked"
+        >
+          <Toggle />
+        </FormItem>
+      </Form>
+    </div>
   );
 }

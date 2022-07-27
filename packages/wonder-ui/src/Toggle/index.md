@@ -19,14 +19,16 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-### 尺寸
+<API src="./Toggle.tsx"></API>
 
-<code src="./demo/demo2.tsx"></code>
+## CSS 变量
 
-
-### 自定义切换图标
-
-<code src="./demo/demo4.tsx"></code>
-
-<API src="./Toggle.tsx" props="checked|checkedIcon|color|defaultChecked|disabled|icon|inputProps|inputRef|onChange|required|size"></API>
-
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-toggle-width | 宽度 | 52px
+| --wui-toggle-height | 高度  | 32px
+| --wui-toggle-border-width | 边框宽度 | 2px
+| --wui-toggle-border-color |  边框颜色 | `theme.palette.divider`
+| --wui-toggle-inactive-color | 默认颜色 | `theme.palette.background.paper`
+| --wui-toggle-handle-color | 控制器颜色 | `theme.palette.background.paper`
+| --wui-toggle-color | 颜色 | `theme.palette.primary.main`

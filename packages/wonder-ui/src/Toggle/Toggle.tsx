@@ -1,217 +1,142 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { toggleClasses, ToggleStyleProps, useClasses } from './ToggleClasses';
+import { capitalize, composeClasses, css } from '@wonder-ui/utils';
+import {
+  COMPONENT_NAME,
+  toggleClasses,
+  toggleCssVars,
+  useToggleCssVars
+} from './ToggleClasses';
+import { hideVisually } from 'polished';
 import { useControlled, useEventCallback } from '@wonder-ui/hooks';
-import { css } from '@wonder-ui/utils';
+import type { ToggleProps } from './ToggleTypes';
 
-export const COMPONENT_NAME = 'WuiToggle';
-export interface ToggleProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> {
-  /**
-   * checked
-   */
-  checked?: boolean;
-  /**
-   * css api
-   */
-  classes?: Partial<typeof toggleClasses>;
-  /**
-   * color
-   * @default primary
-   */
-  color?: 'primary' | 'secondary' | 'danger' | 'warning' | 'info';
+const useClasses = (styleProps: ToggleProps) => {
+  const { checked, classes, color, disabled } = styleProps;
 
-  component?: React.ElementType;
-  /**
-   * default checked
-   */
-  defaultChecked?: boolean;
-  /**
-   * disabled
-   * @default false
-   */
-  disabled?: boolean;
-  /**
-   * checked icon
-   */
-  checkedIcon?: JSX.Element;
-  /**
-   * icon
-   */
-  icon?: JSX.Element;
-  /**
-   * id
-   */
-  id?: string;
-  /**
-   * input props
-   * @default {}
-   */
-  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-  /**
-   * input ref
-   */
-  inputRef?: React.Ref<HTMLInputElement>;
-  /**
-   * onChange event
-   */
-  onChange?: (checked: boolean) => void;
-  /**
-   * root element click event
-   */
-  onClick?: React.MouseEventHandler<HTMLLabelElement>;
-  /**
-   * input required
-   */
-  required?: boolean;
-  /**
-   * size
-   * @default medium
-   */
-  size?: 'medium' | 'small';
-  /**
-   * input value
-   */
-  value?: any;
-}
+  const slots = {
+    root: [
+      'root',
+      color && `color${capitalize(color)}`,
+      checked && 'checked',
+      disabled && 'disabled'
+    ],
+    icon: ['icon'],
+    input: ['input']
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
 
 const ToggleRoot = styled('label', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })({
-  alignSelf: 'center',
-  boxSizing: 'border-box',
   display: 'inline-block',
-  overflow: 'hidden',
+  boxSizing: 'border-box',
+  verticalAlign: 'middle',
+  alignSelf: 'center',
   position: 'relative',
   userSelect: 'none',
-  verticalAlign: 'middle',
-  zIndex: 0,
   cursor: 'pointer',
   WebkitTapHighlightColor: 'transparent',
+
   [`&.${toggleClasses.disabled}`]: {
     pointerEvents: 'none'
   }
 });
 
 const ToggleInput = styled('input', { name: COMPONENT_NAME, slot: 'Input' })({
-  display: 'none'
+  ...hideVisually()
 });
 
-const ToggleIcon = styled('span', {
+const ToggleIcon = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Icon'
-})<{ styleProps: ToggleStyleProps }>(
-  ({ theme }) => {
-    return {
-      margin: 0,
-      padding: 0,
-      zIndex: 0,
-      appearance: 'none',
-      border: 'none',
-      position: 'relative',
-      transition: theme.transitions.create(['background-color']),
-      boxSizing: 'border-box',
-      display: 'block',
+})<{ styleProps: ToggleProps }>(({ theme }) => ({
+  position: 'relative',
+  boxSizing: 'border-box',
+  transition: theme.transitions.create(['background-color']),
+  width: toggleCssVars.value('width'),
+  height: toggleCssVars.value('height'),
+  borderRadius: toggleCssVars.value('height'),
+  backgroundColor: toggleCssVars.value('borderColor'),
 
-      '&:before': {
-        boxSizing: 'border-box',
-        content: '""',
-        left: 2,
-        position: 'absolute',
-        top: 2,
-        transform: 'scale(1)',
-        transition: theme.transitions.create(['transform']),
-        zIndex: 1
-      },
-      '&:after': {
-        boxShadow: '0 2px 4px rgb(0 0 0 / 30%)',
-        content: '""',
-        left: 2,
-        position: 'absolute',
-        top: 2,
-        transform: 'translateX(0px)',
-        transition: theme.transitions.create(['transform']),
-        zIndex: 2
-      },
+  '&:before': {
+    boxSizing: 'border-box',
+    content: '""',
+    left: toggleCssVars.value('borderWidth'),
+    position: 'absolute',
+    top: toggleCssVars.value('borderWidth'),
+    transform: 'scale(1)',
+    transition: theme.transitions.create(['transform']),
+    zIndex: 1,
 
-      [`.${toggleClasses.disabled} > &`]: {
-        opacity: 0.3
-      }
-    };
+    width: `calc(${toggleCssVars.value('width')} - ${toggleCssVars.value(
+      'borderWidth'
+    )} * 2)`,
+    height: `calc(${toggleCssVars.value('height')} - ${toggleCssVars.value(
+      'borderWidth'
+    )} * 2)`,
+    borderRadius: toggleCssVars.value('height'),
+    backgroundColor: toggleCssVars.value('inactiveColor')
   },
-  ({ theme, styleProps }) => {
-    const { switchWidth, switchHeight } = {
-      medium: { switchWidth: 50, switchHeight: 30 },
-      small: { switchWidth: 40, switchHeight: 20 }
-    }[styleProps.size!];
+  '&:after': {
+    boxShadow: '0 2px 4px rgb(0 0 0 / 30%)',
+    content: '""',
+    left: toggleCssVars.value('borderWidth'),
+    position: 'absolute',
+    top: toggleCssVars.value('borderWidth'),
+    transform: 'translateX(0px)',
+    transition: theme.transitions.create(['transform']),
+    zIndex: 2,
 
-    const switchBorderColor = theme.palette.divider,
-      switchHandleColor = '#fff',
-      switchInactiveColor = theme.palette.background.paper,
-      switchActiveColor = theme.palette[styleProps.color || 'primary'].main;
+    width: `calc(${toggleCssVars.value('height')} - ${toggleCssVars.value(
+      'borderWidth'
+    )} * 2)`,
+    height: `calc(${toggleCssVars.value('height')} - ${toggleCssVars.value(
+      'borderWidth'
+    )} * 2)`,
+    borderRadius: `calc(${toggleCssVars.value(
+      'height'
+    )} - ${toggleCssVars.value('borderWidth')})`,
+    backgroundColor: toggleCssVars.value('handleColor')
+  },
 
-    return {
-      width: theme.typography.pxToRem(switchWidth),
-      height: theme.typography.pxToRem(switchHeight),
-      borderRadius: theme.typography.pxToRem(switchHeight),
-      backgroundColor: switchBorderColor,
-      '&:before': {
-        width: theme.typography.pxToRem(switchWidth - 4),
-        height: theme.typography.pxToRem(switchHeight - 4),
-        borderRadius: theme.typography.pxToRem(switchHeight),
-        backgroundColor: switchInactiveColor
-      },
-      '&:after': {
-        width: theme.typography.pxToRem(switchHeight - 4),
-        height: theme.typography.pxToRem(switchHeight - 4),
-        borderRadius: theme.typography.pxToRem(switchHeight - 4),
-        backgroundColor: switchHandleColor
-      },
+  [`.${toggleClasses.checked} > &`]: {
+    backgroundColor: toggleCssVars.value('color'),
+    '&:before': {
+      transform: 'scale(0)',
+      backgroundColor: toggleCssVars.value('inactiveColor')
+    },
+    '&:after': {
+      transform: `translateX(calc(${toggleCssVars.value(
+        'width'
+      )} - ${toggleCssVars.value('height')}))`,
+      backgroundColor: toggleCssVars.value('handleColor')
+    }
+  },
 
-      [`.${toggleClasses.checked} > &`]: {
-        backgroundColor: switchActiveColor,
-        '&:before': {
-          transform: 'scale(0)',
-          width: theme.typography.pxToRem(switchWidth - 4),
-          height: theme.typography.pxToRem(switchHeight - 4),
-          borderRadius: theme.typography.pxToRem(switchHeight),
-          backgroundColor: switchInactiveColor
-        },
-        '&:after': {
-          transform: `translateX(${theme.typography.pxToRem(
-            switchWidth - switchHeight
-          )})`,
-          width: theme.typography.pxToRem(switchHeight - 4),
-          height: theme.typography.pxToRem(switchHeight - 4),
-          borderRadius: theme.typography.pxToRem(switchHeight - 4),
-          backgroundColor: switchHandleColor
-        }
-      }
-    };
+  [`.${toggleClasses.disabled} > &`]: {
+    opacity: theme.palette.action.disabledOpacity
   }
-);
+}));
 
 const Toggle = React.forwardRef<HTMLElement, ToggleProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
   const {
     checked: checkedProp,
-    checkedIcon,
     className,
-    color = 'primary',
-    component,
+    color,
     defaultChecked = false,
     disabled = false,
     icon,
     id,
     inputProps,
-    inputRef,
     onChange,
-    onClick,
-    required = false,
-    size = 'medium',
-    value,
+    style,
+    theme,
     ...rest
   } = props;
   const [checked, setChecked] = useControlled({
@@ -223,22 +148,25 @@ const Toggle = React.forwardRef<HTMLElement, ToggleProps>((inProps, ref) => {
     const checkedValue = e.target.checked;
 
     setChecked(checkedValue);
-
-    if (onChange) {
-      onChange(checkedValue);
-    }
+    onChange?.(e);
   });
 
-  const styleProps = { ...props, size, color, disabled, checked };
+  const styleProps = { ...props, color, disabled, checked };
   const classes = useClasses(styleProps);
+  useToggleCssVars();
 
   return (
     <ToggleRoot
-      as={component}
       className={css(classes.root, className)}
       htmlFor={id}
-      onClick={onClick}
       ref={ref as React.Ref<HTMLLabelElement>}
+      style={{
+        ...style,
+        ...(color &&
+          toggleCssVars.style({
+            color: theme.palette[color].main
+          }))
+      }}
       {...rest}
     >
       <ToggleInput
@@ -247,18 +175,13 @@ const Toggle = React.forwardRef<HTMLElement, ToggleProps>((inProps, ref) => {
         disabled={disabled}
         id={id}
         onChange={handleChange}
-        ref={inputRef}
-        required={required}
         type="checkbox"
-        value={value}
         {...inputProps}
       />
 
-      {!checkedIcon && !icon && (
-        <ToggleIcon styleProps={styleProps} className={classes.icon} />
-      )}
+      {!icon && <ToggleIcon styleProps={styleProps} className={classes.icon} />}
 
-      {checked ? checkedIcon : icon}
+      {typeof icon === 'function' && icon(checked)}
     </ToggleRoot>
   );
 });
