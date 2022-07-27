@@ -18,8 +18,14 @@ export interface ButtonBaseProps
   children?: React.ReactNode;
   classes?: Partial<ButtonBaseClasses>;
   component?: React.ElementType;
+  /**
+   * 禁用反馈波纹
+   */
   disableRipple?: boolean;
   disableTouchRipple?: boolean;
+  /**
+   * 按钮失效状态
+   */
   disabled?: boolean;
   focusRipple?: boolean;
   focusVisibleClassName?: string;

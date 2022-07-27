@@ -50,12 +50,9 @@ const ButtonBaseRoot = styled('button', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })(({ theme }) => ({
-  fontFamily: theme.typography.fontFamily,
-  fontSize: theme.typography.pxToRem(14),
-  fontWeight: theme.typography.fontWeightMedium,
-  lineHeight: 1.75,
   display: 'inline-flex',
   alignItems: 'center',
+  alignSelf: 'stretch',
   justifyContent: 'center',
   position: 'relative',
   boxSizing: 'border-box',
@@ -79,7 +76,8 @@ const ButtonBaseRoot = styled('button', {
     borderStyle: 'none' // Remove Firefox dotted outline.
   },
   [`&.${buttonBaseClasses.disabled}`]: {
-    pointerEvents: 'none' // Disable link interactions
+    pointerEvents: 'none', // Disable link interactions
+    opacity: theme.palette.action.disabledOpacity
   },
   '&:disabled': {
     pointerEvents: 'auto',

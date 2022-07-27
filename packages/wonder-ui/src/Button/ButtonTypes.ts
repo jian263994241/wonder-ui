@@ -5,14 +5,13 @@ export type ButtonClasses = typeof buttonClasses;
 
 export interface ButtonProps extends ButtonBaseProps {
   className?: string;
-  /**
-   * 内容
-   */
   children?: React.ReactNode;
-  /**
-   * Class api
-   */
   classes?: Partial<ButtonClasses>;
+  component?: React.ElementType;
+  disableFocusRipple?: boolean;
+  edge?: 'end' | 'start' | null;
+  endIcon?: React.ReactNode;
+  startIcon?: React.ReactNode;
   /**
    * 按钮颜色
    * @default primary
@@ -28,29 +27,6 @@ export interface ButtonProps extends ButtonBaseProps {
     | 'light'
     | 'dark';
   /**
-   * 节点
-   * @default button
-   */
-  component?: React.ElementType;
-  /**
-   * 禁用焦点波纹
-   */
-  disableFocusRipple?: boolean;
-  /**
-   * 禁用反馈波纹
-   */
-  disableRipple?: boolean;
-  /**
-   * 按钮失效状态
-   */
-  disabled?: boolean;
-  edge?: 'end' | 'start' | null;
-  endIcon?: React.ReactNode;
-  /**
-   * 定义焦点的className
-   */
-  focusVisibleClassName?: string;
-  /**
    * 100%宽度
    */
   fullWidth?: boolean;
@@ -64,7 +40,6 @@ export interface ButtonProps extends ButtonBaseProps {
    * @default medium
    */
   size?: 'small' | 'medium' | 'large';
-  startIcon?: React.ReactNode;
   /**
    * 按钮类型
    * @default text

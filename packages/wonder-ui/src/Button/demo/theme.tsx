@@ -41,19 +41,43 @@ export default () => (
     </ThemeProvider>
 
     <ContentBlock title="CSS变量方式">
-      <Button
-        color="primary"
-        variant="contained"
-        style={
-          {
-            '--button-primary-contained-color': '#03a9f4',
-            '--button-primary-contained-active-color': '#0589c5',
-            '--button-contrast-text-color': '#000'
-          } as React.CSSProperties
-        }
-      >
-        Primary 2
-      </Button>
+      <Space>
+        <Button
+          color="primary"
+          variant="contained"
+          style={
+            {
+              '--wui-button-color': '#03a9f4'
+            } as React.CSSProperties
+          }
+        >
+          Custom Button
+        </Button>
+
+        <Button
+          color="primary"
+          variant="outlined"
+          style={
+            {
+              '--wui-button-color': '#03a9f4'
+            } as React.CSSProperties
+          }
+        >
+          Custom Button
+        </Button>
+
+        <Button
+          color="primary"
+          variant="text"
+          style={
+            {
+              '--wui-button-color': '#03a9f4'
+            } as React.CSSProperties
+          }
+        >
+          Custom Button
+        </Button>
+      </Space>
     </ContentBlock>
   </div>
 );
