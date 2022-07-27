@@ -1,22 +1,35 @@
-/**
- * title: 基本使用
- * desc: 通过`size`来设置间隔大小
- */
-import { WhiteSpace, Divider, styled } from '@wonder-ui/core';
+import {
+  ContentBlock,
+  List,
+  ListHeader,
+  ListItem,
+  ListItemText,
+  Page,
+  WhiteSpace,
+  styled
+} from '@wonder-ui/core';
 
-const WhiteSpaceDemo = styled(WhiteSpace)({
-  background: '#0092ff'
-});
+const WhiteSpaceDemo = styled(WhiteSpace)`
+  background-color: #ccc;
+`;
 
 export default () => (
-  <div>
-    <Divider>Size sm</Divider>
-    <WhiteSpaceDemo size="small" />
+  <Page>
+    <List>
+      <ListHeader>列表</ListHeader>
+      <ListItem>
+        <ListItemText>Item 1</ListItemText>
+      </ListItem>
+      <ListItem>
+        <ListItemText>Item 2</ListItemText>
+      </ListItem>
+      <WhiteSpaceDemo />
+      <ListItem>
+        <ListItemText>Item 3</ListItemText>
+      </ListItem>
+    </List>
 
-    <Divider>Size md (default)</Divider>
     <WhiteSpaceDemo />
-
-    <Divider>Size lg</Divider>
-    <WhiteSpaceDemo size="large" />
-  </div>
+    <ContentBlock title="内容">块之间间隙</ContentBlock>
+  </Page>
 );

@@ -1,58 +1,73 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
+import { capitalize, composeClasses } from '@wonder-ui/utils';
+import {
+  COMPONENT_NAME,
+  useWhiteSpaceCssVars,
+  WhiteSpaceClassesType,
+  whiteSpaceCssVars
+} from './WhiteSpaceClasses';
 import { css } from '@wonder-ui/utils';
-import { useClasses, whiteSpaceClasses } from './WhiteSpaceClasses';
 
-export interface WhiteSpaceProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * Css api
-   */
-  classes?: Partial<typeof whiteSpaceClasses>;
+const useClasses = (styleProps: WhiteSpaceProps) => {
+  const { classes, size } = styleProps;
 
+  const slots = {
+    root: ['root', typeof size === 'string' && `size${capitalize(size)}`]
+  };
+
+  return composeClasses(COMPONENT_NAME, slots, classes);
+};
+
+export interface WhiteSpaceProps {
+  classes?: Partial<WhiteSpaceClassesType>;
+  className?: string;
   component?: React.ElementType;
+  style?: React.CSSProperties;
   /**
    * @description 尺寸
    * @default medium
    */
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | number;
 }
 
 const WhiteSpaceRoot = styled('div', {
-  name: 'WuiWhiteSpace',
+  name: COMPONENT_NAME,
   slot: 'Root'
-})(({ theme }) => ({
+})({
+  height: whiteSpaceCssVars.value('size'),
   width: '100%',
-  boxSizing: 'border-box',
-  [`&.${whiteSpaceClasses.sizeSmall}`]: {
-    height: theme.spacing(1)
-  },
-  [`&.${whiteSpaceClasses.sizeMedium}`]: {
-    height: theme.spacing(2)
-  },
-  [`&.${whiteSpaceClasses.sizeLarge}`]: {
-    height: theme.spacing(3)
-  }
-}));
+  overflow: 'hidden'
+});
 
 const WhiteSpace = React.forwardRef<HTMLElement, WhiteSpaceProps>(
   (inProps, ref) => {
     const props = useThemeProps({ props: inProps, name: 'WuiWhiteSpace' });
-    const { size = 'medium', children, className, component, ...rest } = props;
+    const { size = 'medium', className, component, style, ...rest } = props;
 
     const styleProps = { ...props, size };
 
     const classes = useClasses(styleProps);
+
+    useWhiteSpaceCssVars();
 
     return (
       <WhiteSpaceRoot
         as={component}
         className={css(classes.root, className)}
         ref={ref as React.Ref<HTMLDivElement>}
+        style={{
+          ...whiteSpaceCssVars.style({
+            size:
+              typeof size === 'number'
+                ? size
+                : whiteSpaceCssVars.value(`size${capitalize(size)}` as any)
+          }),
+          ...style
+        }}
         {...rest}
-      >
-        {children}
-      </WhiteSpaceRoot>
+      />
     );
   }
 );

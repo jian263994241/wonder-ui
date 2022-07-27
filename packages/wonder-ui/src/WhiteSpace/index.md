@@ -19,9 +19,14 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-### 和 List 一起使用
+<API src="./WhiteSpace.tsx" ></API>
 
-<code src="./demo/demo2.tsx"></code>
 
-<API src="./WhiteSpace.tsx" props="size"></API>
+## CSS 变量
 
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-white-space-size | 尺寸 | `var(--wui-white-space-size-medium)`
+| --wui-white-space-size-small | 预设尺寸 | `theme.space(1)`
+| --wui-white-space-size-medium | 预设尺寸 | `theme.space(2)`
+| --wui-white-space-size-large |  预设尺寸 | `theme.space(4)`
