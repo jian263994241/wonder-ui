@@ -32,3 +32,12 @@ group:
 ### CheckboxGroup
 
 <API src="../CheckboxGroup/CheckboxGroup.tsx" hideTitle></API>
+
+## CSS 变量
+
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-checkbox-color | 选中图标颜色 | `theme.palette.primary.main`
+| --wui-checkbox-inactive-color | 默认颜色 | `theme.palette.text.icon`
+| --wui-checkbox-icon-size | 图标尺寸 | 22px
+| --wui-checkbox-gap | 间隙 | `theme.spacing(1)`

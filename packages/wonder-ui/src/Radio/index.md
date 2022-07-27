@@ -32,3 +32,13 @@ group:
 ### RadioGroup
 
 <API src="../RadioGroup/RadioGroup.tsx" hideTitle></API>
+
+## CSS 变量
+
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-radio-color | 选中图标颜色 | `theme.palette.primary.main`
+| --wui-radio-inactive-color | 默认颜色 | `theme.palette.text.icon`
+| --wui-radio-icon-size | 图标尺寸 | 22px
+| --wui-radio-gap | 间隙 | `theme.spacing(1)`
+

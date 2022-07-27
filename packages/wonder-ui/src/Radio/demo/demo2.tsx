@@ -48,7 +48,7 @@ export default () => {
         </RadioGroup>
       </FormItem>
 
-      <FormItem label="禁用选项组" name="options2">
+      <FormItem label="禁用选项组" name="options2" initialValue={'orange'}>
         <RadioGroup disabled>
           <Space direction="vertical">
             <Radio value="apple">苹果</Radio>

@@ -5,9 +5,14 @@ import RecordCircle from '../icons/RecordCircle';
 import styled from '../styles/styled';
 import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
-import { checkboxClasses, COMPONENT_NAME } from './CheckboxClasses';
+import {
+  checkboxClasses,
+  checkboxCssVars,
+  COMPONENT_NAME,
+  useCheckboxCssVars
+} from './CheckboxClasses';
 import { CheckboxGroupContext } from '../CheckboxGroup/CheckboxGroupContext';
-import { composeClasses, createCssVars, css } from '@wonder-ui/utils';
+import { composeClasses, css } from '@wonder-ui/utils';
 import { useControlled, useEventCallback } from '@wonder-ui/hooks';
 import type { CheckboxProps, CheckboxStyleProps } from './CheckboxTypes';
 
@@ -30,17 +35,10 @@ const useClasses = (styleProps: CheckboxStyleProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const cssVars = createCssVars(COMPONENT_NAME, ['iconSize', 'gap']);
-
 const CheckboxRoot = styled('label', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })(({ theme }) => ({
-  ...cssVars.style({
-    iconSize: 22,
-    gap: theme.spacing(1)
-  }),
-
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
@@ -60,19 +58,16 @@ const CheckboxRoot = styled('label', {
 const CheckboxIcon = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Icon'
-})(({ theme }) => ({
+})({
   flex: 'none',
-  color: theme.palette.text.icon,
-  width: cssVars.value('iconSize'),
-  height: cssVars.value('iconSize'),
+  color: checkboxCssVars.value('inactiveColor'),
+  width: checkboxCssVars.value('iconSize'),
+  height: checkboxCssVars.value('iconSize'),
   ['& > *']: { display: 'block', width: '100%', height: '100%' },
   [`.${checkboxClasses.checked} > &, .${checkboxClasses.indeterminate} > &`]: {
-    color: theme.palette.primary.main
-  },
-  [`.${checkboxClasses.disabled} > & `]: {
-    color: theme.palette.action.disabled
+    color: checkboxCssVars.value('color')
   }
-}));
+});
 
 const CheckboxInput = styled('input', {
   name: COMPONENT_NAME,
@@ -86,7 +81,7 @@ const CheckboxContent = styled(Typography, {
   slot: 'Content'
 })({
   flex: '0 1 auto',
-  paddingLeft: cssVars.value('gap')
+  paddingLeft: checkboxCssVars.value('gap')
 });
 
 const Checkbox = React.forwardRef<HTMLLabelElement, CheckboxProps>(
@@ -148,6 +143,8 @@ const Checkbox = React.forwardRef<HTMLLabelElement, CheckboxProps>(
         return <Circle />;
       }
     };
+
+    useCheckboxCssVars();
 
     return (
       <CheckboxRoot

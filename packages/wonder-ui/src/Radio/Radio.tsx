@@ -5,8 +5,13 @@ import RecordCircle from '../icons/RecordCircle';
 import styled from '../styles/styled';
 import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
-import { COMPONENT_NAME, radioClasses } from './RadioClasses';
-import { composeClasses, createCssVars, css } from '@wonder-ui/utils';
+import {
+  COMPONENT_NAME,
+  radioClasses,
+  radioCssVars,
+  useRadioCssVars
+} from './RadioClasses';
+import { composeClasses, css } from '@wonder-ui/utils';
 import { RadioGroupContext } from '../RadioGroup/RadioGroupContext';
 import { useControlled, useEventCallback } from '@wonder-ui/hooks';
 import type { RadioProps, RadioStyleProps } from './RadioTypes';
@@ -30,17 +35,10 @@ const useClasses = (styleProps: RadioStyleProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const cssVars = createCssVars(COMPONENT_NAME, ['iconSize', 'gap']);
-
 const CheckboxRoot = styled('label', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })(({ theme }) => ({
-  ...cssVars.style({
-    iconSize: 22,
-    gap: theme.spacing(1)
-  }),
-
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
@@ -62,15 +60,12 @@ const CheckboxIcon = styled('div', {
   slot: 'Icon'
 })(({ theme }) => ({
   flex: 'none',
-  color: theme.palette.text.icon,
-  width: cssVars.value('iconSize'),
-  height: cssVars.value('iconSize'),
+  color: radioCssVars.value('inactiveColor'),
+  width: radioCssVars.value('iconSize'),
+  height: radioCssVars.value('iconSize'),
   ['& > *']: { display: 'block', width: '100%', height: '100%' },
   [`.${radioClasses.checked} > &, .${radioClasses.indeterminate} > &`]: {
-    color: theme.palette.primary.main
-  },
-  [`.${radioClasses.disabled} > & `]: {
-    color: theme.palette.action.disabled
+    color: radioCssVars.value('color')
   }
 }));
 
@@ -87,7 +82,7 @@ const CheckboxContent = styled(Typography, {
 })({
   flex: '0 1 auto',
   fontSize: 'inherit',
-  paddingLeft: cssVars.value('gap')
+  paddingLeft: radioCssVars.value('gap')
 });
 
 const Checkbox = React.forwardRef<HTMLLabelElement, RadioProps>(
@@ -122,6 +117,8 @@ const Checkbox = React.forwardRef<HTMLLabelElement, RadioProps>(
     const styleProps = { ...props, indeterminate, checked, disabled };
 
     const classes = useClasses(styleProps);
+
+    useRadioCssVars();
 
     const handleChange = useEventCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {

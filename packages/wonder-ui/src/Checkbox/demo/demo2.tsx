@@ -48,7 +48,7 @@ export default () => {
         </CheckboxGroup>
       </FormItem>
 
-      <FormItem label="禁用选项组" name="options2">
+      <FormItem label="禁用选项组" name="options2" initialValue={['apple']}>
         <CheckboxGroup disabled>
           <Space direction="vertical">
             <Checkbox value="apple">苹果</Checkbox>
