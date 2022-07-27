@@ -1,14 +1,14 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
+import { capitalize, composeClasses, css, upperFirst } from '@wonder-ui/utils';
 import {
-  capitalize,
-  composeClasses,
-  createCssVars,
-  css,
-  upperFirst
-} from '@wonder-ui/utils';
-import { COMPONENT_NAME, typographyClasses } from './TypographyClasses';
+  COMPONENT_NAME,
+  typographyClasses,
+  typographyCssVars,
+  useTypographyCssVars
+} from './TypographyClasses';
+import { ellipsis } from 'polished';
 import type { TypographyProps } from './TypographyTypes';
 
 const useClasses = (styleProps: TypographyProps) => {
@@ -26,7 +26,7 @@ const useClasses = (styleProps: TypographyProps) => {
   const slots = {
     root: [
       'root',
-      variant && variant,
+      variant && variant !== 'inherit' && variant,
       align && `align${capitalize(align!)}`,
       color && `color${upperFirst(color!)}`,
       gutterBottom && 'gutterBottom',
@@ -39,50 +39,22 @@ const useClasses = (styleProps: TypographyProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const cssVars = createCssVars(COMPONENT_NAME, [
-  'gutterBottom',
-  'paragraphGutter',
-  'paragraphIndent',
-  'h1',
-  'h2',
-  'h3',
-  'h4',
-  'h5',
-  'h6',
-  'subtitle1',
-  'subtitle2',
-  'body1',
-  'body2',
-  'caption'
-]);
-
-const TypographyRoot = styled('span', {
+const TypographyRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })<{ styleProps: TypographyProps }>(({ theme, styleProps }) => ({
-  ...cssVars.style({
-    gutterBottom: '0.35em',
-    paragraphGutter: theme.spacing(2),
-    paragraphIndent: '2em',
-    h1: theme.typography.pxToRem(36),
-    h2: theme.typography.pxToRem(30),
-    h3: theme.typography.pxToRem(26),
-    h4: theme.typography.pxToRem(24),
-    h5: theme.typography.pxToRem(22),
-    h6: theme.typography.pxToRem(20),
-    subtitle1: theme.typography.pxToRem(17),
-    subtitle2: theme.typography.pxToRem(16),
-    body1: theme.typography.pxToRem(15),
-    body2: theme.typography.pxToRem(14),
-    caption: theme.typography.pxToRem(12)
-  }),
-  WebkitTapHighlightColor: 'transparent',
-  WebkitFontSmoothing: 'antialiased',
-  fontFamily: theme.typography.fontFamily,
-  textAlign: styleProps.align,
-  wordBreak: 'break-word',
   margin: 0,
   padding: 0,
+  WebkitTapHighlightColor: 'transparent',
+  WebkitFontSmoothing: 'antialiased',
+  color: typographyCssVars.value('color'),
+  fontFamily: typographyCssVars.value('fontFamily'),
+  fontSize: typographyCssVars.value('fontSize'),
+  fontWeight: typographyCssVars.value('fontWeight'),
+  lineHeight: typographyCssVars.value('lineHeight'),
+  letterSpacing: typographyCssVars.value('letterSpacing'),
+  textAlign: typographyCssVars.value('textAlign') as any,
+
   '&:is(a)': {
     textDecoration: 'none',
     cursor: 'pointer'
@@ -93,86 +65,84 @@ const TypographyRoot = styled('span', {
       opacity: 'unset'
     }
   },
-  [`&.${typographyClasses.h1}`]: {
-    fontWeight: theme.typography.fontWeightMedium,
-    fontSize: cssVars.value('h1')
-  },
-  [`&.${typographyClasses.h2}`]: {
-    fontWeight: theme.typography.fontWeightMedium,
-    fontSize: cssVars.value('h2')
-  },
-  [`&.${typographyClasses.h3}`]: {
-    fontWeight: theme.typography.fontWeightMedium,
-    fontSize: cssVars.value('h3')
-  },
-  [`&.${typographyClasses.h4}`]: {
-    fontWeight: theme.typography.fontWeightMedium,
-    fontSize: cssVars.value('h4')
-  },
-  [`&.${typographyClasses.h5}`]: {
-    fontWeight: theme.typography.fontWeightMedium,
-    fontSize: cssVars.value('h5')
-  },
-  [`&.${typographyClasses.h6}`]: {
-    fontSize: cssVars.value('h6')
-  },
-  [`&.${typographyClasses.subtitle1}`]: {
-    fontWeight: theme.typography.fontWeightMedium,
-    fontSize: cssVars.value('subtitle1')
-  },
-  [`&.${typographyClasses.subtitle2}`]: {
-    fontWeight: theme.typography.fontWeightMedium,
-    fontSize: cssVars.value('subtitle2')
-  },
-  [`&.${typographyClasses.body1}`]: {
-    fontWeight: theme.typography.fontWeightRegular,
-    fontSize: cssVars.value('body1')
-  },
-  [`&.${typographyClasses.body2}`]: {
-    fontWeight: theme.typography.fontWeightRegular,
-    fontSize: cssVars.value('body2')
-  },
-  [`&.${typographyClasses.caption}`]: {
-    fontWeight: theme.typography.fontWeightRegular,
-    fontSize: cssVars.value('caption')
-  },
+  [`&.${typographyClasses.h1}`]: typographyCssVars.style({
+    fontWeight: typographyCssVars.value('titleFontWeight'),
+    fontSize: typographyCssVars.value('h1')
+  }),
+  [`&.${typographyClasses.h2}`]: typographyCssVars.style({
+    fontWeight: typographyCssVars.value('titleFontWeight'),
+    fontSize: typographyCssVars.value('h2')
+  }),
+  [`&.${typographyClasses.h3}`]: typographyCssVars.style({
+    fontWeight: typographyCssVars.value('titleFontWeight'),
+    fontSize: typographyCssVars.value('h3')
+  }),
+  [`&.${typographyClasses.h4}`]: typographyCssVars.style({
+    fontWeight: typographyCssVars.value('titleFontWeight'),
+    fontSize: typographyCssVars.value('h4')
+  }),
+  [`&.${typographyClasses.h5}`]: typographyCssVars.style({
+    fontWeight: typographyCssVars.value('titleFontWeight'),
+    fontSize: typographyCssVars.value('h5')
+  }),
+  [`&.${typographyClasses.h6}`]: typographyCssVars.style({
+    fontSize: typographyCssVars.value('h6')
+  }),
+  [`&.${typographyClasses.subtitle1}`]: typographyCssVars.style({
+    fontWeight: typographyCssVars.value('titleFontWeight'),
+    fontSize: typographyCssVars.value('subtitle1')
+  }),
+  [`&.${typographyClasses.subtitle2}`]: typographyCssVars.style({
+    fontWeight: typographyCssVars.value('titleFontWeight'),
+    fontSize: typographyCssVars.value('subtitle2')
+  }),
+  [`&.${typographyClasses.body1}`]: typographyCssVars.style({
+    fontSize: typographyCssVars.value('body1')
+  }),
+  [`&.${typographyClasses.body2}`]: typographyCssVars.style({
+    fontSize: typographyCssVars.value('body2')
+  }),
+  [`&.${typographyClasses.caption}`]: typographyCssVars.style({
+    fontSize: typographyCssVars.value('caption')
+  }),
 
-  [`&.${typographyClasses.colorPrimary}`]: {
+  [`&.${typographyClasses.colorPrimary}`]: typographyCssVars.style({
     color: theme.palette.primary.main
-  },
-  [`&.${typographyClasses.colorSecondary}`]: {
+  }),
+  [`&.${typographyClasses.colorSecondary}`]: typographyCssVars.style({
     color: theme.palette.secondary.main
-  },
-  [`&.${typographyClasses.colorSuccess}`]: {
+  }),
+  [`&.${typographyClasses.colorSuccess}`]: typographyCssVars.style({
     color: theme.palette.success.main
-  },
-  [`&.${typographyClasses.colorError}`]: {
+  }),
+  [`&.${typographyClasses.colorError}`]: typographyCssVars.style({
     color: theme.palette.error.main
-  },
-  [`&.${typographyClasses.colorWarning}`]: {
+  }),
+  [`&.${typographyClasses.colorWarning}`]: typographyCssVars.style({
     color: theme.palette.warning.main
-  },
+  }),
 
-  [`&.${typographyClasses.colorTextPrimary}`]: {
+  [`&.${typographyClasses.colorTextPrimary}`]: typographyCssVars.style({
     color: theme.palette.text.primary
-  },
-  [`&.${typographyClasses.colorTextSecondary}`]: {
+  }),
+  [`&.${typographyClasses.colorTextSecondary}`]: typographyCssVars.style({
     color: theme.palette.text.secondary
-  },
+  }),
 
   [`&.${typographyClasses.noWrap}`]: {
-    ...theme.typography.ellipsis(1)
+    ...ellipsis('100%', 1)
   },
   [`&.${typographyClasses.lineClamp}`]: {
-    ...theme.typography.ellipsis(styleProps.lineClamp ?? 1)
+    ...ellipsis('100%', styleProps.lineClamp ?? 2)
   },
 
   [`&.${typographyClasses.gutterBottom}`]: {
-    marginBottom: cssVars.value('gutterBottom')
+    marginBottom: typographyCssVars.value('gutterBottom')
   },
+
   [`&.${typographyClasses.paragraph}`]: {
-    textIndent: cssVars.value('paragraphIndent'),
-    marginBottom: cssVars.value('paragraphGutter')
+    textIndent: typographyCssVars.value('paragraphIndent'),
+    marginBottom: typographyCssVars.value('paragraphGutter')
   }
 }));
 
@@ -189,7 +159,8 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       lineClamp,
       noWrap = false,
       paragraph = false,
-      variant = 'body1',
+      variant,
+      style,
       ...rest
     } = props;
 
@@ -207,13 +178,21 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
 
     const classes = useClasses(styleProps);
 
+    useTypographyCssVars();
+
     return (
       <TypographyRoot
         {...rest}
         as={component}
         className={css(classes.root, className)}
-        ref={ref}
+        ref={ref as any}
         styleProps={styleProps}
+        style={{
+          ...typographyCssVars.style({
+            textAlign: styleProps.align
+          }),
+          ...style
+        }}
       >
         {children}
       </TypographyRoot>

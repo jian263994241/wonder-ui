@@ -57,5 +57,5 @@ export interface TypographyProps
    * @description 样式类型
    * @default body1
    */
-  variant?: TypographyVariantKeys;
+  variant?: TypographyVariantKeys | 'inherit';
 }

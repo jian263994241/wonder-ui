@@ -40,7 +40,7 @@ export default () => (
       </Typography>
     </ContentBlock>
 
-    <ContentBlock title="间隔">
+    <ContentBlock title="间距">
       <Typography gutterBottom>
         超级多的文字, 超级多的文字, 超级多的文字, 超级多的文字, 超级多的文字,
         超级多的文字, 超级多的文字, 超级多的文字,
