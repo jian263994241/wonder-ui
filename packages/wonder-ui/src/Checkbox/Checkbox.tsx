@@ -13,6 +13,8 @@ import {
 } from './CheckboxClasses';
 import { CheckboxGroupContext } from '../CheckboxGroup/CheckboxGroupContext';
 import { composeClasses, css } from '@wonder-ui/utils';
+import { hideVisually } from 'polished';
+import { svgIconCssVars } from '../SvgIcon/SvgIconClasses';
 import { useControlled, useEventCallback } from '@wonder-ui/hooks';
 import type { CheckboxProps, CheckboxStyleProps } from './CheckboxTypes';
 
@@ -35,7 +37,7 @@ const useClasses = (styleProps: CheckboxStyleProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const CheckboxRoot = styled('label', {
+const CheckboxRoot = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Root'
 })(({ theme }) => ({
@@ -55,34 +57,47 @@ const CheckboxRoot = styled('label', {
   }
 }));
 
-const CheckboxIcon = styled('div', {
+const CheckboxIcon = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Icon'
 })({
   flex: 'none',
-  color: checkboxCssVars.value('inactiveColor'),
-  width: checkboxCssVars.value('iconSize'),
-  height: checkboxCssVars.value('iconSize'),
-  ['& > *']: { display: 'block', width: '100%', height: '100%' },
-  [`.${checkboxClasses.checked} > &, .${checkboxClasses.indeterminate} > &`]: {
-    color: checkboxCssVars.value('color')
-  }
+  '& > *': {
+    display: 'block'
+  },
+  ...svgIconCssVars.style({
+    color: checkboxCssVars.value('inactiveColor'),
+    size: checkboxCssVars.value('iconSize')
+  }),
+
+  [`.${checkboxClasses.checked} > &, .${checkboxClasses.indeterminate} > &`]:
+    svgIconCssVars.style({
+      color: checkboxCssVars.value('color')
+    })
 });
 
 const CheckboxInput = styled('input', {
   name: COMPONENT_NAME,
   slot: 'Input'
-})({
-  display: 'none'
-});
+})(hideVisually());
 
-const CheckboxContent = styled(Typography, {
+const CheckboxContent = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Content'
 })({
   flex: '0 1 auto',
   paddingLeft: checkboxCssVars.value('gap')
 });
+
+const defaultIcon = (checked: boolean, indeterminate: boolean) => {
+  if (checked) {
+    return <CheckCircleFill />;
+  } else if (indeterminate) {
+    return <RecordCircle />;
+  }
+
+  return <Circle />;
+};
 
 const Checkbox = React.forwardRef<HTMLLabelElement, CheckboxProps>(
   (inProps, ref) => {
@@ -94,7 +109,7 @@ const Checkbox = React.forwardRef<HTMLLabelElement, CheckboxProps>(
       defaultChecked: defaultCheckedProp = false,
       disabled: disabledProp,
       indeterminate = false,
-      icon,
+      icon = defaultIcon,
       onChange,
       style,
       value,
@@ -131,24 +146,19 @@ const Checkbox = React.forwardRef<HTMLLabelElement, CheckboxProps>(
       }
     );
 
-    const renderIcon = () => {
-      if (typeof icon === 'function') {
-        return icon(checked, indeterminate);
-      }
-      if (checked) {
-        return <CheckCircleFill />;
-      } else if (indeterminate) {
-        return <RecordCircle />;
-      } else {
-        return <Circle />;
-      }
-    };
+    const renderIcon = () => (
+      <CheckboxIcon className={classes.icon}>
+        {typeof icon === 'function' ? icon(checked, indeterminate) : icon}
+      </CheckboxIcon>
+    );
 
     useCheckboxCssVars();
 
     return (
       <CheckboxRoot
+        component="label"
         className={css(classes.root, className)}
+        variant="subtitle1"
         style={style}
         ref={ref}
         {...rest}
@@ -162,9 +172,9 @@ const Checkbox = React.forwardRef<HTMLLabelElement, CheckboxProps>(
           id={id}
           name={name}
         />
-        <CheckboxIcon className={classes.icon}>{renderIcon()}</CheckboxIcon>
+        {renderIcon()}
         {children && (
-          <CheckboxContent className={classes.content} variant="body1">
+          <CheckboxContent className={classes.content}>
             {children}
           </CheckboxContent>
         )}

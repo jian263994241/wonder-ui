@@ -1,7 +1,6 @@
 import * as React from 'react';
 import CheckCircleFill from '../icons/CheckCircleFill';
 import Circle from '../icons/Circle';
-import RecordCircle from '../icons/RecordCircle';
 import styled from '../styles/styled';
 import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
@@ -15,15 +14,16 @@ import { composeClasses, css } from '@wonder-ui/utils';
 import { RadioGroupContext } from '../RadioGroup/RadioGroupContext';
 import { useControlled, useEventCallback } from '@wonder-ui/hooks';
 import type { RadioProps, RadioStyleProps } from './RadioTypes';
+import { hideVisually } from 'polished';
+import { svgIconCssVars } from '../SvgIcon/SvgIconClasses';
 
 const useClasses = (styleProps: RadioStyleProps) => {
-  const { block, classes, checked, indeterminate, disabled } = styleProps;
+  const { block, classes, checked, disabled } = styleProps;
 
   const slots = {
     root: [
       'root',
       block && 'block',
-      indeterminate && 'indeterminate',
       checked && 'checked',
       disabled && 'disabled'
     ],
@@ -35,7 +35,7 @@ const useClasses = (styleProps: RadioStyleProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const CheckboxRoot = styled('label', {
+const RadioRoot = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Root'
 })(({ theme }) => ({
@@ -55,28 +55,30 @@ const CheckboxRoot = styled('label', {
   }
 }));
 
-const CheckboxIcon = styled('div', {
+const RadioIcon = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Icon'
-})(({ theme }) => ({
-  flex: 'none',
-  color: radioCssVars.value('inactiveColor'),
-  width: radioCssVars.value('iconSize'),
-  height: radioCssVars.value('iconSize'),
-  ['& > *']: { display: 'block', width: '100%', height: '100%' },
-  [`.${radioClasses.checked} > &, .${radioClasses.indeterminate} > &`]: {
-    color: radioCssVars.value('color')
-  }
-}));
-
-const CheckboxInput = styled('input', {
-  name: COMPONENT_NAME,
-  slot: 'Input'
 })({
-  display: 'none'
+  flex: 'none',
+  '& > *': {
+    display: 'block'
+  },
+  ...svgIconCssVars.style({
+    color: radioCssVars.value('inactiveColor'),
+    size: radioCssVars.value('iconSize')
+  }),
+
+  [`.${radioClasses.checked} > &`]: svgIconCssVars.style({
+    color: radioCssVars.value('color')
+  })
 });
 
-const CheckboxContent = styled(Typography, {
+const RadioInput = styled('input', {
+  name: COMPONENT_NAME,
+  slot: 'Input'
+})(hideVisually());
+
+const RadioContent = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Content'
 })({
@@ -85,93 +87,91 @@ const CheckboxContent = styled(Typography, {
   paddingLeft: radioCssVars.value('gap')
 });
 
-const Checkbox = React.forwardRef<HTMLLabelElement, RadioProps>(
-  (inProps, ref) => {
-    const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
-    const {
-      children,
-      checked: checkedProp,
-      className,
-      defaultChecked: defaultCheckedProp = false,
-      disabled: disabledProp,
-      indeterminate = false,
-      icon,
-      id,
-      name,
-      onChange,
-      style,
-      value,
-      ...rest
-    } = props;
-
-    const context = React.useContext(RadioGroupContext);
-
-    const [_checked, setCheckedIfUncontrolled] = useControlled({
-      value: checkedProp,
-      defaultValue: defaultCheckedProp
-    });
-
-    const checked = context ? context.isValueSelected(value) : _checked;
-    const disabled = context ? context.disabled ?? disabledProp : disabledProp;
-
-    const styleProps = { ...props, indeterminate, checked, disabled };
-
-    const classes = useClasses(styleProps);
-
-    useRadioCssVars();
-
-    const handleChange = useEventCallback(
-      (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCheckedIfUncontrolled(e.target.checked);
-
-        if (onChange) {
-          onChange(e);
-        }
-
-        if (context && value != undefined) {
-          context.handleChange(value);
-        }
-      }
-    );
-
-    const renderIcon = () => {
-      if (typeof icon === 'function') {
-        return icon(checked, indeterminate);
-      }
-      if (checked) {
-        return <CheckCircleFill />;
-      } else if (indeterminate) {
-        return <RecordCircle />;
-      } else {
-        return <Circle />;
-      }
-    };
-
-    return (
-      <CheckboxRoot
-        className={css(classes.root, className)}
-        style={style}
-        ref={ref}
-        {...rest}
-      >
-        <CheckboxInput
-          type="radio"
-          id={id}
-          name={name}
-          className={classes.input}
-          checked={checked}
-          disabled={disabled}
-          onChange={handleChange}
-        />
-        <CheckboxIcon className={classes.icon}>{renderIcon()}</CheckboxIcon>
-        {children && (
-          <CheckboxContent className={classes.content} variant="body1">
-            {children}
-          </CheckboxContent>
-        )}
-      </CheckboxRoot>
-    );
+const defaultIcon = (checked: boolean) => {
+  if (checked) {
+    return <CheckCircleFill />;
   }
-);
 
-export default Checkbox;
+  return <Circle />;
+};
+
+const Radio = React.forwardRef<HTMLLabelElement, RadioProps>((inProps, ref) => {
+  const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
+  const {
+    children,
+    checked: checkedProp,
+    className,
+    defaultChecked: defaultCheckedProp = false,
+    disabled: disabledProp,
+    icon = defaultIcon,
+    id,
+    name,
+    onChange,
+    style,
+    value,
+    ...rest
+  } = props;
+
+  const context = React.useContext(RadioGroupContext);
+
+  const [_checked, setCheckedIfUncontrolled] = useControlled({
+    value: checkedProp,
+    defaultValue: defaultCheckedProp
+  });
+
+  const checked = context ? context.isValueSelected(value) : _checked;
+  const disabled = context ? context.disabled ?? disabledProp : disabledProp;
+
+  const styleProps = { ...props, checked, disabled };
+
+  const classes = useClasses(styleProps);
+
+  useRadioCssVars();
+
+  const handleChange = useEventCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCheckedIfUncontrolled(e.target.checked);
+
+      if (onChange) {
+        onChange(e);
+      }
+
+      if (context && value != undefined) {
+        context.handleChange(value);
+      }
+    }
+  );
+
+  const renderIcon = () => (
+    <RadioIcon className={classes.icon}>
+      {typeof icon === 'function' ? icon(checked) : icon}
+    </RadioIcon>
+  );
+
+  return (
+    <RadioRoot
+      component="label"
+      variant="subtitle1"
+      className={css(classes.root, className)}
+      style={style}
+      ref={ref}
+      {...rest}
+    >
+      <RadioInput
+        type="radio"
+        id={id}
+        name={name}
+        className={classes.input}
+        checked={checked}
+        disabled={disabled}
+        onChange={handleChange}
+      />
+      {renderIcon()}
+      {children && (
+        <RadioContent className={classes.content}>{children}</RadioContent>
+      )}
+    </RadioRoot>
+  );
+});
+
+export default Radio;

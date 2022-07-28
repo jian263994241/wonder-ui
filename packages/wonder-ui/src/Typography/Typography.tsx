@@ -89,11 +89,9 @@ const TypographyRoot = styled('div', {
     fontSize: typographyCssVars.value('h6')
   }),
   [`&.${typographyClasses.subtitle1}`]: typographyCssVars.style({
-    fontWeight: typographyCssVars.value('titleFontWeight'),
     fontSize: typographyCssVars.value('subtitle1')
   }),
   [`&.${typographyClasses.subtitle2}`]: typographyCssVars.style({
-    fontWeight: typographyCssVars.value('titleFontWeight'),
     fontSize: typographyCssVars.value('subtitle2')
   }),
   [`&.${typographyClasses.body1}`]: typographyCssVars.style({

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import useRootCssVars from '../styles/useRootCssVars';
 import styled from '../styles/styled';
 import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
@@ -34,22 +35,7 @@ const cssVars = createCssVars(COMPONENT_NAME, [
 const ContentBlockRoot = styled('div', {
   slot: 'Root',
   name: COMPONENT_NAME
-})(({ theme }) => {
-  const spacing = theme.spacing(1.5);
-
-  return cssVars.style({
-    titltMarginTop: 8,
-    titleMarginBottom: 8,
-    titleMarginHorizontal: spacing,
-    paddingHorizontal: spacing,
-    paddingVertical: spacing,
-    safeAreaLeft: 'env(safe-area-inset-left, 0px)',
-    safeAreaRight: 'env(safe-area-inset-right, 0px)',
-    // dividerColor: theme.palette.divider,
-    insetSideMargin: spacing,
-    insetBorderRadius: 8
-  });
-});
+})({});
 
 const ContentBlockTitle = styled(Typography, {
   slot: 'Title',
@@ -100,6 +86,20 @@ const ContentBlock = React.forwardRef<HTMLDivElement, ContentBlockProps>(
 
     const classes = useClasses({ styleProps });
 
+    useRootCssVars((theme) =>
+      cssVars.style({
+        titltMarginTop: theme.spacing(1),
+        titleMarginBottom: theme.spacing(1),
+        titleMarginHorizontal: theme.spacing(1.5),
+        paddingHorizontal: theme.spacing(1.5),
+        paddingVertical: theme.spacing(1.5),
+        safeAreaLeft: 'env(safe-area-inset-left, 0px)',
+        safeAreaRight: 'env(safe-area-inset-right, 0px)',
+        insetSideMargin: theme.spacing(1.5),
+        insetBorderRadius: theme.spacing(1)
+      })
+    );
+
     return (
       <ContentBlockRoot
         ref={ref}
@@ -119,7 +119,7 @@ const ContentBlock = React.forwardRef<HTMLDivElement, ContentBlockProps>(
           <ContentBlockContent
             styleProps={styleProps}
             className={classes.content}
-            variant="body2"
+            variant="body1"
           >
             {children}
           </ContentBlockContent>

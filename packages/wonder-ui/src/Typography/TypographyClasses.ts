@@ -62,8 +62,8 @@ export const typographyCssVars = createCssVars(COMPONENT_NAME, [
 export const useTypographyCssVars = () => {
   useRootCssVars((theme) =>
     typographyCssVars.style({
-      body1: theme.typography.pxToRem(15),
-      body2: theme.typography.pxToRem(14),
+      body1: theme.typography.pxToRem(14),
+      body2: theme.typography.pxToRem(13),
       caption: theme.typography.pxToRem(12),
       color: 'inherit',
       fontFamily: theme.typography.fontFamily,

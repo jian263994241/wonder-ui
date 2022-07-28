@@ -3,7 +3,6 @@ import {
   List,
   ListHeader,
   ListItem,
-  ListItemText,
   Page,
   WhiteSpace,
   styled
@@ -17,16 +16,10 @@ export default () => (
   <Page>
     <List>
       <ListHeader>列表</ListHeader>
-      <ListItem>
-        <ListItemText>Item 1</ListItemText>
-      </ListItem>
-      <ListItem>
-        <ListItemText>Item 2</ListItemText>
-      </ListItem>
+      <ListItem>Item 1</ListItem>
+      <ListItem>Item 2</ListItem>
       <WhiteSpaceDemo />
-      <ListItem>
-        <ListItemText>Item 3</ListItemText>
-      </ListItem>
+      <ListItem>Item 3</ListItem>
     </List>
 
     <WhiteSpaceDemo />

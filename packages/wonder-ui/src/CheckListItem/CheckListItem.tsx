@@ -6,6 +6,7 @@ import useThemeProps from '../styles/useThemeProps';
 import { CheckListItemProps } from './CheckListItemTypes';
 import { useEventCallback } from '@wonder-ui/hooks';
 import { warn } from '@wonder-ui/utils';
+import { svgIconCssVars } from '../SvgIcon/SvgIconClasses';
 
 const COMPONENT_NAME = 'WuiCheckListItem';
 
@@ -23,6 +24,7 @@ const CheckListItem = React.forwardRef<HTMLLIElement, CheckListItemProps>(
       readOnly,
       onClick,
       meta = {},
+      theme,
       ...rest
     } = props;
     const context = React.useContext(CheckListContext);
@@ -41,7 +43,16 @@ const CheckListItem = React.forwardRef<HTMLLIElement, CheckListItemProps>(
       value: parentValue = []
     } = context;
 
-    const itemActiveIcon = activeIcon || <DefaultCheckIcon color="primary" />;
+    const itemActiveIcon = (
+      <div
+        style={svgIconCssVars.style({
+          color: theme.palette.primary.main,
+          size: 16
+        })}
+      >
+        {activeIcon || <DefaultCheckIcon />}
+      </div>
+    );
 
     const isReadOnly = parentReadOnly || readOnly;
 

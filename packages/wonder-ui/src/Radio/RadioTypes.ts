@@ -29,11 +29,7 @@ export interface RadioProps {
   /**
    * 自定义Icon
    */
-  icon?: (checked: boolean, indeterminate: boolean) => React.ReactNode;
-  /**
-   * @description 设置中间状态，只负责样式控制
-   */
-  indeterminate?: boolean;
+  icon?: (checked: boolean) => React.ReactNode;
   /**
    * input 元素的 id，常用来配合 label 使用
    */

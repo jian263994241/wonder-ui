@@ -47,9 +47,9 @@ const ToggleRoot = styled('label', {
   }
 });
 
-const ToggleInput = styled('input', { name: COMPONENT_NAME, slot: 'Input' })({
-  ...hideVisually()
-});
+const ToggleInput = styled('input', { name: COMPONENT_NAME, slot: 'Input' })(
+  hideVisually()
+);
 
 const ToggleIcon = styled('div', {
   name: COMPONENT_NAME,
