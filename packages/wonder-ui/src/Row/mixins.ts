@@ -1,31 +1,8 @@
 import { capitalize, generateUtilityClass } from '@wonder-ui/utils';
-import { COLUMNS } from './share';
 import { Theme } from '../styles/createTheme';
+import { COMPONENT_NAME } from './RowClasses';
 
-export const makeRow = (
-  theme: Theme,
-  gutterX: number,
-  gutterY: number = 0
-): any => ({
-  '--gutter-x': theme.spacing(gutterX) + 'px',
-  '--gutter-y': theme.spacing(gutterY) + 'px',
-  boxSizing: 'border-box',
-  display: 'flex',
-  flexWrap: 'wrap',
-  marginTop: 'calc(var(--gutter-y) * -1)',
-  marginRight: 'calc(var(--gutter-x)/ -2)',
-  marginLeft: 'calc(var(--gutter-x)/ -2)'
-});
-
-export const makeColReady = () => ({
-  boxSizing: 'border-box',
-  flexShrink: 0,
-  width: '100%',
-  maxWidth: '100%',
-  paddingRight: 'calc(var(--gutter-x)/ 2)',
-  paddingLeft: 'calc(var(--gutter-x)/ 2)',
-  marginTop: 'var(--gutter-y)'
-});
+const COLUMNS = 12;
 
 export const makeCol = (size: number, columns: number = COLUMNS) => {
   if (size) {
@@ -49,29 +26,23 @@ export const makeColAuto = () => ({
 export const makeColOffset = (size: number, columns: number = COLUMNS) => {
   const num = size / columns;
   return {
-    marginLeft: num === 0 ? 0 : `${num * 100}%`
+    marginLeft: num === 0 ? 0 : `calc(100% * ${num})`
   };
 };
 
 export const rowCols = (count: number) => ({
   '& > *': {
     flex: '0 0 auto',
-    width: count === 0 ? 'auto' : `${100 / count}%`
+    width: count === 0 ? 'auto' : `calc(100% / ${count})`
   }
 });
 
-const rowClass = (slot: string) => generateUtilityClass('WuiRow', slot);
+const rowClass = (slot: string) => generateUtilityClass(COMPONENT_NAME, slot);
+
 const colClass = (slot: string) => generateUtilityClass('WuiCol', slot);
 
-export const makeGridColumns = (
-  theme: Theme,
-  gutter: [number, number] = [0, 0],
-  columns: number = COLUMNS
-) => {
-  const styles: Record<string, any> = {
-    ...makeRow(theme, gutter[0], gutter[1]),
-    '& > *': makeColReady()
-  };
+export const makeGridColumns = (theme: Theme, columns: number = COLUMNS) => {
+  const styles: Record<string, any> = {};
 
   theme.breakpoints.keys.forEach((breakpoint) => {
     const infix = capitalize(breakpoint);
@@ -87,12 +58,11 @@ export const makeGridColumns = (
         i,
         columns
       );
-    }
 
-    for (let i = 1; i <= COLUMNS - 1; i++) {
-      styles[mediaQuery][
-        `&& .${colClass(`offset${infix}-${i}`)}`
-      ] = makeColOffset(i, columns);
+      if (i <= COLUMNS - 1) {
+        styles[mediaQuery][`&& .${colClass(`offset${infix}-${i}`)}`] =
+          makeColOffset(i, columns);
+      }
     }
   });
 

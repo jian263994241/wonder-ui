@@ -1,4 +1,5 @@
 ---
+hide: true
 mobile: false
 toc: menu
 nav:
@@ -9,7 +10,7 @@ group:
   order: 1
 ---
 
-# Grid 栅格
+# Grid 栅格(废弃)
 
 借助十二列系统，六个默认响应层，props变量和混合，使用我们强大的移动优先Flexbox网格来构建所有形状和大小的布局。
 

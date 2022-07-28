@@ -1,7 +1,9 @@
 import { ColsType, getResponsiveValue, ResponsiveValue } from './share';
 import { composeClasses, generateUtilityClasses } from '@wonder-ui/utils';
 
-export const rowClasses = generateUtilityClasses('WuiRow', ['root']);
+export const COMPONENT_NAME = 'WuiRow';
+
+export const rowClasses = generateUtilityClasses(COMPONENT_NAME, ['root']);
 
 export interface RowStyleProps {
   classes?: Partial<typeof rowClasses>;
@@ -29,5 +31,5 @@ export const useClasses = (styleProps: RowStyleProps) => {
     ]
   };
 
-  return composeClasses('WuiRow', slot, classes);
+  return composeClasses(COMPONENT_NAME, slot, classes);
 };

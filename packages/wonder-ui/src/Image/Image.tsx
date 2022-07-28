@@ -59,7 +59,10 @@ const ImageImg = styled('img', {
   height: '100%',
   display: 'block',
   WebkitUserDrag: 'none',
-  objectFit: imageCssVars.value('objectFit') as any
+  objectFit: imageCssVars.value('objectFit') as any,
+  '&[hidden]': {
+    display: 'none'
+  }
 }));
 
 const Image = React.forwardRef<HTMLDivElement, ImageProps>((inProps, ref) => {
