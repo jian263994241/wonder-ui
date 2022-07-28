@@ -1,12 +1,12 @@
-import * as React from 'react';
 import Modal from '../Modal';
 import Page from '../Page';
+import React from 'react';
 import Slide from '../Slide';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
+import { allPropagationEvent, css } from '@wonder-ui/utils';
 import { COMPONENT_NAME } from './PopupClasses';
 import { composeClasses } from '@wonder-ui/utils';
-import { css, allPropagationEvent } from '@wonder-ui/utils';
 import { useControlled } from '@wonder-ui/hooks';
 import type { PopupAction, PopupProps, PopupStyleProps } from './PopupTypes';
 

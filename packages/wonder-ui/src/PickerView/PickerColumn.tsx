@@ -3,7 +3,11 @@ import styled from '../styles/styled';
 import Typography from '../Typography';
 import { clamp, css, isObject, preventDefault, warn } from '@wonder-ui/utils';
 import { ColumnProps, PickerFieldNames, PickerOption } from './PickerViewTypes';
-import { COMPONENT_NAME, pickerViewClasses } from './PickerViewClasses';
+import {
+  COMPONENT_NAME,
+  pickerViewClasses,
+  pickerViewCssVars
+} from './PickerViewClasses';
 import { easing } from '../styles/transitions';
 import {
   useEventListener,
@@ -21,12 +25,11 @@ const MOMENTUM_LIMIT_DISTANCE = 15;
 const PickerColumnRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Column'
-})(({ theme }) => ({
+})({
   flex: 1,
-  fontSize: theme.typography.pxToRem(16),
   overflow: 'hidden',
   cursor: 'grab'
-}));
+});
 
 const PickerColumnContent = styled('ul', {
   name: COMPONENT_NAME,
@@ -44,7 +47,8 @@ const PickerColumnItem = styled('li', { name: COMPONENT_NAME, slot: 'Item' })({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: '0 4px'
+  padding: '0 4px',
+  height: pickerViewCssVars.value('itemHeight', '44px')
 });
 
 function isOptionDisabled(option: PickerOption) {
@@ -250,14 +254,13 @@ const PickerColumn = React.forwardRef<HTMLDivElement, ColumnProps>(
               <PickerColumnItem
                 key={index}
                 role="button"
-                style={{ height: `${itemHeight}px` }}
                 className={css(classes.item, {
                   [pickerViewClasses.disabled]: isOptionDisabled(option),
                   [pickerViewClasses.selected]: index === state.index
                 })}
                 onClick={onClickItem.bind(null, index)}
               >
-                <Typography color="textPrimary" variant="body2" noWrap>
+                <Typography variant="inherit" noWrap>
                   {onRenderLabel ? onRenderLabel(option) : label}
                 </Typography>
               </PickerColumnItem>

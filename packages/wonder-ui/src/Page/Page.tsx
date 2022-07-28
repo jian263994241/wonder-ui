@@ -2,33 +2,44 @@ import * as React from 'react';
 import ArrowForward from '../ArrowForward';
 import CloseButton from '../CloseButton';
 import IconButton from '../IconButton';
-import Navbar from '../Navbar';
+import Navbar from '../Navbar/Navbar';
 import styled from '../styles/styled';
+import useRootCssVars from '../styles/useRootCssVars';
 import useThemeProps from '../styles/useThemeProps';
-import { alpha } from '../styles/colorManipulator';
 import { COMPONENT_NAME } from './PageClasses';
-import { composeClasses, css, mergedRef } from '@wonder-ui/utils';
-import { navbarClasses } from '../Navbar/NavbarClasses';
-import { useForkRef, useSize } from '@wonder-ui/hooks';
+import {
+  composeClasses,
+  createCssVars,
+  css,
+  mergedRef
+} from '@wonder-ui/utils';
+import { useSize } from '@wonder-ui/hooks';
 import type { PageProps, PageStyleProps } from './PageTypes';
 
-export const useClasses = (styleProps: PageStyleProps) => {
+const useClasses = (styleProps: PageStyleProps) => {
   const { classes } = styleProps;
 
   const slots = {
     root: ['root'],
     content: ['content'],
-    navbar: ['navbar'],
-    toolbar: ['toolbar']
+    header: ['header'],
+    footer: ['footer']
   };
 
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
+const cssVars = createCssVars(COMPONENT_NAME, [
+  'bg',
+  'contentBg',
+  'contentOverflowX',
+  'contentOverflowY'
+]);
+
 const PageRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})(({ theme }) => ({
+})({
   boxSizing: 'border-box',
   position: 'absolute',
   width: '100%',
@@ -37,39 +48,44 @@ const PageRoot = styled('div', {
   display: 'flex',
   transform: 'none',
   zIndex: 1,
-  backgroundColor: theme.palette.background.default,
-  [`& > .${navbarClasses.root}`]: {
-    position: 'absolute'
-  }
-}));
+  background: cssVars.value('bg')
+});
 
 const PageContent = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Content'
-})(({ theme }) => ({
-  overflowY: 'auto',
+})({
+  overflowX: cssVars.value('contentOverflowX') as any,
+  overflowY: cssVars.value('contentOverflowY') as any,
+  background: cssVars.value('contentBg'),
   boxSizing: 'border-box',
   minHeight: '100%',
   maxHeight: '100%',
   width: '100%',
   position: 'relative',
   zIndex: 1,
-  WebkitOverflowScrolling: 'touch',
-  paddingTop: 'env(safe-area-inset-top)',
-  paddingBottom: 'env(safe-area-inset-bottom)'
-}));
+  WebkitOverflowScrolling: 'touch'
+});
+
+const PageHeader = styled('div', {
+  name: COMPONENT_NAME,
+  slot: 'Header'
+})({
+  position: 'absolute',
+  top: 0,
+  width: '100%',
+  zIndex: 2
+});
 
 const PageFooter = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Footer'
-})(({ theme }) => ({
+})({
   width: '100%',
-  background: alpha(theme.palette.background.paper, 0.89),
-  backdropFilter: 'saturate(180%) blur(20px)',
   position: 'absolute',
   bottom: 0,
   zIndex: 2
-}));
+});
 
 const Page = React.forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
@@ -80,7 +96,7 @@ const Page = React.forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
     component,
     children,
     className,
-    navbar = null,
+    navbar,
     onBack,
     onClose,
     showBackButton = false,
@@ -89,31 +105,27 @@ const Page = React.forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
     title,
     barLeft,
     barRight,
-    footer = null,
+    header,
+    footer,
     ...rest
   } = props;
 
   const classes = useClasses({ ...props });
 
-  const navbarRef = React.useRef<HTMLElement>(null);
+  const headerRef = React.useRef<HTMLDivElement>(null);
+  const footerRef = React.useRef<HTMLDivElement>(null);
 
-  const handleNavbarRef = useForkRef(
-    navbarRef,
-    //@ts-expect-error
-    navbar ? navbar.ref : NavbarProps?.ref
+  const { height: headerHeight = 0 } = useSize(headerRef);
+  const { height: footerHeight = 0 } = useSize(footerRef);
+
+  useRootCssVars((theme) =>
+    cssVars.style({
+      bg: theme.palette.background.default,
+      contentBg: 'transparent',
+      contentOverflowX: 'unset',
+      contentOverflowY: 'auto'
+    })
   );
-  const toolbarRef = React.useRef<HTMLDivElement>(null);
-
-  const { height: navbarHeight = 0 } = useSize(navbarRef);
-  const { height: toolbarHeight = 0 } = useSize(toolbarRef);
-
-  const contentPaddingTop = React.useMemo(() => {
-    return `calc(${navbarHeight}px + env(safe-area-inset-top))`;
-  }, [navbarHeight]);
-
-  const contentPaddingBottom = React.useMemo(() => {
-    return `calc(${toolbarHeight}px + env(safe-area-inset-bottom))`;
-  }, [toolbarHeight]);
 
   const renderBarLeft = () => {
     return (
@@ -129,24 +141,10 @@ const Page = React.forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
     );
   };
 
-  const renderNavBar = () => {
-    if (React.isValidElement(navbar)) {
-      return React.cloneElement(navbar, {
-        title,
-        left: barLeft,
-        right: barRight,
-        ...navbar.props,
-        ...NavbarProps,
-        className: css(
-          navbar.props.className,
-          classes.navbar,
-          NavbarProps?.className
-        ),
-        ref: handleNavbarRef
-      });
-    }
+  const navbar2 = (() => {
+    if (navbar === false) return;
 
-    const hasLeft = barLeft || showCloseButton || showCloseButton;
+    const hasLeft = barLeft || showCloseButton || showBackButton;
 
     if (!navbar && (title || hasLeft || barRight)) {
       return (
@@ -156,17 +154,12 @@ const Page = React.forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
           left={renderBarLeft()}
           right={barRight}
           {...NavbarProps}
-          classes={{
-            ...NavbarProps?.classes,
-            root: css(classes.navbar, NavbarProps?.className)
-          }}
-          ref={handleNavbarRef}
         />
       );
     }
 
     return navbar;
-  };
+  })();
 
   return (
     <PageRoot
@@ -175,8 +168,23 @@ const Page = React.forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
       className={css(classes.root, className)}
       {...rest}
     >
-      {renderNavBar()}
-      {footer && <PageFooter ref={toolbarRef}>{footer}</PageFooter>}
+      {header && (
+        <PageHeader className={classes.header} ref={headerRef}>
+          {header}
+        </PageHeader>
+      )}
+
+      {!header && navbar2 && (
+        <PageHeader className={classes.header} ref={headerRef}>
+          {navbar2}
+        </PageHeader>
+      )}
+
+      {footer && (
+        <PageFooter className={classes.footer} ref={footerRef}>
+          {footer}
+        </PageFooter>
+      )}
 
       <PageContent
         {...ContentProps}
@@ -185,8 +193,8 @@ const Page = React.forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
         ref={mergedRef(ContentRef, ContentProps?.ref)}
         style={{
           ...ContentProps?.style,
-          paddingTop: contentPaddingTop,
-          paddingBottom: contentPaddingBottom
+          paddingTop: headerHeight,
+          paddingBottom: footerHeight
         }}
       >
         {children}

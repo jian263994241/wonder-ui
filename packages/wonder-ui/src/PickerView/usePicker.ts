@@ -71,8 +71,7 @@ export default function usePicker(props: usePickerProps) {
       if (fieldNames.children in firstColumn) {
         dataType = 'cascade';
         formattedColumns = formatCascade(columns);
-      }
-      if (fieldNames.values in firstColumn) {
+      } else if (fieldNames.values in firstColumn) {
         dataType = 'object';
         formattedColumns = columns as PickerObjectColumn[];
       } else {

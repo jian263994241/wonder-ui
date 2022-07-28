@@ -30,7 +30,7 @@ const PickerPopup = React.forwardRef<PopupAction, PickerPopupProps>(
         style={style}
         visible={visible}
         defaultVisible={defaultVisible}
-        navbar={
+        header={
           <Navbar
             title={title}
             subTitle={subTitle}

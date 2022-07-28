@@ -6,7 +6,11 @@ import styled from '../styles/styled';
 import usePicker from './usePicker';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { COMPONENT_NAME } from './PickerViewClasses';
+import {
+  COMPONENT_NAME,
+  pickerViewCssVars,
+  usePickerViewCssVars
+} from './PickerViewClasses';
 import {
   composeClasses,
   css,
@@ -45,17 +49,17 @@ const useClasses = (styleProps: PickerViewProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const PickerRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })(
-  ({ theme }) => ({
-    position: 'relative',
-    userSelect: 'none',
-    backgroundColor: theme.palette.background.paper
-  })
-);
+const PickerRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })({
+  position: 'relative',
+  userSelect: 'none',
+  backgroundColor: pickerViewCssVars.value('bgColor'),
+  fontSize: pickerViewCssVars.value('fontSize')
+});
 
 const PickerColumns = styled('div', { name: COMPONENT_NAME, slot: 'Columns' })({
   display: 'flex',
-  position: 'relative'
+  position: 'relative',
+  height: pickerViewCssVars.value('height')
 });
 
 const PickerMask = styled('div', {
@@ -74,6 +78,9 @@ const PickerMask = styled('div', {
       : 'transparent',
   backgroundPosition: 'top, bottom',
   backgroundRepeat: 'no-repeat',
+  backgroundSize: `100% calc((${pickerViewCssVars.value(
+    'height'
+  )} - ${pickerViewCssVars.value('itemHeight')}) / 2)`,
   transform: 'translateZ(0)',
   pointerEvents: 'none'
 }));
@@ -81,7 +88,8 @@ const PickerMask = styled('div', {
 const PickerIndicator = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Indicator'
-})(({ theme }) => ({
+})({
+  pointerEvents: 'none',
   boxSizing: 'border-box',
   position: 'absolute',
   left: 0,
@@ -89,10 +97,10 @@ const PickerIndicator = styled('div', {
   top: '50%',
   transform: 'translateY(-50%)',
   zIndex: 2,
-  borderTop: `thin solid ${theme.palette.divider}`,
-  borderBottom: `thin solid ${theme.palette.divider}`,
-  pointerEvents: 'none'
-}));
+  borderTop: `thin solid ${pickerViewCssVars.value('indicatorBorderColor')}`,
+  borderBottom: `thin solid ${pickerViewCssVars.value('indicatorBorderColor')}`,
+  height: pickerViewCssVars.value('itemHeight', '44px')
+});
 
 const PickerViewLoading = styled(Backdrop, {
   name: COMPONENT_NAME,
@@ -147,34 +155,35 @@ const PickerView = React.forwardRef<HTMLDivElement, PickerViewProps>(
 
     const classes = useClasses(styleProps);
 
+    usePickerViewCssVars();
+
     const styles = useCreation(() => {
       const itemHeight = unitToPx(itemHeightProp);
       const wrapHeight = itemHeight * +visibleItemCount;
-      const frameStyle = { height: itemHeight };
-      const columnsStyle = { height: wrapHeight };
-      const maskStyle = {
-        backgroundSize: `100% ${(wrapHeight - itemHeight) / 2}px`
-      };
-      return { itemHeight, frameStyle, columnsStyle, maskStyle };
+
+      return { itemHeight, wrapHeight };
     }, [itemHeightProp, visibleItemCount]);
 
     return (
       <PickerRoot
         ref={ref}
         className={css(classes.root, className)}
-        style={style}
+        style={{
+          ...style,
+          ...pickerViewCssVars.style({
+            itemHeight: styles.itemHeight,
+            height: styles.wrapHeight
+          })
+        }}
       >
         <PickerViewLoading visible={loading} className={classes.loading}>
           <ActivityIndicator color="primary" iconSize="medium" />
         </PickerViewLoading>
-        <PickerColumns className={classes.columns} style={styles.columnsStyle}>
+        <PickerColumns className={classes.columns}>
           {picker.columns.length > 0 && (
             <React.Fragment>
-              <PickerMask style={styles.maskStyle} className={classes.mask} />
-              <PickerIndicator
-                style={styles.frameStyle}
-                className={classes.indicator}
-              />
+              <PickerMask className={classes.mask} />
+              <PickerIndicator className={classes.indicator} />
             </React.Fragment>
           )}
 

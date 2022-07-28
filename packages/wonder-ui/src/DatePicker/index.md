@@ -14,13 +14,9 @@ group:
 时间选择器，支持日期、年月、时分等维度，通常与弹出层组件配合使用
 
 
-### 基本使用
+## 代码演示
 
 <code src="./demo/demo1.tsx"></code>
-
-### 表单组件
-
-<code src="./demo/demo2.tsx"></code>
 
 更多场景和参数请参考 `DatePickerView`
 

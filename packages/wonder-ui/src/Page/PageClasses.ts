@@ -5,7 +5,7 @@ export const COMPONENT_NAME = 'WuiPage';
 export const pageClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'content',
-  'navbar',
+  'header',
   'footer'
 ]);
 

@@ -18,13 +18,8 @@ group:
 
 ### 基本使用
 
-在实际场景中，Picker 通常在浮层中显示
 
 <code src="./demo/demo1.tsx"></code>
-
-### 表单组件
-
-<code src="./demo/demo2.tsx"></code>
 
 
 更多场景和参数请参考 `PickerView`

@@ -33,3 +33,11 @@ group:
 
 <API src="./Page.tsx" ></API>
 
+## CSS 变量
+
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-page-background | 背景 | `theme.palette.background.default`
+| --wui-page-content-background | 内容背景 | transparent
+| --wui-page-content-overflow-x | 内容滚动(X) | unset
+| --wui-page-content-overflow-y | 内容滚动(Y) | auto

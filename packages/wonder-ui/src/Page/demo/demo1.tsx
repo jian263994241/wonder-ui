@@ -6,7 +6,7 @@ const Block = styled(Paper)`
   align-items: center;
   justify-content: center;
   color: #fff;
-  background-color: ${({ theme }) => theme.palette.colors.blue.A200};
+  background-color: #2979ff;
 `;
 
 export default () => (

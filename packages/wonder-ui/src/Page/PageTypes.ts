@@ -24,9 +24,9 @@ export interface PageProps {
    */
   children?: React.ReactNode;
   /**
-   * 自定义导航栏
+   * 显示导航栏
    */
-  navbar?: React.ReactNode;
+  navbar?: false;
   /**
    * 返回按钮事件
    */
@@ -61,6 +61,10 @@ export interface PageProps {
    * Navbar right
    */
   barRight?: React.ReactNode;
+  /**
+   * 头部和导航栏不共存
+   */
+  header?: React.ReactNode;
   /**
    * 底部
    */

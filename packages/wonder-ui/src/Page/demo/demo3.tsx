@@ -4,6 +4,8 @@ import {
   Divider,
   Drawer,
   Page,
+  Paper,
+  SafeArea,
   Space,
   Typography,
   WhiteSpace
@@ -28,14 +30,21 @@ export default () => {
             title="活动承诺函"
             onClose={() => setFalse()}
             footer={
-              <Space itemEqual gap={0} split={<Divider direction="vertical" />}>
-                <Button fullWidth shape="square">
-                  我再想想
-                </Button>
-                <Button fullWidth shape="square">
-                  已阅读并签约
-                </Button>
-              </Space>
+              <Paper>
+                <Space
+                  itemEqual
+                  gap={0}
+                  split={<Divider direction="vertical" />}
+                >
+                  <Button fullWidth shape="square">
+                    我再想想
+                  </Button>
+                  <Button fullWidth shape="square">
+                    已阅读并签约
+                  </Button>
+                </Space>
+                <SafeArea position="bottom" />
+              </Paper>
             }
           >
             <div style={{ padding: 16 }}>
