@@ -1,14 +1,9 @@
 import * as React from 'react';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { addUnit, composeClasses, css, forwardRef } from '@wonder-ui/utils';
+import { composeClasses, css, forwardRef } from '@wonder-ui/utils';
 import { checkFlexGap } from './SpaceUtils';
-import {
-  COMPONENT_NAME,
-  spaceClasses,
-  spaceCssVars,
-  useSpaceCssVars
-} from './SpaceClasses';
+import { COMPONENT_NAME, spaceClasses, spaceCssVars } from './SpaceClasses';
 import type { SpaceProps } from './SpaceTypes';
 
 const useClasses = (styleProps: SpaceProps) => {
@@ -36,11 +31,14 @@ const SpaceRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
   const isHorizontal = styleProps.direction === 'horizontal';
 
   return {
+    ...spaceCssVars.style({
+      gapHorizontal: spaceCssVars.value('gap', '0px'),
+      gapVertical: spaceCssVars.value('gap', '0px')
+    }),
     boxSizing: 'border-box',
     padding: 0,
     margin: 0,
     display: 'flex',
-
     flexWrap: styleProps.reversed ? 'wrap-reverse' : 'wrap',
 
     '& > *': {
@@ -121,7 +119,8 @@ const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
     component,
     direction = 'horizontal',
     reversed = false,
-    gap,
+    theme,
+    gap = theme.spacing(1),
     split,
     horizontalAlign,
     verticalAlign = 'center',
@@ -147,8 +146,6 @@ const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
 
   const classes = useClasses(styleProps);
 
-  useSpaceCssVars();
-
   return (
     <SpaceRoot
       as={component}
@@ -157,13 +154,11 @@ const Space = forwardRef<HTMLElement, SpaceProps>((inProps, ref) => {
       styleProps={styleProps}
       style={{
         ...(Array.isArray(gap)
-          ? {
-              [spaceCssVars.getName('gapHorizontal')]: addUnit(gap[0]),
-              [spaceCssVars.getName('gapVertical')]: addUnit(gap[1])
-            }
-          : {
-              [spaceCssVars.getName('gap')]: addUnit(gap)
-            }),
+          ? spaceCssVars.style({
+              gapHorizontal: gap[0],
+              gapVertical: gap[1]
+            })
+          : spaceCssVars.style({ gap })),
         ...style
       }}
       {...rest}

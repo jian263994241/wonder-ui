@@ -26,7 +26,6 @@ group:
 
 | 属性 | 说明 | 默认值
 | - | - | -
-| --wui-white-space-size | 尺寸 | `var(--wui-white-space-size-medium)`
 | --wui-white-space-size-small | 预设尺寸 | `theme.space(1)`
 | --wui-white-space-size-medium | 预设尺寸 | `theme.space(2)`
 | --wui-white-space-size-large |  预设尺寸 | `theme.space(4)`

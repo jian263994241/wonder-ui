@@ -18,14 +18,4 @@ export const spaceCssVars = createCssVars(COMPONENT_NAME, [
   'gapVertical'
 ]);
 
-export const useSpaceCssVars = () => {
-  useRootCssVars((theme) =>
-    spaceCssVars.style({
-      gap: theme.spacing(1),
-      gapHorizontal: spaceCssVars.value('gap'),
-      gapVertical: spaceCssVars.value('gap')
-    })
-  );
-};
-
 export type SpaceClassesType = typeof spaceClasses;

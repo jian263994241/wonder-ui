@@ -1,9 +1,13 @@
 import React from 'react';
 import styled from '../styles/styled';
 import { addUnit } from '@wonder-ui/utils';
-import { createCssVars, css, generateUtilityClasses } from '@wonder-ui/utils';
+import {
+  createCssVars,
+  css,
+  generateUtilityClasses,
+  toString
+} from '@wonder-ui/utils';
 import { GridItemProps, GridProps } from './GridTypes';
-import useRootCssVars from '../styles/useRootCssVars';
 
 const COMPONENT_NAME = 'WuiGrid';
 
@@ -19,8 +23,8 @@ const gridClasses = generateUtilityClasses(COMPONENT_NAME, ['root', 'item']);
 
 const GridRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })({
   ...cssVars.style({
-    gapHorizontal: cssVars.value('gap'),
-    gapVertical: cssVars.value('gap')
+    gapHorizontal: cssVars.value('gap', '0px'),
+    gapVertical: cssVars.value('gap', '0px')
   }),
   display: 'grid',
   gap: `${cssVars.value('gapHorizontal')} ${cssVars.value('gapVertical')}`,
@@ -29,29 +33,25 @@ const GridRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })({
 });
 
 const GridItemRoot = styled('div', { name: COMPONENT_NAME, slot: 'Item' })({
-  gridColumnEnd: `span ${cssVars.value('itemSpan')}`
+  gridColumnEnd: `span ${cssVars.value('itemSpan', '1')}`
 });
 
 export const Grid = React.forwardRef<HTMLDivElement, GridProps>(
   (props, ref) => {
     const { children, className, columns, gap, style, ...rest } = props;
 
-    useRootCssVars(cssVars.style({ gap: 0 }));
-
     return (
       <GridRoot
         ref={ref}
         className={css(gridClasses.root, className)}
         style={{
-          [cssVars.getName('columns')]: columns,
+          ...cssVars.style({ columns: toString(columns) }),
           ...(Array.isArray(gap)
-            ? {
-                [cssVars.getName('gapHorizontal')]: addUnit(gap[0]),
-                [cssVars.getName('gapVertical')]: addUnit(gap[1])
-              }
-            : {
-                [cssVars.getName('gap')]: addUnit(gap)
-              }),
+            ? cssVars.style({
+                gapHorizontal: gap[0],
+                gapVertical: gap[1]
+              })
+            : cssVars.style({ gap })),
           ...style
         }}
         {...rest}
@@ -70,7 +70,9 @@ export const GridItem = React.forwardRef<HTMLDivElement, GridItemProps>(
         ref={ref}
         className={css(gridClasses.item, className)}
         style={{
-          [cssVars.getName('itemSpan')]: span,
+          ...cssVars.style({
+            itemSpan: toString(span)
+          }),
           ...style
         }}
         {...rest}
