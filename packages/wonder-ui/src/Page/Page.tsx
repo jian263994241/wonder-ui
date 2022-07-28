@@ -132,7 +132,7 @@ const Page = React.forwardRef<HTMLDivElement, PageProps>((inProps, ref) => {
       <React.Fragment>
         {showBackButton && (
           <IconButton onClick={onBack}>
-            <ArrowForward fontSize="inherit" direction="left" />
+            <ArrowForward direction="left" />
           </IconButton>
         )}
         {showCloseButton && <CloseButton onClick={onClose} />}
