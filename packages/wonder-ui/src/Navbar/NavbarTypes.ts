@@ -6,7 +6,6 @@ export interface NavbarProps {
   className?: string;
   children?: React.ReactNode;
   style?: React.CSSProperties;
-
   /**
    * 透明背景
    * @default false
@@ -33,6 +32,11 @@ export interface NavbarProps {
    * 副标题
    */
   subTitle?: React.ReactNode;
+  /**
+   * 安全区域
+   * @default false
+   */
+  safeArea?: boolean;
 }
 
 export interface NavbarStyleProps extends NavbarProps {}

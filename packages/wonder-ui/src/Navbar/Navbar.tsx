@@ -1,9 +1,12 @@
 import * as React from 'react';
+import SafeArea from '../SafeArea/SafeArea';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { alpha } from '../styles/colorManipulator';
-import { buttonClasses } from '../Button/buttonClasses';
-import { COMPONENT_NAME } from './NavbarClasses';
+import {
+  COMPONENT_NAME,
+  navbarCssVars,
+  useNavbarCSSvars
+} from './NavbarClasses';
 import { composeClasses, css } from '@wonder-ui/utils';
 import { searchbarClasses } from '../Searchbar';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
@@ -30,17 +33,18 @@ const NavbarRoot = styled('div', {
   slot: 'Root'
 })<{ styleProps: NavbarStyleProps }>(({ theme, styleProps }) => {
   return {
-    fontFamily: theme.typography.fontFamily,
-    fontSize: theme.typography.pxToRem(17),
     position: styleProps.absolute ? 'absolute' : 'relative',
     width: '100%',
+
     zIndex: 99,
     left: 0,
     right: 0,
     boxSizing: 'border-box',
+    backfaceVisibility: 'hidden',
     margin: 0,
-    paddingTop: 'env(safe-area-inset-top)',
     userSelect: 'none',
+    color: navbarCssVars.value('textColor'),
+    fontSize: navbarCssVars.value('fontSize'),
 
     [`& .${searchbarClasses.bg}`]: {
       display: 'none'
@@ -48,106 +52,92 @@ const NavbarRoot = styled('div', {
   };
 });
 
-const NavbarBg = styled('div', { name: COMPONENT_NAME, slot: 'Bg' })(
-  ({ theme }) => {
-    const backgroundColor = theme.palette.background.paper;
-
-    return {
-      position: 'absolute',
-      left: 0,
-      top: 0,
-      width: '100%',
-      height: '100%',
-      pointerEvents: 'none',
-      zIndex: 0,
-      background: alpha(backgroundColor, 0.89),
-      transitionProperty: 'transform',
-      borderWidth: 0,
-      borderStyle: 'solid',
-      borderColor: theme.palette.divider,
-      borderBottomWidth: 'thin',
-      backdropFilter: 'saturate(180%) blur(20px)'
-    };
-  }
-);
+const NavbarBg = styled('div', { name: COMPONENT_NAME, slot: 'Bg' })({
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '100%',
+  pointerEvents: 'none',
+  zIndex: 0,
+  background: navbarCssVars.value('bgColor'),
+  transitionProperty: 'transform',
+  borderBottom: `thin solid ${navbarCssVars.value('borderColor')}`
+});
 
 const NavbarInner = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Inner'
-})(({ theme }) => ({
+})({
   position: 'relative',
   left: 0,
   bottom: 0,
   width: '100%',
-  height: theme.typography.pxToRem(44),
+  height: navbarCssVars.value('height'),
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   boxSizing: 'border-box',
   transform: 'translate3d(0,0,0)',
-  padding:
-    'env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left)',
+  padding: `0 ${navbarCssVars.value('paddingHorizontal')}`,
   zIndex: 10
-}));
+});
 
 const NavbarTitle = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Title'
-})(({ theme }) => ({
-  ...theme.typography.ellipsis(1, '70%'),
-  display: 'block',
+})({
   position: 'relative',
-  textAlign: 'center',
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
-  color: theme.palette.text.primary
-}));
+  display: 'inline-block',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  flexShrink: 10,
+  paddingLeft: navbarCssVars.value('titlePaddingHorizontal'),
+  paddingRight: navbarCssVars.value('titlePaddingHorizontal'),
+  fontWeight: navbarCssVars.value('titleFontWeight'),
+  fontSize: navbarCssVars.value('titleFontSize'),
+  textAlign: navbarCssVars.value('titleTextAlign') as any,
+  zIndex: 10
+});
 
 const NavbarSubTitle = styled('div', {
   name: COMPONENT_NAME,
   slot: 'SubTitle'
-})(({ theme }) => ({
-  ...theme.typography.ellipsis(1),
+})({
   display: 'block',
-  fontSize: '0.65em',
+  fontSize: navbarCssVars.value('subtitleFontSize'),
   fontWeight: 400,
-  lineHeight: 1.2,
-  color: theme.palette.text.secondary
-}));
+  lineHeight: navbarCssVars.value('subtitleLineHeight'),
+  color: navbarCssVars.value('subtitleTextColor'),
+  textAlign: navbarCssVars.value('subtitleTextAlign') as any
+});
 
 const NavbarLeft = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Left'
-})(({ theme }) => ({
+})({
   position: 'relative',
-  alignSelf: 'stretch',
   zIndex: 10,
   flexShrink: 0,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  marginRight: theme.spacing(1),
-  [`& .${buttonClasses.root}`]: {
-    alignSelf: 'stretch'
-  }
-}));
+  marginRight: 10
+});
 
 const NavbarRight = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Right'
-})(({ theme }) => ({
+})({
   position: 'relative',
-  alignSelf: 'stretch',
   zIndex: 10,
   flexShrink: 0,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  marginLeft: theme.spacing(1),
-  [`& .${buttonClasses.root}`]: {
-    alignSelf: 'stretch'
-  }
-}));
+  marginLeft: 10
+});
 
 const Navbar = React.forwardRef<HTMLDivElement, NavbarProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
@@ -161,6 +151,7 @@ const Navbar = React.forwardRef<HTMLDivElement, NavbarProps>((inProps, ref) => {
     left: barLeft,
     right: barRight,
     theme,
+    safeArea,
     ...rest
   } = props;
 
@@ -180,7 +171,7 @@ const Navbar = React.forwardRef<HTMLDivElement, NavbarProps>((inProps, ref) => {
     const innerEl = navbarInnerNodeRef.current;
 
     if (!innerEl) {
-      return 0;
+      return -9999;
     }
 
     const noLeft = !barLeft;
@@ -234,6 +225,8 @@ const Navbar = React.forwardRef<HTMLDivElement, NavbarProps>((inProps, ref) => {
 
   const classes = useClasses(styleProps);
 
+  useNavbarCSSvars();
+
   return (
     <NavbarRoot
       className={css(className, classes.root)}
@@ -242,6 +235,8 @@ const Navbar = React.forwardRef<HTMLDivElement, NavbarProps>((inProps, ref) => {
       ref={handleRef}
     >
       {!backgroundInVisible && <NavbarBg className={classes.background} />}
+
+      {safeArea && <SafeArea position="top" />}
 
       <NavbarInner ref={navbarInnerNodeRef} className={classes.inner}>
         {barLeft && (

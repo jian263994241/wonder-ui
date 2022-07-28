@@ -11,8 +11,6 @@ import { Search, ThreeDotsVertical } from '@wonder-ui/icons';
 export default () => {
   return (
     <Space direction="vertical" nowrap>
-      <Navbar right={<CloseButton />} />
-
       <Navbar
         left={
           <IconButton>
@@ -20,8 +18,6 @@ export default () => {
           </IconButton>
         }
       />
-
-      <Navbar title="超长的导航栏, 超长的导航栏, 超长的导航栏, 超长的导航栏, 超长的导航栏, 超长的导航栏" />
 
       <Navbar
         title="超长的导航栏, 超长的导航栏, 超长的导航栏, 超长的导航栏, 超长的导航栏, 超长的导航栏"

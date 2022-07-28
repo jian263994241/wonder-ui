@@ -14,7 +14,7 @@ export default () => {
 
   return (
     <Page
-      navbar={
+      header={
         <Searchbar
           style={{ position: 'absolute', top: 0 }}
           icon={
