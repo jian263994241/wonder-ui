@@ -8,10 +8,16 @@ import {
   css,
   nextTick
 } from '@wonder-ui/utils';
-import { COMPONENT_NAME, passcodeInputClasses } from './PasscodeInputClasses';
+import {
+  COMPONENT_NAME,
+  passcodeInputClasses,
+  passcodeInputCssVars,
+  usePasscodeInputCssVars
+} from './PasscodeInputClasses';
 import { useControlled, useForkRef } from '@wonder-ui/hooks';
 import type { PasscodeInputProps, StyleProps } from './PasscodeInputTypes';
 import { keyframes } from '@wonder-ui/styled';
+import { hideVisually } from 'polished';
 
 const useClasses = (props: StyleProps) => {
   const { classes, seperated, error } = props.styleProps;
@@ -78,75 +84,82 @@ const PasscodeInputRoot = styled('div', {
 const PasscodeInputCells = styled('div', {
   slot: 'Cells',
   name: COMPONENT_NAME
-})<StyleProps>(({ styleProps, theme }) => ({
+})<StyleProps>(({ styleProps }) => ({
   display: 'inline-flex',
   verticalAlign: 'top',
   ...(!styleProps.seperated && {
-    borderRadius: `var(--passcode-input-border-radius, 8px)`,
+    borderRadius: passcodeInputCssVars.value('borderRadius'),
     overflow: 'hidden',
-    border: `thin solid var(--passcode-input-border-color, ${theme.palette.divider})`,
+    border: `1px solid ${passcodeInputCssVars.value('borderColor')}`,
     ...(styleProps.focused && {
-      borderColor: `var(--passcode-input-border-color-focused, ${theme.palette.primary.main})`,
-      boxShadow: `0 0 2px 0 var(--passcode-input-border-color-focused, ${theme.palette.primary.main})`,
+      borderColor: passcodeInputCssVars.value('focusedBorderColor'),
+      boxShadow: `0 0 3px 0 ${passcodeInputCssVars.value(
+        'focusedBorderColor'
+      )}`,
       outline: 'none'
+    }),
+    ...(styleProps.error && {
+      borderColor: passcodeInputCssVars.value('errorBorderColor'),
+      boxShadow: `0 0 2px 0 ${passcodeInputCssVars.value('errorBorderColor')}`
     })
   }),
   [`.${passcodeInputClasses.error} &`]: {
-    ...(styleProps.seperated
-      ? {
-          animation: `175ms ease-in-out 0s 2 normal none running ${shakeX}`
-        }
-      : {
-          borderColor: `var(--passcode-input-error-color, ${theme.palette.danger.main})`,
-          boxShadow: `0 0 2px 0 var(--passcode-input-error-color, ${theme.palette.danger.main})`,
-          animation: `175ms ease-in-out 0s 2 normal none running ${shakeX}`
-        })
+    animation: `175ms ease-in-out 0s 2 normal none running ${shakeX}`
   }
 }));
 
 const PasscodeInputCell = styled('div', {
   slot: 'Cell',
   name: COMPONENT_NAME
-})<StyleProps>(({ theme, styleProps }) => ({
+})<StyleProps>(({ styleProps }) => ({
   flex: 'none',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   boxSizing: 'border-box',
-  width: `var(--passcode-input-cell-size, 40px)`,
-  height: `var(--passcode-input-cell-size, 40px)`,
-  background: theme.palette.background.paper,
-  color: `var(--passcode-input-text-color, ${theme.palette.text.primary})`,
+  width: passcodeInputCssVars.value('cellSize'),
+  height: passcodeInputCssVars.value('cellSize'),
+  background: passcodeInputCssVars.value('bgColor'),
+  color: passcodeInputCssVars.value('textColor'),
   ...(styleProps.seperated
     ? {
-        borderRadius: `var(--passcode-input-border-radius, 8px)`,
-        border: `1px solid var(--passcode-input-border-color, ${theme.palette.divider})`,
+        borderRadius: passcodeInputCssVars.value('borderRadius'),
+        border: `1px solid ${passcodeInputCssVars.value('borderColor')}`,
         '&:not(:last-child)': {
-          marginRight: `var(--passcode-input-cell-gap, 6px)`
+          marginRight: passcodeInputCssVars.value('cellGap')
         },
         ...(styleProps.focused && {
-          borderColor: `var(--passcode-input-border-color-focused, ${theme.palette.primary.main})`,
-          boxShadow: `0 0 2px 0 var(--passcode-input-border-color-focused, ${theme.palette.primary.main})`,
+          borderColor: passcodeInputCssVars.value('focusedBorderColor'),
+          boxShadow: `0 0 2px 0 ${passcodeInputCssVars.value(
+            'focusedBorderColor'
+          )}`,
           outline: 'none'
         }),
         ...(styleProps.error && {
-          borderColor: `var(--passcode-input-error-color, ${theme.palette.danger.main})`,
-          boxShadow: `0 0 2px 0 var(--passcode-input-error-color, ${theme.palette.danger.main})`
+          borderColor: passcodeInputCssVars.value('errorBorderColor'),
+          boxShadow: `0 0 2px 0 ${passcodeInputCssVars.value(
+            'errorBorderColor'
+          )}`
         })
       }
     : {
         '&:not(:last-child)': {
-          borderRight: `1px solid var(--passcode-input-border-color, ${theme.palette.divider})`
+          borderRight: `1px solid ${passcodeInputCssVars.value('borderColor')}`,
+          ...(styleProps.error && {
+            borderRight: `1px solid ${passcodeInputCssVars.value(
+              'errorBorderColor'
+            )}`
+          })
         }
       }),
 
   ...(styleProps.dot && {
     '&:before': {
       content: `''`,
-      width: `var(--dot-size, 10px)`,
-      height: `var(--dot-size, 10px)`,
-      borderRadius: ' 50%',
-      background: `var(--passcode-input-text-color, ${theme.palette.text.primary})`
+      width: passcodeInputCssVars.value('dotSize'),
+      height: passcodeInputCssVars.value('dotSize'),
+      borderRadius: '50%',
+      background: passcodeInputCssVars.value('textColor')
     }
   }),
   ...(styleProps.caret && {
@@ -155,7 +168,7 @@ const PasscodeInputCell = styled('div', {
       width: 2,
       height: '1.1em',
       marginLeft: 1,
-      background: `var(--passcode-input-caret-color, ${theme.palette.primary.main})`,
+      background: passcodeInputCssVars.value('caretColor'),
       animation: `1.2s linear infinite ${caretBlink}`
     }
   })
@@ -164,15 +177,7 @@ const PasscodeInputCell = styled('div', {
 const PasscodeInputInput = styled('input', {
   slot: 'Input',
   name: COMPONENT_NAME
-})({
-  position: 'absolute',
-  left: '-200vw',
-  top: 0,
-  display: 'block',
-  width: 50,
-  height: 20,
-  opacity: 0.5
-});
+})(hideVisually());
 
 const PasscodeInput = React.forwardRef<HTMLDivElement, PasscodeInputProps>(
   (inProps, ref) => {
@@ -266,6 +271,8 @@ const PasscodeInput = React.forwardRef<HTMLDivElement, PasscodeInputProps>(
       error
     };
     const classes = useClasses({ styleProps });
+
+    usePasscodeInputCssVars();
 
     return (
       <PasscodeInputRoot
