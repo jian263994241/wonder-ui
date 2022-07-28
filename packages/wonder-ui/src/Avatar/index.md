@@ -14,9 +14,10 @@ group:
 
 <API src="./Avatar.tsx"></API>
 
-## CSS Variables
+## CSS 变量
 
-```css
---wui-avatar-size: 44px;
---wui-avatar-border-radius: 4px;
-```
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-avatar-size| 尺寸 | 44px
+| --wui-avatar-border-radius| 圆角 | `theme.shape.borderRadius`
+

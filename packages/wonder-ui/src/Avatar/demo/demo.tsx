@@ -5,7 +5,6 @@ import {
   Typography,
   List,
   ListItem,
-  ListItemText,
   ListHeader
 } from '@wonder-ui/core';
 
@@ -18,11 +17,12 @@ export default () => (
     </ContentBlock>
 
     <ContentBlock title="默认图">
-      <Avatar />
-
-      <Typography color="textSecondary">
-        无图片/加载失败, 会显示一个默认的图像
-      </Typography>
+      <Space direction="vertical">
+        <Avatar />
+        <Typography color="textSecondary" variant="caption">
+          无图片/加载失败, 会显示一个默认的图像
+        </Typography>
+      </Space>
     </ContentBlock>
 
     <ContentBlock title="自定义大小">
@@ -35,11 +35,11 @@ export default () => (
 
     <List>
       <ListHeader>配合列表使用</ListHeader>
-      <ListItem media={<Avatar src={demoSrc} />}>
-        <ListItemText secondary="Deserunt dolor ea eaque eos">
-          Novalee Spicer
-        </ListItemText>
-      </ListItem>
+      <ListItem
+        prefix={<Avatar src={demoSrc} />}
+        primary="Novalee Spicer"
+        secondary="Deserunt dolor ea eaque eos"
+      />
     </List>
   </div>
 );
