@@ -16,7 +16,6 @@ const CheckListItem = React.forwardRef<HTMLLIElement, CheckListItemProps>(
     const {
       children,
       disabled,
-      divider,
       primary,
       secondary,
       value,

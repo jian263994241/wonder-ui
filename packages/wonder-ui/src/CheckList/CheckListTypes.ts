@@ -4,22 +4,13 @@ import { ListClassesType } from '../List/ListClasses';
 type Meta = Record<string, any>;
 
 export interface CheckListProps {
+  className?: string;
+  classes?: Partial<ListClassesType>;
+  children?: React.ReactNode;
   /**
    * 选中图标
    */
-  activeIcon?: JSX.Element;
-  /**
-   * 内容
-   */
-  children?: React.ReactNode;
-  /**
-   * 样式名
-   */
-  className?: string;
-  /**
-   * 节点样式名
-   */
-  classes?: Partial<ListClassesType>;
+  activeIcon?: React.ReactNode;
   /**
    * 默认项
    */

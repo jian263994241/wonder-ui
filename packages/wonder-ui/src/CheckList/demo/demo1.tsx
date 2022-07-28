@@ -28,14 +28,12 @@ export default () => (
 
     <CheckList defaultValue={['A']} header="完成显示">
       <CheckListItem
-        divider
         value="A"
         prefix={<Avatar src={image} />}
         primary="Novalee Spicer A"
         secondary="Deserunt dolor ea eaque eos"
       />
       <CheckListItem
-        divider
         value="B"
         prefix={<Avatar src={image} />}
         primary="Novalee Spicer B"

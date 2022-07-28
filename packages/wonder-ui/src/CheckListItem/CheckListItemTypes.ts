@@ -2,26 +2,15 @@ import * as React from 'react';
 import { ListItemClassesType } from '../ListItem/ListItemClasses';
 
 export interface CheckListItemProps {
-  /**
-   * 等同 primary
-   */
   children?: React.ReactNode;
-  /**
-   * 样式名
-   */
   className?: string;
-  /**
-   * 节点样式名
-   */
   classes?: Partial<ListItemClassesType>;
+  meta?: Record<string, any>;
+  style?: React.CSSProperties;
   /**
    * 禁用
    */
   disabled?: boolean;
-  /**
-   * 分割线
-   */
-  divider?: boolean;
   /**
    * 小图
    */
@@ -29,7 +18,7 @@ export interface CheckListItemProps {
   /**
    * 主要文字
    */
-  primary?: string;
+  primary?: React.ReactNode;
   /**
    * 只读
    */
@@ -37,21 +26,13 @@ export interface CheckListItemProps {
   /**
    * 次要描述文字
    */
-  secondary?: string;
-  /**
-   * 样式
-   */
-  style?: React.CSSProperties;
+  secondary?: React.ReactNode;
   /**
    * 选项值
    */
-  value: string;
+  value: string | number;
   /**
    * 点击事件
    */
   onClick?: React.MouseEventHandler<HTMLLIElement>;
-  /**
-   * 元数据
-   */
-  meta?: Record<string, any>;
 }
