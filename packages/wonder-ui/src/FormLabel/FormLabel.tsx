@@ -1,10 +1,10 @@
-import * as React from 'react';
 import QuestionCircle from '../icons/QuestionCircle';
 import styled from '../styles/styled';
 import Tooltip from '../Tooltip';
 import useThemeProps from '../styles/useThemeProps';
 import { COMPONENT_NAME } from './FormLabelClasses';
 import { composeClasses, css, forwardRef } from '@wonder-ui/utils';
+import { ellipsis } from 'polished';
 import type { FormLabelProps, FormLabelStyleProps } from './FormLabelTypes';
 
 const useClasses = (styleProps: FormLabelStyleProps) => {
@@ -24,7 +24,7 @@ const LabelRoot = styled('label', { name: COMPONENT_NAME, slot: 'Root' })<{
   boxSizing: 'border-box',
   color: theme.palette.text.primary,
 
-  ...theme.typography.ellipsis(1),
+  ...ellipsis('100%', 1),
 
   ...(styleProps.colon && {
     '&::after': {
@@ -55,12 +55,14 @@ const LabelRequiredText = styled('span', {
 const LabelQuestion = styled('span', {
   name: COMPONENT_NAME,
   slot: 'Question'
-})({
+})(({ theme }) => ({
+  display: 'inline-block',
   marginLeft: 4,
   cursor: 'pointer',
-  fontSize: '0.92em',
+  color: theme.palette.text.icon,
+  verticalAlign: -2,
   WebkitTapHighlightColor: 'transparent'
-});
+}));
 
 const Label = forwardRef<HTMLLabelElement, FormLabelProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
@@ -119,7 +121,7 @@ const Label = forwardRef<HTMLLabelElement, FormLabelProps>((inProps, ref) => {
       {help && (
         <Tooltip title={help} placement="top" arrow>
           <LabelQuestion className={classes.help}>
-            <QuestionCircle color="secondary" fontSize="inherit" />
+            <QuestionCircle block />
           </LabelQuestion>
         </Tooltip>
       )}

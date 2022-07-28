@@ -5,17 +5,17 @@ import styled from '../styles/styled';
 import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { COMPONENT_NAME } from './FormItemClasses';
-import { cssVars as listCssVars } from '../List/List';
+import {
+  composeClasses,
+  createChainedFunction,
+  css,
+  mergedRef
+} from '@wonder-ui/utils';
 import { Field } from 'rc-field-form';
 import { formLabelClasses } from '../FormLabel/FormLabelClasses';
+import { listCssVars } from '../List/ListClasses';
 import { listItemClasses } from '../ListItem/ListItemClasses';
 import { useFormContext } from '../Form/FormContext';
-import {
-  createChainedFunction,
-  mergedRef,
-  composeClasses,
-  css
-} from '@wonder-ui/utils';
 import type { FormItemProps, FormItemStyleProps } from './FormItemTypes';
 
 const useClasses = (styleProps: FormItemProps) => {
@@ -44,8 +44,7 @@ const FormItemRoot = styled(ListItem, {
           prefixWidth: '6.2em'
         }),
         [`.${listItemClasses.prefix}`]: {
-          paddingTop: listCssVars.value('paddingTop'),
-          paddingBottom: listCssVars.value('paddingBottom')
+          padding: `${listCssVars.value('paddingVertical')} 0`
         }
       }
     : {
@@ -143,6 +142,7 @@ const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>(
               className={classes.description}
               variant="caption"
               color="textSecondary"
+              align={styleProps.childAlign}
             >
               {data.description}
             </Typography>
@@ -152,6 +152,7 @@ const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>(
               className={classes.error}
               variant="caption"
               color="error"
+              align={styleProps.childAlign}
             >
               {data.error}
             </Typography>
@@ -161,6 +162,7 @@ const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>(
               className={classes.warning}
               variant="caption"
               color="warning"
+              align={styleProps.childAlign}
             >
               {data.warning}
             </Typography>

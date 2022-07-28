@@ -1,14 +1,14 @@
 import * as React from 'react';
-import List from '../List';
+import List from '../List/List';
 import locales from './locales';
 import RcForm from 'rc-field-form';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
-import { createCssVars, merge, composeClasses, css } from '@wonder-ui/utils';
+import { COMPONENT_NAME, formCssVars, useFormCssVars } from './FormClasses';
+import { composeClasses, css, merge } from '@wonder-ui/utils';
 import { FormContext } from './FormContext';
-import type { FormProps, FormStyleProps, FormInstance } from './FormTypes';
 
-const COMPONENT_NAME = 'WuiForm';
+import type { FormProps, FormStyleProps, FormInstance } from './FormTypes';
 
 const useClasses = (props: FormStyleProps) => {
   const { classes, layout } = props;
@@ -22,26 +22,18 @@ const useClasses = (props: FormStyleProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const cssVars = createCssVars(COMPONENT_NAME, [
-  'footerVerticalPadding',
-  'footerHorizontalPadding'
-]);
-
-const FormRoot = styled(RcForm, { name: COMPONENT_NAME, slot: 'Root' })(() => ({
-  ...cssVars.style({
-    footerVerticalPadding: 20,
-    footerHorizontalPadding: 12
-  })
-}));
+const FormRoot = styled(RcForm, {
+  name: COMPONENT_NAME,
+  slot: 'Root'
+})(() => ({}));
 
 const FormFooter = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Footer'
 })({
-  paddingTop: cssVars.value('footerVerticalPadding'),
-  paddingBottom: cssVars.value('footerVerticalPadding'),
-  paddingLeft: cssVars.value('footerHorizontalPadding'),
-  paddingRight: cssVars.value('footerHorizontalPadding')
+  padding: `${formCssVars.value('footerVerticalPadding')} ${formCssVars.value(
+    'footerHorizontalPadding'
+  )}`
 });
 
 const Form = React.forwardRef<FormInstance, FormProps>((inProps, ref) => {
@@ -51,7 +43,7 @@ const Form = React.forwardRef<FormInstance, FormProps>((inProps, ref) => {
     className,
     hasFeedback = true,
     layout = 'horizontal',
-    mode = 'list',
+    card = false,
     requiredMarkType = 'asterisk',
     footer,
     disabled = false,
@@ -64,11 +56,13 @@ const Form = React.forwardRef<FormInstance, FormProps>((inProps, ref) => {
     disabled,
     hasFeedback,
     layout,
-    mode,
+    card,
     requiredMarkType
   };
 
   const classes = useClasses(styleProps);
+
+  useFormCssVars();
 
   const validateMessages = React.useMemo(
     () => merge({}, locales.defaultValidateMessages, validateMessagesProp),
@@ -83,7 +77,7 @@ const Form = React.forwardRef<FormInstance, FormProps>((inProps, ref) => {
         className={css(classes.root, className)}
         ref={ref}
       >
-        <List mode={mode} className={classes.list}>
+        <List card={card} className={classes.list}>
           {children}
         </List>
         {footer && <FormFooter className={classes.footer}>{footer}</FormFooter>}

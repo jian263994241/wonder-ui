@@ -3,7 +3,6 @@ import type {
   FormProps as RcFormProps,
   FormInstance as RcFormInstance
 } from 'rc-field-form';
-import type { ListMode } from '../List/ListTypes';
 import type { FormLabelClassesType } from './FormClasses';
 import type { RequiredMarkType } from '../FormLabel/FormLabelTypes';
 
@@ -41,9 +40,9 @@ export interface FormProps extends RcFormProps {
   requiredMarkType?: RequiredMarkType;
   /**
    * 支持列表和卡片两种模式
-   * @default 'list'
+   * @default false
    */
-  mode?: ListMode;
+  card?: boolean;
 }
 
 export interface FormStyleProps extends FormProps {}

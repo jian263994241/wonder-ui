@@ -187,3 +187,10 @@ type Rule = RuleConfig | ((form: FormInstance) => RuleConfig);
 | validator   | 自定义校验，接收 Promise 作为返回值。[示例](#自定义表单字段)参考   | `(rule, value) => Promise` |
 | warningOnly     | 仅警告，不阻塞表单提交     | `boolean`      |
 | whitespace      | 如果字段仅包含空格则校验不通过，只在 `type: 'string'` 时生效
+
+## CSS 变量
+
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-form-footer-vertical-padding | footer垂直内边距 | 24px
+| --wui-form-footer-horizontal-padding | footer水平内边距 | var(--wui-list-padding-horizontal)
