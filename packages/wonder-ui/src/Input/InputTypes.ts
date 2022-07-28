@@ -54,10 +54,6 @@ export interface InputProps
    */
   disabled?: boolean;
   /**
-   * 禁用激活样式
-   */
-  disabledActiveStyle?: boolean;
-  /**
    * 最大长度
    */
   maxLength?: number;

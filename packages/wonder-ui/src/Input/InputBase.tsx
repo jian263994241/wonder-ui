@@ -6,8 +6,13 @@ import styled from '../styles/styled';
 import TextareaAutosize from './TextareaAutosize';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { COMPONENT_NAME } from './InputClasses';
-import { composeClasses, css } from '@wonder-ui/utils';
+import { capitalize, composeClasses, css } from '@wonder-ui/utils';
+import {
+  COMPONENT_NAME,
+  inputClasses,
+  inputCssVars,
+  useInputCssVars
+} from './InputClasses';
 import { resolveOnChange, triggerFocus } from './inputUtils';
 import {
   useControlled,
@@ -22,12 +27,6 @@ import type {
   InputStyleProps
 } from './InputTypes';
 
-const SIZE = {
-  large: 40,
-  middle: 32,
-  small: 24
-};
-
 const useClasses = (styleProps: InputStyleProps) => {
   const {
     borderless,
@@ -37,19 +36,22 @@ const useClasses = (styleProps: InputStyleProps) => {
     multiline,
     resizable,
     readOnly,
+    size,
     error
   } = styleProps;
 
   const slots = {
     root: [
       'root',
+      !borderless && 'bordered',
       disabled && 'disabled',
       multiline && 'multiline',
       multiline && resizable && 'resizable',
-      borderless && 'borderless',
+
       readOnly && 'readonly',
       focused && 'focused',
-      error && 'hasError'
+      error && 'hasError',
+      size && `size${capitalize(size)}`
     ],
     input: ['input'],
     prefix: ['prefix'],
@@ -64,7 +66,8 @@ const useClasses = (styleProps: InputStyleProps) => {
 const InputRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})<{ styleProps: InputStyleProps }>(({ theme, styleProps }) => ({
+})(({ theme }) => ({
+  margin: 0,
   font: 'inherit',
   letterSpacing: 'inherit',
   color: 'currentColor',
@@ -76,43 +79,58 @@ const InputRoot = styled('div', {
   overflow: 'hidden',
   WebkitTapHighlightColor: 'transparent',
   width: '100%',
-  height: theme.typography.pxToRem(SIZE[styleProps.size!]),
-  padding: 0,
-  margin: 0,
-  transition: theme.transitions.create(['border-color', 'box-shadow']),
-  backgroundColor: theme.palette.background.paper,
+  height: inputCssVars.value('height'),
+  border: inputCssVars.value('border', 'none'),
+  borderRadius: inputCssVars.value('borderRadius', '0px'),
+  padding: `${inputCssVars.value(
+    'paddingVertical',
+    '0px'
+  )} ${inputCssVars.value('paddingHorizontal', '0px')}`,
+  boxShadow: inputCssVars.value('boxShadow', 'none'),
 
-  ...(styleProps.multiline && {
+  transition: theme.transitions.create(['border-color', 'box-shadow']),
+  backgroundColor: inputCssVars.value('bgColor'),
+
+  [`&.${inputClasses.sizeSmall}`]: inputCssVars.style({
+    height: inputCssVars.value('sizeSmall')
+  }),
+  [`&.${inputClasses.sizeMiddle}`]: inputCssVars.style({
+    height: inputCssVars.value('sizeMiddle')
+  }),
+  [`&.${inputClasses.sizeLarge}`]: inputCssVars.style({
+    height: inputCssVars.value('sizeLarge')
+  }),
+
+  [`&&.${inputClasses.multiline}`]: inputCssVars.style({
     height: 'auto'
   }),
 
-  ...(!styleProps.borderless && {
-    border: 'thin solid',
-    borderColor: theme.palette.divider,
+  [`&.${inputClasses.bordered}`]: inputCssVars.style({
+    border: `1px solid ${inputCssVars.value('borderColor')}`,
     borderRadius: theme.shape.borderRadius,
-    padding: styleProps.multiline ? theme.spacing(0.5, 1) : theme.spacing(0, 1),
-
-    ...(styleProps.error && {
-      borderColor: theme.palette.error.main
-    }),
-
-    ...(!styleProps.disabled &&
-      !styleProps.disabledActiveStyle && {
-        ...(styleProps.focused && {
-          borderColor: alpha(theme.palette.primary.main, 0.9),
-          boxShadow: `0 0 0 3px ${alpha(theme.palette.primary.main, 0.18)}`
-        })
-      })
+    paddingVertical: 0,
+    paddingHorizontal: 8
   }),
 
-  ...(styleProps.readOnly && {
-    cursor: 'default'
+  [`&.${inputClasses.bordered}.${inputClasses.multiline}`]: inputCssVars.style({
+    paddingVertical: 4,
+    paddingHorizontal: 8
   }),
 
-  ...(styleProps.disabled && {
-    cursor: 'not-allowed',
-    color: theme.palette.text.disabled
-  })
+  [`&.${inputClasses.bordered}.${inputClasses.hasError}`]: inputCssVars.style({
+    borderColor: theme.palette.error.main,
+    textColor: theme.palette.error.main
+  }),
+
+  [`&.${inputClasses.bordered}.${inputClasses.focused}:not(.${inputClasses.readonly}):not(.${inputClasses.disabled})
+  `]: inputCssVars.style({
+    borderColor: alpha(theme.palette.primary.main, 0.9),
+    boxShadow: `0 0 0 3px ${alpha(theme.palette.primary.main, 0.18)}`
+  }),
+
+  [`&.${inputClasses.disabled}`]: {
+    cursor: 'not-allowed'
+  }
 }));
 
 const InputInput = styled('input', {
@@ -136,10 +154,7 @@ const InputInput = styled('input', {
   return {
     font: 'inherit',
     letterSpacing: 'inherit',
-    color: 'currentColor',
-    ...(styleProps.error && {
-      color: theme.palette.error.main
-    }),
+    color: inputCssVars.value('textColor', 'currentColor'),
     cursor: 'inherit',
     textAlign: 'inherit',
     background: 'inherit',
@@ -155,7 +170,7 @@ const InputInput = styled('input', {
     maxHeight: '100%',
     lineHeight: 'inherit',
     padding: 0,
-    top: !!styleProps.multiline ? -1 : 0,
+    top: 0,
 
     '&::-webkit-input-placeholder': placeholder,
     '&::-moz-placeholder': placeholder, // Firefox 19+
@@ -204,11 +219,12 @@ const InputInput = styled('input', {
       WebkitTextFillColor: theme.palette.text.disabled // Fix opacity Safari bug
     },
 
-    ...(styleProps.multiline && {
+    [`.${inputClasses.multiline} > &`]: {
       height: 'auto',
       resize: styleProps.resizable ? 'vertical' : 'none',
-      paddingTop: 0
-    })
+      paddingTop: 0,
+      top: -1
+    }
   };
 });
 
@@ -270,7 +286,6 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       component,
       defaultValue = '',
       disabled = false,
-      disabledActiveStyle = false,
       error = false,
       maxRows,
       minRows = 2,
@@ -322,7 +337,6 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
       ...props,
       multiline,
       disabled,
-      disabledActiveStyle: readOnly ? true : disabledActiveStyle,
       resizable,
       borderless,
       readOnly,
@@ -332,6 +346,8 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
     };
 
     const classes = useClasses(styleProps);
+
+    useInputCssVars();
 
     const action = {
       focus(option?: InputFocusOptions) {
@@ -431,7 +447,6 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
         as={component}
         className={css(className, classes.root)}
         style={style}
-        styleProps={styleProps}
         onClick={handleClick}
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -439,7 +454,7 @@ const InputBase = React.forwardRef<HTMLInputElement, InputProps>(
         onKeyUp={onKeyUp}
         onCompositionStart={onCompositionStart}
         onCompositionEnd={onCompositionEnd}
-        tabIndex={disabledActiveStyle ? -1 : tabIndex}
+        tabIndex={disabled || readOnly ? -1 : tabIndex}
       >
         {(prefix || onRenderPrefix) && (
           <InputPrefix className={classes.prefix}>

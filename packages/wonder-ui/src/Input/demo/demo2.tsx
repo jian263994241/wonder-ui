@@ -1,25 +1,59 @@
-/**
- * title: 带移除图标
- * desc: 点击清空内容
- */
-import { Input, Space } from '@wonder-ui/core';
+import * as React from 'react';
+import {
+  Button,
+  ContentBlock,
+  Input,
+  InputAction,
+  Space,
+  WhiteSpace
+} from '@wonder-ui/core';
 
 export default () => {
+  const actionRef = React.useRef<InputAction>();
+
   return (
-    <Space direction="vertical">
-      <Input placeholder="Input with clear button" allowClear />
+    <ContentBlock title="聚焦">
       <Input
-        allowClear
+        actionRef={actionRef}
         placeholder="请输入"
-        prefix={<span>￥</span>}
-        suffix={<span>RMB</span>}
+        defaultValue="聚焦额外配置属性"
       />
-      <Input
-        placeholder="Textare with clear button"
-        allowClear
-        multiline
-        minRows={3}
-      />
-    </Space>
+
+      <WhiteSpace />
+      <Space>
+        <Button
+          size="small"
+          onClick={() => {
+            actionRef.current?.focus({ cursor: 'start' });
+          }}
+        >
+          first
+        </Button>
+        <Button
+          size="small"
+          onClick={() => {
+            actionRef.current?.focus({ cursor: 'end' });
+          }}
+        >
+          last
+        </Button>
+        <Button
+          size="small"
+          onClick={() => {
+            actionRef.current?.focus({ cursor: 'all' });
+          }}
+        >
+          select all
+        </Button>
+        <Button
+          size="small"
+          onClick={() => {
+            actionRef.current?.focus({ preventScroll: true });
+          }}
+        >
+          prevent scroll
+        </Button>
+      </Space>
+    </ContentBlock>
   );
 };

@@ -11,7 +11,7 @@ group:
 
 # InputNumber 数字输入框
 
-通过鼠标或键盘，输入范围内的数值。
+数字输入框
 
 ## 代码演示
 
@@ -19,25 +19,10 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-### 格式化展示
+### 自定义
 
 <code src="./demo/demo2.tsx"></code>
 
-### 高精度小数
-
-<code src="./demo/demo3.tsx"></code>
-
-### 键盘行为
-
-<code src="./demo/demo4.tsx"></code>
-
-### 超出边界
-
-<code src="./demo/demo5.tsx"></code>
-
-### 实现一个进步器
-
-<code src="./demo/demo6.tsx"></code>
 
 ## 类型
 
@@ -51,7 +36,7 @@ interface InputNumberAction {
 }
 ```
 
-<API src="./InputNumber.tsx" props="actionRef|borderless|decimalSeparator|disableStepHandler|defaultValue|disabled|formatter|keyboard|max|min|parser|precision|readOnly|step|stringMode|value|onChange|onPressEnter|onStep"></API>
+<API src="./InputNumber.tsx" ></API>
 
 
 

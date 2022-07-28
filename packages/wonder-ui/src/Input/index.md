@@ -1,4 +1,5 @@
 ---
+hide: true
 mobile: false
 toc: menu
 nav:
@@ -11,46 +12,16 @@ group:
 
 # Input 输入框
 
-基本的文字输入框
+文字输入框
 
 ## 代码演示
 
-### 基本使用
 
 <code src="./demo/demo1.tsx"></code>
 
-### 尺寸
-
-<code src="./demo/demo10.tsx"></code>
-
-### 带移除图标
 
 <code src="./demo/demo2.tsx"></code>
 
-### 前缀和后缀
-
-<code src="./demo/demo3.tsx"></code>
-
-### 无边框输入框
-
-<code src="./demo/demo4.tsx"></code>
-
-### 限制输入长度
-
-<code src="./demo/demo5.tsx"></code>
-
-### 多行输入
-
-<code src="./demo/demo6.tsx"></code>
-
-
-### 聚焦
-
-<code src="./demo/demo8.tsx"></code>
-
-### 密码框
-
-<code src="./demo/demo9.tsx"></code>
 
 ## 类型
 
@@ -72,8 +43,14 @@ export interface InputAction {
 
 <API src="./InputBase.tsx"></API>
 
+## CSS 变量
 
-
-
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-input-bg-color | 背景色 | #fff
+| --wui-input-border-color | 边框颜色 | rgba(0, 0, 0, 0.12)
+| --wui-input-size-middle | 预设尺寸 | 2rem
+| --wui-input-size-small | 预设尺寸 | 1.5rem
+| --wui-input-size-large | 预设尺寸 | 2.5rem
 
 
