@@ -148,7 +148,7 @@ const Toggle = React.forwardRef<HTMLElement, ToggleProps>((inProps, ref) => {
     const checkedValue = e.target.checked;
 
     setChecked(checkedValue);
-    onChange?.(e);
+    onChange?.(checkedValue);
   });
 
   const styleProps = { ...props, color, disabled, checked };

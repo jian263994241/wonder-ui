@@ -33,5 +33,5 @@ export interface ToggleProps {
   /**
    * 变化时回调函数
    */
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: (checked: boolean) => void;
 }
