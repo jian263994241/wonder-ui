@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Button from '../Button';
 import ButtonBase from '../ButtonBase';
-import Col from '../Col';
 import Container from '../Container';
 import KeyboardModal, { KeyboardModalAction } from './KeyboardModal';
 import Navbar from '../Navbar';
-import Row from '../Row';
+import SafeArea from '../SafeArea/SafeArea';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import {
@@ -15,13 +14,14 @@ import {
   generateUtilityClasses,
   globalClasses
 } from '@wonder-ui/utils';
+import { Grid, GridItem } from '../Grid/Grid';
+import { IconCollapse, IconDelete } from './icons';
 import { useCreation, useForkRef } from '@wonder-ui/hooks';
 import type {
   NumberKeyboardProps,
   KeyConfig,
   NumberKeyboardClasses
 } from './NumberKeyboardTypes';
-import { IconDelete, IconCollapse } from './icons';
 
 const COMPONENT_NAME = 'WuiNumberKeyboard';
 
@@ -66,7 +66,7 @@ const NumberKeyboardRoot = styled('div', {
 })(({ theme }) => ({
   pointerEvents: 'auto',
   backgroundColor: theme.palette.background.default,
-  paddingBottom: `calc(${theme.spacing(2)}px + env(safe-area-inset-bottom))`,
+  paddingBottom: theme.spacing(2),
   boxSizing: 'border-box'
 }));
 
@@ -86,7 +86,7 @@ const NumberKeyboardBody = styled(Container, {
   }
 }));
 
-const NumberKeyboardSlidebar = styled(Row, {
+const NumberKeyboardSlidebar = styled(Grid, {
   name: COMPONENT_NAME,
   slot: 'Slidebar'
 })(({ theme }) => ({
@@ -94,14 +94,14 @@ const NumberKeyboardSlidebar = styled(Row, {
   paddingLeft: theme.spacing(1)
 }));
 
-const NumberKeyboardKeys = styled(Row, {
+const NumberKeyboardKeys = styled(Grid, {
   name: COMPONENT_NAME,
   slot: 'Keys'
 })({
   flex: 3
 });
 
-const NumberKeyboardKeyWrapper = styled(Col, {
+const NumberKeyboardKeyWrapper = styled(GridItem, {
   name: COMPONENT_NAME,
   slot: 'KeyWapper'
 })({});
@@ -295,7 +295,7 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
           <NumberKeyboardKeyWrapper
             className={classes.keyWrapper}
             key={index}
-            col={col as any}
+            span={1}
           >
             {content !== undefined && content !== '' && (
               <NumberKeyboardButton
@@ -319,8 +319,8 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
         return (
           <NumberKeyboardSlidebar
             className={classes.slidebar}
-            rowCols={1}
-            gutter={[1, 1]}
+            columns={1}
+            gap={8}
           >
             {showDeleteKey && (
               <NumberKeyboardKeyWrapper className={classes.keyWrapper}>
@@ -409,11 +409,12 @@ const NumberKeyboard = React.forwardRef<HTMLDivElement, NumberKeyboardProps>(
       >
         {renderHeader()}
         <NumberKeyboardBody className={classes.body} size="sm">
-          <NumberKeyboardKeys className={classes.keys} gutter={[1, 1]}>
+          <NumberKeyboardKeys className={classes.keys} columns={3} gap={8}>
             {renderKeys()}
           </NumberKeyboardKeys>
           {renderSidebar()}
         </NumberKeyboardBody>
+        <SafeArea position="bottom" />
       </NumberKeyboardRoot>
     );
 

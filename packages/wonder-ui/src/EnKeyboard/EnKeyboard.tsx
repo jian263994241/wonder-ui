@@ -5,6 +5,7 @@ import KeyboardModal, {
   KeyboardModalAction
 } from '../NumberKeyboard/KeyboardModal';
 import Navbar from '../Navbar';
+import SafeArea from '../SafeArea/SafeArea';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import {
@@ -69,7 +70,7 @@ const EnKeyboardRoot = styled('div', {
   pointerEvents: 'auto',
   boxSizing: 'border-box',
   backgroundColor: theme.palette.background.default,
-  paddingBottom: `calc(${theme.spacing(2)}px + env(safe-area-inset-bottom))`
+  paddingBottom: theme.spacing(2)
 }));
 
 const NumberKeyboardHeader = styled(Navbar, {
@@ -387,6 +388,7 @@ const EnKeyboard = React.forwardRef<HTMLDivElement, EnKeyboardProps>(
       >
         {renderHeader()}
         {state.numberPad ? renderNumberPad() : renderEnPad()}
+        <SafeArea position="bottom" />
       </EnKeyboardRoot>
     );
 
