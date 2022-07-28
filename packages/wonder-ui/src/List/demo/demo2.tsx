@@ -18,7 +18,7 @@ export default () => {
         Item 3
       </ListItem>
 
-      <Collapse in={visible} component={ListItem}>
+      <Collapse in={visible} component={ListItem} style={{ minHeight: 'auto' }}>
         <List>
           <ListItem>Nested Item 1</ListItem>
           <ListItem>NestedItem 2</ListItem>

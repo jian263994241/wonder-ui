@@ -40,8 +40,6 @@ export interface ListItemTextProps
    * @default false
    */
   disableTypography?: boolean;
-
-  ref?: React.Ref<any>;
 }
 
 const ListItemTextRoot = styled('div', {
@@ -77,7 +75,7 @@ const ListItemText = forwardRef<HTMLElement, ListItemTextProps>(
     if (primary != null && primary.type !== Typography && !disableTypography) {
       primary = (
         <Typography
-          variant="body1"
+          variant="subtitle1"
           className={classes.textPrimary}
           component="div"
           color="textPrimary"
@@ -95,7 +93,7 @@ const ListItemText = forwardRef<HTMLElement, ListItemTextProps>(
     ) {
       secondary = (
         <Typography
-          variant="body2"
+          variant="subtitle2"
           component="div"
           className={classes.textSecondary}
           color="textSecondary"

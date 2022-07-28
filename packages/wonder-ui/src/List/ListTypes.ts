@@ -1,8 +1,6 @@
 import React from 'react';
 import type { ListClassesType } from './ListClasses';
 
-export type ListMode = 'list' | 'card';
-
 export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {
   component?: React.ElementType;
   classes?: Partial<ListClassesType>;
@@ -16,9 +14,9 @@ export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {
   disableRipple?: boolean;
   /**
    * 卡片样式
-   * @default list
+   * @default false
    */
-  mode?: ListMode;
+  card?: boolean;
 }
 
 export interface ListStyleProps extends ListProps {}
@@ -26,5 +24,5 @@ export interface ListStyleProps extends ListProps {}
 export interface ContextValue {
   disabled?: boolean;
   disableRipple?: boolean;
-  mode?: ListMode;
+  card?: boolean;
 }

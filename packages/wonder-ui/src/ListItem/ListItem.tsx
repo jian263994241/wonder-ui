@@ -1,14 +1,14 @@
 import * as React from 'react';
 import ArrowForward from '../ArrowForward';
 import ButtonBase from '../ButtonBase';
-import ListItemText from '../ListItemText';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
-import { alpha } from '../styles/colorManipulator';
 import { COMPONENT_NAME, listItemClasses } from './ListItemClasses';
 import { composeClasses, css, forwardRef } from '@wonder-ui/utils';
-import { cssVars } from '../List/List';
+import { listCssVars } from '../List/ListClasses';
 import { listHeaderClasses } from '../ListHeader/ListHeaderClasses';
+import { svgIconCssVars } from '../SvgIcon/SvgIconClasses';
 import { useListContext } from '../List/ListContext';
 import { whiteSpaceClasses } from '../WhiteSpace/WhiteSpaceClasses';
 import type { ListItemProps, ListItemStyleProps } from './ListItemTypes';
@@ -36,24 +36,20 @@ const ListItemRoot = styled('div', {
 })<{ styleProps: ListItemStyleProps }>(({ theme, hidden, styleProps }) => ({
   display: hidden ? 'none' : 'block',
   position: 'relative',
-  backgroundColor: cssVars.value('background'),
-  paddingLeft: cssVars.value('paddingLeft'),
+  backgroundColor: listCssVars.value('bgColor'),
+  paddingLeft: listCssVars.value('paddingHorizontal'),
+  minHeight: 44,
 
-  ...(styleProps.mode === 'card' && {
-    // borderTopLeftRadius: cssVars.value('borderRadius'),
-    // borderTopRightRadius: cssVars.value('borderRadius'),
-    // borderBottomLeftRadius: cssVars.value('borderRadius'),
-    // borderBottomRightRadius: cssVars.value('borderRadius'),
-
+  ...(styleProps.card && {
     [`&:first-of-type, .${listHeaderClasses.root} + &, .${whiteSpaceClasses.root} + &`]:
       {
-        borderTopLeftRadius: cssVars.value('borderRadius'),
-        borderTopRightRadius: cssVars.value('borderRadius')
+        borderTopLeftRadius: listCssVars.value('cardBorderRadius'),
+        borderTopRightRadius: listCssVars.value('cardBorderRadius')
       },
 
     [`&:last-of-type`]: {
-      borderBottomLeftRadius: cssVars.value('borderRadius'),
-      borderBottomRightRadius: cssVars.value('borderRadius')
+      borderBottomLeftRadius: listCssVars.value('cardBorderRadius'),
+      borderBottomRightRadius: listCssVars.value('cardBorderRadius')
     }
   }),
 
@@ -67,14 +63,14 @@ const ListItemRoot = styled('div', {
   }
 }));
 
-const ListItemContent = styled('div', {
+const ListItemContent = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Content'
 })({
   display: 'flex',
-  alignItems: cssVars.value('alignItems'),
-  paddingRight: cssVars.value('paddingRight'),
-  borderTop: cssVars.value('divider'),
+  alignItems: listCssVars.value('alignItems'),
+  paddingRight: listCssVars.value('paddingHorizontal'),
+  borderTop: listCssVars.value('divider'),
 
   [`.${listItemClasses.root}:first-of-type > &
     , .${listHeaderClasses.root} + .${listItemClasses.root} > &
@@ -89,8 +85,9 @@ const ListItemBody = styled('div', {
   slot: 'Body'
 })({
   flex: 'auto',
-  paddingTop: cssVars.value('paddingTop'),
-  paddingBottom: cssVars.value('paddingBottom')
+  alignSelf: 'flex-start',
+  paddingTop: listCssVars.value('paddingVertical'),
+  paddingBottom: listCssVars.value('paddingVertical')
 });
 
 const ListItemPrefix = styled('div', {
@@ -98,8 +95,8 @@ const ListItemPrefix = styled('div', {
   slot: 'Prefix'
 })({
   flex: 'none',
-  paddingRight: cssVars.value('prefixPaddingRight'),
-  width: cssVars.value('prefixWidth')
+  paddingRight: listCssVars.value('prefixPaddingRight'),
+  width: listCssVars.value('prefixWidth')
 });
 
 const ListItemExtra = styled('div', {
@@ -108,22 +105,24 @@ const ListItemExtra = styled('div', {
 })(({ theme }) => ({
   color: theme.palette.text.secondary,
   flex: 'none',
-  paddingLeft: cssVars.value('extraPaddingLeft'),
-  maxWidth: cssVars.value('extraMaxWidth'),
-  paddingTop: cssVars.value('paddingTop'),
-  paddingBottom: cssVars.value('paddingBottom')
+  paddingLeft: listCssVars.value('extraPaddingLeft'),
+  maxWidth: listCssVars.value('extraMaxWidth'),
+  paddingTop: listCssVars.value('paddingVertical'),
+  paddingBottom: listCssVars.value('paddingVertical')
 }));
 
 const ListItemArrow = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Arrow'
 })(({ theme }) => ({
-  fontSize: theme.typography.pxToRem(19),
-  color: alpha(theme.palette.text.secondary, 0.3),
   flex: 'none',
   marginLeft: 4,
-  paddingTop: cssVars.value('paddingTop'),
-  paddingBottom: cssVars.value('paddingBottom')
+  paddingTop: listCssVars.value('paddingVertical'),
+  paddingBottom: listCssVars.value('paddingVertical'),
+  ...svgIconCssVars.style({
+    color: theme.palette.text.icon,
+    size: 19
+  })
 }));
 
 const direction = {
@@ -156,7 +155,7 @@ const ListItem = forwardRef<HTMLElement, ListItemProps>((inProps, ref) => {
     ...props,
     disabled,
     selected,
-    mode: context?.mode
+    card: context?.card
   };
 
   const classes = useClasses(styleProps);
@@ -200,20 +199,28 @@ const ListItem = forwardRef<HTMLElement, ListItemProps>((inProps, ref) => {
       styleProps={styleProps}
       {...rootProps}
     >
-      <ListItemContent className={classes.content}>
+      <ListItemContent className={classes.content} variant="subtitle1">
         {prefix && (
           <ListItemPrefix className={classes.prefix}>{prefix}</ListItemPrefix>
         )}
         <ListItemBody className={classes.body}>
-          {(primary || secondary) && (
-            <ListItemText
-              primary={primary}
-              secondary={secondary}
-              classes={{
-                textPrimary: classes.textPrimary,
-                textSecondary: classes.textSecondary
-              }}
-            />
+          {primary && (
+            <Typography
+              variant="subtitle1"
+              className={classes.textPrimary}
+              color="textPrimary"
+            >
+              {primary}
+            </Typography>
+          )}
+          {secondary && (
+            <Typography
+              variant="body1"
+              className={classes.textSecondary}
+              color="textSecondary"
+            >
+              {secondary}
+            </Typography>
           )}
           {children}
         </ListItemBody>

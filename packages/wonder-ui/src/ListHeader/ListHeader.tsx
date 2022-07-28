@@ -8,11 +8,14 @@ import {
   useClasses
 } from './ListHeaderClasses';
 import { css } from '@wonder-ui/utils';
-import { cssVars } from '../List/List';
+import { listCssVars } from '../List/ListClasses';
 
-export interface ListHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ListHeaderProps {
+  className?: string;
   classes?: Partial<typeof listHeaderClasses>;
+  children?: React.ReactNode;
   component?: React.ElementType;
+  style?: React.CSSProperties;
   /**
    * 设置position: sticky
    */
@@ -26,9 +29,9 @@ const ListHeaderRoot = styled(Typography, {
   {
     paddingTop: 8,
     paddingBlock: 8,
-    paddingLeft: cssVars.value('paddingLeft'),
-    paddingRight: cssVars.value('paddingRight'),
-    backgroundColor: cssVars.value('titleBackground')
+    paddingLeft: listCssVars.value('paddingHorizontal'),
+    paddingRight: listCssVars.value('paddingHorizontal'),
+    backgroundColor: listCssVars.value('titleBgColor')
   },
 
   `
@@ -53,11 +56,11 @@ const ListHeader = React.forwardRef<HTMLDivElement, ListHeaderProps>(
     return (
       <ListHeaderRoot
         className={css(classes.root, className)}
-        as={component}
+        component={component}
         ref={ref}
-        {...rest}
         variant="subtitle2"
         color="textSecondary"
+        {...rest}
       >
         {children}
       </ListHeaderRoot>

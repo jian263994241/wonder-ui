@@ -69,17 +69,20 @@ group:
 
 <API src="../ListItem/ListItem.tsx" hideTitle></API>
 
-## CSS Variables
+## CSS 变量
 
-```css
---wui-list-padding-left: 12px;
---wui-list-padding-right: 12px;
---wui-list-padding-top: 10px;
---wui-list-padding-bottom: 10px;
---wui-list-extra-max-width: 70%;
---wui-list-align-items: center;
---wui-list-divider: thin solid rgba(0, 0, 0, 0.12);
---wui-list-border-radius: 8px;
---wui-list-background: #fff;
---wui-list-title-background: #f7f7fa;
-```
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-list-align-items | 垂直对齐 | center
+| --wui-list-bg-color | 背景色 | `theme.palette.background.paper`
+| --wui-list-card-border-radius | card 圆角 | `theme.shape.borderRadius * 2`
+| --wui-list-card-margin-horizontal | card 外边距 | `theme.spacing(2)`
+| --wui-list-divider | 分割线 | `thin solid ${theme.palette.divider}`
+| --wui-list-extra-max-width | extra宽度限制 | 70%
+| --wui-list-extra-padding-left | extra内边距 | `theme.spacing(1.5)`
+| --wui-list-padding-horizontal | 内边距 | `theme.spacing(1.5)`
+| --wui-list-padding-vertical | 垂直内边距 | `theme.spacing(1.5)`
+| --wui-list-prefix-padding-right | prefix边距 | `theme.spacing(1.5)`
+| --wui-list-prefix-width | preifx 宽度 | auto
+| --wui-list-title-bg-color | 标题背景 | `theme.palette.background.default`
+

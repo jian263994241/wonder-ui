@@ -6,7 +6,7 @@ import styled from '../styles/styled';
 import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { listItemClasses } from '../ListItem/ListItemClasses';
-import { cssVars } from '../List/List';
+import { listCssVars } from '../List/ListClasses';
 import {
   composeClasses,
   css,
@@ -129,7 +129,7 @@ const ListInputItemRoot = styled(ListItem, {
   name: COMPONENT_NAME,
   slot: 'Root'
 })({
-  ...cssVars.style({
+  ...listCssVars.style({
     alignItems: 'stretch',
     prefixWidth: '5.8em'
   }),

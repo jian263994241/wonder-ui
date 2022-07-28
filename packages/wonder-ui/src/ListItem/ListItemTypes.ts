@@ -1,6 +1,5 @@
 import React from 'react';
 import type { ListItemClassesType } from './ListItemClasses';
-import type { ListMode } from '../List/ListTypes';
 
 export type ArrowDirection = 'horizontal' | 'vertical' | 'vertical-up';
 
@@ -53,5 +52,5 @@ export interface ListItemProps
 }
 
 export interface ListItemStyleProps extends ListItemProps {
-  mode?: ListMode;
+  card?: boolean;
 }
