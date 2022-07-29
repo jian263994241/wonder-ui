@@ -10,34 +10,20 @@ group:
 ---
 # Badge 徽章
 
-小尺寸的标签
+在右上角展示数字、文字、小红点。
 
 ## 代码演示
 
-### 和文字一起使用
-
 <code src="./demo/demo1.tsx"></code>
-
-### 和按钮一起使用
-
-<code src="./demo/demo2.tsx"></code>
-
-### 背景颜色
-
-通过改变 `color` 徽记背景
-
-<code src="./demo/demo3.tsx"></code>
-
-### 圆角徽章
-
-设置 `rounded=true`
-
-<code src="./demo/demo4.tsx"></code>
-
-### 角标
-
-<code src="./demo/demo5.tsx"></code>
 
 
 <API src="./Badge.tsx"></API>
 
+## CSS 变量
+
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-badge-font-size | 文字大小 | 9px
+| --wui-badge-dot-size | 红点大小 | 10px
+| --wui-badge-color | 颜色 | #ff3141
+| --wui-badge-text-color | 文字颜色 | #fff

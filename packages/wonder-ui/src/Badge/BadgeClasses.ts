@@ -1,24 +1,33 @@
-import {
-  capitalize,
-  composeClasses,
-  generateUtilityClasses
-} from '@wonder-ui/utils';
+import useRootCssVars from '../styles/useRootCssVars';
+import { createCssVars, generateUtilityClasses } from '@wonder-ui/utils';
 
-export const badgeClasses = generateUtilityClasses('WuiBadge', [
+export const COMPONENT_NAME = 'WuiBadge';
+
+export const badgeClasses = generateUtilityClasses(COMPONENT_NAME, [
   'root',
   'content',
-  'rounded',
-  'withChildren',
-  'colorPrimary',
-  'colorSecondary',
-  'colorSuccess',
-  'colorError',
-  'colorDanger',
-  'colorWarning',
-  'colorInfo',
-  'colorLight',
-  'colorDark'
+  'dot'
 ]);
+
+export const badgeCssVars = createCssVars(COMPONENT_NAME, [
+  'fontSize',
+  'dotSize',
+  'color',
+  'textColor',
+  'borderColor',
+  'borderWidth'
+]);
+
+export const useBadgeCssVars = () => {
+  useRootCssVars((theme) =>
+    badgeCssVars.style({
+      fontSize: 9,
+      dotSize: 10,
+      color: theme.palette.danger.main,
+      textColor: theme.palette.common.white
+    })
+  );
+};
 
 export type BadgeClasses = typeof badgeClasses;
 
@@ -36,19 +45,3 @@ export interface BadgeStyleProps {
     | 'dark';
   rounded?: boolean;
 }
-
-export const useClasses = (styleProps: BadgeStyleProps) => {
-  const { classes, color, children, rounded } = styleProps;
-
-  const slots = {
-    root: [
-      'root',
-      rounded && 'rounded',
-      color && `color${capitalize(color)}`,
-      !!children && 'withChildren'
-    ],
-    content: ['content']
-  };
-
-  return composeClasses('WuiBadge', slots, classes);
-};
