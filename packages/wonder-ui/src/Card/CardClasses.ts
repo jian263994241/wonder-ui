@@ -17,8 +17,11 @@ export const cardCssVars = createCssVars(COMPONENT_NAME, [
   'titleFontWeight',
   'paddingHorizontal',
   'headerPaddingVertical',
+  'headerPaddingHorizontal',
   'bodyPaddingVertical',
+  'bodyPaddingHorizontal',
   'footerPaddingVertical',
+  'footerPaddingHorizontal',
   'dividerColor'
 ]);
 

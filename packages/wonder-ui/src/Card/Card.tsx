@@ -25,7 +25,7 @@ const CardRoot = styled(Typography, {
   slot: 'Root'
 })({
   backgroundColor: cardCssVars.value('bgColor'),
-  borderRadius: 8
+  borderRadius: cardCssVars.value('borderRadius', '8px')
 });
 
 const CardHeader = styled('div', {
@@ -38,7 +38,8 @@ const CardHeader = styled('div', {
   alignItems: 'center',
   boxSizing: 'border-box',
   padding: `${cardCssVars.value('headerPaddingVertical')} ${cardCssVars.value(
-    'paddingHorizontal'
+    'headerPaddingHorizontal',
+    cardCssVars.value('paddingHorizontal')
   )}`,
   '&:not(:last-of-type)': {
     borderBottom: `thin solid ${cardCssVars.value('dividerColor')}`
@@ -61,7 +62,8 @@ const CardBody = styled('div', {
   slot: 'Body'
 })({
   padding: `${cardCssVars.value('bodyPaddingVertical')} ${cardCssVars.value(
-    'paddingHorizontal'
+    'bodyPaddingHorizontal',
+    cardCssVars.value('paddingHorizontal')
   )}`,
   fontSize: typographyCssVars.value('body2'),
   '&:not(:last-of-type)': {
@@ -74,7 +76,8 @@ const CardFooter = styled('div', {
   slot: 'Footer'
 })({
   padding: `${cardCssVars.value('footerPaddingVertical')} ${cardCssVars.value(
-    'paddingHorizontal'
+    'footerPaddingHorizontal',
+    cardCssVars.value('paddingHorizontal')
   )}`
 });
 
