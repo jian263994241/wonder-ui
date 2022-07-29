@@ -2,8 +2,9 @@ import * as React from 'react';
 import styled from '../styles/styled';
 import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
-import { COMPONENT_NAME } from './CardClasses';
+import { cardCssVars, COMPONENT_NAME, useCardCssVars } from './CardClasses';
 import { composeClasses, css } from '@wonder-ui/utils';
+import { typographyCssVars } from '../Typography/TypographyClasses';
 import type { CardProps } from './CardTypes';
 
 const useClasses = (props: CardProps) => {
@@ -19,41 +20,63 @@ const useClasses = (props: CardProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const CardRoot = styled('div', {
+const CardRoot = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Root'
-})(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
-  borderRadius: 8,
-  padding: theme.spacing(0, 1.5)
-}));
+})({
+  backgroundColor: cardCssVars.value('bgColor'),
+  borderRadius: 8
+});
 
 const CardHeader = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Header'
-})(({ theme }) => ({
+})({
   position: 'relative',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   boxSizing: 'border-box',
-  padding: theme.spacing(1.5, 0),
-  '&:not(:last-child)': {
-    borderBottom: `thin solid var(--card--border-color, ${theme.palette.divider})`
+  padding: `${cardCssVars.value('headerPaddingVertical')} ${cardCssVars.value(
+    'paddingHorizontal'
+  )}`,
+  '&:not(:last-of-type)': {
+    borderBottom: `thin solid ${cardCssVars.value('dividerColor')}`
   }
-}));
+});
 
 const CardTitle = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Title'
-})({});
+})({
+  fontWeight: cardCssVars.value('titleFontWeight', 500),
+  fontSize: cardCssVars.value(
+    'titleFontSize',
+    typographyCssVars.value('subtitle2')
+  )
+});
 
-const CardBody = styled(Typography, {
+const CardBody = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Body'
-})(({ theme }) => ({
-  padding: theme.spacing(1.5, 0)
-}));
+})({
+  padding: `${cardCssVars.value('bodyPaddingVertical')} ${cardCssVars.value(
+    'paddingHorizontal'
+  )}`,
+  fontSize: typographyCssVars.value('body2'),
+  '&:not(:last-of-type)': {
+    borderBottom: `thin solid ${cardCssVars.value('dividerColor')}`
+  }
+});
+
+const CardFooter = styled('div', {
+  name: COMPONENT_NAME,
+  slot: 'Footer'
+})({
+  padding: `${cardCssVars.value('footerPaddingVertical')} ${cardCssVars.value(
+    'paddingHorizontal'
+  )}`
+});
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });
@@ -62,32 +85,36 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>((inProps, ref) => {
     extra,
     children,
     className,
+    footer,
     onHeaderClick,
     onBodyClick,
+    onFooterClick,
     ...rest
   } = props;
 
   const classes = useClasses(props);
 
+  useCardCssVars();
+
   return (
-    <CardRoot ref={ref} className={css(classes.root, className)} {...rest}>
+    <CardRoot
+      ref={ref}
+      className={css(classes.root, className)}
+      variant="body1"
+      {...rest}
+    >
       {(title || extra) && (
         <CardHeader className={classes.header} onClick={onHeaderClick}>
-          <CardTitle className={classes.title} variant="subtitle1">
-            {title}
-          </CardTitle>
+          <CardTitle className={classes.title}>{title}</CardTitle>
           {extra}
         </CardHeader>
       )}
       {children && (
-        <CardBody
-          className={classes.body}
-          onClick={onBodyClick}
-          variant="body1"
-        >
+        <CardBody className={classes.body} onClick={onBodyClick}>
           {children}
         </CardBody>
       )}
+      {footer && <CardFooter onClick={onFooterClick}>{footer}</CardFooter>}
     </CardRoot>
   );
 });

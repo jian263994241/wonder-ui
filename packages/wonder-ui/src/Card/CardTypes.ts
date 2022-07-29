@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { cardClasses } from './CardClasses';
+import type { CardClasses } from './CardClasses';
 
-export type CardClasses = typeof cardClasses;
-
-export interface CardProps
-  extends Omit<React.HtmlHTMLAttributes<HTMLDivElement>, 'title'> {
+export interface CardProps {
+  className?: string;
   classes?: Partial<CardClasses>;
+  style?: React.CSSProperties;
   /**
    * 标题
    */
@@ -19,11 +18,19 @@ export interface CardProps
    */
   children?: React.ReactNode;
   /**
+   * 底部
+   */
+  footer?: React.ReactNode;
+  /**
    * 点击body
    */
-  onBodyClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  onBodyClick?: React.EventHandler<React.MouseEvent>;
   /**
    * 点击header
    */
-  onHeaderClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  onHeaderClick?: React.EventHandler<React.MouseEvent>;
+  /**
+   * 点击底部
+   */
+  onFooterClick?: React.EventHandler<React.MouseEvent>;
 }
