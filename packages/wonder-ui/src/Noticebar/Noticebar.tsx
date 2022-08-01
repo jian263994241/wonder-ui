@@ -1,50 +1,41 @@
-import * as React from 'react';
-import ArrowForward from '../ArrowForward';
-import CloseButton from '../CloseButton';
+import DefaultIcon from './DefaultIcon';
 import Fade from '../Fade';
 import IconButton from '../IconButton';
+import React from 'react';
 import Space from '../Space';
 import styled from '../styles/styled';
 import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
+import XIcon from '../icons/X';
+import { alpha } from '../styles/colorManipulator';
+import { buttonCssVars } from '../Button';
 import {
   capitalize,
   composeClasses,
   css,
   doubleRaf,
-  generateUtilityClasses,
   getRect,
   raf
 } from '@wonder-ui/utils';
-import { darken, lighten } from '../styles/colorManipulator';
+import {
+  COMPONENT_NAME,
+  noticebarCssVars,
+  useNoticebarCssVars
+} from './NoticebarClasses';
+import { iconButtonCssVars } from '../IconButton';
+import { svgIconCssVars } from '../SvgIcon/SvgIconClasses';
 import { swipeClasses } from '../Swipe/SwipeClasses';
 import { swipeItemClasses } from '../SwipeItem/SwipeItemClasses';
+import { typographyCssVars } from '../Typography/TypographyClasses';
 import { useEventCallback, useReactive, useWindowSize } from '@wonder-ui/hooks';
-
-const COMPONENT_NAME = 'Noticebar';
-
-export const noticebarClasses = generateUtilityClasses(COMPONENT_NAME, [
-  'root',
-  'textWrap',
-  'text',
-  'textAfter',
-  'icon',
-  'close',
-  'closable',
-  'link',
-  'scrollable',
-  'typeInfo',
-  'typeWarning',
-  'wrap'
-]);
+import type { NoticebarProps } from './NoticebarTypes';
 
 const useClasses = (styleProps: NoticebarProps) => {
-  const { classes, scrollable, type, wrap, mode } = styleProps;
+  const { classes, type, wrap, closeable } = styleProps;
   const slots = {
     root: [
       'root',
-      mode && mode,
-      scrollable && 'scrollable',
+      closeable && 'closeable',
       type && `type${capitalize(type)}`,
       wrap && 'wrap'
     ],
@@ -52,100 +43,44 @@ const useClasses = (styleProps: NoticebarProps) => {
     textWrap: ['textWrap'],
     text: ['text'],
     close: ['close'],
-    textAfter: ['textAfter']
+    extra: ['extra']
   };
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-export interface NoticebarProps {
-  /**
-   * 自定义文字后面的内容
-   */
-  textAfter?: React.ReactNode;
-  /**
-   * 类名
-   */
-  className?: string;
-
-  children?: React.ReactNode;
-  /**
-   * 样式
-   */
-  style?: React.CSSProperties;
-  /**
-   * Css api
-   */
-  classes?: Partial<typeof noticebarClasses>;
-  /**
-   * 通知栏模式, 可选值为: 可关闭的或链接
-   */
-  mode?: 'closeable' | 'link';
-  /**
-   * 通知文本内容
-   */
-  text?: React.ReactNode;
-  /**
-   * 图标
-   */
-  icon?: React.ReactNode;
-  /**
-   * 动画延迟时间 (s)
-   */
-  delay?: number;
-  /**
-   * 滚动速率 (px/s)
-   * @default 60
-   */
-  speed?: number;
-  /**
-   * 关闭通知栏时触发
-   */
-  onClose?(event: React.MouseEvent): void;
-  /**
-   * 点击通知栏时触发
-   */
-  onClick?(event: React.MouseEvent): void;
-  /**
-   * 每当滚动栏重新开始滚动时触发
-   */
-  onReplay?(): void;
-  /**
-   * 滚动
-   * @default true
-   */
-  scrollable?: boolean;
-  /**
-   * 类型
-   * @default warning
-   */
-  type?: 'info' | 'warning';
-  /**
-   * 换行
-   */
-  wrap?: boolean;
-}
-
-const NoticebarRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
+const NoticebarRoot = styled(Typography, {
+  name: COMPONENT_NAME,
+  slot: 'Root'
+})<{
   styleProps: NoticebarProps;
-}>(({ theme, styleProps }) => {
-  const color = theme.palette[styleProps.type || 'warning'].main;
-  const backgroundColor = lighten(color, 0.9);
-  const textColor = darken(color, 0.2);
-
+}>(({ styleProps }) => {
   return {
     margin: 0,
     boxSizing: 'border-box',
     width: '100%',
-    height: 40,
-    padding: theme.spacing(0, 2),
-    color: textColor,
-    backgroundColor,
+    height: noticebarCssVars.value('height'),
+    padding: `${noticebarCssVars.value(
+      'paddignVertical'
+    )} ${noticebarCssVars.value('paddingHorizontal')}`,
+    color: noticebarCssVars.value('textColor'),
+    backgroundColor: noticebarCssVars.value('bgColor'),
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    border: `1px solid ${noticebarCssVars.value('borderColor')}`,
+    borderLeft: 'none',
+    borderRight: 'none',
 
     ...(styleProps.wrap && {
-      height: 'auto',
-      padding: theme.spacing(1, 2)
+      height: 'auto'
+    }),
+
+    ...typographyCssVars.style({
+      lineHeight: '1.5'
+    }),
+
+    ...svgIconCssVars.style({
+      size: 18
     }),
 
     [`& .${swipeClasses.root}`]: {
@@ -159,14 +94,17 @@ const NoticebarRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
   };
 });
 
-const NoticebarIcon = styled('span', {
+const NoticebarIcon = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Icon'
 })(({ theme }) => ({
   marginRight: theme.spacing(1),
   flexShrink: 0,
-  display: 'flex',
-  fontSize: theme.typography.pxToRem(16)
+  alignSelf: 'self-start',
+
+  '& > svg': {
+    verticalAlign: 'middle'
+  }
 }));
 
 const NoticebarTextWrap = styled('div', {
@@ -181,7 +119,7 @@ const NoticebarTextWrap = styled('div', {
   overflow: 'hidden'
 });
 
-const NoticebarText = styled(Typography, {
+const NoticebarText = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Text'
 })<{
@@ -189,33 +127,32 @@ const NoticebarText = styled(Typography, {
 }>(({ styleProps }) => ({
   transitionTimingFunction: 'linear',
 
-  ...(!styleProps.scrollable &&
-    !styleProps.wrap && {
-      maxWidth: '100%'
-    }),
   ...(styleProps.wrap
     ? {
-        position: 'relative',
-        whiteSpace: 'normal',
-        wordWrap: 'break-word'
+        position: 'relative'
       }
     : {
         position: 'absolute',
         whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis'
+        maxWidth: 'auto'
       })
 }));
 
-const NoticebarTextAfter = styled(Space, {
+const NoticebarExtra = styled(Space, {
   name: COMPONENT_NAME,
-  slot: 'TextAfter'
-})(({ theme }) => ({
-  cursor: 'pointer',
-  display: 'flex',
-  fontSize: theme.typography.pxToRem(16),
-  marginRight: -theme.spacing(2)
-}));
+  slot: 'Extra'
+})({
+  ...iconButtonCssVars.style({
+    edge: noticebarCssVars.value('paddingHorizontal'),
+    color: noticebarCssVars.value('textColor')
+  }),
+
+  ...buttonCssVars.style({
+    edge: noticebarCssVars.value('paddingHorizontal'),
+    color: noticebarCssVars.value('textColor'),
+    minWidth: 'auto'
+  })
+});
 
 const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
   (inProps, ref) => {
@@ -225,17 +162,17 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
       children,
       type = 'warning',
       wrap = false,
-      scrollable = !wrap,
       onClose,
       onClick,
       onReplay,
       style,
-      icon,
+      icon = <DefaultIcon />,
       text,
-      mode,
+      closeable = false,
       speed = 60,
       delay = 1,
-      textAfter,
+      extra,
+      theme,
       ...rest
     } = props;
 
@@ -245,8 +182,11 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
       duration: 0
     });
 
-    const styleProps = { ...props, type, scrollable, wrap };
+    const styleProps = { ...props, type, wrap };
     const classes = useClasses(styleProps);
+
+    useNoticebarCssVars();
+
     const { width: windowWidth } = useWindowSize();
 
     const wrapRef = React.useRef<HTMLDivElement>(null);
@@ -266,14 +206,14 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
 
       clearTimeout(startTimer.current!);
       startTimer.current = setTimeout(() => {
-        if (!wrapRef.current || !contentRef.current || scrollable === false) {
+        if (!wrapRef.current || !contentRef.current || wrap) {
           return;
         }
 
         const wrapRefWidth = getRect(wrapRef.current).width;
         const contentRefWidth = getRect(contentRef.current).width;
 
-        if (scrollable || contentRefWidth > wrapRefWidth) {
+        if (contentRefWidth > wrapRefWidth) {
           doubleRaf(() => {
             wrapWidth.current = wrapRefWidth;
             contentWidth.current = contentRefWidth;
@@ -303,7 +243,7 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
 
     React.useEffect(() => {
       reset();
-    }, [text, scrollable, windowWidth]);
+    }, [text, windowWidth]);
 
     const handleClose = useEventCallback((e) => {
       state.show = false;
@@ -320,13 +260,28 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
         in={state.show}
         component={NoticebarRoot}
         componentProps={{
+          variant: 'body2',
           styleProps,
           ref,
           role: 'alert',
           ...rest
         }}
         className={css(classes.root, className)}
-        style={style}
+        style={{
+          ...(type === 'info' &&
+            noticebarCssVars.style({
+              textColor: theme.palette.primary.main,
+              bgColor: alpha(theme.palette.primary.main, 0.15),
+              borderColor: alpha(theme.palette.primary.main, 0.1)
+            })),
+          ...(type === 'error' &&
+            noticebarCssVars.style({
+              textColor: theme.palette.error.main,
+              bgColor: alpha(theme.palette.error.main, 0.15),
+              borderColor: alpha(theme.palette.error.main, 0.1)
+            })),
+          ...style
+        }}
       >
         {icon && <NoticebarIcon className={classes.icon}>{icon}</NoticebarIcon>}
 
@@ -342,33 +297,26 @@ const Noticebar = React.forwardRef<HTMLDivElement, NoticebarProps>(
               style={trackStyle}
               styleProps={styleProps}
               onTransitionEnd={onTransitionEnd}
-              variant="body2"
+              onClick={onClick}
             >
               {text}
             </NoticebarText>
           )}
         </NoticebarTextWrap>
 
-        {(textAfter || mode) && (
-          <NoticebarTextAfter className={classes.textAfter} itemWrap={false}>
-            {textAfter}
-            {mode === 'closeable' && (
-              <CloseButton
-                className={classes.close}
-                color="inherit"
-                onClick={handleClose}
-              />
-            )}
-            {mode === 'link' && (
+        {(extra || closeable) && (
+          <NoticebarExtra className={classes.extra} itemWrap={false}>
+            {extra}
+            {closeable && (
               <IconButton
                 className={classes.close}
-                color="inherit"
-                onClick={onClick}
+                edge="end"
+                onClick={handleClose}
               >
-                <ArrowForward fontSize="small" />
+                <XIcon />
               </IconButton>
             )}
-          </NoticebarTextAfter>
+          </NoticebarExtra>
         )}
       </Fade>
     );
