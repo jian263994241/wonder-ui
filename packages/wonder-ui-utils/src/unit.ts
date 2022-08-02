@@ -9,10 +9,18 @@ export function addUnit(value?: string | number): string | undefined {
   return isNumeric(value) ? `${value}px` : String(value);
 }
 
+export function addUnit2(value?: string | number): string | undefined {
+  if (!isDef(value)) {
+    return undefined;
+  }
+
+  return typeof value === 'number' ? `${value}px` : String(value);
+}
+
 // cache
 let rootFontSize: number;
 
-function getRootFontSize() {
+export function getRootFontSize() {
   if (!rootFontSize) {
     const doc = ownerDocument().documentElement;
     const fontSize = doc.style.fontSize || getComputedStyle(doc).fontSize;

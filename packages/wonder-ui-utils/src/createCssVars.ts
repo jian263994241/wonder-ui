@@ -1,4 +1,4 @@
-import { addUnit } from './unit';
+import { addUnit2 } from './unit';
 import { snakeCase } from './string/snakeCase';
 import { upperFirst } from './string/upperFirst';
 
@@ -27,20 +27,24 @@ export function createCssVars<K extends string>(
     const result = {} as Record<string, any>;
 
     for (let k in values) {
-      cssStore[k].value = isCssVar(values[k]) ? values[k] : addUnit(values[k]);
+      cssStore[k].value = isCssVar(values[k]) ? values[k] : addUnit2(values[k]);
       result[cssStore[k].name] = cssStore[k].value;
     }
 
     return result;
   };
 
+  const getName = (key: K) => (cssStore[key] ? cssStore[key].name : key);
+
   const value = (key: K, ...val: any[]) =>
-    cssStore[key] ? `var(${[cssStore[key].name, ...val].join(',')})` : key;
+    `var(${[getName(key), ...val].join(',')})`;
 
   const calc = (...args: (K | Operator)[]) =>
     `calc(${args
-      .map((key) => (cssStore[key as K] ? value(key as K) : key))
+      .map((key) =>
+        ['+', '-', '*', '/'].includes(key) ? key : value(key as K)
+      )
       .join(' ')})`;
 
-  return { style, value, calc };
+  return { style, value, calc, getName };
 }
