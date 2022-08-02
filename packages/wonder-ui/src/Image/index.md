@@ -28,6 +28,6 @@ group:
 | - | - | -
 | --wui-image-height | 图片高度 | auto
 | --wui-image-object-fit | 填充模式 | cover
-| --wui-image-rounded-radius | 图标圆角 | `theme.shape.borderRadius`
+| --wui-image-rounded-radius | 图标圆角 | `theme.shape.borderRadius[2]`
 | --wui-image-width | 图片宽度 | auto
 

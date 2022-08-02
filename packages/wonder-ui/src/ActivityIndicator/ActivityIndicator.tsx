@@ -1,43 +1,29 @@
-import CircularProgress from '../CircularProgress';
+import Circular from '../CircularProgress/Circular';
 import Indicator from './Indicator';
 import styled from '../styles/styled';
 import Typography from '../Typography';
 import useThemeProps from '../styles/useThemeProps';
 import {
   activityIndicatorClasses,
-  COMPONENT_NAME
+  activityIndicatorCssVars,
+  COMPONENT_NAME,
+  useActivityIndicatorCssVars
 } from './ActivityIndicatorClasses';
-import {
-  capitalize,
-  composeClasses,
-  createCssVars,
-  css,
-  forwardRef
-} from '@wonder-ui/utils';
+import { capitalize, composeClasses, css, forwardRef } from '@wonder-ui/utils';
 import type { ActivityIndicatorProps } from './ActivityIndicatorTypes';
-import Circular from '../CircularProgress/Circular';
-
-const cssVars = createCssVars(COMPONENT_NAME, [
-  'iconSizeSmall',
-  'iconSizeMedium',
-  'iconSizeLarge',
-  'colorPrimary',
-  'colorSecondary',
-  'colorLight',
-  'colorDark',
-  'gap'
-]);
 
 const useClasses = (styleProps: ActivityIndicatorProps) => {
   const { classes, vertical, color, iconSize, type } = styleProps;
 
   const slots = {
-    root: ['root', vertical && 'vertical', type && type],
-    icon: [
-      'icon',
+    root: [
+      'root',
+      vertical && 'vertical',
+      type && type,
       iconSize && `iconSize${capitalize(iconSize)}`,
       color && `color${capitalize(color)}`
     ],
+    icon: ['icon'],
     text: ['text']
   };
 
@@ -47,57 +33,55 @@ const useClasses = (styleProps: ActivityIndicatorProps) => {
 const ActivityIndicatorRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})<{ styleProps: ActivityIndicatorProps }>(({ theme, styleProps }) => ({
-  ...cssVars.style({
-    iconSizeLarge: 36,
-    iconSizeMedium: 24,
-    iconSizeSmall: 16,
-    colorPrimary: theme.palette.primary.main,
-    colorSecondary: theme.palette.secondary.main,
-    colorLight: theme.palette.light.main,
-    colorDark: theme.palette.dark.main,
-    gap: theme.spacing(1)
-  }),
+})({
   display: 'flex',
   alignItems: 'center',
   [`&.${activityIndicatorClasses.vertical}`]: {
     flexDirection: 'column'
   },
   [`& > .${activityIndicatorClasses.text}`]: {
-    marginLeft: cssVars.value('gap')
+    marginLeft: activityIndicatorCssVars.value('gap')
   },
   [`&.${activityIndicatorClasses.vertical} > .${activityIndicatorClasses.text}`]:
     {
-      marginTop: cssVars.value('gap'),
+      marginTop: activityIndicatorCssVars.value('gap'),
       marginLeft: 0
-    }
-}));
+    },
+
+  [`&.${activityIndicatorClasses.iconSizeLarge}`]:
+    activityIndicatorCssVars.style({
+      size: activityIndicatorCssVars.value('iconSizeLarge')
+    }),
+  [`&.${activityIndicatorClasses.iconSizeMedium}`]:
+    activityIndicatorCssVars.style({
+      size: activityIndicatorCssVars.value('iconSizeMedium')
+    }),
+  [`&.${activityIndicatorClasses.iconSizeSmall}`]:
+    activityIndicatorCssVars.style({
+      size: activityIndicatorCssVars.value('iconSizeSmall')
+    }),
+  [`&.${activityIndicatorClasses.colorPrimary}`]:
+    activityIndicatorCssVars.style({
+      color: activityIndicatorCssVars.value('colorPrimary')
+    }),
+  [`&.${activityIndicatorClasses.colorSecondary}`]:
+    activityIndicatorCssVars.style({
+      color: activityIndicatorCssVars.value('colorSecondary')
+    }),
+  [`&.${activityIndicatorClasses.colorLight}`]: activityIndicatorCssVars.style({
+    color: activityIndicatorCssVars.value('colorLight')
+  }),
+  [`&.${activityIndicatorClasses.colorDark}`]: activityIndicatorCssVars.style({
+    color: activityIndicatorCssVars.value('colorDark')
+  })
+});
 
 const ActivityIndicatorIcon = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Icon'
 })({
-  [`&.${activityIndicatorClasses.iconSizeLarge}`]: {
-    fontSize: cssVars.value('iconSizeLarge')
-  },
-  [`&.${activityIndicatorClasses.iconSizeMedium}`]: {
-    fontSize: cssVars.value('iconSizeMedium')
-  },
-  [`&.${activityIndicatorClasses.iconSizeSmall}`]: {
-    fontSize: cssVars.value('iconSizeSmall')
-  },
-  [`&.${activityIndicatorClasses.colorPrimary}`]: {
-    color: cssVars.value('colorPrimary')
-  },
-  [`&.${activityIndicatorClasses.colorSecondary}`]: {
-    color: cssVars.value('colorSecondary')
-  },
-  [`&.${activityIndicatorClasses.colorLight}`]: {
-    color: cssVars.value('colorLight')
-  },
-  [`&.${activityIndicatorClasses.colorDark}`]: {
-    color: cssVars.value('colorDark')
-  }
+  fontSize: activityIndicatorCssVars.value('size'),
+  color: activityIndicatorCssVars.value('color')
 });
 
 const ActivityIndicator = forwardRef<HTMLDivElement, ActivityIndicatorProps>(
@@ -117,23 +101,19 @@ const ActivityIndicator = forwardRef<HTMLDivElement, ActivityIndicatorProps>(
 
     const classes = useClasses(styleProps);
 
+    useActivityIndicatorCssVars();
+
     return (
       <ActivityIndicatorRoot
         className={css(classes.root, className)}
         ref={ref}
-        styleProps={styleProps}
         {...rest}
       >
         <ActivityIndicatorIcon className={classes.icon}>
           {type === 'circular' ? <Circular /> : <Indicator />}
         </ActivityIndicatorIcon>
         {text && (
-          <Typography
-            noWrap
-            className={classes.text}
-            variant="body2"
-            color="textSecondary"
-          >
+          <Typography noWrap className={classes.text} variant="body2">
             {text}
           </Typography>
         )}

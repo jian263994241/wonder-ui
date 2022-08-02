@@ -107,7 +107,7 @@ const InputRoot = styled('div', {
 
   [`&.${inputClasses.bordered}`]: inputCssVars.style({
     border: `1px solid ${inputCssVars.value('borderColor')}`,
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.shape.borderRadius[2],
     paddingVertical: 0,
     paddingHorizontal: 8
   }),

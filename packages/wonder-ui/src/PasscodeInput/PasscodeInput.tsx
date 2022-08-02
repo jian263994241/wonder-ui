@@ -125,7 +125,7 @@ const PasscodeInputCell = styled('div', {
     ? {
         borderRadius: passcodeInputCssVars.value('borderRadius'),
         border: `1px solid ${passcodeInputCssVars.value('borderColor')}`,
-        '&:not(:last-child)': {
+        '&:not(:last-of-type)': {
           marginRight: passcodeInputCssVars.value('cellGap')
         },
         ...(styleProps.focused && {
@@ -143,7 +143,7 @@ const PasscodeInputCell = styled('div', {
         })
       }
     : {
-        '&:not(:last-child)': {
+        '&:not(:last-of-type)': {
           borderRight: `1px solid ${passcodeInputCssVars.value('borderColor')}`,
           ...(styleProps.error && {
             borderRight: `1px solid ${passcodeInputCssVars.value(

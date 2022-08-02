@@ -17,11 +17,11 @@ export default defineConfig({
     memo.resolve.alias.delete('history');
   },
   metas: [
-    {
-      name: 'viewport',
-      content:
-        'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover'
-    }
+    // {
+    //   name: 'viewport',
+    //   content:
+    //     'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover'
+    // }
   ],
   locales: [
     ['zh-CN', '中文']

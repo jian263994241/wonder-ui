@@ -29,7 +29,8 @@ const cssVars = createCssVars(COMPONENT_NAME, [
   'safeAreaRight',
   'dividerColor',
   'insetSideMargin',
-  'insetBorderRadius'
+  'insetBorderRadius',
+  'contentBgColor'
 ]);
 
 const ContentBlockRoot = styled('div', {
@@ -54,7 +55,7 @@ const ContentBlockContent = styled(Typography, {
   paddingTop: cssVars.value('paddingVertical'),
   paddingBottom: cssVars.value('paddingVertical'),
   ...(styleProps.strong && {
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: cssVars.value('contentBgColor')
   }),
   ...(styleProps.inset
     ? {
@@ -88,15 +89,16 @@ const ContentBlock = React.forwardRef<HTMLDivElement, ContentBlockProps>(
 
     useRootCssVars((theme) =>
       cssVars.style({
-        titltMarginTop: theme.spacing(1),
-        titleMarginBottom: theme.spacing(1),
-        titleMarginHorizontal: theme.spacing(1.5),
-        paddingHorizontal: theme.spacing(1.5),
-        paddingVertical: theme.spacing(1.5),
+        contentBgColor: theme.palette.background.paper,
+        titltMarginTop: theme.shape.distanceVerticalSmall,
+        titleMarginBottom: theme.shape.distanceVerticalSmall,
+        titleMarginHorizontal: theme.shape.distanceHorizontal,
+        paddingHorizontal: theme.shape.distanceHorizontal,
+        paddingVertical: theme.shape.distanceVertical,
         safeAreaLeft: 'env(safe-area-inset-left, 0px)',
         safeAreaRight: 'env(safe-area-inset-right, 0px)',
-        insetSideMargin: theme.spacing(1.5),
-        insetBorderRadius: theme.spacing(1)
+        insetSideMargin: theme.shape.distanceHorizontal,
+        insetBorderRadius: theme.shape.borderRadius[3]
       })
     );
 

@@ -128,7 +128,8 @@ const TypographyRoot = styled('div', {
   }),
 
   [`&.${typographyClasses.noWrap}`]: {
-    ...ellipsis('100%', 1)
+    ...ellipsis('100%', 1),
+    display: 'block'
   },
   [`&.${typographyClasses.lineClamp}`]: {
     ...ellipsis('100%', styleProps.lineClamp ?? 2)

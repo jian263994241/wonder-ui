@@ -1,12 +1,7 @@
 import { ArrowClockwise, Share } from '@wonder-ui/icons';
-import {
-  ArrowForward,
-  IconButton,
-  Searchbar,
-  Space,
-  styled
-} from '@wonder-ui/core';
+import { IconButton, Searchbar, Space, styled } from '@wonder-ui/core';
 import * as React from 'react';
+import { ChevronLeft } from '@wonder-ui/icons';
 
 const MySearch = styled(Searchbar)`
   .WuiSearchbar-bg {
@@ -45,7 +40,7 @@ export default () => {
       }
       barLeft={
         <IconButton edge="start">
-          <ArrowForward direction="left" fontSize="small" />
+          <ChevronLeft />
         </IconButton>
       }
     />

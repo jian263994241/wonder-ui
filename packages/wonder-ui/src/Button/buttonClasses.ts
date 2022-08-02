@@ -39,7 +39,6 @@ export const buttonClasses = generateUtilityClasses(COMPONENT_NAME, [
   'focusVisible',
   'disabled',
   'active',
-  'colorInherit',
   'textSizeSmall',
   'textSizeMedium',
   'textSizeLarge',
@@ -80,23 +79,21 @@ export const buttonCssVars = createCssVars(COMPONENT_NAME, [
   'paddingHorizontal',
   'paddingVertical',
   'textColor',
-  'textTransform'
+  'textTransform',
+  'edge'
 ]);
 
 export const useButtonCssVars = () => {
   useRootCssVars((theme) =>
     buttonCssVars.style({
       color: theme.palette.primary.main,
-      bgColor: 'transparent',
-      borderColor: 'transparent',
-      borderRadius: theme.shape.borderRadius,
-      borderWidth: 0,
-      boxShadow: 'none',
+      borderRadius: theme.shape.borderRadius[2],
+      borderWidth: 1,
       fontWeight: '500',
       lineHeight: '1.75',
       letterSpacing: '0',
       minWidth: 64,
-      textColor: theme.palette.primary.main,
+      textColor: 'inherit',
       textTransform: 'uppercase'
     })
   );

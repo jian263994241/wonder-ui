@@ -20,8 +20,11 @@ export const formCssVars = createCssVars(COMPONENT_NAME, [
 export const useFormCssVars = () => {
   useRootCssVars((theme) =>
     formCssVars.style({
-      footerVerticalPadding: theme.spacing(3),
-      footerHorizontalPadding: listCssVars.value('paddingHorizontal', '12px')
+      footerVerticalPadding: theme.shape.distanceVerticalLarge,
+      footerHorizontalPadding: listCssVars.value(
+        'paddingHorizontal',
+        theme.shape.distanceHorizontal
+      )
     })
   );
 };

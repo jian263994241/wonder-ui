@@ -3,8 +3,8 @@
 安装依赖
 
 ```
-npm install
-npx lerna bootstrap
+yarn install
+
 ```
 
 启动文档

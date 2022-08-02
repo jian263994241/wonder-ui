@@ -1,41 +1,35 @@
-import { List, ListItem, ListHeader, Ellipsis } from '@wonder-ui/core';
+import { ContentBlock, Ellipsis } from '@wonder-ui/core';
 
 const content =
   'React 使创建交互式 UI 变得轻而易举。为你应用的每一个状态设计简洁的视图，当数据变动时 React 能高效更新并渲染合适的组件。';
 
 export default () => (
-  <List>
-    <ListHeader>尾部省略</ListHeader>
-    <ListItem>
+  <>
+    <ContentBlock title="尾部省略">
       <Ellipsis>{content}</Ellipsis>
-    </ListItem>
+    </ContentBlock>
 
-    <ListHeader>头部省略</ListHeader>
-    <ListItem>
+    <ContentBlock title="头部省略">
       <Ellipsis direction="start">{content}</Ellipsis>
-    </ListItem>
+    </ContentBlock>
 
-    <ListHeader>中间省略</ListHeader>
-    <ListItem>
+    <ContentBlock title="中间省略">
       <Ellipsis direction="middle">{content}</Ellipsis>
-    </ListItem>
+    </ContentBlock>
 
-    <ListHeader>多行省略</ListHeader>
-    <ListItem>
+    <ContentBlock title="多行省略">
       <Ellipsis direction="end" rows={2}>
         {content}
       </Ellipsis>
-    </ListItem>
+    </ContentBlock>
 
-    <ListHeader>展开收起</ListHeader>
-    <ListItem>
-      <Ellipsis direction="end" rows={2} expandText="展开" collapseText="收起">
+    <ContentBlock title="展开收起">
+      <Ellipsis direction="end" rows={1} expandText="展开" collapseText="收起">
         {content}
       </Ellipsis>
-    </ListItem>
+    </ContentBlock>
 
-    <ListHeader>仅展开</ListHeader>
-    <ListItem>
+    <ContentBlock title="仅展开">
       <Ellipsis direction="end" expandText="展开">
         {content}
       </Ellipsis>
@@ -45,6 +39,6 @@ export default () => (
       <Ellipsis direction="middle" expandText="展开">
         {content}
       </Ellipsis>
-    </ListItem>
-  </List>
+    </ContentBlock>
+  </>
 );

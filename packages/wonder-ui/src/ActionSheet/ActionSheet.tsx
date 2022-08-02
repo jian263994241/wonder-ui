@@ -1,16 +1,21 @@
-import * as React from 'react';
 import Button from '../Button/Button';
 import Divider from '../Divider/Divider';
-import Drawer from '../Drawer/Drawer';
+import Popup from '../Popup/Popup';
+import React from 'react';
+import SafeArea from '../SafeArea/SafeArea';
 import styled from '../styles/styled';
 import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import WhiteSpace from '../WhiteSpace/WhiteSpace';
+import {
+  addUnit,
+  composeClasses,
+  createChainedFunction,
+  css
+} from '@wonder-ui/utils';
+import { buttonCssVars } from '../Button';
 import { COMPONENT_NAME } from './ActionSheetClasses';
-import { composeClasses, createChainedFunction, css } from '@wonder-ui/utils';
-import { drawerClasses } from '../Drawer/DrawerClasses';
 import { useControlled } from '@wonder-ui/hooks';
-import { whiteSpaceClasses } from '../WhiteSpace/WhiteSpaceClasses';
 import type { ActionSheetProps } from './ActionSheetTypes';
 
 const useClasses = (props: ActionSheetProps) => {
@@ -26,38 +31,34 @@ const useClasses = (props: ActionSheetProps) => {
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const ActionSheetRoot = styled(Drawer, {
+const ActionSheetRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })(({ theme }) => ({
-  userSelect: 'none',
-  [`.${drawerClasses.paper}`]: {
-    borderTopLeftRadius: `var(--action-sheet-border-radius, ${theme.shape.borderRadius}px)`,
-    borderTopRightRadius: `var(--action-sheet-border-radius, ${theme.shape.borderRadius}px)`,
-    paddingBottom: 'env(safe-area-inset-bottom)'
-  },
-  [`.${whiteSpaceClasses.root}`]: {
-    backgroundColor: theme.palette.background.default
-  }
+  ...buttonCssVars.style({
+    color: theme.palette.text.primary,
+    fontWeight: '400'
+  })
 }));
 
 const ActionSheetTitle = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Title'
 })(({ theme }) => ({
-  padding: '20px 16px',
+  padding: `${addUnit(theme.shape.distanceHorizontal * 1.5)} ${addUnit(
+    theme.shape.distanceHorizontal
+  )}`,
   textAlign: 'center',
-  borderBottom: `thin solid ${theme.palette.divider}`
+  backgroundColor: theme.palette.background.paper
 }));
 
 const ActionSheetAction = styled(Button, {
   name: COMPONENT_NAME,
   slot: 'Action'
-})({
-  width: '100%',
-  padding: '14px 16px',
+})(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
   display: 'block'
-});
+}));
 
 const ActionSheet = React.forwardRef<HTMLDivElement, ActionSheetProps>(
   (inProps, ref) => {
@@ -67,7 +68,7 @@ const ActionSheet = React.forwardRef<HTMLDivElement, ActionSheetProps>(
       cancelText,
       className,
       style,
-      divider,
+      divider = true,
       title,
       onAction,
       onClose,
@@ -93,7 +94,8 @@ const ActionSheet = React.forwardRef<HTMLDivElement, ActionSheetProps>(
       onClose?.();
     };
 
-    const classes = useClasses(props);
+    const styleProps = { ...props, divider };
+    const classes = useClasses(styleProps);
 
     return (
       <React.Fragment>
@@ -103,62 +105,75 @@ const ActionSheet = React.forwardRef<HTMLDivElement, ActionSheetProps>(
               onClick: createChainedFunction(openModal, children.props.onClick)
             })
           : children}
-        <ActionSheetRoot
-          anchor="bottom"
-          visible={visible}
-          onClose={handleClose}
-          className={css(classes.root, className)}
-          ref={ref}
-          style={style}
-        >
-          {title && (
-            <ActionSheetTitle
-              className={classes.title}
-              color="textSecondary"
-              variant="subtitle2"
-            >
-              {title}
-            </ActionSheetTitle>
-          )}
-          {onRenderContent
-            ? onRenderContent()
-            : actions.map((action, index) => (
-                <React.Fragment key={action.key || index}>
-                  <ActionSheetAction
-                    className={classes.action}
-                    color={action.danger ? 'danger' : 'primary'}
-                    size="large"
-                    disabled={action.disabled}
-                    onClick={createChainedFunction(
-                      onAction?.bind(null, action),
-                      action.onClick,
-                      hideModal
-                    )}
-                  >
-                    {action.text}
-                    {action.description && (
-                      <Typography variant="body2" color="textSecondary">
-                        {action.description}
-                      </Typography>
-                    )}
-                  </ActionSheetAction>
-                  {divider && index != actions.length - 1 && <Divider />}
-                </React.Fragment>
-              ))}
 
-          {cancelText && (
-            <React.Fragment>
-              <WhiteSpace size="small" />
-              <ActionSheetAction
-                size="large"
-                className={classes.cancelAction}
-                onClick={handleClose}
-              >
-                {cancelText}
-              </ActionSheetAction>
-            </React.Fragment>
-          )}
-        </ActionSheetRoot>
+        <Popup
+          autoHeight
+          visible={visible}
+          onBackdropClick={handleClose}
+          navbar={false}
+        >
+          <ActionSheetRoot
+            className={css(classes.root, className)}
+            ref={ref}
+            style={style}
+          >
+            {title && (
+              <React.Fragment>
+                <ActionSheetTitle
+                  className={classes.title}
+                  color="textSecondary"
+                  variant="subtitle2"
+                >
+                  {title}
+                </ActionSheetTitle>
+                <Divider />
+              </React.Fragment>
+            )}
+            {onRenderContent
+              ? onRenderContent()
+              : actions.map((action, index) => (
+                  <React.Fragment key={action.key || index}>
+                    <ActionSheetAction
+                      fullWidth
+                      className={classes.action}
+                      color={action.danger ? 'danger' : undefined}
+                      size="large"
+                      shape="square"
+                      disabled={action.disabled}
+                      onClick={createChainedFunction(
+                        onAction?.bind(null, action),
+                        action.onClick,
+                        hideModal
+                      )}
+                    >
+                      {action.text}
+                      {action.description && (
+                        <Typography variant="caption" color="textSecondary">
+                          {action.description}
+                        </Typography>
+                      )}
+                    </ActionSheetAction>
+                    {divider && index != actions.length - 1 && <Divider />}
+                  </React.Fragment>
+                ))}
+
+            {cancelText && (
+              <React.Fragment>
+                <WhiteSpace size="small" />
+                <ActionSheetAction
+                  fullWidth
+                  size="large"
+                  shape="square"
+                  className={classes.cancelAction}
+                  onClick={handleClose}
+                >
+                  {cancelText}
+                </ActionSheetAction>
+              </React.Fragment>
+            )}
+            <SafeArea position="bottom" />
+          </ActionSheetRoot>
+        </Popup>
       </React.Fragment>
     );
   }

@@ -55,7 +55,7 @@ const SkeletonContent = styled('div', {
 
 const commomBlockStyles = (theme: any) => ({
   backgroundColor: emphasize(theme.palette.background.default, 0.08),
-  borderRadius: theme.shape.borderRadius
+  borderRadius: theme.shape.borderRadius[2]
 });
 
 const SkeletonAvatar = styled('div', {

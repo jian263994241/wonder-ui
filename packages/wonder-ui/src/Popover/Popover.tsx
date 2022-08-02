@@ -61,7 +61,7 @@ const PopoverRoot = styled(Modal, {
   shouldForwardProp: () => true
 })<ModalProps>({});
 
-const PopoverPaper = styled(Paper.withComponent(Grow), {
+const PopoverPaper = styled(Paper, {
   name: 'WuiPopover',
   slot: 'Paper',
   shouldForwardProp: () => true
@@ -161,6 +161,7 @@ const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
   const classes = useClasses(styleProps);
 
   const paperRef = React.useRef<HTMLDivElement>(null);
+  //@ts-ignore
   const handdlePaperRef = useForkRef(paperRef, PaperProps?.ref);
 
   const getAnchorOffset = React.useCallback(() => {
@@ -348,17 +349,20 @@ const Popover = React.forwardRef<HTMLElement, PopoverProps>((inProps, ref) => {
       {...rest}
       classes={{ root: css(classes.root, className) }}
     >
-      <PopoverPaper
+      <Grow
         in={visible}
         onEnter={handleEntering}
         duration={duration}
-        {...PaperProps}
-        className={css(classes.paper, PaperProps?.className)}
-        elevation={elevation}
-        ref={handdlePaperRef}
+        component={PopoverPaper}
+        componentProps={{
+          ...PaperProps,
+          className: css(classes.paper, PaperProps?.className),
+          elevation,
+          ref: handdlePaperRef
+        }}
       >
         {children}
-      </PopoverPaper>
+      </Grow>
     </PopoverRoot>
   );
 });

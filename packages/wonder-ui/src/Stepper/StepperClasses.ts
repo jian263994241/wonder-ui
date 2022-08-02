@@ -29,7 +29,7 @@ export const useStepperCssVars = () => {
   useRootCssVars((theme) =>
     stepperCssVars.style({
       height: 28,
-      borderRadius: theme.shape.borderRadius,
+      borderRadius: theme.shape.borderRadius[2],
       bgColor: theme.palette.background.default,
       buttonColor: theme.palette.primary.main,
       fontSize: theme.typography.pxToRem(14),

@@ -17,17 +17,11 @@ group:
 
 <code src="./demo/demo1.tsx"></code>
 
-## CSS 变量
-
-```css
---wui-activity-indicator-icon-size-large: 36px;
---wui-activity-indicator-icon-size-medium: 24px;
---wui-activity-indicator-icon-size-small: 16px;
---wui-activity-indicator-color-primary: #1677ff;
---wui-activity-indicator-color-secondary: #6c757d;
---wui-activity-indicator-color-light: #eee;
---wui-activity-indicator-color-dark: #000;
---wui-activity-indicator-gap: 8px;
-```
 <API src="./ActivityIndicator.tsx" ></API>
 
+## CSS 变量
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-activity-indicator-gap | 文字间距 | `theme.spacing(1)`
+| --wui-activity-indicator-size | icon尺寸 |
+| --wui-activity-indicator-color | icon颜色 |

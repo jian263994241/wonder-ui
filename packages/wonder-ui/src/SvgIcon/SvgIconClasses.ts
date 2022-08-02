@@ -8,6 +8,11 @@ export const svgIconClasses = generateUtilityClasses(COMPONENT_NAME, [
   'spin'
 ]);
 
-export const svgIconCssVars = createCssVars(COMPONENT_NAME, ['color', 'size']);
+export const svgIconCssVars = createCssVars(COMPONENT_NAME, [
+  'color',
+  'size',
+  'width',
+  'height'
+]);
 
 export type SvgIconClassesType = typeof svgIconClasses;

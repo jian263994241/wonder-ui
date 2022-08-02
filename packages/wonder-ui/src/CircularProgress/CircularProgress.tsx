@@ -6,6 +6,7 @@ import { capitalize, composeClasses } from '@wonder-ui/utils';
 import type { CircularProgressProps } from './CircularProgressTypes';
 import { COMPONENT_NAME } from './CircularProgressClasses';
 import Typography from '../Typography/Typography';
+import { svgIconCssVars } from '../SvgIcon';
 
 const useClasses = (styleProps: CircularProgressProps) => {
   const { classes, color, variant } = styleProps;
@@ -27,7 +28,10 @@ const CircularProgressRoot = styled('div', {
   /* Styles applied to the root element. */
   display: 'inline-block',
   userSelect: 'none',
-  color: theme.palette[styleProps.color ?? 'primary'].main
+
+  ...svgIconCssVars.style({
+    color: theme.palette[styleProps.color ?? 'primary'].main
+  })
 }));
 
 const CircularProgressText = styled(Typography, {

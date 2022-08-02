@@ -49,8 +49,13 @@ const spin = keyframes({
 
 const SvgIconRoot = styled('svg', { name: COMPONENT_NAME, slot: 'Root' })({
   fill: svgIconCssVars.value('color', 'currentColor'),
-  width: svgIconCssVars.value('size', '1em'),
-  height: svgIconCssVars.value('size', '1em'),
+  width: svgIconCssVars.value('width'),
+  height: svgIconCssVars.value('height'),
+  ...svgIconCssVars.style({
+    width: svgIconCssVars.value('size', '1em'),
+    height: svgIconCssVars.value('size', '1em')
+  }),
+
   [`&.${svgIconClasses.block}`]: {
     display: 'block'
   },
@@ -69,6 +74,9 @@ const SvgIcon = forwardRef<SVGSVGElement, SvgIconProps>((inProps, ref) => {
     spin = false,
     viewBox = '0 0 16 16',
     block = false,
+    width,
+    height,
+    style,
     ...rest
   } = props;
 
@@ -84,6 +92,10 @@ const SvgIcon = forwardRef<SVGSVGElement, SvgIconProps>((inProps, ref) => {
       ref={ref}
       role={titleAccess ? 'img' : undefined}
       viewBox={viewBox}
+      style={{
+        ...svgIconCssVars.style({ width, height }),
+        ...style
+      }}
       {...rest}
     >
       {children}

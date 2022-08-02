@@ -14,7 +14,7 @@ export const useAvatarCssVars = () => {
   useRootCssVars((theme) =>
     avatarCssVars.style({
       size: 44,
-      borderRadius: theme.shape.borderRadius
+      borderRadius: theme.shape.borderRadius[2]
     })
   );
 };

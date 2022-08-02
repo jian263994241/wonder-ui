@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from '../styles/styled';
-import SvgIcon from '../SvgIcon/SvgIcon';
+import SvgIcon, { svgIconCssVars } from '../SvgIcon';
 import { keyframes } from '@wonder-ui/styled';
 
 export interface CircularProps {
@@ -39,6 +39,7 @@ const circularDashKeyframe = keyframes`
 
 const CircularRoot = styled(SvgIcon)<{ styleProps: CircularProps }>(
   ({ theme, styleProps }) => ({
+    fill: 'none',
     ...(styleProps.variant === 'determinate'
       ? {
           transition: theme.transitions.create('transform')
@@ -51,8 +52,7 @@ const CircularRoot = styled(SvgIcon)<{ styleProps: CircularProps }>(
 
 const CircularCircle = styled('circle')<{ styleProps: CircularProps }>(
   ({ theme, styleProps }) => ({
-    /* Styles applied to the `circle` svg path. */
-    stroke: 'currentColor',
+    stroke: svgIconCssVars.value('color', 'currentColor'),
     // Use butt to follow the specification, by chance, it's already the default CSS value.
     // strokeLinecap: 'butt',
     /* Styles applied to the `circle` svg path if `variant="determinate"`. */

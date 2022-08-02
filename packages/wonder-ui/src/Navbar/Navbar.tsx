@@ -11,6 +11,8 @@ import { composeClasses, css } from '@wonder-ui/utils';
 import { searchbarClasses } from '../Searchbar';
 import { useForkRef, useSize } from '@wonder-ui/hooks';
 import type { NavbarProps, NavbarStyleProps } from './NavbarTypes';
+import { buttonCssVars } from '../Button';
+import { iconButtonCssVars } from '../IconButton';
 
 const useClasses = (styleProps: NavbarStyleProps) => {
   const { classes } = styleProps;
@@ -31,7 +33,7 @@ const useClasses = (styleProps: NavbarStyleProps) => {
 const NavbarRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
-})<{ styleProps: NavbarStyleProps }>(({ theme, styleProps }) => {
+})<{ styleProps: NavbarStyleProps }>(({ styleProps }) => {
   return {
     position: styleProps.absolute ? 'absolute' : 'relative',
     width: '100%',
@@ -80,7 +82,16 @@ const NavbarInner = styled('div', {
   boxSizing: 'border-box',
   transform: 'translate3d(0,0,0)',
   padding: `0 ${navbarCssVars.value('paddingHorizontal')}`,
-  zIndex: 10
+  zIndex: 10,
+
+  ...buttonCssVars.style({
+    edge: navbarCssVars.value('paddingHorizontal'),
+    borderWidth: 0,
+    borderRadius: 0
+  }),
+  ...iconButtonCssVars.style({
+    edge: navbarCssVars.value('paddingHorizontal')
+  })
 });
 
 const NavbarTitle = styled('div', {
@@ -116,28 +127,30 @@ const NavbarSubTitle = styled('div', {
 const NavbarLeft = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Left'
-})({
+})(({ theme }) => ({
   position: 'relative',
   zIndex: 10,
   flexShrink: 0,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  marginRight: 10
-});
+  marginRight: theme.spacing(1),
+  height: '100%'
+}));
 
 const NavbarRight = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Right'
-})({
+})(({ theme }) => ({
   position: 'relative',
   zIndex: 10,
   flexShrink: 0,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  marginLeft: 10
-});
+  marginLeft: theme.spacing(1),
+  height: '100%'
+}));
 
 const Navbar = React.forwardRef<HTMLDivElement, NavbarProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: COMPONENT_NAME });

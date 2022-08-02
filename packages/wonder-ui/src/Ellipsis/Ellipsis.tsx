@@ -1,16 +1,18 @@
 import * as React from 'react';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
-import type { EllipsisProps, EllipsisedValue } from './EllipsisTypes';
-import { useForkRef, useResizeEffect } from '@wonder-ui/hooks';
-import {
-  getComputedStyle,
-  unitToPx,
-  ownerDocument,
-  css,
-  composeClasses
-} from '@wonder-ui/utils';
 import { COMPONENT_NAME } from './EllipsisClasses';
+import {
+  composeClasses,
+  css,
+  getComputedStyle,
+  ownerDocument,
+  unitToPx
+} from '@wonder-ui/utils';
+import { useForkRef, useResizeEffect } from '@wonder-ui/hooks';
+import type { EllipsisProps, EllipsisedValue } from './EllipsisTypes';
+import { typographyCssVars } from '../Typography/TypographyClasses';
 
 const useClasses = (
   props: EllipsisProps & { exceeded: boolean; expanded: boolean }
@@ -28,12 +30,14 @@ const useClasses = (
   return composeClasses(COMPONENT_NAME, slots, classes);
 };
 
-const EllipsisRoot = styled('div', {
+const EllipsisRoot = styled(Typography, {
   name: COMPONENT_NAME,
   slot: 'Root'
 })({
   overflow: 'hidden',
-  lineHeight: 1.5
+  ...typographyCssVars.style({
+    lineHeight: '1.5'
+  })
 });
 
 const EllipsisAction = styled('a', {

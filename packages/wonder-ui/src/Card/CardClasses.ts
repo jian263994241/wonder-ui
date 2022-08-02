@@ -28,11 +28,12 @@ export const cardCssVars = createCssVars(COMPONENT_NAME, [
 export const useCardCssVars = () => {
   useRootCssVars((theme) =>
     cardCssVars.style({
+      borderRadius: theme.shape.borderRadius[3],
       bgColor: theme.palette.background.paper,
-      headerPaddingVertical: theme.spacing(1.5),
-      bodyPaddingVertical: theme.spacing(1.5),
-      footerPaddingVertical: theme.spacing(1.5),
-      paddingHorizontal: theme.spacing(1.5),
+      headerPaddingVertical: theme.shape.distanceVertical,
+      bodyPaddingVertical: theme.shape.distanceVertical,
+      footerPaddingVertical: theme.shape.distanceVertical,
+      paddingHorizontal: theme.shape.distanceHorizontal,
       dividerColor: theme.palette.divider
     })
   );

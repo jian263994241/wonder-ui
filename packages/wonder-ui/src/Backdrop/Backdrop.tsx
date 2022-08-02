@@ -3,24 +3,20 @@ import Fade from '../Fade';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha } from '../styles/colorManipulator';
-import { createCssVars, css, generateUtilityClasses } from '@wonder-ui/utils';
+import { createCssVars, css } from '@wonder-ui/utils';
 import { useEventListener, useForkRef } from '@wonder-ui/hooks';
 import type { BackdropProps } from './BackdropTypes';
-
-const COMPONENT_NAME = 'WuiBackdrop';
-
-export const backdropClasses = generateUtilityClasses(COMPONENT_NAME, [
-  'root',
-  'invisible'
-]);
-
-const cssVars = createCssVars(COMPONENT_NAME, ['zIndex', 'color']);
+import {
+  COMPONENT_NAME,
+  backdropClasses,
+  backdropCssVars
+} from './BackdropClasses';
 
 const BackdropRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })<{ styleProps: BackdropProps }>(({ theme, styleProps }) => ({
-  zIndex: cssVars.value('zIndex', -1),
+  zIndex: backdropCssVars.value('zIndex', 1),
   position: 'fixed',
   display: 'flex',
   alignItems: 'center',
@@ -30,7 +26,7 @@ const BackdropRoot = styled('div', {
   top: 0,
   left: 0,
   touchAction: 'none',
-  backgroundColor: cssVars.value(
+  backgroundColor: backdropCssVars.value(
     'color',
     alpha(
       theme.palette.common[styleProps.color!] || theme.palette.common.black,

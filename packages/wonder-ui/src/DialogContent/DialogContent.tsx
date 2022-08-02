@@ -18,12 +18,13 @@ const DialogContentRoot = styled('div', {
   shouldForwardProp: () => true
 })(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
-  borderRadius: theme.shape.dialogRadius,
+  borderRadius: theme.shape.borderRadius[4],
   width: '100%',
   maxWidth: 300,
   userSelect: 'none',
   overflow: 'hidden',
-  outline: 'none'
+  outline: 'none',
+  zIndex: 2
 }));
 
 const DialogContentInner = styled('div', {
@@ -64,7 +65,6 @@ export const DialogButton = styled(ButtonBase, {
   backgroundColor: 'transparent',
   border: 0,
   boxSizing: 'border-box',
-  textOverflow: 'ellipsis',
   overflow: 'hidden',
   color: `var(--dialog-button-color, ${theme.palette.text.primary})`,
   ...(primary && {

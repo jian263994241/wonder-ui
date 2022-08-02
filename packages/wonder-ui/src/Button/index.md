@@ -41,11 +41,8 @@ group:
 
 | 属性 | 说明 | 默认值
 | - | - | -
-| --wui-button-bg-color | 背景颜色 |  transparent
-| --wui-button-border-color | 边框颜色 |    transparent
-| --wui-button-border-radius | 边框角度 | `theme.shape.borderRadius`
-| --wui-button-border-width | 边框宽度 |    0px
-| --wui-button-box-shadow | 按钮阴影 |    none
+| --wui-button-border-radius | 边框角度 | `theme.shape.borderRadius[2]`
+| --wui-button-border-width | 边框宽度 |    1px
 | --wui-button-color | 按钮颜色 | `theme.palette.primary.main`
 | --wui-button-font-size | 文字大小 |
 | --wui-button-font-weight | 文字粗细 |    500

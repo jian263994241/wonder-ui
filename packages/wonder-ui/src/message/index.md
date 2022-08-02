@@ -14,17 +14,28 @@ group:
 提供 alert, confirm, toast 的方法
 
 ## 代码演示
-### 基本使用
 
 `message`支持消息栈和异步关闭
 
 <code src="./demo/demo1.tsx"></code>
 
-### 配置
-
 配置 toast 自动关闭时间, 出现位置
 
-<code src="./demo/demo2.tsx"></code>
+```js
+message.setup({
+  toastOption: {
+    autoHideDuration: 1000,
+    anchorOrigin: {
+      vertical: 'top',
+      horizontal: 'center'
+    }
+  }
+});
+```
+
+
+
+
 
 ## API
 

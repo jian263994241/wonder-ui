@@ -33,12 +33,11 @@ const PreloaderInner = styled('div', {
     willChange: 'transform, opacity',
     color: theme.palette.getContrastText(backgroundColor),
     display: 'block',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.shape.borderRadius[3],
     backgroundColor: alpha(backgroundColor, 0.92),
     padding: 12,
     outline: 'none',
-    textAlign: 'center',
-    fontSize: 0
+    textAlign: 'center'
   };
 });
 

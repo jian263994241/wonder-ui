@@ -39,10 +39,12 @@ export interface ActionSheetProps {
   cancelText?: React.ReactNode;
   /**
    * 分割线
+   * @default true
    */
   divider?: boolean;
   /**
    * 是否显示
+   * @default false
    */
   visible?: boolean;
   /**

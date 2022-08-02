@@ -20,24 +20,28 @@ export const listCssVars = createCssVars(COMPONENT_NAME, [
   'paddingVertical',
   'prefixPaddingRight',
   'prefixWidth',
-  'titleBgColor'
+  'headerBgColor',
+  'headerMarginTop',
+  'headerMarginBottom'
 ]);
 
 export const useListCssVars = () => {
   useRootCssVars((theme) =>
     listCssVars.style({
       alignItems: 'center',
+      headerBgColor: theme.palette.background.default,
+      headerMarginTop: theme.shape.distanceVerticalSmall,
+      headerMarginBottom: theme.shape.distanceVerticalSmall,
       bgColor: theme.palette.background.paper,
-      cardBorderRadius: theme.shape.borderRadius * 2,
-      cardMarginHorizontal: theme.spacing(2),
+      cardBorderRadius: theme.shape.borderRadius[3],
+      cardMarginHorizontal: theme.shape.distanceHorizontal,
       divider: `thin solid ${theme.palette.divider}`,
       extraMaxWidth: '70%',
-      extraPaddingLeft: theme.spacing(1.5),
-      paddingHorizontal: theme.spacing(1.5),
-      paddingVertical: theme.spacing(1.5),
-      prefixPaddingRight: theme.spacing(1.5),
-      prefixWidth: 'auto',
-      titleBgColor: theme.palette.background.default
+      extraPaddingLeft: theme.shape.distanceHorizontal,
+      paddingHorizontal: theme.shape.distanceHorizontal,
+      paddingVertical: theme.shape.distanceVertical,
+      prefixPaddingRight: theme.shape.distanceHorizontal,
+      prefixWidth: 'auto'
     })
   );
 };

@@ -45,7 +45,7 @@ export interface CascaderViewProps {
   /**
    * 选中图标
    */
-  activeIcon?: JSX.Element;
+  activeIcon?: React.ReactElement;
   /**
    * 样式名
    */

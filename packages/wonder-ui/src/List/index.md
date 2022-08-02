@@ -75,7 +75,7 @@ group:
 | - | - | -
 | --wui-list-align-items | 垂直对齐 | center
 | --wui-list-bg-color | 背景色 | `theme.palette.background.paper`
-| --wui-list-card-border-radius | card 圆角 | `theme.shape.borderRadius * 2`
+| --wui-list-card-border-radius | card 圆角 | `theme.shape.borderRadius[3]`
 | --wui-list-card-margin-horizontal | card 外边距 | `theme.spacing(2)`
 | --wui-list-divider | 分割线 | `thin solid ${theme.palette.divider}`
 | --wui-list-extra-max-width | extra宽度限制 | 70%
@@ -84,5 +84,5 @@ group:
 | --wui-list-padding-vertical | 垂直内边距 | `theme.spacing(1.5)`
 | --wui-list-prefix-padding-right | prefix边距 | `theme.spacing(1.5)`
 | --wui-list-prefix-width | preifx 宽度 | auto
-| --wui-list-title-bg-color | 标题背景 | `theme.palette.background.default`
+| --wui-list-header-bg-color | 标题背景 | `theme.palette.background.default`
 

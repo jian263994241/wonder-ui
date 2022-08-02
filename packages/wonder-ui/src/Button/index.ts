@@ -1,2 +1,3 @@
 export { default } from './Button';
-export * from './ButtonTypes';
+export { buttonCssVars, buttonClasses } from './buttonClasses';
+export type { ButtonProps } from './ButtonTypes';

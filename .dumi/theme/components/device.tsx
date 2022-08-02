@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import React, { useState, useContext, useEffect } from 'react';
-import QRCode from 'qrcode.react';
+import { QRCodeCanvas } from 'qrcode.react';
 import { context, usePrefersColor } from 'dumi/theme';
 import './device.less';
 
@@ -32,7 +32,7 @@ export const Device: FC<IDeviceProps> = ({ url, className }) => {
           onClick={() => setRenderKey(Math.random())}
         />
         <button className="__dumi-default-icon" role="qrcode">
-          <QRCode value={url} size={96} />
+          <QRCodeCanvas value={url} size={96} />
         </button>
         <a
           href={url}

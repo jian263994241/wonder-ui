@@ -1,7 +1,7 @@
 {
   "name": "wonder-ui",
   "private": true,
-  "version": "2.1.2",
+  "version": "2.2.0",
   "scripts": {
     "commit": "cz",
     "build": "build:core & build:styled & build:icons",
@@ -25,7 +25,6 @@
     "@testing-library/react-hooks": "^5.0.0",
     "babel-jest": "^26.6.3",
     "husky": "^4.2.5",
-    "lerna": "^3.20.2",
     "prettier": "^2.0.5",
     "pretty-quick": "^3.1.0",
     "tsdx": "^0.14.1",
@@ -42,10 +41,11 @@
     "@types/react-dom": "^18.0.5",
     "commitizen": "^4.2.2",
     "dayjs": "^1.10.6",
-    "dumi": "^1.1.42",
+    "dumi": "^1.1.46",
     "lcn": "^3.0.2",
+    "lerna": "^5.1.8",
     "node-html-parser": "^2.1.0",
-    "qrcode.react": "^1.0.1",
+    "qrcode.react": "^3.1.0",
     "rc-field-form": "^1.22.0",
     "react": "^18.1.0",
     "react-activation": "^0.11.2",
@@ -67,8 +67,7 @@
   },
   "resolutions": {
     "typescript": "^4.7.3",
-    "rollup-plugin-typescript2": "^0.32.1",
-    "react": "^18.1.0"
+    "rollup-plugin-typescript2": "^0.32.1"
   },
   "config": {
     "commitizen": {

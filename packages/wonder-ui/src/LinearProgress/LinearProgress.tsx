@@ -104,7 +104,7 @@ const LinearProgressBar = styled('span', {
     right: 0,
     bottom: 0,
     left: 0,
-    background: '#fff',
+    background: theme.palette.common.white,
     borderRadius: '.25rem',
     opacity: 0,
     animation: `${progressActiveKeyframes} 2.4s cubic-bezier(.23,1,.32,1) infinite`

@@ -3,6 +3,16 @@ import { buttonClasses } from './buttonClasses';
 
 export type ButtonClasses = typeof buttonClasses;
 
+export type ButtonColor =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'danger'
+  | 'warning'
+  | 'info'
+  | 'light'
+  | 'dark';
+
 export interface ButtonProps extends ButtonBaseProps {
   className?: string;
   children?: React.ReactNode;
@@ -16,16 +26,7 @@ export interface ButtonProps extends ButtonBaseProps {
    * 按钮颜色
    * @default primary
    */
-  color?:
-    | 'inherit'
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info'
-    | 'light'
-    | 'dark';
+  color?: ButtonColor;
   /**
    * 100%宽度
    */

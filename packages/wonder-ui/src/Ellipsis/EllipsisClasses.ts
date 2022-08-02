@@ -9,3 +9,5 @@ export const ellipsisClasses = generateUtilityClasses(COMPONENT_NAME, [
   'collapsed',
   'collapseAction'
 ]);
+
+export type EllipsisClasses = typeof ellipsisClasses;

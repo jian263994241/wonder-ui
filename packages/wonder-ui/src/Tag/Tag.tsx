@@ -47,7 +47,7 @@ const TagRoot = styled(Typography, {
   listStyle: 'none',
   display: 'inline-block',
   padding: theme.spacing(0, 1),
-  borderRadius: theme.shape.borderRadius,
+  borderRadius: theme.shape.borderRadius[2],
   color: theme.palette.text.primary,
   border: '1px solid',
   borderColor: alpha(theme.palette.text.primary, 0.2),

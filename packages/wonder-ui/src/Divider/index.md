@@ -27,17 +27,21 @@ group:
 
 <code src="./demo/horizontal-title.tsx"></code>
 
-### 垂直文字分割线
-
-分割线中带有文字。
+### 垂直分割线
 
 <code src="./demo/vertical-title.tsx"></code>
 
-### 行内分割文字
 
-使用 `direction="vertical"`设置为行内的垂直分割线。
+<API src="./Divider.tsx"></API>
 
-<code src="./demo/vertical.tsx"></code>
+## CSS 变量
 
-<API src="./Divider.tsx" props="absolute|classes|component|children|direction|flexItem|light|textAlign|variant"></API>
-
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-divider-border-width | 分割线宽度 | thin
+| --wui-divider-border-color | 分割线颜色 | `theme.palette.divider`
+| --wui-divider-border-style | 分割线风格 | solid
+| --wui-divider-horizontal-margin | 外边距 | 0px
+| --wui-divider-vertical-margin | 外边距 | 0px
+| --wui-divider-vertical-padding | 标题内边距 | 10px
+| --wui-divider-horizontal-padding | 标题内边距 | 10px

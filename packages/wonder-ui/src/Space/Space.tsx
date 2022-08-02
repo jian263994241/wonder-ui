@@ -81,7 +81,7 @@ const SpaceRoot = styled('div', { name: COMPONENT_NAME, slot: 'Root' })<{
           }),
           [styleProps.reversed
             ? '&> *:not(:first-child)'
-            : '&> *:not(:last-child)']: [
+            : '&> *:not(:last-of-type)']: [
             isHorizontal
               ? {
                   marginRight: spaceCssVars.value('gapHorizontal')

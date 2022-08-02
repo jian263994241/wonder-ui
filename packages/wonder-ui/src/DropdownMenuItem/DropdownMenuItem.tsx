@@ -68,8 +68,6 @@ export interface DropdownMenuItemProps extends ButtonBaseProps {
    * 按钮内容
    */
   children?: React.ReactNode;
-
-  component?: React.ElementType;
   /**
    * 禁用波纹
    */
@@ -93,7 +91,6 @@ const DropdownMenuItem = React.forwardRef<HTMLElement, DropdownMenuItemProps>(
       arrow = false,
       children,
       className,
-      component,
       disableRipple = false,
       overlay,
       onClick,
@@ -106,7 +103,6 @@ const DropdownMenuItem = React.forwardRef<HTMLElement, DropdownMenuItemProps>(
 
     return (
       <DropdownMenuItemRoot
-        as={component}
         disableRipple={disableRipple}
         ref={ref}
         classes={{ root: css(classes.root, className) }}

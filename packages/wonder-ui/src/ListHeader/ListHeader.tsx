@@ -27,13 +27,12 @@ const ListHeaderRoot = styled(Typography, {
   slot: 'Root'
 })(
   {
-    paddingTop: 8,
-    paddingBlock: 8,
+    marginTop: listCssVars.value('headerMarginTop'),
+    marginBottom: listCssVars.value('headerMarginBottom'),
     paddingLeft: listCssVars.value('paddingHorizontal'),
     paddingRight: listCssVars.value('paddingHorizontal'),
-    backgroundColor: listCssVars.value('titleBgColor')
+    backgroundColor: listCssVars.value('headerBgColor')
   },
-
   `
   &.${listHeaderClasses.sticky} {
     position: sticky;

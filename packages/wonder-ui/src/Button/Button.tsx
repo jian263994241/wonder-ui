@@ -3,6 +3,13 @@ import ButtonBase from '../ButtonBase';
 import styled from '../styles/styled';
 import useThemeProps from '../styles/useThemeProps';
 import {
+  addUnit,
+  capitalize,
+  composeClasses,
+  css,
+  forwardRef
+} from '@wonder-ui/utils';
+import {
   buttonClasses,
   buttonCssVars,
   COMPONENT_NAME,
@@ -10,7 +17,6 @@ import {
 } from './buttonClasses';
 import { ButtonGroupContext } from '../ButtonGroup/ButtonGroupContext';
 import { ButtonProps } from './ButtonTypes';
-import { capitalize, composeClasses, css, forwardRef } from '@wonder-ui/utils';
 
 const useClasses = (styleProps: ButtonProps) => {
   const { color, edge, fullWidth, shape, size, variant, classes } = styleProps;
@@ -23,7 +29,6 @@ const useClasses = (styleProps: ButtonProps) => {
       variant && size && `${variant}Size${capitalize(size)}`,
       shape && `shape${capitalize(shape)}`,
       edge && `edge${capitalize(edge)}`,
-      color === 'inherit' && 'colorInherit',
       fullWidth && 'fullWidth'
     ],
     label: ['label'],
@@ -44,7 +49,7 @@ const ButtonRoot = styled(ButtonBase, {
 })<{ styleProps: ButtonProps }>(({ theme, styleProps }) => {
   return {
     fontFamily: 'inherit',
-    fontSize: buttonCssVars.value('fontSize'),
+    fontSize: buttonCssVars.value('fontSize', 'inherit'),
     fontWeight: buttonCssVars.value('fontWeight'),
     lineHeight: buttonCssVars.value('lineHeight'),
     letterSpacing: buttonCssVars.value('letterSpacing'),
@@ -67,18 +72,17 @@ const ButtonRoot = styled(ButtonBase, {
     [`&.${buttonClasses.contained}`]: buttonCssVars.style({
       bgColor: buttonCssVars.value('color'),
       borderColor: buttonCssVars.value('bgColor'),
-      borderWidth: 1,
-      textColor: '#fff'
+      textColor: theme.palette.common.white
     }),
 
     [`&.${buttonClasses.outlined}`]: buttonCssVars.style({
       textColor: buttonCssVars.value('color'),
-      borderColor: buttonCssVars.value('color'),
-      borderWidth: 1
+      borderColor: buttonCssVars.value('color')
     }),
 
     [`&.${buttonClasses.text}`]: buttonCssVars.style({
-      textColor: buttonCssVars.value('color')
+      textColor: buttonCssVars.value('color'),
+      borderColor: 'transparent'
     }),
 
     [`&.${buttonClasses.shapeRound}`]: buttonCssVars.style({
@@ -112,11 +116,16 @@ const ButtonRoot = styled(ButtonBase, {
     },
 
     [`&.${buttonClasses.edgeStart}`]: {
-      marginLeft: styleProps.size === 'small' ? -3 : -12
+      marginLeft: `calc(${buttonCssVars.value(
+        'edge',
+        addUnit(theme.shape.distanceHorizontal)
+      )} * -1)`
     },
-
     [`&.${buttonClasses.edgeEnd}`]: {
-      marginRight: styleProps.size === 'small' ? -3 : -12
+      marginRight: `calc(${buttonCssVars.value(
+        'edge',
+        addUnit(theme.shape.distanceHorizontal)
+      )} * -1)`
     }
   };
 });
@@ -243,13 +252,11 @@ const Button = forwardRef<HTMLElement, ButtonProps>((inProps, ref) => {
       ref={ref}
       styleProps={styleProps}
       style={{
-        ...(styleProps.color &&
-          buttonCssVars.style({
-            color:
-              styleProps.color !== 'inherit'
-                ? theme.palette[styleProps.color!].main
-                : 'inherit'
-          })),
+        ...buttonCssVars.style({
+          color: styleProps.color
+            ? theme.palette[styleProps.color!].main
+            : undefined
+        }),
         ...style
       }}
       {...rest}

@@ -6,6 +6,7 @@ import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { alpha, emphasize } from '../styles/colorManipulator';
 import { snackbarContentClasses, useClasses } from './SnackbarContentClasses';
+import { css } from '@wonder-ui/utils';
 
 export interface SnackbarContentProps extends GrowProps {
   /**
@@ -24,10 +25,9 @@ export interface SnackbarContentProps extends GrowProps {
   role?: string;
 }
 
-const SnackbarContentRoot = styled(Paper.withComponent(Grow), {
+const SnackbarContentRoot = styled(Paper, {
   name: 'WuiSnackbarContent',
-  slot: 'Root',
-  shouldForwardProp: () => true
+  slot: 'Root'
 })(({ theme }) => {
   const emphasis = theme.palette.mode === 'light' ? 0.75 : 0.98;
   const backgroundColor = emphasize(theme.palette.background.default, emphasis);
@@ -36,7 +36,7 @@ const SnackbarContentRoot = styled(Paper.withComponent(Grow), {
     color: theme.palette.getContrastText(backgroundColor),
     backgroundColor: alpha(backgroundColor, 0.92),
     padding: '6px 16px',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.shape.borderRadius[2],
 
     display: 'flex',
     alignItems: 'center',
@@ -88,7 +88,11 @@ const SnackbarContent = React.forwardRef<HTMLDivElement, SnackbarContentProps>(
     const classes = useClasses(styleProps);
 
     return (
-      <SnackbarContentRoot ref={ref} {...rest} classes={{ root: classes.root }}>
+      <Grow
+        component={SnackbarContentRoot}
+        componentProps={{ className: css(classes.root, className), ref }}
+        {...rest}
+      >
         <SnackbarContentMessage variant="body2" className={classes.message}>
           {message}
         </SnackbarContentMessage>
@@ -97,7 +101,7 @@ const SnackbarContent = React.forwardRef<HTMLDivElement, SnackbarContentProps>(
             {action}
           </SnackbarContentAction>
         )}
-      </SnackbarContentRoot>
+      </Grow>
     );
   }
 );

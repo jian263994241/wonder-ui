@@ -57,7 +57,7 @@ const StepRoot = styled('div', {
       color: 'var(--icon-color)'
     }
   },
-  [`&:last-child .${stepClasses.indicator}:after`]: {
+  [`&:last-of-type .${stepClasses.indicator}:after`]: {
     display: 'none'
   }
 }));

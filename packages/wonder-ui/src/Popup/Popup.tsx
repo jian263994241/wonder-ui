@@ -48,7 +48,7 @@ const PopupPage = styled(Page, {
   }),
 
   [theme.breakpoints.up('md')]: {
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.shape.borderRadius[4],
     width: 630,
     maxHeight: 630
   }

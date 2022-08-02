@@ -77,8 +77,9 @@ const ModalContentRoot = styled('div', {
   margin: '0 auto',
   backgroundColor: theme.palette.background.paper,
   borderRadius: 2,
-  boxShadow: theme.shadows[5],
+  boxShadow: 'none',
   width: 580,
+  zIndex: 2,
   [`&.${modalContentClasses.centered}`]: {
     display: 'block',
     textAlign: 'left',
@@ -160,7 +161,6 @@ const ModalContent = React.forwardRef<HTMLElement, ModalContentProps>(
       >
         {onClose && (
           <CloseButton
-            size="medium"
             onClick={onClose}
             classes={{ root: classes.close }}
             style={{ position: 'absolute', right: 0, top: 0 }}

@@ -121,6 +121,9 @@ export * from './Form';
 export { default as FormItem } from './FormItem';
 export * from './FormItem';
 
+export { Grid, GridItem } from './Grid';
+export * from './Grid';
+
 export { default as Grow } from './Grow';
 export * from './Grow';
 
@@ -225,6 +228,9 @@ export * from './RouteTransition';
 
 export { default as Row } from './Row';
 export * from './Row';
+
+export { default as SafeArea } from './SafeArea';
+export * from './SafeArea';
 
 export { default as Searchbar } from './Searchbar';
 export * from './Searchbar';

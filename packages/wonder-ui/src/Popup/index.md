@@ -21,15 +21,10 @@ Popup 是一个响应式模态窗口，其中包含在 App 的主要内容上弹
 
 ## 代码演示
 
-### 基本使用
-
 默认情况下，在 iPhone 和 iPad 上看起来有点不同的弹出窗口，iPhone 它是全屏的。
 
 <code src="./demo/demo1.tsx"></code>
 
-### 非受控组件
-
-<code src="./demo/demo2.tsx"></code>
 
 <API src="./Popup.tsx" ></API>
 

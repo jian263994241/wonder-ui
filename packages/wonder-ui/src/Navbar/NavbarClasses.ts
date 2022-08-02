@@ -38,7 +38,7 @@ export const useNavbarCSSvars = () => {
       borderColor: theme.palette.divider,
       fontSize: 17,
       height: 44,
-      paddingHorizontal: 0,
+      paddingHorizontal: theme.shape.distanceHorizontal,
       subtitleFontSize: 10,
       subtitleLineHeight: '1',
       subtitleTextAlign: 'inherit',

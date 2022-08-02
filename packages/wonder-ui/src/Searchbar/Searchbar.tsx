@@ -152,7 +152,7 @@ const SearchbarInput = styled(Input, {
   slot: 'Input'
 })<{ styleProps: SearchbarStyleProps }>(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
-  borderRadius: theme.shape.borderRadius,
+  borderRadius: theme.shape.borderRadius[2],
   paddingLeft: 8,
   paddingRight: 8
 }));

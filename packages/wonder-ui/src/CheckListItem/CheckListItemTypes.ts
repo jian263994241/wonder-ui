@@ -30,7 +30,7 @@ export interface CheckListItemProps {
   /**
    * 选项值
    */
-  value: string | number;
+  value: string;
   /**
    * 点击事件
    */

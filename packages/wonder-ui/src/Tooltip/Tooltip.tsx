@@ -2,28 +2,26 @@ import * as React from 'react';
 import Grow from '../Grow';
 import Popper, { PopperProps } from '../Popper';
 import styled from '../styles/styled';
+import Typography from '../Typography/Typography';
 import useThemeProps from '../styles/useThemeProps';
 import { css } from '@wonder-ui/utils';
 import { emphasize } from '../styles/colorManipulator';
 import { tooltipClasses, useClasses } from './TooltipClasses';
 import { useForkRef, useTouchFeedback } from '@wonder-ui/hooks';
 
-function round(value: number) {
-  return Math.round(value * 1e5) / 1e5;
-}
-
-export interface TooltipProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
+export interface TooltipProps {
+  classes?: Partial<typeof tooltipClasses>;
+  className?: string;
+  style?: React.CSSProperties;
   /**
    * 显示箭头
-   * @default false
+   * @default true
    */
   arrow?: boolean;
-  classes?: Partial<typeof tooltipClasses>;
   /**
    * 锚节点
    */
-  children: JSX.Element;
+  children: React.ReactElement;
   /**
    * 禁用
    */
@@ -67,7 +65,7 @@ const TooltipRoot = styled(Popper, {
   userSelect: 'none'
 }));
 
-const TooltipTooltip = styled(Grow, {
+const TooltipTooltip = styled(Typography, {
   name: 'WuiTooltip',
   slot: 'Tooltip'
 })(({ theme }) => {
@@ -76,16 +74,14 @@ const TooltipTooltip = styled(Grow, {
 
   return {
     backgroundColor: backgroundColor,
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.shape.borderRadius[2],
     color: theme.palette.getContrastText(backgroundColor),
-    fontFamily: theme.typography.fontFamily,
-    fontWeight: theme.typography.fontWeightRegular,
-    lineHeight: `${round(16 / 12)}em`,
+    lineHeight: 1.5,
     padding: theme.spacing(1),
-    fontSize: theme.typography.pxToRem(12),
     maxWidth: 300,
     margin: 2,
     wordWrap: 'break-word',
+    display: 'block',
 
     [`&.${tooltipClasses.withArrow}`]: {
       position: 'relative',
@@ -174,7 +170,7 @@ const TooltipArrow = styled('div', {
 const Tooltip = React.forwardRef<HTMLElement, TooltipProps>((inProps, ref) => {
   const props = useThemeProps({ props: inProps, name: 'WuiTooltip' });
   const {
-    arrow = false,
+    arrow = true,
     className,
     children,
     disabled,
@@ -215,11 +211,14 @@ const Tooltip = React.forwardRef<HTMLElement, TooltipProps>((inProps, ref) => {
         {...rest}
       >
         {({ TransitionProps, attributes, styles }) => (
-          <TooltipTooltip
+          <Grow
             className={classes.tooltip}
-            theme={theme}
+            component={TooltipTooltip}
+            componentProps={{
+              variant: 'caption',
+              ...attributes.popper
+            }}
             {...TransitionProps}
-            {...attributes.popper}
           >
             {title}
             {arrow ? (
@@ -231,7 +230,7 @@ const Tooltip = React.forwardRef<HTMLElement, TooltipProps>((inProps, ref) => {
                 {...attributes.popper}
               />
             ) : null}
-          </TooltipTooltip>
+          </Grow>
         )}
       </TooltipRoot>
     </React.Fragment>

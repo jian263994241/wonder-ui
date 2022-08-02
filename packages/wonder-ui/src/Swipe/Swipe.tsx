@@ -118,7 +118,7 @@ const SwipeIndicator = styled('span', {
   '&>span': {
     display: 'none'
   },
-  '&:not(:last-child)': {
+  '&:not(:last-of-type)': {
     [styleProps.vertical ? 'marginBottom' : 'marginRight']: 6
   },
   [`&.${globalClasses.active}`]: {

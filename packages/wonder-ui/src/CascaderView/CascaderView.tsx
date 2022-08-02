@@ -114,7 +114,6 @@ const CascaderView = React.forwardRef<HTMLDivElement, CascaderViewProps>(
                     disabled={option.disabled}
                     value={option[cascader.fieldNames.value]}
                     key={index}
-                    divider={index === tab.options.length - 1 ? false : divider}
                     className={css(classes.item, option.className)}
                     style={option.style}
                     meta={option}

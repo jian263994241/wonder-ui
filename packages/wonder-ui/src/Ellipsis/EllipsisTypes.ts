@@ -1,22 +1,13 @@
 import React from 'react';
-import { ellipsisClasses } from './EllipsisClasses';
-
-export type EllipsisClasses = typeof ellipsisClasses;
+import type { EllipsisClasses } from './EllipsisClasses';
+import type { TypographyProps } from '../Typography/TypographyTypes';
 
 export interface EllipsisProps
-  extends React.HtmlHTMLAttributes<HTMLDivElement> {
-  /**
-   * Css API
-   */
+  extends Omit<TypographyProps, 'noWrap' | 'lineClamp'> {
   classes?: Partial<EllipsisClasses>;
-  /**
-   * 样式名
-   */
   className?: string;
-  /**
-   * 内容
-   */
   children: string;
+  style?: React.CSSProperties;
   /**
    * 省略号位置
    * @default end
@@ -35,10 +26,6 @@ export interface EllipsisProps
    * 收起操作文字
    */
   collapseText?: NonNullable<React.ReactNode>;
-  /**
-   * 样式
-   */
-  style?: React.CSSProperties;
 }
 
 export type EllipsisedValue = {

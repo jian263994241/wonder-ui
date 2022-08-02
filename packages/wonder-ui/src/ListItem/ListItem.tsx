@@ -120,7 +120,7 @@ const ListItemArrow = styled('div', {
   paddingTop: listCssVars.value('paddingVertical'),
   paddingBottom: listCssVars.value('paddingVertical'),
   ...svgIconCssVars.style({
-    color: theme.palette.text.icon,
+    color: 'rgba(0, 0, 0, 0.2)',
     size: 19
   })
 }));

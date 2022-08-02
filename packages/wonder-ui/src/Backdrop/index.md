@@ -20,3 +20,11 @@ group:
 
 <API src="./Backdrop.tsx" ></API>
 
+
+## CSS 变量
+
+
+| 属性 | 说明 | 默认值
+| - | - | -
+| --wui-backdrop-color | 颜色 |
+| --wui-backdrop-z-index | z-index |

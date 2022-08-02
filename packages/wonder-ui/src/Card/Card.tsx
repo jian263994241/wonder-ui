@@ -25,7 +25,7 @@ const CardRoot = styled(Typography, {
   slot: 'Root'
 })({
   backgroundColor: cardCssVars.value('bgColor'),
-  borderRadius: cardCssVars.value('borderRadius', '8px')
+  borderRadius: cardCssVars.value('borderRadius')
 });
 
 const CardHeader = styled('div', {

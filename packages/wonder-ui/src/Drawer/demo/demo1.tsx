@@ -51,7 +51,7 @@ export default () => {
               : { width: '100%', height: 200 })
           }}
           showCloseButton
-          onClose={() => toggleVisible()}
+          onClose={() => setVisible(false)}
         >
           <div style={{ padding: '10px 16px' }}>
             Some contents... <br />

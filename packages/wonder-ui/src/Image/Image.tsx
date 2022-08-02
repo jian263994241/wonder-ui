@@ -33,7 +33,7 @@ const ImageRoot = styled('div', {
   name: COMPONENT_NAME,
   slot: 'Root'
 })(() => ({
-  display: 'flex',
+  display: 'inline-flex',
   justifyContent: 'center',
   alignItems: 'center',
   position: 'relative',

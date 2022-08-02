@@ -53,9 +53,12 @@ const PaperRoot = styled('div', {
 
   ...(theme.palette.mode === 'dark' && {
     backgroundImage: `linear-gradient(${alpha(
-      '#fff',
+      theme.palette.common.white,
       getOverlayAlpha(styleProps.elevation ?? 0)
-    )}, ${alpha('#fff', getOverlayAlpha(styleProps.elevation ?? 0))})`
+    )}, ${alpha(
+      theme.palette.common.white,
+      getOverlayAlpha(styleProps.elevation ?? 0)
+    )})`
   })
 }));
 

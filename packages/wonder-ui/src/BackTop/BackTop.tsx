@@ -22,32 +22,21 @@ const COMPONENT_NAME = 'WuiBackTop';
 const backTopClasses = generateUtilityClasses(COMPONENT_NAME, ['root']);
 
 export interface BackTopProps {
-  /**
-   * children
-   */
   children?: React.ReactNode;
-  /**
-   * 额外的 CSS className
-   */
   className?: string;
+  style?: React.CSSProperties;
+  onClick?: React.EventHandler<React.MouseEvent>;
+
   /**
    * 回到顶部所需时间（ms）
    * @default 300
    */
   duration?: number;
   /**
-   * 额外的样式
-   */
-  style?: React.CSSProperties;
-  /**
    * 滚动高度达到此参数值才出现
    * @default 400
    */
   visibilityHeight?: number;
-  /**
-   * 点击事件
-   */
-  onClick?: (e: React.MouseEvent) => void;
 }
 
 function scrollTo(element: Element | Window, to: number, duration: number) {
@@ -87,16 +76,9 @@ const BackTopRoot = styled('div', {
   boxSizing: 'border-box',
   zIndex: theme.zIndex.fixed,
   bottom: 50,
-  right: 100,
+  right: 20,
   cursor: 'pointer',
-  display: 'flex',
-
-  [theme.breakpoints.down('md')]: {
-    right: 60
-  },
-  [theme.breakpoints.down('sm')]: {
-    right: 20
-  }
+  display: 'flex'
 }));
 
 const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
@@ -107,8 +89,6 @@ const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
     duration = 300,
     visibilityHeight = 400,
     onClick,
-    theme,
-    style,
     ...rest
   } = props;
   const [visible, setVisible] = useSafeState(false);
@@ -137,7 +117,6 @@ const BackTop = forwardRef<HTMLDivElement, BackTopProps>((inProps, ref) => {
     <BackTopRoot
       ref={handleRef}
       className={css(backTopClasses.root, className)}
-      style={style}
       onClick={handleClick}
       {...rest}
     >

@@ -73,7 +73,7 @@ class Message {
         buttons: [
           {
             text: props.cancelText || '取消',
-            onClick: createChainedFunction(props.onOk, hideDialog)
+            onClick: createChainedFunction(props.onCancel, hideDialog)
           },
           {
             text: props.okText || '确定',

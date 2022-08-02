@@ -23,7 +23,7 @@ export const useImageCssVars = () => {
     imageCssVars.style({
       width: 'auto',
       height: 'auto',
-      roundedRadius: theme.shape.borderRadius,
+      roundedRadius: theme.shape.borderRadius[2],
       objectFit: 'cover'
     })
   );

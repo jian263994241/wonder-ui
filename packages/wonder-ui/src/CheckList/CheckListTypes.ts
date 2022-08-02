@@ -10,7 +10,7 @@ export interface CheckListProps {
   /**
    * 选中图标
    */
-  activeIcon?: React.ReactNode;
+  activeIcon?: React.ReactElement;
   /**
    * 默认项
    */
@@ -50,7 +50,7 @@ export interface CheckListProps {
 }
 
 export interface CheckListContextType {
-  activeIcon?: JSX.Element;
+  activeIcon?: React.ReactElement;
   value?: string[];
   readOnly?: boolean;
   disabled?: boolean;

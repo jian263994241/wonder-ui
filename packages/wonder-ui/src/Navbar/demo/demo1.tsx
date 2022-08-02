@@ -1,20 +1,13 @@
-import {
-  ArrowForward,
-  Button,
-  CloseButton,
-  IconButton,
-  Navbar,
-  Space
-} from '@wonder-ui/core';
-import { Search, ThreeDotsVertical } from '@wonder-ui/icons';
+import { Button, IconButton, Navbar, Space } from '@wonder-ui/core';
+import { ChevronLeft, Search, ThreeDotsVertical, X } from '@wonder-ui/icons';
 
 export default () => {
   return (
     <Space direction="vertical" nowrap>
       <Navbar
         left={
-          <IconButton>
-            <ArrowForward direction="left" />
+          <IconButton edge="start">
+            <ChevronLeft />
           </IconButton>
         }
       />
@@ -22,8 +15,8 @@ export default () => {
       <Navbar
         title="超长的导航栏, 超长的导航栏, 超长的导航栏, 超长的导航栏, 超长的导航栏, 超长的导航栏"
         left={
-          <IconButton>
-            <ArrowForward direction="left" />
+          <IconButton edge="start">
+            <ChevronLeft />
           </IconButton>
         }
       />
@@ -31,12 +24,12 @@ export default () => {
       <Navbar
         title="导航栏"
         left={
-          <IconButton>
-            <ArrowForward direction="left" />
+          <IconButton edge="start">
+            <ChevronLeft />
           </IconButton>
         }
         right={
-          <IconButton>
+          <IconButton edge="end">
             <ThreeDotsVertical />
           </IconButton>
         }
@@ -45,8 +38,8 @@ export default () => {
       <Navbar
         title="导航栏"
         left={
-          <IconButton>
-            <ArrowForward direction="left" />
+          <IconButton edge="start">
+            <ChevronLeft />
           </IconButton>
         }
         right={
@@ -54,7 +47,7 @@ export default () => {
             <IconButton>
               <Search />
             </IconButton>
-            <IconButton>
+            <IconButton edge="end">
               <ThreeDotsVertical />
             </IconButton>
           </div>
@@ -64,18 +57,26 @@ export default () => {
       <Navbar
         title="导航栏"
         subTitle="副标题, 副标题, 副标题, 副标题"
-        right={<CloseButton />}
+        right={
+          <IconButton edge="end">
+            <X />
+          </IconButton>
+        }
       />
 
       <Navbar
         title="导航栏"
         subTitle="副标题"
         left={
-          <Button startIcon={<ArrowForward direction="left" />} variant="text">
+          <Button edge="start" startIcon={<ChevronLeft />} variant="text">
             返回
           </Button>
         }
-        right={<Button variant="text">关闭</Button>}
+        right={
+          <Button variant="text" edge="end">
+            关闭
+          </Button>
+        }
       />
     </Space>
   );
